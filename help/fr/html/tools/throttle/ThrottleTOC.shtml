@@ -6,22 +6,17 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>Throttle: Table of Contents</title>
-  <meta name="keywords" content=
-  "JMRI decoderpro dcc nmra throttle throttlepro">
-  <meta name="Description" content=
-  "Throttle documentation for JMRI project">
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
+  <meta name="Description" content="Throttle documentation for JMRI project">
   <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Language" content="FR">
   <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days">
   <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
@@ -29,10 +24,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<div>
-<!--#include virtual="Sidebar" -->
 
-<div id="mainContent">
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+
+  <div id="mainContent">
+    <!-- Page Body -->
+
 <h1> Documentation R&#233;gulateur</h1>
 
 <p>Notez que cette documentation a &#233;t&#233; mise &#224; jour. Version actuelle:</p>
@@ -125,8 +123,8 @@
   <dt>C. <a href="ThrottleChapter4.shtml#CloseThrottle"
   title="Closing A Throttle Window">Fermeture d'une Fen&#234;tre R&#233;gulateur</a></dt>
 </dl>
-<!--#include virtual="/Footer" -->
 
+<!--#include virtual="/Footer" -->
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>

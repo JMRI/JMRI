@@ -4,7 +4,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!--  $Id: Debug.shtml 21896 2012-12-19 12:12:05Z rhwood  -->
  <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2017-10-10 -->
 <title>JMRI: DecoderPro User Guide - Debugging</title>
 
@@ -24,8 +23,10 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
+    <!-- Page Body -->
 
 <h1>Guide Utilisateur DecoderPro</h1>
+
 <h2>D&#233;bogage</h2>
 
 <dl>

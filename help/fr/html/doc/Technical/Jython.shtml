@@ -15,12 +15,15 @@
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
+
 <body>
 <!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Acc&#232;s de Jython aux outils JMRI</h1>
 

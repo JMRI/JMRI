@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- UpDated  by Blorec Herv&#233; le 2016-09-15-->
+<!-- Updated by Blorec Herv&#233; le 2016-09-15-->
 <title>JMRI: How to set up Signaling in JMRI</title>
 <meta name="Author" content="Bob Jacobsen">
 <meta name="Author" content="Egbert Broerse">
@@ -19,9 +19,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<!-- Page Body -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>JMRI: Signalisation D&#233;marrage Rapide</h1>
 		<p class="subtitle"> Les instructions pas &#224; pas d&#233;crivent en d&#233;tails comment configurer la
@@ -130,7 +132,6 @@ Astuce: Il est plus facile de reprogrammer la carte que de modifier les connexio
 		<p>Retour &#224; la <a href="index.shtml">page d'aide principale Signalisation</a>.</p>				
 
 <!--#include virtual="/Footer" -->
-
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>

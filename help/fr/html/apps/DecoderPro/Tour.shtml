@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
 <title>JMRI: DecoderPro - Tour</title>
 
@@ -16,10 +15,13 @@
 </head>
 
 <body>
-<!--#include virtual="/header" -->
+<!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>JMRI: Guide Utilisateur DecoderPro </h1>
 <h2>Une Visite Rapide </h2>

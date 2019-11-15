@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- UpDated  by Blorec Herv&#233; le 2016-09-11-->
+<!-- Updated by Blorec Herv&#233; le 2016-09-11-->
 <title>JMRI: Defining Your Own Signaling System</title>
 
 <!-- Style -->
@@ -17,9 +17,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: D&#233;finition de Votre Propre Syst&#232;me de Signalisation</h1>
 

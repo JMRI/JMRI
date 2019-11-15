@@ -8,15 +8,14 @@
 <!--#include virtual="/Style" -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
-<div id="mainContent">
-	<!-- -------- -->
-	<!--  Teaser  -->
-	<!-- Optional -->
-	<!-- -------- -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>JMRI: Construction avec IntelliJ IDEA</h1>
 

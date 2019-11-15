@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- Updated  by Blorec Herv&#233;<bzh56420@yahoo.fr> 2016-09-11-->
+<!-- Updated by Blorec Herv&#233;<bzh56420@yahoo.fr> 2016-09-11-->
 <title>JMRI: Aspect Signaling</title>
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
 <meta name="Date.Modified" content="20151002"/>
@@ -19,10 +19,12 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<div id="mainContent">
-<div>
+    <div id="mainContent">
+        <!-- Page Body -->
+
 <h1>JMRI: Aspect de la Signalisation</h1>
 <p class=subtitle>
 Commande des signaux mod&#232;le d'une mani&#232;re r&#233;aliste
@@ -254,8 +256,7 @@ vous pouvez aller directement &#224; lui par l'InstanceManager:
 <p>Retour &agrave; la <a href="index.shtml">page d'aide principale Signalisation</a>.</p>
 
 <!--#include virtual="/Footer" -->
-
-</div>
-</div>
+        </div>
+    </div>
 </body>
 </html>

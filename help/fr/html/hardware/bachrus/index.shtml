@@ -18,9 +18,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
-      <h2>Guide Mat&eacute;riel JMRI: Bachrus</h2>
+<div id="mBody">
+	<!--#include virtual="../SidebarUp" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Structure Mat&#233;riel: Bachrus</h1>
 

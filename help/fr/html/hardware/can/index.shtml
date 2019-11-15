@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- UpDated  by Blorec Herv&#233; 2017-01-20-->
+<!-- Updated by Blorec Herv&#233; 2017-01-20-->
 <title>JMRI Hardware Support - CAN Network</title>
 
 <!-- Style -->
@@ -14,8 +14,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+
+<div id="mBody">
+	<!--#include virtual="../SidebarUp" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Prise en charge Mat&#233;riel: R&#233;seau CAN</h1>
 <ul class="snav"><!-- TOC -->
@@ -105,7 +109,7 @@ Pr&#233;f&#233;rences et s&#233;lectionnez:
 <li>Il y a aussi un
 <a href="../../../package/jmri/jmrix/can/swing/send/CanSendFrame.shtml">Outil Envoi Trame</a> fpour envoyer manuellement des trames CAN et dans des 
 s&#233;quences.</li>
-<li> Pour le dÃ©veloppement il y a aussi des
+<li> Pour le développement il y a aussi des
 <a href="scripting.shtml">Outils de Script CAN</a>
 pour l'envoi et la r&#233;ception de Trames CAN.
 Ils peuvent &#234;tre tr&#232;s utile lors de test de mat&#233;rie, etc.</li>

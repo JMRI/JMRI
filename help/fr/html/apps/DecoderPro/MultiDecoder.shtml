@@ -4,7 +4,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- Updated by Herv&#233;. BLOREC <bzh56420@yahoo.fr> on 2016-06-28 -->
 <title>JMRI: DecoderPro - Multi-Decoder Tool</title>
 
@@ -20,11 +19,13 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<div>
-<!-- Page Body -->
-<h1>JMRI: Guide  Utilisateur DecoderPro</h1>
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
+
+        <h1>JMRI: Guide  Utilisateur DecoderPro</h1>
 <h2>Outil Multi-DHerv&#233;codeur</h2>
 
 Digitrax a invent&#233; un 

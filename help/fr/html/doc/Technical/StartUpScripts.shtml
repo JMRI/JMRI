@@ -20,8 +20,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
     <div id="mainContent">
+        <!-- Page Body -->
+
 <h1>Scripts de D&#233;marrage JMRI</h1>
 
 Bien que JMRI lui-m&#234;me soit construit pour "fonctionner partout",

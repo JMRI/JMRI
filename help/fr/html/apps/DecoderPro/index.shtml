@@ -19,14 +19,16 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+ <div id="mBody">
+  <!--#include virtual="Sidebar" -->
 
-<!-- Page Body -->
-<h1>JMRI: Guide Utilisateur DecoderPro </h1>
-<p>Actuellement pour JMRI version 4.2</p>
+  <div id="mainContent">
+  <!-- Page Body -->
 
-<h2>Introduction au Programmateur Symbolique JMRI</h2>
+  <h1>JMRI: Guide Utilisateur DecoderPro </h1>
+  <p>Actuellement pour JMRI version 4.2</p>
+
+  <h2>Introduction au Programmateur Symbolique JMRI</h2>
 
 <p>Les d&#233;codeurs DCC modernes sont des b&#234;tes compliqu&#233;es &#224; programmer. L'id&#233;e simple
 de "mettre l'adresse dans CV01" ne s'adaptent pas bien lorsque vous programmer des fonctions complexes 

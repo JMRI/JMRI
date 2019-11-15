@@ -3,7 +3,7 @@
 
 <html lang="fr">
 <head>
-<!-- Updated  by Blorec Herv&#233;  2017-02-05-->
+<!-- Updated by Blorec Herv&#233;  2017-02-05-->
 <title>JMRI Hardware Support - Maple Systems</title>
 
 <!-- Style -->
@@ -17,8 +17,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Mat&#233;riel ris en charge: Syst&#232;mes Maple</h1>
 

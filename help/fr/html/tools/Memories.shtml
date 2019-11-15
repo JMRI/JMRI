@@ -1,8 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--UIpdated by Blorec Herv&#233; le 2013-09-24-->
+<!--Updated by Blorec Herv&#233; le 2013-09-24-->
 <html lang="fr">
 <head>
-<!-- Copyright Me 2008 -->
 
 <title>JMRI: Memories</title>
 
@@ -17,8 +16,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1> JMRI: Documentation Variables M&#233;moires</H1>
 

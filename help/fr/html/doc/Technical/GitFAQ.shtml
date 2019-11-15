@@ -21,10 +21,14 @@
 
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>JMRI:FAQ Git</h1>
 

@@ -10,12 +10,16 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <!--#include virtual="/Style" -->
 </head>
+
 <body>
-
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
-    <div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
+
 <h1>JMRI: Documentation Sections</h1>
 
 <h2>Qu'est-ce qu'une Section?</h2>
@@ -226,10 +230,7 @@ Panneau dans le Fichier...</b> ou s&#233;lectionnez <b>Panneaux-->Sauvegarder le
 principale de JMRI.</p>
 
 <!--#include virtual="/Footer" -->
-
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>
 </html>
-
-

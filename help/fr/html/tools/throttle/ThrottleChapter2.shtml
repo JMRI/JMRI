@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; 2017-01-07-->
+<!-- Updated by Blorec Herv&#233; 2017-01-07-->
 <html lang="fr">
 <head>
   <title>Throttle: Open/Configure a Throttle Window </title>
@@ -21,12 +20,14 @@
 
 <body>
 <!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
 
-<div id="mainContent">
-<h1><span style="color:#ff0000">Mise &#224; jour Version de la documentation du R&#233;gulateur
-</span></h1>
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
+
+<h1>Mise &#224; jour Version de la documentation du R&#233;gulateur</h1>
 
 <p>S'il vous pla&#238;t noter que cette documentation a &#233;t&#233; mise &#224; jour. Version Actuelle:</p>
 <ul>

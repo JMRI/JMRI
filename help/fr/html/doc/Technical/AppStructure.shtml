@@ -8,15 +8,6 @@
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-<html lang="fr">
-<head>
-  <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI: Structure de l'Application</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code">
@@ -28,23 +19,26 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div id="mBody">
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
+        <!-- Page Body -->
+
       <h1>JMRI: Structure de l'Application</h1>
         Le programme
       PanelPro est juste un exemple, mais il est cens&eacute;
       &ecirc;tre un bon.
 
       Le programme PanelPro est juste un exemple, mais il est cens&#233; &#234;tre un bon.
-      <P>
+      <p>
     La source de la classe principale est actuellement dans apps/PanelPro/PanelPro.java,
     qui d&#233;finit la classe principale apps.PanelPro.PanelPro.
 <p>
@@ -80,6 +74,7 @@ sont nomm&#233;s si disponibles sur <a href="Names.shtml">une page s&#233;par&#2
       <p>Voir aussi la page sur <a href=
       "IntroStructure.shtml">Structure de la biblioth&egrave;que
       JMRI</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

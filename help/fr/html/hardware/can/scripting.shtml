@@ -17,9 +17,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
 
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Prise en charge MAt&#233;riel: CAN - Scripts</h1>
 

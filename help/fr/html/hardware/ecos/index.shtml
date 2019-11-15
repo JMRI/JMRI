@@ -3,7 +3,7 @@
 
 <html lang="fr">
 <head>
-<!-- UpDated  by Blorec Herv&#233;  2017-01-26--> 
+<!-- Updated by Blorec Herv&#233;  2017-01-26-->
 <title>JMRI Hardware Support - ESU ECoS</title>
 
 <!-- Style -->
@@ -17,8 +17,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+
     <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Support Mat&#233;riel: ESU ECoS</h1>
 

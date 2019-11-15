@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
-<!-- UpDated  by Blorec Herv&#233; 2011-10-01--> 
+<!-- Updated by Blorec Herv&#233; 2011-10-01-->
 <head>
   <title>
  	JMRI: Signal Groups Documentation
@@ -9,8 +9,7 @@
 
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
 <meta name="Date.Modified" content="20150125"/>
-  <meta name="keywords"
-        content="model railroad JMRI decoderpro panelpro signal">
+<meta name="keywords" content="model railroad JMRI decoderpro panelpro signal">
 
 <!-- Style -->
   <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -22,12 +21,13 @@
 </head>
 
 <body>
-
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
-      <div id="mainContent">
-	  <!-- Page Body -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>JMRI: Groupes Signaux</h1>
 
@@ -83,10 +83,9 @@ L'information Groupe Signal est sauvegard&#233;e comme une partie de la configur
 fichier ( recommand&#233; ) s&#233;lectionnez <b>Fichier--> Enregistrer --> Sauvegarder Configuration et le Panneaux dans le Fichier...</b> ou s&#233;lectionnez <b>Panneaux--> Sauvegarder le Panneau...</b> dans le menu de la fen&#234;tre principale JMRI. 
 <p>Pour plus d'information sur la cr&#233;ation et l'affichage de panneaux, incluant comment montrer lesSignaux sur vos Panneaux, SVP voir les <a href="../../apps/PanelPro/Panels.shtml">pages d'aide Panneaux</a>. 
 
-<p>Retour &#224; la <a href="index.shtml#tools">page principale de l'aide Signalisation</a>.
+<p>Retour &#224; la <a href="index.shtml#tools">page principale de l'aide Signalisation</a>.</p>
 
 <!--#include virtual="/Footer" -->
-
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>

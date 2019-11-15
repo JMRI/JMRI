@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2017-01-09-->
+<!-- Updated by Blorec Herv&#233; le 2017-01-09-->
 <html lang="fr">
 <head>
   <title>Throttles List</title>
@@ -20,8 +20,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Liste des R&#233;gulateurs</h1>
 
@@ -45,7 +48,6 @@ Le M&#234;me que dans <a href="ThrottleToolBar.shtml"> la Fen&#234;tre barre d'o
 Le M&#234;me que dans<a href="ThrottleToolBar.shtml"> la Fen&#234;tre barre d'outils R&#233;gulateur </a>. <br>
 
 <!--#include virtual="/Footer" -->
-
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
   </body>

@@ -18,10 +18,13 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!--#include virtual="/Header" -->
+
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Menus Fen&#234;tre R&#233;gulateur</h1>
 <h2><a name="FileMenu">Fichier menu</a></h2>

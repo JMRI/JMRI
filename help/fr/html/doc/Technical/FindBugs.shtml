@@ -11,22 +11,23 @@
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
     <!-- /Style -->
 </head>
 
 <body>
-  <div id="mBody">
-      <!--#include virtual="/Header" -->
-      <!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<!--#include virtual="/Header" -->
 
-    <H1>JMRI: Analyse statique avec SpotBugs</H1>
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
+
+    <h1>JMRI: Analyse statique avec SpotBugs</h1>
 
 SpotBugs est un outil qui peut examiner le code pour trouver d'&#233;ventuels
 probl&#232;mes. Il fait un "analyse statique", en regardant &#224; travers le

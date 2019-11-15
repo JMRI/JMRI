@@ -8,7 +8,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
   <!-- Translated  by Blorec Herv&#233; le 2011-10-27-->
 
-  <title>JMRI: RPS Receiver Control</title><!-- Style -->
+  <title>JMRI: RPS Receiver Control</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>

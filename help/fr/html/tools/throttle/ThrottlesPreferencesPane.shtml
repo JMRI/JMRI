@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<!-- UpDated by Blorec Herv&#233;  2013-10-04-->
+<!-- Updated by Blorec Herv&#233;  2013-10-04-->
 <html lang="fr">
 <head>
 	<title>Throttles Preferences</title>
@@ -21,9 +21,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Pr&#233;f&#233;rences R&#233;gulateurs</h1>
 
@@ -107,7 +109,6 @@ Cette option activera une <a  href="ThrottleToolBar.shtml">Barre d'Outils qui
 appara&#238;tra dans toutes les Fen&#234;tres R&#233;gulateurs </a>.
 
 <!--#include virtual="/Footer" -->
-
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>

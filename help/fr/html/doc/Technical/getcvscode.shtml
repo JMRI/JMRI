@@ -18,13 +18,14 @@
     <!--#include virtual="/Style" -->
 </head>
 
-<!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+ <body>
+ <!--#include virtual="/Header" -->
 
-	<div id="mainContent">
-	    <!-- ------------- -->
-	    <!-- Page Contents --> <!-- Required -->
-	    <!-- ------------- -->
+ <div id="mBody">
+	 <!--#include virtual="Sidebar" -->
+
+	 <div id="mainContent">
+		 <!-- Page Body -->
 
 	    <h1>JMRI: Obtenir le vieux code CVS</h1>
 
@@ -117,8 +118,9 @@ Pour le serveur entrez <pre><code>&lt; jmri.cvs.sourceforge.net&gt;</code></pre>
 En bas &#224; droite de l'&#233;cran il y a un bouton "Fetch List". Cliquez le et une liste doit appara&#238;tre cliquez sur la ligne 'all'.
 Puis cliquez sur OK en bas du volet.
 Un nouveau volet doit s'ouvrir et les fichiers doivent &#234;tre t&#233;l&#233;charg&#233;s; au bas de ce volet il y a une case nomm&#233;e "Close on Completion", cochez la
-quand le volet se ferme, le dossier que vous avez cr&#233;&#233; doit avoir les dossiers &#224; l'int&#233;rieur avec tous les fichiers JMRI.
-</p>
+quand le volet se ferme, le dossier que vous avez cr&#233;&#233; doit avoir les dossiers &#224; l'int&#233;rieur avec
+tous les fichiers JMRI.
+
 <p>
 Une fois que vous avez r&#233;alis&#233; le contr&#244;le initial depuis CVS dans votre dossier local, pour 
 les actualiser, s&#233;lectionnez les tous et Clic Droit et 

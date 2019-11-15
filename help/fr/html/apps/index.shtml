@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
+<!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 <title>JMRI: Applications</title>
 
 <!-- Style -->
@@ -17,19 +17,21 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
-    <div id="mainContent">
-      <!-- Page Body -->
-        <h2>JMRI: Applications</h2>
+	<div id="mainContent">
+		<!-- Page Body -->
+
+        <h1>JMRI: Applications</h1>
 
 		<p>JMRI offre plusieurs applications qui sont optimis&#233;es pour
 		des objectifs sp&#233;cifiques. Vous pouvez bien s&#251;r &#233;galement 
 		<a href="../doc/Technical/index.shtml#writecode">&#233;crire les votres</a>.
-   <dl>
+
+   		<dl>
 			<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro</a></h3></dt>
 			<dd>
 			   Un meilleur outil pour programmer les d&#233;codeurs.		    

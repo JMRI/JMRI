@@ -1,7 +1,7 @@
 <!-- Sidebar -->
 <!-- This is the common sidebar definition for main (root) pages -->
 
-<!-- UpDated  byHerv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 --> 
+<!-- Updated byHerv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 	  <hr class="hide">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI&reg; is...</div>

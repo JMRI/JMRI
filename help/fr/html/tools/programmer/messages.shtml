@@ -16,8 +16,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: Messages d'Erreur du Programmateur de D&#233;codeur</H1>
 

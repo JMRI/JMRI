@@ -18,7 +18,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.%20css"
   media="print">
   <link rel="icon" href="/images/jmri.%20ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>

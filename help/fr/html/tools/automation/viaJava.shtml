@@ -17,14 +17,16 @@
 </head>
 
 <body>
-<!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-
-
 <!-- Page Body -->
-<H2>JMRI: Automatisation R&#233;seau en Java</h2>
+    <!--#include virtual="/Header" -->
+
+    <div id="mBody">
+        <!--#include virtual="Sidebar" -->
+
+        <div id="mainContent">
+            <!-- Page Body -->
+
+            <h2>JMRI: Automatisation R&#233;seau en Java</h2>
 
 La biblioth&#232;que JMRI fournit un ensemble puissant d'outils pour
 automatiser votre r&#233;seau. Si les outils int&#233;gr&#233;s &#224;
@@ -189,8 +191,8 @@ et l'appeler au d&#233;marrage,  via un Logix ou autre chose.
 
 </dd>
 
-
 </dl>
+
 <p>Retour &#224; la <a href="index.shtml">page d'Aide Automatisation</a>.
 
 <!--#include virtual="/Footer" -->

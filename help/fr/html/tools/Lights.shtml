@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233; le 2017-01-02 -->
+<!-- Updated by Blorec Herv&#233; le 2017-01-02 -->
 <html lang="fr">
 <head>
   <meta name="generator" content=
@@ -10,14 +10,12 @@
   <meta name="keywords" content=
   "hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+	<!-- /Style -->
 </head>
 
 <body>
@@ -27,6 +25,8 @@
 	<!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
+		<!-- Page Body -->
+
 <h1>JMRI:Documentation Lumi&#232;re</h1>
 
 <h2>Qu'est ce que les Lumi&#232;res?</H2>

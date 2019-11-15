@@ -19,8 +19,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="../SidebarUp" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Documentaion D&#233;marrage Mat&#233;riel: Raspberry Pi via GPIO</h1>	
 <p>Le <a href="http://www.raspberrypi.org">Raspberry Pi</a> est une famille peu 

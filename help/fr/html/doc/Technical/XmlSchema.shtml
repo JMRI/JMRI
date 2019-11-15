@@ -7,22 +7,17 @@
     </title>
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code xml schema usage">
-
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
     <!--#include virtual="/Style" -->
 </head>
 
 <body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1> JMRI: Utilisation de Schema XML</h1>
 
@@ -482,7 +477,7 @@ Exemple XML:
   &lt;/db:revhistory&gt;
 </pre>
 
-<P>
+<p>
 Description de l'&#233;chantillon du sch&#233;ma: (Mais voir le vrai, qui est pr&#233;vu dans le schema /docbook )
 <Code> <pre>
      &lt;xs: element ref =: minOccurs "docbook copyright" = "1" maxOccurs = "1" &gt;
@@ -505,7 +500,7 @@ Description de l'&#233;chantillon du sch&#233;ma: (Mais voir le vrai, qui est pr
       &lt;/xs:documentation&gt;&lt;/xs:annotation&gt;
     &lt;/xs:element&gt;
 </pre></code>	
-    </P>
+    </p>
 
 <!--#include virtual="/Footer" -->
 	  </div><!-- closes #mainContent-->

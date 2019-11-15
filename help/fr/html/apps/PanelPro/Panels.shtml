@@ -18,9 +18,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<div>
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>JMRI:Cr&#233;ation Panneaux de Commandes</h1>
 Les librairies JMRI contiennent un syst&#232;me de cr&#233;ation de panneaux de commandes. Il est grandement personnalisable, et vous 

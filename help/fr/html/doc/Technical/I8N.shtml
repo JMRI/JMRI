@@ -16,16 +16,19 @@
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
+
 <body>
 <!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: Internationalisation</h1>
 	    	    
-<P>
+<p>
 Les biblioth&#232;ques JMRI sont destin&#233;es &#224; &#234;tre utilisables dans le monde entier.
 Pour ce faire, ils font usage des fonctionnalit&#233;s "internationalisation"
 int&#233;gr&#233;es dans le langage Java et les biblioth&#232;ques.
@@ -36,7 +39,7 @@ JMRI utilise les param&#232;tres locaux par d&#233;faut pour localiser l'informa
 Cela signifie que JMRI pr&#233;sentera son interface utilisateur
 dans le langage Java  d&#233;fini comme la valeur par d&#233;faut pour cet ordinateur.
 
-<P>
+<p>
 Les locales sont sp&#233;cifi&#233;es par une Langue, et &#233;ventuellement un Pays. 
 La langue est un code &#224; deux lettres minuscules; le pays est une code de deux
 lettre majuscules. "en" est l'anglais, "fr" est le fran&#231;ais , "de" est l'allemand,

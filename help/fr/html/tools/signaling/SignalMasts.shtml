@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- UpDated  by Blorec Herv&#233; le 2016-09-15-->
+<!-- Updated by Blorec Herv&#233; le 2016-09-15-->
 <title>JMRI: Signal Masts</title>
 
 <!-- Style -->
@@ -17,15 +17,18 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: M&#226;ts de Signalisation</h1>
 <p class="subtitle">
     Informations g&#233;n&#233;rales sur les M&#226;ts Signal JMRI
 </p>
 
-<div class=para>
+<div class="para">
 <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.png">
    <img src="../../../package/jmri/jmrit/beantable/SignalMastTable.png" 
         height="86" width="338" align="right"></a>
@@ -37,13 +40,14 @@ Les  M&#226;ts de Signalisation sont configur&#233;s via le
 Vous pouvez en ajouter de nouveaux avec le bouton "Ajouter ..." 
 sur le tableau, qui vous emm&#232;ne &#224; la
 <a href="../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml"> fen&#234;tre "Ajouter  M&#226;ts de Signalisation" </a>.
-
-<p>
-Du tableau, vous pouvez d&#233;finir des M&#226;ts de Signalisation individuels avec tous les aspects qu'ils sont capables
-    d'afficher en cliquant dans la colonne  "Aspect".</p>
-
-<!--#include virtual="/Footer" -->
+</p>
 </div>
-</div>
+
+<p>Du tableau, vous pouvez d&#233;finir des M&#226;ts de Signalisation individuels avec tous les aspects qu'ils sont capables
+d'afficher en cliquant dans la colonne  "Aspect".</p>
+
+    <!--#include virtual="/Footer" -->
+    </div>
+    </div>
 </body>
 </html>>

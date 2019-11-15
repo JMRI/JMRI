@@ -17,18 +17,19 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Installation JMRI: Fichiers de Configuration</h1>
 
-<p>Cette section essaye d'expliquero&#250; sont stock&#233;s sur votre ordinateur les fichiers de Configuration ( r&#233;glages ) de JMRI et quelleinformation ils contiennent .
-</p>
+<p>Cette section essaye d'expliquero&#250; sont stock&#233;s sur votre ordinateur les fichiers de Configuration ( r&#233;glages ) de JMRI et quelleinformation ils contiennent .</p>
 
 <dl>
-	<a name="location">
-	<dt class="left">Emplacements Fichier de Configuration</dt></a>
+	<a name="location"></a>
+	<dt class="left">Emplacements Fichier de Configuration</dt>
 	<dd class="first">
 	Il y a deux endroits o&#250; nous pouvons trouver des Fichiers de Configuration JMRI:
 		<ol>

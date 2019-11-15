@@ -22,10 +22,12 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
-<!-- Page Body -->
+	<div id="mainContent">
+		<!-- Page Body -->
+
 <h1>JMRI: Signalisation</h1>
 
 <p>Cette page introduit la Signalisation, liste les outils Signalisation JMRI et pointe vers les m&#233;thodes plus avanc&#233;es.</p>
@@ -40,7 +42,7 @@ allant du simple "feu rouge" pour terminer par l'&#233;mulation d'un prototype p
 <li><a href="#advanced">Signalisation Avanc&#233;e</a></li>
 </ul>
 
-<a name="terms"><h2>Vocabulaire de Signalisation</h2></a>
+<a name="terms"></a><h2>Vocabulaire de Signalisation</h2>
 
 <h3>Termes de Mod&#232;le r&#233;el de Signalisation Ferroviaire:</h3>
 <a href="https://commons.wikimedia.org/wiki/File:CSX_River_Sub_Kingston_CP_90.jpg"><img src="images/132px-CSX_River_Sub_Kingston_CP_90.jpg" width="132" height="240" align="right"></a>
@@ -79,12 +81,12 @@ direction et l'itin&#233;raire du voyage. La "protection" est pour pr&#233;venir
 <p>
 &#192; travers le monde, les chemins de fer ont d&#233;velopp&#233; une large gamme de mat"riel de signalisation tels que Drapeaux ( non support&#233;s dans JMRI, S&#233;maphores, Signaux &#224; position de lumi&#232;re, Signaux Lampes de Couleur. Diff&#233;rents signaux physiques peuvent montrer la m&#234;me "Indication" en utilisant diff&#233;rentes combinaisons de lumi&#232;res, de positions de s&#233;maphore, et/ou de Panneaux; ces mod&#232;les de lumi&#232;res sont appel&#233;s "Aspects". Par exemple l'Aspect "Arr&#234;t" peut &#234;tre une simple lampe rouge sur un m&#226;t de Signalisation avec seulement une lampe, rouge au-dessus de rouge sur un m&#226;t de signalisation avec deux lampes, etc. Pour apprendre les r&#232;gles du chemin de fer, votre mod&#232;le fait partie du jeu mais JMRI vous aide en fournissant plus de 20 syst&#232;mes de signalisation r&#233;aliste de diff&#233;rents pays. Pourtant, c'est au conducteur d'interpr&#233;ter les Aspects des Signaux affich&#233;s et ajuster le r&#233;gulateur...
 
-  	<p>Beaucoup de <a href="https://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Bloc Automatique Lumineux</a> (ABS au USA et BAL en France) basiques peut se r&#233;sumer &#224; un signal devient rouge quand un train
+<p>Beaucoup de <a href="https://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Bloc Automatique Lumineux</a> (ABS au USA et BAL en France) basiques peut se r&#233;sumer &#224; un signal devient rouge quand un train
 ne peut pas entrer en toute s&#233;curit&#233; dans le canton qu'il prot&#232;ge; il devient jaune lorsque le canton suivant 
 le canton prot&#233;g&#233; ne peut &#234;tre occup&#233;. Bien que ce soit une simplification, il peut servir 
 comme un bon point de d&#233;part pour comprendre la logique de la signalisation. Les syst&#232;me de signalisation modernes sont <a href="https://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Bloc &#224; Permissivit&#233; Absolue</a> (APB) Signalisation utilis&#233; par beaucoup de r&#233;seaux de l'Ouest des US et <a href="https://en.wikipedia.org/wiki/Centralized_traffic_control">Contr&#244;le Centralis&#233; du Trafic</a> ( CTC ) command&#233; &#224; distance &#224; partir de grands tableaux.
 
-	<h3>Nomenclature Standard CTC</h3>
+<h3>Nomenclature Standard CTC</h3>
 
 <h4>Union Switch &amp; Signal Company (US&amp;S)</h4>
 <ul>
@@ -103,7 +105,7 @@ Exemple #2: Les signaux CTC de Dennis Drury obtiennent un nombre pair avec un mo
 </ul>
 <p>Merci &#224; Jim Duncan, qui ajoute: Il y a toujours des exceptions! Tous les libell&#233;s doivent &#234;tre coh&#233;rents, facile &#224; comprendre, et n'avoir absolument aucune possibilit&#233; d'&#234;tre confondu avec un autre signal, aiguillages ou leviers.</p>
  
-	<H3>Lectures compl&#233;mentaires</h3>
+	<h3>Lectures compl&#233;mentaires</h3>
 	<p>Il y a beaucoup d'excellentes sources d'information sur	La signalisation r&#233;aliste, incluant:
 <ul>
   <li>La <a href="https://en.wikipedia.org/wiki/Railway_signal">Page Wikipedia sur la Signalisation</a></li>
@@ -118,7 +120,7 @@ Exemple #2: Les signaux CTC de Dennis Drury obtiennent un nombre pair avec un mo
   <li><a href="http://www.railroadsignals.us/basics/nomenclature.htm">US Circuit Nomenclature</a> aide dans la d&#233;nomination r&#233;aliste des parties du syst&#232;me de signalisation.</li>
 </ul>
 
-<a name="tools"><h2>JMRI Outils Signalisation</h2></a>
+<a name="tools"></a><h2>JMRI Outils Signalisation</h2>
 <p>Il est vraiment simple d'utiliser l'Aspect de Signalisation, sp&#233;cialement si le mat&#233;riel de signal appropri&#233; est d&#233;j&#224; configur&#233; dans JMRI ou vous voulez utiliser des M&#226;ts de Signalisation avec plus d'un Feu de Signalisation.
 	L'aspect de Signalisation dans JMRI utilise une s&#233;rie de fichiers de d&#233;finitions d'Aspect qui sont fournis avec JMRI depuis la version 2.9. De plus pour puiser dans un des plus r&#233;aliste parmi 20 <a href="AspectSignaling.shtml#systems">Syst&#232;mes de Signalisation</a> fournit avec JMRI, vous pouvez en bidouiller un en fonction de votre mat&#233;riel et des op&#233;rations ou d&#233;finir votre propre syst&#232;me et le partager dans le cadre d'une prochaine version de JMRI.<br/>
 	JMRI les principaux outils de signalisation suivants, disponibles depuis le menu<b>Outils --> Tableau --> Signal </b> menu:</p>
@@ -158,7 +160,7 @@ sur vos panneaux, voir la
 	<li>Elmer McKay fournit un apercu g&#233;n&#233;ral <a href="IntroToSignalingYourMRR.html">Comment d&#233;marr&#233;</a> avec les signaux sur votre r&#233;seau.</li>
 </ul>
 	
-<a name="advanced"><h2>La Signalisation Avanc&#233;e</h2></a>
+<a name="advanced"></a><h2>La Signalisation Avanc&#233;e</h2>
 	
 <ul>
 	<li><a href="interlock/index.shtml">Verrouillage Entr&#233;e/Sortie</a></li>
@@ -168,7 +170,7 @@ sur vos panneaux, voir la
 	<li><a href="#widgets">Boite &#224; Outils</a> pour les utilisateurs exp&#233;riment&#233;s pour faire toutes sortes d'automatisme sur le r&#233;seau en &#233;crivant un nouveau programme</li>
 </ul>
 
-<a name="logix"><h3>Signalisation avec Logix</h3></a>
+<a name="logix"></a><h3>Signalisation avec Logix</h3>
 <p>Un <a href="../Logix.shtml">Logix</a> JMRI fournit la logique et les capacit&#233;s de commande pour les objets JMRI, incluant
 M&#226;ts et Feux de Signalisation. Logix peut &#234;tre utilis&#233; pour configurer une signalisation logique personnalis&#233;e en remplissant des formulaires sans &#233;crire de code. Un utilisateur d&#233;finit la logique "Conditionnelle" et les "Actions"
 qui prennent place en fonction de l'&#233;tat de la logique. Les sous-sections suivantes montrent comment Logix peut examiner et commander les Signaux.</p>
@@ -204,7 +206,7 @@ qui prennent place en fonction de l'&#233;tat de la logique. Les sous-sections s
 	<li><b>Apparence M&#226;t de Signalisation Maintenu</b>: &#201;value &#224; Vrai si le M&#226;t de Signalisation est maintenu.</li>
 	</ul>
 
-	<a name="action"><h4>Actions Signal en Logix</h4></a>
+	<a name="action"></a><h4>Actions Signal en Logix</h4>
 
 	<p>Les Actions li&#233;es aux Feux et M&#226;ts de Signalisation actuellement disponibles pour un usage dans les conditionnels Logix sont list&#233;es  
 	ci-dessous en m&#234;me temps que les informations sur chacune. <i>Note:</i> Toutes les actions Logix ne sont pas r&#233;pertori&#233;es ici.</p>
@@ -225,7 +227,7 @@ qui prennent place en fonction de l'&#233;tat de la logique. Les sous-sections s
 </ul>
 <p>Pour plus d'information voir les <a href="../Logix.shtml">pages d'aides Logix</a>.</p>
 
-<a name="scripting"><h3>Script</h3></a>
+<a name="scripting"></a><h3>Script</h3>
 
 	<a href="../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png">
    <img src="../../../package/jmri/jmrit/beantable/images/jmriScriptWindow.png"
@@ -245,7 +247,7 @@ recalcule l'Apparence du Feu de Signalisation bas&#233;es sur les valeurs.
 
 Pour plus d'information voir la <a href="../scripting/index.shtml">page d'aide Scrpit JMRI </a>.
 
-<a name="automat"><h3>Classes d'Automatisation</h3></a>
+<a name="automat"></a><h3>Classes d'Automatisation</h3>
 
 JMRI fournit des classes pour vous aider &#224; &#233;crire du code Java pour contr&#244;ler votre r&#233;seau. Les plus puissants d'entre eux sont destin&#233;s
 &#224; l'automatisation en g&#233;n&#233;ral et rend facile &#224; coder votre propre logique de signalisation dans le programme; voir la <A HREF="../automation/viaJava.shtml"> page web automatisation</a>.
@@ -262,7 +264,7 @@ en retour au r&#233;seau, et m&#234;me les d&#233;tails de "quelle sorties dois-
 mettre pour obtenir que le signal de l'Evitement Est soit montrer Jaune?". Vous pouvez
 vous concentrer uniquement sur la logique du signal dans le code que vous &#233;crivez.
 
-<A name="widgets"><h3>Boite &#224; Outils</h3></a>
+<A name="widgets"></a><h3>Boite &#224; Outils</h3>
 
 L'ensemble de la
 <A HREF="../../doc/Technical/index.shtml"> boite &#224; Outils JMRI</A>
@@ -272,15 +274,12 @@ ausi bien que des outils puissants pout travailler sur l'&#233;cran utilisateur.
 
 <h2>Outils h&#233;rit&#233;s</h2> 
 <ul>
+ 	<li>L'outil <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Logique Signal Simple</a> fournit
+	 la premi&#232;re version basique de la signalisation ABS ( BAL SNCF ) et Enclenchements utilisant de simples M&#226;ts avec Feu de signalisation. L'outil Logique Signal Simple est toujours disponible dans le menu Outils. Cependant, pour pr&#233;venir les conflits logiqueset les Aspects &#233;tranges des Feux, ne pas essayer de combiner l'usage de l'outil SSL les outils Logique M&#226;ts de Signalisation pour les m&#234;mes signaaux.
+</ul>
 
-		<li>L'outil <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Logique Signal Simple</a> fournit la premi&#232;re version basique de la signalisation ABS ( BAL SNCF ) et Enclenchements utilisant de simples M&#226;ts avec Feu de signalisation. L'outil Logique Signal Simple est toujours disponible dans le menu Outils. Cependant, pour pr&#233;venir les conflits logiqueset les Aspects &#233;tranges des Feux, ne pas essayer de combiner l'usage de l'outil SSL les outils Logique M&#226;ts de Signalisation pour les m&#234;mes signaaux.
+<p><b>*SearchLight:</b> Feu avec une seule lampe devant laquelle pivote un secteur ayant des &#233;crans color&#233;s.</p>
 
-	</ul>
-<p>
-<p>
-<p>
-<b>*SearchLight:</b> Feu avec une seule lampe devant laquelle pivote un secteur ayant des &#233;crans color&#233;s.
-	<p><p><p>
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->

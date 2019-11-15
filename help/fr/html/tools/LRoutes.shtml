@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233; le 2016-08-29-->
+<!-- Updated by Blorec Herv&#233; le 2016-08-29-->
 <html lang="fr">
 <head>
   <title>
@@ -20,10 +20,14 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
 
-<H1>JMRI: Documentation LItin&#233;raire</H1>
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
+
+<h1>JMRI: Documentation LItin&#233;raire</h1>
 
 <h2>Que sont LItin&#233;raires</h2>
 <p>LItin&#233;raires &#233;tends les capacit&#233;s d'Itin&#233;raires. Lumi&#232;res et Feux de Signalisation
@@ -336,8 +340,7 @@ a tous les &#233;tat de ses variables qui d&#233;clenchent les actions quand ils
 radio sur l'onglet "LItin&#233;raire base"<b>Route Logix Type</b></p> donne des option. 
 Si vous voulez que le LItin&#233;raire s'effectue de  mani&#232;re passive comme le fait un Itin&#233;raire, 
 appuyez sur le bouton <b>Old</b>. Si vous voulez que le LItin&#233;raire d&#233;clenche ses 
-actions quand tout les ""droit de v&#233;to" sont retir&#233;s, appuyez sur le bouton <b>New</b> .
-</p>  
+actions quand tout les ""droit de v&#233;to" sont retir&#233;s, appuyez sur le bouton <b>New</b> .</p>
   
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

@@ -6,7 +6,6 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright ($Author$) 2009 -->
-  <!-- $Id$ -->
 
   <title>JMRI: WiThrottle Protocol</title>
   <!-- Style -->
@@ -31,7 +30,8 @@
         color: rgb(145, 188, 122);
         font-weight: bold;
     }
-  </style><!-- /Style -->
+  </style>
+    <!-- /Style -->
 </head>
 
 <body>

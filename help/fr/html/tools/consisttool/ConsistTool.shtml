@@ -20,9 +20,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-	<div>
+
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
+
 <h1>JMRI: Outil Couplage</h1>
 
 <h2>Renseignements g&#233;n&#233;raux</H2>

@@ -14,13 +14,13 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div id="mBody">
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <!-- Page Body -->
+        <!-- Page Body -->
 
 <h1>D&#233;marrage JMRI: Codes et Messages d'Erreurs</h1>
 

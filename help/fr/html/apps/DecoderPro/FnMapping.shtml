@@ -19,9 +19,12 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<div>
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	<!-- Page Body -->
+
 <h1>JMRI: Guide Utilisateur DecoderPro </h1>
 
 <h2>Fonction Mapping dans les Fichiers Programmateur</h2>

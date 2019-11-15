@@ -2,9 +2,7 @@
 <!--Updated by Herv&#233; Blorec le 2016/08/17-->
 <html lang="fr">
 <head>
-    <title>
- 	JMRI: Turnout Feedback
-   </title>
+    <title>JMRI: Turnout Feedback</title>
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI Turnout feedback">
 
@@ -22,10 +20,13 @@
 <body>
 <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<H1>JMRI: R&#233;troSignalisation Aiguillage</H1>
+    <div id="mainContent">
+        <!-- Page Body -->
+
+<h1>JMRI: R&#233;troSignalisation Aiguillage</h1>
 
 Les Mod&#232;listes ferroviaires veulent des choses diff&#233;rentes quand il s'agit de conna&#238;tre 
 l'&#233;tat des aiguillages sur leur r&#233;seau. Certains sont tr&#232;s heureux de pouvoir 
@@ -230,7 +231,6 @@ Avec le r&#233;glage MONITORING, quand quelque chose en dehord de JMRI ( un autr
 change l'&#233;tat de l'aiguillage, JMRI l'accepte et change ses &#233;tats internes pour l'aiguillage.
 
 <!--#include virtual="/Footer" -->
-
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

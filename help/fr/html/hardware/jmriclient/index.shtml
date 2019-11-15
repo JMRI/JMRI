@@ -17,8 +17,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">>
+
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Support Mat&#233;riel: Connexion JMRIClient</h1>
 

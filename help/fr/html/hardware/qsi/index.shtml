@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- UpDated  by Blorec Herv&#233;  2013-09-18--> 
+<!-- Updated by Blorec Herv&#233;  2013-09-18-->
 <title>JMRI: Programmateur Quantum</title>
 
 <!-- Style -->
@@ -12,12 +12,16 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+
     <div id="mainContent">
+        <!-- Page Body -->
 
 <h1> 
 JMRI: Programmateur Quantum

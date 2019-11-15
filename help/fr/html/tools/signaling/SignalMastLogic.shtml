@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Kevin Dickerson 2011 -->
-<!-- UpDated  by Blorec Herv&#233; 2016-09-13--> 
+<!-- Updated by Blorec Herv&#233; 2016-09-13-->
 <title>JMRI: Signal Mast Logic introduction</title>
 <META name="Author" content="Bob Jacobsen, Egbert Broerse">
 <META name="Date.Modified" content="20140614">
@@ -21,8 +21,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>JMRI: Logique M&#226;t de Signalisation</h1>
 
@@ -175,7 +178,6 @@ Vous pouvez manuellement ajouter de nouvelles paires de Logiques M&#226;ts de Si
 <p>Retour &#224; la <a href="index.shtml#tools">page principale d'aide Signalisation</a>
 
 <!--#include virtual="/Footer" -->
-
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>

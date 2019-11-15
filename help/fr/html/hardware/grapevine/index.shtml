@@ -3,7 +3,7 @@
 
 <html lang="fr">
 <head>
-<!-- Updated  by Blorec Herv&#233; 2017-01-26-->
+<!-- Updated by Blorec Herv&#233; 2017-01-26-->
 <title>JMRI Hardware Support - Protrak Grapevine System</title>
 
 <!-- Style -->
@@ -17,8 +17,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Support Mat&#233;riel: Protrak Grapevine System</h1>
 
@@ -30,9 +34,9 @@
 
 <a name="limitations"></a><h2>Limitations</h2>
 <ul>
-<LI>Les horloges rapides ne sont pas encore support&#233;es. Si vous en avez une et que vous souhaitez la tester
- avec JMRI, nous le faire savoir.
-</UL>
+<li>Les horloges rapides ne sont pas encore support&#233;es. Si vous en avez une et que vous souhaitez la tester
+    avec JMRI, nous le faire savoir.</li>
+</ul>
 
 <a name="connecting"></a><h2>Connexion</h2>
 

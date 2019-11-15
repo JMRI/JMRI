@@ -4,7 +4,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <!-- Translated by Herv&#233. BLOREC <bzh56420@yahoo.fr> on 2016-06-24 -->
 <title>JMRI: DecoderPro User Guide - Configuration Files</title>
 
@@ -20,11 +19,14 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
+	<div id="mainContent">
+	<!-- Page Body -->
 
-<H1>JMRI: Guide Utilisateur DecoderPro</H1> 
+<h1>JMRI: Guide Utilisateur DecoderPro</h1>
+
 <H2>Fichiers de Configuration</H2>
 
 <p>Cette section tente de r&#233;pondre &#224; la question de savoir ce que contiennent les fichiers de configuration et 

@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: Servlet Json</title><!-- Style -->
+  <title>JMRI: Servlet Json</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -26,7 +27,8 @@
             code {
                 white-space: normal;
             }
-  </style><!-- /Style -->
+  </style>
+  <!-- /Style -->
 </head>
 
 <body>

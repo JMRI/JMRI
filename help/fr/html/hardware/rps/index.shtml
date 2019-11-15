@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated  by Blorec Herv&#233;  2017-02-06-->
+<!-- Updated by Blorec Herv&#233;  2017-02-06-->
 <html lang="fr">
 <head>
  <title>JMRI Hardware Support - NAC Services RPS</title>
@@ -16,8 +16,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1> Documentation Mat&#233;riel: NAC Service RPS</h1>
 
@@ -211,7 +214,7 @@ Les informations RPS peuvent &#234;tre utilis&#233;es pour d&#233;tecter l'occup
 <h3> Autre source d'information </h3>
 
 Il y a plus d'informations disponibles sur le
-<a href="http://www.proto87.com/RPS-MR-position-detection-system.html"> Site Web RPS  </a>.
+<a href="http://www.proto87.com/RPS-MR-position-detection-system.html"> Site Web RPS</a>.
 
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->

@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2017-01-07-->
+<!-- Updated by Blorec Herv&#233; le 2017-01-07-->
 <html lang="en">
 <head>
   <title>Throttle pane Toolbar</title>
@@ -20,9 +20,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<div>
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Barre d'outils R&#233;gulateur</h1>
 
@@ -64,10 +67,9 @@ inconnu).
 
 <h2>Bouton Liste</h2>
 
-Afficher/Masquer la liste des <a href="ThrottlesListWindow.shtml">R&#233;gulateurs</a>.
+<p>Afficher/Masquer la liste des <a href="ThrottlesListWindow.shtml">R&#233;gulateurs</a>.</p>
 
 <!--#include virtual="/Footer" -->
-
       </div><!-- closes #mainContent-->
     </div> <!-- closes #mBody-->
 </body>

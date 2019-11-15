@@ -7,7 +7,8 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Updated by Herv&#233; Blorec 2013-10-14-->
 
-  <title>JMRI: SSL Documentation</title><!-- Style -->
+  <title>JMRI: SSL Documentation</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"

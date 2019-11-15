@@ -5,15 +5,7 @@
     <title>Using the NetBeans Swing GUI Builder </title>
 		<meta name="author" content="Bob Jacobsen">
         <meta name="keywords" content="JMRI technical code NetBeans">
-
-        <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-        <!-- are an arbitrary design pattern used by the update.pl script to -->
-        <!-- easily replace the common header/footer code for all the web pages -->
-
-        <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-        <!-- or change them to reflect your alternative logo -->
-
-        <!-- Style -->
+ 	<!-- Style -->
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
         <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
         <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
@@ -22,10 +14,15 @@
         <!-- /Style -->
     </head>
 
-    <!--#include virtual="/Header" -->
-    <!--#include virtual="Sidebar" -->
+<body>
+<!--#include virtual="/Header" -->
 
-    <div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
+
         <!-- - - - - - - - - -->
 				<p> Des morceaux de code de l'Interface Graphique Utilisateur ( GUI ) de JMRI sont maintenus
 						par l'utilisation de

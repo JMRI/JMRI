@@ -18,10 +18,13 @@
 <body>
 <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="../SidebarUp" -->
 
-      <H1>Support Mat&#233;riel: EasyDCC</H1>
+	<div id="mainContent">
+	<!-- Page Body -->
+
+    <h1>Support Mat&#233;riel: EasyDCC</h1>
 
 	<a name="hardware"></a><H2>Mat&#233;riel pris en charge</H2>
 	<h3>Centrale</h3>

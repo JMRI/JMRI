@@ -19,8 +19,11 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	<!-- Page Body -->
 
 <h1>JMRI: Guide Utilisateur DecoderPro</h1> 
 <h2>Comment DecoderPro Identifie Les D&#233;codeurs</h2>

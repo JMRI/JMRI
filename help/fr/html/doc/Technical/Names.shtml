@@ -10,11 +10,6 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code names user name system name">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -23,16 +18,20 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-<H1>JMRI: Les Noms et D&#233;signations</H1>
+    <div id="mainContent">
+        <!-- Page Body -->
+
+<h1>JMRI: Les Noms et D&#233;signations</h1>
 
 Cette page explique comment les objets JMRI sont nomm&#233;s, comment ces noms sont utilis&#233;s
 pour r&#233;f&#233;rencer les objets (mat&#233;riel et logiciel), et comment les noms lisibles par 
@@ -42,8 +41,8 @@ l'utilisateur sont utilis&#233;s..
 
 Pourquoi avons-nous besoin de noms pour tout, plut&#244;t que simplement des r&#233;f&#233;rences dans le code?
 Il ya plusieurs utilisations importantes:
-<OL>
-<LI>Lorsque vous travaillez avec l'entr&#233;e utilisateur, par exemple, en saisissant un nombre dans un champ,
+<ol>
+<li>Lorsque vous travaillez avec l'entr&#233;e utilisateur, par exemple, en saisissant un nombre dans un champ,
 le code aura besoin de savoir comment caract&#233;riser les informations fournies par l'utilisateur
 sur des objets. Parfois, l'utilisateur voudra nommer les objets
 avec un nom d'utilisateur arbitraire, par exemple, "Aiguillage Lockport-Est".
@@ -51,37 +50,37 @@ Ceux-ci peuvent ne pas &#234;tre connus avant que leur mise en correspondance av
 Mais d'autres fois ce seront de nouvelles identifications que le
 code doit comprendre, par exemple, quelque chose qui signifie "LocoNet Aiguillage 23 .
 
-<LI>Nous imaginons que les configurations sont stock&#233;es dans des fichiers XML,
+<li>Nous imaginons que les configurations sont stock&#233;es dans des fichiers XML,
 sous une forme symbolique. Les noms sont un moyen pratique de relier des objets
 et des r&#233;f&#233;rences d'objets dans ce genre de configuration.
-</OL>
+</ol>
 
-<a name="type">
-<h2>&#201;l&#233;ments avec des noms</h2></a>
+<a name="type"></a>
+<h2>&#201;l&#233;ments avec des noms</h2>
 Il y a un certain nombre de choses qui peuvent avoir besoin des noms:
-<UL>
-<LI>Aspects pour les signaux
-<LI>Cantons (segment de voies)
-<LI>Feu de signalisation
-<LI>Lumi&#232;res(un type de sortie)
-<LI>M&#233;moires
-<LI>Sorties
-<LI>Alimentation districts et Alimentation sous-districts
-<LI>Itin&#233;raires
-<LI>Entr&#233;e Capteurs
-<LI>Aiguillages
-<LI>logiX
-</UL>
 
-Certains d'entre eux sont associ&#233;s &#224; un p&#233;riph&#233;rique mat&#233;riel sp&#233;cifique, par exemple un aiguillage particulier
-. D'autres sont plus virtuels, par exemple, un itin&#233;raire, qui est une s&#233;rie d'information de commandes
+<ul>
+    <LI>Aspects pour les signaux
+    <LI>Cantons (segment de voies)
+    <LI>Feu de signalisation
+    <LI>Lumi&#232;res(un type de sortie)
+    <LI>M&#233;moires
+    <LI>Sorties
+    <LI>Alimentation districts et Alimentation sous-districts
+    <LI>Itin&#233;raires
+    <LI>Entr&#233;e Capteurs
+    <LI>Aiguillages
+    <LI>logiX
+</ul>
+
+Certains d'entre eux sont associ&#233;s &#224; un p&#233;riph&#233;rique mat&#233;riel sp&#233;cifique, par exemple un aiguillage particulier. D'autres sont plus virtuels, par exemple, un itin&#233;raire, qui est une s&#233;rie d'information de commandes
  au sein du programme.
 
 <h2>Noms Syst&#232;me et Utilisateur</h2>
 
- JMRI utilisent &#224; la fois les "noms syst&#232;me" et les "noms utilisateur " pour r&#233;f&#233;rencer des choses 
+JMRI utilisent &#224; la fois les "noms syst&#232;me" et les "noms utilisateur " pour r&#233;f&#233;rencer des choses
 
-<P>
+<p>
 Nous voulons que les utilisateurs puissent appeler les choses comme ils veulent.
 Des noms tels que "p (24,23) *" ne sont pas utiles. Chaque &#233;l&#233;ment nomm&#233; pourra donc
 avoir un "nom utilisateur", qui est une cha&#238;ne enti&#232;rement libre. Vous pouvez mettre
@@ -239,8 +238,8 @@ est mise en &#339;uvre sur trois sorties diff&#233;rentes, LT1, LT2 et LT3, l'ob
 pourrait &#234;tre appel&#233; IH3.
 
 
-<a name="special">
-<h2>Convention de D&#233;signation pour un usage automatique</h2></a>
+<a name="special"></a>
+<h2>Convention de D&#233;signation pour un usage automatique</h2>
 
 Certaines constructions de niveau sup&#233;rieur cr&#233;ent leurs propres &#233;l&#233;ments. Par exemple, un
 "Groupe Capteur"
@@ -255,10 +254,10 @@ CAPTEUR GROUPE: mon groupe: LS2
 sont cr&#233;&#233;s qui met en &#339;uvre le groupe. L'outil de groupe capteurs sait o&#249; regarder
 pour les itin&#233;raire de ce nom.
 
-<P>
+<p>
 Pour ce faire, deux r&#232;gles informelles sont utilis&#233;es:
-<UL>
-<LI>Les utilisateurs ne devront pas utiliser les  caract&#232;res :, ASCII 0x3A),
+<ul>
+<li>Les utilisateurs ne devront pas utiliser les  caract&#232;res :, ASCII 0x3A),
 &quot; (double quote, ASCII 0x22),
 ni 
 $ (dollar sign, ASCII 0x24 ) dans les noms de syst&#232;me ou utilisateur.
@@ -266,37 +265,42 @@ Les outils automatiques doivent utiliser au moins un de ceux-ci afin de s'assure
 avec un nom choisi par l'utilisateur.
 <LI> Les outils qui utilisent cette m&#233;thode ont leur nom d'outil au d&#233;but de tous les noms de syst&#232;me
 qu'ils cr&#233;ent, comme "SENSOR GROUP" a &#233;t&#233; utilis&#233;e ci-dessus.
-</UL>
-<P>
-La liste des outils travaillant de cette mani&#232;re:
-<UL>
-<LI> CAPTEUR GROUPE - jmri.jmrit.sensorgroup
-<LI> USS CTC - jmri.jmrit.ussctc
-<LI>Feux de Signalisation - particulari&#232;rement <a href="http://www.jmri.org/JavaDoc/doc/jmri/implementation/SE8cSignalHead.html">SE8C </a>
-</UL>
+</ul>
 
+<p>La liste des outils travaillant de cette mani&#232;re:</p>
+
+    <ul>
+        <li> CAPTEUR GROUPE - jmri.jmrit.sensorgroup</li>
+        <li> USS CTC - jmri.jmrit.ussctc</li>
+        <li>Feux de Signalisation - particulari&#232;rement <a
+                href="http://www.jmri.org/JavaDoc/doc/jmri/implementation/SE8cSignalHead.html">SE8C </a></li>
         <li>- Les <u>12</u> <u>C</u>/IRM <u>S</u>Ensor .</li>
-      </ul>Notez qu'il n'y a aucune hypoth&egrave;se de
+    </ul>
+
+      Notez qu'il n'y a aucune hypoth&egrave;se de
       mod&egrave;le pour les noms, ils ne sont pas affecter de
       fa&ccedil;on monotone, ils ne sont pas limit&eacute;s
       &agrave; un seul syst&egrave;me.
 
-      <h3>Mat&eacute;riel, lettres syst&egrave;me</h3>Notez que
+      <h3>Mat&eacute;riel, lettres syst&egrave;me</h3>
+
+      Notez que
       certaines d'entre elles sont des espaces
       r&eacute;serv&eacute;s, et n'ont pas de mise en oeuvre
-      sous-jacente. (les liens vont vers des pages JMRI avec plus
-      d'informations))
+      sous-jacente. (les liens vont vers des pages JMRI avec
+      plus d'informations)
 
-<LI>La convention nom syst&#232;me ne fournit pas un moyen facile d'identifier plus d'
-un adaptateur d'un type donn&#233;. Par exemple, si vous &#234;tes connect&#233; &#224; plus 
-d'un LocoNet, ou &#224; plus d'une station de commande d'un n'importe quel type, 
-vous pouvez soit donner au second une lettre s&#233;par&#233;e ( L, puis M ) 
-ou vous pouvez identifier le second avec une annotation (l, pui L2 ).
-C'est un peu ambigu, mais il y a des partisans des deux approches. 
+    <ul>
+        <li>La convention nom syst&#232;me ne fournit pas un moyen facile d'identifier plus d'
+        un adaptateur d'un type donn&#233;. Par exemple, si vous &#234;tes connect&#233; &#224; plus
+        d'un LocoNet, ou &#224; plus d'une station de commande d'un n'importe quel type,
+        vous pouvez soit donner au second une lettre s&#233;par&#233;e ( L, puis M )
+        ou vous pouvez identifier le second avec une annotation (l, pui L2 ).
+        C'est un peu ambigu, mais il y a des partisans des deux approches.
 
-<LI> De m&#234;me, il n'y a aucune disposition pour un seul programme pour faire face &#224; plus 
-d'un r&#233;seau. Si c'est n&#233;cessaire, nous devons comprendre 
-ce que le programme tente de faire
+        <li> De m&#234;me, il n'y a aucune disposition pour un seul programme pour faire face &#224; plus
+        d'un r&#233;seau. Si c'est n&#233;cessaire, nous devons comprendre
+        ce que le programme tente de faire
 
         <li>C <a href="../../hardware/cmri/CMRI.shtml">C/IRM
         s&eacute;rie</a></li>
@@ -370,9 +374,11 @@ ce que le programme tente de faire
 
         <li>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo
         MX-1</a></li>
-      </ul>
+    </ul>
 
-      <h3>Lettres type de p&eacute;riph&eacute;rique</h3>Notez que
+   <h3>Lettres type de p&eacute;riph&eacute;rique</h3>
+
+        Notez que
       certains d'entre eux sont des espaces r&eacute;serv&eacute;s,
       et n'ont pas de mise en oeuvre sous-jacente. En outre, il n'y
       a aucune garantie que tout syst&egrave;me mat&eacute;riel
@@ -446,9 +452,12 @@ ce que le programme tente de faire
 
         <li>X Logix - un ensemble d'&eacute;quations logiques
         utilis&eacute;es pour contr&ocirc;ler le r&eacute;seau</li>
-      </ul><a name="systeminfo" id="systeminfo"></a>
+      </ul>
 
-      <h3>Info-sp&eacute;cifiques Syst&egrave;me</h3>Chaque
+      <a name="systeminfo" id="systeminfo"></a>
+      <h3>Info-sp&eacute;cifiques Syst&egrave;me</h3>
+
+        Chaque
       syst&egrave;me mat&eacute;riel diff&eacute;rent peut
       sp&eacute;cifier la "chaine " qui suit le syst&egrave;me et
       la lettre type. G&eacute;n&eacute;ralement sp&eacute;cifique,
@@ -551,7 +560,9 @@ nom.
         programme pour faire face &agrave; plus d'un r&eacute;seau.
         Si c'est n&eacute;cessaire, nous devons comprendre ce que
         le programme tente de faire</li>
-      </ul><!--#include virtual="/Footer" -->
+      </ul>
+
+        <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

@@ -12,24 +12,26 @@
   <title>JMRI: Persistence XML</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
-  "JMRI technical code xml persistance"><!-- Style -->
+  "JMRI technical code xml persistance">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div id="mBody">
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
+        <!-- Page Body -->
+
       <h1>JMRI: Persistence XML</h1>
 
       <p>JMRI utilise XML pour la persistance des structures
@@ -183,7 +185,8 @@
       dont le contenu est alors d&eacute;fini par un fichier de
       sch&eacute;ma. Ces fichiers sont conserv&eacute;s dans le
       r&eacute;pertoire <a href=
-      "http://jmri.org/xml/schema">xml/schema</a> .</p>
+      "http://jmri.org/xml/schema">xml/schema</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

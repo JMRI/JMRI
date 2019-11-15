@@ -1,40 +1,35 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated by Blorec Herv&#233; le 2017-01-07-->
+<!-- Updated by Blorec Herv&#233; le 2017-01-07-->
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>Throttle: Getting Started</title>
-  <meta name="keywords" content=
-  "JMRI decoderpro dcc nmra throttlepro">
-  <meta name="Description" content=
-  "Throttle documentation for JMRI project">
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttlepro">
+  <meta name="Description" content="Throttle documentation for JMRI project">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
   <meta name="Language" content="fr">
   <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the updatethis document usin.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
-  <meta http-equiv="content-type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="content-type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+        <!-- Page Body -->
+
 <h1><span style="color:#ff0000">
 Mise &#224; jour de la Version de documentation du R&#233;gulateur
 </span></h1>
@@ -170,9 +165,8 @@ options disponibles, et n'oublions pas ... de faire circuler une locomotive.</p>
         src="images/RightArrow2.jpg"></a></b></td>
   </tr>
 
-</tbody>
+ </tbody>
 </table>
-<br>
 
 <!--#include virtual="/Footer" -->
  </div>

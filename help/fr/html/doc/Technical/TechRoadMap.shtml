@@ -8,11 +8,6 @@
   <title>JMRI: Cartographie Technologique</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code road map">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -22,16 +17,19 @@
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!-- /Style -->
 </head>
 
-
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
-	<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
 
-	    <H1>JMRI: Cartographie Technologique</H1>
+    <div id="mainContent">
+        <!-- Page Body -->
+
+	    <h1>JMRI: Cartographie Technologique</h1>
 
 Cette page est la feuille de route pour le d&#233;veloppement futur de JMRI,
 incluant les changements de notre utilisation des 
@@ -136,7 +134,6 @@ signifie que vous pouvez supprimer cats ( maintenant redondant ) dans de nombreu
 Jenkins vale signaler.
 
 <!--#include virtual="/Footer" -->
-
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

@@ -1,5 +1,5 @@
 <!doctype html public "-//w3c//dtd html 4.01//en" "http://www.w3.org/tr/html4/strict.dtd">
-<!--  UpDated  by Blorec Herv&#233; le 2017-01-20-->
+<!-- Updated by Blorec Herv&#233; le 2017-01-20-->
 <html lang="fr">
 <head>
  <title>JMRI Hardware Support - Chubb C/MRI</title>
@@ -18,12 +18,15 @@
 <body>
 <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
 
-<H1>Prise en Charge Mat&#233;riel: Chubb C/MRI</H1>
+    <div id="mainContent">
+        <!-- Page Body -->
+
+<h1>Prise en Charge Mat&#233;riel: Chubb C/MRI</h1>
   
-<a name=contents></a>
+<a name="contents"></a>
 
 La documentation ci-dessous explique comment JMRI peut &#234;tre utilis&#233; avec C/MRI, et
 comment d&#233;marrer avec la connexion d'un syst&#232;me C/MRI &#224; JMRI. Il suppose une base de

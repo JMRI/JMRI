@@ -12,11 +12,14 @@
 </head>
 <body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
+		<!-- Page Body -->
 
-	    <H1>JMRI: Info Technique </H1>
+	    <h1>JMRI: Info Technique </h1>
 
 Vous n'avez pas besoin pour travailler avec votre propre copie du code source JMRI, des compilateurs,
 etc, si vous voulez juste ex&#233;cuter les programmes. Vous pouvez t&#233;l&#233;charger des copies enti&#232;rement 

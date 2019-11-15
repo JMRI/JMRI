@@ -3,12 +3,9 @@
 
 <html lang="fr">
 <head>
-<!-- Copyright Me 2008 -->
-<!--  $Id$ -->
-<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
+<!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
 
-
-<title>JMRI: Advanced Icons in PanelPro</title>
+  <title>JMRI: Advanced Icons in PanelPro</title>
 
   <title>JMRI: Ic&ocirc;nes Avanc&eacute;es dans PanelPro</title>
   <!-- Style -->
@@ -19,20 +16,23 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
 
-  <div id="mBody">
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
+        <!-- Page Body -->
+
       <h1>JMRI: Ic&ocirc;nes Avanc&eacute;es dans
       PanelPro</h1><a name="memoryicon" id="memoryicon"></a>
 
-<a name="memoryicon"><h3>Ic&#244;nes M&#233;moire</h3></a>
+<a name="memoryicon"></a><h3>Ic&#244;nes M&#233;moire</h3>
 
 Les Objets M&#233;moire sont con&#231;us pour les scripts de
 commande; la premi&#232;re application est un MemoryIcon qui vous permet de placer une ic&#244;ne 

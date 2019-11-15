@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="fr">
 <head>
-<!-- UpDated by Blorec Herv&#233; 2016-09-15-->
+<!-- Updated by Blorec Herv&#233; 2016-09-15-->
   <title>JMRI: Signal Heads Documentation</title>
 
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
 <meta name="Date.Modified" content="20160323"/>
-  <meta name="keywords"
-        content="turnout model railroad JMRI decoderpro panelpro">
+<meta name="keywords" content="turnout model railroad JMRI decoderpro panelpro">
 
 <!-- Style -->
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -19,11 +18,13 @@
 </head>
 
 <body>
-
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
 
-      <div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>JMRI: Feux de Signalisation</h1>
 
@@ -75,10 +76,9 @@ une copie du fichier de configuration JMRI comme une sauvegarde d'abord et lire 
 
 L'information Feu de Signalisation est sauvegard&#233;e comme une partie de la configuration JMRI dans un fichier XML, ainsi que la configuration du panneau de commande et d'autres choses semblables. Pour plus d'informations sur la cr&#233;ation et l'affichage des panneaux, y compris la fa&#231;on de montrer des signaux sur vos panneaux, SVP voir les <A HREF="../../apps/PanelPro/Panels.shtml">pages Panneaux</a>.
 
-<p>Retour &#224; la <a href="index.shtml#tools">page principale d'aide Signalisation</a>.
+<p>Retour &#224; la <a href="index.shtml#tools">page principale d'aide Signalisation</a>.</p>
 
 <!--#include virtual="/Footer" -->
-
     </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </body>

@@ -4,7 +4,6 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
  <!--Updated et Translated by Herv&#233; Blorec le 2016-06-18 -->
 <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder File</title>
 
@@ -19,11 +18,16 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
 
-<h1>JMRI: Guide Utilisateur DecoderPro</h1>
-<h2>Cr&#233;ation d'un fichier d&#233;codeur personnalis&#233;</h2>
+<div id="mBody">
+<!--#include virtual="Sidebar" -->
+
+    <div id="mainContent">
+    <!-- Page Body -->
+
+    <h1>JMRI: Guide Utilisateur DecoderPro</h1>
+
+    <h2>Cr&#233;ation d'un fichier d&#233;codeur personnalis&#233;</h2>
 
 <p>Cette page fournit l'information sur la m&#233;thode de travail des fichiers de d&#233;finitions
 pour le Programmateur Symbolique DecoderPro et comment en cr&#233;er un nouveau.</p>
@@ -83,7 +87,6 @@ HREF="../../../../../xml/decoders/0NMRA.xml">0NMRA.xml</a> )
 &lt;?xml version="1.0" encoding="utf-8"?&gt;<br>
 &lt;?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?&gt;<br>
 &lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved --&gt;<br>
-&lt;!-- $Id$ --&gt;<br>
 ...<br>
 &lt;decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd"&gt;<br>
 </p>
@@ -170,7 +173,7 @@ d&#233;finissez les deux attributs pour couvrir la gamme:
 Si vous ne connaissez pas le num&#233;ro de version, ne d&#233;finissez pas 
 un de ces attributs.Laissez les juste &#225; off.
 lowVersionID par d&#233;fauts &#225; 0, highVersionID par d&#233;fauts &#225; 255
-afin qu'ensemble, les valeurs par d&#233;faut signifie Â«toute valeurÂ».
+afin qu'ensemble, les valeurs par d&#233;faut signifie «toute valeur».
 
 <li><dfn>comment</dfn> - Ceci est optionnel. Vous pouvez inclure votre nom, ou autre 
 info au sujet du changement dans le fichier.
