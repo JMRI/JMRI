@@ -929,8 +929,8 @@ public class JUnitUtil {
         if (InstanceManager.containsDefault(ShutDownManager.class)) {
             ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
             List<ShutDownTask> list = sm.tasks();
-            if (list.isEmpty()) {
-                log.error("No ShutDownTasks to clear", Log4JUtil.shortenStacktrace(new Exception("traceback")));
+            if (list.isEmpty() && log.isDebugEnabled()) {
+                log.debug("No ShutDownTasks to clear", Log4JUtil.shortenStacktrace(new Exception("traceback")));
             }
             while (!list.isEmpty()) {
                 ShutDownTask task = list.get(0);
