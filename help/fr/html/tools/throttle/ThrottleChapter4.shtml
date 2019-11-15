@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- Translated by Blorec Herv&eegu; le 2011-18-07-->
+<!-- UpDated by Blorec Herv&#233; 2017-18-07-->
 
 <html lang="fr">
 <head>
@@ -13,9 +13,9 @@
   <meta name="Description" content=
   "Throttle documentation for JMRI project">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
-  <meta name="Language" content="fr">
   <meta name="Robots" content="Index, Follow">
-  <meta name="Revisit-After" content="7 Days"><!-- Style -->
+  <meta name="Revisit-After" content="7 Days">
+    <!-- Style -->
   <meta http-equiv="content-type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -28,11 +28,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+<div>
 <!--#include virtual="Sidebar" -->
 
-<div id="mainContent">dossier (sous-r&eacute;pertoire)
-<h1 style="color:#ff0000">Mise &aacute; jour Version documentation du R&eacute;gulateur
-</span></h1>
+<div id="mainContent">
+<h1>Mise &aacute; jour Version documentation du R&eacute;gulateur</h1>
 
 <p>S'il vous pla&icirc;t noter que cette documentation a &eacute;t&eacute; mise &aacute; jour, reportez-vous aux liens ci-dessous:</p>
 <ul>
@@ -149,8 +149,7 @@ Fen&ecirc;tres r&eacute;gulateurs identifi&eacute;es dans ce fichier seront ouve
   </table>
 </dir>
 
-<a name="LoadLayout"></a> 
-
+<a name="LoadLayout"></a>
 <h2>Ouvrir/Charger une Configuration R&eacute;gulateur</h2>
 
 <p> Apr&egrave;s avoir enregistr&eacute; une  configuration de r&eacute;gulateur , vous aurez envie d'ouvrir &aacute;
@@ -204,12 +203,10 @@ ce que ces r&eacute;gulateurs soient pleinement applicables, m&eacute;fiez-vous 
 avec votre syst&egrave;me DCC en particulier avec cette fonction. Il est donc sugg&eacute;r&eacute;
 qu'<u>avant </u> d'ouvrir un fichier de configuration de r&eacute;gulateur sauvegard&eacute;e, l'adresse DCC
 soit v&eacute;rifi&eacute;e comme n'&eacute;tant pas utilis&eacute;e par un autre r&eacute;gulateur quelque part. </p>
-<br>
-<br>
-<br>
-<a name="Merging"></a> 
 
+<a name="Merging"></a>
 <h2>Fusion Fen&ecirc;tres de R&eacute;gulateurs </h2>
+
 <dir>
    <p> Les fichiers de mise en page de R&eacute;gulateurs  peuvent consister en une Fen&ecirc;tre de r&eacute;gulateur unique (pour contr&ocirc;ler
    une seule locomotive ou une adresse de couplage), ou elle peut contenir de multiples
@@ -240,17 +237,11 @@ soit v&eacute;rifi&eacute;e comme n'&eacute;tant pas utilis&eacute;e par un autr
    <li> <strong> Annuler </strong>? Annule la demande d'"ouverture"  et ferme cette
      Fen&ecirc;tre de dialogue. </li>
 </ul>
-<br>
-<br>
 
-
-<p class="important"><b>Remarque: Ne confondez pas l'action qui se produit ici
+<p class="important">Remarque: Ne confondez pas l'action qui se produit ici
 avec toute tentative d'&eacute;craser votre configuration des fichiers de r&eacute;gulateurs sauvegard&eacute;s. Les actions ci-dessus
  n'ont aucun effet sur la r&eacute;elle mise configuration des fichiers de r&eacute;gulateurs sauvegard&eacute;s eux-m&ecirc;mes.
-La seule "fusion" et "remplacement" qui se produit se passe tout simplement sur votre &eacute;cran. </b>
-</p>
-<br>
-<br>
+La seule "fusion" et "remplacement" qui se produit se passe tout simplement sur votre &eacute;cran.</p>
 
 <table border="2" width="100%" cellpadding="4" cellspacing="2">
    <tbody>
@@ -282,7 +273,6 @@ La seule "fusion" et "remplacement" qui se produit se passe tout simplement sur 
 <br>
 
 <a name="SaveThrottlePreferences"></a>
-
 <h2>Enregistrer les pr&eacute;f&eacute;rences R&eacute;gulateurs</h2>
 
 <p> "Enregistrer les pr&eacute;f&eacute;rences R&eacute;gulateurs" vous permet de personnaliser la fa&ccedil;on dont de nouveaux

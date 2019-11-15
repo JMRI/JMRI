@@ -53,7 +53,7 @@ Si vous voulez travailler avec le code, quelques minutes d'installation de CVS e
 <p>
 Beaucoup d'ordinateurs ont CVS install&#233;, Linux et MAC OS X.
 Si vous utilisez Windows, vous aurez besoin d'installer un programme "client" CVS comme
-<a href="http://sourceforge.net/project/showfiles.php?group_id=10072&release_id=24467">WinCVS</a>
+<a href="http://sourceforge.net/project/showfiles.php?group_id=10072&amp;release_id=24467">WinCVS</a>
 Une version r&#233;cente peut &#234;tre t&#233;l&#233;charg&#233;e depuis:
 <a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip</a>.
 

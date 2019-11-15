@@ -38,7 +38,7 @@ Le <a href="WebSite.shtml">site web JMRI</a> est dans un r&#233;pertoire similai
 
 <a name="view" id="view"></a>  
 <h2>Affichage du Code en Ligne</h2>
-	<P>Vous pouvez 	
+	<p>Vous pouvez
 	<a href="https://github.com/JMRI/JMRI">parcourir le code JMRI directement</a>
 	sur ce site. Par exemple, si vous souhaitez regarder cette page,
 	<a href="https://github.com/JMRI/JMRI/blob/master/help/en/html/doc/Technical/getgitcode.shtml">cliquez sur ce lien</a> 
@@ -84,9 +84,9 @@ Le <a href="WebSite.shtml">site web JMRI</a> est dans un r&#233;pertoire similai
 	<p>Bien qu'il y ait beaucoup de fa&#231;ons d'utiliser Git, les sections suivantes 
 	vous montre les plus communes:
   <ul>
-  <li><a html="#desktop">Utilisation de l'application GitHub Desktop</a> (Mac ou Windows seulement)
-  <li><a html="#cmd">Utilisation de la ligne de commande</a>
-  <li><a html="#ide">Utilisation d'un Environnement de D&#233;veloppement Int&#233;gr&#233; (IDE)</a>
+  <li><a html="#desktop">Utilisation de l'application GitHub Desktop</a> (Mac ou Windows seulement)</li>
+  <li><a html="#cmd">Utilisation de la ligne de commande</a></li>
+  <li><a html="#ide">Utilisation d'un Environnement de D&#233;veloppement Int&#233;gr&#233; (IDE)</a></li>
   </ul>
 
 	<p>Si vous voulez d&#233;velopper des changements dans le code, voir la page
@@ -115,15 +115,15 @@ Le <a href="WebSite.shtml">site web JMRI</a> est dans un r&#233;pertoire similai
 		 (cliquer sur le lien devrait vous y conduire).
 
 	<li>cliquez sur le bouton "Clone in Desktop" en haut &#224; droite.<br>
-	<a href="images/GitHubCloneDeskop.png"><img src="images/GitHubCloneDeskop.png" alt="Clone to desktop button in GitHub web" height="315" width="409"></a>
+	<a href="images/GitHubCloneDeskop.png"><img src="images/GitHubCloneDeskop.png" alt="Clone to desktop button in GitHub web" height="315" width="409"></a></li>
 	<li>L'application GitHub Desktop montre un dialogue o&#249; vous pouvez
 		 s&#233;lectionnez l'emplacement du t&#233;l&#233;chargement. Changez celui-ci si vous voulez:<br>
 		 <a href="images/GhDtCloneDialog.png"><img src="images/GhDtCloneDialog.png" alt="Clone dialog in GitHub Desktop Mac" height="279" width="267"></a>
 		 <br>
-		 et Cliquez "Clone".
-	<li>Le t&#233;l&#233;chargement d&#233;marre. Cela peut prendre quelques minutes.
-	<li>Pour plus de d&#233;tails, voir notre page <a href="GitFAQ.shtml">Aide Git FAQ</a>.
-</UL>
+		 et Cliquez "Clone".</li>
+	<li>Le t&#233;l&#233;chargement d&#233;marre. Cela peut prendre quelques minutes.</li>
+	<li>Pour plus de d&#233;tails, voir notre page <a href="GitFAQ.shtml">Aide Git FAQ</a>.</li>
+</ul>
 
 	<p>
 	Une fois que le t&#233;l&#233;chargement est termin&#233;, il y a des &#233;l&#233;ments de menu
@@ -208,10 +208,10 @@ Le <a href="WebSite.shtml">site web JMRI</a> est dans un r&#233;pertoire similai
 	La plupart des IDEs ont un support Git fournit avec.
 	Pour ceux qui peuvent construire JMRI nous avons des instructions sp&#233;cifiques:
    <ul>
-   <li><a href="Ant.shtml">Ant</a>
-   <li><a href="Eclipse.shtml">Eclipse</a>
-   <li><a href="NetBeans.shtml">NetBeans</a>
-   <li><a href="IntelliJ.shtml">IntelliJ</a>
+   <li><a href="Ant.shtml">Ant</a></li>
+   <li><a href="Eclipse.shtml">Eclipse</a></li>
+   <li><a href="NetBeans.shtml">NetBeans</a></li>
+   <li><a href="IntelliJ.shtml">IntelliJ</a></li>
    </ul>	
 
 	<h2>Acc&#232;s Aux Anciennes Versions</h2>

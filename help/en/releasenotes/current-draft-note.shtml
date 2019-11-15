@@ -266,7 +266,7 @@
 
         <h4>TCS</h4>
             <ul>
-                <li></li>
+                <li>WOW add CV 177-181 and new bit in CV182</li>
             </ul>
 	    
 	    <h4>Team Digital</h4>
@@ -371,7 +371,7 @@
     <h3>Preferences</h3>
         <a id="Preferences" name="Preferences"></a>
         <ul>
-            <li></li>
+            <li>Updated saved window positions to cope with multiple screen setups (<a href="https://github.com/JMRI/JMRI/pull/7616">PR #7616</a>)</li>
         </ul>
 
     <h3>Resources</h3>

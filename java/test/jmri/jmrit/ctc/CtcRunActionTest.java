@@ -105,6 +105,10 @@ public class CtcRunActionTest {
 
     @After
     public void tearDown() {
+
+        // stop any BlockBossLogic threads created
+        JUnitUtil.clearBlockBossLogic();
+
         JUnitUtil.tearDown();
     }
 

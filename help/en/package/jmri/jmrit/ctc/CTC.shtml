@@ -879,7 +879,7 @@ do, then define the missing object(s) in JMRI.
         </p>
         <p>
         Normally, the feedback value matches the commanded value.  JMRI allows for both being backwards, and in order to
-        fix that, you put a check the "Inverted" column in the Turnouts Table in JMRI.  However, in case the feedback value
+        fix that, you put a check the "Inverted" column in the Turnout Table in JMRI.  However, in case the feedback value
         is different than the commanded value, then you put a check in that column.  The following table lists the possibilities:
         </p>
         <table>

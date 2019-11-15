@@ -82,6 +82,7 @@ public class SoundBiteTest {
 
     @After
     public void tearDown() {
+        jmri.util.JUnitAppender.suppressErrorMessage("Unhandled audio format type 0");
         jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         InstanceManager.getDefault(ShutDownManager.class).deregister(damsdt);
         JUnitUtil.tearDown();
