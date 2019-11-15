@@ -21,7 +21,8 @@
 <body>
   <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
       <h1>Hardware Support: DCC Specialties Products</h1><a href=
       "http://www.dccspecialties.com/products/hare-ng.htm"><img src="http://www.dccspecialties.com/products/img/hareng_2420-600.jpg"
@@ -30,7 +31,7 @@
       height="165" width="150" align="right"></a> <a href=
       "http://www.dccspecialties.com/products/wabbit_review.htm"><img src="http://www.dccspecialties.com/products/img/wabbit_rev_3.gif"
       height="85" width="150" align="right"></a> <a href=
-      "http://www.dccspecialties.com/">DCC Specialities</a> makes
+      "http://www.dccspecialties.com/">DCC Specialties</a> makes
       several powerful controllers for model railroads. Their two
       switch motor controllers are called the <a href=
       "http://www.dccspecialties.com/products/hare-ng.htm">Hare</a>

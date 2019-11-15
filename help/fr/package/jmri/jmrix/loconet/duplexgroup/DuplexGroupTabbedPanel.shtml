@@ -29,7 +29,7 @@
 
       <table border="0">
         <tr>
-          <td valign="center">
+          <td>
             <b>CONTENTS</b>
 
             <ul>
@@ -712,6 +712,7 @@
 
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
+
     </div>
   </div><!--#include virtual="/Footer" -->
 </body>

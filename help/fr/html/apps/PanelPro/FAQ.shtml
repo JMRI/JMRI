@@ -27,12 +27,11 @@
     <!--#include virtual="Sidebar" -->
 
     <div id="mainContent">
-      <h1>JMRI: PanelPro Questions Fr&eacute;quemment Pos&eacute;es
-      (FAQ)</h1><a name="context" id="context"></a>
+      <h1>JMRI: PanelPro Questions Fr&eacute;quemment Pos&eacute;es (FAQ)</h1>
+      <a name="context" id="context"></a>
 
-      <h3><a name="context" id="context">Comment JMRI fait le lien
-      avec le reste de mon r&eacute;seau?</a></h3><a name="context"
-      id="context"></a>
+      <h3>Comment JMRI fait le lien
+      avec le reste de mon r&eacute;seau?</h3>
 
       <p>Jim Betz a r&eacute;pondu &agrave; ces questions sur la
       liste des utilisateur de JMRI</p>
@@ -287,11 +286,11 @@
       pr&eacute;f&eacute;rences qui stockent vos param&egrave;tres
       d'applications: <tt>PanelProConfig2.xml</tt> . Vous pouvez
       &eacute;galement rechercher ce fichier pour trouver ce
-      r&eacute;pertoire
+      r&eacute;pertoire .
 
       <p><img src="../../../images/IconFileTree.gif" alt=
       "Capture d'&eacute;cran de l'arborescence de fichiers" align=
-      "right" width="288 HEIGHT=" hspace="5" vspace="0"> Si vous
+      "right" width="288" hspace="5" vspace="0">Si vous
       avez cr&eacute;&eacute; des ic&ocirc;nes et que vous voulez
       qu'elles soient utilisable depuis l'&eacute;diteur de
       panneaux, les mettre dans un r&eacute;pertoire

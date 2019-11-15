@@ -267,7 +267,7 @@ Le format pour une inclusion est:
 
 Le programme cherche ces fragments de fichier d'abord dans le r&#233;pertoire &lt;preferences&gt;,
 puis dans le r&#233;pertoire &lt;programme&gt;. Le chemin complet doit &#234;tre pr&#233;sent, exemple
-vous avez besoin d'un r&#233;pertoire xml qui contient un r&#233;pertoire d&#233;codeurs dans votre r&#233;pertoire &lt;preferences&gt: pour le fragment de 
+vous avez besoin d'un r&#233;pertoire xml qui contient un r&#233;pertoire d&#233;codeurs dans votre r&#233;pertoire &lt;preferences&gt; pour le fragment de
 fichier &#224; trouver.
 <p>
 Utilisez un fichier existant comme un exemple pour pour les meilleurs &#233;l&#233;ments et &amp; le format n&#233;cessaire.

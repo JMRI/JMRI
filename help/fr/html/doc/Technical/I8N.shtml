@@ -155,7 +155,7 @@ svn diff java/src> patch.txt
 </pre> </code>
 et les utilisateurs de Windows peuvent faire la m&#234;me chose avec leur application SVN.
 <li> T&#233;l&#233;chargez ce fichier sur le tracker "Patches" sur sourceforge: <br>
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315">http://sourceforge.net/tracker/?group_id=26788&atid=388315</a>.<br/>
+<A HREF="http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315</a>.<br/>
 Sur cette page:
 <ul>
     <!-- needs retranslation -->

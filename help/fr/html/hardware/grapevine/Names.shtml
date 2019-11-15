@@ -73,12 +73,12 @@ Les n&#339;uds Grapevine ont un nombre d'entr&#233;es possibles:
      Il y a huit connecteurs &#224; trois broches sur un n&#339;ud de Grapevine
      qui peuvent &#234;tre utilis&#233;s comme entr&#233;es en g&#233;n&#233;ral. Ces capteurs sont
      r&#233;f&#233;renc&#233; 001 &#224; 008. Ils peuvent &#233;galement &#234;tre r&#233;f&#233;renc&#233;s
-     dans un format plus court (o&#249 les trois chiffres complets ne sont pas n&#233;cessaires)
+     dans un format plus court (o&#249; les trois chiffres complets ne sont pas n&#233;cessaires)
      comme P1 &#224; P8.
      <p>
      En outre, il y a huit broches suppl&#233;mentaires dans le
      Connecteur &#224; 14 broches qui peut &#234;tre r&#233;f&#233;renc&#233; en tant que capteurs
-     009 &#224; 016 ou par le biais p9 p16, o&#249 le "p" indique entr&#233;e parall&#232;le.
+     009 &#224; 016 ou par le biais p9 p16, o&#249; le "p" indique entr&#233;e parall&#232;le.
  </dd>
  <dt>
     Les Cartes S&#233;rie de Capteur d'Occupation

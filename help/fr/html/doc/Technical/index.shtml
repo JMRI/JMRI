@@ -117,9 +117,9 @@ SourceForge.net fournit le support projet:
 <li><a href="http://sourceforge.net/projects/jmri/">page projet JMRI</a> et 
 <a href="http://sourceforge.net/export/projhtml.php?group_id=26788">statistiques project</a>.
 <li>Trackers for 
-<a href="http://sourceforge.net/tracker/?group_id=26788&atid=388313">Bugs</a>,
-<a href="http://sourceforge.net/tracker/?group_id=26788&atid=388316">Fonctions Demand&#233;es</a>, et
-<a href="http://sourceforge.net/tracker/?group_id=26788&atid=388315">Patches</a>.
+<a href="http://sourceforge.net/tracker/?group_id=26788&amp;atid=388313">Bugs</a>,
+<a href="http://sourceforge.net/tracker/?group_id=26788&amp;atid=388316">Fonctions Demand&#233;es</a>, et
+<a href="http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315">Patches</a>.
 </ul>
 
 <h2> Code </h2>
@@ -167,7 +167,7 @@ nous puissions les distribuer au reste de la communaut&#233;.
 <P>
 Pour la premi&#232;re et/ou petites contributions, par exemple, un fichier nouveau d&#233;codeur ou correction d'un petit bug,
 s'il vous pla&#238;t remplir une nouvelle  entr&#233;e "Patches" sur SourceForge &#224; l'aide
-<A HREF="http://sourceforge.net/tracker/?group_id=26788&atid=388315"> nos  pages patchs </a>
+<A HREF="http://sourceforge.net/tracker/?group_id=26788&amp;atid=388315"> nos  pages patchs </a>
 (cliquez sur Nouveau dans les milieu &#224; gauche, puis remplissez le formulaire qui en r&#233;sulte).
 Vous pouvez joindre l'ensemble du dossier. Si c'est plusieurs fichiers,
 et que vous utilisez un IDE comme

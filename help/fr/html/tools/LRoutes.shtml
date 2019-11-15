@@ -70,22 +70,22 @@ faire appara&#238;tre la fen&#234;tre Ajouter/Modifier LItin&#233;raire.</p>
 <a name="additin&#233;raire"></a><h3>Pour ajouter un Nouvel LItin&#233;raire:</h3>
 
 <ol>
-	<li><p>Entrez un nom syst&#232;me, tels que "RTX100". tout
+	<li>Entrez un nom syst&#232;me, tels que "RTX100". tout
          nom court peut &#234;tre utilis&#233; &#224; condition qu'il soit diff&#233;rent des nom syst&#232;me
-          des autres LItin&#233;raires .</p>
-	<p>Par convention, les noms commencent g&#233;n&#233;ralement par les lettres "RTX" pour un
-         LItin&#233;raire.</p>
+          des autres LItin&#233;raires .<br>
+	Par convention, les noms commencent g&#233;n&#233;ralement par les lettres "RTX" pour un
+         LItin&#233;raire.
 	</li>
-	<p><li>Entrez un nom utilisateur. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rente
+	<li>Entrez un nom utilisateur. Toute cha&#238;ne de caract&#232;res qui est diff&#233;rente
          du nom utilisateur des autres LItin&#233;raires est accept&#233;e, mais il est
-         sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue de l'LItin&#233;raire.</p>
+         sage d'utiliser une cha&#238;ne qui d&#233;crit l'utilisation pr&#233;vue de l'LItin&#233;raire.
 	</li>
 	<li>Notez les quatre onglets sous la barre de menu. S&#233;lectionnez l'onglet &#233;tiquet&#233;
          <b>Actions ( sortie )</b>. Celui-ci affiche un tableau avec tous les
          Capteurs,les Aiguillages, les Lumi&#232;res et/ou Feux de Signalisation que l'utilisateur a d&#233;fini
          dans leurs tableaux respectifs.
 	</li>
-	<p><li>S&#233;lectionnez les Entit&#233;s devant &#234;tre incluses pour les actions &#224; prendre dans le
+	<li>S&#233;lectionnez les Entit&#233;s devant &#234;tre incluses pour les actions &#224; prendre dans le
          LItin&#233;raire de la liste en cliquant sur la 
 			case dans la colonne <b>Inclure</b>. Pour chaque &#233;l&#233;ment inclus,
          utilisez la liste d&#233;roulante dans la colonne <b>D&#233;terminer Action</b> pour s&#233;lectionner 
@@ -96,21 +96,21 @@ faire appara&#238;tre la fen&#234;tre Ajouter/Modifier LItin&#233;raire.</p>
          lorsque le LItin&#233;raire est "Configur&#233;" - de m&#234;me pour les feux. un
          Feux de Signalisation inclus peut &#234;tre r&#233;gl&#233; &#224; l'une quelconque
          de ses "apparences". Ne vous inqui&#233;tez pas si tout n'est pas
-         parfait. Il est facile de modifier ces informations ult&#233;rieurement.</p>
+         parfait. Il est facile de modifier ces informations ult&#233;rieurement.
 	</li>
 	<li>
-		<p>Notez que l'onglet "Actions (sortie) "vous permet d'afficher
+		Notez que l'onglet "Actions (sortie) "vous permet d'afficher
          "Toutes" les entit&#233;s ou seulement celles "incluses". 
 			C'est seulement pour votre convenance pour v&#233;rifier que toutes les entit&#233;s d&#233;sir&#233;es
           ont &#233;t&#233; inscrites; elle n'affecte pas l'entr&#233;e des
-         informations.</p>
+         informations.
 	</li>
 	<li>
          <p>Ensuite s&#233;lectionnez l'onglet intitul&#233;
          <b>D&#233;clencheurs/Commandes (entr&#233;e)</b>. Celui-ci affiche &#233;galement un tableau avec tous les
          Capteurs, Aiguillages, Lumi&#232;res et/ou Feux de Signalisation que l'utilisateur a d&#233;fini
          dans leurs tableaux respectifs.   
-	<li><p>S&#233;lectionnez l'entit&#233; devant &#234;tre incluse pour la commande (par ex:D&#233;clencheur) du 
+	<li>S&#233;lectionnez l'entit&#233; devant &#234;tre incluse pour la commande (par ex:D&#233;clencheur) du
 			LItin&#233;raire de la liste en cliquant sur la 
 			case dans la colonne <b>Inclure</b>. Pour chaque &#233;l&#233;ment inclus, 
 			utilisez la case dans la colonne <b>&#201;tat du d&#233;clencheur</b> dans la liste d&#233;roulante pour s&#233;lectionner 
@@ -122,35 +122,33 @@ faire appara&#238;tre la fen&#234;tre Ajouter/Modifier LItin&#233;raire.</p>
 			ou une Lumi&#232;re. Un Feu de Signalisation inclus a le choix de "On" pour chacune 
 			de ses apparences et des choix de "v&#233;to lorsque" pour chaque apparence.
 	</li>
-        <li>Cet onglet a &#233;galement des boutons radio "Tout" et "inclus" qui op&#232;rent 
-			d'une mani&#232;re semblable &#224; l'onglet pr&#233;c&#233;dent.
+    <li>Cet onglet a &#233;galement des boutons radio "Tout" et "inclus" qui op&#232;rent
+		d'une mani&#232;re semblable &#224; l'onglet pr&#233;c&#233;dent.
 	</li>
-         <p><li>Ensuite, s&#233;lectionnez l'onglet &#233;tiquet&#233; <b>Alignement/Verrouillage/ etc.</b> .
-	</p></li>
-	<p><li>Si vous voulez que LItin&#233;raire d&#233;clenche un son quand se il d&#233;clenche,
+    <li>Ensuite, s&#233;lectionnez l'onglet &#233;tiquet&#233; <b>Alignement/Verrouillage/ etc.</b> .</li>
+	<li>Si vous voulez que LItin&#233;raire d&#233;clenche un son quand se il d&#233;clenche,
           entrez le nom de fichier d'un fichier son dans la boite texte suivante "Jouer fichier Son".
         	 En cliquant <b>D&#233;terminer</b> fera appara&#238;tre un dialogue de s&#233;lection de fichiers
           pour aider &#224; localiser le fichier. Une fois le fichier localis&#233;, cliquez 
           sur son nom dans la bo&#238;te de dialogue qui va le copier, compl&#233;tez avec le chemin, dans
-          la zone de texte.</p>
+          la zone de texte.
 	</li>
 	<li>
-		<p>De m&#234;me, si vous voulez un script &#224; ex&#233;cuter lorsque le LItin&#233;raire 
+		De m&#234;me, si vous voulez un script &#224; ex&#233;cuter lorsque le LItin&#233;raire
 			d&#233;clenche, entrez son nom de fichier dans la bo&#238;te de texte intitul&#233;e "Ex&#233;cuter le script". Le 
 			bouton <b>Valider</b>  peut &#234;tre utilis&#233; comme ci-dessus pour aider &#224; la saisie 
-			des informations du fichier script.</p>
+			des informations du fichier script.
 		</li>
   		<li>
-  		<p>V&#233;rification des boites &#224; cochez <b>D&#233;finir verrouillages</b> qui verrouille les aiguillages 
+  		V&#233;rification des boites &#224; cochez <b>D&#233;finir verrouillages</b> qui verrouille les aiguillages
 			inclus &#224; partir de l'onglet "Actions (sortie)" lorsque les entit&#233;s depuis 
 			"D&#233;clencheurs/Commandes (entr&#233;e)" d&#233;clenchent. Lorsque ces entit&#233;s ne sont plus 
 			pour d&#233;terminer en &#233;tat de d&#233;clenchement, les aiguillages ci-dessus sont d&#233;verrouill&#233;s.
          Pour plus d'informations sur les verrrouillages d'aiguillage, voir 
 			<a href="../../package/jmri/jmrit/beantable/RouteAddEdit.shtml#fonction verrouillage aiguillage"> aiguillage fonction de verrouillage</a>.
-			</p>
  	</li>
  	<li>
-  		<p>Le tableau de l'onglet "Alignement/Verrouillages/etc."  r&#233;pertorie tous les capteurs 
+  		Le tableau de l'onglet "Alignement/Verrouillages/etc."  r&#233;pertorie tous les capteurs
 		d&#233;finis dans le Tableau Capteur. Un capteur (ou capteurs) 
 		peut &#234;tre choisi pour devenir actif lorsque les actions des 
 		entit&#233;s incluses &#224; partir de l'onglet "Actions (sortie)" sont termin&#233;es. Vous 
@@ -158,16 +156,15 @@ faire appara&#238;tre la fen&#234;tre Ajouter/Modifier LItin&#233;raire.</p>
 		Feux de Signalisation en groupes s&#233;par&#233;s ou pour tous ensembles. Si les actions 
 		de groupe sont achev&#233;es par des moyens autres que le d&#233;clencheur LItin&#233;raire, le 
 		capteur indiquera toujours "alignement".
- 	</p>
-  <p><li> Enfin, s&#233;lectionnez l'onglet intitul&#233; <b>LItin&#233;raire Basique</b>  et retour au premier onglet.
-       </p>   
-       </li>
-<p><li>Cliquez sur le bouton <b>Ajouter LItin&#233;raire</b>  situ&#233; au 
+
+  		<li> Enfin, s&#233;lectionnez l'onglet intitul&#233; <b>LItin&#233;raire Basique</b>  et retour au premier onglet.
+       	</li>
+		<li>Cliquez sur le bouton <b>Ajouter LItin&#233;raire</b>  situ&#233; au
 			bas de la fen&#234;tre. Si tout va bien, un message 
 			indiquant "LItin&#233;raire nouveau ajout&#233; ..." sera affich&#233; dans la bo&#238;te de notes 
 			en bas de l'onglet. S'il y a des probl&#232;mes avec quoi que ce soit, 
 			un message d'erreur s'affichera dans la bo&#238;te de notes; vous devrez alors 
-			corriger l'erreur et cliquez sur <b>Ajouter LItin&#233;raire</b>  &#224; nouveau</p></li>.
+			corriger l'erreur et cliquez sur <b>Ajouter LItin&#233;raire</b>  &#224; nouveau.</li>
 	</ol>
 		<p>Pour sortir de l'addition d'un LItin&#233;raire, pressez le bouton<b>Cancel</b>.
 
@@ -293,7 +290,7 @@ passe &#224; l'apparence Jaune.</dd>
 passe l'apparence Flash Jaune.</Dd>
 <DT>"Sur Vert"</DT><DD>LItin&#233;raire est d&#233;clench&#233; quand le signal 
 passe &#224; l'apparence Vert.</Dd>
-<DT>"Sur Flash Vert "</DT><DD>LItin&#233;raire est d&#233;clench&#233 quand le signal 
+<DT>"Sur Flash Vert "</DT><DD>LItin&#233;raire est d&#233;clench&#233; quand le signal
 passe l'apparence Flash Vert.</Dd>
 <DT>"Sur Allum&#233;"</DT><DD>LItin&#233;raire est d&#233;clench&#233; quand le signal 
 passe d'&#201;teint &#224; Allum&#233;.</Dd>
@@ -339,11 +336,11 @@ a tous les &#233;tat de ses variables qui d&#233;clenchent les actions quand ils
 radio sur l'onglet "LItin&#233;raire base"<b>Route Logix Type</b></p> donne des option. 
 Si vous voulez que le LItin&#233;raire s'effectue de  mani&#232;re passive comme le fait un Itin&#233;raire, 
 appuyez sur le bouton <b>Old</b>. Si vous voulez que le LItin&#233;raire d&#233;clenche ses 
-actions quand tout les ""droit de v&#233;to" sont retir&#233;s, appuyez sur le bouton <b>New</b>  .
+actions quand tout les ""droit de v&#233;to" sont retir&#233;s, appuyez sur le bouton <b>New</b> .
 </p>  
   
 <!--#include virtual="/Footer" -->
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>
-</html
+</html>

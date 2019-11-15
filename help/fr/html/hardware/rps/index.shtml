@@ -1,4 +1,3 @@
-<
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- UpDated  by Blorec Herv&#233;  2017-02-06-->
 <html lang="fr">
@@ -134,7 +133,7 @@ Pour que votre syst&#232;me RPS commencer &#224; mesurer les positions, vous ave
 lui dire de scruter les locomotives dans lesquelles vous avez install&#233;es des
 &#233;metteurs RPS. Pour ce faire:
 <ul>
-    <li> Ouvrez le Â» 
+    <li> Ouvrez le » 
       "<a href="../../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">RPS Polling Control</a>"
      &#224; partir du menu RPS
      <li> Vous devriez voir l'ensemble des locomotives dans votre liste
@@ -158,13 +157,13 @@ communications avec l'appareil en ouvrant le "Moniteur RPS"
 <p>
 JMRI fournit un certain nombre d'outils dans le menu RPS pour
 travailler avec le syst&#232;me RPS:
-<dl>
+    <dl>
 		<dt>Moniteur RPS</dt>
 		<dd>Le volet affiche tout le trafic vue sur la connexion<br>
 		<a href="images/RPSMonitor.png">
 		<img src="images/RPSMonitor.png" alt="RPS Monitor Pane" width="352" height="84"></a>
 		</dd>
-		<dt><dt><a href="../../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml"> R&#233;cepteur de Contr&#244;le </a>
+		<dt><a href="../../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml"> R&#233;cepteur de Contr&#244;le </a>
 		<dd> C'est l&#224; que vous entrez les informations de position au sujet des positions de votre r&#233;cepteur
 		etc<br>
 		<a href="images/ReceiverControl.gif">
@@ -200,14 +199,13 @@ travailler avec le syst&#232;me RPS:
 		<a href="images/RPSAlignment.png">
 		<img src="images/RPSAlignment.png" alt="RPS Alignment Pane" width="452" height="282"></a>
 		</dd>
-</dl>
+    </dl>
 
 Vous pouvez &#233;galement afficher des informations RPS sur les TCO PanelPro utilisant une
 "<a href="../../../package/jmri/jmrit/display/RpsIcon.shtml"> Ic&#244;ne RPS </a>".
 <p>
 Les informations RPS peuvent &#234;tre utilis&#233;es pour d&#233;tecter l'occupation &#224; l'aide
-<a href="sensors.shtml"> Capteurs RPS JMRI  </a>.<dt>
-
+<a href="sensors.shtml"> Capteurs RPS JMRI  </a>.
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3> Autre source d'information </h3>
