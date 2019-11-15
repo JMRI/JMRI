@@ -949,28 +949,26 @@ public class JUnitUtil {
      * @see #initShutDownManager()
      */
     static void checkShutDownManager() {
-        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
-        
-        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        while (list != null && !list.isEmpty()) {
-            ShutDownTask task = list.get(0);
-            log.error("Test {} left ShutDownTask registered: {} (of type {})", getTestClassName(), task.getName(), task.getClass(), 
-                        Log4JUtil.shortenStacktrace(new Exception("traceback")));
-            sm.deregister(task);
-            list = sm.tasks();  // avoid ConcurrentModificationException
-        }
-
-        // use reflection to reset static fields in the class.
-        try {
-            Class<?> c = jmri.managers.DefaultShutDownManager.class;
-            Field f = c.getDeclaredField("shuttingDown");
-            f.setAccessible(true);
-            f.set(sm, false);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
-        }
-        
+        InstanceManager.getExistingDefault(ShutDownManager.class).ifPresent(sm -> {
+            List<ShutDownTask> list = sm.tasks();
+            while (!list.isEmpty()) {
+                ShutDownTask task = list.get(0);
+                log.error("Test {} left ShutDownTask registered: {} (of type {})", getTestClassName(), task.getName(), task.getClass(), 
+                            Log4JUtil.shortenStacktrace(new Exception("traceback")));
+                sm.deregister(task);
+                list = sm.tasks();  // avoid ConcurrentModificationException
+            }
+    
+            // use reflection to reset static fields in the class.
+            try {
+                Class<?> c = jmri.managers.DefaultShutDownManager.class;
+                Field f = c.getDeclaredField("shuttingDown");
+                f.setAccessible(true);
+                f.set(sm, false);
+            } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
+                log.error("Failed to reset DefaultShutDownManager shuttingDown field", x);
+            }
+        });        
     }
 
     /**

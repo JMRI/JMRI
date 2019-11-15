@@ -355,7 +355,9 @@ public class ManagerTest {
     public void tearDown() {
         // clear to avoid report at end of test
         Manager.legacyNameSet.clear();
-
+        InstanceManager.getExistingDefault(ShutDownManager.class).ifPresent(mgr -> {
+            mgr.deregister(Manager.legacyReportTask);
+        });
         JUnitUtil.tearDown();
     }
 

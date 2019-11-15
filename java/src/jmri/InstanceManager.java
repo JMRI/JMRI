@@ -372,10 +372,31 @@ public final class InstanceManager {
      * @return the default wrapped in an Optional or an empty Optional if the
      *         default is null
      * @see #getNullableDefault(java.lang.Class)
+     * @see #getExistingDefault(Class)
      */
     @Nonnull
-    static public <T> Optional<T> getOptionalDefault(@Nonnull Class< T> type) {
+    public static <T> Optional<T> getOptionalDefault(@Nonnull Class<T> type) {
         return Optional.ofNullable(InstanceManager.getNullableDefault(type));
+    }
+
+    /**
+     * Get the default, if it already exists, avoiding creating a missing
+     * default, even if that missing default would otherwise be automatically
+     * created.
+     * <p>
+     * This method is designed for use in {@link jmri.ShutDownTask}s, tearing
+     * down unit tests, and other situations where automatically creating the
+     * default object is not desirable.
+     * 
+     * @param <T>  the type of the default class
+     * @param type the class Object for the default type
+     * @return the default wrapped in an Optional or an empty Optional if the
+     *         default is null
+     * @see #getOptionalDefault(Class)
+     */
+    @Nonnull
+    public static <T> Optional<T> getExistingDefault(@Nonnull Class<T> type) {
+        return Optional.ofNullable(InstanceManager.containsDefault(type) ? InstanceManager.getNullableDefault(type) : null);
     }
 
     /**
@@ -392,7 +413,7 @@ public final class InstanceManager {
      * @return The default for type (normally this is the item passed in)
      */
     @Nonnull
-    static public <T> T setDefault(@Nonnull Class< T> type, @Nonnull T item) {
+    static public <T> T setDefault(@Nonnull Class<T> type, @Nonnull T item) {
         log.trace("setDefault for type {}", type.getName());
         if (item == null) {
             NullPointerException npe = new NullPointerException();
@@ -587,11 +608,11 @@ public final class InstanceManager {
     /**
      * @param p consist manager to make store
      * @deprecated Since 4.11.4, use
-     * {@link #store(java.lang.Object, java.lang.Class)} directly.
+     *             {@link #store(java.lang.Object, java.lang.Class)} directly.
      */
     @Deprecated
     static public void setConsistManager(ConsistManager p) {
-        jmri.util.Log4JUtil.deprecationWarning(log, "setConsistManager");        
+        jmri.util.Log4JUtil.deprecationWarning(log, "setConsistManager");
         store(p, ConsistManager.class);
     }
 
