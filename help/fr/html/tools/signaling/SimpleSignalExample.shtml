@@ -20,15 +20,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
+<div>
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<!-- Page Body -->
+<h1>JMRI: Exemple Logique de Signal Simple</h1>
 
-<h1>
-JMRI: Exemple Logique de Signal Simple 
-</h1>
 <p class="important">N'utilisez pas l'outil Logique Signal Simple (SSL) quand vous avez d&#233;j&#224; construit les M&#226;ts de Signalisation et la Logique M&#226;t de Signalisation la plus avanc&#233;e dans le m&#234;me fichier de Panneau/Configuration.</p> 
 <p>    
 Cette page donne un exemple d'utilisation de la <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Logique Signal Simple</a> JMRI 
@@ -43,7 +40,7 @@ d'un recueil de r&#232;glement. Pour plus d'informations sur les diverses possib
 S'il vous pla&#238;t voir la
 <a href="index.shtml"> page de Signalisation JMRI</a>.
 
-<a id="example1"<h2>Exemple Pr&#233;d&#233;finis</H2>
+<a id="example1"></a><h2>Exemple Pr&#233;d&#233;finis</h2>
 
 Un exemple pr&#233;d&#233;finie de SSL est fourni dans l'installation de JMRI ( voir la
 <a href="http://jmri.org/download"> page de t&#233;l&#233;chargement </a> ) pour plus d'informations sur le t&#233;l&#233;chargement.
@@ -151,7 +148,7 @@ Vous pouvez changer n'importe lequel de ces r&#233;glages et cliquer "Appliquer"
 actif, puis cliquez sur le Panneau exemple pour voir comment les nouvaux r&#233;glages agissent.
 </ul>
 
-<a name="setup"/>
+    <a name="setup"></a>
 <h2>Configurer votre propre exemple </h2>
 L'ensemble complet des &#233;tapes de cr&#233;ation de cet exemple sont:
 <ol>
@@ -193,7 +190,7 @@ taper un nom de fichier, et frapper "Enregistrer". (Vous voudrez peut-&#234;tre 
 <li>Si vous avez des Feux de Signalisation connect&#233;s aux sorties "aiguillage-type" 
 signalez aussi au programme l'existence de ces adresses aiguillage. (Utilisateurs de SE8c sauter cette &#233;tape)
 
-<a name="definesignals"/>
+    <a name="definesignals"></a>
 <li> Renseignez PanelPro &#224; propos de l'adressage de vos signaux.
 <<a href="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"><img
         src="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png" align="right" width="312" height="119"
@@ -306,8 +303,10 @@ infos sur comment faire, consultez la
 <p>
 
 <p>Retour &#224; la <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">page d'aide Logique Signal Simple</a>.
-<p>Situ&#233; &#224; fr\html\tools\signaling\
+    <p>Situ&#233; &#224; fr\html\tools\signaling\</p>
 
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>

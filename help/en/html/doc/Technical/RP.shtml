@@ -195,7 +195,7 @@
 
         <a href="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/lastBuild/warnings4Result/">
             <img src="http://builds.jmri.org/jenkins/job/Development/job/Deprecations/warnings4/trendGraph/png?url=PRIORITY" align="right" width="250" height="100">
-        </a>
+        </a></li>
         <li>As soon as you can, remove all JMRI uses of these deprecated classes and/or methods
             until the deprecations report is clean. 
             (Until you do this, warnings will be showing up in the logs)

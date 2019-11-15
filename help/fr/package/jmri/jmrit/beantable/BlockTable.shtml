@@ -18,7 +18,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -163,8 +164,9 @@
           l'unit&eacute; est demand&eacute;e au bas du tableau de
           Canton.</p>
         </li>
+      </ul>
 
-<H1> Le Tableau Canton</H1>
+<h1> Le Tableau Canton</h1>
 
 <H2>Cantons :</h2>
 <p>Les Cantons sont des tron&#231;ons de voie dont l'occupation peut &#234;tre suivie individuellement. Diviser la
@@ -186,8 +188,9 @@ actuellement aucun moyen d'entrer manuellement les chemins ou les param&#232;tre
 <p> Pour une utilisation pour les trains circulants automatiquement, un attribut de la longueur et un attribut de courbure 
 peuvent &#233;ventuellement &#234;tre affect&#233;s &#224; un Canton. Ces attributs optionnels sont entr&#233;s manuellement
 dans ce tableau. Si les trains ne sont pas ex&#233;cut&#233; automatiquement pour
-un Canton, il n'est pas n&#233;cessaire d'ajouter ces attributs.</p><p>
-<H2>Colonnes  dans le Tableau Canton:</H2>
+un Canton, il n'est pas n&#233;cessaire d'ajouter ces attributs.</p>
+
+<h2>Colonnes  dans le Tableau Canton:</h2>
 <ul>
 <li> <p><b>Nom  syst&#232;me</b> - Le nom syst&#232;me du Canton. Il n'y a pas d'exigence fonctionnelle pour une lettre dans le Nom Syst&#232;me d'un Canton, mais par convention, nous utilisons
 'B' pour 'Canton'. L'impl&#233;mentation par d&#233;faut n'est pas sp&#233;cifique au syst&#232;me, donc une lettre du syst&#232;me
@@ -204,7 +207,8 @@ distinguer ce Canton parmi d'autres Cantons, ou de fournir des notes utiles sur 
 <li><p><b>Supprimer</b> - Cliquez sur le  bouton <b>Supprimer</b> dans n'importe quelle rang&#233;e pour supprimer le Canton de cette ligne de la liste des Cantons dans l'ordinateur. Vous devez sauvegarder votre configuration (et
 les panneaux pr&#233;sents) sur le disque pour rendre la suppression permanente. La radiation peut pas &#234;tre annul&#233;e.
 <b>Attention: Assurez-vous de supprimer toutes les r&#233;f&#233;rences &#224; un Canton avant de le supprimer</b>.
-Les Cantons sont r&#233;f&#233;renc&#233;s dans les chemins d'autres Cantons, dans certains scripts, et dans les panneaux de d'&#233;diteur de R&#233;seau <p></Li> 
+Les Cantons sont r&#233;f&#233;renc&#233;s dans les chemins d'autres Cantons, dans certains scripts, et dans les
+  panneaux de d'&#233;diteur de R&#233;seau</li>
 <li><p> <b>Direction</b> - La direction actuelle enregistr&#233;e dans le canton
 
 <li><p> <b>Longueur</b> (facultatif) - Affiche la longueur du Canton. En option, vous pouvez
@@ -269,7 +273,7 @@ Elle est &#233;galement utilis&#233; par la logique du m&#226;t de signalisation
 ont &#233;t&#233; pr&#233;d&#233;finies dans le fichier signalSpeed.xml, en plus d'une option globale.
 <br> Il est &#233;galement possible d'entrer une valeur num&#233;rique pour repr&#233;senter une vitesse.
 <p> La valeur globale est d&#233;finie via les <b>Vitesses</b> du menu option.</p></li>
-
+</ul>
 
 <p>
 <a href="../../../../html/tools/tracker/index.shtml">Plus d'information sur les Cantons</a></p>
@@ -277,9 +281,10 @@ ont &#233;t&#233; pr&#233;d&#233;finies dans le fichier signalSpeed.xml, en plus
 <a href="../display/LayoutEditor.shtml">Plus d'informations sur l'utilisation des Cantons avec l'&#233;diteur de R&#233;seau</a>
 <p>Retour &#224;  la <a href="../../../../html/tools/Blocks.shtml">page d'Aide Cantons</a></p>
 
-
 Localis&#233; &#224; package/jmri/jmrt/beantable/BlockTable
-<Li>
+
 <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

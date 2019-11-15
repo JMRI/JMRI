@@ -136,34 +136,34 @@ par des digits, ex: &quot;N1&quot; et &quot;N2&quot;.
 Notez que certaines d'entre elles sont des espaces r&#233;serv&#233;s, et n'ont pas de mise en &#339;uvre sous-jacente.
 ( Liens avec les pages JMRI pour plus d'informations )
 <ul>
-<LI>A CTI <a href="../../hardware/acela/index.shtml">Acela</a>
-<LI>B Direct DCC control
-<LI>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI serial</a>
-<LI>D <a href="../../hardware/SRCP/index.shtml">SRCP</a>
-<LI>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a>
-<LI>F <a href="../../hardware/rfid/index.shtml">RFID tag readers</a>
-<LI>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a>
-<LI>H
-<LI>I Internal, ex: objets non connect&#233;s au mat&#233;riel.
-<LI>J
-<LI>K <a href="../../hardware/maple/index.shtml">Maple Systems</a>
-<LI>L <a href="../../hardware/loconet/Digitrax.shtml">LocoNet</a>
-<LI>M Bus de contr&#244;le du r&#233;seau ferroviaire y compris
+<li>A CTI <a href="../../hardware/acela/index.shtml">Acela</a></li>
+<li>B Direct DCC control</li>
+<li>C <a href="../../hardware/cmri/CMRI.shtml">C/MRI serial</a></li>
+<li>D <a href="../../hardware/SRCP/index.shtml">SRCP</a></li>
+<li>E <a href="../../hardware/easydcc/EasyDCC.shtml">EasyDCC</a></li>
+<li>F <a href="../../hardware/rfid/index.shtml">RFID tag readers</a></li>
+<li>G ProTrak <a href="../../hardware/grapevine/index.shtml">Grapevine</a></li>
+<li>H</li>
+<li>I Internal, ex: objets non connect&#233;s au mat&#233;riel.</li>
+<li>J</li>
+<li>K <a href="../../hardware/maple/index.shtml">Maple Systems</a></li>
+<li>L <a href="../../hardware/loconet/Digitrax.shtml">LocoNet</a></li>
+<li>M Bus de contr&#244;le du r&#233;seau ferroviaire y compris
       <a href="../../hardware/openlcb/index.shtml">OpenLCB</a> et
       <a href="../../hardware/can/cbus/index.shtml">MERG CBUS</a>.		
-		Utilis&#233; aussi pour la mise en &#339;uvre maitre/esclave <a href="../../hardware/modbus/index.shtml">Modbus</a>. 
-<LI>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (also <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a> currently)
-<LI>O <a href="../../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a>
-<LI>P <a href="../../hardware/powerline/index.shtml">Powerline transmission</a>, e.g. X10 and Insteon
-<LI>Q <a href="../../hardware/qsi/index.shtml">QSI programmer interface</a>
-<LI>R <a href="../../hardware/rps/index.shtml">RPS system</a>
-<LI>S <a href="../../hardware/sprog/SPROG.shtml">SPROG</a>
-<LI>T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a>
-<li>U <a href="../../hardware/ecos/index.shtml">ESU ECoS</a>
-<LI>V TracTronics <a href="../../hardware/secsi/index.shtml">SECSI</a>
-<LI>W (reserved for Wangrow, but that's currently still combined with NCE)
-<LI>X <a href="../../hardware/XPressNet/index.shtml">XpressNet</a>
-<LI>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo MX-1</a>
+        Utilis&#233; aussi pour la mise en &#339;uvre maitre/esclave <a href="../../hardware/modbus/index.shtml">Modbus</a>.</li>
+<li>N <a href="../../hardware/nce/NCE.shtml">NCE</a> (aussi <a href="../../hardware/nce/Wangrow.shtml">Wangrow</a>)</li>
+<li>O <a href="../../hardware/oaktree/OakTree.shtml">Oak Tree Systems</a></li>
+<li>P <a href="../../hardware/powerline/index.shtml">Powerline transmission</a>, e.g. X10 and Insteon</li>
+<li>Q <a href="../../hardware/qsi/index.shtml">QSI programmer interface</a></li>
+<li>R <a href="../../hardware/rps/index.shtml">RPS system</a></li>
+<li>S <a href="../../hardware/sprog/SPROG.shtml">SPROG</a></li>
+<li>T <a href="../../hardware/tmcc/index.shtml">Lionel TMCC</a></li>
+<li>U <a href="../../hardware/ecos/index.shtml">ESU ECoS</a></li>
+<li>V TracTronics <a href="../../hardware/secsi/index.shtml">SECSI</a></li>
+<li>W (reserved for Wangrow, but that's currently still combined with NCE)</li>
+<li>X <a href="../../hardware/XPressNet/index.shtml">XpressNet</a></li>
+<li>Z <a href="../../hardware/zimo/Zimo.shtml">Zimo MX-1</a></li>
 </ul>
 
 <a name="types" id="types"></a>
@@ -174,58 +174,65 @@ il n'y a aucune garantie que tout syst&#232;me de mat&#233;riel donn&#233; ne se
 <ul>
 
 <li>A Audio - un objet logiciel interne qui contient des informations sur un &#233;chantillon  son
-pour &#234;tre plac&#233; &#224; une position sp&#233;cifique dans l'espace 3D
+pour &#234;tre plac&#233; &#224; une position sp&#233;cifique dans l'espace 3D</li>
 
 <li>B Bloc(Canton) - un objet logiciel qui permet de suivre le contenu d'un canton sp&#233;cifique
-de la voie
+de la voie</li>
 
-<li>D iDentit&#233; -Un objet logiciel qui contient des informations sur une plaque d'identit&#233; qui est, g&#233;n&#233;ralement, attach&#233; &#224; un morceau de mat&#233;riel roulant. Ces objets ne sont pas sp&#233;cifiques au syst&#232;me, mais sont des objets internes, donc ont des noms commen&#231;ant par l'ID. Le mat&#233;riel sous-jacent va utiliser des objets Reporter pour communiquer avec JMRI quand un objet identit&#233; sp&#233;cifique a &#233;t&#233; vu
+<li>D iDentit&#233; -Un objet logiciel qui contient des informations sur une plaque d'identit&#233; qui est,
+    g&#233;n&#233;ralement, attach&#233; &#224; un morceau de mat&#233;riel roulant. Ces objets ne sont pas
+    sp&#233;cifiques au syst&#232;me, mais sont des objets internes, donc ont des noms commen&#231;ant par l'ID.
+    Le mat&#233;riel sous-jacent va utiliser des objets Reporter pour communiquer avec JMRI quand un objet
+    identit&#233; sp&#233;cifique a &#233;t&#233; vu</li>
 
-<LI>F M&#226;t Signalisation (F n'est pas particuli&#232;rement mn&#233;monique, peut-&#234;tre qu'un m&#226;t &#224; deux feux
-ressemble &#224; un F vue de c&#244;t&#233;? Toutes les bonnes lettres ont &#233;t&#233; prises)
+<li>F M&#226;t Signalisation (F n'est pas particuli&#232;rement mn&#233;monique, peut-&#234;tre qu'un m&#226;t &#224; deux feux
+ressemble &#224; un F vue de c&#244;t&#233;? Toutes les bonnes lettres ont &#233;t&#233; prises)</li>
 
-<LI> H Feu de signalisation   - Une partie d'un signal (qui peut avoir plusieurs feux).
+<li> H Feu de signalisation   - Une partie d'un signal (qui peut avoir plusieurs feux).
 &#201;galement interpr&#233;t&#233; pour inclure des indicateurs sur les panneaux de commandes qui
-agissent pour afficher les aspects des signaux
+agissent pour afficher les aspects des signaux</li>
 
 
-<LI>M M&#233;moire - Pour l'instant, cela n'a pas vraiment d'&#233;quivalent dans le mat&#233;riel de r&#233;seau,
+<li>M M&#233;moire - Pour l'instant, cela n'a pas vraiment d'&#233;quivalent dans le mat&#233;riel de r&#233;seau,
 mais est utilis&#233; comme un endroit pour stocker temporairement des informations et un affichage sur panneaux, etc.
 
-<LI>L Light (Lumi&#232;re) -une autre forme de sortie, par exemple, utilis&#233; pour les voyants de contr&#244;le sur un r&#233;seau 
+<li>L Light (Lumi&#232;re) -une autre forme de sortie, par exemple, utilis&#233; pour les voyants de contr&#244;le sur un r&#233;seau
 
-<LI> P - Gestionnaire d'alimentation du r&#233;seau, &#224; savoir, district, sous - district; tous les syst&#232;mes ne font pas de distinction entre ceux-ci, de sorte que la lettre type d'appareil ne le fait pas non plus.. Par exemple, la partie du syst&#232;me sp&#233;cifique pourrait &#234;tre B pour la puissance du r&#233;seau principale, par exemple LPB ou S42 pour 2 canaux sous-district sur la carte 4, par exemple LPS42.
+<li> P - Gestionnaire d'alimentation du r&#233;seau, &#224; savoir, district, sous - district; tous les syst&#232;mes
+    ne font pas de distinction entre ceux-ci, de sorte que la lettre type d'appareil ne le fait pas non plus.
+    Par exemple, la partie du syst&#232;me sp&#233;cifique pourrait &#234;tre B pour la puissance du r&#233;seau
+    principale, par exemple LPB ou S42 pour 2 canaux sous-district sur la carte 4, par exemple LPS42.</li>
 
-<LI> R Rapports - un m&#233;canisme d'usage g&#233;n&#233;ral pour la communication d'informations complexes
+<li> R Rapports - un m&#233;canisme d'usage g&#233;n&#233;ral pour la communication d'informations complexes
 du r&#233;seau, par exemple, identification locomotive depuis certains mat&#233;riels, Transpondeur,
-Num&#233;ros des &#233;tiquettes RFID, etc.
+Num&#233;ros des &#233;tiquettes RFID, etc.</li>
 
-<LI>S Sensor (Capteurs) - en g&#233;n&#233;ral les capteurs d'entr&#233;e ont un but qui est g&#233;n&#233;ralement
+<li>S Sensor (Capteurs) - en g&#233;n&#233;ral les capteurs d'entr&#233;e ont un but qui est g&#233;n&#233;ralement
 d'&#234;tre ACTIF ou INACTIF. C'est le plus couramment utilis&#233; pour le remplissage des 
-d&#233;tecteurs de cantons.
+d&#233;tecteurs de cantons.</li>
 
-<LI> T Turnout (Aiguillage) - en fait une sortie &#224; usage g&#233;n&#233;ral sur le r&#233;seau
-<LI> X Logix - un ensemble d'&#233;quations logiques utilis&#233;es pour commander le r&#233;seau 
+<li> T Turnout (Aiguillage) - en fait une sortie &#224; usage g&#233;n&#233;ral sur le r&#233;seau</li>
+<li> X Logix - un ensemble d'&#233;quations logiques utilis&#233;es pour commander le r&#233;seau</li>
 </ul>
 
-<a name="systeminfo">
-<h3>Info-sp&#233;cifiques Syst&#232;me</H3></a>
+<a name="systeminfo"></a>
+<h3>Info-sp&#233;cifiques Syst&#232;me</h3>
 Chaque syst&#232;me mat&#233;riel diff&#233;rent peut sp&#233;cifier la "chaine " qui suit le syst&#232;me et la lettre type.
 G&#233;n&#233;ralement sp&#233;cifique, ce sont de petits nombres, mais leur signification exacte est tr&#232;s sp&#233;cifique au syst&#232;me.
 Pour plus d'informations, s'il vous pla&#238;t voir les pages sp&#233;cifiques pour 
 
-<UL>
-<LI><A HREF="../../hardware/cmri/CMRI.shtml#numbers">C/MRI</a>
-<LI><A HREF="../../hardware/loconet/Addressing.shtml">Digitrax LocoNet</a>
-<LI><A HREF="../../hardware/grapevine/Names.shtml">Grapevine</a>
-<LI><A HREF="../../hardware/XPressNet/XNetAddressing.shtml ">Lenz XPressNet</a>
-<LI><A HREF="../../hardware/nce/NCE.shtml#names">NCE</a>
-<LI><A HREF="../../hardware/powerline/Names.shtml">Powerline adapters, e.g, X10, Insteon</a>
-</UL>
+<ul>
+<li><a href="../../hardware/cmri/CMRI.shtml#numbers">C/MRI</a></li>
+<li><a href="../../hardware/loconet/Addressing.shtml">Digitrax LocoNet</a></li>
+<li><a href="../../hardware/grapevine/Names.shtml">Grapevine</a></li>
+<li><a href="../../hardware/XPressNet/XNetAddressing.shtml ">Lenz XPressNet</a></li>
+<li><a href="../../hardware/nce/NCE.shtml#names">NCE</a></li>
+<li><a href="../../hardware/powerline/Names.shtml">Powerline adapters, e.g, X10, Insteon</a></li>
+</ul>
 ( Si vous constatez un oubli, SVP 
 <a href="getgitcode.shtml#propose">Ajoutez une r&#233;f&#233;rence</a>)
 
-<P>
+<p>
 Les objets "internes" peuvent &#233;galement &#234;tre adress&#233;s et manipul&#233;s, mais ils n'ont pas de stricte
 correspondance avec certains mat&#233;riels sur le r&#233;seau. Par exemple, si un feu de signalisation
 est mise en &#339;uvre sur trois sorties diff&#233;rentes, LT1, LT2 et LT3, l'objet feu de signalisation
@@ -233,7 +240,7 @@ pourrait &#234;tre appel&#233; IH3.
 
 
 <a name="special">
-<H2>Convention de D&#233;signation pour un usage automatique</h2></a>
+<h2>Convention de D&#233;signation pour un usage automatique</h2></a>
 
 Certaines constructions de niveau sup&#233;rieur cr&#233;ent leurs propres &#233;l&#233;ments. Par exemple, un
 "Groupe Capteur"
