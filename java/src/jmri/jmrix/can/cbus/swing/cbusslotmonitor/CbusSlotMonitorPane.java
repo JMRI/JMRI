@@ -180,7 +180,7 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
      */
     @Override
     public String getTitle() {
-        return appendConnToString(Bundle.getMessage("MenuItemCbusSlotMonitor"));
+        return prependConnToString(Bundle.getMessage("MenuItemCbusSlotMonitor"));
     }
 
     public CbusSlotMonitorPane() {
