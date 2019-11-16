@@ -217,7 +217,7 @@ public class VSDManagerFrame extends JmriJFrame {
             VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
             if (newDecoder == null) {
                 log.warn("no New Decoder constructed! Config: {}", config);
-                String msg = "VSDecoder not created. Maximal number is " + String.valueOf(VSDecoderManager.instance().max_decoder);
+                String msg = "VSDecoder not created. Maximal number is " + String.valueOf(VSDecoderManager.max_decoder);
                 JOptionPane.showMessageDialog(null, msg);
                 return;
             }
