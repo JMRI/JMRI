@@ -937,6 +937,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
+    protected void disposeBlockPathFrame(OBlock block) {
+        BlockPathFrame frame = _blockPathMap.get(block.getSystemName());
+        frame.getModel().removeListener();
+        _blockPathMap.remove(block.getSystemName());
+        frame.dispose();
+    }
+
     protected String makePathTurnoutName(String blockSysName, String pathName) {
         return "%" + pathName + "&" + blockSysName;
     }

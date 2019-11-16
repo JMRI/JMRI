@@ -148,6 +148,8 @@ public class Portal {
             return Bundle.getMessage("DuplicatePortalName", oldName, p.getDescription());
         }
         _name = newName;
+        InstanceManager.getDefault(WarrantManager.class).portalNameChange(oldName, newName);
+        
         // for some unknown reason, PortalManager firePropertyChange is not read by PortalTableModel
         // so let OBlock do it
         if (_toBlock != null) {
@@ -155,7 +157,7 @@ public class Portal {
         } else if (_fromBlock != null) {
             _fromBlock.pseudoPropertyChange("NameChange", oldName, this);
         }
-        // CircuitBuilder PortalList reads it
+        // CircuitBuilder PortalList needs this property change
         pcs.firePropertyChange("NameChange", oldName, newName);
         return null;
     }

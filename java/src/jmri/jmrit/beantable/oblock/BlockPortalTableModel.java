@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.Portal;
 import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
@@ -31,7 +32,8 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
 
     public static final int BLOCK_NAME_COLUMN = 0;
     public static final int PORTAL_NAME_COLUMN = 1;
-    public static final int NUMCOLS = 2;
+    public static final int OPPOSING_BLOCK_NAME = 2;
+    public static final int NUMCOLS = 3;
 
     OBlockTableModel _oBlockModel;
 
@@ -62,6 +64,8 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
                 return Bundle.getMessage("BlockName");
             case PORTAL_NAME_COLUMN:
                 return Bundle.getMessage("PortalName");
+            case OPPOSING_BLOCK_NAME:
+                return Bundle.getMessage("OppBlockName");
             default:
                 log.warn("Unhandled column name: {}", col);
                 break;
@@ -90,7 +94,14 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
                 }
                 return "";
             }
-            return block.getPortals().get(idx).getName();
+            if (col == PORTAL_NAME_COLUMN) {
+                return block.getPortals().get(idx).getName();
+            }
+            if (col == OPPOSING_BLOCK_NAME) {
+                Portal portal = block.getPortals().get(idx);
+                return portal.getOpposingBlock(block).getDisplayName();
+            }
+
             /*
              while (count <= row)  {
              count += ((OBlock)list.get(idx++)).getPortals().size();

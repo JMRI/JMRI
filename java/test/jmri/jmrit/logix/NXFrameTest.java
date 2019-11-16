@@ -74,6 +74,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 
@@ -137,6 +139,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
         OBlock block = _OBlockMgr.getBySystemName("OB0");
@@ -252,6 +256,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 
@@ -292,6 +298,8 @@ public class NXFrameTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         _sensorMgr = InstanceManager.getDefault(SensorManager.class);
 

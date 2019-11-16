@@ -443,7 +443,9 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
             if (property.equals("portalCount") || 
                     property.equals("pathCount") || property.equals("pathName")) {
                 fireTableDataChanged();
-            }
+            } else if (property.equals("deleted")) {
+                _parent.disposeBlockPathFrame(_block);
+            };
         }
     }
 

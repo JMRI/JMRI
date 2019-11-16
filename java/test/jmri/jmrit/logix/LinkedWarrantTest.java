@@ -41,7 +41,8 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
 
@@ -116,7 +117,8 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
 
@@ -189,7 +191,8 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
 
@@ -274,7 +277,8 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
 

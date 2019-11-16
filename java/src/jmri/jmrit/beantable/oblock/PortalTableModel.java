@@ -50,10 +50,6 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         initTempRow();
     }
 
-/*    public void init() {
-        initTempRow();
-    }*/
-
     void initTempRow() {
         for (int i = 0; i < NUMCOLS; i++) {
             tempRow[i] = null;

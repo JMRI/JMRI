@@ -88,7 +88,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         panel.add(new JLabel(Bundle.getMessage("PathTitle", _homeBlock.getDisplayName())));
         pathPanel.add(panel);
 
-        _pathListModel = new PathListModel();
+        _pathListModel = new PathListModel(this);
         _pathList = new JList<>();
         _pathList.setModel(_pathListModel);
         _pathList.addListSelectionListener(this);
@@ -210,6 +210,12 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
 
     class PathListModel extends AbstractListModel<OPath> implements PropertyChangeListener {
 
+        EditFrame _parent;
+
+        PathListModel(EditFrame parent) {
+            _parent = parent;
+        }
+
         @Override
         public int getSize() {
             return _homeBlock.getPaths().size();
@@ -225,9 +231,9 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         }
 
         public void propertyChange(PropertyChangeEvent e) {
-/*            if (!(e.getSource() instanceof Portal)) {
-                return;
-            }*/
+            if (e.getPropertyName().equals("deleted")) {
+                _parent.closingEvent(true);
+            }
             fireContentsChanged(this, 0, 0);
         }
     }

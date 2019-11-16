@@ -110,13 +110,13 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         _portalMap.remove(name);
         pcs.firePropertyChange("numPortals", portal, _nameList.size());
     }
-
+/*
     private synchronized void blockChange(Portal portal) {
         int idx = _nameList.indexOf(portal);
         // a complete mystery why PortalTableModel does not get this PropertyChange
         pcs.firePropertyChange("BlockChanged", Integer.valueOf(idx), Integer.valueOf(idx));
         log.debug("blockChange fired.");
-    }
+    }*/
 
     @OverridingMethodsMustInvokeSuper
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
@@ -133,21 +133,21 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
             return;
         }
         Portal portal = (Portal)e.getSource();
-        WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         String propertyName = e.getPropertyName();
         log.debug("property = {}", propertyName);
         if (propertyName.equals("portalDelete")) {
             deletePortal(portal);
-        } else if (propertyName.equals("NameChange")) { // note, source is Portal
+/*        } else if (propertyName.equals("NameChange")) { // note, source is Portal
             // Name has been changed already by Portal
             String newName = (String)e.getNewValue();
             String oldName = (String)e.getOldValue();
+            WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
             manager.portalNameChange(oldName, newName);
             Integer idx = _nameList.indexOf(_portalMap.get(newName));
             pcs.firePropertyChange("NameChange", idx, idx);
             // note, source will be PortalManager, but PortalTableModel does not get property change ?
-        } else if (propertyName.equals("BlockChanged")) {
-            blockChange(portal);
+/*        } else if (propertyName.equals("BlockChanged")) {
+            blockChange(portal);*/
         }
     }
 

@@ -102,7 +102,7 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         panel.add(new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName())));
         portalPanel.add(panel);
         _portalName = new JTextField();
-        _portalList = new PortalList(_homeBlock);
+        _portalList = new PortalList(_homeBlock, this);
         _portalList.addListSelectionListener(this);
         portalPanel.add(new JScrollPane(_portalList));
 

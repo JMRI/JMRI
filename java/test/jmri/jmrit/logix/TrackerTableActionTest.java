@@ -46,6 +46,8 @@ public class TrackerTableActionTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         OBlock Middle = _OBlockMgr.getByUserName("Middle");
         Sensor sMiddle = Middle.getSensor();
         Assert.assertNotNull("Senor sMiddle not found", sMiddle);
@@ -95,6 +97,8 @@ public class TrackerTableActionTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         OBlock Main = _OBlockMgr.getByUserName("Main");
         Sensor sMain = Main.getSensor();
         Assert.assertNotNull("Senor sMain found", sMain);
@@ -129,6 +133,8 @@ public class TrackerTableActionTest {
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         OBlock West = _OBlockMgr.getByUserName("West");
         Sensor sWest = West.getSensor();
         Assert.assertNotNull("Senor sWest found", sWest);

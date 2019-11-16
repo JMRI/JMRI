@@ -89,7 +89,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         panel.add(new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName())));
         portalPanel.add(panel);
 
-        _portalList = new PortalList(_homeBlock);
+        _portalList = new PortalList(_homeBlock, this);
         _portalList.addListSelectionListener(this);
         portalPanel.add(new JScrollPane(_portalList));
 

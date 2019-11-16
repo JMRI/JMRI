@@ -79,7 +79,7 @@ public class EditSignalFrame extends EditFrame implements ListSelectionListener 
         panel.add(new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName(DisplayOptions.QUOTED_DISPLAYNAME))));
         signalPanel.add(panel);
 
-        _portalList = new PortalList(_homeBlock);
+        _portalList = new PortalList(_homeBlock, this);
         _portalList.addListSelectionListener(this);
         signalPanel.add(new JScrollPane(_portalList));
         signalPanel.add(Box.createVerticalStrut(STRUT_SIZE));

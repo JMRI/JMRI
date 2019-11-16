@@ -26,10 +26,11 @@ import jmri.jmrit.logix.PortalManager;
 public class PortalList extends JList<Portal> {
 
     private PortalListModel _portalListModel;
+    private EditFrame _parent;
 
-    PortalList(OBlock block) {
+    PortalList(OBlock block, EditFrame parent) {
         super();
-        _portalListModel = new PortalListModel(block);
+        _portalListModel = new PortalListModel(block, parent);
         setModel(_portalListModel);
         setCellRenderer(new PortalCellRenderer());
         setPreferredSize(new Dimension(300, 120));
@@ -69,10 +70,13 @@ public class PortalList extends JList<Portal> {
     static class PortalListModel extends AbstractListModel<Portal> implements PropertyChangeListener {
 
         OBlock _homeBlock;
+        private EditFrame _parent;
         List<Portal> _list = new ArrayList<>();
 
-        PortalListModel(OBlock block) {
+        PortalListModel(OBlock block, EditFrame parent) {
             _homeBlock = block;
+            _parent = parent;
+            _homeBlock.addPropertyChangeListener(this);
             makeList();
         }
         
@@ -104,14 +108,18 @@ public class PortalList extends JList<Portal> {
         }
 
         public void propertyChange(PropertyChangeEvent e) {
-            if (!(e.getSource() instanceof Portal)) {
-                return;
-            }
+            Object source = e.getSource();
+            String property = e.getPropertyName();
             if (log.isDebugEnabled()) {
-                log.debug("property = {} source= {}", e.getPropertyName(), e.getSource().getClass().getName());                
+                log.debug("property = {} source= {}", property, source.getClass().getName());                
             }
-            makeList();
-            fireContentsChanged(this, 0, 0);
+            if (source instanceof OBlock && property.equals("deleted")) {
+                _homeBlock.removePropertyChangeListener(this);
+                _parent.closingEvent(true);
+            } else {
+                makeList();
+                fireContentsChanged(this, 0, 0);
+            }
         }
     }
     private final static Logger log = LoggerFactory.getLogger(PortalList.class);
