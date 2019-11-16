@@ -35,8 +35,8 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Path;
-import jmri.Reporter;
 import jmri.Reportable;
+import jmri.Reporter;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.AbstractNamedBean;
@@ -1140,7 +1140,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             BeanItemPanel layout = new BeanItemPanel();
             layout.setName(Bundle.getMessage("LayoutEditor"));
 
-            LayoutEditor.setupComboBox(memoryComboBox, false, true);
+            LayoutEditor.setupComboBox(memoryComboBox, false, true, false);
 
             layout.addItem(new BeanEditItem(new JLabel("" + useCount), Bundle.getMessage("UseCount"), null));
             layout.addItem(new BeanEditItem(memoryComboBox, Bundle.getMessage("BeanNameMemory"),
