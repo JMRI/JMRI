@@ -17,8 +17,9 @@
     <version author="Michael@Povel-Walsrode.de" version="0.2" lastUpdated="20100109"/>
     <!-- 0.2 2010/01/09 MCP Added item entries for all variables -->
     <!-- 0.1 2010/01/08 MCP Copied from LD-G-21 -->
-	<version author="optonix@gmail.com" version="1" lastUpdated="20191109" />
-	<!-- 2019/11/09 Initial version based on LD-G-32-->
+	<version author="optonix@gmail.com" version="1.1" lastUpdated="20191110" />
+	<!--2019/11/10 V1.1 Small fixes for X3 in Lights section-->
+	<!--2019/11/09 V1.0 Initial version based on LD-G-32-->
 	<decoder>
 		<family name="Multiprotocol Decoder" mfg="Tams Elektronik GmbH" lowVersionID="23" highVersionID="23">
 			<model model="LD-G-32.2" numOuts="6" numFns="14">
@@ -422,7 +423,7 @@
 						<choice>always off</choice>
 					</enumChoice>
 				</enumVal>
-				<label>X2 output mode</label>
+				<label>X3 output mode</label>
 			</variable>
 			<variable item="Output 3 effect generated" CV="55" mask="VVVVVXXX" default="0">
 				<enumVal>
@@ -437,7 +438,7 @@
 						<choice>Always ON</choice>
 					</enumChoice>
 				</enumVal>
-				<label>X2 output blinking</label>
+				<label>X3 output blinking</label>
 			</variable>
 			<variable CV="62" mask="XXXXVVVV" item="Global lighting option 1" default="15" tooltip="Sets intensity of dimmed headlight (larger number = brighter light)">
 				<decVal min="0" max="15" />
@@ -514,6 +515,17 @@
 					</enumChoice>
 				</enumVal>
 				<label>X2 output is shunting light</label>
+			</variable>
+			<variable item="Output 3 options" CV="115" mask="XXXXXVXX" default="0">
+				<enumVal>
+					<enumChoice choice="OFF" value="0">
+						<choice>OFF</choice>
+					</enumChoice>
+					<enumChoice choice="ON" value="1">
+						<choice>ON</choice>
+					</enumChoice>
+				</enumVal>
+				<label>X3 output is shunting light</label>
 			</variable>
 			<variable CV="115" mask="XVXXXXXX" item="F3 controls output 6">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml" />
