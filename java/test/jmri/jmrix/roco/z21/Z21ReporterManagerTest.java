@@ -21,43 +21,44 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
         return "ZR" + i;
     }
 
-   @Test
-   public void testAutomaticCreateFromRailComReply(){
-       Z21ReporterManager zr = (Z21ReporterManager) l;
-       zr.enableInternalReporterCreationFromMessages();  // defautls to disabled.
-       byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
-       Z21Reply reply = new Z21Reply(msg,17);
-       Assert.assertNull("No reporter before message",zr.getReporter("ZR1"));
-       jmri.util.ThreadingUtil.runOnLayout( () -> { zr.reply(reply); });
-       JUnitUtil.waitFor( ()-> { return zr.getReporter("ZR1") != null; },"wait for reporter creation");
-       Assert.assertNotNull("Reporter Created via message",zr.getReporter("ZR1"));
-   }
+    @Test
+    public void testAutomaticCreateFromRailComReply(){
+        Z21ReporterManager zr = (Z21ReporterManager) l;
+        zr.enableInternalReporterCreationFromMessages();  // defautls to disabled.
+        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
+        Z21Reply reply = new Z21Reply(msg,17);
+        Assert.assertNull("No reporter before message",zr.getReporter("ZR1"));
+        jmri.util.ThreadingUtil.runOnLayout( () -> { zr.reply(reply); });
+        JUnitUtil.waitFor( ()-> { return zr.getReporter("ZR1") != null; },"wait for reporter creation");
+        Assert.assertNotNull("Reporter Created via message",zr.getReporter("ZR1"));
+    }
 
-   @Before
+    @Before
     @Override
-   public void setUp() {
+    public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initIdTagManager();
         JUnitUtil.initRailComManager();
         memo = new Z21SystemConnectionMemo();
         tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
         memo.setRocoZ21CommandStation(new RocoZ21CommandStation());
         l = new Z21ReporterManager(memo);
-   }
+    }
 
-   @After
-   public void tearDown(){
+    @After
+    public void tearDown(){
         l = null;
         tc.terminateThreads();
         memo = null;
         tc = null;
         JUnitUtil.tearDown();
-   }
+    }
 
     @Override
     protected int maxN() { return 1; }
-    
+
     @Override
     protected String getNameToTest1() {
         return "1";
