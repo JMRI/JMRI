@@ -247,7 +247,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
      * @return ArrayList of screen bounds and insets
      */
     public static ArrayList<ScreenDimensions> getScreenDimensions() {
-        ArrayList<ScreenDimensions> screenDimensions = new ArrayList();
+        ArrayList<ScreenDimensions> screenDimensions = new ArrayList<>();
         for (GraphicsDevice gd: GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
             Rectangle bounds = new Rectangle();
             Insets insets = new Insets(0, 0, 0, 0);
@@ -598,6 +598,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
             }
         }
         // As a fall-back, return the first display which is the primary
+        log.debug("Falling back to using the primary display");
         return getScreenDimensions().get(0);
     }
 
