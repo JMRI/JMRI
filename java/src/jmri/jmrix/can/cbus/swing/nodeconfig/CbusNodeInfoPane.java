@@ -234,12 +234,14 @@ public class CbusNodeInfoPane extends JPanel {
         
         textAreaString.append(System.getProperty("line.separator"));
         for (int i = 1; i <= nodeOfInterest.getParameter(0); i++) {
-            textAreaString.append ("Parameter ");
-            textAreaString.append (i);
-            textAreaString.append (" : ");
-            textAreaString.append ( nodeOfInterest.getParameter(i) );
-            textAreaString.append (" (dec)");
-            textAreaString.append(System.getProperty("line.separator"));
+            if ( nodeOfInterest.getParameter(i) > -1 ) {
+                textAreaString.append ("Parameter ");
+                textAreaString.append (i);
+                textAreaString.append (" : ");
+                textAreaString.append ( nodeOfInterest.getParameter(i) );
+                textAreaString.append (" (dec)");
+                textAreaString.append(System.getProperty("line.separator"));
+            }
         }
         
         //   nodePartTwobuilder.append ("<p> Is Bootable Y / N</p>");
