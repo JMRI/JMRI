@@ -17,14 +17,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-    <!-- Page Body -->
-
+        <!-- Page Body -->
 <h1>Guide Utilisateur DecoderPro</h1>
 
 <h2>D&#233;bogage</h2>
@@ -44,11 +41,11 @@ recherchez-les dans le r&#233;pertoire de l'application. </p>
 sur ce que signifient les termes. Si vous n'aimez pas les messages reli&#233;s &#225; un fichier,
 changer la ligne.</p>
 
-<p class=example>
+<p class="example">
 log4j.rootCategory= WARN, A1
 </p>
 <p>Pour inclure la destination enregistrement suppl&#233;mentaire "R":
-<p class=example>
+<p class="example">
 log4j.rootCategory= WARN, A1,R
 </p>
 <p>R est d&#233;fini plus tard dans default.lcf comme connexion pour le fichier "example.log" .
@@ -63,7 +60,7 @@ juste sur des parties du programme, mais dans l'optique que cela vous soit utile
 devrez passer du temps &#225; apprendre au sujet des parties internes.</p>
 </dd>
 
-<dt class=left>D&#233;bogage des probl&#232;mes avec les fichiers XML</dt>
+<dt class="left">D&#233;bogage des probl&#232;mes avec les fichiers XML</dt>
 <dd>
 <p>Quand un fichier XML ne peut pas &#234;tre analyser, vous obtiendrez des messages d'erreur 
 difficiles &#225; comprendre. La partie la plus importante de ceux-ci est le num&#233;ro de ligne.

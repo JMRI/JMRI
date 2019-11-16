@@ -38,19 +38,18 @@
       possibilit&eacute;s de JMRI.
 
       <p>Aide sur les menus sp&eacute;cifiques:</p>
-
       <ul>
         <li>Edition - ( <a href=
         "../TabbedPreferences.shtml">Pr&eacute;f&eacute;rences</a>
         )</li>
+      </ul>
 
-<p>
-Aide sur les menus sp&#233;cifiques:
-<ul>
-<li> Edition - (<a href="../TabbedPreferences.shtml"> Pr&#233;f&#233;rences </a>)</li>
-<li> <a href="../../jmri/jmrit/ToolsMenu.shtml"> Outils </a></li>
-<li> <a href="../../../html/apps/DecoderPro/Roster.shtml#menu"> Inventaire</a></li>
-</ul>
+      <p>Aide sur les menus sp&#233;cifiques:</p>
+      <ul>
+        <li>Edition - (<a href="../TabbedPreferences.shtml"> Pr&#233;f&#233;rences </a>)</li>
+        <li><a href="../../jmri/jmrit/ToolsMenu.shtml"> Outils </a></li>
+        <li><a href="../../../html/apps/DecoderPro/Roster.shtml#menu"> Inventaire</a></li>
+      </ul>
 
  <!--#include virtual="/Footer" -->
   </div> <!-- close #mainContent -->

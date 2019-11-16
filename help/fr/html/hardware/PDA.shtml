@@ -19,14 +19,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
-
-      <h1>Guide d'Installalation JMRI: Utilisation d'un PDA pour
+<h1>Guide d'Installalation JMRI: Utilisation d'un PDA pour
       acc&eacute;der aux applications JMRI</h1>Daryl Kruse a
       exp&eacute;riment&eacute; un PDA Dell Axim pour une
       utilisation comme r&eacute;gulateur Digitrax 2-voies
@@ -50,18 +47,18 @@ Daryl Kruse a exp&#233;riment&#233;
 Il a fourni l'information suivante
 sur la fa&#231;on dont il l'a mis en place:
 
-<P>1. Notre maison a un r&#233;seau local sans fil mis en place pour les membres de la famille pour acc&#233;der &#224;
+<p>1. Notre maison a un r&#233;seau local sans fil mis en place pour les membres de la famille pour acc&#233;der &#224;
 notre service Internet par c&#226;ble.
 
-<P>2. Mon ordinateur consacr&#233; au train est connect&#233; &#224; notre LAN et, bien s&#251;r, est
+<p>2. Mon ordinateur consacr&#233; au train est connect&#233; &#224; notre LAN et, bien s&#251;r, est
 connect&#233; &#224; JMRI et le LocoNet via une interface.
 
-<P>3. Mon Dell Axim est un terminal client sans fil.
+<p>3. Mon Dell Axim est un terminal client sans fil.
 
-<P>4. Apr&#232;s avoir jet&#233; un oeil sur les r&#233;gulateurs et les contr&#244;le d'aiguillage JMRI,
+<p>4. Apr&#232;s avoir jet&#233; un oeil sur les r&#233;gulateurs et les contr&#244;le d'aiguillage JMRI,
  j'utilise mon terminal Client Axim pour acc&#233;der &#224; l'&#233;cran de l'ordinateur.
 
-<P>5. Je peux alors contr&#244;ler le r&#233;seau avec l'Axim.
+<p>5. Je peux alors contr&#244;ler le r&#233;seau avec l'Axim.
 
       <p>Le bouton principal &agrave; quatre voies de l'Axim peut
       &ecirc;tre utilis&eacute; pour augmenter (&agrave; gauche) et

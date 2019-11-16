@@ -21,14 +21,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h2>JMRI: D&eacute;tails R&eacute;gulateurs RailDriver</h2>
+<h2>JMRI: D&eacute;tails R&eacute;gulateurs RailDriver</h2>
 
     <img src="../../../images/bangdesk.gif" align=
       "left"> Cette page est en construction. Le support RailDriver

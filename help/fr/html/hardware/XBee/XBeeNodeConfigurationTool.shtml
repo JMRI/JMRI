@@ -15,12 +15,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="../SidebarUp" -->
-
-	<div id="mainContent">
-		<!-- Page Body -->
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Structure Mat&#233;rielle: Outil de Configuration de N&#339;ud XBee</h1>
 

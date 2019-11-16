@@ -17,10 +17,9 @@
 
 <body>
 <!--#include virtual="/Header" -->
+    <div class="nomenu" id="mBody">
+    <div id="mainContent">
 
-<div class="nomenu" id="mBody">
-
-<div id="mainContent">
 <h1>Support: Digitrax LocoNet&reg;</h1>
 
 <div class="toc">
@@ -251,7 +250,7 @@ signaux, etc. Pour le d&#233;sactiver, vous pouvez utiliser l'outil "Configure C
 dans le menu <b>LocoNet</b> pour r&#233;gler l'interrupteur d'option 31 &#224; "T" (rejet&#233;), ou le mettre
 directement dans la centrale &#224; l'aide d'un r&#233;gulateur Digitrax.</p>
 
-<p>Si vous avez de multiples connexions, l'onglet "par D&#233;faut" dans le Fen&#234;tre Pr&#233;f&#233;rences peuvent &#234;tre utilis&#233;s pour diriger certains types d'op&#233;rations sur diff&#233;rentes connexions. Un bon exemple de ceci est un syst&#232;me avec deux connexions PR3, l'une en mode programmateur autonome pour la programmation des CVs du d&#233;codeur, et l'autre pour la communication avec un r&#233;seau LocoNet et de la centrale de commande. Dans ce cas, utilisez les param&#232;tres "Valeurs par d&#233;faut" pour s&#233;lectionner une connexion LocoNet seulement pour "Programmer" et l'autre connexion LocoNet pour "Throttles, "Power Control" et "Command Station". </P>
+<p>Si vous avez de multiples connexions, l'onglet "par D&#233;faut" dans le Fen&#234;tre Pr&#233;f&#233;rences peuvent &#234;tre utilis&#233;s pour diriger certains types d'op&#233;rations sur diff&#233;rentes connexions. Un bon exemple de ceci est un syst&#232;me avec deux connexions PR3, l'une en mode programmateur autonome pour la programmation des CVs du d&#233;codeur, et l'autre pour la communication avec un r&#233;seau LocoNet et de la centrale de commande. Dans ce cas, utilisez les param&#232;tres "Valeurs par d&#233;faut" pour s&#233;lectionner une connexion LocoNet seulement pour "Programmer" et l'autre connexion LocoNet pour "Throttles, "Power Control" et "Command Station". </p>
 
  <h2><a name="Using"></a>Utiliser JMRI avec LocoNet&reg;</h2>
 JMRI fournit un certain nombre de fonctionnalit&#233;s qui lui permettent d'interagir avec LocoNet:
@@ -329,7 +328,7 @@ pour plus d'informations.
       </ul>
 
     <a name="TurnoutCmdHandling"></a><h4>Command Station Turnout Command Rejection
-    and JMRI Turnout Command Handling</a></h4>
+    and JMRI Turnout Command Handling</h4>
      <p>Les centrales de commande Digitrax passent des messages LocoNet de commande de commutation sur
        signal de la voie DCC afin que les d&#233;codeurs d'accessoires connect&#233;s &#224; la voie peuvent
        recevoir les commandes de commutation. Les stations de commande Digitrax semblent stocker
@@ -382,8 +381,8 @@ pour plus d'informations.
        le mat&#233;riel de signalisation &#224; g&#233;n&#233;rer les aspects des signaux clignotants au lieu de programmer
        JMRI pour envoyer s&#233;quentiellement des messages "ON" et "OFF" pour le mat&#233;riel de signalisation.<br>
         D'autres utilisateurs qui n'ont pas <i>tout</i> le mat&#233;riel contr&#244;l&#233;s par des messages de d&#233;codeurs d'accessoires par l'envoi de messages sur le signal DCC de la voie (ou sur les fils du c&#226;ble RailSync de LocoNet) peuvent d&#233;cider d'emp&#234;cher la centrale de commande de transmettre <i>tout</i> les message LocoNet de commande de commutation au signal DCC de la voi (et fils de RailSync) en permettant "le bit Bushby" de la station de commande.
-       Voir l'outil JMRI LocoNet de <a href="../../../package/jmri/jmrix/l	oconet/cmdstnconfig/CmdStnConfigFrame.shtml">
-       Configuration de la centrale de commande</a> .
+       Voir l'outil JMRI LocoNet de <a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
+       Configuration de la centrale de commande</a>.
        </li>
 	  <li>Une bonne fa&#231;on d'&#233;viter ce probl&#232;me est d'emp&#234;cher la centrale Digitrax de recevoir les messages LocoNet de commande de commutation. Cela peut se faire en utilisant uniquement des dispositifs qui envoient et/ou re&#231;oivent des messages de commande de commutation via le bus de donn&#233;es LocoNet, et de mettre en oeuvre un LocoNet <i>autonome</i> pour une utilisation par ces dispositifs. Ce LocoNet autonome peut &#234;tre reli&#233; s&#233;par&#233;ment &#224; JMRI de sorte que JMRI puisse acc&#233;der &#224; la centrale de commande,
        r&#233;gulateurss, horloge rapide, et d'autres ressources via une connexion LocoNet,
@@ -421,7 +420,7 @@ pour plus d'informations.
 <h3>Aide JMRI</h3>
 	<p>JMRI fournit un support sp&#233;cifique pour une vari&#233;t&#233; de Digitrax et de
      Mat&#233;riel tierce partie bas&#233; sur LocoNet, ainsi qu'une vari&#233;t&#233; d'outils pour configurer
-	le mat&#233;rile LocoNet.<br />
+	le mat&#233;rile LocoNet.<br>
 	Quelques liens
 <ul>
    <li> Ordinateurs vers les Interfaces mat&#233;rielles LocoNet&reg; 

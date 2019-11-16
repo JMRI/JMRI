@@ -47,10 +47,8 @@
       clic &agrave; la m&ecirc;me position sur ce panneau JMRI.
       JMRI agit sur ce clic, et renvoie &eacute;galement une image
       du panneau mis &agrave; jour. Ainsi les applications client
-      trl que <a href="http://withrottle.com" target=
-      "_new">WiThrottle</a> et <a href=
-      "http://enginedriver.rrclubs.org" target=
-      "_new">EngineDriver</a> peuvent utiliser le serveur web JMRI
+      trl que <a href="http://withrottle.com">WiThrottle</a> et <a href=
+      "http://enginedriver.rrclubs.org">EngineDriver</a> peuvent utiliser le serveur web JMRI
       pour fournir des capacit&eacute;s additionnelles telles que
       l'acc&egrave;s au panneau et aux ic&ocirc;nes figurant sur la
       liste. <a id="Start" name="Start"></a></p>
@@ -76,8 +74,7 @@
       activ&eacute;, comme Safari vous devriez voir un site web
       "Mon Chemin de Fer JMRI" dans l'onglet "Bonjour". Les
       utilisateurs de Chrome et FireFox peuvent activer la
-      caract&eacute;tistique avec le <a href="http://dnssd.me"
-      target="_new">plug-in DNSSD</a> pour obtenir la page
+      caract&eacute;tistique avec le <a href="http://dnssd.me">plug-in DNSSD</a> pour obtenir la page
       d'accueil du serveur Web JMRI.</p>
 
       <p>Ensuite, faisons en sorte que vous pouvez acc&eacute;der

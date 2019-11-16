@@ -17,14 +17,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-		<!-- Page Body -->
-
-      <h1>Guide Installation JMRI: Connexion Serveur Terminal</h1>
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+<h1>Guide Installation JMRI: Connexion Serveur Terminal</h1>
 
 Un <strong>Serveur Terminal</strong> est une bo&#238;te qui connecte un ou plusieurs ports s&#233;rie
  &#224; un r&#233;seau afin qu'ils puissent &#234;tre accessibles &#224; partir d'un ordinateur distant.
@@ -35,7 +32,7 @@ de mettre l'ordinateur et la centrale aussi &#233;loign&#233; que vous le souhai
 <a name="hardware"></a><h2>Mat&#233;riel prit en charge</h2>
 
 <p>Cette utilisation a &#233;t&#233; initialement cr&#233;&#233;e par Zuhn David, qui
-a une <A href="http://stpaulterminal.org/software/jmri/lantronix.html"> page web </a>
+a une <a href="http://stpaulterminal.org/software/jmri/lantronix.html"> page web </a>
 d&#233;crivant en d&#233;tail comment il l'a mis en place pour EasyDCC.
 Pour NCE et C/MRI le processus est similaire.
 

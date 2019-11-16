@@ -27,10 +27,12 @@
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
   media="screen">
   <!-- /FAQ-Head -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">

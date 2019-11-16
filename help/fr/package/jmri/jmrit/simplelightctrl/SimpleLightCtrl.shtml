@@ -22,7 +22,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Commande Lumi&#232;re </H1>
+<h1>Commande Lumi&#232;re </h1>
 
 Entrez le nom du syst&#232;me de lumi&#232;re 
 que vous souhaitez commander dans la bo&#238;te &#224; droite de "lumi&#232;re".
@@ -35,21 +35,21 @@ le r&#233;seau. Un autre exemple, un nom syst&#232;me de lumi&#232;re valable  p
 qui est une lumi&#232;re interne num&#233;ro 123 . Appuyer sur le bouton On ou Off
 changerera seulement l'&#233;tat de la lumi&#232;re interne et ne changera pas une
 lumi&#232;re sur le r&#233;seau. Voir "
-<A HREF="../../../../html/doc/Technical/Names.shtml"> Noms </A>
+<a href="../../../../html/doc/Technical/Names.shtml"> Noms </a>
 "Voire l'aide g&#233;n&#233;rale pour plus d'informations.
 
-<H2>Boutons de Commande Lumi&#232;re et &#201;tats </H2>
+<h2>Boutons de Commande Lumi&#232;re et &#201;tats </h2>
 
 <dl>
 <dt> &#201;tat actuel: </dt>
-<dd> Montre l'&#233;tat actuel connu de la lumi&#232;re. </Dd>
+<dd> Montre l'&#233;tat actuel connu de la lumi&#232;re. </dd>
 <dt> &lt;Inconnu&gt;</dt>
 <dd> Soit aucun nom de lumi&#232;re s&#233;lectionn&#233; ou nom de Lumi&#232;re non valide. </dd>
 <dt> Off </dt>
-<dd>La Lumi&#232;re est au minimum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou Off. </Dd>
+<dd>La Lumi&#232;re est au minimum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou Off. </dd>
 <dt>On </dt>
-<dd>La Lumi&#232;re est au maximum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou On. </Dd>
-<DT> Interm&#233;diaire</DT>
+<dd>La Lumi&#232;re est au maximum d'intensit&#233; si l'intensit&#233; variable est prise en charge, ou On. </dd>
+<dt> Interm&#233;diaire</dt>
 <dd>
 L'intensit&#233; lumineuse se situe entre 0 et 100% et l'intensit&#233; du courant est &#233;gale &#224;
 l'intensit&#233; cible.
@@ -79,9 +79,9 @@ chaque minute rapide selon la valeur Temps de Transition.
 <p>Configuration des Options des Lumi&#232;res:</p>
 
 <dl>
-<DT> Activ&#233;e: </DT>
+<dt> Activ&#233;e: </dt>
 <dd> La lumi&#232;re va r&#233;pondre &#224; son type de commande automatique. </dd>
-<DT>Variable: </DT>
+<dt>Variable: </dt>
 <dd>La Lumi&#232;re peut &#234;tre command&#233;e &#224; des valeurs comprises entre 0% et 100%. </dd>
 <dt>Transition: </dt>
 <dd>Les changements d'intensit&#233; vont utiliser le temps de transition ppour &#233;voluer

@@ -23,10 +23,8 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -96,7 +94,7 @@ vous laissiez ce num&#233;ro comme il est, cependant, vous <u>pouvez</u> le modi
 num&#233;ro de fonction si vous voulez vraiment. Un exemple de pourquoi vous pourriez vouloir faire cela
 est si vous voulez vraiment un bouton "lumi&#232;res"  &#8212; qui est habituellement F0 (situ&#233; comme le
 dernier bouton/bas par d&#233;faut) &#8212; pour &#234;tre situ&#233; aussi sur le premier bouton dans le
-Panneau de fonction.</P>
+Panneau de fonction.</p>
 
 <p class="important"><b> Attention! Si des modifications sont effectu&#233;es dans le champs
 "Num&#233;ro de la fonction" , v&#233;rifier qu'il n'y a pas deux boutons assign&#233;s
@@ -176,34 +174,34 @@ situ&#233; juste sous la barre de titre principal de la fen&#234;tre.</p>
 
    <table border="0" width="100%" cellpadding="0" cellspacing="0">
      <tbody>
-               <td align="left" valign="top"><p>cliquer sur le bouton "<big>Voir</big>" option menu
-            affiche un petit menu de 3 &#233;l&#233;ments par d&#233;faut, chacun avec une
+     <tr>
+        <td align="left" valign="top"><p>cliquer sur le bouton "<big>Voir</big>" option menu
+           affiche un petit menu de 3 &#233;l&#233;ments par d&#233;faut, chacun avec une
            coche pr&#233;c&#233;dant l'article. Cela correspond &#224; 3 sous-fen&#234;tres
            (Panneau d'adresses, Panneau de fonction, et Panneau de contr&#244;le) qui composent la
            fen&#234;tre globale du R&#233;gulateur.</p>
         </td>
          <td><img width="20" height="20" src="images/spacer.gif"></td>
-         <td align="center" valign="top"><br>
-
-
+         <td align="center" valign="top">
            <p style="text-align: center; font-size: xx-small"><img width= "308"
            height = "148" src = "images/jmri018.jpg" title = "View Menu Options"><br>
            Figure 3-4: Options de menu View</p>
         </td>
-      </tr>
-       <tr>
+     </tr>
+     <tr>
         <td align="left" valign="top"><p>Comme indiqu&#233; dans le <a
            href= "ThrottleChapter1.shtml">Chapitre 1</a>, parce que chaque sous-fen&#234;tre
            a des boutons pour minimiser ou fermer, si l'on obtient une fermeture de la fen&#234;tre par erreur,
-           cette option de menu vous permet de restaurer la fen&#234;tre.</p>
+           cette option de menu vous permet de restaurer la fen&#234;tre.<br>
            pour les d&#233;codeurs qui ne sont <u>pas</u> associ&#233; &#224; un moteur
            (comme une voiture de passagers &#233;clair&#233;e ou fourgon de queue ou une unit&#233; de Fred). Dans ces
            cas, une succession d'&#233;cran r&#233;el critique peut &#234;tre sauv&#233; en &#233;tant capable de
            d&#233;sactiver (ou fermer) le Panneau de Commande. Soyez un peu cr&#233;atif avec 
            le redimensionnement de la fen&#234;tre, et vous pourriez avoir plusieurs de ces
-           fen&#234;tres de R&#233;gulateur personnalis&#233;es  dans la m&#234;me zone comme une fen&#234;tre r&#233;gulateur unique compl&#232;te.</p>
+           fen&#234;tres de R&#233;gulateur personnalis&#233;es  dans la m&#234;me zone comme une fen&#234;tre
+           r&#233;gulateur unique compl&#232;te.</p>
         </td>
-       <tr>
+     </tr>
     </tbody>
   </table>
 
@@ -253,7 +251,7 @@ situ&#233; juste sous la barre de titre principal de la fen&#234;tre.</p>
 <p>Ce chapitre termine les options avanc&#233;es du r&#233;gulateur qui sont actuellement
 disponibles. Le chapitre suivant montre comment enregistrer toutes ces r&#233;gulateurs personnalis&#233;s
  dans une <b>Configuration R&#233;gulateur</b>", puis comment les charger &#224; nouveau.
-Vous pouvez utiliser la fl&#232;che de droite ci-dessous pour aller &#224; ce chapitre maintenant.</P>
+Vous pouvez utiliser la fl&#232;che de droite ci-dessous pour aller &#224; ce chapitre maintenant.</p>
 
 <table border="0" width="100%" cellpadding="0" cellspacing="0">
   <tbody>

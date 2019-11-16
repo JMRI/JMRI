@@ -18,14 +18,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-	<div id="mainContent">
-	<!-- Page Body -->
-
-<h1>JMRI: Guide Utilisateur DecoderPro</h1> 
+<h1>JMRI: Guide Utilisateur DecoderPro</h1>
 <h2>Comment DecoderPro Identifie Les D&#233;codeurs</h2>
 
 <p>
@@ -152,10 +150,11 @@ Au-del&#224; de ce qui suit:
 	d'aider les clients avec un logiciel comme DecoderPro. Et pourquoi ne pas accorder de cr&#233;dit pour les nouvelles 
 	fonctionnalit&#233;s aux personnes qui vous les aurons demander pour le nouveau mod&#232;le?</li>
 	</ul>
-<p> 
-*BEMF: compensation de charge
 
-<!--#include virtual="/Footer" -->
-</div>
+	<p>*BEMF: compensation de charge</p>
+
+		<!--#include virtual="/Footer" -->
+		</div>
+	</div>
 </body>
 </html>

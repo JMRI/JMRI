@@ -17,12 +17,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="../SidebarUp" -->
-
-	<div id="mainContent">
-		<!-- Page Body -->
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1> Documentation Mat&#233;riel: Lecteurs RFID</h1>
 
@@ -94,7 +92,7 @@ sur le
 <h3>Rapports</h3>
 Les lectures RFID &#224; venir dans les applications JMRI sont &#233;galement accessibles via les
 Objets Rapports JMRI. Le Nom Syst&#232;me
-<!-- <a Href="Names.shtml"> du Rapport </a> --> du Rapport
+<!-- <a href="Names.shtml"> du Rapport </a> --> du Rapport
 d&#233;termine &#224; quel lecteur RFID il correspond.
 
 <p>

@@ -14,13 +14,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-		<!-- Page Body -->
-
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 <a name="Top"></a>
 <h1>JMRI&reg;: Configuration</h1>
 <h2>General Installation</h2>

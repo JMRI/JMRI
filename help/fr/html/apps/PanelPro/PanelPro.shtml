@@ -18,12 +18,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-		<!-- Page Body -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: PanelPro, Une Application pour Fabriquer des Panneaux de Commande</h1>
 
@@ -287,7 +285,7 @@ Pour plus d'information voir la
 
 <a href="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif">
 <img src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif" align="right" alt="screen shot of layout editor panel" 
-width="296" height="86" hspace="0" vspace="0"></A>
+width="296" height="86" hspace="0" vspace="0"></a>
 
 L' 
 <a href="../../../package/jmri/jmrit/display/LayoutEditor.shtml">&#201;diteur de R&#233;seau</a>

@@ -20,14 +20,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-	<div id="mainContent">
-		<!-- Page Body -->
-
-	    <H1>JMRI: Construction avec Eclipse</H1>
+<h1>JMRI: Construction avec Eclipse</h1>
 
    		
 	<p>Eclipse (disponible &#224; <a href="http://www.eclipse.org">  www.eclipse.org </a>) fait une excellente plate-forme pour
@@ -78,7 +76,7 @@
 		<li>Cliquez le bouton "Next" et l'&#233;cran Local Destination
 			doit appara&#238;tre.</li>
 		<li> Appuyez sur le bouton "Next" si la destination locale vous 
-			convient.<li>
+			convient.</li>
 	</ol>
 
 	<p>Apr&#232;s que le t&#233;l&#233;chargement est termin&#233; l'Eclipse Package Explorer
@@ -154,7 +152,7 @@
 					sur la partie sup&#233;rieure droite..</li>
 
   			<li>Vous devriez maintenant avoir un nouvel onglet "Main" en surbrillance. Au-dessus ceci, 
-					remplacer "New_configuration" par "DecoderPro". Ci-dessous, entrez "jmri" ​​
+					remplacer "New_configuration" par "DecoderPro". Ci-dessous, entrez "jmri"
 					(minuscules importante) pour "Project" et "apps.DecoderPro.DecoderPro" for "Main class:".</li>
 
  			<li>S&#233;lectionnez l'onglet "Arguments", et sous les arguments VM entrer ( Vous 
@@ -193,7 +191,7 @@ pour: <pre>-Djava.library.path=.;lib;lib/windows/x64
     </ol>
     
 	<a name="javacc"></a>
-    <H2>Installation de JavaCC Plugin ( Comme alternative &#224; ex&#233;cuter Ant Build
+    <h2>Installation de JavaCC Plugin ( Comme alternative &#224; ex&#233;cuter Ant Build
 			proc&#233;d&#233; ci-dessus )</h2>
 
 	Au lieu d'utliser la consruction ant porur pour remplir le r&#233;pertoire "tmp", vous pouvez, 
@@ -227,7 +225,7 @@ pour: <pre>-Djava.library.path=.;lib;lib/windows/x64
 			du principal r&#233;f&#233;rentiel JMRI avant d'effectuer vos propositions. Apr&#232;s un 
 			"pull" de votre espace de travail et, &#233;ventuellement, votre d&#233;p&#244;t GitHub
 			&#224; distance sera en synchronisation avec le principal r&#233;f&#233;rentiel JMRI. Pour effectuer
-	 		un «pull», s&#233;lectionnez votre projet, le "Team" puis "Pull" dans le menu. </P>
+	 		un «pull», s&#233;lectionnez votre projet, le "Team" puis "Pull" dans le menu. </p>
 
 	<p>Si vous voulez voir quels fichiers vont &#234;tre modifi&#233;s avant
 			le "Pull" vous pouvez usitiliser la fonctionnalit&#233; "Team Synchronizing". Pour le faire

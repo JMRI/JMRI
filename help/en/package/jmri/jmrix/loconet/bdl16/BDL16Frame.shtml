@@ -50,7 +50,7 @@
       <p>Any time that a Board ID number is typed into the Board ID text entry space,
       the number will be added to the list if it is not already present in the list.</p>
       
-      <H2>Reading and writing the OpSw settings</h2>
+      <h2>Reading and writing the OpSw settings</h2>
        
       <p>This tool only accesses the board's OpSw values when the "Read Full Sheet" 
           or "Write Full Sheet" button is pressed.</p>

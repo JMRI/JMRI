@@ -20,14 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
-
-      <h1>JMRI: FAQ Scripts</h1>
+<h1>JMRI: FAQ Scripts</h1>
 
       <p class="subtitle">Foire aux questions sur les scripts JMRI
       avec Jython</p>

@@ -22,14 +22,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>JMRI: Acc&egrave;s aux fichiers Portables</h1>JMRI
+<h1>JMRI: Acc&egrave;s aux fichiers Portables</h1>JMRI
       utilise des fichiers pour les ic&ocirc;nes, images, fichiers
       de panneau, scripts, et beaucoup d'autres choses. Les
       r&eacute;f&eacute;rences &agrave; ceux-ci sont couramment

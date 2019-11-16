@@ -18,12 +18,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-	<!-- Page Body -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: Guide Utilisateur DecoderPro </h1>
 
@@ -36,14 +34,14 @@ sorties dans un d&#233;codeur .
 Vous pouvez faire une chose similaire avec beaucoup de lignes et de colonnes dans
 l'affichage, mais &#231;a repr&#233;sente beaucoup plus de travail, et 
 l'affichage ne serait pas bien r&#233;gl&#233;.
-<P>
+<p>
 L'&#233;l&#233;ment "fnmapping" travaille en regardant les variables avec des noms 
 comme "F2 commande sortie 1". Sp&#233;cifiquement, il cherche un nom compos&#233; 
 de trois parties:  
 	<ol>
 	<li>
 	Un nom de fonction.  Ce peut &#234;tre "FL" ou "Fn" ou "Fnn", o&#249; n ou nn sont des nombres d&#233;cimaux
-	dans l'intervalle 0-28.<br/>Sont aussi accept&#233;es quelques non-touches d'&#233;tat sp&#233;ciales utilis&#233;es par quelques d&#233;codeurs 
+	dans l'intervalle 0-28.<br>Sont aussi accept&#233;es quelques non-touches d'&#233;tat sp&#233;ciales utilis&#233;es par quelques d&#233;codeurs
 	pour commander les sorties. Celle-ci incluent couramment "STOP", "DRIVE", "AV", "AR" 
 	et "Sn" ou "Snn" o&#249; n ou nn est un 	nombre d&#233;cimal dans l'intervalle 0-28.
 	</li>
@@ -102,7 +100,7 @@ la Fonction Map:</p>
 <h2>Exemple de Mapping</h2>
 Ces exemples sont pris dans le fichier de d&#233;finition de d&#233;codeur  
 <a href="../../xml/decoders/Digitrax_01x3.xml">Digitrax_01x3.xml</a>.
-<P>
+<p>
 Le bloc de d&#233;finitions pour la fonction z&#233;ro dans la direction avant est comme suit:
 <pre>
 		&lt;variable label="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1"&gt; &lt;enumVal&gt; 

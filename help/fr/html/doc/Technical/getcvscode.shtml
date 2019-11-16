@@ -19,15 +19,13 @@
 </head>
 
  <body>
- <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
- <div id="mBody">
-	 <!--#include virtual="Sidebar" -->
-
-	 <div id="mainContent">
-		 <!-- Page Body -->
-
-	    <h1>JMRI: Obtenir le vieux code CVS</h1>
+<h1>JMRI: Obtenir le vieux code CVS</h1>
 
 <h2>Cette pages est conserv&#233;e dans un but historique seulement!</h2>
 
@@ -39,10 +37,10 @@ code source, vous devez utiliser les instructions d&#233;taill&#233;es ci-dessou
 <h2>D&#233;marrage Rapide</h2>
 
 <p>Vous pouvez t&#233;l&#233;charger le code source JMRI via CVS en utilisant:
-<code><pre>
+<code>
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri login
 cvs -d:pserver:anonymous@jmri.cvs.sourceforge.net:/cvsroot/jmri co all 
-</pre></code>
+</code>
 ( Si un mot de passe est demand&#233;, taper sur rerour )
 
 

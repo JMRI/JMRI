@@ -11,7 +11,7 @@
 		<dd>Information sur l'&#233;criture des scripts pour contr&#244;ler JMRI plus en d&#233;tail:
 		    <ul>
 		    <li><a href="Start.shtml">Introduction</a></li>
-		    <li><A HREF="Python.shtml">Le Langage </a></li>
+		    <li><a href="Python.shtml">Le Langage </a></li>
 		    <li><a href="Examples.shtml">Exemples</a></li>
 		    <li><a href="FAQ.shtml">Questions Fr&#233;quemment Pos&#233;es(FAQs)</a></li>
 		    <li><a href="ex_set_turnouts.shtml">Exemple: R&#233;glage Aiguillages</a></li>

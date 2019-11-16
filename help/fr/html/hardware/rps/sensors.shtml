@@ -20,14 +20,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
-      <h1>JMRI Guide Mat&eacute;riel: Capteurs RPS</h1>
+<h1>JMRI Guide Mat&eacute;riel: Capteurs RPS</h1>
       <em>S'il
       vous pla&icirc;t noter que le support de JMRI pour le RPS
       s'am&eacute;liore rapidement. Cette page fait

@@ -1,20 +1,20 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <!-- Translated by Blorec Herv&#233; le 2011-09-28-->
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
   <meta name="generator" content=
-  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org" />
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org"/>
 
   <title>How to build a throttle oriented JMRI interface</title>
-  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro" />
-  <meta name="Description" content="Throttle documentation for JMRI project" />
+  <meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro"/>
+  <meta name="Description" content="Throttle documentation for JMRI project"/>
   <meta name="Keywords" content="JMRI" />
-  <meta name="Author" content="Lionel Jeanson" />
+  <meta name="Author" content="Lionel Jeanson"/>
   <meta name="Language" content="fr" />
-  <meta name="Robots" content="Index, Follow" />
-  <meta name="Revisit-After" content="7 Days" />
+  <meta name="Robots" content="Index, Follow"/>
+  <meta name="Revisit-After" content="7 Days"/>
   <!-- Style -->
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen" />
@@ -26,25 +26,23 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>Comment Construire une Interface R&eacute;gulateur
+<h1>Comment Construire une Interface R&eacute;gulateur
       Orient&eacute;e JMRI</h1>
       <p>Fort de son historique nous
       supposons que vous &ecirc;tes un utilisateur
       d&eacute;j&agrave; exp&eacute;riment&eacute; des JMRI.
-      <br>
+      <br />
       Particuli&egrave;rement, nous supposons que votre connexion
       est d&eacute;j&agrave; active avec JMRI f et que vous
       &ecirc;tes d&eacute;j&agrave; en mesure d'ouvrir une
       fen&ecirc;tre R&eacute;gulateur et contr&ocirc;ler une
       locomotive.
-      <br>
+      <br />
       De plus nous supposons que votre base de donn&eacute;es Liste
       (Roster) existe d&eacute;j&agrave;, la plupart de ces
       fonctionnalit&eacute;s R&eacute;gulateur sont
@@ -55,7 +53,7 @@
       <p>La premi&egrave;re &eacute;tape est de <a href=
       "RostersMediaPane.shtml">remplir les m&eacute;dias et les
       &eacute;tiquettes volets Fonctions dans DecoderPro</a>.
-      <br>
+      <br />
       Une fois cela fait et toutes les &eacute;tiquettes fonctions
       sont d&eacute;finies pour vos listes, <a href=
       "ThrottlesPreferencesPane.shtml">vous voulez vous assurer que
@@ -74,7 +72,7 @@
       en arri&egrave;re</a> )), l'image de fond devrait &ecirc;tre
       l&agrave;, et les boutons fonction devrait refl&eacute;ter ce
       que vous avez entr&eacute; dans DecoderPro.
-      <br>
+      <br />
       Maintenant ce que vous pouvez faire, c'est mettre en place la
       fen&ecirc;tre du R&eacute;gulateur comme vous voulez la
       positioner sur le Panneau de configuration et la taille que
@@ -97,13 +95,13 @@
       Jynstruments pour les plus utilis&eacute;s, ou pour des
       Fonctionnalit&eacute;s un peu plus complexes o&ugrave; seul
       un script Jython peut le faire.
-      <br>
+      <br />
       Lorsque vous &ecirc;tes satisifait avec l'&eacute;tape 3) et
       4) pour une liste sp&eacute;cifique, vous voulez atteindre
       l'entr&eacute;e du menu Enregistrer dans le menu Fichier
       <a href="ThrottleWindowMenus.shtml">fen&ecirc;tre
       R&eacute;gulateur</a> Afin de sauvegarder la configuration
-      actuelle du R&eacute;gulateur,<br>
+      actuelle du R&eacute;gulateur,<br />
       la prochaine fois le r&eacute;gulateur est requis pour cette
       entr&eacute;e Liste, ce fichier de sauvegarde sera
       charg&eacute; automatiquement et la fen&ecirc;tre

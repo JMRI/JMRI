@@ -9,12 +9,9 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI help preferences">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
@@ -217,7 +214,7 @@ Certaines personnes pr&#233;f&#233;reraient ne pas les voir,
 afin qu'ils ne continuent pas &#224; essayer de les regarder.
 Nous fournissons cette pr&#233;f&#233;rence que vous pourrez choisir.</p>
 
-  <dt><a id="roster"></a>Inventaire</dt>
+  <dt>Inventaire</dt>
   <dd>
 Normalement, l'inventaire est stock&#233;e dans un emplacement standard 
 dans le cadre du  

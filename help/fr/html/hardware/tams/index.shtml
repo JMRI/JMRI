@@ -20,14 +20,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>JMRI: Support TAMs</h1>JMRI peut se connecter &agrave;
+<h1>JMRI: Support TAMs</h1>JMRI peut se connecter &agrave;
       une centrale MasterControl TAMS en utilisant l'interface USB
       int&eacute;gr&eacute;e et/ou l'interface s&eacute;rie.<br>
       L'interface USB est livr&eacute; avec les pilotes pour

@@ -22,10 +22,10 @@
 <div id="mainContent">
 
 	<h1>Structure Mat&#233;rielle: Cr&#233;ation d'un Fichier Journal</h1>
-	<P>
+	<p>
  	D&#233;marrer DecoderPro (ou la d&#233;mo JMRI)
 	<p>Ouvrez le <strong>Moniteur XpressNet</strong> ( qui est dans le sous-menu du menu "Syst&#232;me" de XPressNet)
-	<P>
+	<p>
  	Le volet suivant va s'ouvrir:<br>
   	<img src="images/XPressNetTrafficMonitor.jpg" alt="XPressNet Traffic Monitor Image">
 

@@ -22,14 +22,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
-      <h1>JMRI: Obtenir le Code Ancien</h1>
+<h1>JMRI: Obtenir le Code Ancien</h1>
 
       <h2>Cette page est conserv&eacute;e dans un but historique
       seulement!</h2>

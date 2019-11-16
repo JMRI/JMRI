@@ -22,14 +22,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h2>s&eacute;quences JMRI Guide Mat&eacute;riel: Signaux avec
+<h2>s&eacute;quences JMRI Guide Mat&eacute;riel: Signaux avec
       C/MRI</h2>
 
       <p>Pour des signaux s&eacute;par&eacute;s avec des diodes

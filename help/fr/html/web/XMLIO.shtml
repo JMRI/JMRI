@@ -278,7 +278,6 @@ contr&ocirc;ler un r&eacute;gulateur via le ThrottleManager DCC par
 d&eacute;faut. La premi&egrave;re utilisation alloue le
 r&eacute;gulateur, et tous les post&eacute;rieurs utilisent les
 attributs pr&eacute;sents:
-      <pre>
 <code>&lt;xmlio&gt;
     &lt;throttle&gt;
         &lt;adresse&gt; 1234&lt;/address&gt;
@@ -288,11 +287,11 @@ attributs pr&eacute;sents:
    &lt;/throttle&gt;
 &lt;/Xmlio&gt;
 </code>
-</pre><code>Un &eacute;l&eacute;ment r&eacute;gulateur est
-retourn&eacute; inchang&eacute;.</code>
+Un &eacute;l&eacute;ment r&eacute;gulateur est
+retourn&eacute; inchang&eacute;.
 
-      <h2><code>Documents associ&eacute;s</code></h2><code>C.F. K H
-      Wolf, K Froitzheim, M Weber, Department of Distributed
+      <h2>Documents associ&eacute;s</h2>
+      C.F. K H Wolf, K Froitzheim, M Weber, Department of Distributed
       Systems, Universit&eacute; d'Ulm, "Interactive Video and
       Remote Control via the World Wide Web", dans "Lecture Notes
       in Computer Science", Springer, Berlin, 1996.<br>
@@ -302,8 +301,9 @@ retourn&eacute; inchang&eacute;.</code>
       "http://web.archive.org/web/*/http://rr-vs.informatik.uni-ulm.de/rr/">
       Page r&eacute;f&eacute;renc&eacute;e</a> <a href=
       "http://rr.informatik.tu-freiberg.de/index.php?con=home&amp;sel=&amp;lang=eng&amp;js=1&amp;">
-      r&eacute;h&eacute;berg&eacute;e</a>. 
-      <!--#include virtual="/Footer" --></code>
+      r&eacute;h&eacute;berg&eacute;e</a>.
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

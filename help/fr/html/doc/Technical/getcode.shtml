@@ -11,25 +11,21 @@
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code CVS download">
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
-</head><!--#include virtual="/Header" -->
+</head>
 
 <body>
-<!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header.shtml" -->
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-        <!-- Page Body -->
 
-      <h1>JMRI: Obtention du Code</h1>
+    <h1>JMRI: Obtention du Code</h1>
 
       <h2>Lancement Rapide</h2>Vous pouvez
       t&eacute;l&eacute;charger le code source le plus
@@ -107,8 +103,8 @@ svn update
       les autorisations et les commandes appropri&eacute;s, vous
       pouvez fusionner vos modifications dans la source commune
       automagiquement. Contactez-nous si vous &ecirc;tes pr&ecirc;t
-      &agrave; faire ou voir la <a info="" sur="" href=
-      "index.shtml#contributing">contribution</a> .</p>
+      &agrave; faire ou voir la <a href=
+      "index.shtml#contributing">info sur contribution</a>.</p>
 
       <h2>Acc&egrave;s aux anciennes Versions</h2>
 

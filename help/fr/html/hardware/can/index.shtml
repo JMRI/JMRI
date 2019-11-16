@@ -14,10 +14,8 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
 	<!--#include virtual="../SidebarUp" -->
-
 	<div id="mainContent">
 		<!-- Page Body -->
 
@@ -37,7 +35,7 @@ JMRI fournit le support au d&#233;veloppement et l'utilisation de ceux-ci. Deux 
 <h3><a href="../openlcb/index.shtml">OpenLCB</a></h3>
 <p> OpenLCB est un groupe d'ammateurs et de fabricants qui se sont ressembl&#233;s pour produire un bus de contr&#244;le de r&#233;seau orient&#233; vers l'avenir, appel&#233; 
 aussi <a href="http://openlcb.org">OpenLCB</a>.<br>
-JMRI inclut <a href="../openlcb/index.shtml">un support basique pour OpenLCB</a> et OpenLCB en d&#233;veloppe plus lui-m&#234;me. </P>
+JMRI inclut <a href="../openlcb/index.shtml">un support basique pour OpenLCB</a> et OpenLCB en d&#233;veloppe plus lui-m&#234;me. </p>
 
 <img src="http://www.nmra.org/common/nmra_logo.jpg" align="right" alt="NMRA logo" height="45" width="55">
 <p>Le <a href="http://www.nmra.org">NMRA</a> a
@@ -98,8 +96,8 @@ Pr&#233;f&#233;rences et s&#233;lectionnez:
 	que votre adaptateur. Dans ce cas, mettre "openlcbcan.local." dans le champ d'adresse IP.
 	<p> Le num&#233;ro de port pour les adaptateurs OpenLCB est 23 par d&#233;faut.
 	<li> Configurer le protocole de connexion comme vous le souhaitez, par exemple "OpenLCB", et le
-	Pr&#233;fixe de connexion (habituellement "M") et le nom de connexion au besoin.
-	<l> Cliquez sur Enregistrer et red&#233;marrez.
+	Pr&#233;fixe de connexion (habituellement "M") et le nom de connexion au besoin.</li>
+	<li> Cliquez sur Enregistrer et red&#233;marrez.</li>
 </ul>
 
 <a name="tools"></a><h2>Outils CAN JMRI</h2>

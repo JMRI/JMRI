@@ -21,13 +21,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-		<!-- Page Body -->
-
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 <h1>JMRI: Signalisation</h1>
 
 <p>Cette page introduit la Signalisation, liste les outils Signalisation JMRI et pointe vers les m&#233;thodes plus avanc&#233;es.</p>
@@ -94,7 +91,7 @@ comme un bon point de d&#233;part pour comprendre la logique de la signalisation
 <li>Les Aiguillages sont identifi&#233;s par des Nombres IMPAIRS</li>
 </ul>
 
-<p>Exemple #1: Les signaux &#224; un aiguillage command&#233; avec une voie d'approche par la gauche et deux voies vers la droite -2R ( face &#224; la pointe ), 2L ( voie directe ), 2LA ( voie d&#233;vi&#233;e ). 2LA devrait &#234;ttre montr&#233;e comme 2L sur le panneau pour correspondre avec le Signal Levier 2. La direction cardinale doit aussi &#234;tre utilis&#233;e( N,S, E, W ) &#224; un croisement pour l'itin&#233;raire oppos&#233;. Les Aiguillage sont N  (normal ) ou R ( inverse ).<br/>
+<p>Exemple #1: Les signaux &#224; un aiguillage command&#233; avec une voie d'approche par la gauche et deux voies vers la droite -2R ( face &#224; la pointe ), 2L ( voie directe ), 2LA ( voie d&#233;vi&#233;e ). 2LA devrait &#234;ttre montr&#233;e comme 2L sur le panneau pour correspondre avec le Signal Levier 2. La direction cardinale doit aussi &#234;tre utilis&#233;e( N,S, E, W ) &#224; un croisement pour l'itin&#233;raire oppos&#233;. Les Aiguillage sont N  (normal ) ou R ( inverse ).<br>
 Exemple #2: Les signaux CTC de Dennis Drury obtiennent un nombre pair avec un modificateur directionnel tel que E 50 W ou E 52 W. Les signaux du canton interm&#233;diaire peuvent &#234;tre num&#233;rot&#233;s par une position kilom&#233;tique de l'emplacement tel que 322.2 et 322.3.</p>
  
 <h4>General Railroad Signal (GRS)</h4>   
@@ -122,7 +119,7 @@ Exemple #2: Les signaux CTC de Dennis Drury obtiennent un nombre pair avec un mo
 
 <a name="tools"></a><h2>JMRI Outils Signalisation</h2>
 <p>Il est vraiment simple d'utiliser l'Aspect de Signalisation, sp&#233;cialement si le mat&#233;riel de signal appropri&#233; est d&#233;j&#224; configur&#233; dans JMRI ou vous voulez utiliser des M&#226;ts de Signalisation avec plus d'un Feu de Signalisation.
-	L'aspect de Signalisation dans JMRI utilise une s&#233;rie de fichiers de d&#233;finitions d'Aspect qui sont fournis avec JMRI depuis la version 2.9. De plus pour puiser dans un des plus r&#233;aliste parmi 20 <a href="AspectSignaling.shtml#systems">Syst&#232;mes de Signalisation</a> fournit avec JMRI, vous pouvez en bidouiller un en fonction de votre mat&#233;riel et des op&#233;rations ou d&#233;finir votre propre syst&#232;me et le partager dans le cadre d'une prochaine version de JMRI.<br/>
+	L'aspect de Signalisation dans JMRI utilise une s&#233;rie de fichiers de d&#233;finitions d'Aspect qui sont fournis avec JMRI depuis la version 2.9. De plus pour puiser dans un des plus r&#233;aliste parmi 20 <a href="AspectSignaling.shtml#systems">Syst&#232;mes de Signalisation</a> fournit avec JMRI, vous pouvez en bidouiller un en fonction de votre mat&#233;riel et des op&#233;rations ou d&#233;finir votre propre syst&#232;me et le partager dans le cadre d'une prochaine version de JMRI.<br>
 	JMRI les principaux outils de signalisation suivants, disponibles depuis le menu<b>Outils --> Tableau --> Signal </b> menu:</p>
 
 	<p>1. Les objets <b><a href="SignalHeads.shtml">Feu de Signalisation</a></b> repr&#233;sentants les lampes individuelles d'un signal et pouvant &#234;tre cr&#233;&#233;s, chang&#233;s, enlev&#233;s et configur&#233;s pour des apparences ( couleurs ) sp&#233;cifiques dans le <a href="../../../package/jmri/jmrit/beantable/SignalHeadTable.shtml">Tableau Feu de Signalisation</a>Un ou plusieurs Feux de Signalisation habituellement sont une partie d'un M&#226;t de Signalisation. Pour les d&#233;codeurs de signalisation, qui acceptent directement des Aspects multiples, il peut ne pas &#234;tre n&#233;cessaire de cr&#233;er des Feux de Signalisation  individuels, avnt la cr&#233;ation des objets M&#226;t de Signalisation.</p>
@@ -136,14 +133,14 @@ Exemple #2: Les signaux CTC de Dennis Drury obtiennent un nombre pair avec un mo
 	</a>
 Les M&#226;ts de Signalisation sont configur&#233;s par le
 	<a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Tableau M&#226;t de Signalisation</a>. Depuis le Tableau M&#226;t de Signalisation, vous pouvez cr&#233;er et modifier les M&#226;ts de Signalisation et configurer individuellement les M&#226;ts de Signalisation pour tous les Aspects qu'ils sont capable d'afficher en cliquant dans la colonne "Aspect.
-   <br/>
+   <br>
 	Vous pouvez ajouter une ic&#244;ne M&#226;t de Signalisation dans l'&#201;diteur de Panneau par la m&#233;thode habituelle. L'ic&#244;ne M&#226;t de Signalisation affichera l'image depuis la d&#233;finition Apparence de ce type particulier de M&#226;t de Signalisation et de Syst&#232;me de Signal. </p>
 	<p>3. Les <b><a href="SignalGroups.shtml">Groupes Signaux</a></b> sont utilis&#233;s pour d&#233;finir un nombre de Feux de Signalisation, o&#249; seul un Feu de Signalisation peut &#234;tre allum&#233; &#224; un moment donn&#233;, d&#233;pendant de l'Apparence ( &#201;tat ) du M&#226;t de Signalisation associ&#233; et d'un ensemble de conditions. 
 	Les Groupes Signaux seront utilis&#233;s l&#224; o&#249; des indicateurs suppl&#233;mentaires seront install&#233;s pour compl&#233;ter le M&#226;t de Signalisation principal, tel que l'affichage de Bifurcation, Itin&#233;raire, Vitesse. Ces indicateurs fournissent une information additionnelle au conducteur qui n'est pas donn&#233;e par le M&#226;t de Signalisation principal. De tels indicateurs sont vus fr&#233;quement en signalisation Europ&#233;enne et en GB.</p>
  
 	<p>4. L'outil <b><a href="SignalMastLogic.shtml">Logique M&#226;t de Signalisation</a></b> permet &#224; la Logique de Signalisation d'&#234;tre construite sous forme de paire de conditions entre les M&#226;ts de Signalisation sur le R&#233;seau.
 Chaque Logique M&#226;t de Signalisation utilise les &#233;tats des Cantons, des Aiguillages, des Capteurs et autre 
-M&#226;t de Signalisation pour d&#233;terminer quel Aspect un M&#226;t de Signalisation Particulier devrait afficher.<br/>
+M&#226;t de Signalisation pour d&#233;terminer quel Aspect un M&#226;t de Signalisation Particulier devrait afficher.<br>
 Si le r&#233;seau a &#233;t&#233; dessin&#233; avec l'&#201;diteur de R&#233;seau et que les M&#226;ts de Signalisation ont 
 &#233;t&#233; plac&#233;s sur le panneau en utilisant les outils vari&#233;s, alors il est possible de construire dynamiquement toutes les Logiques M&#226;t de Signalisation, avec un minimum d'intervention utilisateur. Pour les panneaux cr&#233;&#233;s avec l'&#201;diteur de Panneau de Commande, beaucoup de ces informations doivent &#234;tre entr&#233;es &#224; la main.</p>
  
@@ -151,7 +148,7 @@ Si le r&#233;seau a &#233;t&#233; dessin&#233; avec l'&#201;diteur de R&#233;sea
 m&#234;me temps que la configuration du tableau de commande, les Logix, les Itin&#233;raires et choses similaires. Pour plus d'information
 sur la cr&#233;ation et l'affichage des panneaux, incluant comment montrer les signaux 
 sur vos panneaux, voir la 
-	<a HREF="../../apps/PanelPro/Panels.shtml">page d'aide Panneaux</a>.</p> 	
+	<a href="../../apps/PanelPro/Panels.shtml">page d'aide Panneaux</a>.</p>
 
 	<p>Et Apr&#232;s?</p>
 <ul>
@@ -186,7 +183,7 @@ qui prennent place en fonction de l'&#233;tat de la logique. Les sous-sections s
 	Aiguillage, M&#226;t de Signalisation, etc. ) dans les variables d'&#233;tat dans ses Conditionnels sont 
 	surveill&#233;s. Un calcul de tous les Conditionnels dans le Logix est d&#233;clench&#233;
 	quand un des &#233;tats surveill&#233;s change comme not&#233; ci-dessous. <i>Note:</i> Tous les Conditionnels Logix ne sont pas list&#233;s ici.
-	</P>
+	</p>
 
 	<a href="../../../package/jmri/jmrit/beantable/images/LogixSignalHeadVariable.png">
     <img src="../../../package/jmri/jmrit/beantable/images/LogixSignalHeadVariable.png"
@@ -235,12 +232,12 @@ qui prennent place en fonction de l'&#233;tat de la logique. Les sous-sections s
 
 	<p>Comme d'autres objets dans JMRI, vous pouvez configurer et lire des Feux de Signalisation, des M&#226;ts de Signalisation et la Logique de M&#226;t de Signalisation via des Scripts. Au lieu de d&#233;finir notre propre langage pour accomplir ceci,
 	 <a href="../scripting/index.shtml">les Script JMRI </a> utilisent le langage "Python" qui est commun&#233;ment utilis&#233; en d&#233;veloppement web.
-	<br/>
-	<p>Plusieurs m&#233;thodes du fichier jmri_default.py peuvent &#234;tre utilis&#233;es pour travailler avec la signalisation. Les m&#233;thodes qui peuvent &#234;tre utilis&#233;es dans un script Python pour interagir avec les M&#226;ts Signalisation incluent: getAspect(), getSignalSystem(), getValidAspects() et setAspect(Stop). Voir ces <a href="AspectSignaling.shtml#mastscripting">Exemples</a>.<br/>
+	<br>
+	<p>Plusieurs m&#233;thodes du fichier jmri_default.py peuvent &#234;tre utilis&#233;es pour travailler avec la signalisation. Les m&#233;thodes qui peuvent &#234;tre utilis&#233;es dans un script Python pour interagir avec les M&#226;ts Signalisation incluent: getAspect(), getSignalSystem(), getValidAspects() et setAspect(Stop). Voir ces <a href="AspectSignaling.shtml#mastscripting">Exemples</a>.<br>
  	Pour le script d'un Feu de Signalisation la m&#233;thode "getSignalHead" peut &#234;tre utilis&#233;e. Puis, "setAppearance" est une m&#233;thode de l'objet retourn&#233; SignalHead. Exemple:  
 	<pre>signals.getSignalHead("IH1").setAppearance(YELLOW)</pre>
 
-<p><a href="../../../../../jython/SigletExample.py">SigletExample.py</a><br/>
+<p><a href="../../../../../jython/SigletExample.py">SigletExample.py</a><br>
 Un exemple de script pour un "Siglet" JMRI dans 
 Python. Il &#233;coute les modifications apport&#233;es &#224; deux capteurs et un aiguillage, puis
 recalcule l'Apparence du Feu de Signalisation bas&#233;es sur les valeurs.
@@ -250,13 +247,13 @@ Pour plus d'information voir la <a href="../scripting/index.shtml">page d'aide S
 <a name="automat"></a><h3>Classes d'Automatisation</h3>
 
 JMRI fournit des classes pour vous aider &#224; &#233;crire du code Java pour contr&#244;ler votre r&#233;seau. Les plus puissants d'entre eux sont destin&#233;s
-&#224; l'automatisation en g&#233;n&#233;ral et rend facile &#224; coder votre propre logique de signalisation dans le programme; voir la <A HREF="../automation/viaJava.shtml"> page web automatisation</a>.
+&#224; l'automatisation en g&#233;n&#233;ral et rend facile &#224; coder votre propre logique de signalisation dans le programme; voir la <a href="../automation/viaJava.shtml"> page web automatisation</a>.
 La
-<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> classe "Siglet"</A>
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html"> classe "Siglet"</a>
 et s'est "kin" sont cens&#233;s rendre
 facile l'&#233;criture d'une logique de signalisation complexe personnalis&#233;e; une variante de ceux-ci a &#233;t&#233; utilis&#233;e
 par Nick Kulp's pour l'automatisation de la signalisation sur son  <a href="http://jmri.org/community/examples/Panels-Cornwall/CornwallRunning.html">R&#233;seau Cornwall</a>..
-<P>
+<p>
 Bien que les Classes d'Automatisation n&#233;cessitent l'&#233;criture de code, au lieu de simplement remplir
 un formulaire GUI, le programme g&#232;re tous les d&#233;tails de la lecture des
  changements d'&#233;tat du r&#233;seau, l'&#233;criture des modifications d'aspect d&#233;sir&#233;.
@@ -267,7 +264,7 @@ vous concentrer uniquement sur la logique du signal dans le code que vous &#233;
 <A name="widgets"></a><h3>Boite &#224; Outils</h3>
 
 L'ensemble de la
-<A HREF="../../doc/Technical/index.shtml"> boite &#224; Outils JMRI</A>
+<a href="../../doc/Technical/index.shtml"> boite &#224; Outils JMRI</a>
 est disponible pour une utilisation si vous voulez vraiment faire d&#233;velopper de nouveaux outils, commandant tous les d&#233;tails. La programmation avec la Bo&#236;te &#224; Outils JMRI fournit les commandes pour les syst&#232;mes C/MRI et la plupart des syst&#232;mes DCC.
 avec des outils tr&#232;s utiles pour manipuler les aiguillages, les capteurs, les signaux, les locomotives,etc,
 ausi bien que des outils puissants pout travailler sur l'&#233;cran utilisateur.
@@ -285,5 +282,3 @@ ausi bien que des outils puissants pout travailler sur l'&#233;cran utilisateur.
 </div> <!-- closes #mBody-->
 </body>
 </html>
-   
-

@@ -18,14 +18,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
-	    <h1>JMRI:Foire Aux Questions CVS (FAQ)</h1>
+<h1>JMRI:Foire Aux Questions CVS (FAQ)</h1>
 Ceci est une liste de questions fr&#233;quemment pos&#233;es sur CVS, en particulier sur la fa&#231;on dont nous l'utilisons avec JMRI.
 
 <em> Note: Le code JMRI n'est plus maintenu dans CVS</em>
@@ -39,7 +37,7 @@ pour plus d'informations sur la maintenance du code JMRI.
 
 De nombreux ordinateurs sont livr&#233;s avec CVS install&#233;, y compris Linux et Mac OS X.
 Si vous utilisez Windows, vous aurez besoin d'installer un  programme CVS "client" comme
-<A HREF="http://sourceforge.net/project/showfiles.php?group_id=10072&amp;release_id=24467"> WinCVS </a>.
+<a href="http://sourceforge.net/project/showfiles.php?group_id=10072&amp;release_id=24467"> WinCVS </a>.
 Une version r&#233;cente peut &#234;tre t&#233;l&#233;charg&#233;e &#224; partir de:
 <a href="http://prdownloads.sourceforge.net/cvsgui/WinCvs120.zip">WinCvs120.zip</a>.
 
@@ -114,14 +112,14 @@ sp&eacute;cifique, changer le commandement "co" par "update-d"
       avec vos modifications au projet, ces lignes doivent
       &ecirc;tre intactes dans le fichier de contribution.
 
-      <h3><a name="update" id="update">Comment puis-je mettre
-      &agrave; jour une copie existante de la source de la version
-      actuelle?</a></h3>Comme le code commun change, vous pouvez
+      <h3>Comment puis-je mettre &agrave; jour une copie existante de
+      la source de la version actuelle?</h3>
+      Comme le code commun change, vous pouvez
       mettre &agrave; jour votre copie pour contenir la
       derni&egrave;re version. Pour ce faire, utilisez:
-      <pre>
+      <code>
 cvs -q update
-</PRE>
+      </code>
 Toute modification sera fusionn&#233;e dans les fichiers sur votre disque, et vous devriez &#234;tre &#224; jour avec vos propres modifications encore pr&#233;sentes.
 
 <p>

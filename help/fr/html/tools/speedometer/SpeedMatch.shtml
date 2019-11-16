@@ -20,14 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
-
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h2>Correspondance de Vitesse</h2>
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+<h2>Correspondance de Vitesse</h2>
 
       <h3>Couplage de Machines de Diff&Atilde;&copy;rents
       Fabricants Utilisant DCC/DecoderPro</h3>(Fourni par Keith

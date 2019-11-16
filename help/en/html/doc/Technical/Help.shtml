@@ -79,9 +79,9 @@
       just one). The web is meant to be a <em>web</em>, with many
       paths through it to reach content. The second part of the
       tree should also be organized as "one page, one topic", with
-      links to connect them as needed. <a name="limitations" id=
-      "limitations"></a>
+      links to connect them as needed.
 
+      <a name="limitations" id="limitations"></a>
       <p>All the page formatting on JMRI help and other web
       pages is done through included CSS files, originally created by
       John Plocher. These are included from "/css" via 
@@ -306,6 +306,7 @@ confuses JavaHelp.
       "http://jmri.tagadab.com/jenkins/job/WebSite/job/generate-website/">
       Jenkins job</a> that handles periodic updates for the static
       (from repository, unlike e.g. Javadoc) pages.</p>
+
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

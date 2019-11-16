@@ -17,10 +17,8 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -64,6 +62,7 @@ transmises sur le bus par JMRI.
 L'interface CanListener fournit ceux-ci s&#233;par&#233;ment
 via des proc&#233;dures "reply"et "message", respectivement.
 
+<code>
 class MyCanListener (jmri.jmrix.can.CanListener) :
     def message(self, msg) :
         # g&egrave;re la transmission des trames CAN en ignorant leurs retours
@@ -75,7 +74,7 @@ class MyCanListener (jmri.jmrix.can.CanListener) :
         return
     
 jmri.jmrix.can.TrafficController.instance().addCanListener(MyCanListener())
-</pre></code>
+</code>
 
 <a name="documentation"></a><h2>Documentation</h2>
 <h3>Aide JMRI</h3>

@@ -21,14 +21,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
-      <h1>JMRI: M&eacute;canismes Plug-in</h1>
+<h1>JMRI: M&eacute;canismes Plug-in</h1>
         L'objectif initial du
       projet &eacute;tait de produire une biblioth&egrave;que que
       les gens pourraient utiliser pour cr&eacute;er leurs propres

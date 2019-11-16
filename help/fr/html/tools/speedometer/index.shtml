@@ -16,14 +16,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
-
-      <h2>Tachym&egrave;tre</h2>
+<h2>Tachym&egrave;tre</h2>
 
 <h1>Compteur</h1>
 

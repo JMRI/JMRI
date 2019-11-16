@@ -64,7 +64,7 @@ Donc, l'Indicateur d'Itin&#233;raire peut seulement afficher une destination &#2
 <a href="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png"><img src="../../../package/jmri/jmrit/beantable/SignalGroupsTable.png" ALIGN=RIGHT WIDTH="386" HEIGHT="165" HSPACE="0" VSPACE="0" ALT="Signal Group Table figure"></a>
 
 <p>Les Groupes Signaux JMRI peuvent &#234;tre cr&#233;&#233;s et modifi&#233;s en utilisant le  <a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">Tableau Groupe de Signaux</a>. Vous acc&#233;dez &#224; cet outil depuis le menu Outils--> Tableaux --> Groupes de Signaux de la plupart des programme JMRI.
-	<br/>
+	<br>
 Dans le Tableau Groupe Signal vous pouvez cr&#233;er, changer et effacer des Groupes Signaux individuellement. Vous changez la configuration d'un Groupe de Signaux en cliquant sur le bouton "Modifier" dans la ligne correspondante.</br>
  		Plus d'information sur la configuration  des Groupes Signaux et un <a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml#example">Exemple</a> peuvent &#234;tre trouv&#233;s sur la 
 		<a href="../../../package/jmri/jmrit/beantable/SignalGroupTable.shtml">page d'aide de Tableau de Groupe Signal</a>.</p> 

@@ -18,10 +18,8 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -54,17 +52,19 @@
 <h3>&#201;tape 1</h3>
 <p> Pour configurer un emplacement de fichier utilisateur partag&#233; sur le Web:
 <ul>
-	<Li> Cr&#233;ez un dossier JMRI dans Dropbox sur le premier ordinateur. </li>
-	Li> Si vous avez d&#233;j&#225; cr&#233;&#233; des &#233;l&#233;ments (listes, panneaux, etc.), allez dans Aide-> Emplacements et
-	Appuyez sur Ouvrir les fichiers des utilisateurs.
-<a href="images/Help_Locations.png"> <img src="images/Help_Locations.png" width = "682" height = "139"></a>
-	<br> Ceci ouvrira une fen&ecirc;tre sur votre bureau montrant un r&#233;pertoire.
+	<li> Cr&#233;ez un dossier JMRI dans Dropbox sur le premier ordinateur.</li>
+	<li> Si vous avez d&#233;j&#225; cr&#233;&#233; des &#233;l&#233;ments (listes, panneaux, etc.), allez dans Aide->
+        Emplacements et	Appuyez sur Ouvrir les fichiers des utilisateurs.
+    <a href="images/Help_Locations.png"><img src="images/Help_Locations.png" width="682" height="139"
+    alt="User Files Locations"></a>
+	<br>Ceci ouvrira une fen&ecirc;tre sur votre bureau montrant un r&#233;pertoire.
 	Rappelez-vous o&#249; c'est, parce que vous allez d&#233;placer des &#233;l&#233;ments depuis l&#225; plus tard.
 	</li>
 	<li> Toujours dans la fen&ecirc;tre Aide-> Lieux, v&#233;rifiez si votre emplacement de liste est diff&#233;rent
     de l'emplacement des fichiers utilisateur.
 	Si oui, cliquez sur Ouvrir l'emplacement de la liste pour ouvrir une fen&ecirc;tre sur cet emplacement. Vous 		copirez des fichiers depuis l&#225; plus tard.
-	<a href="images/Help_Locations_Roster.png"><img src="images/Help_Locations_Roster.png" width="682" height="139"></a></li>
+	<a href="images/Help_Locations_Roster.png"><img src="images/Help_Locations_Roster.png" width="682"
+    height="139" alt="Roster Files Locations"></a></li>
 	<li> Preferences-> Inventaire-> Inventaire-> Emplacement Inventaire > R&#233;initialiser. N'entrez pas
         d'emplacement d'inventaire. De cette fa&#231;on, il suivra le r&#233;glage de l'emplacement des fichiers utilisateur. <br>
 <a href="images/Roster_Reset.png"> <img src="images/Roster_Reset.png" width = "416" height = "159"> </a> </li>

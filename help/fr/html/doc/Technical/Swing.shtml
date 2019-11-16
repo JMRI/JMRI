@@ -23,14 +23,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>JMRI: utilisation de Swing</h1>Nous utilisons Java Swing
+<h1>JMRI: utilisation de Swing</h1>Nous utilisons Java Swing
       pour notre d&eacute;veloppement Interface Graphique
       Utilisateur (GUI). Il est beaucoup plus puissant que l'AWT
       d'origine, et le prix est juste. En particulier, nous

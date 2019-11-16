@@ -24,14 +24,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>JMRI: Utilisation de DTD XML</h1>Cette page d&eacute;crit
+<h1>JMRI: Utilisation de DTD XML</h1>Cette page d&eacute;crit
       l'utilisation des DTD XML dans JMRI avant la version 2.9.4.
       Ces DTD ont &eacute;t&eacute; remplac&eacute;s par un
       sch&eacute;ma XML dans JMRI 2.9.4.

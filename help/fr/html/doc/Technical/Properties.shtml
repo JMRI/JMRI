@@ -20,14 +20,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>JMRI: Propri&eacute;t&eacute;s du
+<h1>JMRI: Propri&eacute;t&eacute;s du
       Syst&egrave;me</h1>Cette page liste les
       propri&eacute;t&eacute;s du syst&egrave;me que JMRI utilise.
 

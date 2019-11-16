@@ -17,16 +17,14 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-	<div id="mainContent">
-	<!-- Page Body -->
+<h1>Support Mat&#233;riel: EasyDCC</h1>
 
-    <h1>Support Mat&#233;riel: EasyDCC</h1>
-
-	<a name="hardware"></a><H2>Mat&#233;riel pris en charge</H2>
+	<a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>
 	<h3>Centrale</h3>
 		<ul>
 		<li>EDCSK -  EasyDCC Kit Centrale 
@@ -51,13 +49,13 @@
 	magasins ont g&#233;n&#233;ralement en stock, due au connecteur RJ11 n&#233;cessaire &#224; l'extr&#233;mit&#233;
 	du c&#226;ble de la centrale de commande. Vous aurez probablement &#224; faire ce
 	c&#226;ble vous-m&#234;me ou un autre utilisateur CVP le faire &#224; votre place.
-	<P>
+	<p>
 	Pour plus d'informations sur la fa&#231;on dont le c&#226;ble est connect&#233;, voir page
 	134 du manuel de la centrale de commande EasyDCC V4  ou de la page 143 du manuel de V6
 	(une 
-	<A HREF="http://www.cvpusa.com/doc_center/6_97_easydcc_manual_web_sec.pdf"> version dans un fichier PDF</a>
+	<a href="http://www.cvpusa.com/doc_center/6_97_easydcc_manual_web_sec.pdf"> version dans un fichier PDF</a>
  	disponible sur le web)
-	<P>
+	<p>
 	Un moyen facile de le faire est d'acheter un c&#226;ble s&#233;rie &#224; 9 broches et d'un c&#226;ble de t&#233;l&#233;phone, 
 	puis les couper et les &#233;pissurrer ensemble.<br>
 	Une m&#233;thode alternative 
@@ -88,7 +86,7 @@
 		<li>Redemarrez JMRI, Vous devriez maintenant &#234;tre op&#233;rationnel.</li>
 	</ul>
 
-	<H3>D&#233;bogage</H3>
+	<h3>D&#233;bogage</h3>
 	<p>R&#233;f&#233;rez vous aux <a href="http://www.cvpusa.com/easydcc/default.htm">Manuels CVP EasyDCC</a></p>
 
 <a name="tools"></a><h2>Outils JMRI EasyDCC</h2>

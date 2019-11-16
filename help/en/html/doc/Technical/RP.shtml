@@ -24,10 +24,12 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
 
     <div id="mainContent">
@@ -111,8 +113,7 @@
         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html">HashMap</a>, 
         etc) in the 
         <a href="https://docs.oracle.com/javase/8/docs/api/java/util/package-summary.html">java.util package</a>.
-        
-        
+
         <ul>
         <li>
         Please don't use fixed-size arrays for holding variable sized data in objects.

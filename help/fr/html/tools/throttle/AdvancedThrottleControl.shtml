@@ -20,11 +20,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>Contr&#244;le Avanc&#233; d'un R&#233;gulateur</h1>
 
       <h2>Contr&#244;le du clavier de la fen&#234;tre du
@@ -138,16 +137,15 @@
       la fen&#234;tre r&#233;gulateur est Jynstrumentable aussi,
       donc ici nous laissons tomber le Jynstruments sur la barre
       elle-m&#234;me, pas sur le contenu de la
-      fen&#234;tre.</span><br>
-      <a name="joypad"></a></p>
+      fen&#234;tre.</span></p>
 
-      <h3><a name="joypad">USB Joypad
-      (USBControl.jyn)</a></h3><a name="joypad">Il y a un
+      <h3><a name="joypad">USB Joypad (USBControl.jyn)</a></h3>
+      Il y a un
       Jynstrument nomm&#233; USBControl.jyn sur une fen&#234;tre
       barre d'outils R&#233;gulateur pour prendre le contr&#244;le
       de cette fen&#234;tre avec une manette. Voir les fichiers.Py
       pour les param&#232;tres par d&#233;faut du bouton, et les
-      personnalisations possibles.</a>
+      personnalisations possibles.
 
       <p>Particuli&#232;rement vous pourriez vouloir d&#233;finir
       un fichier de "pilote" pour votre propre appareil, &#224;
@@ -231,7 +229,7 @@
       luxe &#224; distance comme nous n'utilisons que les boutons.
       Mais il s'int&#232;gre tr&#232;s bien dans une main et une
       fois que vous connaissez les param&#232;tres, vous n'avez
-      m&#234;me pas &#224; regarder pour l'utiliser.<br></a>
+      m&#234;me pas &#224; regarder pour l'utiliser.
 
       <h4>Contr&#244;les par
       D&#233;faut:</h4> largeur
@@ -288,8 +286,8 @@
         l&#224;.</a><br>
         <br>
 
-        <h2><a name="iphone">IPhone et IPod Touch</a></h2><a name=
-        "iphone">Il ya une application tierce appel&#233;e</a>
+        <h2><a name="iphone">IPhone et IPod Touch</a></h2>
+        Il ya une application tierce appel&#233;e
         <a href="http://withrottle.com/">WiThrottle</a> qui
         travaille avec JMRI vous permettant de contr&#244;ler les
         trains avec votre iPhone ou iPod Touch.

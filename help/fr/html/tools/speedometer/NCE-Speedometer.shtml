@@ -20,14 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
-
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>Utilisation du Compteur JMRI avec NCE</h1>
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+<h1>Utilisation du Compteur JMRI avec NCE</h1>
 
       <h2>Installation</h2>La fonction compteur de vitesse au sein
       de DecoderPro est utilis&eacute;e pour mesurer la vitesse

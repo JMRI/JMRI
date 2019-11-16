@@ -3,23 +3,21 @@
 <html lang="fr">
 <head>
     <title>Using the NetBeans Swing GUI Builder </title>
-		<meta name="author" content="Bob Jacobsen">
-        <meta name="keywords" content="JMRI technical code NetBeans">
+	<meta name="author" content="Bob Jacobsen">
+	<meta name="keywords" content="JMRI technical code NetBeans">
  	<!-- Style -->
-        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-        <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-        <link rel="icon" href="/images/jmri.ico" type="image/png">
-        <link rel="home" title="Home" href="/">
-        <!-- /Style -->
-    </head>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+	<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+	<link rel="icon" href="/images/jmri.ico" type="image/png">
+	<link rel="home" title="Home" href="/">
+    <!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
 	<!--#include virtual="Sidebar" -->
-
 	<div id="mainContent">
 		<!-- Page Body -->
 
@@ -85,20 +83,20 @@
 				<p>D'autre outils, cependant, afficheront le code de fa&#231;on tr&#232;s diff&#233;rente, et 
 						Code contiendra les marques non-standards suivantes, bien que valides, 
 						comme les commentaires qui sont cach&#233;s dans NetBeans: </p>
-			<dl>
-					<dt>// &lt;editor-fold defaultstate="collapsed" desc="Generated Code"&gt;</dt>
-					<dd>Masquer tout entre elle et
-							<code>// &lt;/editor-fold&gt;</code> avec la description
-							<em>Generated Code</em> dans NetBeans et autres &#233;diteurs qui
-							le reconnaissent.	Le code entre cess deux commentaires peut &#234;tre affich&#233;
-							en cliquant	l'ic&#244;ne	<strong>+</strong> &#224; gauche de la description dans ces 
-							&#233;diteurs. C'est utilis&#233; pour cacher le code qui ne devrait pas &#234;tre 
-							modifi&#233; manuellement.</dd>	
-					<dt>// &lt;/editor-fold&gt;</dt>
-					<dd>Utilis&#233; avec
-							<code>// &lt;editor-fold defaultstate="collapsed" desc="Generated Code"&gt;</code>.
-							Voir la description commentaire pour plus d'informations.</dd>
-					<dt>//GEN-BEGIN:<em>&lt;token&gt;</em></dt>
+		<dl>
+			<dt>// &lt;editor-fold defaultstate="collapsed" desc="Generated Code"&gt;</dt>
+			<dd>Masquer tout entre elle et
+					<code>// &lt;/editor-fold&gt;</code> avec la description
+					<em>Generated Code</em> dans NetBeans et autres &#233;diteurs qui
+					le reconnaissent.	Le code entre cess deux commentaires peut &#234;tre affich&#233;
+					en cliquant	l'ic&#244;ne	<strong>+</strong> &#224; gauche de la description dans ces
+					&#233;diteurs. C'est utilis&#233; pour cacher le code qui ne devrait pas &#234;tre
+					modifi&#233; manuellement.</dd>
+			<dt>// &lt;/editor-fold&gt;</dt>
+			<dd>Utilis&#233; avec
+					<code>// &lt;editor-fold defaultstate="collapsed" desc="Generated Code"&gt;</code>.
+					Voir la description commentaire pour plus d'informations.</dd>
+			<dt>//GEN-BEGIN:<em>&lt;token&gt;</em></dt>
           <dd>Pr&#233;c&#232;de une m&#233;thode ou un bloc de variable qui est
 							enti&#233;rement g&#233;n&#233;r&#233; par le Builder. Une telle m&#233;thode ou bloc est 
 							suivi d'un														
@@ -119,34 +117,34 @@
 							de celui-ci est &#233;crit par un d&#233;veloppeur. Ce commentaire marque l'accolade 
 							fermante dans la m&#233;thode pr&#233;c&#233;d&#233;e 
 							par un <code>//GEN-FIRST:<em>&lt;token&gt;</em></code>commentaire 
-							correspondant..</dd>
-        	
+							correspondant.</dd>
        	</dl>
+
        	<h3><a href="form">Fichier .form</a></h3>
-				<p>Le fichier .form est enti&#232;rement cach&#233; au sein d'un IDE NetBeans.L'ouverture
-						d'un fichier .java avec son fichier correspondaznt .form ( le m&#234;me nom de 
-						fichier dans le m&#234;me paquet ) ajoutera le bouton  <strong>Design</strong> &#224; la
-						baree d'outil de l'&#233;diteur, permettant au Builder d'&#234;tre utilis&#233;.</p>
-				<p>Le fichier .form est un fichier XML adh&#233;rant &#224; la DTD dans			
-						<a href="http://hg.netbeans.org/core-main/file/tip/form/src/org/netbeans/modules/form/forminfo/forms.dtd">le code source NetBeans</a>
-						( li&#233; &#224; la t&#234;te de l'arbre NetBeans ). NetBeans utilise ce fichier 
-						pour stocker des informations suppl&#233;mentaires en dehors de la sp&#233;cification  
-						JavaBeans ce qui est n&#233;cessaire pour g&#233;n&#233;rer correctement la m&#233;thode
-						<code>initComponents()</code>, des bouts de m&#233;thodes et des listes de 
-						variables. En absence d'autres changements dans le fichier .java, ce fichier
-						pourra &#234;tre utilis&#233; pour g&#233;n&#233;rer enti&#232;rement un neouveau fichier. java, si cela 
-						est n&#233;cessaire.</p>
-				<p>Ce fichier ne devrait pas &#234;tre modifi&#233; &#224; la main, mais devrait &#234;tre g&#233;n&#233;r&#233; par 
-						le Builder.</p>
+		<p>Le fichier .form est enti&#232;rement cach&#233; au sein d'un IDE NetBeans.L'ouverture
+				d'un fichier .java avec son fichier correspondaznt .form ( le m&#234;me nom de
+				fichier dans le m&#234;me paquet ) ajoutera le bouton  <strong>Design</strong> &#224; la
+				baree d'outil de l'&#233;diteur, permettant au Builder d'&#234;tre utilis&#233;.</p>
+		<p>Le fichier .form est un fichier XML adh&#233;rant &#224; la DTD dans
+				<a href="http://hg.netbeans.org/core-main/file/tip/form/src/org/netbeans/modules/form/forminfo/forms.dtd">le code source NetBeans</a>
+				( li&#233; &#224; la t&#234;te de l'arbre NetBeans ). NetBeans utilise ce fichier
+				pour stocker des informations suppl&#233;mentaires en dehors de la sp&#233;cification
+				JavaBeans ce qui est n&#233;cessaire pour g&#233;n&#233;rer correctement la m&#233;thode
+				<code>initComponents()</code>, des bouts de m&#233;thodes et des listes de
+				variables. En absence d'autres changements dans le fichier .java, ce fichier
+				pourra &#234;tre utilis&#233; pour g&#233;n&#233;rer enti&#232;rement un neouveau fichier. java, si cela
+				est n&#233;cessaire.</p>
+		<p>Ce fichier ne devrait pas &#234;tre modifi&#233; &#224; la main, mais devrait &#234;tre g&#233;n&#233;r&#233; par
+		le Builder.</p>
 
         <h2><a id="references">Voir aussi</a></h2>
         <ul>
             <li><a href="https://netbeans.org/kb/docs/java/quickstart-gui.html">Designing a Swing GUI in NetBeans IDE</a></li>
             <li><a href="https://netbeans.org/kb/trails/matisse.html">Java GUI Applications Learning Trail</a></li>
         </ul>
-        <!--#include virtual="/Footer" -->
-    </div>
-    <!-- closes #mainContent-->
-</body>
 
+        <!--#include virtual="/Footer" -->
+    	</div><!-- closes #mainContent-->
+	</div>
+</body>
 </html>

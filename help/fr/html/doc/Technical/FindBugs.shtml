@@ -20,14 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
-
-    <h1>JMRI: Analyse statique avec SpotBugs</h1>
+<h1>JMRI: Analyse statique avec SpotBugs</h1>
 
 SpotBugs est un outil qui peut examiner le code pour trouver d'&#233;ventuels
 probl&#232;mes. Il fait un "analyse statique", en regardant &#224; travers le
@@ -40,9 +37,9 @@ Disposer d'un outil qui peut faire les inspections automatiquement,
 afin qu'elles puissent se faire &#224; chaque fois que quelque chose est chang&#233;,
 prot&#232;ge le code d'une d&#233;gradation lente sans que quelqu'un le
 remarque jusqu'&#224; ce qu'il soit trop tard.
-<P>
+<p>
     Pour plus d'informations sur SpotBugs, voir
-    <A href="https://spotbugs.github.io"> la page d'accueil SpotBugs  </A>.
+    <a href="https://spotbugs.github.io"> la page d'accueil SpotBugs  </a>.
 
 <p>
     Nous ex&#233;cutons sous forme d'une routine SpotBugs comme une partie de notre
@@ -141,13 +138,14 @@ Nous n'utilisons pas ces annotations:
     Nous avons d&#233;sactiv&#233; les SpotBugs de routine de contr&#244;le de certains types de conditions:
     <dl>
         <dt><a
-                href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#ri-class-implements-same-interface-as-superclass-ri-redundant-interfaces">RI_REDUNDANT_INTERFACES</a></dt>
+        href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#ri-class-implements-same-interface-as-superclass-ri-redundant-interfaces">RI_REDUNDANT_INTERFACES</a></dt>
         <dd>Ce drapeaux au cas o&#249; une classe impl&#233;mente une interface, et aussi h&#233;rite d'une 
 	superclasse qui impl&#233;mente d&#233;j&#224; cette interface. Ceci est redondant et inutile, mais il ne peut pas provoquer de dysfonctionnement 
         du code. Nous avons assez d'entre eux que nousavons &#233;teint l'avertissement, et nous y reviendrons plus tard.</dd>
-        <dt><a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-named-static-inner-class-sic-inner-should-be-static-anon">SIC_INNER_SHOULD_BE_STATIC_ANON
-                , 
-                <dt><a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-static-inner-class-sic-inner-should-be-static-needs-this">
+        <dt><a
+        href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-named-static-inner-class-sic-inner-should-be-static-anon">SIC_INNER_SHOULD_BE_STATIC_ANON</a>
+        ,
+        <dt><a href="http://spotbugs.readthedocs.io/en/latest/bugDescriptions.html#sic-could-be-refactored-into-a-static-inner-class-sic-inner-should-be-static-needs-this">
         SIC_INNER_SHOULD_BE_STATIC_NEEDS_THIS</a></dt>
 	<dd>Static oppos&#233; &#224; non-static,
 	les classes internes ( classes d&#233;finies au c&#339;ur d'autres classes ) prennent moins de place
@@ -203,16 +201,16 @@ Pour ex&#233;cuter la t&#226;che:
 
     <li> soit ex&#233;cuter
  
-</code><pre>
+<code>
 ant-Dspotbugs.home=C:/SpotBugs-3.1.1 spotbugs ( rempla&#233;ant le param&#232;tre de votre emplacement d'installation )
-</pre> </code>
+</code>
 
 ou modifier le build.xml et modifier le param&#232;tre comment&#233;
 de spotbugs.home &#224; votre emplacement d'installation, puis ex&#233;cutez
 
-</code> <pre>
+<code>
 ant spotbugs
-</pre> </code>
+</code>
     </li>
 </ul>
 

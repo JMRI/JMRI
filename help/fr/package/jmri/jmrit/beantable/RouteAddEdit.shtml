@@ -154,7 +154,9 @@
       <p>Pour plus d'informations sur comment configurer le
       verrouillage d'aiguillage S'il vous pla&icirc;t voir la
       <a href="TurnoutTable.shtml#Turnout%20lock%20feature">Page
-      Tableau Aiguillage</a>.</p><!--#include virtual="/Footer" -->
+      Tableau Aiguillage</a>.</p>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

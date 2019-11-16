@@ -19,14 +19,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>JMRI: TCH System Technology n'est plus
+<h1>JMRI: TCH System Technology n'est plus
       support&agrave;</h1>
       <p>A compter du Novembre 10, 2008, JMRI ne
       supporte plus le mat&agrave;riel de technologie TCH.</p>

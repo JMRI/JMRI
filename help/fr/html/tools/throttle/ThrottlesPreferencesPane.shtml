@@ -1,14 +1,12 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Updated by Blorec Herv&#233;  2013-10-04-->
 <html lang="fr">
 <head>
-	<title>Throttles Preferences</title>
+	<title>Pr&#233;f&#233;rences R&#233;gulateurs</title>
 	<meta name="keywords" content="JMRI decoderpro dcc nmra throttle throttlepro">
 	<meta name="Description" content="Throttle documentation for JMRI project">
 	<meta name="Author" content="Lionel Jeanson">
-	<meta name="Language" content="EN" >
-	
+
 	<!-- Style -->
 	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 	<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -20,12 +18,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-		<!-- Page Body -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Pr&#233;f&#233;rences R&#233;gulateurs</h1>
 
@@ -38,7 +34,7 @@ Il est recommand&#233; de fermer toutes les fen&#234;tres R&#233;gulateurs avant
 ensemble de Pr&#233;f&#233;rences, puis rouvrez les une fois les nouveaux param&#232;tres 
 appliqu&#233;e ou sauv&#233;s.
 	<ul>
-   	<li>Le bouton Annuler ferme la fen&#234;tre et laisse les param&#232;tres actuels des R&#233;gulateurs comme ils sont. </Li>
+   	<li>Le bouton Annuler ferme la fen&#234;tre et laisse les param&#232;tres actuels des R&#233;gulateurs comme ils sont. </li>
    	<li>Le bouton Appliquer appliquera l'ensemble actuel des pr&#233;f&#233;rences et la
 	fen&#234;tre des pr&#233;f&#233;rences restera ouverte. </li>
    	<li>Le bouton Enregistrer enregistrera vos pr&#233;f&#233;rences actuelles, et fermerera les fen&#234;tres Pr&#233;f&#233;rences, 

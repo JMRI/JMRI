@@ -20,12 +20,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-	<!--#include virtual="Sidebar" -->
-
-	<div id="mainContent">
-		<!-- Page Body -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>L'utilisation de la Fen&#234;tre R&#233;gulateur</h1>
 
@@ -34,30 +32,30 @@
 <h1>Utilisation du Volet R&#233;gulateur</h1>
 
 Il ya trois panneaux (ou sous-fen&#234;tres) associ&#233;s &#224; chacune des fen&#234;tres R&#233;gulateurs. 
-Ils sont identifi&#233;s comm: <br>
+Ils sont identifi&#233;s comm:<br>
 
 <ul>
  	<li>Le Panneau de Commande &#8212; contient un curseur d'acc&#233;l&#233;rateur pour contr&#244;ler la vitesse
 	de la locomotive, d'un s&#233;lecteur de marche avant et inverse, une bouton d'arr&#234;t d'urgence
- 	et un bouton Arr&#234;t (principalement utilis&#233; pour les d&#233;codeurs son). </li>
+ 	et un bouton Arr&#234;t (principalement utilis&#233; pour les d&#233;codeurs son).</li>
  	<li> Le Panneau Fonction  &#8212; est utilis&#233; pour associer les touches de fonction avec
-	les fonctions de sortie actives du d&#233;codeur. </li>
+	les fonctions de sortie actives du d&#233;codeur.</li>
   	<li>Le Panneau Adresse &#8212; est utilis&#233; pour identifier l'adresse du d&#233;codeur, et 
-	distribuer ou lib&#233;rer l'adresse identifi&#233;e. </li>
+	distribuer ou lib&#233;rer l'adresse identifi&#233;e.</li>
 </ul>
 
 Notez que ces trois panneaux sont en fait des fen&#234;tres actuellement d&#233;finies au sein d'une 
 fen&#234;tre globale, chacun de ces panneaux contient ses propres boutons "minimiser" et
 "fermer" &#8212; ainsi ils peuvent &#234;tre redimensionn&#233;s. Vous pouvez effectivement
 minimiser un ou plusieurs de ces panneaux dans la fen&#234;tre du r&#233;gulateur. Lorsque
-une de ces sous-fen&#234;tres est ferm&#233;e, elle peut &#234;tre r&#233;ouverte par le biais< a  href="ThrottleWindowMenus.shtml"> du menu Affichage </a>.<br>
-<br>
+une de ces sous-fen&#234;tres est ferm&#233;e, elle peut &#234;tre r&#233;ouverte par le biais
+<a href="ThrottleWindowMenus.shtml">du menu Affichage</a>.<br>
 
 Pour plus de d&#233;tails sur l'utilisation du R&#233;gulateur
-<a href="ThrottleWindowMenus.shtml"> voir l&#224;, les menus de la fen&#234;tre </a>.
+<a href="ThrottleWindowMenus.shtml">voir l&#224;, les menus de la fen&#234;tre</a>.
 <br>
 Pour plus de d&#233;tails sur l'utilisation du r&#233;gulateur
-<a href="ThrottleToolBar.shtml"> voir l&#224;, barre d'outils de la fen&#234;tre </a>.
+<a href="ThrottleToolBar.shtml">voir l&#224;, barre d'outils de la fen&#234;tre</a>.
 <br>
 Pour plus de d&#233;tails sur l'utilisation des pr&#233;f&#233;rences manettes <a href="ThrottlesPreferencesPane.shtml"> voir l&#224;, les pr&#233;f&#233;rences de R&#233;gulateur </a>.<br>
 <br>
@@ -158,19 +156,18 @@ Ce volet est accessible par un clic droit dans le volet AddressPanel, sur
 une Touche de Fonction sp&#233;cifique et ouvrant une entr&#233;e du menu Propri&#233;t&#233;s.<br>
 <br>
 Notez que pour les R&#233;gulateurs qui ont un Inventaire associ&#233;e, il est pr&#233;f&#233;rable de
-d&#233;finir ces param&#232;tres dans le <a  href="RostersMediaPane.shtml"> volet label Fonction   dans DecoderPro </a>. (Mais si vous les modifiez ici, vous pouvez toujours exporter ces changements  dans l'inventaire gr&#226;ce &#224; <a href="ThrottleWindowMenus.shtml"> l'exportation dans le menu entr&#233;es de l'Inventaire </a>)<br
-<br>
-
-<ul>
-
- 	<li>Num&#233;ro de la fonction   &#8212; associe le bouton avec un num&#233;ro de fonction </li>
-   	<li>Texte &#8212;  personnalisation du texte de l'&#233;tiquette du bouton </li>
-  	<li>Taille de la police &#8212; taille du texte affich&#233; sur le bouton </li>
-   	<li>verrouillable &#8212; indique si le bouton agit comme un interrupteur &#224; bascule "Marche/Arr&#234;t", 
- 	ou comme un commutateur momentan&#233; </li>
-   	<li>Visible &#8212; indique si le bouton est visible dans la fen&#234;tre
-	Panneau Fonction </li>
-</ul>
+d&#233;finir ces param&#232;tres dans le <a  href="RostersMediaPane.shtml"> volet label Fonction dans DecoderPro</a>.
+	(Mais si vous les modifiez ici, vous pouvez toujours exporter ces changements  dans l'inventaire gr&#226;ce
+	&#224; <a href="ThrottleWindowMenus.shtml"> l'exportation dans le menu entr&#233;es de l'Inventaire </a>)
+	<ul>
+		<li>Num&#233;ro de la fonction   &#8212; associe le bouton avec un num&#233;ro de fonction </li>
+		<li>Texte &#8212;  personnalisation du texte de l'&#233;tiquette du bouton </li>
+		<li>Taille de la police &#8212; taille du texte affich&#233; sur le bouton </li>
+		<li>verrouillable &#8212; indique si le bouton agit comme un interrupteur &#224; bascule "Marche/Arr&#234;t",
+		ou comme un commutateur momentan&#233; </li>
+		<li>Visible &#8212; indique si le bouton est visible dans la fen&#234;tre
+		Panneau Fonction </li>
+	</ul>
 
 Par d&#233;faut, le Num&#233;ro de Fonction est associ&#233; au num&#233;ro de bouton
 o&#249; vous avez initialement fait un clic droit dessus. Par exemple, dans les chiffres indiqu&#233;s
@@ -184,8 +181,7 @@ situ&#233; aussi sur le premier bouton dans le panneau de fonction. <br>
 <span style="font-weight: bold;"> Attention! </span> Si toutes les modifications
 sont faites pour le champs "Num&#233;ro Fonction", v&#233;rifiez pour vous assurer que
 deux boutons ne sont pas affect&#233;s au m&#234;me num&#233;ro de fonction &#8212; certaines 
-cons&#233;quences ind&#233;sirables pourraient se produire. <br>
-
+cons&#233;quences ind&#233;sirables pourraient se produire.<br>
 <br>
 Les Champ Texte seront les bienvenus  et modifi&#233;s. Par d&#233;faut,
 ils sont configur&#233;s pour un r&#233;gulateur &#224; main similaire : F1 ... F2.. F3 ...etc. Le

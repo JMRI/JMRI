@@ -20,14 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
-
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h2>JMRI: Le langage Python/Jython</h2>
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+<h2>JMRI: Le langage Python/Jython</h2>
       <p><a href=
       "http://www.python.org">Python</a> est un langage de script
       couramment utilis&eacute; qui est disponible sur de nombreux

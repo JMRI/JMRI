@@ -45,7 +45,7 @@ couper le r&#233;seau et appuyez sur un bouton ou de mettre une locomotive dans 
 <p>
 Par cons&#233;quent, JMRI vous laisse changer un Capteur via le Tableau Capteur ( voir ci-dessous ), ou
 en cliquant sur une ic&#244;ne du Capteur sur un panneau ( voir les 
-<A HREF="../apps/PanelPro/PanelPro.shtml">pages PanelPro</a> 
+<a href="../apps/PanelPro/PanelPro.shtml">pages PanelPro</a>
 pour plus d'info sur les Panneaux).
 <p>
 Le changement prend effet imm&#233;diatement, sauf si une minuterie anti-rebond est configur&#233; voir ci-dessous,
@@ -145,3 +145,4 @@ dans le menu <b>Panneau</b>.
       </div><!-- closes #mainContent-->
     </div><!-- closes #mBody-->
 </body>
+</html>

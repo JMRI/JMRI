@@ -19,15 +19,12 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<!--#include virtual="/Header" -->
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <!-- Page Body -->
-
-      <h2>JMRI: Mise en Route avec des Scripts</h2>
+        <!-- Page Body -->
+<h2>JMRI: Mise en Route avec des Scripts</h2>
 
       <h3>Ex&eacute;cuter "Bonjour le monde"</h3>Il y a plusieurs
       fa&ccedil;ons d'utiliser des scripts Python avec JMRI. Le

@@ -21,14 +21,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>Construction de JMRI avec Ant</h1>Pour ceux d'entre vous
+<h1>Construction de JMRI avec Ant</h1>Pour ceux d'entre vous
       qui pr&eacute;f&egrave;rent une approche en ligne de commande
       il conviendrait d'examiner "Ant", un des meilleurs
       utilitaires pour faire les projets Java. Ant est disponible

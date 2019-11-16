@@ -20,14 +20,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
-
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h2>Utiliser le port s&eacute;rie pour les capteurs de
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+<h2>Utiliser le port s&eacute;rie pour les capteurs de
       canton</h2>
     <p>Jim Scorse a fourni un sch&eacute;ma pour le
       raccordement d'un d&eacute;tecteur de canton NCE au port

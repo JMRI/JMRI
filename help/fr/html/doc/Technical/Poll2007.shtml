@@ -20,14 +20,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>JMRI: 2007 User Poll</h1>In late May and early June 2007,
+<h1>JMRI: 2007 User Poll</h1>In late May and early June 2007,
       we ran three polls in the now deprecated Yahoo <a href=
       "http://groups.yahoo.com/group/jmriusers">jmriusers group</a>
       to learn more about what our users are actually using. This

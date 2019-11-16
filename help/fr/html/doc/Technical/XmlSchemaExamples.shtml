@@ -19,14 +19,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
-      <h1>JMRI: XML Exemples de Sch&eacute;ma</h1>Cette page
+<h1>JMRI: XML Exemples de Sch&eacute;ma</h1>Cette page
       contient des exemples de divers fragments Examples de Schema
       XML que vous pourriez trouver utiles. Pour une analyse de
       l'utilisation JMRI de Schema, XML, y compris des infos sur

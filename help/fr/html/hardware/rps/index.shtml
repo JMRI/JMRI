@@ -15,10 +15,8 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
@@ -49,8 +47,8 @@ et JMRI pour utiliser RPS.
 <p>
 A l'heure actuelle, RPS est pris en charge avec les syst&#232;mes DCC :
 <ul>
-     <LI> Digitrax
-     <LI> Lenz
+     <li> Digitrax
+     <li> Lenz
      <li> RCE
 </ul>
 D'autres peuvent travailler, et nous sommes int&#233;ress&#233;s &#224; le faire, mais ils
@@ -75,8 +73,8 @@ ou c&#226;ble "modem" , mais <I> pas </I> un c&#226;ble "crois&#233;" ou "null-m
 <h3>R&#233;glages</h3>
 <img src="images/NAC_RPSConnection.png" width="431" height="200" align="right" alt="RPS Connection pane">
 Ensuite, configurez le programme JMRI.
-<UL>
-   <LI> D&#233;marrer votre programme bas&#233; sur JMRI (DecoderPro, PanelPro, etc.)
+<ul>
+   <li> D&#233;marrer votre programme bas&#233; sur JMRI (DecoderPro, PanelPro, etc.)
    <li> Allez dans le panneau des pr&#233;f&#233;rences du programme.
    Celui-ci s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous
    pouvez le s&#233;lectionner dans le menu "&#233;dition".
@@ -90,7 +88,7 @@ Ensuite, configurez le programme JMRI.
    <li> S&#233;lectionnez "station de base RPS" dans la bo&#238;te de s&#233;lection "connexion Aux 2"
    .
   
-   <LI> Dans la bo&#238;te de s&#233;lection de port associ&#233;, choisissez le nom du
+   <li> Dans la bo&#238;te de s&#233;lection de port associ&#233;, choisissez le nom du
    port s&#233;rie que vous avez connect&#233; au syst&#232;me de RPS.
 
    <li> La vitesse de transmission va afficher une valeur fixe de

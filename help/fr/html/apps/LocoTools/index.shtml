@@ -22,14 +22,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>LocoNet&trade; Outils</h1>
+<h1>LocoNet&trade; Outils</h1>
 
       <p class="subtitle">LocoNet est une marque
       d&eacute;pos&eacute;e de <a href=
@@ -308,12 +306,12 @@
             <h2><a name="cmdstn" id="cmdstn">Outil de Configuration
             de la Centrale de Commande Digitrax</a></h2>
 
-            <p><a name="cmdstn" id="cmdstn">Cet outil fournit un
+            <p>Cet outil fournit un
             m&eacute;canisme pour lire et &eacute;crire la valeur
             des OpSw de la centrale de Commande qui commandent les
             fonctions de base de la cenrale de
-            commande.</a></p><a name="cmdstn" id="cmdstn">Pour plus
-            d'information voir la</a> <a href=
+            commande.Pour plus
+            d'information voir la <a href=
             "../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
             page d'aide</a> .
           </dd>

@@ -23,14 +23,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h2>JMRI Guide Mat&eacute;riel: SPROG</h2>
+<h2>JMRI Guide Mat&eacute;riel: SPROG</h2>
 
       <h3>Mat&eacute;riel Support&eacute;</h3>JMRI supporte le
       Sprog &agrave; la fois en tant que programmateur

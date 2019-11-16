@@ -21,11 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Simple Signal Logic</h1>
 
       <p class="subtitle">Background information of the logic used
@@ -155,7 +154,7 @@
         // show result if changed
         if (appearance != oldAppearance) {
             ((SignalHead)outputs[0]).setAppearance(appearance);
-            if (log.isDebugEnabled()) log.debug("Change appearance of "+name+" to "+appearance);
+            log.debug("Change appearance of {} to {}", name, appearance);
         }
     }
 </pre>

@@ -13,14 +13,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
-      <h1>JMRI: Editeurs XML</h1>
+<h1>JMRI: Editeurs XML</h1>
 
       <p>JMRI utilise XML pour un certain
       nombre d'objectifs: de tenir d&eacute;codeur

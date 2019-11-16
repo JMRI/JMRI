@@ -32,7 +32,7 @@
 		<a href="../doc/Technical/index.shtml#writecode">&#233;crire les votres</a>.
 
    		<dl>
-			<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro</a></h3></dt>
+			<dt><a href="./DecoderPro/index.shtml">DecoderPro</a></dt>
 			<dd>
 			   Un meilleur outil pour programmer les d&#233;codeurs.		    
 			   DecoderPro simplifie la t&#226;che de configuration compliqu&#233;e des d&#233;codeurs DCC
@@ -41,7 +41,7 @@
 			   Ouvrez DecoderPro en double cliquant sur son ic&#244;ne dans le dossier d'installation JMRI.
 			</dd>
 
-			<dt><h3><a href="./PanelPro/PanelPro.shtml">PanelPro</a></h3></dt>
+			<dt><a href="./PanelPro/PanelPro.shtml">PanelPro</a></dt>
 			<dd>
 		       L'exploitation CRT d&#233;riv&#233;e des panneaux contr&#244;le CTC qui refl&#232;tent en temps r&#233;el
 		       l'&#233;tat de votre r&#233;seau <em>et</em> vous permettent de le contr&#244;ler - presque comme un
@@ -49,21 +49,21 @@
 			   Ouvrez PanelPro en double cliquant sur son ic&#244;ne dans le dossier d'installation JMRI.
 			</dd>
 			
-			<dt><h3><a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a></h3></dt>
+			<dt><a href="./DispatcherPro/index.shtml">DispatcherPro&trade;</a></dt>
 			<dd>
 			   Un syst&#232;me pour Dispatcher, regroupant votre Inventaire et Vos R&#233;gulateurs.
 			</dd>		
 
-	  <dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></h3></dt>
-    <dd>
-    Cr&#233;er des Manifestes de Train qui d&#233;taillent le travail que vos &#233;quipes de train 
-	produiront lors d'une session d'exploitation. 
-    Le Manifeste liste les wagons collect&#233;s et d&#233;pos&#233;s,  
-    montrant o&#249; sont localis&#233;s les wagons ainsi que leurs destinations
-    </dd>
+	  	<dt><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></dt>
+		<dd>
+		Cr&#233;er des Manifestes de Train qui d&#233;taillent le travail que vos &#233;quipes de train
+		produiront lors d'une session d'exploitation.
+		Le Manifeste liste les wagons collect&#233;s et d&#233;pos&#233;s,
+		montrant o&#249; sont localis&#233;s les wagons ainsi que leurs destinations
+		</dd>
 
 
-	<dt><h3><a href="./SoundPro/SoundPro.shtml">SoundPro</a></h3></dt>
+	<dt><a href="./SoundPro/SoundPro.shtml">SoundPro</a></dt>
 	<dd>
 		Un jeu d'outil pour l'utilisation Audio avec JMRI.<br>
 		Ouvrez SoundPro en double cliquant sur son ic&#244;ne dans le dossier d'installation JMRI

@@ -19,14 +19,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="../SidebarUp" -->
-
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h2>JMRI: R&eacute;gulateur RailDriver</h2>
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
+<h2>JMRI: R&eacute;gulateur RailDriver</h2>
 
     <img src=
       "../../../images/bangdesk.gif" align="left"> Cette page est

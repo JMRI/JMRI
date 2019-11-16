@@ -22,14 +22,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>JMRI: Ajouter un Nouveau Type de Donn&eacute;es</h1>
+<h1>JMRI: Ajouter un Nouveau Type de Donn&eacute;es</h1>
 
       <div class="para">
         <p>Cette page d&eacute;crit les &eacute;tapes pour ajouter

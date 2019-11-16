@@ -168,7 +168,7 @@
 
 <h1> Le Tableau Canton</h1>
 
-<H2>Cantons :</h2>
+<h2>Cantons :</h2>
 <p>Les Cantons sont des tron&#231;ons de voie dont l'occupation peut &#234;tre suivie individuellement. Diviser la
 voie en Cantons est facultatif. Les Cantons mis en place dans un sch&#233;ma de voies correspondent normalement
 aux Cantons physiques sur un r&#233;seau. L'occupation du Canton est indiqu&#233; par l'&#233;tat d'un
@@ -194,7 +194,7 @@ un Canton, il n'est pas n&#233;cessaire d'ajouter ces attributs.</p>
 <ul>
 <li> <p><b>Nom  syst&#232;me</b> - Le nom syst&#232;me du Canton. Il n'y a pas d'exigence fonctionnelle pour une lettre dans le Nom Syst&#232;me d'un Canton, mais par convention, nous utilisons
 'B' pour 'Canton'. L'impl&#233;mentation par d&#233;faut n'est pas sp&#233;cifique au syst&#232;me, donc une lettre du syst&#232;me
-du "I" est appropri&#233;. Cela conduit &#224; des noms de syst&#232;me comme "IB201".</P></li>
+du "I" est appropri&#233;. Cela conduit &#224; des noms de syst&#232;me comme "IB201".</p></li>
 <li><p><b>Nom Utilisateur</b> - Le nom Utilisateur du Canton. Le nom Utilisateur d'un Canton cr&#233;&#233;
 ici peut &#234;tre r&#233;gl&#233; &#224; n'importe quel texte. Le nom utilisateur pour un Canton cr&#233;&#233; par l'&#233;diteur de R&#233;seau est
 fix&#233; par l'&#233;diteur de TCO et ne doit pas &#234;tre chang&#233;.</p></li>
@@ -269,7 +269,7 @@ La vitesse est utilis&#233;e avec certains outils d'automatisation et de logique
 d&#233;terminer &#224; quelle vitesse un train peut &#234;tre r&#233;gl&#233; &#224; travers le Canton.
 Elle est &#233;galement utilis&#233; par la logique du m&#226;t de signalisation pour d&#233;terminer quel aspect doit
 &#234;tre affich&#233; dans un signal de chemin  .
-<P> Dans la liste d&#233;roulante, vous sont pr&#233;sent&#233;s un ensemble de vitesses fixes qui 
+<p> Dans la liste d&#233;roulante, vous sont pr&#233;sent&#233;s un ensemble de vitesses fixes qui
 ont &#233;t&#233; pr&#233;d&#233;finies dans le fichier signalSpeed.xml, en plus d'une option globale.
 <br> Il est &#233;galement possible d'entrer une valeur num&#233;rique pour repr&#233;senter une vitesse.
 <p> La valeur globale est d&#233;finie via les <b>Vitesses</b> du menu option.</p></li>

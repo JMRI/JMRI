@@ -19,7 +19,7 @@
 
 <!-- Sortable tables -->
 <!-- <script src="../../../web/js/sorttable.js"></script> for local testing -->
-<script src="/web/js/sorttable.js"></script>
+<script src="/web/js/sorttable.js" type="text/javascript"></script>
 
 <style type="text/css">
 table.sortable th {
@@ -169,7 +169,8 @@ table.sortable th {
 <tr>
   <td class="app">All</td>
   <td class="en">User Name</td>
-  <td class="descr" Un nom lisible faisant r&#233;f&#233;rence &#225; un &#233;l&#233;ment dans JMRI, qui peut &#234;tre chang&#233; et m&#234;me r&#233;utilis&#233; pour un autre &#233;l&#233;ment <a href="../html/doc/Technical/Names.shtml">...</a></td>
+  <td class="descr">Un nom lisible faisant r&#233;f&#233;rence &#225; un &#233;l&#233;ment dans JMRI, qui peut
+    &#234;tre chang&#233; et m&#234;me r&#233;utilis&#233; pour un autre &#233;l&#233;ment <a href="../html/doc/Technical/Names.shtml">...</a></td>
   <td class="de">Nutzername</td>
   <td class="it">Nome Utente</td>
   <td class="fr">Nom Utilisateur</td>
@@ -659,7 +660,7 @@ table.sortable th {
 <tr>
   <td class="app">Ops</td>
   <td class="en">Time Table</td>
-  <td class="descr">1. Sur les chemins de fer des &#201;tats-Unis, fonctionnement en vertu d'horaire et d'ordre de train pour (TT & amp; A): un plan de fonctionnement pr&#233;d&#233;termin&#233; (l'horaire) &#225; moins d'&#234;tre remplac&#233; par des ordres transmis au train par le dispatcheurr, par le biais d'interm&#233;diaires locaux.. <a href="https://en.wikipedia.org/wiki/Train_order_operation">...</a><br>
+  <td class="descr">1. Sur les chemins de fer des &#201;tats-Unis, fonctionnement en vertu d'horaire et d'ordre de train pour (TT &amp; A): un plan de fonctionnement pr&#233;d&#233;termin&#233; (l'horaire) &#225; moins d'&#234;tre remplac&#233; par des ordres transmis au train par le dispatcheurr, par le biais d'interm&#233;diaires locaux.. <a href="https://en.wikipedia.org/wiki/Train_order_operation">...</a><br>
   2. Dans l'OperationsPro JMRI: un tableaud&#233;finissant quel train circulera un jour donn&#233; de la semaine..
   <a href="../package/jmri/jmrit/operations/Operations.shtml#Timetable">...</a></td>
   <td class="de">Fahrplan/Kursbuch</td>
@@ -749,7 +750,7 @@ table.sortable th {
   <td class="en_UK"></td>
   <td class="da">Kontrol Panel Editor</td>
 </tr>
-<tr>">
+<tr>
   <td class="app">PP</td>
   <td class="en">Panel Editor</td>
   <td class="descr">Une application JMRI pour dessiner graphiquement un Panneau et animer ensuite des parties de celui-ci pour montrer l'&#233;tat des &#233;l&#233;ments sur le r&#233;seau et cliquer pour les commander. <a href="../html/apps/PanelPro/PanelPro.shtml#pe">...</a></td>

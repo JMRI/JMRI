@@ -22,14 +22,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>JMRI: Utilisation XML</h1>JMRI utilise XML pour un
+<h1>JMRI: Utilisation XML</h1>JMRI utilise XML pour un
       certain nombre d'objectifs: de maintenir les
       d&eacute;finitions de d&eacute;codeur , pour son <a href=
       "XmlPersistance.shtml">syst&egrave;me de persistance</a> pour

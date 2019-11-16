@@ -26,14 +26,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h1>R&eacute;glage des Listes Images et des
+<h1>R&eacute;glage des Listes Images et des
       Ic&ocirc;nes</h1><img src="images/DecProRosterMediaPane.png"
       alt=""><br>
       <br>

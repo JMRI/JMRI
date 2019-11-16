@@ -25,14 +25,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
         <!-- Page Body -->
 
-      <h1>JMRI: Persistence XML</h1>
+<h1>JMRI: Persistence XML</h1>
 
       <p>JMRI utilise XML pour la persistance des structures
       internes, en particulier lors du stockage des
@@ -175,9 +173,9 @@
       ci-dessous..</p>
 
       <h2><a id="schema" name="schema">Sch&eacute;ma de
-      Gestion</a></h2><a id="schema" name="schema">JMRI
-      contr&ocirc;le la s&eacute;mantique de XML utilisant le</a>
-      <a href="XmlSchema.shtml">Sch&eacute;ma XML</a> .
+      Gestion</a></h2>JMRI contr&ocirc;le la s&eacute;mantique
+      de XML utilisant le
+      <a href="XmlSchema.shtml">Sch&eacute;ma XML</a>.
 
       <p>Par exemple, l'information mise en page est
       enregistr&eacute;e dans des fichiers XML en tant qu'un

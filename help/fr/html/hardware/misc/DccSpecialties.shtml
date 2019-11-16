@@ -21,14 +21,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
-  <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-  <div id="mainContent">
-    <!-- Page Body -->
-
-      <h2>JMRI: Programmation Poduits DCC Specialties</h2><a href=
+<h2>JMRI: Programmation Poduits DCC Specialties</h2><a href=
       "http://www.dccspecialties.com/products/hare-ng.htm"><img src="http://www.dccspecialties.com/products/img/hareng_2420-600.jpg"
       height="126" width="150" align="right"></a> <a href=
       "http://www.dccspecialties.com/products/wabbit_review.htm"><img src="http://www.dccspecialties.com/products/img/wabbit_1077_600.jpg"
