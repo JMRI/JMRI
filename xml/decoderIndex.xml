@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.17.5ish+jake+20191101T0325Z+Rf2913b7cd4 on Thu Oct 31 20:26:31 PDT 2019-->
-  <decoderIndex version="976">
-    <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
+  <!--Written by JMRI version 4.17.6ish+jake+20191115T0606Z+R763ced6dca on Thu Nov 14 22:06:28 PST 2019-->
+  <decoderIndex version="980">
+    <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -15,23 +15,30 @@
       <manufacturer mfg="Atlas" mfgID="127" />
       <manufacturer mfg="AuroTrains" mfgID="170" />
       <manufacturer mfg="Auvidel" mfgID="76" />
+      <manufacturer mfg="BLOCKsignalling" mfgID="148" />
       <manufacturer mfg="BRAWA Modellspielwaren GmbH" mfgID="186" />
       <manufacturer mfg="Bachmann Trains" mfgID="101" />
       <manufacturer mfg="Benezan Electronics" mfgID="114" />
       <manufacturer mfg="Berros" mfgID="122" />
+      <manufacturer mfg="Blue Digital" mfgID="225" />
       <manufacturer mfg="Bluecher-Electronic" mfgID="60" />
       <manufacturer mfg="Brelec" mfgID="31" />
       <manufacturer mfg="Broadway Limited Imports, LLC" mfgID="38" />
       <manufacturer mfg="CML Systems" mfgID="1" />
+      <manufacturer mfg="CMos Engineering" mfgID="130" />
       <manufacturer mfg="CT Elektronik" mfgID="117" />
       <manufacturer mfg="CVP Products" mfgID="135" />
       <manufacturer mfg="Capecom" mfgID="47" />
       <manufacturer mfg="Computer Dialysis France" mfgID="105" />
       <manufacturer mfg="Con-Com GmbH" mfgID="204" />
       <manufacturer mfg="DCC Supplies, Ltd" mfgID="51" />
+      <manufacturer mfg="DCC Train Automation" mfgID="144" />
       <manufacturer mfg="DCC-Gaspar-Electronic" mfgID="124" />
       <manufacturer mfg="DCCconcepts" mfgID="36" />
+      <manufacturer mfg="Dapol Limited" mfgID="154" />
+      <manufacturer mfg="Desktop Station" mfgID="140" />
       <manufacturer mfg="Dietz Modellbahntechnik" mfgID="115" />
+      <manufacturer mfg="Digi-CZ" mfgID="152" />
       <manufacturer mfg="Digirails" mfgID="42" />
       <manufacturer mfg="Digital Bahn" mfgID="64" />
       <manufacturer mfg="Digitools Elektronika, Kft" mfgID="75" />
@@ -41,17 +48,16 @@
       <manufacturer mfg="E-Modell" mfgID="69" />
       <manufacturer mfg="ECCO GmbH" mfgID="121" />
       <manufacturer mfg="Educational Computer, Inc." mfgID="39" />
-      <manufacturer mfg="Electric Railroad Company" mfgID="73" />
       <manufacturer mfg="Electronic Solutions Ulm GmbH" mfgID="151" />
       <manufacturer mfg="Electronik and Model Produktion" mfgID="35" />
       <manufacturer mfg="Electroniscript, inc" mfgID="94" />
-      <manufacturer mfg="Elproma Electronics Poland" mfgID="225" />
       <manufacturer mfg="Fleischmann" mfgID="155" />
       <manufacturer mfg="Frateschi Model Trains" mfgID="128" />
+      <manufacturer mfg="Fucik" mfgID="158" />
       <manufacturer mfg="GFB Designs" mfgID="46" />
       <manufacturer mfg="Gaugemaster" mfgID="65" />
       <manufacturer mfg="GooVerModels" mfgID="81" />
-      <manufacturer mfg="HAG Modelleisenbahn AG" mfgID="81" />
+      <manufacturer mfg="HAG Modelleisenbahn AG" mfgID="82" />
       <manufacturer mfg="HONS Model" mfgID="88" />
       <manufacturer mfg="Haber and Koenig Electronics GmbH" mfgID="111" />
       <manufacturer mfg="Harman DCC" mfgID="98" />
@@ -80,26 +86,31 @@
       <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
       <manufacturer mfg="MBTronik - PiN GITmBH" mfgID="26" />
+      <manufacturer mfg="MD Electronics" mfgID="160" />
       <manufacturer mfg="MERG" mfgID="165" />
       <manufacturer mfg="MRC" mfgID="143" />
       <manufacturer mfg="MTB Model" mfgID="72" />
       <manufacturer mfg="MTH Electric Trains, Inc." mfgID="27" />
+      <manufacturer mfg="Maison de DCC" mfgID="166" />
       <manufacturer mfg="Massoth Elektronik, GmbH" mfgID="123" />
       <manufacturer mfg="Mistral Train Models" mfgID="29" />
       <manufacturer mfg="MoBaTrain.de" mfgID="24" />
-      <manufacturer mfg="Modelleisenbahn GmbH" mfgID="161" />
       <manufacturer mfg="MyLocoSound" mfgID="116" />
       <manufacturer mfg="MÜT GmbH" mfgID="118" />
       <manufacturer mfg="Möllehem Gårdsproduktion" mfgID="126" />
       <manufacturer mfg="N&amp;Q Electronics" mfgID="50" />
       <manufacturer mfg="NAC Services, Inc" mfgID="37" />
       <manufacturer mfg="NMRA Reserved" mfgID="238" />
+      <manufacturer mfg="NYRS" mfgID="136" />
       <manufacturer mfg="Nagasue System Design Office" mfgID="103" />
+      <manufacturer mfg="Nagoden" mfgID="108" />
       <manufacturer mfg="New York Byano Limited" mfgID="71" />
       <manufacturer mfg="Ngineering" mfgID="43" />
       <manufacturer mfg="Noarail" mfgID="63" />
       <manufacturer mfg="North Coast Engineering" mfgID="11" />
+      <manufacturer mfg="Nucky" mfgID="156" />
       <manufacturer mfg="Opherline1" mfgID="106" />
+      <manufacturer mfg="PIKO" mfgID="162" />
       <manufacturer mfg="PRICOM Design" mfgID="96" />
       <manufacturer mfg="PSI-Dynatrol" mfgID="14" />
       <manufacturer mfg="Passmann" mfgID="41" />
@@ -114,6 +125,7 @@
       <manufacturer mfg="RR-CirKits" mfgID="87" />
       <manufacturer mfg="Railflyer Model Prototypes, Inc." mfgID="84" />
       <manufacturer mfg="Railnet Solutions, LLC" mfgID="66" />
+      <manufacturer mfg="Rails Europ Express" mfgID="146" />
       <manufacturer mfg="Railstars Limited" mfgID="91" />
       <manufacturer mfg="RamFixx Technologies (Wangrow)" mfgID="15" />
       <manufacturer mfg="Rampino Elektronik" mfgID="57" />
@@ -124,6 +136,7 @@
       <manufacturer mfg="Roco Modelspielwaren" mfgID="161" />
       <manufacturer mfg="Rocrail" mfgID="70" />
       <manufacturer mfg="S Helper Service" mfgID="23" />
+      <manufacturer mfg="SLOMO Railroad Models" mfgID="142" />
       <manufacturer mfg="SPROG DCC" mfgID="44" />
       <manufacturer mfg="Sanda Kan Industrial" mfgID="95" />
       <manufacturer mfg="Shourt Line" mfgID="90" />
@@ -141,8 +154,9 @@
       <manufacturer mfg="The Electric Railroad Company" mfgID="73" />
       <manufacturer mfg="Throttle-Up (SoundTraxx)" mfgID="141" />
       <manufacturer mfg="Train Control Systems" mfgID="153" />
-      <manufacturer mfg="Train Modules" mfgID="61" />
+      <manufacturer mfg="Train ID Systems" mfgID="138" />
       <manufacturer mfg="Train Technology" mfgID="2" />
+      <manufacturer mfg="TrainModules" mfgID="61" />
       <manufacturer mfg="TrainTech" mfgID="104" />
       <manufacturer mfg="Trenes Digitales" mfgID="100" />
       <manufacturer mfg="Trix Modelleisenbahn" mfgID="131" />
@@ -153,9 +167,11 @@
       <manufacturer mfg="WP Railshops" mfgID="163" />
       <manufacturer mfg="Wangrow" mfgID="12" />
       <manufacturer mfg="Wekomm Engineering, GmbH" mfgID="86" />
+      <manufacturer mfg="Wm. K. Walthers, Inc" mfgID="150" />
       <manufacturer mfg="ZTC" mfgID="132" />
       <manufacturer mfg="Zimo" mfgID="145" />
       <manufacturer mfg="csikos-muhely" mfgID="120" />
+      <manufacturer mfg="drM" mfgID="164" />
     </mfgList>
     <familyList>
       <family name="NMRA standard CV definitions" mfg="NMRA" file="0NMRA.xml">
