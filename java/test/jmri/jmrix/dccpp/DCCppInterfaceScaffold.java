@@ -4,6 +4,9 @@ import java.util.Vector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
+
 /**
  * DCCppInterfaceScaffold.java
  *
@@ -18,6 +21,8 @@ public class DCCppInterfaceScaffold extends DCCppTrafficController {
 
     public DCCppInterfaceScaffold(DCCppCommandStation pCommandStation) {
         super(pCommandStation);
+        // Immediately de-register unneeded shutDownTask
+        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
     }
 
     // override some DCCppTrafficController methods for test purposes
