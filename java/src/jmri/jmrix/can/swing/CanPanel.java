@@ -37,7 +37,7 @@ abstract public class CanPanel extends jmri.util.swing.JmriPanel implements CanP
     }
     
     /**
-     * Appends Connection UserName, if present, to start of a String.
+     * Prepends Connection UserName, if present, to start of a String.
      * @param initial The Initial String
      * @return The Connection with the initial String appended
      */
