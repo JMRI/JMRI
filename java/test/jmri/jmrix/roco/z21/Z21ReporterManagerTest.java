@@ -37,8 +37,8 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
     @Override
    public void setUp() {
         JUnitUtil.setUp();
-
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initRailComManager();
         memo = new Z21SystemConnectionMemo();
         tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
