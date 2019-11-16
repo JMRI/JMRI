@@ -230,6 +230,13 @@
               This is used in our standard testing infrastructure(s) to ensure that a mocked
               test-compatible ShutDownManager is available.
             </dd>
+        <dt>jmri.skipKnownIntermittent</dt>
+            <dd>When set to "true", this skips running certain tests that are too intermittent to
+            include in CI running.  
+            The scripts/run_intermittent_tests_separately file
+            runs these test classes separately.</dd>
+        <dt>jmri.skipschematests</dt>
+            <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
         <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
             <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
                 This can be useful if i.e. the CI tests are hanging, and you can't figure out which

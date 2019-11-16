@@ -68,6 +68,7 @@ env:
   - HEADLESS=false STATIC=false 
   - HEADLESS=true STATIC=false
   - HEADLESS=true STATIC=true
+  - HEADLESS=false SKIPINTERMITTENT=true STATIC=true
 
 matrix:
   exclude:
