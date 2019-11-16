@@ -25,6 +25,27 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Rule
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+            e = new LayoutEditor("Layout Editor Test Layout");
+            jmri.InstanceManager.setDefault(LayoutBlockManager.class, new LayoutBlockManager());
+        }
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        if (e != null) {
+            JUnitUtil.dispose(e);
+            e = null;
+        }
+        JUnitUtil.tearDown();
+    }
+
     @Test
     public void testStringCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -876,27 +897,6 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         LayoutEditorAuxTools t = e.getLEAuxTools();
         Assert.assertNotNull("tools exist", t);
         JUnitUtil.dispose(e);
-    }
-
-    @Before
-    @Override
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            e = new LayoutEditor("Layout Editor Test Layout");
-            jmri.InstanceManager.setDefault(LayoutBlockManager.class, new LayoutBlockManager());
-        }
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        if (e != null) {
-            JUnitUtil.dispose(e);
-            e = null;
-        }
-        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
