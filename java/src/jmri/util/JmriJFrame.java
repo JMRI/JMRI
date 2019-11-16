@@ -586,18 +586,6 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return (escapeKeyActionClosesWindow && getEscapeKeyAction() != null);
     }
 
-    /**
-     * {@inheritDoc}
-     * Provide a maximum frame size that is limited to what can fit on the
-     * screen after toolbars, etc are deducted.
-     * <p>
-     * Some of the methods used here return null pointers on some Java
-     * implementations, however, so this will return the superclasses's maximum
-     * size if the algorithm used here fails.
-     *
-     * @return the maximum window size
-     */
-
     private ScreenDimensions getContainingDisplay(Point location) {
         // Loop through attached screen to determine which
         // contains the top-left origin point of this window
@@ -613,6 +601,17 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
         return getScreenDimensions().get(0);
     }
 
+    /**
+     * {@inheritDoc}
+     * Provide a maximum frame size that is limited to what can fit on the
+     * screen after toolbars, etc are deducted.
+     * <p>
+     * Some of the methods used here return null pointers on some Java
+     * implementations, however, so this will return the superclasses's maximum
+     * size if the algorithm used here fails.
+     *
+     * @return the maximum window size
+     */
     @Override
     public Dimension getMaximumSize() {
         // adjust maximum size to full screen minus any toolbars
