@@ -264,6 +264,14 @@
                 <li></li>
             </ul>
 
+        <h4>TAMS</h4>
+            <ul>
+                <li>New definition for the 32.2 version of the 
+                Multiprotocol Decoder
+                by
+                Tams Elektronik GmbH</li>
+            </ul>
+
         <h4>TCS</h4>
             <ul>
                 <li>WOW add CV 177-181 and new bit in CV182</li>
