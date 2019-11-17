@@ -536,11 +536,10 @@ public class LayoutShape {
             jmi.setToolTipText(Bundle.getMessage("ShapeLevelMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                 //prompt for level
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
-                        level, QuickPromptUtil.checkIntRange(1, null, 
-                            Bundle.getMessage("ShapeLevelValueTitle")));
+                        level, QuickPromptUtil.checkIntRange(1, 10, null));
                 setLevel(newValue);
                 layoutEditor.repaint();
             });
@@ -577,7 +576,7 @@ public class LayoutShape {
             jmi.setToolTipText(Bundle.getMessage("ShapeLineWidthMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                 //prompt for lineWidth
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
                         lineWidth, QuickPromptUtil.checkIntRange(1, MAX_LINEWIDTH, null));

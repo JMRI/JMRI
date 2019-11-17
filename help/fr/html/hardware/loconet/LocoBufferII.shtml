@@ -75,20 +75,19 @@ test&#233;e est la prise LocoNet elle-m&#234;me.
 
 <p>
 &#233;tapes:
-<OL>
-<LI> D&#233;branchez le c&#226;ble LocoNet
-<LI> Bo&#238;tier ouvert (utiliser un petit tournevis pour travailler les loquets dans les petites fentes sur les c&#244;t&#233;s)
-<LI> Installez le terminateur
-<LI> Mettre sw 7-8 sur On, tous les autres commutateurs sur OFF
-<LI> D&#233;finissez les options JMRI LocoBuffer &#224; 19200 bauds et le mat&#233;riel
-handshake autoris&#233;
-<LI> Ouvrez la fen&#234;tre Moniteur JMRI LocoNet .
-<LI> En utilisant JMRI envoyer certaines commandes (commandes de commutation, par exemple)
-<LI> Les commandes doivent appara&#238;tre dans la fen&#234;tre du moniteur LocoNet et La LED d'activit&#233; LocoBuffer-II doit clignoter
-<li> Retirer le terminateur (&#224; moins que votre application l'exige)
-<LI> Restaurer les commutateurs LocoBuffer-II &#224; leurs r&#233;glages normaux pour votre application
-</OL>
-<p/ >
+<ol>
+    <LI> D&#233;branchez le c&#226;ble LocoNet
+    <LI> Bo&#238;tier ouvert (utiliser un petit tournevis pour travailler les loquets dans les petites fentes sur les c&#244;t&#233;s)
+    <LI> Installez le terminateur
+    <LI> Mettre sw 7-8 sur On, tous les autres commutateurs sur OFF
+    <LI> D&#233;finissez les options JMRI LocoBuffer &#224; 19200 bauds et le mat&#233;riel
+    handshake autoris&#233;
+    <LI> Ouvrez la fen&#234;tre Moniteur JMRI LocoNet .
+    <LI> En utilisant JMRI envoyer certaines commandes (commandes de commutation, par exemple)
+    <LI> Les commandes doivent appara&#238;tre dans la fen&#234;tre du moniteur LocoNet et La LED d'activit&#233; LocoBuffer-II doit clignoter
+    <li> Retirer le terminateur (&#224; moins que votre application l'exige)
+    <LI> Restaurer les commutateurs LocoBuffer-II &#224; leurs r&#233;glages normaux pour votre application
+</ol>
 
 <h2><a name="locoBufferIIPower">LocoBuffer-II Power</a></h2>
 

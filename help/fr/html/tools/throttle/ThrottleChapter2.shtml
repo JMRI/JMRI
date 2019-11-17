@@ -8,14 +8,8 @@
   <meta name="Description" content="Throttle documentation for JMRI project">
   <meta name="Keywords" content="JMRI">
   <meta name="Author" content="Paul Fraker (paul@frakers.com)">
-  <meta name="Language" content="fr">
   <meta name="Robots" content="Index, Follow">
   <meta name="Revisit-After" content="7 Days">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the ceur ommon header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!-- Style -->
   <meta http-equiv="content-type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -87,10 +81,10 @@ lisez ceci, il suffit de remplacer "8251" par votre adresse d&#233;codeur Loco p
 <a name="StructWin"></a> 
 
 <h2>Structure d'une fen&#234;tre R&#233;gulateurs </h2>
-<dir>
-   <p> Il y a <i>trois panneaux</i> (ou sous-fen&#234;tres) associ&#233;s &#224; chaque
-   Fen&#234;tre de r&#233;gulateur. Ils sont identifi&#233;s comme suit: </p>
-</dir>
+
+<p> Il y a <i>trois panneaux</i> (ou sous-fen&#234;tres) associ&#233;s &#224; chaque
+Fen&#234;tre de r&#233;gulateur. Ils sont identifi&#233;s comme suit: </p>
+
 <ul>
   <li>Le <b>Panneau de commande</b> contient un curseur d'acc&#233;l&#233;ration pour commander la vitesse des
       locomotives, d'un s&#233;lecteur de marche avant et arri&#232;re, un bouton d'action d'arr&#234;t d'urgence,
@@ -118,10 +112,8 @@ sur l'un des boutons, le panneau dispara&#238;t. </p>
 height="464" src="images/jmri011.jpg"
 title="JMRI Throttle New Default Window"><br>
 Figure 2-2: Nouvelle Fen&#234;tre R&#233;gulateur </p>
-<br>
-<br>
-<a name="WinConfig"></a> 
 
+<a name="WinConfig"></a>
 <h1>Configurer le Nouveau R&#233;gulateur </h1>
 
 <p> Maintenant que nous avons r&#233;ussi &#224; ouvrir la fen&#234;tre du R&#233;gulateur, la prochaine chose
@@ -133,7 +125,6 @@ autres options sur les panneaux seront activ&#233;es. </p>
 <a name="AddressPanel"> </a>
 
 <h2> Affecter une adresse D&#233;codeur &#224; un R&#233;gulateur </h2>
-<dir>
 
    <table border="0" width="100%" cellpadding="0" cellspacing="0">
      <tbody>
@@ -197,7 +188,6 @@ autres options sur les panneaux seront activ&#233;es. </p>
         </tr>
     </tbody>
   </table>
-</dir>
 
 <table>
   <tbody>
@@ -216,7 +206,6 @@ autres options sur les panneaux seront activ&#233;es. </p>
 
 <a name="ControlPanel"></a> 
 <h2>Panneau de configuration - Faisons Circuler un train </h2>
-<dir>
 
   <table border="0" width="100%" cellpadding="0" cellspacing="0">
     <tbody>
@@ -300,12 +289,10 @@ autres options sur les panneaux seront activ&#233;es. </p>
        </tr>
      </tbody>
    </table>
-</dir>
 
 <a name="StandardActions"> </a>
 <h3> Clavier de Commandes </h3>
-<dir>
-   <dir>
+
      <p> Il ya un groupe de touches d'action sur le clavier qui ont &#233;t&#233; d&#233;finies comme
      "<b>standard</b>" sur tous les syst&#232;mes DCC et plates-formes informatiques. Ils sont
      identifi&#233;s dans le tableau suivant: </p>
@@ -403,13 +390,10 @@ autres options sur les panneaux seront activ&#233;es. </p>
      <p> Bien s&#251;r, en plus des actions standard du clavier, ce n'est pas la peine d'avoir une souris
  	si vous ne pouvez pas l'utiliser pour commander vos trains. Alors maintenant, nous allons discuter 
 	comment d&#233;placer votre locomotive en utilisant la souris de votre ordinateur. </p> 
- </dir>
-</dir>
 
 <a name="MouseControl"></a> 
 <h3>Commande de la Souris </h3>
-<dir>
-   <dir>
+
      <p> Vous pouvez effectuer toutes les actions du clavier not&#233;es ci-dessus en utilisant votre
      pointeur de la souris dans la fen&#234;tre Panneau de Commandes. Nous allons commencer par d&#233;finir les  marche
      Avant, marche Arri&#232;re, Arr&#234;t et Inactif. Ils sont assez simples &#224; utiliser. </P>
@@ -455,15 +439,12 @@ un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son mo
  basculera sur son &#233;tat "inactif". </td> 
        </tr>
       </tbody>
-    </table>  </dir>
-</dir>
+    </table>
 
 <a name="SliderBar"></a> 
 
 <h4>LA BARRE CURSEUR </h4>
-<dir>
-  <dir>
-    <dir>
+
       <p> Le curseur peut fonctionner diff&#233;remment pour chaque utilisateur en fonction de
       plusieurs facteurs. Ce guide de l'utilisateur ne va pas  essayer d'identifier l'ensemble des
       diff&#233;rentes possibilit&#233;s. Au lieu de cela, il va identifier plusieurs
@@ -583,14 +564,11 @@ un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son mo
        <p> Si vous avez d&#233;couvert que votre syst&#232;me fonctionne d'une mani&#232;re diff&#233;rente
        parmi tous ceux indiqu&#233;s ci-dessus, alors vous avez simplement trouv&#233; un autre
        m&#233;thode.</p>
-    </dir>
-  </dir>
-</dir>
 
 <a name="Acquiring"></a> 
 
 <h2> L'acquisition d'une Locomotive Enregistr&#233;e </h2>
-<dir>
+
    <p> Lorsque l'adresse du d&#233;codeur est d'abord "<big>D&#233;finie</big>", le logiciel demande
    l'&#233;tat actuel du d&#233;codeur. Cela inclut la direction actuelle de la
    locomotive, sa vitesse actuelle, et les boutons de fonction qu'ils soient On ou Off. Le
@@ -610,11 +588,9 @@ un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son mo
    Une am&#233;lioration future de la fonction r&#233;gulateur sera de synchroniser les
    pointeur de la barre curseur en cons&#233;quence. Jusque-l&#224;, m&#233;fiez-vous de cette petite
    r&#233;action. </p>
-</dir>
 
 <a name="FunctionPanel"></a> 
 <h2>Le Panneau Fonction </h2>
-<dir>
 
    <table border="0" width="100%" cellpadding="0" cellspacing="0">
      <tbody>
@@ -646,7 +622,6 @@ un d&#233;codeur de son (comme un Soundtraxx DSD-150)est utilis&#233;, le son mo
       </tr>
     </tbody>
   </table>
-</dir>
 
 <p>Si vous lisez cette page de haut en bas comme un manuel de formation, &#224; sa
 conclusion, vous devriez &#234;tre en mesure de ...</p>
@@ -680,10 +655,9 @@ afin de rendre l'exp&#233;rience de votre r&#233;seau num&#233;rique encore plus
     </tr>
   </tbody>
 </table>
-<br>
-<br>
-<br>
-<br>
-<!--#include virtual="/Footer" --> </div>
+
+<!--#include virtual="/Footer" -->
+        </div>
+    </div>
 </body>
 </html>

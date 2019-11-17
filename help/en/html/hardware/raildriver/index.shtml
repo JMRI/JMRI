@@ -22,7 +22,8 @@
 <body>
   <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
       <h1>Hardware Support: RailDriver Throttle</h1>
 
@@ -30,11 +31,11 @@
       back here or on the <a href=
       "https://groups.io/g/jmriusers">JMRI
       users group</a> for changes.<br>
-      <a href="RailDriver.gif"><img src="RailDriver.gif" align=
-      "right" width="389" height="236" alt=
-      "RailDriver line drawing"></a> <a name="hardware" id=
-      "hardware"></a></p>
+      <a href="images/RailDriver.gif"><img src="images/RailDriver.gif"
+      align="right" width="389" height="236" alt=
+      "RailDriver line drawing"></a> </p>
 
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <p>JMRI allows you to use a <a href=
@@ -115,15 +116,16 @@
 
       <p>Eventually, we'd like to make a more detailed simulation
       available by connecting the rest of the controls, and adding
-      a detailed model of the trains braking and acceleration.
-      <a name="documentation" id="documentation"></a></p>
+      a detailed model of the trains braking and acceleration.</p>
 
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
 
       <p>For technical information on Raildriver, please see the
       <a href="details.shtml">Details Help page</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

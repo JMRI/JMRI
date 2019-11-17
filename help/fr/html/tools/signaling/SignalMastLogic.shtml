@@ -7,7 +7,7 @@
 <!-- UpDated  by Blorec Herv&#233; 2016-09-13--> 
 <title>JMRI: Signal Mast Logic introduction</title>
 <META name="Author" content="Bob Jacobsen, Egbert Broerse">
-<META name="Date.Modified" content="20140614"/>
+<META name="Date.Modified" content="20140614">
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -24,7 +24,8 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>JMRI: Logique M&#226;t de Signalisation</H1>
+<h1>JMRI: Logique M&#226;t de Signalisation</h1>
+
 <p class=subtitle>
     Informations g&#233;n&#233;rales sur la Logique M&#226;t de Signalisation
 </p>
@@ -68,10 +69,11 @@ Cependant, s'il y a  de multiples Aspects qui pourraient &#234;tre potentielleme
 <ul><li>Itin&#233;raire Divergent
 		<ul>
 <li>S'il y a des Aspects pour un itin&#233;raire D&#233;vi&#233; et les Aiguillages sur le chemin sont D&#233;vi&#233;s, 
-il utilisera alors l'Aspect d'un itin&#233;raire D&#233;vi&#233;. </Li>
-<li>Si aucun des Aiguillages sur l'itin&#233;raire n'est D&#233;vi&#233s, alors l'Aspect qui n'est pas 
+il utilisera alors l'Aspect d'un itin&#233;raire D&#233;vi&#233;.</li>
+<li>Si aucun des Aiguillages sur l'itin&#233;raire n'est D&#233;vi&#233;s, alors l'Aspect qui n'est pas
 d&#233;sign&#233;e comme un Aspect D&#233;vi&#233; sera utilis&#233; </li>
 </ul></li>
+
 <li>Canton/Signal de Vitesse<br>
 <ul><li>
 Si l'itin&#233;raire D&#233;vi&#233; n'est pas disponible sur les Aspects du signal, ou il ne 
@@ -145,17 +147,18 @@ un M&#226;t de Signalisation qui fait face dans le canton A, qui prot&#232;ge le
 M&#226;t de Signalisation qui fait face au canton B pour prot&#233;ger le canton A.
 <p>Utilisant l'&#201;diteur de Panneau et n'ayant pas de cantons d&#233;finis, la Logique M&#226;t de Signalisation ne peut pas &#234;tre trouv&#233;e automatiquement, car ce type dePanneau affiche seulement les ic&#244;nes individuelles sur un r&#233;seau graphique, de sorte que vous devez ajouter manuellement les connexions comme &#233;tant des Cantons &#224; l'aide de l'Outil Cantons ou ajouter les Paires de M&#226;t de Signalisation dans le Tableau Logique Signaux pour toutes les connexions possibles.<br/>Ajoutez manuellement les Ic&#244;nes Signaux sur votre panneau par Clic-Droit et en choisissant "Ajouter Ic&#244;ne".
              
-		<a name="autologic"><h3>G&#233;n&#233;rer la Logique M&#226;t de Signalisation</h3></a>
+<a name="autologic"></a><h3>G&#233;n&#233;rer la Logique M&#226;t de Signalisation</h3>
+
 		Logique M&#226;t de Signalisation peut &#234;tre g&#233;n&#233;rer automatiquement de trois fa&#231;ons diff&#233;rentes:
 <ul>
-		<li>La premi&#232;re m&#233;thode est de le construire sur un M&#226;t de Signalisation Ã  partire d'un M&#226;t de Signalisation basique. Ceci peut &#234;tre fait 
+		<li>La premi&#232;re m&#233;thode est de le construire sur un M&#226;t de Signalisation à partire d'un M&#226;t de Signalisation basique. Ceci peut &#234;tre fait 
 en s&#233;lectionnant "Logique M&#226;t de Signalisation" depuis le menu contextuel pour l'ic&#244;ne M&#226;t de Signalisation sur 
 le panneau. Apr&#232;s un clic sur le bouton "D&#233;couvrir", le syst&#232;me d&#233;marre et 
 trouve tous les M&#226;t de Signalisation destination qui sont valides pour le M&#226;t de Signalisation s&#233;lectionn&#233;.
 <img src="images/discover.png" width="502" height="209">
 			<li>La seconde m&#233;thode est le menu <b>Outils --> Paires de Signalisation Auto G&#233;n&#233;r&#233;es</b> dans le Tableau Logique M&#226;t de Signalisation. Ceci g&#233;n&#233;rera la Logique M&#226;t de Signalisation bas&#233; sur tous les M&#226;ts de Signalisation sur le panneau de l'&#201;diteur de R&#233;seau. Si n&#233;cessaire, ceci vous donnera l'option pour activer le Routage de Cantons.
 		<img src="images/pairs.png" width="308" height="125"> 
-		<br/>S'il vous pla&#238;t soyez conscient que sur de grand sch&#233;ma avec un grand nombre de M&#226;ts de Signalisation configurÃ©s, ceci 
+		<br/>S'il vous pla&#238;t soyez conscient que sur de grand sch&#233;ma avec un grand nombre de M&#226;ts de Signalisation configurés, ceci 
 		peut prendre du temps.
 		<li>Il est encore plus facile si vous utilisez du mat&#233;riel comme <a href="http://www.rr-cirkits.com">RR-Circuits Signalman</a> ou m&#234;me plus facile en utilisant <a href="http://signalist.co.uk">Signalist SC1</a> pr&#233;-configur&#233; qui supporte les commandes Aspect Signal NMRA. Vous pouvez sauter les &#233;tapes M&#226;t de Signalisation et &#201;diteur de R&#233;seau et aller directement &#224; la cr&#233;ation de M&#226;t de Signalisation comme une simple entr&#233;e et le mat&#233;riel g&#232;re tout l'&#233;clairage LED/lampe, etc.</li>
 		</ul><!-- JMRI groups message -->

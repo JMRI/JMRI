@@ -30,7 +30,8 @@
 	<li><a href="#documentation">Documentation</a></li>
 </ul>
 
-<h2 name="overview" id="overview">Aper&#231;u</h2>
+<a name="overview" id="overview"></a>
+<h2>Aper&#231;u</h2>
 <p>DCC++ est une Centrale DCC Source Libre bas&#233;e sur Arduino  <a href="#documentation">&#192; faire Soi-M&#234;me</a>.</p>
 <p>Vous pouvez en savoir plus au sujet de DCC++ sur le site web
  <a href="https://sites.google.com/site/dccppsite/home" target="_blank">DCC++</a>.</p>
@@ -43,15 +44,15 @@
 	<li>Commande de vitesse 128 crans</li>
 	 <li>Commande de toutes les fonction F0-F28</li>
 	<li>Activation et D&#233;sactivation des fonctions accessoires 0-2048</li>
-	<li>Programmation sur la Voie de Programmation</li>
+	<li>Programmation sur la Voie de Programmation
+	<ul><li>&#201;criture des octets variables de configuration</li>
+		<li>D&#233;finir/Effacer la configuration sp&#233;cifiques des octets variables</li>
+		<li>Lire des octets variables de configuration</li>
+	</ul></li>
+	<li>Programmation sur la Voie d'Exploitaion
 	<ul><li>&#201;criture des octets variables de configuration</LI>
 		<li>D&#233;finir/Effacer la configuration sp&#233;cifiques des octets variables</li>
-		<li>Lire des octets variables de configuration</LI>
-	</ul>
-	<li>Programmation sur la Voie d'Exploitaion</li>
-	<ul><li>&#201;criture des octets variables de configuration</LI>
-		<li>D&#233;finir/Effacer la configuration sp&#233;cifiques des octets variables</li>
-	</ul>
+	</ul></li>
 	<li>Commande des Aiguillages de Capteurs DCC</li>
 	<li>Acc&#232;s et commandes directement par les bornes E/S de l'Arduino pour les fonctions et les capteurs</li>
 </ul>
@@ -88,7 +89,8 @@ pour &#234;tre Pour &#234;tre un &#233;mulateur de centrale &#224; part enti&#23
 DCC++ Over TCP. Un ordinateur distant ( ou plusieurs ) peut alors utliser 
 l'interface DCC++ Over TCP pour acc&#233;der &#224; distance et contr&#244;ler la centrale.
 
-<a name="Limitations"><h2>Limitations</h2></a>
+<a name="Limitations"></a><h2>Limitations</h2>
+
 <div class="list">
     <dl>
     	<dt class="left">JMRI</dt>
@@ -105,20 +107,20 @@ l'interface DCC++ Over TCP pour acc&#233;der &#224; distance et contr&#244;ler l
 
 <h3>Connexion &#224; une Centrale DCC++  via USB</h3>
 <ol>
-	<li>Pour connecter votre ordinateur &#224; une centrale DCC++, premi&#232;rement installer les pilotes appropri&#233;s</li>
+	<li>Pour connecter votre ordinateur &#224; une centrale DCC++, premi&#232;rement installer les pilotes appropri&#233;s
 	<ul>
-	<li>Pour la Centrale DCC++ avec JMRI, vous pouver avoir besoin d'installer un &#233;quipement pilote 
-	sur votre ordinateur. S'il vous plait r&#233;f&#233;rez-vous aux pages  
-	 <a href="https://www.arduino.cc/en/Guide/HomePage">D&#233;marrage d'Arduino </a>
-	pour les instructions.
-	<ul>
-		<li><a href="https://www.arduino.cc/en/Guide/Windows">Windows</a> (Voir <strong>Point 4</strong>)</li>
-		<li>Mac: pas besoin de drivers</li>
-		<li><a href="http://playground.arduino.cc/Learning/Linux">Linux</a></li>
+		<li>Pour la Centrale DCC++ avec JMRI, vous pouver avoir besoin d'installer un &#233;quipement pilote
+		sur votre ordinateur. S'il vous plait r&#233;f&#233;rez-vous aux pages
+		 <a href="https://www.arduino.cc/en/Guide/HomePage">D&#233;marrage d'Arduino </a>
+		pour les instructions.
+		<ul>
+			<li><a href="https://www.arduino.cc/en/Guide/Windows">Windows</a> (Voir <strong>Point 4</strong>)</li>
+			<li>Mac: pas besoin de drivers</li>
+			<li><a href="http://playground.arduino.cc/Learning/Linux">Linux</a></li>
+		</ul>
+		</li>
 	</ul>
-	page
-	<br />
-</UL>
+</ul>
 
 	<p><strong>Note:</strong> Si vous avez d&#233;j&#224; install&#233; le logiciel Arduino IDE, les pilotes de p&#233;riph&#233;rique doivent d&#233;j&#224; 
 	&#234;tre install&#233;s. </ P>
