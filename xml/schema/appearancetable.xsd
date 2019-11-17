@@ -272,19 +272,19 @@
     </xs:complexType>
 
     <xs:key name="appearanceAspectName">
-        <xs:annotation><xs:documentation>Insist that the appearance aspectname is unique</xs:documentation></xs:annotation>
+        <xs:annotation><xs:documentation>Constrains each appearance aspectname value to be unique. </xs:documentation></xs:annotation>
         <xs:selector xpath="./appearances/appearance/aspectname"/>
         <xs:field xpath="."/>
     </xs:key>
 
     <xs:keyref name="specificAppearancesAspectExists" refer="appearanceAspectName">
-      <xs:annotation><xs:documentation>Insist that each specificappearances aspect value refer to an existing appearance aspectname</xs:documentation></xs:annotation>
+      <xs:annotation><xs:documentation>Constrains each specificappearances aspect element to refer to an existing appearance aspectname. </xs:documentation></xs:annotation>
       <xs:selector xpath="./specificappearances/*/aspect"/>
       <xs:field xpath="."/>
     </xs:keyref>
 
     <xs:keyref name="aspecMappingOurAspectExists" refer="appearanceAspectName">
-      <xs:annotation><xs:documentation>Insist that each ourAspect value refer to an existing appearance aspectname</xs:documentation></xs:annotation>
+      <xs:annotation><xs:documentation>Constrains each ourAspect element to refer to an existing appearance aspectname. </xs:documentation></xs:annotation>
       <xs:selector xpath="./aspectMappings/aspectMapping/ourAspect"/>
       <xs:field xpath="."/>
     </xs:keyref>
