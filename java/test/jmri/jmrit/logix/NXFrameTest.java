@@ -48,7 +48,6 @@ public class NXFrameTest {
     public void testRoutePanel() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipKnownIntermittent"));
-        Assert.fail("deliberate test fail");
 
         NXFrame nxFrame = new NXFrame();
         Assert.assertNotNull("NXFrame", nxFrame);
