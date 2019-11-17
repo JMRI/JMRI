@@ -8,6 +8,7 @@ set -ev
 PRINT_SUMMARY=${PRINT_SUMMARY:-true}
 RUN_ORDER=${RUN_ORDER:-filesystem}
 HEADLESS=${HEADLESS:-false}
+SKIPINTERMITTENT=${SKIPINTERMITTENT:-true}
 
 # ensure Jython can cache JAR classes
 PYTHON_CACHEDIR="${HOME}/jython/cache"
@@ -34,19 +35,26 @@ if [[ "${HEADLESS}" == "true" ]] ; then
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
+            -Djmri.skipTestsRequiringSeparateRunning=${SKIPINTERMITTENT} \
             -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'" \
             -Dpython.cachedir=${PYTHON_CACHEDIR}
     fi
 else
-    # run full GUI test suite and fail on coverage issues
-    #       skipping XML Schema validation in long-running task, still done in headless
-    mvn verify -U -P travis-coverage --batch-mode \
-        -Dsurefire.printSummary=${PRINT_SUMMARY} \
-        -Dsurefire.runOrder=${RUN_ORDER} \
-        -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
-        -Djava.awt.headless=${HEADLESS} \
-        -Dcucumber.options="--tags 'not @Ignore'" \
-        -Dpython.cachedir=${PYTHON_CACHEDIR} \
-        -Djmri.skipschematests=true
+    if [[ "${SKIPINTERMITTENT}" == "true" ]] ; then
+        # run full GUI test suite and fail on coverage issues
+        #       skipping XML Schema validation in long-running task, still done in headless
+        mvn verify -U -P travis-coverage --batch-mode \
+            -Dsurefire.printSummary=${PRINT_SUMMARY} \
+            -Dsurefire.runOrder=${RUN_ORDER} \
+            -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
+            -Djava.awt.headless=${HEADLESS} \
+            -Djmri.skipTestsRequiringSeparateRunning=${SKIPINTERMITTENT} \
+            -Djmri.skipschematests=true \
+            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'" \
+            -Dpython.cachedir=${PYTHON_CACHEDIR}
+    else
+        # run the SKIPINTERMITTENT tests separately
+        ./scripts/run_flagged_tests_separately
+    fi
 fi
 
