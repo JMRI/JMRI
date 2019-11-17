@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- XML File to represent multiple missing field values -->
+<CbusNode xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/MERG-DEV/JMRI/master/schema/MergCBUSNodeBackup.xsd" NodeNum="41377">
+  <UserName></UserName>
+  <ModuleTypeName></ModuleTypeName>
+  <FreeText></FreeText>
+  <Backups>
+    <BackupInfo dateTimeStamp="2019-12-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="299" EventNum="203" EvVars="010203" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-11-24 19:51:15" result="COMPLETE">
+      <Parameters />
+      <NodeVariables />
+      <NodeEvents />
+    </BackupInfo>
+    <BackupInfo />
+    <BackupInfo dateTimeStamp="NOT A DATE" result="COMPLETE" />
+    <BackupInfo dateTimeStamp="2019-12-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="" EventNum="" EvVars="010203" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-12-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent  EventNum="203" EvVars="010203" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-12-24 19:51:15" result="COMPLETE">
+      <Parameters>A5591D800D01010D0D0100080000000000000101</Parameters>
+      <NodeVariables>01</NodeVariables>
+      <NodeEvents>
+        <NodeEvent NodeNum="299" EvVars="010203" />
+      </NodeEvents>
+    </BackupInfo>
+    <BackupInfo dateTimeStamp="2019-12-24 19:51:15" result="NOTANENUM" />
+  </Backups>
+</CbusNode>

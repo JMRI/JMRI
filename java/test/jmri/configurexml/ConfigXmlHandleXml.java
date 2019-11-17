@@ -1,7 +1,7 @@
 package jmri.configurexml;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import org.jdom2.Element;
 
 /**
@@ -56,10 +56,10 @@ class ConfigXmlHandleXml implements XmlAdapter {
     @Override
     public void handleException(
             @Nonnull String description,
-            @Nullable String operation,
-            @Nullable String systemName,
-            @Nullable String userName,
-            @Nullable Exception exception) throws JmriConfigureXmlException {
+            @CheckForNull String operation,
+            @CheckForNull String systemName,
+            @CheckForNull String userName,
+            @CheckForNull Exception exception) throws JmriConfigureXmlException {
     }
 
     @Override

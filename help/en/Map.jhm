@@ -534,6 +534,8 @@
 
 <mapID target="package.jmri.jmrix.ieee802154.swing.nodeconfig.NodeConfigFrame" url="package/jmri/jmrix/ieee802154/swing/nodeconfig/NodeConfigFrame.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ExchangeBetweenFreightAndLocal" url="package/jmri/jmrit/operations/Operations.shtml#ExchangeBetweenFreightAndLocal"/>
+
 <mapID target="package.jmri.jmrit.display.SetSignalsAtTurnout" url="package/jmri/jmrit/display/SetSignalsAtTurnout.shtml"/>
 
 <mapID target="html.tools.Turnouts" url="html/tools/Turnouts.shtml"/>
@@ -2379,6 +2381,8 @@
 <mapID target="html.hardware.cmri.CMRI_L652" url="html/hardware/cmri/CMRI.shtml#L652"/>
 
 <mapID target="package.jmri.jmrit.beantable.AudioTable" url="package/jmri/jmrit/beantable/AudioTable.shtml"/>
+
+<mapID target="package.jmri.jmrit.logix.Tracker" url="package/jmri/jmrit/logix/Tracker.shtml"/>
 
 <mapID target="html.hardware.XPressNet.index_tools" url="html/hardware/XPressNet/index.shtml#tools"/>
 

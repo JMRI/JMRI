@@ -676,7 +676,6 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     /**
      * Handle start set time check box change
      */
-    @SuppressWarnings("deprecation")
     private void startSetTimeChanged() {
         int hours = 0;
         int minutes = 0;

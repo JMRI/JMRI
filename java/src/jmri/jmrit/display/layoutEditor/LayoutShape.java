@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -418,7 +418,7 @@ public class LayoutShape {
     private JPopupMenu popup = null;
 
     @Nonnull
-    protected JPopupMenu showShapePopUp(@Nullable MouseEvent mouseEvent, int hitPointType) {
+    protected JPopupMenu showShapePopUp(@CheckForNull MouseEvent mouseEvent, int hitPointType) {
         if (popup != null) {
             popup.removeAll();
         } else {
@@ -536,11 +536,10 @@ public class LayoutShape {
             jmi.setToolTipText(Bundle.getMessage("ShapeLevelMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                 //prompt for level
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
-                        level, QuickPromptUtil.checkIntRange(1, null, 
-                            Bundle.getMessage("ShapeLevelValueTitle")));
+                        level, QuickPromptUtil.checkIntRange(1, 10, null));
                 setLevel(newValue);
                 layoutEditor.repaint();
             });
@@ -577,7 +576,7 @@ public class LayoutShape {
             jmi.setToolTipText(Bundle.getMessage("ShapeLineWidthMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                 //prompt for lineWidth
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
                         lineWidth, QuickPromptUtil.checkIntRange(1, MAX_LINEWIDTH, null));
@@ -677,7 +676,7 @@ public class LayoutShape {
             if (getType() == LayoutShapeType.eOpen) {
                 // and this is first or last point...
                 if ((idx == 0) || (idxR == 0)) {
-                    // then force straightt shape point type
+                    // then force straight shape point type
                     lspt = LayoutShapePointType.eStraight;
                 }
             }
@@ -826,7 +825,7 @@ public class LayoutShape {
             ENUM_MAP = Collections.unmodifiableMap(map);
         }
 
-        public static LayoutShapeType getName(@Nullable String name) {
+        public static LayoutShapeType getName(@CheckForNull String name) {
             return ENUM_MAP.get(name);
         }
 
@@ -857,7 +856,7 @@ public class LayoutShape {
             ENUM_MAP = Collections.unmodifiableMap(map);
         }
 
-        public static LayoutShapePointType getName(@Nullable String name) {
+        public static LayoutShapePointType getName(@CheckForNull String name) {
             return ENUM_MAP.get(name);
         }
 

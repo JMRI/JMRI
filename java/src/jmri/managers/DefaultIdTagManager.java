@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
-import java.util.SortedSet;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.Disposable;
@@ -95,6 +94,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
      */
     @Override
     protected void registerSelf() {
+        // override to do nothing
     }
 
     @Override
@@ -103,12 +103,14 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public IdTag provide(String name) throws IllegalArgumentException {
+    @Nonnull
+    public IdTag provide(@Nonnull String name) throws IllegalArgumentException {
         return provideIdTag(name);
     }
 
     @Override
-    public IdTag provideIdTag(String name) throws IllegalArgumentException {
+    @Nonnull
+    public IdTag provideIdTag(@Nonnull String name) throws IllegalArgumentException {
         if (!initialised && !loading) {
             init();
         }
@@ -126,7 +128,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public IdTag getIdTag(String name) {
+    public IdTag getIdTag(@Nonnull String name) {
         if (!initialised && !loading) {
             init();
         }
@@ -145,7 +147,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public IdTag getBySystemName(String name) {
+    public IdTag getBySystemName(@Nonnull String name) {
         if (!initialised && !loading) {
             init();
         }
@@ -153,7 +155,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public IdTag getByUserName(String key) {
+    public IdTag getByUserName(@Nonnull String key) {
         if (!initialised && !loading) {
             init();
         }
@@ -161,7 +163,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public IdTag getByTagID(String tagID) {
+    public IdTag getByTagID(@Nonnull String tagID) {
         if (!initialised && !loading) {
             init();
         }
@@ -171,14 +173,14 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     protected IdTag createNewIdTag(String systemName, String userName) {
         // Names start with the system prefix followed by D.
         // Add the prefix if not present.
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter() )) // NOI18N
-        {
-            systemName = getSystemPrefix() + typeLetter() + systemName; // NOI18N
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter())) {
+            systemName = getSystemPrefix() + typeLetter() + systemName;
         }
         return new DefaultIdTag(systemName, userName);
     }
 
     @Override
+    @Nonnull
     public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
         if (!initialised && !loading) {
             init();
@@ -218,13 +220,13 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public void register(IdTag s) {
+    public void register(@Nonnull IdTag s) {
         super.register(s);
         this.setDirty(true);
     }
 
     @Override
-    public void deregister(IdTag s) {
+    public void deregister(@Nonnull IdTag s) {
         super.deregister(s);
         this.setDirty(true);
     }
@@ -249,7 +251,6 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         this.dirty = false;
         log.debug("...done reading IdTag details");
     }
-
 
     @Override
     public void setStateStored(boolean state) {
@@ -294,7 +295,8 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
+    @Nonnull
+    public List<IdTag> getTagsForReporter(@Nonnull Reporter reporter, long threshold) {
         List<IdTag> out = new ArrayList<>();
         Date lastWhenLastSeen = new Date(0);
 

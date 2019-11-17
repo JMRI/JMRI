@@ -89,12 +89,12 @@ public class ShapeDrawer {
             _drawFrame = new DrawEllipse("newShape", "Ellipse", null, _editor, true);
         }
     }
-    
+
     protected boolean makeNewShape() {
         if (_drawFrame != null) {
-            int ans = JOptionPane.showConfirmDialog(_drawFrame,  
-                   Bundle.getMessage("cancelFrame", _drawFrame.getTitle()), 
-                   Bundle.getMessage("QuestionTitle"), 
+            int ans = JOptionPane.showConfirmDialog(_drawFrame,
+                   Bundle.getMessage("cancelFrame", _drawFrame.getTitle()),
+                   Bundle.getMessage("QuestionTitle"),
                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
             if (ans == JOptionPane.YES_OPTION) {
                 _drawFrame.closingEvent(true);
@@ -152,14 +152,14 @@ public class ShapeDrawer {
         }
         if (pos instanceof PositionableShape && _editor.isEditable()) {
             if (_currentSelection != null) {
-                _currentSelection.removeHandles();                        
+                _currentSelection.removeHandles();
             }
             _currentSelection = (PositionableShape) pos;
             _currentSelection.drawHandles();
             return true;
         }
         if (_currentSelection != null) {
-            _currentSelection.removeHandles();                        
+            _currentSelection.removeHandles();
             _currentSelection = null;
         }
         return false;
@@ -168,11 +168,11 @@ public class ShapeDrawer {
     /*
      * For all PositionableShapes except PositionablePolygon, this terminates the first
      * phase of creating the PositionableShape. The initial DrawFrame is discarded and
-     * the shape is created, entered into the Editor'c content and the editing version 
+     * the shape is created, entered into the Editor'c content and the editing version
      * of the DrawFrame is made.
      * For a PositionablePolygon, the releases add a vertex to the shape. The actual
      * creation of the PositionablePolygon, and the above actions are done at doMouseClicked
-     * 
+     *
      */
     public boolean doMouseReleased(Positionable selection, MouseEvent event, Editor ed) {
         log.debug("Mouse Released _drawFrame= {}", (_drawFrame==null ? "null" : _drawFrame.getTitle()));
@@ -191,7 +191,7 @@ public class ShapeDrawer {
                 shape.setHeight(r.height);
                 shape.setLocation(r.x, r.y);
                 shape.updateSize();
-                _drawFrame.closingEvent(true);       // close opening create prompt frame
+                _drawFrame.closingEvent(false);       // close opening create prompt frame
                 _drawFrame = shape.makeEditFrame(true); // make finishing create frame;
                 ed.putItem(shape);
                 return true;
@@ -210,7 +210,7 @@ public class ShapeDrawer {
                     Point pt = ((DrawPolygon)_drawFrame).getStartPoint();
                     shape.setLocation(pt.x, pt.y);
                     shape.updateSize();
-                    _drawFrame.closingEvent(true);       // close opening create prompt frame
+                    _drawFrame.closingEvent(false);       // close opening create prompt frame
                     _drawFrame = shape.makeEditFrame(true); // make finishing create frame;
                     ed.putItem(shape);
                     return true;

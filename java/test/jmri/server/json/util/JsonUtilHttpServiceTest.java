@@ -62,6 +62,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     @Override
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 
@@ -342,7 +343,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetPanel() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
-        ObjectNode result = service.getPanel(locale, editor, JSON.XML, 42);
+        ObjectNode result = service.getPanel(editor, JSON.XML, 42);
         validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
@@ -357,7 +358,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetPanels_Locale_String() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
-        JsonNode result = service.getPanels(locale, JSON.XML, 42);
+        JsonNode result = service.getPanels(JSON.XML, 42);
         validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
@@ -372,7 +373,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetPanels_Locale() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
-        JsonNode result = service.getPanels(locale, 42);
+        JsonNode result = service.getPanels(42);
         validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);

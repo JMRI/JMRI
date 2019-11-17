@@ -113,7 +113,7 @@ public class LnPr2PowerManager extends LnPowerManager {
                 timer.stop();
             }
             firePropertyChange("Power", null, null); // NOI18N
-        } else if (m.getOpCode() == 0xEF) {
+        } else if (m.getOpCode() == LnConstants.OPC_WR_SL_DATA) {
             // if this is a service mode write, drop out of power on mode
             if ((m.getElement(1) == 0x0E)
                     && (m.getElement(2) == 0x7C)

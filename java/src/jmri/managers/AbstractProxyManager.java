@@ -145,7 +145,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         });
 
         m.addDataListener(this);
-        updateOrderList();
         recomputeNamedBeanSet();
 
         if (log.isDebugEnabled()) {
@@ -166,7 +165,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         public int compare(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().compareTo(e2.getSystemPrefix()); }
     });
     private Manager<E> internalManager = null;
-    private Manager<E> defaultManager = null;
+    protected Manager<E> defaultManager = null;
 
     /**
      * Create specific internal manager as needed for concrete type.
@@ -648,28 +647,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         return Collections.unmodifiableList(retval);
     }
 
-    private ArrayList<String> addedOrderList = null;
-    
-    protected void updateOrderList() {
-        if (addedOrderList == null) return; // only maintain if requested
-        addedOrderList.clear();
-        for (Manager<E> m : mgrs) {
-            @SuppressWarnings("deprecation") // getSystemNameAddedOrderList() call needed until deprecated code removed
-            List<String> t = m.getSystemNameAddedOrderList();
-            addedOrderList.addAll(t);
-        }
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public List<String> getSystemNameAddedOrderList() {
-        // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameAddedOrderList"); // used by configureXML
-        addedOrderList = new ArrayList<>();  // need to start maintaining it
-        updateOrderList();
-        return Collections.unmodifiableList(addedOrderList);
-    }
-
     /** {@inheritDoc} */
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -734,8 +711,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      */
     @Override
     public void intervalAdded(AbstractProxyManager.ManagerDataEvent<E> e) {
-        updateOrderList();
-
         if (namedBeanSet != null && e.getIndex0() == e.getIndex1()) {
             // just one element added, and we have the object reference
             namedBeanSet.add(e.getChangedBean());
@@ -765,7 +740,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      */
     @Override
     public void intervalRemoved(AbstractProxyManager.ManagerDataEvent<E> e) {
-        updateOrderList();
         recomputeNamedBeanSet();
 
         if (muted) return;

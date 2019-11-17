@@ -191,7 +191,9 @@ public class Xml {
     static final String TYPE = "type"; // NOI18N
     static final String MODEL = "model"; // NOI18N
     static final String LENGTH = "length"; // NOI18N
+    static final String WEIGHT = "weight"; // NOI18N
     static final String LOAD = "load"; // NOI18N
+    static final String LOAD_TYPE = "load_type"; // NOI18N
     static final String COLOR = "color"; // NOI18N
     static final String TRACK = "track"; // NOI18N
     //static final String DESTINATION = "destination"; // NOI18N

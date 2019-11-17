@@ -446,7 +446,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *         Channel, Password or ID
      */
     public static final boolean isDuplexGroupMessage(LocoNetMessage m) {
-        if ((m.getElement(0) == LnConstants.OPC_PEER_XFER)
+        if ((m.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (m.getElement(1) == LnConstants.RE_DPLX_OP_LEN)) {
             // Message is a peer-to-peer message of appropriate length for
             // Duplex Group operations.  Check the individual message type
@@ -486,7 +486,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *         DUPLEX_GROUP_ID_REPORT_MESSAGE DUPLEX_GROUP_ID_WRITE_MESSAGE
      */
     public static final DuplexGroupMessageType getDuplexGroupIdentityMessageType(LocoNetMessage m) {
-        if ((m.getElement(0) == LnConstants.OPC_PEER_XFER)
+        if ((m.getOpCode() == LnConstants.OPC_PEER_XFER)
                 && (m.getElement(1) == LnConstants.RE_DPLX_OP_LEN)) {
             // Message is a peer-to-peer message of appropriate length for
             // Duplex Group operations.  Check the individual message type
@@ -774,7 +774,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * @return true if message is an IPL device report indicating a UR92
      *         present, else return false.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE", 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "DLS_DEAD_LOCAL_STORE",
                 justification = "False positive on the implied local variable in numUr92++")
     private boolean handleMessageIplResult(LocoNetMessage m) {
         if (LnIPLImplementation.isIplUr92IdentityReportMessage(m)) {

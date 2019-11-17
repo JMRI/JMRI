@@ -18,12 +18,13 @@
     <!--#include virtual="/Style" -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-<H1> JMRI: Utilisation de Schema XML</H1>
+<h1> JMRI: Utilisation de Schema XML</h1>
 
 JMRI utilise XML pour un certains nombres ce but:
 organiser les d&#233;finitions de d&#233;codeur, pour ses
@@ -125,7 +126,7 @@ En pratique, La "gestion de Version" consiste &#224; avoir de multiples versions
 de versions des fichiers de d&#233;finition de schema qui sont &#233;tiquett&#233;es par la
 premi&#232;re version JMRI qui peut les lire.
 <p>
-Quand avez vous besoin  de cr&#233;er une nouvelle version?
+        Quand avez vous besoin  de cr&#233;er une nouvelle version?</p>
 <ul>
 <li>
 vous <em>n'avez pas</em> besoin
@@ -227,20 +228,21 @@ pourront certainement basculer vers elle.
 <a id="test">
 <a id="junitschema test">
 <h3>Test JUnit</h3>
+
 Vous devez ajoutez aussi un
 <a href="JUnit.shtml">test JUnit</a>
 qui v&#233;rifie un fichier typique
 Il y a trois sortes de v&#233;rifications qui peuvent &#234;tre faites:
 <ol>
-Vous devriez toujours avoir une classe qui valide
+<li>Vous devriez toujours avoir une classe qui valide
 un fichier typique contre le sch&#233;ma.
-<p>
+<br>
 Cela se fait en ayant une classe Schema Test dans votre paquet d'arbre de test ( voir par exemple:
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/Schema Test.java" target="_blank">test/jmri/configurexml/Schema Test.java</a>
 qui v&#233;rifie tous les fichiers XML conserv&#233;s l&#224;.
 Si cela est en place, mettez juste une copie du ( nouveau )
 fichier typique XML dans le sous-r&#233;pertoire "verify" existant.
-<p>Pour v&#233;rifier plus largement votre sch&#233;ma, vous pouvez v&#233;rifier qu'il 
+<br>Pour v&#233;rifier plus largement votre sch&#233;ma, vous pouvez v&#233;rifier qu'il
 met en d&#233;faut les fichiers XML que vous pensez n'&#234;tre pas valides.
 Il y a beaucoup de fa&#231;ons de ne pas &#234;tre valable, et vous ne devez pas
 tout v&#233;rifier, mais s'il y a quelque chose de sp&#233;cifique dont 
@@ -248,30 +250,29 @@ vous voulez &#234;tre s&#251;r, mettez un exemple de ceci
 dans le sous-r&#233;pertoire "invalid". Ces fichiers sont attendus en &#233;chec
 pour une raison sp&#233;cifique. Vous devez documenter cette raison par l'interm&#233;diaire des commentaires dans le fichier
 lui-m&#234;me afin que vos coll&#232;gues puissent le comprendre plus tard.
-<p>S'il n'y a pas de sous-r&#233;pertoire "verify", cr&#233;ez en un et ajoutez le 
+<li>S'il n'y a pas de sous-r&#233;pertoire "verify", cr&#233;ez en un et ajoutez le
 &#224; la fin de de la classe Schema Test dans ce paquet. S'il n'y 
 a pas de classe Schema Test, cr&#233;ez en une en dupliquant une existante, 
-voir lien ci-dessous. N'oubliez pas de l'ajouter dans le PackageTest pour qu'elle soit appel&#233;e!
+voir lien ci-dessous. N'oubliez pas de l'ajouter dans le PackageTest pour qu'elle soit appel&#233;e!</li>
 
 <li>Si vous travaillez sur les fichiers configurexml ( fichiers panneau ) ,
 et que votre nouveau code n'est pas appel&#233; dans l'affichage actuel des panneaux
 ( ex: peut fonctionner dans le cadre d'headlesstest ), vous devez ajouter un test pour qu'un 
-exemple de fichier puissent &#234;tre t&#233;l&#233;charg&#233; et restock&#233; avec succ&#232;s. 
-
+exemple de fichier puissent &#234;tre t&#233;l&#233;charg&#233; et restock&#233; avec succ&#232;s.
 
 ( nous ex&#233;cutons ces tests headless comme une part de Jenkins, donc SVP 
 n'ajoutez pas de test qui font appara&#238;tre des fen&#234;tres, cela causerait des erreurs ).
-<p>
+<br>
 Cela se fait en ayant une classe LoadAndStoreTest dans votre paquet test-tree ( voir ex:
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/LoadAndStoreTest.java" target="_blank">test/jmri/configurexml/LoadAndStoreTest.java</a> )
 qui v&#233;rifie tous les fichiers XML gard&#233;s l&#224;.
 Si c'est en place, mettez juste une copie d'un ( nouveau ) 
 fichier XML typique dans le sous-r&#233;pertoire existant "load" 
-<p> S'il ny a pas de sous-r&#233;pertoire "load", cr&#233;ez en un en dupliquant un existant, 
+<br> S'il ny a pas de sous-r&#233;pertoire "load", cr&#233;ez en un en dupliquant un existant,
 &#224; la fin de la classe LoadAndStoreTest &#224; la fin de ce paquet. S'il n'y 
 a pas de classe LoadAndStoreTest, cr&#233;ez en une en dupliquant une existante. 
 voir le lien ci-dessous. N'oubliez pas de l'ajouter dans PackageTest pour qu'elle puisse &#234;tre appel&#233;e! 
-<p>Quand LoadAndStoreTest s'ex&#233;cute, il charge les fichiers dans le r&#233;pertoire "load" 
+<br>Quand LoadAndStoreTest s'ex&#233;cute, il charge les fichiers dans le r&#233;pertoire "load"
 un par un, stocker chaque retour vers le r&#233;pertoire "temp" au sein 
 du r&#233;pertoire des pr&#233;f&#233;rences locales, et ensuite compare les fichier d'entr&#233;es et 
 sorties. Parfois ce processus de charge-et-stockage a comme cons&#233;quence quelque chose qui est 
@@ -283,18 +284,19 @@ si n&#233;cessaire ) au sein de votre paquet test. Voir
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/java/test/jmri/configurexml/loadref" target="_blank">test/jmri/configurexml/loadref</a>
 comme exemple. LoadAndStoreTest comparera aux dossiers qu'il trouve ici, 
 au lieu du fichier original dans le sous-r&#233;pertoire "load". 
-<p>Si vos changements de code provoque l'&#233;chec de ce test 
+<br>Si vos changements de code provoque l'&#233;chec de ce test
 avec l'ancienne version de ce fichier, <em>ne pas changer l'ancienne version.</em>
 &#192; la place, soit mettre une r&#233;f&#233;rence de sortie actualis&#233;e dans le r&#233;pertoire 
 "loadref", versionner le schema pour permettre &#224; l'ancien fichier de se charger, 
-ou r&#233;parez votre code. La compatibilit&#233; ascendante est importante!
+    ou r&#233;parez votre code. La compatibilit&#233; ascendante est importante!</li>
 
 <li>Vous pouvez aussi ajouter un test JUnit personnalis&#233; qui lit votre dossier 
 t&#233;moin et veille que les objets appropri&#233;s ont &#233;t&#233; cr&#233;&#233;s, qu'ils 
 ont les donn&#233;es et les &#233;tats corrects, etc. Ceci pourrait &#234;tre 
 quelque chose d'une "chargez et v&#233;rifiez que les nouveaux beans existent dans le nouveau gestionnaire"
-pour quelque chose de beaucoup plus &#233;tendue. 
+    pour quelque chose de beaucoup plus &#233;tendue.</li>
 </ol>
+
 Au minimum, SVP veuillez faire les contr&#244;les de sch&#233;ma. Ils sont faciles, et 
 &#233;pargneront un bon nombre d'ennuis &#224; l'avenir. Si votre nouvelle fonction 
 n'appelle pas d'affichage sur l'&#233;cran, l'ajout de des v&#233;rification  charger et stocker est aussi
@@ -304,10 +306,10 @@ Ceux-ci conservent les anciennes versions des fichiers de travail!</em>
 Si votre nouveau code et/ou schema casse le processus de fichiers existants,
 vous devez soit corriger votre code ou
 <a href="#versioning">num&#233;roter la version du sch&#233;ma</a> pour permettre &#224; de multiple 
-formats de coexister 
+formats de coexister.
 
-
-<h2 id="devschema ">Developpement du Schema JMRI</h2>
+<a id="devschema"></a>
+<h2>Developpement du Schema JMRI</h2>
 
 Pour quelques exemples des structures de schema XML
 d&#233;crit ici, voir la page s&#233;par&#233;e 
@@ -356,7 +358,6 @@ Il y a quelques &#233;l&#233;ments (&#233;l&#233;ments et groupes d'attributs) q
 Ils sont d&#233;finis dans le fichier
 <a href="http://jmri.org/xml/schema /types/general.xsd">types/general.xsd</a> .
 
-
 <p>
 Plus d'informations sur les mod&#232;les de conception de sch&#233;mas XML est disponible &#224;
 <a href="http://www.ibm.com/developerworks/xml/library/ws-soa-xmlwsdl.html#N1012B">DeveloperWorks</a> et le 
@@ -400,9 +401,9 @@ Une liste partielle des types pr&#233;d&#233;finis:
 </dl>
 
 Pour d'autres, naviguer sur les
-<a types href="http://jmri.org/xml/schema /types/general.xsd">types g&#233;n&#233;raux de schema </a>.
+<a href="http://jmri.org/xml/schema /types/general.xsd">types g&#233;n&#233;raux de schema</a>.
 
-<H2>Normes Externes et Travaux Futurs</h2>
+<h2>Normes Externes et Travaux Futurs</h2>
 
 le
 <a href="http://www.oasis-open.org/"> collaboration OASIS</a>
@@ -420,9 +421,9 @@ pour am&#233;liorer l'inter-op&#233;rabilit&#233;. Les premiers int&#233;r&#234;
 
 Voir
 <ul>
-<li><a href="http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html">http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html</a>
-<li><a href="http://www.docbook.org/xml/5.0/xsd/">http://www.docbook.org/xml/5.0/xsd/</a>
-<li><a href="http://www.docbook.org/xml/5.0/xsd/docbook.xsd">http://www.docbook.org/xml/5.0/xsd/docbook.xsd</a>
+    <li><a href="http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html">http://www.docbook.org/specs/docbook-5.0-spec-cs-01.html</a></li>
+    <li><a href="http://www.docbook.org/xml/5.0/xsd/">http://www.docbook.org/xml/5.0/xsd/</a></li>
+    <li><a href="http://www.docbook.org/xml/5.0/xsd/docbook.xsd">http://www.docbook.org/xml/5.0/xsd/docbook.xsd</a></li>
 </ul>
 <p>
 Nous avons notre propre sous-ensemble DocBook que nous utilisons, parce
@@ -460,9 +461,9 @@ pour le Copyrignt, Auteur et Informations de R&#233;vision dans nos fichiers XML
 <P>
 Exemple XML:
 <Code> <pre>
-   &Lt;db: copyright &gt;
-         &Lt;db: ann&#233;e &gt; 2009 &lt;/db: ann&#233;e &gt;
-         &Lt;db: ann&#233;e &gt; 2010 &lt;/db: ann&#233;e &gt; &lt;
+   &lt;db: copyright &gt;
+         &lt;db: ann&#233;e &gt; 2009 &lt;/db: ann&#233;e &gt;
+         &lt;db: ann&#233;e &gt; 2010 &lt;/db: ann&#233;e &gt; &lt;
          db: support &gt; JMRI &lt;/db: support &gt; &lt;/db: copyright &gt;
 
 &lt;db:authorgroup&gt;
@@ -484,18 +485,18 @@ Exemple XML:
 <P>
 Description de l'&#233;chantillon du sch&#233;ma: (Mais voir le vrai, qui est pr&#233;vu dans le schema /docbook )
 <Code> <pre>
-     &Lt;xs: element ref =: minOccurs "docbook copyright" = "1" maxOccurs = "1" &gt;
-       &Lt;xs: annotation &gt; &lt; xs: documentation &gt;
+     &lt;xs: element ref =: minOccurs "docbook copyright" = "1" maxOccurs = "1" &gt;
+       &lt;xs: annotation &gt; &lt; xs: documentation &gt;
        &#233;l&#233;ment (s) DocBook fournissant des informations de copyright sous forme standard.
        Doit &#234;tre pr&#233;sent.
-       &Lt;/xs: documentation &gt; &lt;/xs: annotation &gt;
-&Lt;/xs: element &gt;
+       &lt;/xs: documentation &gt; &lt;/xs: annotation &gt;
+&lt;/xs: element &gt;
 
-&Lt;xs: element ref =: minOccurs "docbook AuthorGroup" = "1" maxOccurs = "unbounded" &gt;
-       &Lt;xs: annotation &gt; &lt;xs: documentation &gt;
+&lt;xs: element ref =: minOccurs "docbook AuthorGroup" = "1" maxOccurs = "unbounded" &gt;
+       &lt;xs: annotation &gt; &lt;xs: documentation &gt;
        &#233;l&#233;ment DocBook (s) d&#233;crivant les auteurs en forme standard
-       &Lt;/xs: documentation &gt; &lt;/xs: annotation &gt;
-&Lt;/xs: element &gt;
+       &lt;/xs: documentation &gt; &lt;/xs: annotation &gt;
+&lt;/xs: element &gt;
 
 
     &lt;xs:element ref="docbook:revhistory" minOccurs="1" maxOccurs="unbounded" &gt;
@@ -504,9 +505,9 @@ Description de l'&#233;chantillon du sch&#233;ma: (Mais voir le vrai, qui est pr
       &lt;/xs:documentation&gt;&lt;/xs:annotation&gt;
     &lt;/xs:element&gt;
 </pre></code>	
+    </P>
 
 <!--#include virtual="/Footer" -->
-
 	  </div><!-- closes #mainContent-->
 	</div> <!-- closes #mBody-->
 </body>

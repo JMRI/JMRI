@@ -182,6 +182,8 @@
         <li><a href="#TrackDestinations">Track Destinations</a></li>
 
         <li><a href="#CreateClassificationYard">How to Create a Classification Yard</a></li>
+        
+        <li><a href="#ExchangeBetweenFreightAndLocal">How to Exchange Cars Between Through Freight and Local Switcher</a></li>   
        </ul></li>
 
       <li><a href="#Staging">Staging Tracks</a>
@@ -353,7 +355,7 @@
         <li><a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a></li>
        </ul></li>
 
-      <li><a href="#SwitcherService">Switcher Service</a></li>
+      <li><a href="#SwitcherService">Switcher Service (Local)</a></li>
 
       <li><a href="#BuildingTrains">Building Trains</a></li>
 
@@ -1065,7 +1067,7 @@
     longer since each pass by the program is documented.</p>
 
    <a name="AllowLocalCarMovements" id="AllowLocalCarMovements"></a>
-   <h3>Switcher Service</h3>
+   <h3>Switcher Service (Local)</h3>
    The next set of options control local car movements when using a <a href="#SwitcherService">switcher</a>
    to service a location. A switcher only services one location. Normally it is better not to allow
    a car to move from one spur directly to another spur at the same location when using a switcher.
@@ -1859,6 +1861,11 @@
    <p>Some of the text messages allow substitutions using the format "{number}". The program
     provides a tool tip when hovering over the text box which shows the available substitutions for
     that particular message.</p>
+    
+    <p>You can also modify the color of the text by adding the color control text &lt;FONT color="red"&gt; at the
+    start of the line, where "red" is the color text you want. Complete the color change by placing &lt;/FONT&gt; at the
+    end of the line.</p>
+
 
    <a name="BuildReportDetails" id="BuildReportDetails"></a>
    <h3>Build Report Options</h3>
@@ -2536,12 +2543,17 @@
    The easiest way to create the exchange of cars between trains is to use a
    classification/interchange track. A classification/interchange (C/I) track can be used for
    classification, the movement of cars within the same railroad, and an interchange, the movement
-   of cars between railroads. Cars dropped off to a classification/interchange track by a train on a
-   given route will not be picked up by any train using that same route. Another train with a
-   different route is required to pick up the cars. For example, you might have a branch line that
-   picks up and set out cars from a terminal. By defining the track as a classification/interchange
-   track, once the branch line train delivers the cars, they will remain there until the main line
-   train stops to service the classification/interchange track.
+   of cars between railroads. Cars dropped off to a C/I track by a train on a given route will not
+   be picked up by any train using that same route. Another train with a different route is required
+   to pick up the cars. This includes transferring cars from a through freight to a local switcher.
+   For example, you might have a branch line that picks up and set out cars from a terminal. By
+   defining the track as a classification/interchange track, once the branch line train delivers the
+   cars, they will remain there until the main line train stops to service the
+   classification/interchange track. Same goes for a
+   <a href="#SwitcherService">local switcher</a>, cars dropped off at a location with a C/I track
+   will remain there until the local moves them to the spur tracks. When the local pulls cars for
+   the spur and places them on the C/I track, they will remain there until the main line train pulls
+   them.
 
    <p>The car's load status does not change when placed at a classification/interchange track.</p>
 
@@ -2594,6 +2606,30 @@
      href="#Pools">Track Pools</a> feature to share the track space in your yard.
    </p>
 
+   <a name="ExchangeBetweenFreightAndLocal" id="ExchangeBetweenFreightAndLocal"></a>
+   <h3>How to Exchange Cars Between Through Freight and Local Switcher</h3>
+
+   If you would like your through freight to set out and pull cars to a track and have a local move
+   them to and from the various industries at that location, you would use an
+   classification/interchange (C/I) track to make the exchange. Create a C/I track that only
+   services the type of cars that the local industries can use when delivering cars to the spur
+   tracks. Deselect all the track direction controls for the tracks that will only be serviced by
+   the
+   <a href="#SwitcherService">local switcher</a>. Now when you build the through freight, you should
+   see that the manifest only shows cars being pulled or set out to the C/I track for that location.
+   One issue if you not using schedules and customs loads, is that cars are randomly placed on the
+   C/I track, meaning that if an industry need a certain type of car it might not be delivered to
+   the C/I track. One way to fix this problem is to create multiple C/I tracks for that location,
+   and restrict them to certain types of cars. For example, say a location's industries could use
+   two boxcars, and one tankcar. You would create two C/I tracks, one would be the length of two
+   boxcars, and only allow boxcars, the other would only allow tankcars, and would be the length of
+   one tankcar. Each C/I track could have the "same" name using the hyphen feature, for example you
+   could name the C/I boxcar track "Yard-(boxcars)", and the tankcar track "Yard-(tankcars)". Both
+   tracks would print as "Yard" on Manifests and switch lists. And finally to facilitate the
+   exchange of cars from the spur tracks to the through freight, create another C/I track that only
+   accepts set outs from the local switcher. The other solution is to use the
+   <a href="#PlannedPickUps">Planned Pick Ups</a> feature for both spur tracks. 
+   
    <a name="Staging" id="Staging"></a>
    <h3>Staging Tracks</h3>
    Staging tracks are normally used to represent locations that generate traffic to and from your
@@ -3087,7 +3123,7 @@
    <a name="Cars" id="Cars"></a>
    <h2>Cars</h2>
    The cars window allows you to edit your car roster. You can enter a car's road (reporting mark),
-   number, type, and length. The program will automatically calculate the car's weight based on
+   number, type, and length. The program will automatically calculate the car's maximum weight based on
    length and the scale your modeling. You can optionally add the car's color, built date, load and
    owner. If you want a group of cars to be switched as a unit, you can create a "kernel". You can
    assign any number of cars to a kernel but the type of the first car assigned will be used by the
@@ -3224,7 +3260,7 @@
    <h4>Type, Length, Weight</h4>
    Select the car's type and length from the menu boxes. Use the "Edit" button to the right of the
    menu boxes to add or delete car types, or lengths that you want to add or remove. The car's
-   weight is automatically calculated, but you can enter a different weight if necessary. When
+   maximum weight is automatically calculated, but you can enter a different weight if necessary. When
    entering the length of a car, enter the length of the body and not the total length. For example,
    a forty foot boxcar has a length of 40 feet. The program when calculating lengths will add two
    feet to each end of a car for the couplers. Therefore when you place a forty foot car at a spur,
@@ -3270,7 +3306,7 @@
     feature for all cars of a given type. Since the car's road and number isn't displayed on the
     Manifests and switch list, any car of that type can be placed into a train. Later if you try and
     find a car by its road number, it could very well have been shipped out on an earlier train. So
-    you have to decide, use road numbers or or not for a given type of car.</p>
+    you have to decide, use road numbers or not for a given type of car.</p>
 
    <h4>Location and Track</h4>
    <p>Now set the car's location on the layout. If the car is off the layout, set the location
@@ -3386,9 +3422,9 @@
 
    <a name="LoadType" id="LoadType"></a>
    <h4>Load Type</h4>
-   A load type of "Load" means the program will consider the car as being loaded and the maximum car
+   A load type of "Load" means the program will consider the car as being loaded and the car's maximum
    weight is used when calculating the train's total weight. A load type of "Empty" tells the
-   program that the car is empty as to only use 1/3 of the car's maximum weight when calculating the
+   program that the car is empty and to only use 1/3 of the car's maximum weight when calculating the
    train's total weight. If you use the <a href="#ManifestComments">Loads and Empties</a> option
    when printing your Manifest, you will want to use the correct load type so that the program
    prints out the correct number of loads and empties in the train.
@@ -4095,6 +4131,12 @@
    train. Useful when you want to try various build options and don't what to physically move
    locomotives and cars on the railroad. Note that you can only reset a train that hasn't been
    moved.
+
+   <p>
+    There are many counters used when building a train and they are NOT restored when using the
+    train reset feature. This includes track use counts, <a href="#Schedules">schedules</a>, and car
+    wait values. Therefore new train builds can be different after using the train reset function.
+   </p>
 
    <h3>Save Train</h3>
    <p>Press "Save Train" to save your train. The program will create a file named
@@ -4936,25 +4978,21 @@
    </p>
 
    <a name="SwitcherService" id="SwitcherService"></a>
-   <h3>Switcher Service</h3>
+   <h3>Switcher Service (Local)</h3>
    Many operators assign a locomotive to a location to do the local switching. Using the location's
    switch list allows the person assigned to the location to service all trains that stop at that
-   location. However, there can be locations that don't get enough work servicing through or local
+   location. However, there can be locations that don't get enough work servicing through
    trains and it would be nice to create some additional work for the crew member assigned to that
-   location. To create a "switcher" job, create a route with just one location, the location that
+   location. To create a local "switcher" job, create a route with just one location, the location that
    the switcher will service, and assign that route to a train. The "train" now becomes a switcher
    that will only service that location. Adjust the "Move" count in the route to control how many
    cars the switcher will service.
 
-   <p>Since a switcher only services a single location, the program ignores the train direction
+   <p>Since a local switcher only services a single location, the program ignores the train direction
     control in the switcher's route, and therefore the location and track service direction controls
-    for a train are also ignored by the program.</p>
-
-   <p>Some operators like to produce a train Manifest that only shows set outs or pick ups from
-    a yard or interchange, and then have a switch list that shows moves between the yard and spurs.
-    To eliminate tracks from showing up on a train's Manifest, deselect all of the direction control
-    boxes for that track. Only a switcher will service a track that doesn't have any direction boxes
-    selected.</p>
+    for a train are also ignored by the program. If you only want a track to be serviced by a
+    switcher, deselect all the train direction controls for that track. Only a switcher will service
+    a track that doesn't have any direction boxes selected.</p>
 
    <h4>Switcher Restrictions</h4>
    <p>
@@ -5163,6 +5201,14 @@
     number of car moves requested by a location is met, or the available cars being processed by the
     program is used up. Once the car moves requested for a location is met, the next location in the
     route is examined. This continues until all locations in a train's route have been processed.</p>
+
+   <p>
+    The program can build trains in one of two modes,
+    <a href="#SettingsOptions">Normal</a> or Aggressive. In normal mode, the program sends cars to
+    tracks that have physical space for the new cars. In aggressive, the program can send cars to
+    tracks that are full as long as one or more of the cars on that track is scheduled to be picked up.
+    A car can be scheduled to be picked up by a previously built train, or by the one being built.
+   </p>
 
    <p>
     In <a href="#SettingsOptions">aggressive mode</a> , the program when figuring out destinations

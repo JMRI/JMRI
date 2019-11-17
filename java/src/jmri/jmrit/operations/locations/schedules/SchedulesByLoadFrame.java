@@ -3,16 +3,12 @@ package jmri.jmrit.operations.locations.schedules;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
@@ -23,8 +19,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.tools.PrintCarLoadsAction;
 import jmri.jmrit.operations.setup.Control;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame to display spurs with schedules and their loads
@@ -96,8 +90,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         // build menu
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
-        toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemCarLoadsPreview"), true, this));
-        toolMenu.add(new PrintCarLoadsAction(Bundle.getMessage("MenuItemCarLoadsPrint"), false, this));
+        toolMenu.add(new PrintCarLoadsAction(true, this));
+        toolMenu.add(new PrintCarLoadsAction(false, this));
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_ShowSchedulesByCarTypeAndLoad", true); // NOI18N

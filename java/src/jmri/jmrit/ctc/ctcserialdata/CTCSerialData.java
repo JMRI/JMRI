@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CTCSerialData {
 
-    public final static String CTCVersion = "V0.26";
+    public final static String CTCVersion = "V1.02";
     private OtherData _mOtherData;
     private ArrayList<CodeButtonHandlerData> _mCodeButtonHandlerDataArrayList;
     private final static Logger log = LoggerFactory.getLogger(CTCSerialData.class);

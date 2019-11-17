@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.Set;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.NamedBean;
 import jmri.beans.Beans;
@@ -51,7 +51,7 @@ public abstract class AbstractNamedBean implements NamedBean {
      *                                               normalized
      * @throws jmri.NamedBean.BadSystemNameException if the system name is null
      */
-    protected AbstractNamedBean(@Nonnull String sys, @Nullable String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+    protected AbstractNamedBean(@Nonnull String sys, @CheckForNull String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
         if (Objects.isNull(sys)) {
             throw new NamedBean.BadSystemNameException();
         }
@@ -110,7 +110,6 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Deprecated  // will be removed when superclass method is removed due to @Override
     @CheckReturnValue
     @Nonnull
-    @SuppressWarnings("deprecation") // overrides deprecated method
     final public String getFullyFormattedDisplayName() {
         return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }
@@ -120,7 +119,6 @@ public abstract class AbstractNamedBean implements NamedBean {
     @Deprecated  // will be removed when superclass method is removed due to @Override
     @CheckReturnValue
     @Nonnull
-    @SuppressWarnings("deprecation") // overrides deprecated method
     final public String getFullyFormattedDisplayName(boolean userNameFirst) {
         return getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
     }

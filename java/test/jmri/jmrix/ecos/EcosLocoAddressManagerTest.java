@@ -74,6 +74,8 @@ public class EcosLocoAddressManagerTest {
         };
         EcosLocoAddressManager t = new EcosLocoAddressManager(memo);
         Assert.assertNotNull("exists",t);
+        t.terminateThreads();
+        memo.dispose();
     }
 
     @Before
@@ -86,6 +88,7 @@ public class EcosLocoAddressManagerTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

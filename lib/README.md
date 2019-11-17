@@ -109,11 +109,11 @@ After that, add and commit the additional files that were created within lib/
 - version 2.0.5
 - from <jdom.org>
 
-##### jackson-annotations-2.9.8.jar, jackson-core-2.9.8.jar, jackson-databind-2.9.8.jar
+##### jackson-annotations-2.10.0.jar, jackson-core-2.10.0.jar, jackson-databind-2.10.0.jar
 - JSON processing library com.fasterxml.jackson
-- version 2.9.8
+- version 2.10.0
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.9.8
+- JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.10.0
 
 ##### json-schema-validator-1.0.10.jar
 - JSON Schema validation library
@@ -148,9 +148,9 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
         lib/windows/x64/intelbth_x64.dll
         lib/windows/x86/intelbth.dll
 
-##### jython-standalone-2.7.0.jar
-- from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.0/
-- unlike jython-2.7.0.jar, includes embedded standard python libs
+##### jython-standalone-2.7.1.jar
+- from http://repo1.maven.org/maven2/org/python/jython-standalone/2.7.1/
+- unlike jython-2.7.1.jar, includes embedded standard python libs
 
 ##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
 - from <https://jinput.dev.java.net/> jinput_dist_20090401
@@ -224,6 +224,12 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - Java Native Access platform-specific utilities library
 - from http://search.maven.org/#artifactdetails%7Cnet.java.dev.jna%7Cjna-platform%7C4.4.0%7Cjar
 
+
+##### pi4j-core-1.2.jar, pi4j-device-1.2.jar, pi4j-gpio-extension-1.2.jar
+- Pi4j
+- from https://pi4j.com/
+- Used for supporting GPIO pins on a raspberry pi. pi4j-core is required at compile time.  pi4j-device and pi4j-gpio-extension may be used at runtime (by scripts) to control devices attached to the raspberry pi.
+
 ##### thumbnailator-0.4.8.jar
 - Thumbnailator
 - from https://github.com/coobird/thumbnailator
@@ -251,6 +257,10 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 
 
 ## For unit tests & development work only:
+
+##### ArchUnit: archunit-0.11.0.jar archunit-junit4-0.11.0.jar
+- See https://www.archunit.org
+- Jars from https://search.maven.org/search?q=g:com.tngtech.archunit
 
 ##### checker-framework directory and contents
 - The Checker Framework 2.0.1 (1-Jun-2016)

@@ -92,14 +92,14 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
     protected ObjectNode getNamedBean(T bean, @Nonnull String name, @Nonnull String type, @Nonnull Locale locale, int id)
             throws JsonException {
         if (bean == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
+            throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, type, name), id);
         }
         ObjectNode data = mapper.createObjectNode();
         data.put(JSON.NAME, bean.getSystemName());
         data.put(JSON.USERNAME, bean.getUserName());
         data.put(JSON.COMMENT, bean.getComment());
         ArrayNode properties = data.putArray(JSON.PROPERTIES);
-        bean.getPropertyKeys().stream().forEach((key) -> {
+        bean.getPropertyKeys().stream().forEach(key -> {
             Object value = bean.getProperty(key);
             if (value != null) {
                 properties.add(mapper.createObjectNode().put(key, value.toString()));
@@ -130,7 +130,7 @@ public abstract class JsonNonProvidedNamedBeanHttpService<T extends NamedBean> e
     protected T postNamedBean(T bean, @Nonnull JsonNode data, @Nonnull String name, @Nonnull String type,
             @Nonnull Locale locale, int id) throws JsonException {
         if (bean == null) {
-            throw new JsonException(404, Bundle.getMessage(locale, "ErrorNotFound", type, name), id);
+            throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, type, name), id);
         }
         if (data.path(JSON.USERNAME).isTextual()) {
             bean.setUserName(data.path(JSON.USERNAME).asText());

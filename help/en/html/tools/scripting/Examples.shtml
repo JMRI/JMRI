@@ -289,7 +289,7 @@
       <p>Try to send some bytes to a parallel port.</p>
 
       <p><a href=
-      "../../../../../../../ParallelPortTurnouts.py">ParallelPortTurnouts.py</a></p>
+      "../../../../../jython/ParallelPortTurnouts.py">ParallelPortTurnouts.py</a></p>
 
       <p>Connect JMRI Turnouts to parallel port logic. Maps internal
       Turnouts to specific values to be send to the parallel port.

@@ -98,7 +98,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
                         id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                        Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -108,7 +108,7 @@ public class JsonSensorHttpService extends JsonNamedBeanHttpService<Sensor> {
     }
 
     @Override
-    protected ProvidingManager<Sensor> getManager() throws UnsupportedOperationException {
+    protected ProvidingManager<Sensor> getManager() {
         return InstanceManager.getDefault(SensorManager.class);
     }
 }

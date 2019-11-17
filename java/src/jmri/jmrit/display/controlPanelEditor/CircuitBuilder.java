@@ -164,7 +164,7 @@ public class CircuitBuilder {
         return _circuitMenu;
     }
 
-    protected void openWindow() {
+    protected void openCBWindow() {
         if (_cbFrame != null) {
             _cbFrame.toFront();
         } else {
@@ -188,49 +188,37 @@ public class CircuitBuilder {
         JMenuItem editItem = new JMenuItem(Bundle.getMessage("newCircuitItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             newCircuit();
         });
         editItem = new JMenuItem(Bundle.getMessage("editCircuitItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             editCircuit("editCircuitItem", true);
         });
         editItem = new JMenuItem(Bundle.getMessage("editPortalsItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             editPortals("editPortalsItem", true);
         });
         editItem = new JMenuItem(Bundle.getMessage("editCircuitPathsItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             editCircuitPaths("editCircuitPathsItem", true);
         });
         editItem = new JMenuItem(Bundle.getMessage("editDirectionItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             editPortalDirection("editDirectionItem", true);
         });
         editItem = new JMenuItem(Bundle.getMessage("editSignalItem"));
         _circuitMenu.add(editItem);
         editItem.addActionListener((ActionEvent event) -> {
-            if (_cbFrame !=null) {
-                _cbFrame.dispose();
-            }
+            closeCBWindow();
             editSignalFrame("editSignalItem", true);
         });
         _todoMenu = new JMenu(Bundle.getMessage("circuitErrorsItem"));
@@ -1660,6 +1648,12 @@ public class CircuitBuilder {
         }
     }
 
+    protected void closeCBWindow() {
+        if (_cbFrame !=null) {
+            _cbFrame.dispose();
+        }
+    }
+    
     static int NONE = 0;
     static int OBLOCK = 1;
     static int PORTAL = 2;

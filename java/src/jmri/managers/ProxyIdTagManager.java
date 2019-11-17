@@ -43,6 +43,17 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
         return InstanceManager.getNullableDefault(IdTagManager.class) != null;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Manager<IdTag> getDefaultManager() {
+        if(defaultManager!=getInternalManager()){
+           defaultManager = getInternalManager();
+        }
+        return defaultManager;
+    }
+
     @Override
     protected AbstractManager<IdTag> makeInternalManager() {
         // since this really is an internal tracking mechanisim,

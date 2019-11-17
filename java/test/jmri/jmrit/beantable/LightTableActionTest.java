@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JTableOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.util.NameComponentChooser;
@@ -27,7 +28,7 @@ import org.netbeans.jemmy.util.NameComponentChooser;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class LightTableActionTest extends AbstractTableActionBase {
+public class LightTableActionTest extends AbstractTableActionBase<Light> {
 
     @Test
     public void testCTor() {
@@ -358,15 +359,50 @@ public class LightTableActionTest extends AbstractTableActionBase {
         Assert.assertEquals("Correct Hour OFF Time ", "23", new JTextFieldOperator(jfof5, 2).getText());
         Assert.assertEquals("Correct Minute OFF Time ", "24", new JTextFieldOperator(jfof5, 3).getText());
 
-        new JTextFieldOperator(jfof5, 0).setText("07");
-        new JTextFieldOperator(jfof5, 1).setText("07");
-        new JTextFieldOperator(jfof5, 2).setText("07");
-        new JTextFieldOperator(jfof5, 3).setText("07");
-
+        new JTextFieldOperator(jfof5, 0).setText("01");
+        new JTextFieldOperator(jfof5, 1).setText("02");
+        new JTextFieldOperator(jfof5, 2).setText("01");
+        new JTextFieldOperator(jfof5, 3).setText("02");
+        
+        JemmyUtil.pressButton(jfof5, Bundle.getMessage("ButtonUpdate"));
+        // light control edit frame does not close as the on and off times are the same
+        
+        checkEditLightFeedback( Bundle.getMessage("LightWarn11"), jfocef4);
+        
+        new JTextFieldOperator(jfof5, 2).setText("03");
+        new JTextFieldOperator(jfof5, 3).setText("04");
+        
         JemmyUtil.pressButton(jfof5, Bundle.getMessage("ButtonUpdate"));
         // light control edit frame closes
+        
+        // now attempt to create a new Light Control with the same time
+        
+        JemmyUtil.pressButton(jfocef4, Bundle.getMessage("LightAddControlButton"));
+        fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
+        jfoc = new JFrameOperator(fControl);
+        
+        new JComboBoxOperator(jfoc, 0).setSelectedItem(Bundle.getMessage("LightFastClockControl"));
+        
+        new JTextFieldOperator(jfoc, 0).setText("03");
+        new JTextFieldOperator(jfoc, 1).setText("04");
+        new JTextFieldOperator(jfoc, 2).setText("01");
+        new JTextFieldOperator(jfoc, 3).setText("02");
+        
+        JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
+        // light control edit frame does not close as the on and off times are the same
+        
+        checkEditLightFeedback( Bundle.getMessage("LightWarn12"), jfocef4);
+        
+        new JTextFieldOperator(jfoc, 0).setText("05");
+        new JTextFieldOperator(jfoc, 1).setText("06");
+        new JTextFieldOperator(jfoc, 2).setText("07");
+        new JTextFieldOperator(jfoc, 3).setText("08");
+        
+        JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
+        
+        checkEditLightFeedback( Bundle.getMessage("LightUpdateInst"), jfocef4);
 
-        // now we click cancel on the edit light so changes from the edited control are not passed
+        // now we click cancel on the edit light and ensure changes from the edited control are not passed
         JemmyUtil.pressButton(new JFrameOperator(f4), Bundle.getMessage("ButtonCancel"));
 
         Assert.assertEquals("Unchanged Light Control Type and Times", "ON at 21:22, OFF at 23:24.",
@@ -376,7 +412,7 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(f);  // close Light Table window
 
     }
-
+    
     @Test
     public void testAddEditTurnoutLightControl() throws jmri.JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -712,6 +748,12 @@ public class LightTableActionTest extends AbstractTableActionBase {
         JUnitUtil.dispose(f); // close Light Table window
 
         // JemmyUtil.pressButton(new JFrameOperator(f),("Pause Test"));
+    }
+
+    // test the feedback message displayed in-pane for an Edit / New Light pane WITH variable intensity
+    private void checkEditLightFeedback( String toTest, JFrameOperator jfo){
+        JLabelOperator lblFeedback = new JLabelOperator(jfo, 11);
+        Assert.assertEquals("Message did not appear", toTest, lblFeedback.getText());
     }
 
     // The minimal setup for log4J

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Wow sound, based on CV100_CV157_FW86 -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="EMF Option 3" CV="177" default="3">
+    <decVal min="2"/>
+    <label>Motor Power Stroke</label>
+    <tooltip>Limits the response time of the BEMF algorithm. If the locomotive is overshooting its target speed and a bit jerky try decreasing the value. To enable this feature set bit 4 and 0 in CV182.</tooltip>
+  </variable>
+  <variable item="EMF Option 4" CV="178" default="19">
+    <decVal min="12"/>
+    <label>BEMF sample rate delay above critical speed step</label>
+    <tooltip>Motors have a point at which "inertia takes over" and the way they respond changes. The CV controls how often changes are made to the motor output above that "inertia takes over" speed step (CV181).</tooltip>
+  </variable>
+  <variable item="EMF Option 5" CV="179" default="15">
+    <decVal min="5"/>
+    <label>BEMF Sample rate delay below critical speed step</label>
+    <tooltip>Motors have a point at which "inertia takes over" and the way they respond changes. The CV controls how often changes are made to the motor output below that "inertia takes over" speed step (CV181).</tooltip>
+  </variable>
+  <variable item="EMF Option 6" CV="181" default="4">
+    <decVal min="3" max="126"/>
+    <label>BEMF critical speed step</label>
+    <tooltip>This CV controls at what speed step "inertia takes over" and BEMF algorithm can slow down how fast it reacts. This will vary based on the type of motor, gear ratio, etc. Usually this speed step is 7 (of 128) or below.</tooltip>
+  </variable>
+  <variable item="EMF Option 2" CV="182" mask="XXXVXXXX" default="0">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Allows forced delays</label>
+    <tooltip>Allows forced delays in Power Stroke mode below Speed Step 32</tooltip>
+  </variable>
+</variables>

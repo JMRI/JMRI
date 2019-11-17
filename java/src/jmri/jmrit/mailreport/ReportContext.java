@@ -6,6 +6,7 @@ import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.HeadlessException;
 import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.io.File;
 import java.net.InetAddress;
@@ -201,7 +202,6 @@ public class ReportContext {
         }
 
         // look at context
-        //Rectangle virtualBounds = new Rectangle();
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             addString("Environment max bounds: " + ge.getMaximumWindowBounds());
@@ -209,13 +209,17 @@ public class ReportContext {
             try {
                 GraphicsDevice[] gs = ge.getScreenDevices();
                 for (GraphicsDevice gd : gs) {
-                    GraphicsConfiguration[] gc = gd.getConfigurations();
-                    for (int i = 0; i < gc.length; i++) {
-                        addString("bounds[" + i + "] = " + gc[i].getBounds());
-                        // virtualBounds = virtualBounds.union(gc[i].getBounds());
+                    Rectangle virtualBounds = new Rectangle();
+                    Insets virtualInsets = new Insets(0, 0, 0, 0);
+                    for (GraphicsConfiguration gc: gd.getConfigurations()) {
+                        virtualBounds = virtualBounds.union(gc.getBounds());
+                        virtualInsets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
                     }
+                    addString("Device: " + gd.getIDstring() + " virtualBounds = " + virtualBounds.getBounds());
+                    addString("Device: " + gd.getIDstring() + " virtualInsets = " + virtualInsets);
                     addString("Device: " + gd.getIDstring() + " bounds = " + gd.getDefaultConfiguration().getBounds()
                             + " " + gd.getDefaultConfiguration().toString());
+                    addString("Device: " + gd.getIDstring() + " insets = " + Toolkit.getDefaultToolkit().getScreenInsets(gd.getDefaultConfiguration()));
                 }
             } catch (HeadlessException ex) {
                 addString("Exception getting device bounds " + ex.getMessage());

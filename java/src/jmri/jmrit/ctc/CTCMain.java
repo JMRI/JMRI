@@ -181,17 +181,21 @@ public class CTCMain {
                                 codeButtonHandlerData._mTUL_AdditionalExternalTurnout3FeedbackDifferent)
                 : null;
 
-// Slave Switch: duplicate other referenced entry
+// Slave Switch: duplicate other referenced entry, otherwise handle IL normally:
             IndicationLockingSignals indicationLockingSignals = null;   // Default if not enabled
-            if (codeButtonHandlerData._mIL_Enabled) {
-                String stringToUse = codeButtonHandlerData._mIL_ListOfCSVSignalNames;   // By default if a problem looking up the reference.
-                if (slavedSwitch) { // Slaved, substitute it if it exists:
-                    CodeButtonHandlerData slavedSwitchCodeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerDataViaUniqueID(codeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID);
-                    if (slavedSwitchCodeButtonHandlerData != null)  { // Safety check
-                        stringToUse = slavedSwitchCodeButtonHandlerData._mIL_ListOfCSVSignalNames;  // Substitute this data.
-                    }
+            if (slavedSwitch) {
+                CodeButtonHandlerData slavedSwitchCodeButtonHandlerData = _mCTCSerialData.getCodeButtonHandlerDataViaUniqueID(codeButtonHandlerData._mOSSectionSwitchSlavedToUniqueID);
+                if (slavedSwitchCodeButtonHandlerData != null)  { // Safety check
+                    indicationLockingSignals = new IndicationLockingSignals(userIdentifier,
+                                                                            slavedSwitchCodeButtonHandlerData._mIL_ListOfCSVSignalNames,
+                                                                            codeButtonHandlerData._mSWDI_ExternalTurnout,
+                                                                            otherData._mSignalSystemType);
                 }
-                indicationLockingSignals = new IndicationLockingSignals(userIdentifier, stringToUse);
+            } else if (codeButtonHandlerData._mIL_Enabled) {
+                indicationLockingSignals = new IndicationLockingSignals(userIdentifier,
+                                                                        codeButtonHandlerData._mIL_ListOfCSVSignalNames,
+                                                                        codeButtonHandlerData._mSWDI_ExternalTurnout,
+                                                                        otherData._mSignalSystemType);
             }
 
 // Slave Switch: null
@@ -231,7 +235,7 @@ public class CTCMain {
         _mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensor.addPropertyChangeListener(_mCTCDebug_TrafficLockingRuleTriggeredDisplayInternalSensorPropertyChangeListener);
 
         for (TrafficLocking trafficLocking : trafficLockingFileReadComplete) { // Call these routines to give them a chance to initialize:
-            trafficLocking.fileReadComplete(_mCBHashMap, _mSIDIHashMap, _mSWDIHashMap);
+            trafficLocking.fileReadComplete(_mCBHashMap, _mSWDIHashMap);
         }
 
 /*  As a final item, if the developer wants us to lock all of the lockable

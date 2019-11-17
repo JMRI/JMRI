@@ -19,10 +19,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
-import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -661,7 +660,7 @@ public class PositionablePoint extends LayoutTrack {
      * @param newTrack the new track connection
      * @return true if successful
      */
-    public boolean replaceTrackConnection(@Nullable TrackSegment oldTrack, @Nullable TrackSegment newTrack) {
+    public boolean replaceTrackConnection(@CheckForNull TrackSegment oldTrack, @CheckForNull TrackSegment newTrack) {
         boolean result = false; // assume failure (pessimist!)
         // trying to replace old track with null?
         if (newTrack == null) {
@@ -1125,7 +1124,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                     //prompt for width
-                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             connect1.getBumperLineWidth(), new Predicate<Integer>() {
@@ -1146,7 +1145,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                     //prompt for length
-                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             connect1.getBumperLength(), new Predicate<Integer>() {
@@ -1461,7 +1460,9 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * Build a list of sensors, signal heads, and signal masts attached to a connection point.
+     * Build a list of sensors, signal heads, and signal masts attached to a
+     * connection point.
+     *
      * @param ts The track segment to be checked.
      * @return a list of bean reference names.
      */
@@ -1559,18 +1560,15 @@ public class PositionablePoint extends LayoutTrack {
             updateLink();
         });
 
-        // make this button the default button (return or enter activates)
-        // Note: We have to invoke this later because we don't currently have a root pane
-        SwingUtilities.invokeLater(() -> {
-            JRootPane rootPane = SwingUtilities.getRootPane(done);
-            rootPane.setDefaultButton(done);
-        });
-
         container.add(getLinkPanel(), BorderLayout.NORTH);
         container.add(done, BorderLayout.SOUTH);
         container.revalidate();
 
         editLink.add(container);
+
+        // make this button the default button (return or enter activates)
+        JRootPane rootPane = SwingUtilities.getRootPane(done);
+        rootPane.setDefaultButton(done);
 
         editLink.pack();
         editLink.setModal(false);
@@ -1761,7 +1759,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * return true if this connection type is disconnected
      *
-     * @param connectionType  the connection type to test
+     * @param connectionType the connection type to test
      * @return true if the connection for this connection type is free
      */
     @Override
@@ -2005,7 +2003,7 @@ public class PositionablePoint extends LayoutTrack {
         * <p>
         *     Basically, we're maintaining contiguous track sets for each block found
         *     (in blockNamesToTrackNameSetMap)
-        */
+         */
         //check the 1st connection points block
         TrackSegment ts1 = getConnect1();
         String blk1 = null;

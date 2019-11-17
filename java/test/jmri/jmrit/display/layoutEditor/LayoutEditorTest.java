@@ -13,7 +13,7 @@ import org.junit.rules.*;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
- * Test simple functioning of LayoutEditor
+ * Test simple functioning of LayoutEditor.
  *
  * @author Paul Bender Copyright (C) 2016
  */
@@ -24,6 +24,27 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
     @Rule
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
+
+    @Before
+    @Override
+    public void setUp() {
+        JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+        if (!GraphicsEnvironment.isHeadless()) {
+            e = new LayoutEditor("Layout Editor Test Layout");
+            jmri.InstanceManager.setDefault(LayoutBlockManager.class, new LayoutBlockManager());
+        }
+    }
+
+    @After
+    @Override
+    public void tearDown() {
+        if (e != null) {
+            JUnitUtil.dispose(e);
+            e = null;
+        }
+        JUnitUtil.tearDown();
+    }
 
     @Test
     public void testStringCtor() {
@@ -836,7 +857,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    public void testToolBarPostionOptions() {
+    public void testToolBarPositionOptions() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
@@ -878,26 +899,6 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.dispose(e);
     }
 
-    @Before
-    @Override
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        if (!GraphicsEnvironment.isHeadless()) {
-            e = new LayoutEditor("Layout Editor Test Layout");
-            jmri.InstanceManager.setDefault(LayoutBlockManager.class, new LayoutBlockManager());
-        }
-    }
-
-    @After
-    @Override
-    public void tearDown() {
-        if (e != null) {
-            JUnitUtil.dispose(e);
-            e = null;
-        }
-        JUnitUtil.tearDown();
-    }
-
     // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
+
 }

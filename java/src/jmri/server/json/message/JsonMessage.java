@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonHttpService;
@@ -87,7 +87,7 @@ public class JsonMessage {
      *                sent to all clients
      * @param locale  the locale of the message
      */
-    public JsonMessage(TYPE type, @Nonnull String message, @Nullable String client, @Nonnull Locale locale) {
+    public JsonMessage(TYPE type, @Nonnull String message, @CheckForNull String client, @Nonnull Locale locale) {
         this(type, message, client, null, locale);
     }
 
@@ -102,7 +102,7 @@ public class JsonMessage {
      * @param context the context for the message; if null, no context is sent
      * @param locale  the locale of the message
      */
-    public JsonMessage(TYPE type, @Nonnull String message, @Nullable String client, @Nullable JsonNode context, @Nonnull Locale locale) {
+    public JsonMessage(TYPE type, @Nonnull String message, @CheckForNull String client, @CheckForNull JsonNode context, @Nonnull Locale locale) {
         this.type = type;
         this.message = message;
         this.locale = locale;

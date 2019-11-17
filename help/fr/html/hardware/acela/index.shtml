@@ -23,11 +23,11 @@
 
 <h1>Structure Mat&#233;riel: Syst&#232;me CTI Acela</h1>
 <ul class="snav"><!-- TOC -->
-<li><a href="#hardware">Mat&#233;riel</a>
-<li><a href="#limitations">Limitations</a>
-<li><a href="#connecting">Connexion</a>
-<li><a href="#tools">Outils</a>
-<li><a href="#documentation">Documentation</a>
+	<li><a href="#hardware">Mat&#233;riel</a></li>
+	<li><a href="#limitations">Limitations</a></li>
+	<li><a href="#connecting">Connexion</a></li>
+	<li><a href="#tools">Outils</a></li>
+	<li><a href="#documentation">Documentation</a></li>
 </ul>
 
 <a name="hardware"></a><h2>Mat&#233;riel pris en charge</h2>

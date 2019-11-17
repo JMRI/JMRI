@@ -1,4 +1,4 @@
-<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN"
  <!--Updated by Herv&#233; Blorec  2016-08-05 -->
 <html lang="fr">
 <head>
@@ -310,13 +310,6 @@ commande sortie dans le menu.
 Les classes "<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/package-summary.html">Automate</a>"
 existantes de JMRI fournissent des crochets pour l'automatisation du r&#233;seau utilisateur, y compris la signalisation.
 Mais ils exigent que vous &#233;criviez du code Java et de le compiler en fichiers .class.
-<P>
-La classe 
-<A HREF="http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/JythonAutomaton.html">JythonAutomaton</a>
- est destin&#233;e &#224; faciliter la mise en page personnalis&#233;e du code d'automatisation, car 
-elle vous permettra d'appeler un script Jython. Une fois qu'il est int&#233;gr&#233; dans 
-le processus de configuration, vous serez capable de coder votre automatisation dans un 
-ou plusieurs fichiers .py, et ont le programme de d&#233;marrage pour les ex&#233;cuter au d&#233;marrage.
 
 <h2>Etapes suivantes</h2>
 Nous sommes seulement &#224; apprendre comment int&#233;grer au mieux JMRI et Python, donc il y a 
@@ -326,49 +319,50 @@ encore quelques myst&#232;res fondamentaux.
 L'id&#233;e de "modules" Python  n'est pas encore 
 clairement compris. Il y a trois fa&#231;ons de d&#233;marrer le programme via 
 un fichier .py:
-<OL>
-<LI>
-<PRE>
-  % ./jmrithon
-  Jython 2.1 on java1.4.1_01 (JIT: null)
-  Taper "copyright", "credits" ou "license" pour plus d'informations
-  >>> import PanelPro
-</PRE>
-Cela fonctionne, en ce sens que le programme d&#233;marre. Mais 
-les m&#233;thodes commodes sont toutes dans le namespace PanelPro:
-<PRE>
-  >>> turnouts.newTurnout("LT1","")
-  Traceback (innermost last):
-    File "<console>", line 1, in ?
-  NameError: turnouts
+<ol>
+    <li>
+    <PRE>
+      % ./jmrithon
+      Jython 2.1 on java1.4.1_01 (JIT: null)
+      Taper "copyright", "credits" ou "license" pour plus d'informations
+      >>> import PanelPro
+    </PRE>
+    Cela fonctionne, en ce sens que le programme d&#233;marre. Mais
+    les m&#233;thodes commodes sont toutes dans le namespace PanelPro:
+    <PRE>
+      >>> turnouts.newTurnout("LT1","")
+      Traceback (innermost last):
+        File "&lt;console&gt;", line 1, in ?
+      NameError: turnouts
 
-  >>> PanelPro.turnouts.newTurnout("LT1","")
-  jmri.jmrix.loconet.LnTurnout@36b91b
-</PRE>
-ce qui fait nettement plus &#224; taper plus tard..
-Et il est d&#233;routant, car selon que vous ayez commenc&#233;
-PanelPro, DecoderPro ou une autre application, les noms seront
-diff&#233;rents.
-<LI>
-<PRE>
-  % ./jmrithon
-  >>>  execfile("PanelPro.py")
-</PRE>
-
-    % ./jmrithon -PanelPro.py
+      >>> PanelPro.turnouts.newTurnout("LT1","")
+      jmri.jmrix.loconet.LnTurnout@36b91b
+    </PRE>
+    ce qui fait nettement plus &#224; taper plus tard.
+    Et il est d&#233;routant, car selon que vous ayez commenc&#233;
+    PanelPro, DecoderPro ou une autre application, les noms seront
+        diff&#233;rents.</li>
+    <li>
+    <PRE>
+      % ./jmrithon
+      >>>  execfile("PanelPro.py")
     </PRE>
 
-Cela semble un peu moche, car ce n'est pas en utilisant les modules techniques normaux de Python
-. Mais les m&#233;thodes commodes sont
-dans le namespace de niveau sup&#233;rieur:
-<PRE>
-  turnouts.newTurnout("LT1", "")
-</PRE>
-<BR>
-Nous avons besoin de comprendre si c'est un vrai probl&#232;me. La plupart des programmes 
-Python n'utilisent pas cet namespace de haut niveau, et il y a probablement
-une bonne raison!
-</OL>
+        % ./jmrithon -PanelPro.py
+        </PRE>
+
+    Cela semble un peu moche, car ce n'est pas en utilisant les modules techniques normaux de Python
+    . Mais les m&#233;thodes commodes sont
+    dans le namespace de niveau sup&#233;rieur:
+    <PRE>
+      turnouts.newTurnout("LT1", "")
+    </PRE>
+    <BR>
+    Nous avons besoin de comprendre si c'est un vrai probl&#232;me. La plupart des programmes
+    Python n'utilisent pas cet namespace de haut niveau, et il y a probablement
+        une bonne raison!</li>
+</ol>
+
 Nous avons besoin de comprendre comment les d&#233;veloppeurs de Jython ont pr&#233;vu de faire ceci.
 
 <h3> R&#233;siliation </h3>

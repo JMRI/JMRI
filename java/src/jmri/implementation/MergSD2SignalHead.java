@@ -108,7 +108,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
             updateOutput();
 
             // notify listeners, if any
-            firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
+            firePropertyChange("Appearance", oldAppearance, newAppearance);
         }
 
     }
@@ -120,7 +120,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         if (oldLit != newLit) {
             updateOutput();
             // notify listeners, if any
-            firePropertyChange("Lit", Boolean.valueOf(oldLit), Boolean.valueOf(newLit));
+            firePropertyChange("Lit", oldLit, newLit);
         }
     }
 
@@ -278,19 +278,18 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         RED,
         GREEN
     };
-
-    final static private String[] validStateNames2AspectHome = new String[]{
-        Bundle.getMessage("SignalHeadStateRed"),
-        Bundle.getMessage("SignalHeadStateGreen")
+    final static private String[] validStateKeys2AspectHome = new String[]{
+        "SignalHeadStateRed",
+        "SignalHeadStateGreen"
     };
 
     final static private int[] validStates2AspectDistant = new int[]{
         YELLOW,
         GREEN
     };
-    final static private String[] validStateNames2AspectDistant = new String[]{
-        Bundle.getMessage("SignalHeadStateYellow"),
-        Bundle.getMessage("SignalHeadStateGreen")
+    final static private String[] validStateKeys2AspectDistant = new String[]{
+        "SignalHeadStateYellow",
+        "SignalHeadStateGreen"
     };
 
     final static private int[] validStates3Aspect = new int[]{
@@ -298,11 +297,10 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         YELLOW,
         GREEN
     };
-
-    final static private String[] validStateNames3Aspect = new String[]{
-        Bundle.getMessage("SignalHeadStateRed"),
-        Bundle.getMessage("SignalHeadStateYellow"),
-        Bundle.getMessage("SignalHeadStateGreen")
+    final static private String[] validStateKeys3Aspect = new String[]{
+        "SignalHeadStateRed",
+        "SignalHeadStateYellow",
+        "SignalHeadStateGreen"
     };
 
     final static private int[] validStates4Aspect = new int[]{
@@ -311,14 +309,16 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         LUNAR,
         GREEN
     };
-
-    final static private String[] validStateNames4Aspect = new String[]{
-        Bundle.getMessage("SignalHeadStateRed"),
-        Bundle.getMessage("SignalHeadStateYellow"),
-        Bundle.getMessage("SignalHeadStateLunar"),
-        Bundle.getMessage("SignalHeadStateGreen")
+    final static private String[] validStateKeys4Aspect = new String[]{
+        "SignalHeadStateRed",
+        "SignalHeadStateYellow",
+        "SignalHeadStateLunar",
+        "SignalHeadStateGreen"
     };
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] getValidStates() {
         if (!mHome) {
@@ -332,30 +332,45 @@ public class MergSD2SignalHead extends DefaultSignalHead {
                 case 4:
                     return Arrays.copyOf(validStates4Aspect, validStates4Aspect.length);
                 default:
-                    log.warn("Unexpected number of apsects: " + mAspects);
+                    log.warn("Unexpected number of aspects: {}", mAspects);
                     return Arrays.copyOf(validStates3Aspect, validStates3Aspect.length);
             }
         }
-
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String[] getValidStateNames() {
+    public String[] getValidStateKeys() {
         if (!mHome) {
-            return Arrays.copyOf(validStateNames2AspectDistant, validStateNames2AspectDistant.length);
+            return Arrays.copyOf(validStateKeys2AspectDistant, validStateKeys2AspectDistant.length);
         } else {
             switch (mAspects) {
                 case 2:
-                    return Arrays.copyOf(validStateNames2AspectHome, validStateNames2AspectHome.length);
+                    return Arrays.copyOf(validStateKeys2AspectHome, validStateKeys2AspectHome.length);
                 case 3:
-                    return Arrays.copyOf(validStateNames3Aspect, validStateNames3Aspect.length);
+                    return Arrays.copyOf(validStateKeys3Aspect, validStateKeys3Aspect.length);
                 case 4:
-                    return Arrays.copyOf(validStateNames4Aspect, validStateNames3Aspect.length);
+                    return Arrays.copyOf(validStateKeys4Aspect, validStateKeys3Aspect.length);
                 default:
-                    log.warn("Unexpected number of apsects: " + mAspects);
-                    return Arrays.copyOf(validStateNames3Aspect, validStateNames3Aspect.length);
+                    log.warn("Unexpected number of aspects: {}", mAspects);
+                    return Arrays.copyOf(validStateKeys3Aspect, validStateKeys3Aspect.length);
             }
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getValidStateNames() {
+        String[] stateNames = new String[getValidStateKeys().length];
+        int i = 0;
+        for (String stateKey : getValidStateKeys()) {
+            stateNames[i++] = Bundle.getMessage(stateKey);
+        }
+        return stateNames;
     }
 
     @Override

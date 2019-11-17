@@ -626,6 +626,73 @@ public interface NamedBean extends Comparable<NamedBean>, PropertyChangeProvider
         }
     }
 
+    public class DuplicateSystemNameException extends IllegalArgumentException {
+
+        private final String localizedMessage;
+        
+        /**
+         * Create an exception with no message to the user or for logging. Use
+         * only when calling methods likely have alternate mechanism for
+         * allowing user to understand why exception was thrown.
+         */
+        public DuplicateSystemNameException() {
+            super();
+            localizedMessage = super.getMessage();
+        }
+
+        /**
+         * Create a exception.
+         *
+         * @param message bundle key to be translated
+         */
+        public DuplicateSystemNameException(String message) {
+            super(message);
+            localizedMessage = super.getMessage();
+        }
+
+        /**
+         * Create a localized exception, suitable for display to the user. This
+         * takes the same arguments as
+         * {@link jmri.Bundle#getMessage(java.util.Locale, java.lang.String, java.lang.Object...)}
+         * as it uses that method to create both the localized and loggable
+         * messages.
+         * <p>
+         * Use {@link #getLocalizedMessage()} to display the message to the
+         * user, and use {@link #getMessage()} to record the message in logs.
+         * <p>
+         * <strong>Note</strong> the message must be accessible by
+         * {@link jmri.Bundle}.
+         *
+         * @param locale  the locale to be used
+         * @param message bundle key to be translated
+         * @param subs    One or more objects to be inserted into the message
+         */
+        public DuplicateSystemNameException(Locale locale, String message, Object... subs) {
+            this(Bundle.getMessage(locale, message, subs),
+                    Bundle.getMessage(locale, message, subs));
+        }
+
+        /**
+         * Create a localized exception, suitable for display to the user. This
+         * takes the non-localized message followed by the localized message.
+         * <p>
+         * Use {@link #getLocalizedMessage()} to display the message to the
+         * user, and use {@link #getMessage()} to record the message in logs.
+         *
+         * @param logging the English message for logging
+         * @param display the localized message for display
+         */
+        public DuplicateSystemNameException(String logging, String display) {
+            super(logging);
+            localizedMessage = display;
+        }
+
+        @Override
+        public String getLocalizedMessage() {
+            return localizedMessage;
+        }
+    }
+
     /**
      * Display options for {@link #getDisplayName(DisplayOptions)}. The quoted
      * forms are intended to be used in sentences and messages, while the

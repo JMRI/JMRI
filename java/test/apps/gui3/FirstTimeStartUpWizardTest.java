@@ -49,7 +49,7 @@ public class FirstTimeStartUpWizardTest {
 
             @Override
             protected void installShutDownManager() {
-                JUnitUtil.initShutDownManager();
+                // done automatically now as part of InstanceManager default handling
             }
 
             @Override
@@ -74,6 +74,7 @@ public class FirstTimeStartUpWizardTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
         JUnitUtil.resetApplication();
         JUnitUtil.tearDown();
     }

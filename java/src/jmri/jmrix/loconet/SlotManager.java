@@ -302,11 +302,8 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         synchronized (this) {
             v = (Vector<SlotListener>) slotListeners.clone();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size() // NOI18N
-                    + " SlotListeners about slot " // NOI18N
-                    + s.getSlot());
-        }
+        log.debug("notify {} SlotListeners about slot {}", // NOI18N
+                v.size(), s.getSlot());
         // forward to all listeners
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
@@ -325,6 +322,30 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     @Override
     public void message(LocoNetMessage m) {
+        if (m.getOpCode() == LnConstants.OPC_RE_LOCORESET_BUTTON) {
+            if (commandStationType.getSupportsLocoReset()) {
+                // Command station LocoReset button was triggered.
+                //
+                // Note that sending a LocoNet message using this OpCode to the command
+                // station does _not_ seem to trigger the equivalent effect; only
+                // pressing the button seems to do so.
+                // If the OpCode is received by JMRI, regardless of its source,
+                // JMRI will simply trigger a re-read of all slots.  This will
+                // allow the JMRI slots to stay consistent with command station
+                // slot information, regardless of whether the command station
+                // just modified the slot information.
+                javax.swing.Timer t = new javax.swing.Timer(500, (java.awt.event.ActionEvent e) -> {
+                    log.debug("Updating slots account received opcode 0x8a message");   // NOI18N
+                    update();
+                });
+                t.stop();
+                t.setInitialDelay(500);
+                t.setRepeats(false);
+                t.start();
+            }
+            return;
+        }
+
         // LACK processing for resend of immediate command
         if (!mTurnoutNoRetry && immedPacket != null &&
                 m.getOpCode() == LnConstants.OPC_LONG_ACK &&
@@ -394,7 +415,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * else returns -1
      */
     int getDirectFunctionAddress(LocoNetMessage m) {
-        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
+        if (m.getOpCode() != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -433,7 +454,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * @return an integer containing the bytes of the DCC packet, except the address bytes.
      */
     int getDirectDccPacket(LocoNetMessage m) {
-        if (m.getElement(0) != LnConstants.OPC_IMM_PACKET) {
+        if (m.getOpCode() != LnConstants.OPC_IMM_PACKET) {
             return -1;
         }
         if (m.getElement(1) != 0x0B) {
@@ -685,6 +706,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         if (i >= _slots.length || i < 0) {
             log.error("Received slot number {} is greater than array length {} Message was {}", // NOI18N
                     i, _slots.length, m.toString()); // NOI18N
+            return; // prevents array index out-of-bounds when referencing _slots[i]
         }
         try {
             _slots[i].setSlot(m);
@@ -985,7 +1007,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         } else {
             // regular CV case
             int CV = Integer.parseInt(cvNum);
-            
+
             lopsa = 0;
             hopsa = 0;
             mServiceMode = true;
@@ -1002,7 +1024,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 throw new jmri.ProgrammerException("mode not supported"); // NOI18N
             }
 
-            doWrite(CV, val, p, pcmd);   
+            doWrite(CV, val, p, pcmd);
         }
     }
 
