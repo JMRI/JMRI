@@ -24,9 +24,11 @@
 
       <H1> Support Mat&#233;riel: Fleischmann Twin Centre</H1>
 
-<P>JMRI peut communiquer avec Fleischmann Twin Centre de plusieurs fa&#231;ons. Pour avoir plus de d&#233;tails, voir la page 
-<a href="Uhlenbrock.shtml"> sur la configuration des &#233;quipements compatibles avec Uhlenbrock</a>.
+<p>JMRI peut communiquer avec Fleischmann Twin Centre de plusieurs fa&#231;ons. Pour avoir plus de d&#233;tails, voir la page
+    <a href="Uhlenbrock.shtml"> sur la configuration des &#233;quipements compatibles avec Uhlenbrock</a>.</p>
 
 <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

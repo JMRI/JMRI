@@ -18,7 +18,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
@@ -149,7 +150,7 @@
         "#automation">l'Automatisation Aiguillage</a>
         ci-dessous.</dd>
 
-        <dt><a name="Lock Mode"></a> Mode de Verrouillage</dt>
+        <dt><a name="LockMode"></a> Mode de Verrouillage</dt>
 
         <dd>Affiche les verrouillages, le cas
         &eacute;ch&eacute;ant, qui sont actifs pour cet aiguillage.
@@ -271,7 +272,7 @@
         Aiguillages</a> ci-dessous pour plus d'informations.</dd>
       </dl>
 
-      <h3><a name="Turnout Feedback"></a> R&eacute;tro
+      <h3><a name="TurnoutFeedback"></a> R&eacute;tro
       Signalisations Aiguillages</h3>
 
       <p>Les Mod&eacute;listes veulent des choses
@@ -486,7 +487,7 @@
       ceux-ci. Voir la section menu "Automatiser" pour modifier ces
       param&egrave;tres par d&eacute;faut.</p>
 
-      <h3><a name="Turnout lock feature"></a> Aiguillage Fonction
+      <h3><a name="TurnoutLockFeature"></a> Aiguillage Fonction
       de Verrouillage</h3>
 
       <p>La fonction de verrouillage des aiguillages vous permet de

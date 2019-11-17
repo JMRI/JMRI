@@ -2,6 +2,7 @@ package jmri.jmrit.vsdecoder.swing;
 
 import java.awt.GraphicsEnvironment;
 import javax.swing.JPanel;
+import jmri.*;
 import jmri.jmrit.vsdecoder.VSDConfig;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -21,6 +22,9 @@ public class VSDConfigDialogTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VSDConfigDialog t = new VSDConfigDialog(new JPanel(), "test", new VSDConfig());
         Assert.assertNotNull("exists", t);
+        
+        // this created an audio manager, clean that up
+        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
 
     // The minimal setup for log4J

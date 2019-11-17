@@ -138,7 +138,8 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	structure r&#233;pertoire <code>.git/</code>.
 	<p>
  	Quand vous <em>pull</em> ou <em>push</em>, vous dites &#225; Git de synchroniser votre contenu 
-	<code.git/</code> avec avec celui du r&#233;pertoire distant dont vous avez initialement clon&#233; le contenu.
+	<code>git/</code> avec avec celui du r&#233;pertoire distant dont vous avez initialement clon&#233; le
+	contenu.
 	<p>
 	La documentation suivante devrait vous aider &#225; d&#233;marrer en utilisant soit la ligne de commande git ou GitHub Desktop:
 
@@ -189,7 +190,8 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
       <li>Utilisation de GitHub Desktop
 	      <ul>
 	      <li>Clonez le r&#233;f&#233;rentiel JMRI sur votre syst&#232;me local en choisissant un &#233;l&#233;ment de l'onglet "Clone" dans le fichier &gt;Clone repository.. menu et cliquez "Clone":<br>  
-		<a href="images/GhDtCloneDialog.png"><img c="images/GhDtCloneDialog.png" width="267" height="184" alt="GitHub Desktop PR dialog"></a>
+		<a href="images/GhDtCloneDialog.png"><img src="images/GhDtCloneDialog.png" width="267" height="184"
+		alt="GitHub Desktop PR dialog"></a>
 		</li>
 		<li>Faites vos changement localement, testez les, etc.<br>
 		Quand tout cela fonctionne, <em>soumettez</em> votre modification &#225; votre r&#233;f&#233;rentiel JMRI local en retournant &#225; l'application GitHub Desktop, examinez tous les changements constat&#233;s par le programme, 
@@ -375,7 +377,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
       </ol>
     </dd>
     
-    <dt id="share">La r&#233;solution d'un conflit de fusion</dt>
+    <dt>La r&#233;solution d'un conflit de fusion</dt>
       <dd>
 			Il est pas rare que deux personnes ou plus ont des id&#233;es sur la m&#234;me partie du programme ou le site Web JMRI, chacun faisant des soumissions et
 			et des PRs pour des parties des m&#234;mes fichiers. S'ils ont travaill&#233; sur diff&#233;rentes lignes de texte ou de code dans un fichier, GitHub sait comment combiner
@@ -409,7 +411,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	<li>Appveyor fonctionne sur Windows; Il saute les tests de fin de ligne, ce n'est pas fiable sur Windows.
 	    Pour un gain de temps, il saute beaucoup de de tests de formats XML
 	    ( Travis les couvres de toute fa&#231;on ).
-	<ul>
+	</ul>
 	Pour ajouter ceux-ci &#225; votre r&#233;pertore personnel:
 	<ul>
 	<li>Pour Travis aller &#225;
@@ -425,7 +427,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	</ul>
 	A partir de l&#225;, en "poussant" &#225; votre propre r&#233;f&#233;rentiel va ex&#233;cuter les tests. Vous recevrez 
 	un email lorsque les tests sont termin&#233;s, ou vous pouvez v&#233;rifier sur le web.
-
+	</dd>
 	<dt id="lineends">Manipulation des Fins de Ligne</dt>
 	<dd>
 	Mac et Linux utilise un caract&#232;re LF &#225; la fin de chaque ligne; Windows utilise la paire CRLF.
@@ -457,15 +459,15 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 			l'expertise de Git de le faire pour vous et n'oubliez de les remercier.
 			</ol>
 	<p>Les maintenanciers qui rencontre un PR actualis&#233; avec une &#233;tiquette CRLF voudront v&#233;rifier que tous 
-	les fichiers dans le PR <u>ne montrent pas</u> toutes les lignes chang&#233;es. Si elles le sont, m&#234;me si elles ont 
-	la fin de ligne LF correcte, le PR ne pourra pas &#234;tre fusionn&#233;.</p>  
+	les fichiers dans le PR <i>ne montrent pas</i> toutes les lignes chang&#233;es. Si elles le sont, m&#234;me si
+	elles ont la fin de ligne LF correcte, le PR ne pourra pas &#234;tre fusionn&#233;.</p>
 	<p>Beaucoup d'<a href="XmlEditors.shtml">&#201;diteurs XML</a> ont un R&#233;glage des Pr&#233;f&#233;rences pour les fins de ligne.<br>
 	Par exemple, dans Expresso cochez que les Line Ending sont param&#233;tr&#233;es pour <strong> Unix (LF)</strong>
 	avant de d&#233;marrer l'&#233;dition de fichier JMRI:<br>
 	<a href="images/EspressoPrefsLF.png"><img src="images/EspressoPrefsLF.png" width="226" height="219" alt="Espresso LF Preference setting"></a>
 	</p>
-	<dd
-	<dt  id="testPR">Test d'un Pull Request</dt>	
+	</dd>
+	<dt id="testPR">Test d'un Pull Request</dt>
 	<dd>
 	<p>Les Pull requests sont juste un cas particulier d'une branche. Si vous voulez les tester
 	avant de les fusionner dans un master, vous pouvez les apporter dans votre r&#233;pertoire local
@@ -484,29 +486,29 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
         <u>user</u> wants to merge <u>3</u> commits into JMRI:master from <u>user</u>:<u>branch</u>
         </blockquote>
         <a href="images/GitHubPRbranchInfo.png"><img src="images/GitHubPRbranchInfo.png" width="446" height="114" alt="GitHub Web branch screen"></a>
-
+			</li>
 	 <li>Ensuite, pousser cette branche sur votre propre machine avec la commande:
 	 <pre><code>
         git fetch https://github.com/<u>user</u>/JMRI.git <u>branch</u>:<u>local-branch</u>
         </code></pre>
 	o&#249; vous avez remplacer chaque valeur soulign&#233;e:
 	<ul>
-		<li> Changez "user" par le nom utilisateur GitHub correcte
-		<li>Changez "branch" par le nom de branche dans le pull request ( c'est OK si c'est par ex: master )
+		<li> Changez "user" par le nom utilisateur GitHub correcte</li>
+		<li>Changez "branch" par le nom de branche dans le pull request ( c'est OK si c'est par ex: master )</li>
 		<li>changez "local-branch" par ce que vous voulez appeler la branche sur votre propre machine.
 		<em>Celle-ci ne doit pas d&#233;j&#225; exist&#233;</em>.Quelque chose comme "ma-branche-utilisateur" Vous rappellera 
 		de qui est le d&#233;p&#244;t dont vous l'avez tir&#233;, tout en marquant les changements ult&#233;rieurs comme les v&#244;tres 
 		si vous les partagez plus tard avec quelqu'un d'autre.
 		( Il est recommand&#233; que vous d&#233;marriez vos noms de branches avec
-		votre propre nom, cela simplifie tout sorte s d'op&#233;rations )
-        </ul>
-        <li>>La branche existe manitenant dans votre machine, Et vous pouvez juste vous d&#233;placer vers elle:	
+		votre propre nom, cela simplifie tout sorte s d'op&#233;rations )</li>
+        </ul></li>
+        <li>La branche existe manitenant dans votre machine, Et vous pouvez juste vous d&#233;placer vers elle:
         <pre><code>
         git checkout <u>local-branch</u>
         </code></pre>	  
 	  puis compler, tester, etc, comme vous le voulez. Vous pouvez m&#234;me soumettre et partager les changements
 	  si vous le d&#233;sirez, parce que c'est maintenant votre propre branche de d&#233;veloppement: Elle a commenc&#233; &#225; 
-	  une autre personne, mais c'est maintenant la votre.
+	  une autre personne, mais c'est maintenant la votre.</li>
 	</ul>
 	</dd>
 
@@ -537,7 +539,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	      <li>Il est maintenant dans votre r&#233;pertoire sur	une branche	qui lui est propre, o&#249; vous pouvez o&#249; vous pouvez tester des choses comme d'habitude
 
 		<li>Quand vous &#234;tes satisfait, poussez le contenu soumis de votre r&#233;pertoire local vers votre r&#233;pertoire GitHub
-		( (En supposant que la configuration par d&#233;faut, o&#249; & quot; pousser & quot; va &#225; votre 
+		( En supposant que la configuration par d&#233;faut, o&#249; &quot; pousser &quot; va &#225; votre
 		propre d&#233;p&#244;t sur GitHub) avec 
 	      <blockquote>
 	      <code>git push origin patch-NNNN</code>
@@ -676,8 +678,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 
 </dl>
 
-  <!--#include virtual="/Footer" -->
-
+  	<!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 
