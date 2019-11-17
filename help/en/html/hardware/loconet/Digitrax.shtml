@@ -23,10 +23,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Support: Digitrax LocoNet&reg;</h1>
 
       <div class="toc">

@@ -26,9 +26,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>L'&eacute;diteur Index des Images</h1>Cette fen&ecirc;tre
       est utilis&eacute;e pour cr&eacute;er un Index d'Image.
       L'index peut &ecirc;tre organis&eacute; selon toute

@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -22,10 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>XpressNet LZV100 Configuration Tool</h1><img src=
       "images/LZV100ConfigurationUtility.jpg" alt=
       "LZV100 Configuration Tool Image">

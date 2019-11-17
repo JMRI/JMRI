@@ -22,9 +22,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: R&eacute;gulateur WiFi</h1><a href=
       "http://withrottle.com"><img height="250" width="150" src=
       "images/WiT150x250.png" align="right"></a> Cette

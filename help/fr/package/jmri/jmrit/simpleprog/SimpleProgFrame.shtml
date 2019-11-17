@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>Programmateur Simple CV</h2><a href=
       "SimpleProgFrame.jpg"><img src="SimpleProgFrame.jpg" align=
       "right" width="132" height="180"></a><br>

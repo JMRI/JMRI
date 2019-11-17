@@ -3,9 +3,8 @@
 <html lang="fr">
 <head>
  <title>JMRI Hardware Support - Chubb C/MRI</title>
-    <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-    <meta name="keywords" content="Bruce Chubb C/MRI Computer interface java model railroad JMRI install windows">
-
+ <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+ <meta name="keywords" content="Bruce Chubb C/MRI Computer interface java model railroad JMRI install windows">
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -18,12 +17,11 @@
 <body>
 <!--#include virtual="/Header" -->
 <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
         <!-- Page Body -->
 
 <h1>Prise en Charge Mat&#233;riel: Chubb C/MRI</h1>
-  
 <a name="contents"></a>
 
 La documentation ci-dessous explique comment JMRI peut &#234;tre utilis&#233; avec C/MRI, et

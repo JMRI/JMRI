@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Fen&ecirc;tre Principale InstallTest</h1>
       La fen&ecirc;tre principale InstallTest est destin&eacute;e
       &agrave; montrer si vous avez Java et JMRI correctement

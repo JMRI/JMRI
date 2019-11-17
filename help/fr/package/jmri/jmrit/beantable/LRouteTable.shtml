@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Le Tableau L-Itin&eacute;raire</h1>
 
       <p>Un L-Itin&eacute;raire est une version plus

@@ -34,11 +34,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>Using the Throttle Pane</h1><img src=
       "images/BasicThrottleWindow.png" alt=
       "BasicThrottleWindow.png"><br>

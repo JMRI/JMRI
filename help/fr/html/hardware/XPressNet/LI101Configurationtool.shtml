@@ -17,9 +17,8 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div class="nomenu" id="mBody">
+    <div id="mainContent">
 
 <h1> Outil de Configuration XPressNet LI101F </h1>
 

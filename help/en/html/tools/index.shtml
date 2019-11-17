@@ -23,11 +23,9 @@
 <body>
   <div id="container">
     <!--#include virtual="/Header" -->
-
-    <div id="mBody">
+  <div id="mBody">
       <!--#include virtual="Sidebar" -->
-
-      <div id="mainContent">
+    <div id="mainContent">
         <!-- Page Body -->
 
         <h1>JMRI: Tools</h1>

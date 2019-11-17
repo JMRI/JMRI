@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>LocoNet Slot Monitor</h1>
       <a href=
       "SlotMonitorScreenShot.bmp"><img src="SlotMonitorScreenShot.bmp"

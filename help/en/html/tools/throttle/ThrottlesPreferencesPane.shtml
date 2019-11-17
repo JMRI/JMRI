@@ -27,11 +27,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>Throttles Preferences</h1><img src=
       "images/ThrottlesPreferencesPane.png" alt=
       "Throttle Pref pane" />

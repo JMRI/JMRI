@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Outil de Mise &agrave; Jour SPROG II</h2>
       <p>L'Outil de Mise &agrave; Jour SPROG II vous permets
       de charger un nouveau logiciel dans SPROG II.</p>

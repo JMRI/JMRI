@@ -22,11 +22,10 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Startup Scripts</h1>
 
       <p>Although JMRI itself is constructed to "run anywhere",

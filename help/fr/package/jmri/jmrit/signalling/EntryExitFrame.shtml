@@ -22,9 +22,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+      <!--#include virtual="Sidebar" -->
+      <div id="mainContent">
 
     <h1>JMRI: Entr&eacute;e/Sortie (NX)</h1>
 
@@ -303,6 +303,7 @@
     nouveau l'Itin&eacute;raire et s&eacute;lectionnez "Effacer" .</p>
 
     <!--#include virtual="/Footer" -->
+    </div>
   </div>
 </body>
 </html>

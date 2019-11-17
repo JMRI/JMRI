@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Panel</h1>
 
       <p>A Panel is a set of icons representing various components

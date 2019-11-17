@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Moniteur de Trafic CTI Acela ic</h1>
 
       <p>Pour plus d'informations sur les diff&eacute;rents
@@ -35,6 +35,7 @@
       pla&icirc;t voir le <a href=
       "../../AbstractMonFrame.shtml">page Fen&ecirc;tre
       Moniteur de Communications</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

@@ -23,11 +23,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div id="mBody">
+<div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI: XML IO Servlet</h1>Le servlet JMRI XML fournit un
       acc&egrave;s Web bi-directionnel aux services JMRI.
 

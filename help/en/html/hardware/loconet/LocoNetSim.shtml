@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -23,12 +22,12 @@
   <div id="container">
     <p class="skipLink"><a href="#mainContent" accesskey="2">Skip
     to main content</a></p>
-      <!--#include virtual="/Header" -->
-
-      <div id="mBody">
-          <!--#include virtual="Sidebar" -->
+    <!--#include virtual="/Header" -->
+    <div id="mBody">
+      <!--#include virtual="Sidebar" -->
       <div id="mainContent">
-        <h1>Hardware Support: LocoNet&reg; Simulator</h1>
+
+      <h1>Hardware Support: LocoNet&reg; Simulator</h1>
 
         <p>If JMRI is configured to use a Digitrax LocoNet&reg;
         connection, but the connection isn't available, several

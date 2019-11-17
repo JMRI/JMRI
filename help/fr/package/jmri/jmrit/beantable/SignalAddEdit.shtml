@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Ajout/Edition des T&ecirc;tes de signal</h1><a href=
       "../../../../images/SigAdd.gif"><img src=
       "../../../../images/SigAdd.gif" align="right" width="181"

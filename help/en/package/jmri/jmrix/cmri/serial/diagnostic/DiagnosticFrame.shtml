@@ -22,9 +22,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: C/MRI Diagnostics</h2>
       <p>When it asks for output card
       number, it means the address. For example, if you have two

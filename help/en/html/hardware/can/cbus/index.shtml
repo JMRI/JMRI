@@ -21,10 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
       <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
      <h1>JMRI Hardware Support: MERG CBUS Main Support Page</h1>
       <ul class="snav">
         <li><a href="#documentation">JMRI Documentation</a></li>

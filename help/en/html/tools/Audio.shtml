@@ -18,11 +18,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Audio Documentation</h1>JMRI Audio objects hold
       information about sounds that can be played-back by the
       computer.

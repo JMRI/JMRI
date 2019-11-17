@@ -3,7 +3,6 @@
 <head>
 <!-- Updated by Herv&#233; Blorec 2017-01-26 -->
 <title>JMRI Hardware Support - Grapevine System - Naming</title>
-
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -16,7 +15,7 @@
 <body>
 <!--#include virtual="/Header" -->
 <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
         <!-- Page Body -->
 

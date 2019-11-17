@@ -21,9 +21,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Upload Debugging Information</h1>
       <a href="SampleReportForm.png"><img src="SampleReportForm.png" height="25%" width="25%" align="right"></a>
       <p>The "Upload

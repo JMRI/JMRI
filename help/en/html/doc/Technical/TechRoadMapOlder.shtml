@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -28,12 +27,11 @@
 
 <body>
 <!--#include virtual="/Header.shtml" -->
-
 <div id="mBody">
   <!--#include virtual="Sidebar.shtml" -->
-
   <div id="mainContent">
-      <h1>JMRI: Technology Road Map History</h1>
+    <h1>JMRI: Technology Road Map History</h1>
+
       <p>This page is the historical version of the road map for
       JMRI's future development. It contains notes on older releases.<br>
       For more recent work, see the <a href="TechRoadMap.shtml">main

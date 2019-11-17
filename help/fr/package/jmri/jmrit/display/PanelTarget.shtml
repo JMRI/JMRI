@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Le Panneau</h1>
       <p>Un panneau est un ensemble d'ic&ocirc;nes
       repr&eacute;sentant les diff&eacute;rentes composantes d'un

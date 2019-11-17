@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Translater s&eacute;lection</h1>
 
       <p>La bo&icirc;te de dialogue Translater S&eacute;lection

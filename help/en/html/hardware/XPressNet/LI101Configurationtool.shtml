@@ -22,10 +22,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>XpressNet LI101F Configuration Tool</h1><img src=
       "images/LI101ConfigurationUtility.jpg" alt=
       "LI101 Configuration Tool Image">

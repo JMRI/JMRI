@@ -25,10 +25,10 @@
 </head>
 
 <body>
-  &reg; <!--#include virtual="/Header" -->
-
+  <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Guide Mat&eacute;riel JMRI: Connecter un MS100 &agrave;
       LocoNet&reg;</h1>
 

@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: S&Atilde;&copy;lectionnez le mode PR3</h2>Une
       <a href=
       "../../../../../../html/hardware/loconet/PR3.shtml">PR3

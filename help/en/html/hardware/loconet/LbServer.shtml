@@ -25,10 +25,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Connecting Multiple Computers to
       LocoNet&reg; via LbServer</h1>
 

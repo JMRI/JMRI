@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="fr">
 <head>
 <!-- Updated by Blorec Herv&#233; 2017-01-26-->
 <title>JMRI Hardware Support - Protrak Grapevine System</title>
-
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -18,7 +16,7 @@
 <body>
 <!--#include virtual="/Header" -->
 <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
         <!-- Page Body -->
 

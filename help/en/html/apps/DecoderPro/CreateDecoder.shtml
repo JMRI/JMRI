@@ -23,12 +23,11 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: DecoderPro User Guide</h1>
+
+    <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>Creating A Custom Decoder File</h2>
 

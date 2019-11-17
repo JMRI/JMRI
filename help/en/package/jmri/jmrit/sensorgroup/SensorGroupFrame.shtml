@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Sensor Groups</h1>The Sensor Group tool window allows you
       to define Sensor Groups, a group of sensors of which at most
       one can be active. When a member of the group becomes active,

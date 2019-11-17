@@ -24,12 +24,11 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: Aspect Signaling</h1>
+
+    <h1>JMRI: Aspect Signaling</h1>
 
       <p class="subtitle">Controlling model signals in a
       prototypical manner</p><a href="images/Rule282.png"><img src=

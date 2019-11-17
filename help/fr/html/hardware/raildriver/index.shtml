@@ -1,12 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="fr">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Updated by Blorec Herv&#233; le 2013-09-18-->
-
   <title>JMRI: RailDriver Throttle</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
@@ -20,9 +18,10 @@
 <body>
 <!--#include virtual="/Header" -->
 <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
         <!-- Page Body -->
+
 <h2>JMRI: R&eacute;gulateur RailDriver</h2>
 
     <img src=

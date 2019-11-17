@@ -22,10 +22,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
+
       <h1>Hardware Support: M&auml;rklin Command Station 2
       (CS2)</h1>
 

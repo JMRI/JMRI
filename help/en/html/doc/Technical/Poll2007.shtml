@@ -28,11 +28,11 @@
 
 <body>
 <!--#include virtual="/Header.shtml" -->
-
 <div id="mBody">
   <!--#include virtual="Sidebar.shtml" -->
 
   <div id="mainContent">
+
       <h1>JMRI: 2007 User Poll</h1>
       <p>In late May and early June 2007, we ran three polls in the <a href=
       "http://groups.yahoo.com/group/jmriusers">jmriusers group</a>

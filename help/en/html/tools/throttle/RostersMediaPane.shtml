@@ -27,11 +27,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h2>Setting Roster Media</h2><img src=
       "images/DecProRosterMediaPane.png" alt="">
 

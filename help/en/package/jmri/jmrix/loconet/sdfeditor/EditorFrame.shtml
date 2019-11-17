@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>SDF Sound File Editor</h1>
       <p>Digitrax sound decoders are
       loaded with "sound projects", stored in "Sound Project"

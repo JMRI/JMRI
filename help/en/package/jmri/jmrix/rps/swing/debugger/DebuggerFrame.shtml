@@ -21,9 +21,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: RPS Debugger</h1><a href=
       "../../../../../../html/hardware/rps/images/Debugger.jpg"><img src="../../../../../../html/hardware/rps/images/Debugger.jpg"
       height="262" width="168" alt="RPS Receiver Control window"
@@ -67,6 +67,7 @@
       change to "Stop CSV Export...". Select that menu choice to
       stop the logging and ensure that the last lines have been
       written out.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

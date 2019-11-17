@@ -26,9 +26,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Guide Mat&eacute;riel JMRI: M&eacute;thodes pour
       connecter plusieurs ordinateurs &agrave; un r&eacute;seau
       miniature LocoNet&reg;</h1>JMRI met en oeuvre actuellement

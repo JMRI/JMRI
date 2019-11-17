@@ -22,11 +22,13 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>JMRI: RPS Alignment Tool</h1>This is the
-      jmri.jmrix.rps.reversealign.AlignmentPanel help page. 
+
+      <h1>JMRI: RPS Alignment Tool</h1>
+      This is the
+      jmri.jmrix.rps.reversealign.AlignmentPanel help page.
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

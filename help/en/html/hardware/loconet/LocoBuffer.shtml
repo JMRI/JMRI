@@ -24,10 +24,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Connecting a LocoBuffer to
       LocoNet&reg;</h1>
 

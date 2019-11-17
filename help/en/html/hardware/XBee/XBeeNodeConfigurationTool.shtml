@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -22,10 +21,11 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+      <!-- Page Body -->
+
       <h1>Hardware Support: XBee Node Configuration
       Tool</h1><a name="tools" id="tools"></a>
 

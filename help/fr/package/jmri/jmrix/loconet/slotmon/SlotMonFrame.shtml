@@ -26,9 +26,9 @@
 
 <body>
   charset=iso-8859-1"&gt; <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>LocoNet Moniteur d'emplacements</h1><a href=
       "../../../../../html/apps/LocoTools/images/SlotMon.gif"><img src="../../../../../html/apps/LocoTools/images/SlotMon.gif"
       width="300" height="150" alt="Command slot station Monitor"
@@ -146,8 +146,10 @@
         <dt>F0-F8</dt>
 
         <dd>Les param&Atilde;&uml;tres de la fonction
-        actuelle.</dd><!--#include virtual="/Footer" -->
+        actuelle.</dd>
       </dl>
+
+        <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

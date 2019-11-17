@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Configure SECSI Nodes</h1>
 
       <p>SECSI nodes need to be configured before input works.</p>
@@ -54,7 +54,9 @@
         <dt>This is the
         help/jmri/jmrix/secsi/nodeconfig/NodeConfigFrame help
         page</dt>
-      </dl><!--#include virtual="/Footer" -->
+      </dl>
+
+      <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

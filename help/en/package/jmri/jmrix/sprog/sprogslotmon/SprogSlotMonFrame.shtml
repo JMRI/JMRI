@@ -23,14 +23,15 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Monitor SPROG Slots</h1>
 
       <p>This is the
       help/jmri/jmrix/sprog/sprogslotmon/SprogSlotMonFrame help
       page.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

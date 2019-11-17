@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Commandes Multi-d&eacute;codeur</h2>A l'origine,
       DCC n'a pas fourni un moyen commode de programmer Les valeurs
       de configuration des (CV) quand vous avez plus d'un

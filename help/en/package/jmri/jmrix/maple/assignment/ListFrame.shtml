@@ -22,9 +22,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Maple Input and Output Assignments</h2>
 
       <p>This tool lets you display Sensor, Turnout and Light

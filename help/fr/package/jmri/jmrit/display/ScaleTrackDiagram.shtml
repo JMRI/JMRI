@@ -26,9 +26,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>&Eacute;chelle/Translater diagramme de voie</h1>
 
       <p>Le dialogue &Eacute;chelle/Translater diagramme de voie
@@ -95,6 +95,7 @@
 
       <p><b>Pour conserver vos modifications, s'il vous pla&icirc;t
       n'oubliez pas d'enregistrer votre panneau!</b></p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

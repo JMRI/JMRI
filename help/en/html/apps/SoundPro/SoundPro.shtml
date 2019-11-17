@@ -24,11 +24,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI: SoundPro Main Window</h1><img src=
       "../../../../../resources/SoundPro.gif" align="right" height=
       "100" width="100"> The SoundPro main window gives access to

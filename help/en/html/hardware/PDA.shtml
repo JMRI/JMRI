@@ -24,10 +24,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Using a PDA to access JMRI
       (deprecated)</h1>
 

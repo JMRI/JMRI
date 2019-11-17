@@ -25,9 +25,9 @@
     <!--#include virtual="/Header" -->
     <div id="mBody">
     <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
 
-        <div id="mainContent">
-            <h1>JMRI: PanelPro</h1>
+      <h1>JMRI: PanelPro</h1>
             <p>The JMRI libraries contain the PanelPro
             application for creating panels to control or follow your
             (virtual) model railroad. This page introduces the

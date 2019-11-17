@@ -20,9 +20,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Configure Digitrax PM4x</h1><a href=
       "PM4xConfigTool.png"><img src="PM4xConfigTool.png" alt=
       "PM4x Configuration Tool Screen Capture"></a>

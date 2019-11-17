@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -28,12 +27,11 @@
 
 <body>
 <!--#include virtual="/Header.shtml" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-      <h1>JMRI Code: CVS FAQ</h1>
+
+    <h1>JMRI Code: CVS FAQ</h1>
       <p>This is a list of Frequently Asked Questions for CVS,
       particularly regarding how we use it with JMRI.</p>
 

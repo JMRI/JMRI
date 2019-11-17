@@ -18,10 +18,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
       <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h2>JMRI: Utils USS CTC Tools</h2>
 
       <p>JMRI contains tools to help in the automation of USS CTC

@@ -20,9 +20,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Tams LocoData Frame</h1>
       The Tams LocoData tool lets you read and write Locomotive Data
       to the Tams command station.

@@ -22,9 +22,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Introduction &agrave; DecoderPro 3</h1>Ce fichier d'aide
       est en cours d'&eacute;laboration. S'il vous pla&icirc;t
       aider JMRI en contribuant &agrave; am&eacute;liorer ce

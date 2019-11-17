@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Updated by Blorec Herv&#233;  2017-01-19-->
-<title>JMRI Hardware Support - MERG CBUS</title>
+<title>JMRI Mat&#233;riel - MERG CBUS</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,8 +17,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Structure Mat&#233;riel: CBUS MERG</h1>
 

@@ -21,10 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-      <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
+
       <h1>Hardware Support: xAP</h1>
 
       <p>xAP is a popular home-automation protocol used by

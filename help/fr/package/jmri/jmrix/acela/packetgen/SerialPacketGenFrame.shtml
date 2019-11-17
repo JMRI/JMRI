@@ -25,11 +25,13 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Send CTI Acela Message</h1>Ceci est la page d'aide
+
+      <h1>Send CTI Acela Message</h1>
+      Ceci est la page d'aide
       help/en/package/jmri/jmrix//acela/packetgen/SerialPacketGenFrame
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

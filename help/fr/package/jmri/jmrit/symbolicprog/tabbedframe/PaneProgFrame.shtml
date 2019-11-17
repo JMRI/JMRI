@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Op&eacute;rations Programmateur DecoderPro en Mode
       Service</h1><a name="contents" id="contents"></a>
 

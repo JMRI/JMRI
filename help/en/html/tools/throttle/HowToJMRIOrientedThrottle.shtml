@@ -31,11 +31,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>How to build a throttle oriented JMRI interface</h1>For
       this how to we assume you're an already experienced user of
       JMRI.<br />

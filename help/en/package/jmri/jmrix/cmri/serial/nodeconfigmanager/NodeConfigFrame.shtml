@@ -22,9 +22,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: C/MRI Node Configuration Manager</h2>
       This is the cmri/serial/nodeconfig/NodeConfigFrame.shtml page.
       Help is on the way.

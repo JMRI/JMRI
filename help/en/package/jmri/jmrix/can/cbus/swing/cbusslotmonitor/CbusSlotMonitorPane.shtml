@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
      <h1>JMRI : MERG CBUS Command Station Monitor</h1>
         <p>Main Table - Monitoring train sessions.</p>
 

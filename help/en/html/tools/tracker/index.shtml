@@ -24,11 +24,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h2>JMRI: Block Tracking</h2>
 
       <h3>Background Information</h3>Model railroad control systems

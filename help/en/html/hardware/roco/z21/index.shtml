@@ -24,10 +24,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Fleischmann/Roco z21/Z21</h1>
 
       <p>The Roco z21/Z21 is a command station with support for

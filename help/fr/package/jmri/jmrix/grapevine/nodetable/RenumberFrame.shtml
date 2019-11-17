@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Modifier Adresse d'une Carte Grapevine</h1>Cet outil vous
       permet de changer l'adresse d'une carte Grapevine.
 
@@ -44,6 +44,7 @@
       <p>Vous pouvez ouvrir la <a href="NodeTableFrame.shtml">Table
       N&Aring;"ud</a> et cliquez sur "V&Atilde;&copy;rifier" pour
       voir si le renum&Atilde;&copy;rotation a r&Atilde;&copy;ussi.</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

@@ -22,11 +22,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Frame Servlet</h1>The JMRI Frame Servlet provides
       web access to JMRI windows. Its base url is "/frame/", which
       by itself will return a page listing available frames.

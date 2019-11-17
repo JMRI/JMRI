@@ -21,10 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
+
       <h1>Hardware Support: CTI Acela System Names</h1>
 
       <p>Individual Inputs (Sensors) and Outputs (Turnouts and

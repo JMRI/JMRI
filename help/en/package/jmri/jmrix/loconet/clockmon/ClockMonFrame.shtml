@@ -26,15 +26,16 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>LocoNet Fast Clock Control</h1>
 
       <p>See the <a href=
       "../../../../../html/tools/fastclock/LocoNetClock.shtml">LocoNet
       Clock Help</a></p>This is the
-      help/jmri/jmrix/loconet/clockmon/ClockMonFrame help page 
+      help/jmri/jmrix/loconet/clockmon/ClockMonFrame help page
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

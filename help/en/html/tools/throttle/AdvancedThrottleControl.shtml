@@ -25,11 +25,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>Advanced Throttle Control</h1>
 
       <h2>Keyboard Control of the Standard Throttle</h2>You can

@@ -28,11 +28,10 @@
 
 <body>
 <!--#include virtual="/Header.shtml" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Recommended Practices</h1>
       <p>This page contains miscellaneous info and pointers for JMRI
       developers.</p>

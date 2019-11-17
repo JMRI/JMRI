@@ -15,9 +15,9 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>L'outil JMRI XPressNet Syst&egrave;me
       d'information</h2><img src="images/XPressNetSystemInfo.jpg"
       alt="Syst&egrave;me XPressNet Image Information Tool ">

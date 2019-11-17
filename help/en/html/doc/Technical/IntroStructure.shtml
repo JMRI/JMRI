@@ -27,12 +27,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
+    <div id="mainContent">
 
-<div id="mBody">
-  <!--#include virtual="Sidebar.shtml" -->
-
-  <div id="mainContent">
       <h1>JMRI Code: Introduction to JMRI Library Structure</h1>
       
       <p>This page is the top-level introduction to how the

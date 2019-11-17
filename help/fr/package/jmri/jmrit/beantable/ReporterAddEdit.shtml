@@ -24,12 +24,13 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Ajout/Modification de Rapports</h1>Ceci est la page
       d'aide
-      help/fr/package/jmri/jmrit/beantable/ReporterAddEdit.shtml 
+      help/fr/package/jmri/jmrit/beantable/ReporterAddEdit.shtml
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

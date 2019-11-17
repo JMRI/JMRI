@@ -22,11 +22,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI Web Access</h1>
 
       <p>JMRI can provide web access to your model railroad.</p>

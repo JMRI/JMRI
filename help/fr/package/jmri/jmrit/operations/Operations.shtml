@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>Exploitations JMRI</h2>Le programme d'Exploitations vous
       permet de cr&eacute;er des manifestes de train
       g&eacute;n&eacute;r&eacute;s par ordinateur pour vos chemins

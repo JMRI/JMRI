@@ -36,10 +36,8 @@ table.sortable th {
 
 <body>
 <!--#include virtual="/Header" -->
-
 <div id="mBody">
   <!--#include virtual="../html/Sidebar" -->
-
   <div id="mainContent">
 
       <h1>JMRI: Glossaire</h1>
@@ -1274,6 +1272,7 @@ table.sortable th {
 </table>
 
 <!-- end of Glossary table -->
+
    <!--#include virtual="/Footer" -->
    </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->

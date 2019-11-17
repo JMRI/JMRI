@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Les &eacute;diteurs d'Ic&ocirc;nes</h1>
 
       <h2>Contenu des &eacute;diteurs d'Ic&ocirc;ne</h2><img src=

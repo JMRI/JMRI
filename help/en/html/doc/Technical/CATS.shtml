@@ -28,11 +28,10 @@
 
 <body>
 <!--#include virtual="/Header.shtml" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Integration with CATS</h1>
       <p>The Crandic Automated Traffic System (CATS) is a
       JMRI-based application by Rodney Black for

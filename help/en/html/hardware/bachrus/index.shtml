@@ -24,10 +24,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Bachrus</h1>
 
       <p>JMRI supports the Bachrus MTS-DCC Model train Speedometer,

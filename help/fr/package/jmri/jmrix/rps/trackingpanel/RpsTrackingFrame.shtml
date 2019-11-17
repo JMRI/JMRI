@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: RPS &Atilde;&permil;cran de Poursuite</h1><a href=
       "../../../../../html/hardware/rps/images/RpsTracker.jpg"><img src="../../../../../html/hardware/rps/images/RpsTracker.jpg"
       height="248" width="209" align="right" alt=
@@ -108,7 +108,9 @@
         <li>&amp;rlquo;Afficher r&Atilde;&copy;gions"
         contr&Atilde;&acute;le si les r&Atilde;&copy;gions sont
         dessin&Atilde;&copy;es ou non.</li>
-      </ul>Les quatre zones de texte et le bouton "Valider" vous
+      </ul>
+
+      Les quatre zones de texte et le bouton "Valider" vous
       permettent de d&Atilde;&copy;finir les
       coordonn&Atilde;&copy;es de la cartographie pour la
       fen&Atilde;&ordf;tre. Les deux du haut
@@ -122,7 +124,8 @@
       &Atilde;  0,0, et le coin sup&Atilde;&copy;rieur gauche mis
       &Atilde;  de grandes valeurs pour montrer votre
       r&Atilde;&copy;seau en entier, mais vous n'avez pas &Atilde; 
-      le faire comme &Atilde;&sect;a. 
+      le faire comme &Atilde;&sect;a.
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

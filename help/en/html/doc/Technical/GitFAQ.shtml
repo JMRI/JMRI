@@ -30,12 +30,11 @@
 </head>
 
 <body>
-<!--#include virtual="/Header.shtml" -->
-
-<div id="mBody">
+  <!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Git FAQ</h1>
 
       <p>This is a list of Frequently Asked Questions for Git,

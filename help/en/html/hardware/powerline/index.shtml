@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI Hardware Support - Powerline Controllers</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -21,10 +19,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Powerline Controllers</h1>
 
       <p>This page describes how to configure JMRI to talk to

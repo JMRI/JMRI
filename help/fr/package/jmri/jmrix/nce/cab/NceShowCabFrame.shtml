@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Montrer Cabines NCE</h1>
 
       <p>Cet outil fournit une liste des Cabs* NCE
@@ -59,6 +59,8 @@
       n'auront pas &Atilde;  temporiser en attendant une
       r&Atilde;&copy;ponse de l'adresse de la Cab
       purg&Atilde;&copy;e. *commande manuelle</p>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

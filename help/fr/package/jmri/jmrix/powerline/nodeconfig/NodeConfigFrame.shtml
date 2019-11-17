@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Configurer les p&Atilde;&copy;riph&Atilde;&copy;riques
       Powerline</h1>Ceci est la page d'aide
       help/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame
@@ -43,7 +43,9 @@
 
         <dd>(commentaire expliquant plus en d&Atilde;&copy;tail ce
         qu'est le type)</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

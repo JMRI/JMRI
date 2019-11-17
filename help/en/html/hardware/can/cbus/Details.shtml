@@ -21,10 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: MERG CBUS - Connection Details</h1>
         <ul class="snav">
         <li><a href="#canid">CBUS CAN Network ID</a></li>

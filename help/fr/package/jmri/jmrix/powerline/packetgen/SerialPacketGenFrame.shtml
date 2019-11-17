@@ -24,12 +24,15 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Send Powerline Device Message</h1>This is the
+
+      <h1>Send Powerline Device Message</h1>
+      This is the
       help/jmri/jmrix/powerline/packetgen/SerialPacketGenFrame help
-      page <!--#include virtual="/Footer" -->
+      page
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

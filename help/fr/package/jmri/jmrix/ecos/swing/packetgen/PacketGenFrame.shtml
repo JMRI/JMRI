@@ -24,13 +24,14 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Commande du G&eacute;n&eacute;rateur ECoS</h1>L'outil
       g&eacute;n&eacute;rateur de commande ECoS vous permet de
       taper un message pour la station de commande ECoS et puis de
       l'envoyer.
+
     </div>
   </div>
 </body>

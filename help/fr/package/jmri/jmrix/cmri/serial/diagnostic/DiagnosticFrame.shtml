@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Diagnostiques C/MRI</h2>
       <p>Quand on vous demande votre
       num&Atilde;&copy;ro de carte de sortie, cela signifie

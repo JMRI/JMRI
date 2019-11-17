@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Outil de mise &aacute;  jour SPROG V4</h2>
       <p>L'outil de mise &aacute; jour SPROG V4T vous permet de charger une
       nouveau firmware dans un SPROG V4.</p>

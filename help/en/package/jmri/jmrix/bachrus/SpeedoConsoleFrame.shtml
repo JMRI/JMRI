@@ -24,10 +24,11 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Bachrus Speedometer</h1>- awaiting image -<br>
+
+      <h1>Bachrus Speedometer</h1>
+      - awaiting image -<br>
 
       <p>Set up the loco to be measured on a running stand with the
       reader unit appropriate to the track gauge, connected to the

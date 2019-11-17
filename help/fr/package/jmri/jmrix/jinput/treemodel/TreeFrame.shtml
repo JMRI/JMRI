@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: contr&Atilde;&acute;le d'entr&Atilde;&copy;e
       USB</h2><a href="TreeFrame.jpg"><img align="right" height=
       "132" src="TreeFrame.jpg" width="325"></a> La

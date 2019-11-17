@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Outil de capture
       d'&eacute;v&eacute;nement CBUS</h1>CBUS <a href=
       "../../../../../../../html/hardware/can/images/ConfigTool.jpg">
@@ -128,6 +128,7 @@
       CBUS</a> peut vous aider &aacute; comprendre quels
       &eacute;v&eacute;nements sont survenus sur votre
       R&eacute;seau.</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

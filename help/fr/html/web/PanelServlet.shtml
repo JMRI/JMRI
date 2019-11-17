@@ -22,11 +22,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Panneau Servlet</h1>
 
       <p>Les Servlets Panel JMRI offrent un acc&egrave;s Web

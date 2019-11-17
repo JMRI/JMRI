@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Console SPROG</h2>La fen&ecirc;tre console SPROG
       fournit une mani&egrave;re de voir et de contr&ocirc;ler les
       op&eacute;rations Sprog depuis un seul endroit.

@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Le Tableau Lumi&egrave;re</h1>
 
       <p>Les Lumi&egrave;res sont des bits de sortie
@@ -183,6 +183,7 @@
       configuration. Lorsque les Lumi&egrave;res sont
       charg&eacute;es &agrave; partir d'un fichier de
       configuration, elles sont tous activ&eacute;es.</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

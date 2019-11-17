@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Fen&Atilde;&ordf;tre Moniteur de Communication</h1>JMRI
       offre une fen&Atilde;&ordf;tre de communication pour
       surveiller pour que vous puissiez voir ce qui se passe sur le

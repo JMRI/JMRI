@@ -21,9 +21,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Configure Powerline Devices</h1>This is the
       help/jmri/jmrix/powerline/nodeconfig/NodeConfigFrame help
       page
@@ -38,7 +38,9 @@
 
         <dd>(comment explaining what the type is in more
         detail)</dd>
-      </dl><!--#include virtual="/Footer" -->
+      </dl>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

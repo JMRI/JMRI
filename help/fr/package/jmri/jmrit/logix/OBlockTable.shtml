@@ -26,9 +26,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Les Tableaux Occupation de Cantons</h1>
 
       <h2>Pr&eacute;sentation</h2>Les Tableaux Occupation de
@@ -440,7 +440,8 @@
       <p>Voir <a href="../logix/OBlockEdit.shtml">Cr&eacute;ation
       et modification OCantons, Portails et OChemins .</a> Pour
       plus de d&eacute;tails sur l'utilisation de ces
-      tableaux.<br></p>
+      tableaux.</p>
+
     </div>
   </div>
 </body>

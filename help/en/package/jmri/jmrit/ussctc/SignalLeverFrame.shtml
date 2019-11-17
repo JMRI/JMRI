@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Signal Lever</h1><b>This is not fully implemented yet</b>
 
       <p>A Signal lever on a USS CTC panel has two inputs (Sensors)

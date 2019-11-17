@@ -21,9 +21,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Stack Monitor Tool</h2>This is the
       jmri.jmrix.lenz.stackmon.StackMonFrame help page. 
       <!--#include virtual="/Footer" -->

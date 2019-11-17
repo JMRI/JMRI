@@ -24,11 +24,11 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Tachym&Atilde;&uml;tre Bachrus</h1>- L'image en attente
-      -<br>
+
+      <h1>Tachym&Atilde;&uml;tre Bachrus</h1>
+      - L'image en attente -
 
       <p>Mettre en place la locomotive &Atilde;  mesurer sur une
       zone fonctionnant avec l'unit&Atilde;&copy; de lecture
@@ -81,7 +81,8 @@
       de meilleurs r&Atilde;&copy;sultats les CV dynamique devrait
       &Atilde;&ordf;tre mis &Atilde;  z&Atilde;&copy;ro afin que
       les commandes de vitesse prennent effet
-      imm&Atilde;&copy;diatement.. 
+      imm&Atilde;&copy;diatement.
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

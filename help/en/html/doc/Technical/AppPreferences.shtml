@@ -23,10 +23,8 @@
 
 <body>
 <!--#include virtual="/Header.shtml" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
             <!-- created by pasting output of pandoc  -@-from=markdown -@-to=html AppPreferences.txt into
             this div (remove @ between the hyphens (-), not allowed in an HTML comment) -->

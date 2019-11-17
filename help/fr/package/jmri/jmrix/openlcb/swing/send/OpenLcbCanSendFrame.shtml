@@ -27,9 +27,9 @@
   <!-- Style -->
    <!-- /Style -->
    <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Envoi Trame OpenLCB</h1><a href="SendFrame.jpg"><img src=
       "SendFrame.jpg" width="221" height="176" alt=
       "Send Frame Tool image" align="right"></a><br>
@@ -141,6 +141,7 @@
 
       <p>"Envoyer Confirmation" envoie la confirmation de tous les
       datagrammes que vous recevez en r&eacute;ponse.</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

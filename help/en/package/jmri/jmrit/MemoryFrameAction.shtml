@@ -19,9 +19,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Memory Monitor Tool</h1><a href=
       "MemoryFrameAction.jpg"><img src="MemoryFrameAction.jpg"
       width="194" height="56" align="right"></a> The Memory Monitor

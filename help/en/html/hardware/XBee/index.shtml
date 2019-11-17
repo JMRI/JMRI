@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -23,11 +22,12 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-
+<!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+  <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+    <!-- Page Body -->
+
       <h1>Hardware Support: Digi XBee Network</h1>
 
       <ul class="snav">

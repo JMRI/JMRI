@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
      <h1>JMRI : Cab Signals</h1>
        
        <p>JMRI generated Cab Signals are currently available for the following hadware types : </p>

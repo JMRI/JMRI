@@ -25,10 +25,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Connecting through a Bluetooth
       LocoBridge Adapter</h1><img src=
       "http://www.mollehem.se/images/stories/virtuemart/product/bt_rensad2.png"

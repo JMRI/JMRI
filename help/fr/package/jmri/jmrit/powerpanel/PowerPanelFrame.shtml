@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Commande Alimentation</h1>
 
       <p>Les boutons On/Off sur ce volet font la m&ecirc;me chose

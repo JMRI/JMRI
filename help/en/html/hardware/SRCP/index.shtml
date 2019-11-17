@@ -21,10 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
+
       <h1>Hardware Support: SRCP Protocol</h1><a href=
       "http://www.der-moba.de/index.php/Digitalprojekt"><img src=
       "http://www.der-moba.de/images/7/7b/Srcp-clients.png" align=

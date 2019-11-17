@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Mandat</h1>Un Mandat est une collection d'informations
       suffisantes pour ex&eacute;cuter un train automatis&eacute;.
       Il fixera les aiguillages pour un itin&eacute;raire

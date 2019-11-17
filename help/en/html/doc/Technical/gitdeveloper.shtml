@@ -19,11 +19,10 @@
 
 <body>
 <!--#include virtual="/Header.shtml" -->
-
 <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Developing with JMRI</h1>
 
       <h2>Background</h2>

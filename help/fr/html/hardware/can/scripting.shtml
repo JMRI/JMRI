@@ -4,7 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Translated  by Blorec Herv&#233; le 2017-01-20 -->
-<title>JMRI Hardware Support - CAN Network - Scripting</title>
+<title>JMRI Mat&#233;riel - CAN - Scripts</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -18,11 +18,11 @@
 <body>
 <!--#include virtual="/Header" -->
 <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
         <!-- Page Body -->
 
-<h1>Prise en charge MAt&#233;riel: CAN - Scripts</h1>
+<h1>Prise en charge Mat&#233;riel: CAN - Scripts</h1>
 
 <p>Script JMRI peut &#234;tre utilis&#233; pour
 envoyer et recevoir des trames CAN.

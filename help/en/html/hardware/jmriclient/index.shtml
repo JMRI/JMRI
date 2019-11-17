@@ -22,10 +22,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
+
       <h1>Hardware Support: JMRIClient Connection</h1>
 
       <p>The JMRIClient Connection provides a method of remotely

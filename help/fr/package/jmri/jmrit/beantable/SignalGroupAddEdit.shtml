@@ -22,11 +22,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Tableau de Groupe Signaux</h1>Groupes de Signaux.
       Les groupes de signaux sont utilis&eacute;s pour
       d&eacute;finir un certain nombre de t&ecirc;tes de signal,

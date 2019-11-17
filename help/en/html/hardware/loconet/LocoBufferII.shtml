@@ -5,7 +5,6 @@
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI Hardware Support - LocoBuffer-II to
   LocoNet&reg;</title>
   <meta name="author" content="Bob Jacobsen">
@@ -25,10 +24,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Connecting a LocoBuffer-II to
       LocoNet&reg;</h1>
 

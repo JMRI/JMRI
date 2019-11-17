@@ -23,11 +23,11 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
-        <h1>Hardware Support: Connecting to a Digitrax DCS52</h1><br>
+
+      <h1>Hardware Support: Connecting to a Digitrax DCS52</h1><br>
 
       <p>JMRI may be connected to the Digitrax DCS52 in any
       of a wide variety of ways.  Since the DCS52 has a built-in USB interface,

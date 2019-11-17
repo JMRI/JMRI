@@ -25,10 +25,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Connecting an MS100 to
       LocoNet&reg;</h1>
 

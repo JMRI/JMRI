@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Configuration Horloge Rapide</h1>
 
       <h2>Introduction aux Horloges Rapides JMRI</h2>JMRI fournit
@@ -299,6 +299,7 @@
       utilis&eacute; pour Date/Format ce n'est disponible<a href=
       "http://java.sun.com/j2se/1.4.2/docs/api/java/text/SimpleDateFormat.html">ici</a>.
       </p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

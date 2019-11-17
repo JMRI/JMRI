@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Edit NCE Macro</h1>This tool allows you to review, edit,
       and save NCE style macros. It also allows you to backup and
       restore all the NCE command station macros to and from a

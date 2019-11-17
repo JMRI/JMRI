@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Item Palette</h1>
       <b>The Item Palette</b> is used to
       place icons and text onto <b>Control Panel Editor</b> panels.

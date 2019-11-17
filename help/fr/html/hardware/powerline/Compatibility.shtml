@@ -21,10 +21,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
 
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
       <h2>JMRI: Controleurs CPL (Powerline)pris en charge</h2>Cette
       page vous permet d'identifier le type de contr&ocirc;leur que
       vous avez, et vous donne des informations n&eacute;cessaires

@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Pr&eacute;f&eacute;rences utilisateur ECoS</h1>Les
       pr&eacute;f&eacute;rences ECoS, vous permet de
       contr&ocirc;ler la fa&ccedil;on dont les Ecos interagissent
@@ -104,6 +104,7 @@
       l'aiguillage ou que l'accessoire a &eacute;t&eacute;
       retir&eacute; de l'Ecos, ce param&egrave;tre d&eacute;termine
       comment JMRI devrait r&eacute;agir.</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

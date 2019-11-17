@@ -26,10 +26,10 @@
   <div id="container">
     <p class="skipLink"><a href="#mainContent" accesskey="2">Skip
     to main content</a></p><!--#include virtual="/Header" -->
-
-    <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
       <div id="mainContent">
-        <h1>Guide Mat&eacute;riel JMRI: Simulateur
+
+      <h1>Guide Mat&eacute;riel JMRI: Simulateur
         LocoNet&reg;</h1>Si JMRI est configur&eacute; pour utiliser
         une connexion Digitrax LocoNet&reg;, mais que la connexion
         n'est pas disponible, plusieurs aspects du programme

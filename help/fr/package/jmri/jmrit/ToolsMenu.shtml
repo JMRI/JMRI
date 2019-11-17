@@ -22,9 +22,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Menu Outils</h1>Le menu Outils permet
       d'acc&eacute;der aux outils de base JMRI :
 

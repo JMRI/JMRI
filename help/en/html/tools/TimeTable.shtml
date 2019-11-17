@@ -71,12 +71,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-    <!-- Sidebar inserts div #mBody-->
-
     <div id="mainContent">
+
       <span class="since">since 4.13.4</span>
       <h1>Timetable</h1>
 

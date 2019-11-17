@@ -21,9 +21,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: ECoS Preferences</h1>
       The ECoS User Preferences allows you to control the way
       that the ECoS interacts with JMRI for different features:

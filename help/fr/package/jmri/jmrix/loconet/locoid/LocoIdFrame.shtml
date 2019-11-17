@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Configurer ID LocoNet</h1>Si vous utilisez le
       r&Atilde;&copy;cepteur radio(s) UR91 sur votre LocoNet, vous
       avez une ID LocoNet. Utiliser les manettes de radio et UR91
@@ -59,6 +59,7 @@
       <p>Voir aussi page 98 du <a href=
       "http://www.digitrax.com/ftp/superchief.pdf">manuel Super
       Chief</a> de Digitrax (PDF).</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

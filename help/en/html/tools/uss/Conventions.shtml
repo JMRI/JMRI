@@ -18,10 +18,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
       <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h2>JMRI: USS CTC Tools Recommendations</h2>
 
       <p>This page discussions some conventions that might be 

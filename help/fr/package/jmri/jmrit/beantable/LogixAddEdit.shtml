@@ -26,9 +26,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Ajout/Modification de Logix</h1>
 
       <p>Dans la fen&ecirc;tre Ajouter Logix, entrer un nom

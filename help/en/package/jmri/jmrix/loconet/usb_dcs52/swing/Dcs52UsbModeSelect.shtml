@@ -19,9 +19,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>JMRI: Select DCS52 USB Mode</h2>A <a href=
       "../../../../../../html/hardware/loconet/DCS52.shtml">Digitrax
       DCS52</a> USB interface can act either as a stand-alone programmer, or as an

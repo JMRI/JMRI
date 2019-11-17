@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -17,11 +16,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>JMRI LocoIO Programmer Tools (deprecated)</h1>
 
       <p><strong>The standalone LocoIO Programmer tool is no longer

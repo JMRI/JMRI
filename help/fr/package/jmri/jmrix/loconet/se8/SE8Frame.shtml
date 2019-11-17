@@ -24,14 +24,15 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      Configurer Digitrax SE8c <!--
-<a href="../../../../../html/apps/LocoTools/images/DS64.jpg"> 
-<img src ="../../../../../ html/apps/LocoTools/images/DS64.jpg "
-align = "right" height = "271" width = "245" alt = "image du panneau"> </a>
- -->
+
+        <h1>Configurer Digitrax SE8c</h1>
+        <!--
+        <a href="../../../../../html/apps/LocoTools/images/DS64.jpg">
+        <img src ="../../../../../ html/apps/LocoTools/images/DS64.jpg "
+        align = "right" height = "271" width = "245" alt = "image du panneau"> </a>
+         -->
 
       <p>L'outil de programmation JMRI SE8c vous permet de
       configurer les options internes d'un SE8c directement
@@ -55,7 +56,8 @@ align = "right" height = "271" width = "245" alt = "image du panneau"> </a>
 
       <h3>Limitations</h3>En raison de la fa&Atilde;&sect;on dont
       fonctionne la carte SE8c, cet outil ne peut pas changer
-      l'adresse de base de l'unit&Atilde;&copy; 
+      l'adresse de base de l'unit&eacute;;
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

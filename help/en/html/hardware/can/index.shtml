@@ -1,6 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -21,10 +20,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-      <!--#include virtual="../SidebarUp" -->
+      <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: CAN: Controller Area Networks</h1>
 
       <ul class="snav">
@@ -150,10 +149,8 @@
       <dl>
         <dt>TCH Technology</dt>
 
-        <dd><a href=
-        "http://www.tchtechnology.com/products/can_usb/">TCH
-        Technology CAN/USB</a> which provides a high-speed
-        connection for model railroad use</dd>
+        <dd>TCH Technology CAN/USB provides a high-speed
+        connection for model railroad use (site not accessible as of 2019)</dd>
 
         <dt>grid connect</dt>
 
@@ -189,8 +186,9 @@
             </dl>
             
             <dl>
-            <dt>MERG CANPiWi </dt>
-            <dd>The CANPiWi is based on the Raspberry Pi Zero W, and is an interface 
+            <dt>MERG CANPiWi/CANPiZero</dt>
+            <dd>The <a href="https://www.merg.org.uk/kits.php">CANPiWi</a> is based
+            on the Raspberry Pi Zero W, and is an interface
             between Engine Driver / WiThrottle and MERG CBUS.</dd>
             </dl>
 

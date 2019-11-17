@@ -22,9 +22,9 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI Code: System Properties</h1>
       <p>This page lists the system properties that JMRI uses.</p>
 

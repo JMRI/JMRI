@@ -24,10 +24,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1><a name="usb2serial" id="usb2serial">Hardware Setup
       Support: Using a USB-to-Serial Adapter</a></h1>
 

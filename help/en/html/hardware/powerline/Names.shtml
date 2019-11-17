@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -21,11 +20,12 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Powerline - System Names</h1>
+
       Individual inputs (Sensors) and outputs (Turnouts and
       Lights) in JMRI are accessed via System Names.<br>
       For information on the general scheme, please see <a href=

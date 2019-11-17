@@ -25,12 +25,15 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
-      <h1>Send Grapevine Message</h1>This is the
+
+      <h1>Send Grapevine Message</h1>
+      This is the
       help/jmri/jmrix/grapevine/packetgen/SerialPacketGenFrame help
-      page <!--#include virtual="/Footer" -->
+      page
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

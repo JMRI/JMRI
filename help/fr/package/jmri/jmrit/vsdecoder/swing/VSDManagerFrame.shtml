@@ -21,10 +21,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header"-->
-
+  <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>D&eacute;codeur Son Virtuel JMRI</h1>Ceci est la page de
       r&eacute;f&eacute;rence rapide pour l'outil D&eacute;codeur
       Son Virtuel JMRI.<br>

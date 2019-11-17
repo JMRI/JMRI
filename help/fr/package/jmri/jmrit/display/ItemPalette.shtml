@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>L'&eacute;l&eacute;ment
       Palette</h1><b>L'&eacute;l&eacute;ment Palette</b> est
       utilis&eacute; pour placer des ic&ocirc;nes et du texte sur

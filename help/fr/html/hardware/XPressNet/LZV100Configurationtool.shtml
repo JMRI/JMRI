@@ -17,8 +17,7 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
 <div id="mainContent">
 
 <h2>Outil deCconfiguration XPressNet LZV100 </h2>

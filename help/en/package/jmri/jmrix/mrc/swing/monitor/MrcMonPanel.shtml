@@ -21,9 +21,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: MRC Command Monitor</h1>This is the
       package/jmri/jmrix/mrc/swing/monitor/MrcMonPanel.shtml
       package help file.

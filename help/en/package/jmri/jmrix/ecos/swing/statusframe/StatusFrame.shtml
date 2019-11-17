@@ -21,9 +21,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: ECoS Info Tool</h1>
 
       <p>The ECoS Info tool displays version information from the

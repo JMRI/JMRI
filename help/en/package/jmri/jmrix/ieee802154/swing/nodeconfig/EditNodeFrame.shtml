@@ -21,12 +21,13 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
      <h1>JMRI: IEEE802154 - Edit Node Frame</h1>
      
         Help is on the way.
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

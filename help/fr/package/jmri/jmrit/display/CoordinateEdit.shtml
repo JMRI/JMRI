@@ -26,9 +26,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>L'&Eacute;diteur de Propri&eacute;t&eacute;s
       &Eacute;tiquette et Ic&ocirc;ne</h1>Cet &eacute;diteur vous
       permet de modifier les propri&eacute;t&eacute;s des

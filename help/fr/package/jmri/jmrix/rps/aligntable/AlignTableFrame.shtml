@@ -23,11 +23,12 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: R&Atilde;&copy;cepteur de Contr&Atilde;&acute;le
-      RPS</h1><a href=
+      RPS</h1>
+      <a href=
       "../../../../../html/hardware/rps/images/ReceiverControl.gif"><img src="../../../../../html/hardware/rps/images/ReceiverControl.gif"
       height="120" width="292" alt="RPS Receiver Control window"
       align="right"></a><br>
@@ -130,6 +131,7 @@
           fichier.</p>
         </dd>
       </dl>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

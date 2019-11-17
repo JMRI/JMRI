@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Configurer les N&Aring;"uds Grapevine</h1>Ceci est la
       page d'aide
       help/en/jmri/jmrix/grapevine/nodetable/NodeTableFrame
@@ -129,6 +129,7 @@
           &Atilde;&ordf;tre utilis&Atilde;&copy; pour changer
           l'adresse d'un noeud de Grapevine. Il ouvre une <a href=
           "RenumberFrame.shtml">nouvelle fen&Atilde;&ordf;tre</a> .</p>
+
           <!--#include virtual="/Footer" -->
         </dd>
       </dl>

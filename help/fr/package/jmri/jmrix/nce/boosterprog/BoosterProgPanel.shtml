@@ -23,12 +23,14 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>NCE Booster</h1>
 
       <p>Under construction!</p>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

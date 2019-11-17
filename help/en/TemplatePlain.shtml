@@ -22,9 +22,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Page Title???</h1>Content???? This file shows the
       top and bottom matter for a plain page, without a side menu
       (on the web). <!--#include virtual="/Footer" -->

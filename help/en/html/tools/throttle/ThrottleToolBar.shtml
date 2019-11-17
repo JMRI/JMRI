@@ -27,11 +27,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>Throttle pane Toolbar</h1><img src=
       "images/ThrottleToolBar.png" alt="" /><br />
       The Throttle toolbar is accessible from the <a href=

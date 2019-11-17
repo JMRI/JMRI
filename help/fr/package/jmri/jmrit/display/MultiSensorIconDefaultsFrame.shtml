@@ -24,12 +24,14 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The MultiSensorIcon Defaults Frame</h1>This is the
       help/jmri/jmrit/display/MultiSensorIconDefaultsFrame help
-      page <!--#include virtual="/Footer" -->
+      page
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

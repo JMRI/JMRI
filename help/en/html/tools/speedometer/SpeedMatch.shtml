@@ -21,11 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
+
       <h1>Speedometer</h1>
 
       <h2>Speed Matching</h2>

@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>D&Atilde;&copy;codeur Son Virtuel JMRI</h1>Ceci est la
       page de r&Atilde;&copy;f&Atilde;&copy;rence rapide de l'outil
       D&Atilde;&copy;codeur Son Virtuel JMRI.<br>
