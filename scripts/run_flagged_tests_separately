@@ -10,7 +10,7 @@
 rm -f ./failed_files.txt
 touch ./failed_files.txt
 
-for jmri_test in $( find java/test/$1 -name \*Test.java -exec grep -q jmri.skipKnownIntermittent {} \; -print) 
+for jmri_test in $( find java/test/$1 -name \*Test.java -exec grep -q jmri.skipTestsRequiringSeparateRunning {} \; -print) 
     do jmri_test=${jmri_test#java/test/} 
         jmri_test=${jmri_test%\.java}
         date

@@ -1520,7 +1520,7 @@
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
-            <sysproperty key="jmri.skipKnownIntermittent" value="true"/><!-- skip intermittent tests -->
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
 
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>

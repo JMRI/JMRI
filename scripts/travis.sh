@@ -30,7 +30,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
-            -Djmri.skipKnownIntermittent=${SKIPINTERMITTENT} \
+            -Djmri.skipTestsRequiringSeparateRunning=${SKIPINTERMITTENT} \
             -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'"
     fi
 else
@@ -42,11 +42,11 @@ else
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
-            -Djmri.skipKnownIntermittent=${SKIPINTERMITTENT} \
+            -Djmri.skipTestsRequiringSeparateRunning=${SKIPINTERMITTENT} \
             -Djmri.skipschematests=true \
             -Dcucumber.options="--tags 'not @Ignore'"
     else
         # run the SKIPINTERMITTENT tests separately
-        ./scripts/run_intermittent_tests_separately
+        ./scripts/run_flagged_tests_separately
     fi
 fi
