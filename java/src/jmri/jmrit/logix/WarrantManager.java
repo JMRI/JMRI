@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.ShutDownTask;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -146,20 +147,37 @@ public class WarrantManager extends AbstractManager<Warrant>
     protected boolean okToRemovePortal(Portal portal) {
         String name = portal.getName();
         boolean ok = true;
-        List<Warrant> list = warrantsUsing(portal);
-        if (!list.isEmpty()) {
+        List<Warrant> wList = warrantsUsing(portal);
+        if (!wList.isEmpty()) {
             ok = false;
             if (!_suppressWarnings) {
                 StringBuilder sb = new StringBuilder();
-                for (Warrant w : list) {
+                for (Warrant w : wList) {
                     sb.append(Bundle.getMessage("DeleteWarrantPortal", name, w.getDisplayName()));
                  }
                 sb.append(Bundle.getMessage("DeleteConfirm", name));
                 ok = okToRemove(name, sb.toString());
             }
         }
+        List<NamedBean> sList = signalsUsing(portal);
+        if (!sList.isEmpty()) {
+            ok = false;
+            if (!_suppressWarnings) {
+                StringBuilder sb = new StringBuilder();
+                for (NamedBean s : sList) {
+                    sb.append(Bundle.getMessage("DeletePortalSignal", 
+                            name, s.getDisplayName(), portal.getProtectedBlock(s)));
+                 }
+                sb.append(Bundle.getMessage("DeleteConfirmSignal", name));
+                ok = okToRemove(name, sb.toString());
+            }
+        }
+        
         if (ok) {
-            removeWarrants(list);
+            removeWarrants(wList);
+            for (NamedBean s : sList) {
+                portal.deleteSignal(s);
+            }
         }
         return ok;
     }
@@ -264,6 +282,19 @@ public class WarrantManager extends AbstractManager<Warrant>
         return list;
     }
 
+    protected List<NamedBean> signalsUsing(Portal portal) {
+        ArrayList<NamedBean> list = new ArrayList<>();
+        NamedBean signal = portal.getToSignal();
+        if (signal != null) {
+            list.add(signal);
+        }
+        signal = portal.getFromSignal();
+        if (signal != null) {
+            list.add(signal);
+        }
+        return list;
+    }
+
     protected List<Warrant> warrantsUsing(OBlock block, OPath path) {
         ArrayList<Warrant> list = new ArrayList<>();
         String name = path.getName();
@@ -313,8 +344,10 @@ public class WarrantManager extends AbstractManager<Warrant>
         if (_mergeProfiles == null) {
             _mergeProfiles = new HashMap<>();
             _sessionProfiles = new HashMap<>();
-            ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
-            jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
+            if (!WarrantPreferences.getDefault().getShutdown().equals((WarrantPreferences.Shutdown.NO_MERGE))) {
+                ShutDownTask shutDownTask = new WarrantShutdownTask("WarrantRosterSpeedProfileCheck");
+                jmri.InstanceManager.getDefault(jmri.ShutDownManager.class).register(shutDownTask);
+            }
         }
         if (id != null) {
             _mergeProfiles.put(id, merge);

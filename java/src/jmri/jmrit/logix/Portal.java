@@ -10,11 +10,9 @@ import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.implementation.SignalSpeedMap;
-import jmri.util.ThreadingUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -276,21 +274,24 @@ public class Portal {
         if (protectedBlock == null) {
             return false;
         }
+        boolean ret = false;
         if ((_fromBlock != null) && _fromBlock.equals(protectedBlock)) {
             _toSignal = signal;
             _toSignalOffset = length;
-            log.debug("setProtectSignal: _toSignal= \"{}\", protectedBlock= {}",
-                    signal.getDisplayName(), protectedBlock.getDisplayName());
-            return true;
+            ret = true;
         }
         if ((_toBlock != null) && _toBlock.equals(protectedBlock)) {
             _fromSignal = signal;
             _fromSignalOffset = length;
-            log.debug("setProtectSignal: _fromSignal= \"{}\", protectedBlock= {}",
-                    signal.getDisplayName(), protectedBlock.getDisplayName());
-            return true;
+            ret = true;
         }
-        return false;
+        if (ret) {
+            protectedBlock.pseudoPropertyChange("signalChange", false, true);
+            pcs.firePropertyChange("signalChange", false, true);
+            log.debug("setProtectSignal: \"{}\" for Block= {} at portal {}",
+                    (signal != null?signal.getDisplayName() : "null"), protectedBlock.getDisplayName(), _name);
+        }
+        return ret;
     }
 
     /**
@@ -335,7 +336,7 @@ public class Portal {
     }
 
     public float getFromSignalOffset() {
-        return _fromSignalOffset;
+        return _toSignalOffset;
     }
 
     public NamedBean getToSignal() {
@@ -353,8 +354,18 @@ public class Portal {
     public void deleteSignal(@Nonnull NamedBean signal) {
         if (signal.equals(_toSignal)) {
             _toSignal = null;
+            _toSignalOffset = 0;
+            if (_fromBlock != null) {
+                _fromBlock.pseudoPropertyChange("signalChange", false, false);
+                pcs.firePropertyChange("signalChange", false, false);
+            }
         } else if (signal.equals(_fromSignal)) {
             _fromSignal = null;
+            _toSignalOffset = 0;
+            if (_toBlock != null) {
+                _toBlock.pseudoPropertyChange("signalChange", false, false);
+                pcs.firePropertyChange("signalChange", false, false);
+            }
         }
     }
 

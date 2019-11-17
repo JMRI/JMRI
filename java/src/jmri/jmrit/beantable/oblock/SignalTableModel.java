@@ -134,18 +134,25 @@ public class SignalTableModel extends AbstractTableModel {
         ArrayList<SignalRow> tempList = new ArrayList<SignalRow>();
         Collection<Portal> portals = _portalMgr.getPortalSet();
         for (Portal portal : portals) {
-            NamedBean signal = portal.getFromSignal();
-            SignalRow sr = null;
-            if (signal != null) {
-                sr = new SignalRow(signal, portal.getFromBlock(), portal, portal.getToBlock(),
-                         portal.getFromSignalOffset(), portal.getToBlock().isMetric());
-                addToList(tempList, sr);
-            }
-            signal = portal.getToSignal();
-            if (signal != null) {
-                sr = new SignalRow(signal, portal.getToBlock(), portal, portal.getFromBlock(), 
-                        portal.getToSignalOffset(), portal.getFromBlock().isMetric());
-                addToList(tempList, sr);
+            // check portal is well formed
+            OBlock fromBlock = portal.getFromBlock();
+            OBlock toBlock = portal.getToBlock();
+            if (fromBlock != null && toBlock != null) {
+                NamedBean signal = portal.getFromSignal();
+                SignalRow sr = null;
+                if (signal != null) {
+                    sr = new SignalRow(signal, fromBlock, portal, toBlock,
+                             portal.getFromSignalOffset(), toBlock.isMetric());
+                    addToList(tempList, sr);
+                }
+                signal = portal.getToSignal();
+                if (signal != null) {
+                    sr = new SignalRow(signal, toBlock, portal, fromBlock, 
+                            portal.getToSignalOffset(), fromBlock.isMetric());
+                    addToList(tempList, sr);
+                }
+//            } else {
+//                log.error("Portal {} needs an OBlock on each side", portal.getName());
             }
         }
         _signalList = tempList;
@@ -733,7 +740,7 @@ public class SignalTableModel extends AbstractTableModel {
     public void propertyChange(PropertyChangeEvent e) {
         String property = e.getPropertyName();
         if (property.equals("length") || property.equals("portalCount")
-                || property.equals("UserName")) {
+                || property.equals("UserName") || property.equals("signalChange")) {
             makeList();
             fireTableDataChanged();
         }

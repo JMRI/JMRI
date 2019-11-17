@@ -26,7 +26,6 @@ import jmri.jmrit.logix.PortalManager;
 public class PortalList extends JList<Portal> {
 
     private PortalListModel _portalListModel;
-    private EditFrame _parent;
 
     PortalList(OBlock block, EditFrame parent) {
         super();
@@ -119,6 +118,9 @@ public class PortalList extends JList<Portal> {
             } else {
                 makeList();
                 fireContentsChanged(this, 0, 0);
+                if (property.equals("signalChange") || property.equals("NameChange")) {
+                    _parent.clearListSelection();
+                }
             }
         }
     }

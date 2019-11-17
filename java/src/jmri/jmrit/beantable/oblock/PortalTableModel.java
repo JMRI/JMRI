@@ -289,6 +289,8 @@ public class PortalTableModel extends AbstractTableModel implements PropertyChan
         } else if (property.equals("NameChange")) {
             int row = _manager.getIndexOf((Portal)e.getNewValue());
             fireTableRowsUpdated(row, row);   
+        } else if (property.equals("signals")) {
+            _parent.getSignalModel().propertyChange(e);
         }
     }
 

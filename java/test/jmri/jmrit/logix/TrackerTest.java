@@ -52,12 +52,12 @@ public class TrackerTest {
     @Test
     public void testMultipleStartBlocks() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
-        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         OBlockManager _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         
         OBlock West = _OBlockMgr.getByUserName("West");

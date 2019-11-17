@@ -445,7 +445,7 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 fireTableDataChanged();
             } else if (property.equals("deleted")) {
                 _parent.disposeBlockPathFrame(_block);
-            };
+            }
         }
     }
 

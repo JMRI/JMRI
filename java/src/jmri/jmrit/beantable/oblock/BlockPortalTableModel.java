@@ -8,7 +8,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
-import jmri.util.NamedBeanComparator;
+import jmri.util.NamedBeanUserNameComparator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +82,7 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
             OBlock block = null;
             OBlock[] array = new OBlock[list.size()];
             array = list.toArray(array);
-            Arrays.sort(array, new NamedBeanComparator<>());
+            Arrays.sort(array, new NamedBeanUserNameComparator<>());
             while (count <= row) {
                 count += array[idx++].getPortals().size();
             }
@@ -99,23 +99,11 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
             }
             if (col == OPPOSING_BLOCK_NAME) {
                 Portal portal = block.getPortals().get(idx);
-                return portal.getOpposingBlock(block).getDisplayName();
+                OBlock oppBlock = portal.getOpposingBlock(block);
+                if (oppBlock != null) {
+                    return oppBlock.getDisplayName();
+                }
             }
-
-            /*
-             while (count <= row)  {
-             count += ((OBlock)list.get(idx++)).getPortals().size();
-             }
-             block = (OBlock)list.get(--idx);
-             idx = row - (count - block.getPortals().size());
-             if (col==BLOCK_NAME_COLUMN) {
-             if (idx==0) {
-             return block.getDisplayName();
-             }
-             return "";
-             }
-             return block.getPortals().get(idx).getName();
-             */
         }
         return null;
     }

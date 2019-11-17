@@ -41,12 +41,12 @@ public class TrackerTableActionTest {
     @Test
     public void testTracking1() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
-        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         OBlock Middle = _OBlockMgr.getByUserName("Middle");
         Sensor sMiddle = Middle.getSensor();
@@ -92,12 +92,12 @@ public class TrackerTableActionTest {
     @Test
     public void testTrackingDark() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
-        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         OBlock Main = _OBlockMgr.getByUserName("Main");
         Sensor sMain = Main.getSensor();
@@ -128,12 +128,12 @@ public class TrackerTableActionTest {
     @Test
     public void testMultipleTrackers() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
-        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         OBlock West = _OBlockMgr.getByUserName("West");
         Sensor sWest = West.getSensor();
