@@ -144,7 +144,7 @@ Les Lumi&#232;res peuvent &#234;tre configur&#233;s avec l'outil de
 <a href="../../../package/jmri/jmrix/acela/nodeconfig/NodeConfigFrame.shtml">Configuration des n&#339;uds</a>
 . Si vous configurez vos Lumi&#232;res (sorties), n'oubliez pas de les enregistrer avec le
 Bouton "Enregistrer" sur la
-<a fen&#234;tre href="../../../package/apps/TabbedPreferences.shtml"> fen&#234;tre Pr&#233;f&#233;rences</a>
+<a href="../../../package/apps/TabbedPreferences.shtml">fen&#234;tre Pr&#233;f&#233;rences</a>
 (sous "&#201;dition" dans le menu principal).
 
 <H2>Limitations</h2>

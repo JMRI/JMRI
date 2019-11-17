@@ -3199,8 +3199,14 @@ var $setWidgetState = function($id, $newState) {
                 if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
                     if ($widget.widgetType == "fastclock") {
                         $drawClock($widget);
-                    } else {  //set memory/block/reporter text to new value from server, suppressing "null"
-                        $('div#' + $id).text(($newState != null) ? $newState : "");
+                    } else {  //set memory/block/reporter text or html to new value from server, clearing "null"
+                        if ($newState == null) {
+                            $('div#' + $id).text("");                                                  
+                        } else if ($newState.startsWith("<html>")) {
+                            $('div#' + $id).html($newState);                          
+                        } else {
+                            $('div#' + $id).text($newState);
+                        }
                     }
                 } else {
                     if (typeof $widget['text' + $newState] !== "undefined") {

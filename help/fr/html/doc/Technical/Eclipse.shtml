@@ -16,7 +16,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 
@@ -207,19 +208,19 @@ pour: <pre>-Djava.library.path=.;lib;lib/windows/x64
 	Au lieu d'utliser la consruction ant porur pour remplir le r&#233;pertoire "tmp", vous pouvez, 
 	installer le plugin JavaCC. Voici les &#233;tapres:
 	<ol>
-			<li>T&#233;l&#233;chargez le plugin Eclipse JavaCC suivant les instructions 
-					trouv&#233;es ici: <a href="http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</a>
+			<li>T&#233;l&#233;chargez le plugin Eclipse JavaCC suivant les instructions trouv&#233;es ici:
+			<a href="http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</a></li>
 			<li>Apr&#232;s red&#233;marrage d'Eclipse, clic,droit sur le r&#233;pertoire java
-					dans Project Explorer ou Navigator et s&#233;lectionnez JavaCC Options:
+			dans Project Explorer ou Navigator et s&#233;lectionnez JavaCC Options:</li>
 			<li>Sur l'onglet JavaCC Options, entrez le r&#233;pertoire de sortie a &#234;tre
-					java/tmp/jmri/jmris/srcp/parser
+			java/tmp/jmri/jmris/srcp/parser</li>
 			<li>Sur la page options JavaCC, entrez le r&#233;pertoire de sortie a &#234;tre
-					java/tmp/jmri/jmris/srcp/parser
+			java/tmp/jmri/jmris/srcp/parser</li>
 			<li>Confirmez que le" Java Build Path" inclut le r&#233;pertoire tmp
-						( voir Propri&#233;t&#233;s Projet )
-	<ol>
+			( voir Propri&#233;t&#233;s Projet )</li>
+	</ol>
 
-<	a name="push"></a>
+	<a name="push"></a>
 	<h2>Pousser des changements dans votre branche GitHub</h2>
 	
 	La pratique standard pour obtenir que vos changements soient inclus dans Le code du r&#233;f&#233;rentiel princial JMRI  
@@ -237,89 +238,88 @@ pour: <pre>-Djava.library.path=.;lib;lib/windows/x64
 			&#224; distance sera en synchronisation avec le principal r&#233;f&#233;rentiel JMRI. Pour effectuer
 	 		un «pull», s&#233;lectionnez votre projet, le "Team" puis "Pull" dans le menu. </P>
 
-	<pW>Si vous voulez voir quels fichiers vont &#234;tre modifi&#233;s avant 
+	<p>Si vous voulez voir quels fichiers vont &#234;tre modifi&#233;s avant
 			le "Pull" vous pouvez usitiliser la fonctionnalit&#233; "Team Synchronizing". Pour le faire
 			clic-droit sur votre projet, le "Team Synchronizing" puis "Synchronise Wokspace"</p>
 
 	<p>Pouss&#233;e vers votre branche GitHub:
 	<ul>	
 			<li>Premi&#232;rement, soumettez votre changement sur le r&#233;pertoire sur votre 
-				ordinateur.
+			ordinateur.</li>
+
 			<li>Pour soumettre un jeu de changement, clic-droit sur le projet auquel
-				vous voulez soumettre; et s&#233;lectionner "Team" suivi par "Commit". Entrez un 
-				message de soumission et s&#233;lectionn&#233;s le fichier ou vous voulez soumettre.<p>
+			vous voulez soumettre; et s&#233;lectionner "Team" suivi par "Commit". Entrez un
+			message de soumission et s&#233;lectionn&#233;s le fichier ou vous voulez soumettre.</li>
 
 			<li>Ensuite "push" un jeu de changement depuis votre r&#233;pertoire local que vos
-					voulez soumissionner, et s&#233;lectionnez "Team" suivit par "Commit". Entrer un 
-					messages et s&#233;lectionner les fichiers que vouis voulez soumisionner.<p>
+			voulez soumissionner, et s&#233;lectionnez "Team" suivit par "Commit". Entrer un
+			messages et s&#233;lectionner les fichiers que vouis voulez soumisionner.</li>
  			<li>Ensuite, "push" un jeu de changements depuis votre r&#233;pertoire local vers
-					votre r&#233;pertoire sir GitHub ( vous faites ceci pour que les autres puissent y acc&#233;der et
-					r&#233;cup&#233;rer pour l'inclusion dans JMRI)
-					<p>
-							Avant que vous puissiez poussez vos changement vers GitHub pour lz premi&#232;re fois,
-							vous devez cr&#233;er votre <a href="gitdeveloper.shtml#repo">propre r&#233;pertoire Git Hub</a>
-							(  que vous avez fait ci-dessus ) et "fork" le r&#233;f&#233;rentiel JMRI.	
-							Connectez-vous &#224; votre compte &#224; <a href="https://github.com/">GitHub.com</a> et naviquez ensuite dans le
-							r&#233;pertoire JMRI  <a href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a>
-							Dans le coin sup&#233;rieure Droit de la page, vous trouverez un bouton
-							libel&#233; "Fork". Appuyez sur ce bouton pour cr&#233;er votre propre r&#233;pertoire source JMRI
-					</P>		
-					<P>Pour pousser dans votre R&#233;pertoire gITμhB, s&#233;lectionnez encore "Team et ensuite
-					 		"Remote" pius "Configure puish ro Upstream". Dans la fen&#234;tre 'Cobfigure Puss",
-							cliquezsur "Push URIs" et ensuite le bouton "Add". dans la fen&#234;tre "New URI, entrez
-							l'URL de votre R&#233;pertoire GitHub ainsi que votre nom d'utilisateur et mot de passe.
-							Apr&#232;s appuyez sur "Finish" la fen&#234;tre "Configure Push" devrait ressembler &#224; l'image
-							ci-dessous:
-							<a href="images/EclipseConfigurePush.png">
-							<img src="images/EclipseConfigurePush.png" width="350" height="322" alt="Eclipse Error pane"></a>
-					<p>Presser soit le bouton "Save and Push" ou "Save". Plus tard quand 
-							vous voudrez pousser de nouveau changements dans votr r&#233;pertoire sur GitHub,
-							vous pourrez simplement les soummisionner comme d&#233;crit ci-dessus, et ensuite utliser
-							l'ic&#244;ne Push sur la fen&#234;tre de Synchronisation0</p>
-			<li>Finalement, soumettre un "Pull Request" &#224; un r&#233;f&#233;rentiel principal de code JMRI sur 
-					le site web Git HuB
-					<p>
- 							Pour faire ceci, d&#233;marrer par vous identifier sur <a href="http://github.com">GitHub
-								web site</a>, s&#233;lecion de votre r&#233;pertoire	et cliquer le <a href="gitdeveloper.shtml#pull"> bouton 
-								Pull Request</a>. Pour plus d'infon voir les <a href="gitdeveloper.shtml#pull">instructions
-								d&#233;velopp&#233;es,</a>
-					</p>
+			votre r&#233;pertoire sir GitHub ( vous faites ceci pour que les autres puissent y acc&#233;der et
+			r&#233;cup&#233;rer pour l'inclusion dans JMRI)
+			<br>
+			Avant que vous puissiez poussez vos changement vers GitHub pour lz premi&#232;re fois,
+			vous devez cr&#233;er votre <a href="gitdeveloper.shtml#repo">propre r&#233;pertoire Git Hub</a>
+			(  que vous avez fait ci-dessus ) et "fork" le r&#233;f&#233;rentiel JMRI.
+			Connectez-vous &#224; votre compte &#224; <a href="https://github.com/">GitHub.com</a> et naviquez ensuite dans le
+			r&#233;pertoire JMRI  <a href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a>
+			Dans le coin sup&#233;rieure Droit de la page, vous trouverez un bouton
+			libel&#233; "Fork". Appuyez sur ce bouton pour cr&#233;er votre propre r&#233;pertoire source JMRI
+			<br>
+			Pour pousser dans votre R&#233;pertoire gITμhB, s&#233;lectionnez encore "Team et ensuite
+			"Remote" pius "Configure puish ro Upstream". Dans la fen&#234;tre 'Cobfigure Puss",
+			cliquezsur "Push URIs" et ensuite le bouton "Add". dans la fen&#234;tre "New URI, entrez
+			l'URL de votre R&#233;pertoire GitHub ainsi que votre nom d'utilisateur et mot de passe.
+			Apr&#232;s appuyez sur "Finish" la fen&#234;tre "Configure Push" devrait ressembler &#224; l'image
+			ci-dessous:<br>
+			<a href="images/EclipseConfigurePush.png">
+			<img src="images/EclipseConfigurePush.png" width="350" height="322" alt="Eclipse Error pane"></a>
+			<br>Presser soit le bouton "Save and Push" ou "Save". Plus tard quand
+			vous voudrez pousser de nouveau changements dans votr r&#233;pertoire sur GitHub,
+			vous pourrez simplement les soummisionner comme d&#233;crit ci-dessus, et ensuite utliser
+			l'ic&#244;ne Push sur la fen&#234;tre de Synchronisation0</li>
 
+			<li>Finalement, soumettre un "Pull Request" &#224; un r&#233;f&#233;rentiel principal de code JMRI sur
+			le site web Git HuB
+			<br>
+			Pour faire ceci, d&#233;marrer par vous identifier sur <a href="http://github.com">GitHub
+			web site</a>, s&#233;lecion de votre r&#233;pertoire	et cliquer le <a href="gitdeveloper.shtml#pull"> bouton
+			Pull Request</a>. Pour plus d'infon voir les <a href="gitdeveloper.shtml#pull">instructions
+			d&#233;velopp&#233;es,</a>
+			</li>
 	</ul>
 
 	<a name="errors"></a>
-	<H2>Erreurs de Compilation et Avertissements</H2>
-
+	<h2>Erreurs de Compilation et Avertissements</h2>
+	<p>
 	La configuration par d&#233;faut du Compilateur Eclipse g&#233;n&#232;re de nombreux avertissements inutiles.
 	Vous pouvez ajuster les avertissements pour les faire correspondre aux captures d'&#233;cran
-	ci-dessous en allant &#224; Window-> Preferences et s&#233;lectionnez "Java-> Complier-> Errors/Warnings" 
+		ci-dessous en allant &#224; Window-> Preferences et s&#233;lectionnez "Java-> Complier-> Errors/Warnings" </p>
 	
 	<p>
-	<img src="images/ErrorsWarningsCodeStyle.png"><img src="images/ErrorsWarningsCodeStyle.png" width="413" height="342" alt="Eclipse 
+	<a href="images/ErrorsWarningsCodeStyle.png"><img src="images/ErrorsWarningsCodeStyle.png" width="413" height="342" alt="Eclipse
 	Error pane"></a>
 	</p>
 	<p>
-	<img src="images/ErrorsWarningsPotential.png"><img src="images/ErrorsWarningsPotential.png" width="424" height="500" alt="Eclipse 
+	<a href="images/ErrorsWarningsPotential.png"><img src="images/ErrorsWarningsPotential.png" width="424" height="500" alt="Eclipse
 	 	Error pane"></a>
 	</p>
 	<p>
-	<img src="images/ErrorsWarningsName.png"><img src="images/ErrorsWarningsName.png" width="413" height="360" alt="Eclipse Error 
+	<a href="images/ErrorsWarningsName.png"><img src="images/ErrorsWarningsName.png" width="413" height="360" alt="Eclipse Error
 	pane"></a>
 	</p>
 	<p>
-	<img src="images/ErrorsWarningsUnnecessary.png"><img src="images/ErrorsWarningsUnnecessary.png" width="413" height="502" 
+	<a href="images/ErrorsWarningsUnnecessary.png"><img src="images/ErrorsWarningsUnnecessary.png" width="413" height="502"
 	alt="Eclipse Error pane"></a>
 	</p>
 	<p>
-	<img src="images/ErrorsWarningsAnnotations.png"><img src="images/ErrorsWarningsAnnotations.png" width="423" height="500" 
+	<a href="images/ErrorsWarningsAnnotations.png"><img src="images/ErrorsWarningsAnnotations.png" width="423" height="500"
 	alt="Eclipse Error pane"></a>
 	</p>
 
-<!--#include virtual="/Footer" -->
-
+		<!--#include virtual="/Footer" -->
       </div>
       <!-- closes #mainContent-->
     <!-- closes #mBody-->
-
 </body>
 </html>

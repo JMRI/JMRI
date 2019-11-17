@@ -23,7 +23,8 @@
 <body>
   <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
       <h1>Hardware Support: Digi XBee Network</h1>
 
@@ -72,8 +73,9 @@
         <li>The CISECO <a href=
         "http://shop.ciseco.co.uk/slice-of-pi-add-on-for-raspberry-pi/">
         Slice of Pi</a> (in conjunction with a Raspberry Pi)</li>
-      </ul><a name="connecting" id="connecting"></a>
+      </ul>
 
+      <a name="connecting" id="connecting"></a>
       <h2>Connecting</h2>
 
       <h3>Wiring</h3>
@@ -81,7 +83,7 @@
       <p>JMRI can communicate with XBee Series 1 and XBee Series 2
       modules.</p>
 
-      <p>In JMRI versions Prior to 4.5.5, Underlying support for
+      <p>In JMRI versions prior to 4.5.5, underlying support for
       communication is provided by 
       <a href="https://github.com/andrewrapp/xbee-api">Andrew Rapp's
       xbee-api library for Java</a>.</p>

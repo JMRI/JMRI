@@ -20,7 +20,8 @@
 <body>
   <!--#include virtual="/Header" -->
 
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
       <img src="http://www.modbus.org/images/logo_new.jpg" alt=
       "Modbus logo" height="40" width="145" align="right">

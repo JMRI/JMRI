@@ -52,10 +52,10 @@
 <h1>Support: Adressage LocoNet&reg;</h1>
 
 <ul class="snav"><!-- h2 TOC -->
-<li><a href="#turnouts">Aiguillages</a>
-<li><a href="#sensor">Capteurs</a>
-<li><a href="#transponding">Retransmission</a>
-<li><a href="#SVs">SVs</a>
+    <li><a href="#turnouts">Aiguillages</a></li>
+    <li><a href="#sensor">Capteurs</a></li>
+    <li><a href="#transponding">Retransmission</a></li>
+    <li><a href="#SVs">SVs</a></li>
 </ul>
 
 Le Syst&#232;mes LocoNet&reg; adresse des Capteurs en entr&#233;e et des Aiguillages en  sortie en utilisant des num&#233;ros.
@@ -162,7 +162,7 @@ Les zones de transpondeur sont num&#233;rot&#233;es s&#233;quentiellement depuis
      La deuxi&#232;me zone de transpondage d'une carte BDL16x est rapport&#233; comme un journal num&#233;ro
      <span style="font-family: monospace"> (1 + ( adresse carte -1) * 16) + 2</span>.</p>
 La num&#233;rotation Rapports  <p> est r&#233;sum&#233;e dans le tableau ci-dessous:</p>
-     <table border="2">.
+     <table border="2">
 	  <tr align="center"><td>Adresse Carte</td><td>Zone</td><td>Num&#233;ro Rapport</td></tr>
         <tr align="center"><td rowspan="8">1</td><td>A</td><td>LR1</td></tr>
         <tr align="center"><td>B</td><td>LR3</td></tr>
@@ -260,14 +260,15 @@ Il ne semble pas y avoir de m&#233;thode standard pour cartographier cela en un 
 JMRI cartographie A/B par (B-1)*256+A. La plupart des cartes semblent utiliser les adresses N/1, ainsi ceci 
 fait que cela corresponde tout juste &#224; N dans JMRI. Pour r&#233;sum&#233;:
 <p>
-<p>
+
 <table border="2">
-<tr><th width="80px">Ancien<br/>Style</th><th width="80px">JMRI<br/>Nombre</th>
+<tr><th width="80">Ancien<br>Style</th><th width="80">JMRI<br/>Nombre</th>
 <tr><td>10/1</td><td>10</td></tr>
 <tr><td>83/1</td><td>83</td></tr>
 <tr><td>83/2</td><td>339</td></tr>
 <tr><td>83/0</td><td>-173</td></tr>
 </table>
+
 Notez que les adresses N/0 font des op&#233;rations sp&#233;ciales, et ne sont pas r&#233;ellement des adresses: Elles tournent 
 les messages de programmation en commandes. Ils sont disponibles en utilisant des nombres n&#233;gatifs 
 comme ci-dessus, mais ils ne sont vraiment pas recommand&#233;!
@@ -283,9 +284,8 @@ l'&#233;l&#233;ment "programming pour ressembler &#224;:
         &lt;mode&gt;LOCONETSV2MODE&lt;/mode&gt;
     &lt;/programming&gt;
 </pre></code>
-<P>lLe protocole SV LocoNet Version 1 est la m&#234;me exception que vous sp&#233;cifiez LOCONETSV1MODE.
-Pour avoir plus d'information, voir le 
- <a href="">schema definition file</a>.
+<p>lLe protocole SV LocoNet Version 1 est la m&#234;me exception que vous sp&#233;cifiez LOCONETSV1MODE.
+Pour avoir plus d'information, voir le schema definition file.
 <p>
 Notez que le protocole version 1 n'est plus recommand&#233;e. Si vous &#233;crivez 
 une d&#233;finition d&#233;codeur pour un circuit qui peut utiliser les deux, vous sautereze la ver sion 1 par 
