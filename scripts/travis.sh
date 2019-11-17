@@ -9,6 +9,10 @@ PRINT_SUMMARY=${PRINT_SUMMARY:-true}
 RUN_ORDER=${RUN_ORDER:-filesystem}
 HEADLESS=${HEADLESS:-false}
 
+# ensure Jython can cache JAR classes
+PYTHON_CACHEDIR="${HOME}/jython/cache"
+mkdir -p ${PYTHON_CACHEDIR}
+
 export MAVEN_OPTS=-Xmx1536m
 
 if [[ "${HEADLESS}" == "true" ]] ; then
@@ -30,14 +34,19 @@ if [[ "${HEADLESS}" == "true" ]] ; then
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
-            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'"
+            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'" \
+            -Dpython.cachedir=${PYTHON_CACHEDIR}
     fi
 else
     # run full GUI test suite and fail on coverage issues
+    #       skipping XML Schema validation in long-running task, still done in headless
     mvn verify -U -P travis-coverage --batch-mode \
         -Dsurefire.printSummary=${PRINT_SUMMARY} \
         -Dsurefire.runOrder=${RUN_ORDER} \
         -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
         -Djava.awt.headless=${HEADLESS} \
-        -Dcucumber.options="--tags 'not @Ignore'"
+        -Dcucumber.options="--tags 'not @Ignore'" \
+        -Dpython.cachedir=${PYTHON_CACHEDIR} \
+        -Djmri.skipschematests=true
 fi
+
