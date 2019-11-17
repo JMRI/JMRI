@@ -234,7 +234,7 @@
             <dd>When set to "true", this skips running certain tests that should be run
             separately (not in the long series of tests we use for CI running) 
             because they behave intermittently when run as part of the main test sequence.  
-            The <code>scripts/run_flagged_tests_separately<code> file
+            The <code>scripts/run_flagged_tests_separately</code> file
             runs these test classes separately.</dd>
         <dt>jmri.skipschematests</dt>
             <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
