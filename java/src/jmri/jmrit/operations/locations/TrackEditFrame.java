@@ -24,6 +24,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import jmri.ReporterManager;
+import jmri.swing.NamedBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,7 +143,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JPanel panelOpt4 = new JPanel();
 
     // Reader selection dropdown.
-    JComboBox<Reporter> readerSelector = new JComboBox<>();
+    NamedBeanComboBox<Reporter> readerSelector;
 
     public static final String DISPOSE = "dispose"; // NOI18N
     public static final int MAX_NAME_LENGTH = Control.max_len_string_track_name;
@@ -279,12 +281,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         adjustTextAreaColumnWidth(commentScroller, commentTextArea);
 
         // reader row
-        JPanel readerPanel = new JPanel();
-        readerPanel.setLayout(new GridBagLayout());
-        readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
-        addItem(readerPanel, readerSelector, 0, 0);
-
-        readerPanel.setVisible(Setup.isRfidEnabled());
+        if (Setup.isRfidEnabled()) {
+            JPanel readerPanel = new JPanel();
+            readerPanel.setLayout(new GridBagLayout());
+            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
+            ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
+            readerSelector = new NamedBeanComboBox<>(reporterManager);
+            readerSelector.setAllowNull(true);
+            addItem(readerPanel, readerSelector, 0, 0);
+        }
 
         // row 12
         JPanel panelButtons = new JPanel();
@@ -346,14 +351,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         //  addComboBoxAction(comboBoxTypes);
         addCheckBoxAction(autoDropCheckBox);
         addCheckBoxAction(autoPickupCheckBox);
-
-        if (Setup.isRfidEnabled()) {
-            // setup the Reader dropdown.
-            readerSelector.addItem(null); // add an empty entry.
-            for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet()) {
-                readerSelector.addItem((Reporter) r);
-            }
-        }
 
         // load fields and enable buttons
         if (_track != null) {

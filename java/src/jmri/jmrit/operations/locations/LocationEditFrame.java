@@ -24,6 +24,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
+import jmri.ReporterManager;
+import jmri.swing.NamedBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,7 +112,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     // Reader selection dropdown.
-    JComboBox<Reporter> readerSelector = new JComboBox<>();
+    NamedBeanComboBox<Reporter> readerSelector;
     
     JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
 
@@ -152,11 +154,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         opsGroup.add(stageRadioButton);
 
         if (Setup.isRfidEnabled()) {
-            // setup the Reader dropdown.
-            readerSelector.addItem(null); // add an empty entry.
-            for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet()) {
-                readerSelector.addItem((Reporter) r);
-            }
+            ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
+            readerSelector=new NamedBeanComboBox<Reporter>(reporterManager);
+            readerSelector.setAllowNull(true);
         }
 
         if (_location != null) {

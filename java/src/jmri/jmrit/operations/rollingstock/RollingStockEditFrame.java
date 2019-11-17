@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.IdTag;
+import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -38,7 +39,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-
+import jmri.swing.NamedBeanComboBox;
 /**
  * Frame for edit of rolling stock. The common elements are: road, road number,
  * type, blocking, length, location and track, groups (Kernel or Consist)
@@ -98,7 +99,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     public JComboBox<Location> locationBox = locationManager.getComboBox();
     public JComboBox<Track> trackLocationBox = new JComboBox<>();
 
-    public JComboBox<IdTag> rfidComboBox = new JComboBox<>();
+    public NamedBeanComboBox<IdTag> rfidComboBox;
 
     // panels
     public JPanel pTypeOptions = new JPanel(); // options dependent on car or engine
@@ -116,6 +117,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     public RollingStockEditFrame(String title) {
         super(title);
+        //instanceManager = InstanceManger.getInstance();
     }
 
     abstract protected RollingStockAttribute getTypeManager();
@@ -280,15 +282,14 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         }
 
         // row 14
-        if (Setup.isRfidEnabled() && jmri.InstanceManager.getNullableDefault(jmri.IdTagManager.class) != null) {
+        IdTagManager tagManager = InstanceManager.getNullableDefault(IdTagManager.class);
+        if (Setup.isRfidEnabled() && tagManager != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
+            rfidComboBox = new NamedBeanComboBox<IdTag>(tagManager);
+            rfidComboBox.setAllowNull(true);
             addItem(pRfid, rfidComboBox, 1, 0);
-            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanSet()
-                    .forEach((tag) -> rfidComboBox.addItem(tag));
-            rfidComboBox.insertItemAt((jmri.IdTag) null, 0); // must have a blank entry, for no ID tag, and make it the default.
-            rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
         }
 
