@@ -15,18 +15,20 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<div class="nomenu" id="mBody">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+        <!-- Page Body -->
 
-      <h2>L'outil JMRI XPressNet Syst&egrave;me
-      d'information</h2><img src="images/XPressNetSystemInfo.jpg"
+      <h1>L'outil JMRI XPressNet Syst&egrave;me
+      d'information</h1><img src="images/XPressNetSystemInfo.jpg"
       alt="Syst&egrave;me XPressNet Image Information Tool ">
 
       <p>L'outil XPressNet Syst&egrave;me d'information est
       utilis&eacute;e pour d&eacute;terminer quel mat&eacute;riel
       est connect&eacute; au syst&egrave;me.</p>
 
-<h1>Structure Mat&#233;rielle: Outil Information Syst&#232;me XPressNet</h1>
+<h2>Structure Mat&#233;rielle: Outil Information Syst&#232;me XPressNet</h2>
 <img src="images/XPressNetSystemInfo.jpg" alt="XPressNet System 
 Information Tool Image">
 <p>

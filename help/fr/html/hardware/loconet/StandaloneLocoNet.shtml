@@ -18,8 +18,9 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<!--#include virtual="/Header" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
       <h1>Documentation Mat&#233;riel:LocoNet&reg; Autonome</h1>
@@ -790,7 +791,7 @@ LocoNet qui sont normalement fournies par une centrale de  bas&#233;e sur LocoNe
 		<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">
 			Digitrax, Inc.</a></p>
 
-<!--#include virtual="/Footer" -->
+    <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->
 </body>

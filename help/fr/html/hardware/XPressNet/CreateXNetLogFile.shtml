@@ -17,8 +17,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+		<!-- Page Body -->
 
 	<h1>Structure Mat&#233;rielle: Cr&#233;ation d'un Fichier Journal</h1>
 	<p>

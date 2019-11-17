@@ -18,7 +18,8 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
       <h1>Support Mat&#233;riel: Keyspan connexions USB</h1>
@@ -149,6 +150,7 @@ d&#233;codeurs sur le r&#233;seau. Le Trafic de la centrale de commande, du r&#2
 divers composants auxiliaires (PM4, DS54) &#233;tait disponible pour les tests.
 	</dd>
 	</dl>
+
 <p>LocoNet&reg; est une marque d&#233;pos&#233; de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
 <!--#include virtual="/Footer" -->

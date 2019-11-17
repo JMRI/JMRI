@@ -17,8 +17,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+ <!--#include virtual="Sidebar" -->
+ <div id="mainContent">
+  <!-- Page Body -->
 
 <h2>Outil deCconfiguration XPressNet LZV100 </h2>
 <img src="images/LZV100ConfigurationUtility.jpg" alt="LZV100 Configuration 

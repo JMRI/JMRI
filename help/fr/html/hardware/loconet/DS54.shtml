@@ -23,7 +23,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
+<!--#include virtual="/Header" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
 
   <h1>JMRI: DS54 Examples</h1>
 
@@ -211,8 +214,7 @@ utiliser la r&eacute;tro-signalisation "EXACT".
   la m&ecirc;me position terminale sur la DS54, et que tous les
   DS54s relient la connexion Rail B &agrave; <i>l'autre</i>
   position terminale. Il est important de s'assurer qu'il n'y a pas
-  un le flux de courant inattendu sur
-  &acirc;&euro;&lsaquo;&acirc;&euro;&lsaquo;le c&acirc;ble LocoNet
+  un le flux de courant inattendu sur le c&acirc;ble LocoNet
   en raison de d'inversion de phase lors de la connexions des DS54
   &agrave; la voie. Notez que cela signifie que les connexions DS54
   &agrave; la voie ne <i>devrait pas</i> se faire sur
@@ -226,7 +228,9 @@ utiliser la r&eacute;tro-signalisation "EXACT".
 
   <p>LocoNet&reg; est une marque d&eacute;pos&eacute;e de <a href=
   "http://www.digitrax.com">Digitrax, Inc.</a></p>
+
   <!--#include virtual="/Footer" -->
-  <!--#include virtual="/Footer" -->
+  </div>
+</div>
 </body>
 </html>

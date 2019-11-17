@@ -18,8 +18,9 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
 
       <h1>Guide Installation JMRI: Uhlenbrock Intellibox via Port
       S&eacute;rie</h1>
@@ -185,11 +186,10 @@
 		</ul>
 		Enregistrez et re&#233;marrez.
 
-<a name="tools"></a><h2>Outils JMRI Uhlenbrock</h2>
-N/A
+		<a name="tools"></a><h2>Outils JMRI Uhlenbrock</h2>
+		N/A
 
-<hr class="hide">
-<!--#include virtual="/Footer" -->
+	<!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>

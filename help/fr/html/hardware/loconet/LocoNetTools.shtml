@@ -22,9 +22,10 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+<!--#include virtual="/Header" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
 
       <h1>Outils JMRI qui prennent en charge les &eacute;quipements
       LocoNet&reg;</h1>
@@ -370,6 +371,7 @@
 
       <p>LocoNet&reg; est une marque d&eacute;pos&eacute;e de
       <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

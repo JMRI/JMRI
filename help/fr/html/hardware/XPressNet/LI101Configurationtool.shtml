@@ -17,10 +17,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-<div class="nomenu" id="mBody">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+     <!-- Page Body -->
 
-<h1> Outil de Configuration XPressNet LI101F </h1>
+    <h1> Outil de Configuration XPressNet LI101F </h1>
 
 <img src="images/LI101ConfigurationUtility.jpg" alt="LI101 Configuration Tool Image">>
 <p>
@@ -35,7 +37,7 @@ p&#233;riph&#233;riques sur votre XpressNet.
 La seconde liste d&#233;roulante affiche les boites fixant la vitesse du port LI101F. Cette vitesse devrait
 correspondre &#224; ce que vous avez utilis&#233; pour le  param&#232;tre "Port Speed" dans le volet Pr&#233;f&#233;rences
 
-		<h4>Boutons</h4>
+	<h4>Boutons</h4>
 
 <p>
 A partir du c&#244;t&#233; gauche de l'&#233;cran, le bouton "Read from 

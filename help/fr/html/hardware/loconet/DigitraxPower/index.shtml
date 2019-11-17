@@ -16,7 +16,8 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
 <h1>Mesures de la puissance sur les fils des composants Digitrax</h1>

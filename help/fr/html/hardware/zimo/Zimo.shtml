@@ -24,9 +24,11 @@
 </head>
 
 <body>
-  <!--#include virtual="/Header" -->
-<div class="nomenu" id="mBody">
-    <div id="mainContent">
+<!--#include virtual="/Header" -->
+<div id="mBody">
+  <!--#include virtual="../SidebarUp" -->
+  <div id="mainContent">
+    <!-- Page Body -->
 
       <h2>JMRI Guide Mat&eacute;riel: Zimo mx-1</h2>
 

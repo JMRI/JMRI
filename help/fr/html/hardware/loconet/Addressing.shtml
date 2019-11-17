@@ -1,29 +1,28 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- Updated by Blorec Herv&#233;  2017-01-27-->
 <html lang="fr">
 <head>
- <title>JMRI Hardware Support - LocoNet&reg; Addressing</title>
-
+    <title>JMRI Hardware Support - LocoNet&reg; Addressing</title>
     <meta name="author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI LocoNet Address Addressing Sensors Turnout">
-
-<!-- Style -->
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-<link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!-- Style -->
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+    <link rel="icon" href="/images/jmri.ico" type="image/png">
+    <link rel="home" title="Home" href="/">
+    <!-- /Style -->
 </head>
 
 <body>
 <!--#include virtual="/Header" -->
 <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
-        <!-- Page Body -->
+      <!-- Page Body -->
 
-<h1>Adressage LocoNet</h1>Le Syst&egrave;mes LocoNet adresse
+      <h1>Adressage LocoNet</h1>
+      Le Syst&egrave;mes LocoNet adresse
       des capteurs en entr&eacute;e et des aiguillages en sortie en
       utilisant des num&eacute;ros. Cette page explique comment ces
       chiffres sont d&eacute;finis dans JMRI, et comment ils se

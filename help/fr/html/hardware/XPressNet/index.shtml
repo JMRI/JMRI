@@ -18,8 +18,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+      <!-- Page Body -->
 
       <h1>Guide Mat&eacute;riel JMRI: XPressNet</h1>
 

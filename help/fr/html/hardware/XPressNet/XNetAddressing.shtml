@@ -16,8 +16,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
+    <!-- Page Body -->
 
       <h1>Bus Adressant les R&eacute;tro-Signalisation Lenz</h1>Sur
       les syst&egrave;mes de Lenz, la r&eacute;tro-signalisation

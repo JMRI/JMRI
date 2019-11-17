@@ -17,10 +17,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
 
-<h1>Support Mat&#233;riel JMRI: Connexion &#224; un Digitrax PR3</h1>
+	<h1>Support Mat&#233;riel JMRI: Connexion &#224; un Digitrax PR3</h1>
 
 <a href="http://digitrax.com/prd_compint_pr3.php">
 <img src="http://www.digitrax.com/static/apps/products/computer-control/pr3/images/PR3_jpg_350x900_q85.jpg" 
@@ -232,10 +233,11 @@ vous devez soit ne pas utiliser un r&#233;gulateur JMRI pour utiliser la locomot
 voie de programmation PR3, ou de se souvenir de r&#233;&#233;crire CV128 avec la bonne valeur
 juste avant de retirer la locomotive de la voie.
 
-<p> LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com"> Digitrax, Inc. </a> </p>
+<p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com"> Digitrax, Inc. </a> </p>
+
+		<!--#include virtual="/Footer" -->
      </div>
    </div>
-<!--#include virtual="/Footer" -->
 </body>
 </html>
 
