@@ -95,14 +95,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         }
         CanMessage msg;
         
-        if ( null == decision ) {
-            log.error("decision type {} unknown to CbusThrottleManager",decision);
-            return;
-        }
-        else switch (decision) {
+        switch (decision) {
             case STEAL_OR_SHARE:
                 // 1st line request
-                
                 // Request a session for this throttle normally
                 _handleExpectedSecondLevelRequest = false;
                 msg = new CanMessage(3, tc.getCanid());
@@ -112,7 +107,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 break;
             case STEAL:
                 // 2nd line request
-                
                 // Request a Steal session
                 _handleExpectedSecondLevelRequest = true;
                 msg = new CanMessage(4, tc.getCanid());
@@ -123,7 +117,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
                 break;
             case SHARE:
                 // 2nd line request
-                
                 // Request a Share session
                 _handleExpectedSecondLevelRequest = true;
                 msg = new CanMessage(4, tc.getCanid());
@@ -140,7 +133,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
         // send the request to layout
         _handleExpected = true;
         tc.sendCanMessage(msg, this);
-        
     }
 
     /**
@@ -654,12 +646,8 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
      * {@inheritDoc}
      */
     @Override
-    protected void makeHardwareDecision(LocoAddress address, DecisionType question){
-        
-        if ( null == question ){
-            log.error("Question type {} unknown",question);
-        }
-        else // no need to check if share / steal currently enabled on command station,
+    protected void makeHardwareDecision(LocoAddress address,DecisionType question){
+        // no need to check if share / steal currently enabled on command station,
         // this has already been done to produce the correct question
         switch (question) {
             case STEAL:
