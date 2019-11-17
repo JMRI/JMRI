@@ -13,7 +13,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
+public class RpsReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase<RpsReporterManager> {
 
     @Override
     public String getSystemName(String i) {

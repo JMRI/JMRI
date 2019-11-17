@@ -797,27 +797,26 @@ public class JUnitUtil {
      */
     public static void initIdTagManager() {
         InstanceManager.reset(IdTagManager.class);
-        InstanceManager.setDefault(IdTagManager.class,
-                new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
-                    @Override
-                    public void init() {
-                        super.init();
-                        // IdTagManager shutDownTask is not needed in tests, so unregister it
-                        InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
-                    }
+        InstanceManager.setIdTagManager(new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class)) {
+            @Override
+            public void init() {
+                super.init();
+                // IdTagManager shutDownTask is not needed in tests, so unregister it
+                InstanceManager.getDefault(ShutDownManager.class).deregister(shutDownTask);
+            }
 
-                    @Override
-                    public void writeIdTagDetails() {
-                        // do not actually write tags
-                        this.dirty = false;
-                    }
+            @Override
+            public void writeIdTagDetails() {
+                // do not actually write tags
+                this.dirty = false;
+            }
 
-                    @Override
-                    public void readIdTagDetails() {
-                        // do not actually read tags
-                        this.dirty = false;
-                    }
-                });
+            @Override
+            public void readIdTagDetails() {
+                // do not actually read tags
+                this.dirty = false;
+            }
+        });
     }
 
     public static void initRailComManager() {

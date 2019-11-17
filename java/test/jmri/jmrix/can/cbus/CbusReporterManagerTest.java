@@ -18,7 +18,7 @@ import org.junit.Test;
  * @author	Paul Bender Copyright (C) 2012,2016
  * @author	Steve Young Copyright (C) 2019 
  */
-public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
+public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase<CbusReporterManager> {
 
     protected Object generateObjectToReport(){
         return new jmri.implementation.DefaultIdTag("ID0413276BC1", "Test Tag");

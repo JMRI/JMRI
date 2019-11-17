@@ -16,8 +16,9 @@ import org.junit.*;
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
  * @author      Paul Bender Copyright (C) 2016
+ * @param <M> The class of ReporterManager supported
  */
-public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManagerTestBase<ReporterManager, Reporter> {
+public abstract class AbstractReporterMgrTestBase<M extends ReporterManager> extends AbstractProvidingManagerTestBase<M, Reporter> {
 
     /**
      * Max number of Reporters supported.  Override to return 1 if

@@ -11,7 +11,7 @@ import org.junit.*;
  * @author Paul Bender Copyright (C) 2016
  **/
 
-public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgrTestBase {
+public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgrTestBase<Z21ReporterManager> {
         
     private Z21SystemConnectionMemo memo;
     private Z21InterfaceScaffold tc;

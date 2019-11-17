@@ -103,7 +103,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
        // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
-                || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
+                || (systemName.length() <= (getSystemPrefix() + typeLetter()).length())) {
             log.error("Invalid system name for reporter: {} needed {}{}",
                     systemName, getSystemPrefix(), typeLetter());
             throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
@@ -114,7 +114,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         Reporter r;
         if ((userName != null) && ((r = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != r) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + r.getSystemName() + ")");
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, r.getSystemName());
             }
             return r;
         }
@@ -122,8 +122,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
             if ((r.getUserName() == null) && (userName != null)) {
                 r.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found reporter via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")");
+                log.warn("Found reporter via system name ({}) with non-null user name ({})", systemName, userName);
             }
             return r;
         }
@@ -145,10 +144,12 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     /**
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
-     *
-     * @return Never null
+     * 
+     * @param systemName the system name for the new Reporter
+     * @param userName   the user name for the new Reporter
+     * @return a new Reporter; not null
      */
-    abstract protected Reporter createNewReporter(String systemName, String userName);
+    protected abstract Reporter createNewReporter(String systemName, String userName);
 
     /** {@inheritDoc} */
     @Override
@@ -202,6 +203,6 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
-    private final static Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractReporterManager.class);
 
 }

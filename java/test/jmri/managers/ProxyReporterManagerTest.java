@@ -17,7 +17,7 @@ import org.junit.Test;
  * @author	Mark Underwood 2012
  * @author	Paul Bender 2016
  */
-public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
+public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase<ProxyReporterManager> {
 
     @Override
     public String getSystemName(String i) {
@@ -96,7 +96,8 @@ public class ProxyReporterManagerTest extends AbstractReporterMgrTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = InstanceManager.getDefault(jmri.ReporterManager.class);
+        l = new ProxyReporterManager();
+        InstanceManager.setDefault(ReporterManager.class, l);
     }
 
     @After
