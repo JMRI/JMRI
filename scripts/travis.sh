@@ -30,6 +30,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
+            -Djmri.skipKnownIntermittent=${SKIPINTERMITTENT} \
             -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'"
     fi
 else
@@ -41,6 +42,7 @@ else
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
+            -Djmri.skipKnownIntermittent=${SKIPINTERMITTENT} \
             -Djmri.skipschematests=true \
             -Dcucumber.options="--tags 'not @Ignore'"
     else
