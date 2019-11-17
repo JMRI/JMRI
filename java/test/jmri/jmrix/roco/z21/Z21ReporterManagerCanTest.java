@@ -23,13 +23,12 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
 
    @Test
    public void testAutomaticCreateFromCanReply(){
-       Z21ReporterManager zr = (Z21ReporterManager) l;
        byte msg[]={(byte)0x0E,(byte)0x00,(byte)0xC4,(byte)0x00,(byte)0xcd,(byte)0xab,(byte)0x01,(byte)0x00,(byte)0x01,(byte)0x11,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00};
        Z21Reply reply = new Z21Reply(msg,14);
-       Assert.assertNull("No reporter before message",zr.getReporter("ZRabcd:1"));
-       jmri.util.ThreadingUtil.runOnLayout( () -> { zr.reply(reply); });
-       JUnitUtil.waitFor( ()-> { return zr.getReporter("ZRABCD:1") != null; },"wait for reporter creation");
-       Assert.assertNotNull("Reporter Created via message",zr.getReporter("ZRABCD:1"));
+       Assert.assertNull("No reporter before message", l.getReporter("ZRabcd:1"));
+       jmri.util.ThreadingUtil.runOnLayout(() -> { l.reply(reply); });
+       JUnitUtil.waitFor(() -> { return l.getReporter("ZRABCD:1") != null; },"wait for reporter creation");
+       Assert.assertNotNull("Reporter Created via message", l.getReporter("ZRABCD:1"));
    }
 
     @Test
@@ -78,7 +77,9 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
     @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initIdTagManager();
+        JUnitUtil.initRailComManager();
         memo = new Z21SystemConnectionMemo();
         tc = new Z21InterfaceScaffold();
         memo.setTrafficController(tc);
@@ -92,7 +93,6 @@ public class Z21ReporterManagerCanTest extends jmri.managers.AbstractReporterMgr
         tc.terminateThreads();
         memo = null;
         tc = null;
-        JUnitUtil.clearShutDownManager(); // clears "Writing IdTags" from DefaultIdTagManager
         JUnitUtil.tearDown();
    }
 
