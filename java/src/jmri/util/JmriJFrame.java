@@ -242,7 +242,7 @@ public class JmriJFrame extends JFrame implements WindowListener, jmri.ModifiedF
 
     /**
      * Iterates through the attached displays and retrieves bounds, insets
-     * & id for each screen.
+     * and id for each screen.
      * Size of returned ArrayList equals the number of detected displays.
      * @return ArrayList of screen bounds and insets
      */
