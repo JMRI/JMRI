@@ -62,14 +62,13 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
      */
     @Override
     public void message(XNetMessage l) {
+        // nothing to do
     }
 
     // Handle a timeout notification
     @Override
     public void notifyTimeout(XNetMessage msg) {
-        if (log.isDebugEnabled()) {
-            log.debug("Notified of timeout on message" + msg.toString());
-        }
+        log.debug("Notified of timeout on message {}", msg);
     }
 
     // methods to connect/disconnect to a source of data in another
@@ -112,6 +111,6 @@ public class XNetTrafficRouter extends XNetTrafficController implements XNetList
         lastSender = null;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetTrafficRouter.class);
+    private static final Logger log = LoggerFactory.getLogger(XNetTrafficRouter.class);
 
 }

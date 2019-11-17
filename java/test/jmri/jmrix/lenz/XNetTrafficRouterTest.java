@@ -1,5 +1,7 @@
 package jmri.jmrix.lenz;
 
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -53,6 +55,7 @@ public class XNetTrafficRouterTest {
         // check receipt
         Assert.assertEquals("one message sent", 1, upstream.outbound.size());
         Assert.assertTrue(upstream.outbound.elementAt(0) == m);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(router.shutDownTask);
     }
 
     static int count = 0;
@@ -109,6 +112,7 @@ public class XNetTrafficRouterTest {
 
         // check receipt
         Assert.assertEquals("one message sent", 1, count);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(router.shutDownTask);
     }
 
     @Test
@@ -139,6 +143,7 @@ public class XNetTrafficRouterTest {
         // disconnect
         router.disconnectPort(upstream);
         Assert.assertTrue("not connected", !router.status());
+        InstanceManager.getDefault(ShutDownManager.class).deregister(router.shutDownTask);
     }
 
     @Before

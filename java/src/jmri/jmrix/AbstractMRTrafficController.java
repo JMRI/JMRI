@@ -93,7 +93,7 @@ Note left of OKSENDMSGSTATE : Transient internal state\nwill transition when goi
 
 abstract public class AbstractMRTrafficController {
 
-    protected final ShutDownTask shutDownTask = new CleanupTask(this); // retain for possible removal.
+    public final ShutDownTask shutDownTask = new CleanupTask(this); // retain for possible removal.
 
     /**
      * Create a new unnamed MRTrafficController.
