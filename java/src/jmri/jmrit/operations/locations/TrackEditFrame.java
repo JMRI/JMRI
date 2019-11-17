@@ -281,14 +281,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         adjustTextAreaColumnWidth(commentScroller, commentTextArea);
 
         // reader row
+        JPanel readerPanel = new JPanel();
         if (Setup.isRfidEnabled()) {
-            JPanel readerPanel = new JPanel();
             readerPanel.setLayout(new GridBagLayout());
             readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
             ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
             readerSelector = new NamedBeanComboBox<>(reporterManager);
             readerSelector.setAllowNull(true);
             addItem(readerPanel, readerSelector, 0, 0);
+        } else {
+            readerPanel.setVisible(false);
         }
 
         // row 12
