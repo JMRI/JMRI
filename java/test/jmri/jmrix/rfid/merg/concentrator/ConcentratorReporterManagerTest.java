@@ -11,7 +11,7 @@ import org.junit.*;
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
-public class ConcentratorReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
+public class ConcentratorReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase<ConcentratorReporterManager> {
 
     @Override
     public String getSystemName(String i) {

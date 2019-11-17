@@ -13,7 +13,7 @@ import org.junit.Before;
  * @author	Bob Jacobsen
  * @author      Paul Bender Copyright (C) 2016
  */
-public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
+public class Dcc4PcReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase<Dcc4PcReporterManager> {
 
     @Override
     public String getSystemName(String i) {

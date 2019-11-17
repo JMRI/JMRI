@@ -12,7 +12,7 @@ import org.junit.Before;
  *
  * @author	Bob Jacobsen
  */
-public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
+public class JMRIClientReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase<JMRIClientReporterManager> {
 
     @Override
     public String getSystemName(String i) {
