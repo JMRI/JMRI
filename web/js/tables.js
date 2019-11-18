@@ -88,9 +88,9 @@ function displayCellValue(type, colName, value) {
 			comma = "";
 			value.forEach(function(item) { //return list
 				if (item.name)
-					ret += comma + item.name;
+					ret += comma + item.name + " " + item.userName; //if named, list name and username only
 				else { 
-					Object.keys(item).forEach(function(key) {
+					Object.keys(item).forEach(function(key) { //otherwise list the array of pairs
 						ret += comma + key + ":" + item[key];
 					});
 				}
@@ -98,7 +98,13 @@ function displayCellValue(type, colName, value) {
 			});
 			return ret;
 		}
-		return value; //return simple array
+		ret = "";
+		comma = "";
+		value.forEach(function(item) { //otherwise build and return simple array list
+			ret += comma + item; 
+			comma = ", ";
+		});
+		return ret;
 	}
 	if (typeof value === "object") {
 		if (value.name) {
