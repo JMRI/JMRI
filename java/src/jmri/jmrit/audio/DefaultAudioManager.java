@@ -251,7 +251,8 @@ public class DefaultAudioManager extends AbstractAudioManager {
         // Shutdown AudioFactory and close the output device
         log.info("Shutting down active AudioFactory");
         InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(audioShutDownTask);
-        activeAudioFactory.cleanup();
+        if (activeAudioFactory != null) activeAudioFactory.cleanup();
+        // Record that we're no longer initialised
         initialised = false;
     }
 
