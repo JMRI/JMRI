@@ -105,6 +105,11 @@ public class NullAudioFactory extends AbstractAudioFactory {
     }
 
     @Override
+    public boolean isInitialised() {
+        return initialised;
+    }
+
+    @Override
     public AudioBuffer createNewBuffer(String systemName, String userName) {
         return new NullAudioBuffer(systemName, userName);
     }

@@ -397,6 +397,11 @@ public class JoalAudioFactory extends AbstractAudioFactory {
     }
 
     @Override
+    public boolean isInitialised() {
+        return initialised;
+    }
+
+    @Override
     public AudioBuffer createNewBuffer(String systemName, String userName) {
         return new JoalAudioBuffer(systemName, userName);
     }
