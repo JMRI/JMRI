@@ -1,5 +1,6 @@
 package jmri.jmrit.audio;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.List;
 import jmri.Audio;
 import jmri.AudioManager;
@@ -57,6 +58,8 @@ public class NullAudioFactory extends AbstractAudioFactory {
                 + " version - " + jmri.Version.name(); // NOI18N
     }
 
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "OK to write to static variables to record static library status")
     @Override
     public void cleanup() {
         // Stop the command thread

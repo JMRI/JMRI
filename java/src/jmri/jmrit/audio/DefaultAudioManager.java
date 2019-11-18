@@ -282,6 +282,8 @@ public class DefaultAudioManager extends AbstractAudioManager {
         super.deregister(s);
     }
 
+    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "OK to write to static variables to record static library status")
     @Override
     public void cleanup() {
         // Shutdown AudioFactory and close the output device
