@@ -336,17 +336,17 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
         assignedBuffer.removeAllItems();
         assignedBuffer.addItem("Select buffer from list");
-        am.getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
-            Audio a = am.getAudio(s);
+        am.getNamedBeanSet(Audio.BUFFER).stream().forEach((s) -> {
+            Audio a = am.getAudio(s.getSystemName());
             if (a != null) {
                 String u = a.getUserName();
                 if (u != null) {
                     assignedBuffer.addItem(u);
                 } else {
-                    assignedBuffer.addItem(s);
+                    assignedBuffer.addItem(s.getSystemName());
                 }
             } else {
-                assignedBuffer.addItem(s);
+                assignedBuffer.addItem(s.getSystemName());
             }
         });
     }

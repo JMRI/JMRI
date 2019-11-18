@@ -2,8 +2,11 @@ package jmri.jmrit.audio;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
@@ -49,6 +52,10 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     private static boolean initialised = false;
 
+    private final TreeSet<Audio> listeners = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
+    private final TreeSet<Audio> buffers = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
+    private final TreeSet<Audio> sources = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
+
     public final ShutDownTask audioShutDownTask = new QuietShutDownTask("AudioFactory Shutdown") {
         @Override
         public boolean execute() {
@@ -86,6 +93,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 }
                 countBuffers++;
                 a = activeAudioFactory.createNewBuffer(systemName, userName);
+                buffers.add(a);
                 break;
             }
             case Audio.LISTENER: {
@@ -95,6 +103,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 }
                 countListeners++;
                 a = activeAudioFactory.createNewListener(systemName, userName);
+                listeners.add(a);
                 break;
             }
             case Audio.SOURCE: {
@@ -104,6 +113,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 }
                 countSources++;
                 a = activeAudioFactory.createNewSource(systemName, userName);
+                sources.add(a);
                 break;
             }
             default:
@@ -114,6 +124,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     @Override
+    @Deprecated
     public List<String> getSystemNameList(char subType) {
         Set<Audio> tempSet = getNamedBeanSet();
         List<String> out = new ArrayList<>();
@@ -123,6 +134,25 @@ public class DefaultAudioManager extends AbstractAudioManager {
             }
         });
         return out;
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public SortedSet<Audio> getNamedBeanSet(char subType) {
+        switch (subType) {
+            case Audio.BUFFER: {
+                return Collections.unmodifiableSortedSet(buffers);
+            }
+            case Audio.LISTENER: {
+                return Collections.unmodifiableSortedSet(listeners);
+            }
+            case Audio.SOURCE: {
+                return Collections.unmodifiableSortedSet(sources);
+            }
+            default: {
+                throw new IllegalArgumentException();
+            }
+        }
     }
 
     /**
@@ -226,24 +256,30 @@ public class DefaultAudioManager extends AbstractAudioManager {
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Synchronized method to ensure correct counter manipulation")
     public synchronized void deregister(Audio s) {
-        super.deregister(s);
         // Decrement the relevant Audio object counter
         switch (s.getSubType()) {
             case (Audio.BUFFER): {
+                buffers.remove(s);
                 countBuffers--;
+                log.debug("Remove buffer; count: {}", countBuffers);
                 break;
             }
             case (Audio.SOURCE): {
+                sources.remove(s);
                 countSources--;
+                log.debug("Remove source; count: {}", countSources);
                 break;
             }
             case (Audio.LISTENER): {
+                listeners.remove(s);
                 countListeners--;
+                log.debug("Remove listener; count: {}", countListeners);
                 break;
             }
             default:
                 throw new IllegalArgumentException();
         }
+        super.deregister(s);
     }
 
     @Override
@@ -258,6 +294,14 @@ public class DefaultAudioManager extends AbstractAudioManager {
         countListeners = 0;
         // Record that we're no longer initialised
         initialised = false;
+    }
+
+    @Override
+    public void dispose() {
+        buffers.clear();
+        sources.clear();
+        listeners.clear();
+        super.dispose();
     }
 
     @Override

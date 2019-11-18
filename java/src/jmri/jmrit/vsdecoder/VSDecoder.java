@@ -134,12 +134,12 @@ public class VSDecoder implements PropertyChangeListener {
 
         if (log.isDebugEnabled()) {
             log.debug("VSDecoder Init Complete.  Audio Objects Created:");
-            for (String s : jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.SOURCE)) {
+            jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.SOURCE).forEach((s) -> {
                 log.debug("\tSource: {}", s);
-            }
-            for (String s : jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.BUFFER)) {
+            });
+            jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.BUFFER).forEach((s) -> {
                 log.debug("\tBuffer: {}", s);
-            }
+            });
         }
     }
 
