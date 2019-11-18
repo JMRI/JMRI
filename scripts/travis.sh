@@ -50,7 +50,7 @@ else
             -Djava.awt.headless=${HEADLESS} \
             -Djmri.skipTestsRequiringSeparateRunning=${SKIPINTERMITTENT} \
             -Djmri.skipschematests=true \
-            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'" \
+            -Dcucumber.options="--tags 'not @Ignore'" \
             -Dpython.cachedir=${PYTHON_CACHEDIR}
     else
         # run the SKIPINTERMITTENT tests separately
