@@ -79,8 +79,32 @@ function displayCellValue(type, colName, value) {
 	if (value == null) {
 		return ""; //return empty string for any null value
 	}
-	if ($.isArray(value)) {
-		return "array[" + value.length + "]"; //return array[size] for arrays						
+	if ($.isArray(value)) { 
+		if (value.length == 0) {
+			return "";
+		}
+		if (typeof value[0] === "object") { //check first item to see if associative array
+			ret = "";
+			comma = "";
+			value.forEach(function(item) { //return list
+				if (item.name)
+					ret += comma + item.name + " " + item.userName; //if named, list name and username only
+				else { 
+					Object.keys(item).forEach(function(key) { //otherwise list the array of pairs
+						ret += comma + key + ":" + item[key];
+					});
+				}
+				comma = ", ";
+			});
+			return ret;
+		}
+		ret = "";
+		comma = "";
+		value.forEach(function(item) { //otherwise build and return simple array list
+			ret += comma + item; 
+			comma = ", ";
+		});
+		return ret;
 	}
 	if (typeof value === "object") {
 		if (value.name) {
@@ -94,20 +118,20 @@ function displayCellValue(type, colName, value) {
 		switch (type) {
 			case "turnout":
 				switch (value) {
-					case 0: return "unknown";
-					case 2: return "closed";
-					case 4: return "thrown";
-					case 8: return "inconsistent";
+					case jmri.UNKNOWN: return "unknown";
+					case jmri.CLOSED: return "closed";
+					case jmri.THROWN: return "thrown";
+					case jmri.INCONSISTENT: return "inconsistent";
 					default: return value;
 				}
 			case "route":
 			case "sensor":
 			case "layoutBlock":
 				switch (value) {
-					case 0: return "unknown";
-					case 2: return "active";
-					case 4: return "inactive";
-					case 8: return "inconsistent";
+					case jmri.UNKNOWN: return "unknown";
+					case jmri.ACTIVE: return "active";
+					case jmri.INACTIVE: return "inactive";
+					case jmri.INCONSISTENT: return "inconsistent";
 					default: return value;
 				}
 			case "block":
@@ -119,7 +143,7 @@ function displayCellValue(type, colName, value) {
 				}
 			case "light":
 				switch (value) {
-					case 0: return "unknown";
+					case jmri.UNKNOWN: return "unknown";
 					case 2: return "on";
 					case 4: return "off";
 					default: return value;
@@ -128,7 +152,7 @@ function displayCellValue(type, colName, value) {
 				return value; //not special, just return the passed in value
 		}
 	}
-	return htmlEncode(value); //otherwise replace special characters
+	return value; //otherwise return unchanged value
 }
 
 //replace some special chars with html equivalents

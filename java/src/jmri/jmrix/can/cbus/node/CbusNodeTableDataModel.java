@@ -4,24 +4,13 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.TimerTask;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.jmrix.can.CanListener;
-import jmri.jmrix.can.CanMessage;
-import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficController;
-import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusMessage;
-import jmri.jmrix.can.cbus.CbusOpCodes;
-import jmri.jmrix.can.cbus.CbusPreferences;
-import jmri.jmrix.can.cbus.CbusSend;
+import jmri.jmrix.can.*;
+import jmri.jmrix.can.cbus.*;
 import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;
-import jmri.util.FileUtil;
-import jmri.util.ThreadingUtil;
-import java.util.TimerTask;
-import jmri.util.TimerUtil;
-import jmri.util.XmlFilenameFilter;
+import jmri.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,9 +24,9 @@ import org.slf4j.LoggerFactory;
 public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
 
     protected ArrayList<CbusNode> _mainArray;
-    private CanSystemConnectionMemo _memo;
-    private TrafficController tc;
-    private CbusSend send;
+    private final CanSystemConnectionMemo _memo;
+    private final TrafficController tc;
+    private final CbusSend send;
     private CbusPreferences preferences;
     private ArrayList<Integer> _nodesFound;
     private CbusAllocateNodeNumber allocate;
@@ -63,15 +52,13 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     public CbusNodeTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
         
         log.debug("Starting MERG CBUS Node Table");
-        _mainArray = new ArrayList<CbusNode>();
-        _nodesFound = new ArrayList<Integer>();
+        _mainArray = new ArrayList<>();
+        _nodesFound = new ArrayList<>();
         _memo = memo;
         
         // connect to the CanInterface
         tc = memo.getTrafficController();
-        if (tc != null ) {
-            tc.addCanListener(this);
-        }
+        addTc(tc);
         
         send = new CbusSend(memo);
 
@@ -102,7 +89,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
             if (allocate == null) {
                 allocate = new CbusAllocateNodeNumber( _memo, this );
             } else {
-                return;
             }
         } else {
             if ( allocate != null ) {
@@ -114,7 +100,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     
     
     // order needs to match column list top of dtabledatamodel
-    public static final String[] columnToolTips = {
+    public static final String[] COLUMNTOOLTIPS = {
         null,
         null,
         null,
@@ -152,24 +138,24 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     }
 
     /**
-     * Configure a table to have our standard rows and columns.
+     * Configure a table to have standard rows and columns.
      * <p>
-     * This is optional, in that other table formats can use this table model.
-     * But we put it here to help keep it consistent.
+     * 
+     * @param table the JTable to have common defaults
      */
-    public void configureTable(JTable eventTable) {
+    public void configureTable(JTable table) {
         // allow reordering of the columns
-        eventTable.getTableHeader().setReorderingAllowed(true);
+        table.getTableHeader().setReorderingAllowed(true);
 
         // shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
-        eventTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+        table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
         // resize columns as requested
-        for (int i = 0; i < eventTable.getColumnCount(); i++) {
+        for (int i = 0; i < table.getColumnCount(); i++) {
             int width = getPreferredWidth(i);
-            eventTable.getColumnModel().getColumn(i).setPreferredWidth(width);
+            table.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        eventTable.sizeColumnsToFit(-1);
+        table.sizeColumnsToFit(-1);
     }
 
 
@@ -217,6 +203,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     /**
     * Returns int of startup column widths
     * @param col int col number
+    * @return default column width
     */
     public static int getPreferredWidth(int col) {
         switch (col) {
@@ -244,6 +231,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     
     /**
     * Returns column class type.
+     * @param col Node Table Column number
     */
     @Override
     public Class<?> getColumnClass(int col) {
@@ -276,7 +264,9 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     
     /**
     * Boolean return to edit table cell or not
-    * @return boolean
+     * @param row Table Row number
+     * @param col Table Column number
+    * @return UserName and Resync Button columns true, else false
     */
     @Override
     public boolean isCellEditable(int row, int col) {
@@ -340,19 +330,20 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if (col == NODE_USER_NAME_COLUMN) {
-            _mainArray.get(row).setUserName( (String) value );
-            ThreadingUtil.runOnGUI( ()->{
-                fireTableCellUpdated(row, col);
-            });
-        }
-        else if ( col == NODE_RESYNC_BUTTON_COLUMN) {
-            _mainArray.get(row).resetNodeAll();
-            setUrgentNode( _mainArray.get(row).getNodeNumber() );
-            startBackgroundFetch();
-        }
-        else {
-            log.debug("invalid column");
+        switch (col) {
+            case NODE_USER_NAME_COLUMN:
+                _mainArray.get(row).setUserName( (String) value );
+                ThreadingUtil.runOnGUI( ()->{
+                    fireTableCellUpdated(row, col);
+                }); break;
+            case NODE_RESYNC_BUTTON_COLUMN:
+                _mainArray.get(row).resetNodeAll();
+                setUrgentNode( _mainArray.get(row).getNodeNumber() );
+                startBackgroundFetch();
+                break;
+            default:
+                log.debug("invalid column");
+                break;
         }
     }
 
@@ -373,7 +364,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     @Override
     public void reply(CanReply m) { // incoming cbus message
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
         int opc = CbusMessage.getOpcode(m);
@@ -527,6 +518,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * For a given CAN ID, if in use, return formatted Node Name and number
      * else returns zero length string
      * @param canId the CAN ID to search the table for
+     * @return Node Number and name
      */
     public String getNodeNameFromCanId ( int canId ) {
         for (int i = 0; i < getRowCount(); i++) {
@@ -557,7 +549,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * @return Node Number + either node model or Username.
      */       
     public ArrayList<String> getListOfNodeNumberNames(){
-        ArrayList<String> list = new ArrayList<String>();
+        ArrayList<String> list = new ArrayList<>();
         for (int i = 0; i < getRowCount(); i++) {
             list.add( _mainArray.get(i).getNodeNumberName() );
         }
@@ -660,7 +652,6 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      */
     public void triggerUrgentFetch(){
         if (!urgentActive) {
-            return;
         }
         else {
             sendNextBackgroundFetch();
@@ -850,17 +841,14 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
                 _mainArray.get(i).nodeOnNetwork(false);
             }
         }
-        
         // if node heard but flagged as off-network, reset
-        java.util.Iterator itr = _nodesFound.iterator(); 
-        while (itr.hasNext()) {
-            int foundNodeNum = (int)itr.next(); 
-            CbusNode foundNode = getNodeByNodeNum(foundNodeNum);
-            if ( foundNode != null && foundNode.getSessionBackupStatus() == CbusNodeConstants.BackupType.NOTONNETWORK ) {
-                foundNode.resetNodeAll();
-                startBackgroundFetch();
-            }
-        }
+        _nodesFound.stream().map((foundNodeNum) -> getNodeByNodeNum(foundNodeNum)).filter((foundNode) 
+                -> ( foundNode != null && foundNode.getSessionBackupStatus() == CbusNodeConstants.BackupType.NOTONNETWORK )).map((foundNode) -> {
+            foundNode.resetNodeAll();
+            return foundNode;
+        }).forEachOrdered((_item) -> {
+            startBackgroundFetch();
+        });
     }
     
     /**
@@ -878,7 +866,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * @param timeout value in msec to wait for responses
      */
     private void setSearchForNodesTimeout( int timeout) {
-        _nodesFound = new ArrayList<Integer>();
+        _nodesFound = new ArrayList<>();
         searchForNodesTask = new TimerTask() {
             @Override
             public void run() {

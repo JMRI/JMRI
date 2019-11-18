@@ -28,6 +28,7 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -211,6 +212,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
      *
      * @throws jmri.server.json.JsonException if something goes wrong
      */
+    @Ignore("Until upstream sources are fixed; see #7633")
     @Test
     public void testDoSchema() throws JsonException {
         JsonIdTagHttpService instance = new JsonIdTagHttpService(mapper);
@@ -218,6 +220,10 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         validate(idTag);
         idTag = instance.doSchema(JsonIdTag.IDTAG, true, locale, 42);
         validate(idTag);
+
+        // Suppress a warning message (see networknt/json-schema-validator#79)
+        JUnitAppender.checkForMessageStartingWith(
+                "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
     }
 
 }

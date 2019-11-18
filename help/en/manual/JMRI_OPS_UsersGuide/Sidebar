@@ -5,7 +5,7 @@
 <div id="side"> <!-- Block of text at top -->
     <div style="text-align: center"><strong>The OpsPro Manual</strong></div>
 
-<dl class="toc"><!-- main table of contents -->
+<dl><!-- main table of contents -->
 <dt><h3>Setup JMRI</h3></dt>
 	  <dd>
     <ul>

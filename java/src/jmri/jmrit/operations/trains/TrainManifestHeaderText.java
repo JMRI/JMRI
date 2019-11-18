@@ -17,7 +17,9 @@ public class TrainManifestHeaderText {
     private static String type = Bundle.getMessage("Type");
     private static String model = Bundle.getMessage("Model");
     private static String length = Bundle.getMessage("Length");
+    private static String weight = Bundle.getMessage("Weight");
     private static String load = Bundle.getMessage("Load");
+    private static String load_type = Bundle.getMessage("Load_Type");
     private static String color = Bundle.getMessage("Color");
     private static String track = Bundle.getMessage("Track");
     private static String destination = Bundle.getMessage("Destination");
@@ -81,6 +83,14 @@ public class TrainManifestHeaderText {
     public static void setStringHeader_Length(String s) {
         length = s;
     }
+    
+    public static String getStringHeader_Weight() {
+        return weight;
+    }
+
+    public static void setStringHeader_Weight(String s) {
+        weight = s;
+    }
 
     public static String getStringHeader_Load() {
         return load;
@@ -88,6 +98,14 @@ public class TrainManifestHeaderText {
 
     public static void setStringHeader_Load(String s) {
         load = s;
+    }
+    
+    public static String getStringHeader_Load_Type() {
+        return load_type;
+    }
+
+    public static void setStringHeader_Load_Type(String s) {
+        load_type = s;
     }
 
     public static String getStringHeader_Color() {
@@ -239,9 +257,17 @@ public class TrainManifestHeaderText {
             e.addContent(values = new Element(Xml.LENGTH));
             values.setAttribute(Xml.TEXT, getStringHeader_Length());
         }
+        if (!getStringHeader_Length().equals(Bundle.getMessage("Weight"))) {
+            e.addContent(values = new Element(Xml.WEIGHT));
+            values.setAttribute(Xml.TEXT, getStringHeader_Weight());
+        }
         if (!getStringHeader_Load().equals(Bundle.getMessage("Load"))) {
             e.addContent(values = new Element(Xml.LOAD));
             values.setAttribute(Xml.TEXT, getStringHeader_Load());
+        }
+        if (!getStringHeader_Load_Type().equals(Bundle.getMessage("Load_Type"))) {
+            e.addContent(values = new Element(Xml.LOAD_TYPE));
+            values.setAttribute(Xml.TEXT, getStringHeader_Load_Type());
         }
         if (!getStringHeader_Color().equals(Bundle.getMessage("Color"))) {
             e.addContent(values = new Element(Xml.COLOR));
@@ -343,9 +369,19 @@ public class TrainManifestHeaderText {
                 setStringHeader_Length(a.getValue());
             }
         }
+        if (emts.getChild(Xml.WEIGHT) != null) {
+            if ((a = emts.getChild(Xml.WEIGHT).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Weight(a.getValue());
+            }
+        }
         if (emts.getChild(Xml.LOAD) != null) {
             if ((a = emts.getChild(Xml.LOAD).getAttribute(Xml.TEXT)) != null) {
                 setStringHeader_Load(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.LOAD_TYPE) != null) {
+            if ((a = emts.getChild(Xml.LOAD_TYPE).getAttribute(Xml.TEXT)) != null) {
+                setStringHeader_Load_Type(a.getValue());
             }
         }
         if (emts.getChild(Xml.COLOR) != null) {

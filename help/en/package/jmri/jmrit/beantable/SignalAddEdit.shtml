@@ -18,9 +18,9 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Adding &amp; Editing Signal Heads</h1>
 
       <p>JMRI needs to know how a Signal Head on the layout is

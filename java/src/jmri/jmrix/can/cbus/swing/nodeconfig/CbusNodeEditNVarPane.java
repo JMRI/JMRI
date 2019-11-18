@@ -2,9 +2,7 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
@@ -31,10 +29,11 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
     private JButton saveNvButton;
     private JButton resetNvButton;
     private CbusNode nodeOfInterest;
-    private NodeConfigToolPane _mainPane;
+    private final NodeConfigToolPane _mainPane;
 
     /**
      * Create a new instance of CbusNodeEditNVarPane.
+     * @param main the NodeConfigToolPane this is a component of
      */
     protected CbusNodeEditNVarPane( NodeConfigToolPane main ) {
         super();

@@ -8,27 +8,23 @@
 
   <title>JMRI: Simple Signal Logic Example</title>
   <!-- Style -->
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
 <!--#include virtual="/Header" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<h1>JMRI: Exemple Logique de Signal Simple</h1>
 
-<!-- Page Body -->
-
-<h1>
-JMRI: Exemple Logique de Signal Simple 
-</h1>
 <p class="important">N'utilisez pas l'outil Logique Signal Simple (SSL) quand vous avez d&#233;j&#224; construit les M&#226;ts de Signalisation et la Logique M&#226;t de Signalisation la plus avanc&#233;e dans le m&#234;me fichier de Panneau/Configuration.</p> 
 <p>    
 Cette page donne un exemple d'utilisation de la <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">Logique Signal Simple</a> JMRI 
@@ -43,7 +39,7 @@ d'un recueil de r&#232;glement. Pour plus d'informations sur les diverses possib
 S'il vous pla&#238;t voir la
 <a href="index.shtml"> page de Signalisation JMRI</a>.
 
-<a id="example1"<h2>Exemple Pr&#233;d&#233;finis</H2>
+<a id="example1"></a><h2>Exemple Pr&#233;d&#233;finis</h2>
 
 Un exemple pr&#233;d&#233;finie de SSL est fourni dans l'installation de JMRI ( voir la
 <a href="http://jmri.org/download"> page de t&#233;l&#233;chargement </a> ) pour plus d'informations sur le t&#233;l&#233;chargement.
@@ -151,7 +147,7 @@ Vous pouvez changer n'importe lequel de ces r&#233;glages et cliquer "Appliquer"
 actif, puis cliquez sur le Panneau exemple pour voir comment les nouvaux r&#233;glages agissent.
 </ul>
 
-<a name="setup"/>
+    <a name="setup"></a>
 <h2>Configurer votre propre exemple </h2>
 L'ensemble complet des &#233;tapes de cr&#233;ation de cet exemple sont:
 <ol>
@@ -178,42 +174,42 @@ PanelPro, s'il vous pla&#238;t voir la
 taper un nom de fichier, et frapper "Enregistrer". (Vous voudrez peut-&#234;tre le faire souvent!)
 
 <li>Renseignez le programme &#224; propos de votre ordinateur pilotant les aiguillages.
- <ul>
-  <li>Dans le menu Outils, ouvrez l'outil "Tableaux Aiguillage"--> "Aiguillages".
-   <li>Si vous avez un syst&#232;me Digitrax DCC, mettre
-      d&#233;vi&#233; ou direct chaque Aiguillage depuis un r&#233;gulateur.
-      PanelPro capturera toutes les adresses Aiguillages &#224; partir 
+    <ul>
+        <li>Dans le menu Outils, ouvrez l'outil "Tableaux Aiguillage"--> "Aiguillages".
+        <li>Si vous avez un syst&#232;me Digitrax DCC, mettre
+        d&#233;vi&#233; ou direct chaque Aiguillage depuis un r&#233;gulateur.
+        PanelPro capturera toutes les adresses Aiguillages &#224; partir
 		du trafic LocoNet r&#233;sultant.
-   <li>Vous pouvez &#233;galement utiliser le bouton "Ajouter..." dans le Tableau Aiguillage pour ouvrir 
-    un volet et entrer de nouveaux Aiguillages.
-   <li>Le volet "Commande Aiguillage..." dans le menu Outils cr&#233;e &#233;galement une nouvelle
-     entr&#233;e d'aiguillage pour chaque aiguillage que vous manipulez.
-   </ul>
+        <li>Vous pouvez &#233;galement utiliser le bouton "Ajouter..." dans le Tableau Aiguillage pour ouvrir
+        un volet et entrer de nouveaux Aiguillages.
+        <li>Le volet "Commande Aiguillage..." dans le menu Outils cr&#233;e &#233;galement une nouvelle
+        entr&#233;e d'aiguillage pour chaque aiguillage que vous manipulez.
+    </ul></li>
 
-<li>Si vous avez des Feux de Signalisation connect&#233;s aux sorties "aiguillage-type" 
-signalez aussi au programme l'existence de ces adresses aiguillage. (Utilisateurs de SE8c sauter cette &#233;tape)
+    <li>Si vous avez des Feux de Signalisation connect&#233;s aux sorties "aiguillage-type"
+    signalez aussi au programme l'existence de ces adresses aiguillage. (Utilisateurs de SE8c sauter cette &#233;tape)</li>
 
-<a name="definesignals"/>
-<li> Renseignez PanelPro &#224; propos de l'adressage de vos signaux.
-<<a href="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"><img
-        src="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png" align="right" width="312" height="119"
-        hspace="0" vspace="0" alt="Signal Head Table Figure"></a>
-  <ul>
-  <li>Dans le menu Outils, ouvrez l'outil "Tableau Feu de Signalisation".
-  <li>Cliquez sur le bouton
+    <li><a name="definesignals"></a>Renseignez PanelPro &#224; propos de l'adressage de vos signaux.
+    <a href="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png"><img
+    src="../../../package/jmri/jmrit/beantable/images/SigHeadTable.png" align="right" width="312" height="119"
+    hspace="0" vspace="0" alt="Signal Head Table Figure"></a>
+
+    <ul>
+      <li>Dans le menu Outils, ouvrez l'outil "Tableau Feu de Signalisation".
+      <li>Cliquez sur le bouton
       "<a href="../../../package/jmri/jmrit/beantable/SignalAddEdit.shtml"> Ajouter ...</a>"
       en bas &#224; gauche du tableau pour afficher un volet. En haut il y a plusieurs propositions pour le type de driver du Feu de Signalisation:
-    	<DL>
-      <DT> Sortie Triple
-      <DD>C'est  un Feu de signalisation avec des lumi&#232;res rouge/jaune/vert qui
+    	<dl>
+      <dt> Sortie Triple
+      <dd>C'est  un Feu de signalisation avec des lumi&#232;res rouge/jaune/vert qui
       sont pilot&#233;s par trois sorties s&#233;par&#233;es.
       Les sorties sont pilot&#233;es par la logique aiguillageJMRI et
       apparaissent dans le Tableau Aiguillage.
       <br>Pour configurer l'un d'eux,
       entrez le nom que vous voulez lui donner ( g&#233;n&#233;ralement quelque chose comme IH2, ), et
       les num&#233;ros d'adresses des trois sorties qui pilotent les lampes ( comme "258" etc. ).
-      <DT> Sortie Double
-      <DD>Un type de Connexion de Feu de Signalisation avec avec des lumi&#232;res qui
+      <dt> Sortie Double
+      <dd>Un type de Connexion de Feu de Signalisation avec avec des lumi&#232;res qui
       sont pilot&#233;es par deux connexions de sortie.
       Les deux sorties pilotent les feux rouges et verts s&#233;par&#233;ment; PanelPro
       va les combiner &#224; la fois On pour faire le jaune.
@@ -223,8 +219,8 @@ signalez aussi au programme l'existence de ces adresses aiguillage. (Utilisateur
       Pour configurer l'un d'eux,
       entrez le nom que vous voulez lui donner ( g&#233;n&#233;ralement quelque chose comme IH2 ), et
       les num&#233;ros d'adresses des deux sorties qui pilotent les lampes ( comme "258" etc. ).
-      <DT>SE8c 4 Aspects
-      <DD>Il s'agit d'un Type de Connexion or un Feu de Signalisation pilot&#233; par un d&#233;codeur SE8c Digitrax.
+      <dt>SE8c 4 Aspects
+      <dd>Il s'agit d'un Type de Connexion or un Feu de Signalisation pilot&#233; par un d&#233;codeur SE8c Digitrax.
       <br>
       Entrez la partie inf&#233;rieure des deux "adresses d'Aiguillage" auxquelles ce Feu de Signalisation
       r&#233;pond. Par exemple, si c'est le premier Feu de Signalisation sur la premi&#232;re
@@ -235,12 +231,13 @@ signalez aussi au programme l'existence de ces adresses aiguillage. (Utilisateur
       JMRI va g&#233;rer tout ce qui est n&#233;cessaire pour les clignotants.
       <dt>Et beaucoup plus
 		<dd>D'autres options de pilotage de signal sont "D&#233;codeur de Signal DCC" et "Acela", parmi beaucoup d'autres, ( Vous pouvez faire d&#233;filer vers le haut ou vers le bas pour les voir toutes ). <br>voir la <a href="SignalHeads.shtml">page d'aide Feux de Signalisation</a> pour plus d'information sur chaque.
-     	</dl>Une fois que vous avez d&#233;fini les options, cliquez 'OK". Vous pouvez
-		utilisez ce volet r&#233;p&#233;titivement pour entrer tous les Feux de Signalisation que vous avez.
+      </dl>
+      Une fois que vous avez d&#233;fini les options, cliquez 'OK". Vous pouvez
+      utilisez ce volet r&#233;p&#233;titivement pour entrer tous les Feux de Signalisation que vous avez.</li>
 	</ul>
 
-<li>Configurer votre logique de signalisation en utilisant l'Outil "Logique Signal Simple".<br>
-Ouvrez l'outil "Logique Signal Simple" depuis le menu "Outils". Vous obtiendrez un volet 
+    <li>Configurer votre logique de signalisation en utilisant l'Outil "Logique Signal Simple".<br>
+    Ouvrez l'outil "Logique Signal Simple" depuis le menu "Outils". Vous obtiendrez un volet
 		avec un nombre de champs:
 		<a href="../../../images/SslExample.png"><img src="../../../images/SslExample.png" align=right
                                                           width="469" height="287" hspace="2" vspace="0"
@@ -282,17 +279,17 @@ Ouvrez l'outil "Logique Signal Simple" depuis le menu "Outils". Vous obtiendrez 
 		Si vous souhaitez donner un avertissement suppl&#233;mentaire, cliquez sur la case "Avec Flash
 		Jaune ". Dans ce cas, le signal avant un rouge appara&#238;tra
 		jaune, et le signal avant le jaune montrera un Flash Jaune.<br>
-<i>Nous sugg&#233;rons	que vous utilisiez le <a href="AspectSignaling.shtml">Bloc Automatique Lumineux</a> plus r&#233;cent &#224; la place de SSL pour toutes les configurations plus complexex.</i>
-<li>Une fois que vous avez d&#233;fini les options , cliquez sur "Appliquer". Vous pouvez
-	
+        <i>Nous sugg&#233;rons	que vous utilisiez le <a href="AspectSignaling.shtml">Bloc Automatique Lumineux</a> plus
+        r&#233;cent &#224; la place de SSL pour toutes les configurations plus complexex.</i>
+        <li>Une fois que vous avez d&#233;fini les options , cliquez sur "Appliquer". Vous pouvez
+
 	    <li>Une fois que vous avez d&#233;fini les options, cliquez sur "OK". Vous pouvez
 		utilisez ce volet r&#233;p&#233;titivement pour entrer tous autant de fois que vous le voulez, chacun avec son propre nom unique &#233;videmment.
 		</ul>
-<li> Vous enregistrez votre travailen s&#233;lectionnant "Sauvegarder Panneaux et Configuration dan le Fichier..." depuis le menu Fichier, et vous avez fini!
+    <li>Vous enregistrez votre travailen s&#233;lectionnant "Sauvegarder Panneaux et Configuration dan le Fichier..." depuis le menu Fichier, et vous avez fini!
 </ol>
 
-<p>Maintenant Vous pouvez essayer votre SSL en faisant fonctionner votre r&#233;seau
-<br>
+<p>Maintenant Vous pouvez essayer votre SSL en faisant fonctionner votre r&#233;seau<br>
 Bien qu'il soit beaucoup moins amusant que r&#233;ellement l'ex&#233;cution du r&#233;seau,
 vous pouvez &#233;galement tester votre en changeant l'Aiguillage
 l'&#233;tat des Capteurs dans l'ordinateur lui-m&#234;me. Il suffit de cliquer sur l'&#233;tat des
@@ -303,11 +300,12 @@ L'ic&#244;ne du signal sera actualis&#233;e avec la nouvelle Apparence.
 Vous pouvez cr&#233;er un petit Panneau de Commande pour le faire graphiquement. Pour de plus amples
 infos sur comment faire, consultez la
 <a href="../../apps/PanelPro/Panels.shtml">page d'aide Panneaux </a>.
-<p>
 
 <p>Retour &#224; la <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml">page d'aide Logique Signal Simple</a>.
-<p>Situ&#233; &#224; fr\html\tools\signaling\
+<p>Situ&#233; &#224; fr\html\tools\signaling\</p>
 
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>

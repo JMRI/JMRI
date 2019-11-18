@@ -46,7 +46,8 @@ import org.junit.runners.Suite;
         JmriColorChooserPanelTest.class,
         JmriColorChooserTest.class,
         TextAreaFIFOTest.class,
-        ComboBoxToolTipRendererTest.class
+        ComboBoxToolTipRendererTest.class,
+        StayOpenCheckBoxItemTest.class
 })
 
 /**

@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
+import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import jmri.Block;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -686,8 +686,7 @@ public class ConnectivityUtil {
                     return (!t.getSignalA1Name().isEmpty()
                             && !t.getSignalB1Name().isEmpty()
                             && !t.getSignalC1Name().isEmpty());
-                } else if (t.getTurnoutType() == LayoutTurnout.SINGLE_SLIP
-                        || t.getTurnoutType() == LayoutTurnout.DOUBLE_SLIP) {
+                } else if (t.isTurnoutTypeSlip()) {
                     if (!t.getSignalA1Name().isEmpty()
                             && !t.getSignalA2Name().isEmpty()
                             && !t.getSignalB1Name().isEmpty()
