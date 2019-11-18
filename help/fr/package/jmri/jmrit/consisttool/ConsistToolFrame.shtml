@@ -33,40 +33,40 @@ D&#233;codeur Assist&#233;) se composent et une Centrale d
 &#224; Couplage Assist&#233;. Si les Centrales &#224; Couplages Assist&#233;s ne sont pas
 prises en charge par l'outil de votre syst&#232;me, ces s&#233;lections seront
 gris&#233;es.
-</P>
+</p>
 <p>
 La case &#224; c&#244;t&#233; de l'&#233;tiquette de <b>Couplage:</b> est utilis&#233; pour sp&#233;cifier l' ID du
 couplage. Pour les D&#233;codeur &#224; Couplage Assist&#233;, cela devrait &#234;tre l'
 adresse courte utilis&#233;e pour identifier le couplage. Pour  une Centrale &#224; Couplage Assist&#233;, cette valeur peut &#234;tre automatiquement
 rempli avec l'adresse de la locomotive de t&#234;te quand vous essayez de l'ajouter
 au couplage.
-</P>
+</p>
 <p>
 L'ajout d'un ID typique pour un D&#233;codeur &#224; Couplage Assist&#233;  devrait ressembler
 &#224; ce qui suit:
-</P>
+</p>
 <img src=images/ConsistTool-IDAdded.jpg alt="Consist Tool-ID Added">
 <p>
 La deuxi&#232;me ligne de l'outil couplage est utilis&#233; pour ajouter des locomotives.
 Une locomotive peut &#234;tre ajout&#233;e soit en entrant son num&#233;ro dans la
 case &#224; c&#244;t&#233; de la <b>Nouvelle Locomotive</b> ou en s&#233;lectionnant son num&#233;ro
 partir de la liste d&#233;roulante.
-</P>
+</p>
 <img src=images/ConsistTool-LeadLoco.jpg alt=" Lead Locomotive Selected">
 <p>
 Cliquer sur le bouton <b>Ajouter</b> va ajouter une locomotive au couplage
 et elle appara&#238;tra dans la liste sous la deuxi&#232;me ligne.
-</P>
+</p>
 <img src=images/ConsistTool-LeadLocoAdded.jpg alt="Lead Locomotive Added to Consist">
 <p>
 Cliquer sur le bouton <b>R&#233;initialiser</b> effacera l'information pour
 cette locomotive.
-</P>
+</p>
 <p>
 La case Direction <b>Normal</b> est utilis&#233;e pour d&#233;terminer si
 la locomotive roule en marche avant ou arri&#232;re lorsque le
 couplage se d&#233;place vers l'avant.
-</P>
+</p>
 <p>
 Vous remarquerez peut-&#234;tre &#224; partir des captures d'&#233;cran pr&#233;c&#233;dente que cette case est
 gris&#233; jusqu'&#224; ce qu'une locomotive de t&#234;te soit s&#233;lectionn&#233;e. Avec les

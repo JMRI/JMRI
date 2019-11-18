@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233;  2017-02-10-->
+<!-- Updated by Blorec Herv&#233;  2017-02-10-->
 <html lang="fr">
 <head>
  <title>
@@ -19,11 +19,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
 <div id="mainContent">
 
-<H1>JMRI: Ancien Panneau Pr&#233;f&#233;rences </H1>
+<h1>JMRI: Ancien Panneau Pr&#233;f&#233;rences </h1>
 
 <p class="important">
 	Cette page d&#233;crit un ancien panneau des Pr&#233;f&#233;rences qui a &#233;t&#233; remplac&#233; par

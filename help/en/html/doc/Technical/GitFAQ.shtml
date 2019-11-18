@@ -17,7 +17,8 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 
   <!-- FAQ-Head -->
   <script type="text/javascript">
@@ -26,13 +27,14 @@
   <link rel="stylesheet" type="text/css" href="/web/css/faq.css"
   media="screen">
   <!-- /FAQ-Head -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Git FAQ</h1>
 
       <p>This is a list of Frequently Asked Questions for Git,

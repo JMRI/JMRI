@@ -11,14 +11,15 @@
   <meta name="keywords" content=
   "JMRI technical code IntelliJ IDEA 2017.2 2018 2019.1 IDE">
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
 
-    <div id="mainContent">
-      <h1>JMRI Code: Building with IntelliJ IDEA</h1>
+  <h1>JMRI Code: Building with IntelliJ IDEA</h1>
 
       <p>IntelliJ IDEA Community Edition (available from <a href=
       "https://www.jetbrains.com/idea/">www.jetbrains.com/idea/</a>)

@@ -18,14 +18,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Analyseur de paquets DCC
       NCE</h1>S&eacute;lectionnez le "port
       s&eacute;rie" et appuyer sur le bouton "Ouvrir" avant
@@ -385,6 +386,8 @@
       portion d'octets &aacute; &eacute;crire de cette
       commande est d&eacute;cod&eacute;e par
       l'analyseur.</p>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

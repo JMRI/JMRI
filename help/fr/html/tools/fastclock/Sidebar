@@ -8,7 +8,7 @@
 	  <dl>
 		<dt><h3><a href="../index.shtml">Outils</a></h3></dt>
 		<dd>JMRI fournit des outils puissants pour travailler avec vos r&#233;seaux.
-		    <UL>
+		    <ul>
 				<li><a href="../Turnouts.shtml">Aiguillages</a></li>
 				<li><a href="../Lights.shtml">Lumi&#232;res</a></li>
 				<li><a href="../Sensors.shtml">Capteurs</a></li>

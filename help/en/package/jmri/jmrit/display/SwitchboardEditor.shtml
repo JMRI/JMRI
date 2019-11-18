@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="home" href="/"><!-- /Style -->
+  <link rel="home" title="home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Switchboard Editor</h1>
       <span class="since">since 4.7.3</span>
       <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>

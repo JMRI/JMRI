@@ -25,10 +25,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Keyspan USB connections</h1>
 
       <p>This page describes tests of two USB-to-serial adapters,
