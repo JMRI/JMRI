@@ -775,7 +775,7 @@ public class TrackSegment extends LayoutTrack {
         jmi.setToolTipText(Bundle.getMessage(toolTipKey));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for lineWidth
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+            int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                     Bundle.getMessage(titleKey),
                     Bundle.getMessage(titleKey),
                     // getting again, maybe something changed from the menu construction ?
@@ -1326,7 +1326,7 @@ public class TrackSegment extends LayoutTrack {
             jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                 //prompt for width
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                         getBumperLineWidth(), new Predicate<Integer>() {
@@ -1347,7 +1347,7 @@ public class TrackSegment extends LayoutTrack {
             jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                 //prompt for length
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
                         bumperLength, new Predicate<Integer>() {

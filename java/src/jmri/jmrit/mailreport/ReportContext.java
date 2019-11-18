@@ -23,6 +23,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.JmriInsets;
+import jmri.util.JmriJFrame;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
@@ -207,19 +208,9 @@ public class ReportContext {
             addString("Environment max bounds: " + ge.getMaximumWindowBounds());
 
             try {
-                GraphicsDevice[] gs = ge.getScreenDevices();
-                for (GraphicsDevice gd : gs) {
-                    Rectangle virtualBounds = new Rectangle();
-                    Insets virtualInsets = new Insets(0, 0, 0, 0);
-                    for (GraphicsConfiguration gc: gd.getConfigurations()) {
-                        virtualBounds = virtualBounds.union(gc.getBounds());
-                        virtualInsets = Toolkit.getDefaultToolkit().getScreenInsets(gc);
-                    }
-                    addString("Device: " + gd.getIDstring() + " virtualBounds = " + virtualBounds.getBounds());
-                    addString("Device: " + gd.getIDstring() + " virtualInsets = " + virtualInsets);
-                    addString("Device: " + gd.getIDstring() + " bounds = " + gd.getDefaultConfiguration().getBounds()
-                            + " " + gd.getDefaultConfiguration().toString());
-                    addString("Device: " + gd.getIDstring() + " insets = " + Toolkit.getDefaultToolkit().getScreenInsets(gd.getDefaultConfiguration()));
+                for (JmriJFrame.ScreenDimensions sd: JmriJFrame.getScreenDimensions()) {
+                    addString("Device: " + sd.getGraphicsDevice().getIDstring() + " bounds = " + sd.getBounds());
+                    addString("Device: " + sd.getGraphicsDevice().getIDstring() + " insets = " + sd.getInsets());
                 }
             } catch (HeadlessException ex) {
                 addString("Exception getting device bounds " + ex.getMessage());
