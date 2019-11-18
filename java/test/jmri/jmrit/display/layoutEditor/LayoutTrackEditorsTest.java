@@ -27,7 +27,7 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 public class LayoutTrackEditorsTest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(20); // 10 second timeout for methods in this test class.
 
     @Rule    // allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
@@ -79,6 +79,8 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditTrackSegmentDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         trackSegment.setArc(true);
         trackSegment.setCircle(true);
         createBlocks();
@@ -189,6 +191,8 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditTurnoutDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         createTurnouts();
 
         // Edit the double crossover
@@ -281,6 +285,8 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditRHTurnoutDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         createTurnouts();
         createBlocks();
 
@@ -387,6 +393,8 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditDoubleSlipDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         createTurnouts();
         createBlocks();
 
@@ -445,6 +453,8 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditSingleSlipDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         createTurnouts();
         createBlocks();
 
@@ -537,6 +547,8 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditXingDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         createBlocks();
 
         // Edit the level crossing
@@ -636,6 +648,8 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testEditTurntableDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         createTurnouts();
 
         // Edit the layoutTurntable
