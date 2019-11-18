@@ -74,7 +74,7 @@ public class TableFramesTest {
         // check import result
 
         Assert.assertNotNull("Imported OBlock", InstanceManager.getDefault(OBlockManager.class).getOBlock("OB0001"));
-//        jmri.util.JUnitAppender.assertErrorMessage("Portal IP0001-0002 needs an OBlock on each side");
+        jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
     }
 
     // The minimal setup for log4J

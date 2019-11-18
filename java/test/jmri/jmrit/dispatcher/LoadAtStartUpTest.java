@@ -17,6 +17,7 @@ import jmri.SensorManager;
 import jmri.SignalMastManager;
 import jmri.Throttle;
 import jmri.ThrottleManager;
+import jmri.jmrit.logix.WarrantPreferences;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
@@ -37,6 +38,7 @@ public class LoadAtStartUpTest {
 
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load layout file
         java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/DispatcherSMLLayout.xml");
