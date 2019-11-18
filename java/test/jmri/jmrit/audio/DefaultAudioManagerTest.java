@@ -27,10 +27,7 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
     @Test
     public void testGetActiveAudioFactory() {
         AudioFactory result = l.getActiveAudioFactory();
-        l.init();
-        JUnitUtil.waitFor(()->{return l.isInitialised();});
         Assert.assertNotNull("Verify that ActiveAudioFactory is not null", result);
-        l.cleanup();
     }
 
     /**
@@ -47,10 +44,14 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
     public void setUp() {
         JUnitUtil.setUp();
         l = new DefaultAudioManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        l.init();
+        JUnitUtil.waitFor(()->{return l.isInitialised();});
     }
 
     @After
     public void tearDown() {
+        l.cleanup();
+        JUnitUtil.waitFor(()->{return !l.isInitialised();});
         l = null;
         JUnitUtil.tearDown();
     }
