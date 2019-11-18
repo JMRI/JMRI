@@ -2921,6 +2921,17 @@
     have several schedules, it would do what is needed. By entering multiple spurs with schedules
     shared via a pool, you can create any car sequence imaginable for your industry.</p>
 
+   <h4>Track Pool Example</h4>
+   The following describes one way to use the track pool feature. Say you have an industry with three loading doors that was
+   originally designed to service 40' boxcars. You could tell the program that each door is a spur with a length of 44'.
+   This would force the program to only place 40' or smaller boxcars at each door. But what if you wanted to also accept
+   50' cars. By pooling the three tracks together, a larger boxcar could steal space from one of the other doors.
+   However, placing two 50' boxcars at adjacent doors doesn't work, but you could place two 50' boxcars at the two end
+   doors, but the center door can't be used when either end door is serving a 50' boxcar. To do this you would pool all
+   three "door" tracks, and set the minimum track length for the two end doors to 44'. Now the program can only steal
+   space from the center door. Placing a 50' boxcar at either end door, prevents the program from placing a car at the
+   center door. If a 40' boxcar is first placed at the center door, only 40' cars are then allowed at the end doors.
+   
    <a name="AlternateTrack" id="AlternateTrack"></a>
    <h4>Alternate Track or "Off Spot"</h4>
    You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur
