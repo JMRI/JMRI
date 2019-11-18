@@ -101,6 +101,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
         // Finally, shutdown NullAudio and close the output device
         log.debug("Shutting down NullAudio");
         // Do nothing
+        initialised = false;
     }
 
     @Override

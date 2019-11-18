@@ -244,6 +244,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
         log.info("Shutting down active AudioFactory");
         InstanceManager.getDefault(jmri.ShutDownManager.class).deregister(audioShutDownTask);
         activeAudioFactory.cleanup();
+        initialised = false;
     }
 
     @Override

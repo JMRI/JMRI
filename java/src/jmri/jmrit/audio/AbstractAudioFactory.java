@@ -88,6 +88,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                 AbstractAudioThread.snooze(100);
             }
         }
+        initialised = false;
     }
 
     @Override

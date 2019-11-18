@@ -140,6 +140,7 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
         // Finally, shutdown JavaSound and close the output device
         log.debug("Shutting down JavaSound");
         mixer = null;
+        initialised = false;
     }
 
     @Override
