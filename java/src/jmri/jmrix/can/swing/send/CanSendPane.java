@@ -163,10 +163,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
 
     @Override
     public String getTitle() {
-        if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("MenuItemSendFrame"));
-        }
-        return Bundle.getMessage("MenuItemSendFrame");
+        return prependConnToString(Bundle.getMessage("MenuItemSendFrame"));
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
