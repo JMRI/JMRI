@@ -153,12 +153,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         opsGroup.add(interchangeRadioButton);
         opsGroup.add(stageRadioButton);
 
-        if (Setup.isRfidEnabled()) {
-            ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
-            readerSelector=new NamedBeanComboBox<Reporter>(reporterManager);
-            readerSelector.setAllowNull(true);
-        }
-
         if (_location != null) {
             enableButtons(true);
             locationNameTextField.setText(_location.getName());
@@ -245,13 +239,18 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         // adjust text area width based on window size
         adjustTextAreaColumnWidth(commentScroller, commentTextArea);
 
-        // reader row
         JPanel readerPanel = new JPanel();
-        readerPanel.setLayout(new GridBagLayout());
-        readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
-        addItem(readerPanel, readerSelector, 0, 0);
-
-        readerPanel.setVisible(Setup.isRfidEnabled());
+        readerPanel.setVisible(false);
+        // reader row
+        if (Setup.isRfidEnabled()) {
+            ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
+            readerSelector=new NamedBeanComboBox<Reporter>(reporterManager);
+            readerSelector.setAllowNull(true);
+            readerPanel.setLayout(new GridBagLayout());
+            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
+            addItem(readerPanel, readerSelector, 0, 0);
+            readerPanel.setVisible(true);
+        }
 
         // row 12
         JPanel pB = new JPanel();
@@ -495,7 +494,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         _location.setName(locationNameTextField.getText());
         _location.setComment(commentTextArea.getText());
         if (Setup.isRfidEnabled()) {
-            _location.setReporter((Reporter) readerSelector.getSelectedItem());
+            _location.setReporter(readerSelector.getSelectedItem());
         }
         setLocationOps();
         // save location file
@@ -568,8 +567,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         stageRadioButton.setEnabled(enabled);
         //
         yardTable.setEnabled(enabled);
-        // enable readerSelect.
-        readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
+        if(readerSelector!=null) {
+           // enable readerSelect.
+           readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
+        }
     }
 
     @Override

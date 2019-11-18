@@ -289,6 +289,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             rfidComboBox = new NamedBeanComboBox<IdTag>(tagManager);
             rfidComboBox.setAllowNull(true);
+            rfidComboBox.setToolTipText(Bundle.getMessage("TipIdTag"));
             addItem(pRfid, rfidComboBox, 1, 0);
             pOptional.add(pRfid);
         }
@@ -393,8 +394,9 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
         commentTextField.setText(rs.getComment());
         valueTextArea.setText(rs.getValue());
-        rfidComboBox.setSelectedItem(rs.getIdTag());
-        
+        if(rfidComboBox != null) {
+           rfidComboBox.setSelectedItem(rs.getIdTag());
+        }
         // enable delete and save buttons
         deleteButton.setEnabled(true);
         saveButton.setEnabled(true);
@@ -562,10 +564,9 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         }
         _rs.setComment(commentTextField.getText());
         _rs.setValue(valueTextArea.getText());
-        // save the IdTag for this rolling stock
-        IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
-        if (idTag != null) {
-            _rs.setRfid(idTag.toString());
+        if(rfidComboBox!=null) {
+            // save the IdTag for this rolling stock
+            _rs.setIdTag(rfidComboBox.getSelectedItem());
         }
         autoTrackCheckBox.setEnabled(true);
 

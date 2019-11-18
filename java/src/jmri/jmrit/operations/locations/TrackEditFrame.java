@@ -599,7 +599,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         track.setComment(commentTextArea.getText());
 
         if (Setup.isRfidEnabled()) {
-            _track.setReporter((Reporter) readerSelector.getSelectedItem());
+            _track.setReporter(readerSelector.getSelectedItem());
         }
 
         // save current window size so it doesn't change during updates
@@ -803,9 +803,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         orderFIFO.setEnabled(enabled);
         orderLIFO.setEnabled(enabled);
         enableCheckboxes(enabled);
-        // enable readerSelect.
-        readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
-
+        if(readerSelector!=null) {
+           // enable readerSelect.
+           readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
+        }
     }
 
     @Override
