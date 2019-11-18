@@ -178,7 +178,8 @@ public class LinkedWarrantTest {
         String[] route2 = {"OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11"};
         block = _OBlockMgr.getOBlock("OB11");
 
-        Assert.assertEquals("Train after second leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
+        Assert.assertEquals("Train after second leg", block.getSensor().getDisplayName(),
+                NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);

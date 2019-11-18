@@ -128,7 +128,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         List<Warrant> list = warrantsUsing(block);
         boolean ok = true;
         if (!list.isEmpty()) {
-            ok = false;
+//            ok = false;   Last setting was OK = true when _suppressWarnings was set to true
             if (!_suppressWarnings) {
                 StringBuilder sb = new StringBuilder();
                 for (Warrant w : list) {
@@ -149,7 +149,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         boolean ok = true;
         List<Warrant> wList = warrantsUsing(portal);
         if (!wList.isEmpty()) {
-            ok = false;
+//          ok = false;   Last setting was OK = true when _suppressWarnings was set to true
             if (!_suppressWarnings) {
                 StringBuilder sb = new StringBuilder();
                 for (Warrant w : wList) {
@@ -161,7 +161,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         }
         List<NamedBean> sList = signalsUsing(portal);
         if (!sList.isEmpty()) {
-            ok = false;
+//          ok = false;   Last setting was OK = true when _suppressWarnings was set to true
             if (!_suppressWarnings) {
                 StringBuilder sb = new StringBuilder();
                 for (NamedBean s : sList) {
@@ -188,6 +188,7 @@ public class WarrantManager extends AbstractManager<Warrant>
         boolean ok = true;
         List<Warrant> list = warrantsUsing(block, path);
         if (!list.isEmpty()) {
+//          ok = false;   Last setting was OK = true when _suppressWarnings was set to true
             if (!_suppressWarnings) {
                 StringBuilder sb = new StringBuilder();
                 for (Warrant w : list) {
