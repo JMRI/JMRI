@@ -127,7 +127,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     /**
      * Attempt to create and initialise an AudioFactory, working
-     * down a preference heirarchy. Result is in activeAudioFactory.
+     * down a preference hierarchy. Result is in activeAudioFactory.
      * Uses null implementation to always succeed
      */
     private void createFactory() {
