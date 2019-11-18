@@ -214,6 +214,14 @@ public class DefaultAudioManager extends AbstractAudioManager {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean isInitialised() {
+        return initialised;
+    }
+
     @Override
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification = "Synchronized method to ensure correct counter manipulation")

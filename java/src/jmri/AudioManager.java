@@ -161,4 +161,10 @@ public interface AudioManager extends Manager<Audio> {
      */
     public void cleanup();
 
+    /**
+     * Determine if this AudioManager is initialised
+     * @return true if initialised
+     */
+    public boolean isInitialised();
+
 }
