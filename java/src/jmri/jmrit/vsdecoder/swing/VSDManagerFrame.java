@@ -217,6 +217,8 @@ public class VSDManagerFrame extends JmriJFrame {
             VSDecoder newDecoder = VSDecoderManager.instance().getVSDecoder(config);
             if (newDecoder == null) {
                 log.warn("no New Decoder constructed! Config: {}", config);
+                String msg = "VSDecoder not created. Maximal number is " + String.valueOf(VSDecoderManager.max_decoder);
+                JOptionPane.showMessageDialog(null, msg);
                 return;
             }
             VSDControl newControl = new VSDControl(config);
@@ -345,7 +347,7 @@ public class VSDManagerFrame extends JmriJFrame {
         String pcname = PCIDMap.get(id);
         PropertyChangeEvent pce = new PropertyChangeEvent(this, pcname, oldProp, newProp);
         // Fire the actual PropertyChangeEvent
-        log.debug("Firing property change: " + pcname);
+        log.debug("Firing property change: {}", pcname);
         firePropertyChange(pce);
     }
 
