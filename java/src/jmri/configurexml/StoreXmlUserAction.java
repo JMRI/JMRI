@@ -24,12 +24,22 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
+    private java.io.File defaultFile = null;
+
     public StoreXmlUserAction() {
         this(rb.getString("MenuItemStore"));
     }
 
     public StoreXmlUserAction(String s) {
         super(s);
+    }
+
+    public void setDefaultFile(java.io.File newDefaultFile) {
+        defaultFile = newDefaultFile;
+    }
+
+    public java.io.File getDefaultFile() {
+        return defaultFile;
     }
 
     @Override
@@ -40,6 +50,10 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         userFileChooser.setApproveButtonText(Bundle.getMessage("ButtonSave")); // is in jmri.NBBundle
         userFileChooser.setDialogTitle(rb.getString("StorePanelTitle"));
+        if (defaultFile != null) {
+            userFileChooser.setCurrentDirectory(defaultFile);
+            userFileChooser.setSelectedFile(defaultFile);
+        }
         java.io.File file = getFileCustom(userFileChooser);
 
         if (file == null) {

@@ -687,20 +687,13 @@ public class LayoutEditorTools {
             for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
                 if (t.getTurnout() == turnout) {
                     layoutTurnout = t;
-                    if (((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                            || (t.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                            || (t.getTurnoutType() == LayoutTurnout.LH_XOVER))
-                            && (!isCrossover)) {
+                    if (t.isTurnoutTypeXover()) {
                         JOptionPane.showMessageDialog(layoutEditor,
                                 Bundle.getMessage("InfoMessage1"), "",
                                 JOptionPane.INFORMATION_MESSAGE);
                         setSignalsCancelPressed(null);
                         return false;
-                    }
-                    if ((!((t.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                            || (t.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                            || (t.getTurnoutType() == LayoutTurnout.LH_XOVER)))
-                            && isCrossover) {
+                    } else if (isCrossover) {
                         JOptionPane.showMessageDialog(layoutEditor,
                                 Bundle.getMessage("InfoMessage8"), "",
                                 JOptionPane.INFORMATION_MESSAGE);

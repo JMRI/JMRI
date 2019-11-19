@@ -16,6 +16,7 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  * Test simple functioning of LayoutEditor.
  *
  * @author Paul Bender Copyright (C) 2016
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
@@ -60,6 +61,45 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         LayoutEditor e = new LayoutEditor(); // create layout editor
         Assert.assertNotNull("exists", e);
         JUnitUtil.dispose(e);
+    }
+
+    @Test
+    public void testSavePanel() {
+
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
+
+        // test the file -> delete panel menu item
+        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("StorePanelTitle"),
+                Bundle.getMessage("ButtonSave"));  // NOI18N
+        jmo.pushMenu(Bundle.getMessage("MenuFile") + "/"
+                + Bundle.getMessage("MenuItemStore"), "/");
+        JUnitUtil.waitFor(() -> {
+            return !(misc1.isAlive());
+        }, "misc1 finished");
+    }
+
+    @Test
+    public void testDeletePanel() {
+
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
+
+        // test the file -> delete panel menu item
+        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("DeleteVerifyTitle"),
+                Bundle.getMessage("ButtonYesDelete"));  // NOI18N
+        jmo.pushMenu(Bundle.getMessage("MenuFile") + "/"
+                + Bundle.getMessage("DeletePanel"), "/");
+        JUnitUtil.waitFor(() -> {
+            return !(misc1.isAlive());
+        }, "misc1 finished");
+
     }
 
     @Test
@@ -864,30 +904,37 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
 
         // try each possible option for toolbar location
-        //Top
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
-                + Bundle.getMessage("ToolBar") + "/"
-                + Bundle.getMessage("ToolBarSideTop"), "/");
-
+        // (default is top so we do it last...)
+        //
         //Left
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideLeft"), "/");
 
         //Right
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideRight"), "/");
 
         //Bottom
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideBottom"), "/");
 
         //float
         jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideFloat"), "/");
+
+        //Top
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
+                + Bundle.getMessage("ToolBarSideTop"), "/");
     }
 
     @Test
@@ -900,5 +947,4 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
-
 }
