@@ -20,7 +20,6 @@ install:
   - java -version
   - javac -version
   - mvn -version
-  - ant -version
 build: off
 
 environment:
