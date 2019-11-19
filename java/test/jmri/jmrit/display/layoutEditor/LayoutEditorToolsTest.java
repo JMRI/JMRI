@@ -29,20 +29,20 @@ public class LayoutEditorToolsTest {
     private LayoutEditor le = null;
     private LayoutEditorTools let = null;
 
-    ///@Test
+    @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", let);
     }
 
-    ///@Test
+    @Test
     public void testHitEndBumper() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // we haven't done anything, so reachedEndBumper should return false.
         Assert.assertFalse("reached end bumper", let.reachedEndBumper());
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -50,12 +50,12 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame to appear,
-        // then closes it.
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        // then closes it.
         jfo.requestClose();
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtTurnoutWithDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -74,7 +74,7 @@ public class LayoutEditorToolsTest {
         jfo.requestClose();
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtTurnoutWithCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -95,6 +95,7 @@ public class LayoutEditorToolsTest {
     @Test
     public void testSetSignalsAtTurnoutFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
@@ -103,12 +104,12 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame to appear,
-        // then closes it.
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        // then closes it.
         jfo.requestClose();
     }
 
-    ///@Test
+    @Test
     @Ignore("NPE during execution due to missing frame")
     public void testSetSignalsAtLevelXing() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -117,12 +118,12 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtLevelXing(le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame to appear,
-        // then closes it.
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
+        // then closes it.
         jfo.requestClose();
     }
 
-    ///@Test
+    @Test
     @Ignore("NPE during execution due to missing frame")
     public void testSetSignalsAtLevelXingFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -134,24 +135,24 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtLevelXingFromMenu(to, le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame to appear,
-        // then closes it.
         JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
+        // then closes it.
         jfo.requestClose();
     }
 
-    ///@Test
+    @Test
     public void testGetHeadFromNameNullName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull("null signal head for null name", let.getHeadFromName(null));
     }
 
-    ///@Test
+    @Test
     public void testGetHeadFromNameEmptyName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull("null signal head for empty name", let.getHeadFromName(""));
     }
 
-    ///@Test
+    @Test
     public void testGetHeadFromNameValid() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -160,21 +161,21 @@ public class LayoutEditorToolsTest {
         Assert.assertEquals("signal head for valid name", h, let.getHeadFromName("IH1"));
     }
 
-    ///@Test
+    @Test
     public void testRemoveSignalHeadFromPanelNameNullName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // this test verifies there is no exception
         let.removeSignalHeadFromPanel(null);
     }
 
-    ///@Test
+    @Test
     public void testRemoveSignalHeadFromPanelEmptyName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // this test verifies there is no exception
         let.removeSignalHeadFromPanel("");
     }
 
-    ///@Test
+    @Test
     public void testFinalizeBlockBossLogicNullInput() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // this test verifies there is no exception
@@ -182,7 +183,7 @@ public class LayoutEditorToolsTest {
 
     }
 
-    ///@Test
+    @Test
     public void testSetSignalHeadOnPanelAtXYIntAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -201,7 +202,7 @@ public class LayoutEditorToolsTest {
 
     }
 
-    ///@Test
+    @Test
     public void testSetSignalHeadOnPanelAtPointAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -221,7 +222,7 @@ public class LayoutEditorToolsTest {
 
     }
 
-    ///@Test
+    @Test
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -240,7 +241,7 @@ public class LayoutEditorToolsTest {
 
     }
 
-    ///@Test
+    @Test
     public void testGetSignalHeadIcon() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -248,7 +249,7 @@ public class LayoutEditorToolsTest {
         Assert.assertNotNull("Signal head icon for panel", let.getSignalHeadIcon("IH1"));
     }
 
-    ///@Test
+    @Test
     public void testIsHeadOnPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -256,7 +257,7 @@ public class LayoutEditorToolsTest {
         Assert.assertFalse("Signal head not on panel", let.isHeadOnPanel(h));
     }
 
-    ///@Test
+    @Test
     public void testIsHeadAssignedAnywhere() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -264,7 +265,7 @@ public class LayoutEditorToolsTest {
         Assert.assertFalse("Signal head not on panel", let.isHeadAssignedAnywhere(h));
     }
 
-    ///@Test
+    @Test
     public void testRemoveSignalHeadAssignment() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -273,7 +274,7 @@ public class LayoutEditorToolsTest {
         let.removeAssignment(h);
     }
 
-    ///@Test
+    @Test
     public void testInitializeBlockBossLogic() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
