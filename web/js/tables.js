@@ -36,10 +36,12 @@ function rebuildTable(data) {
 		});
 		thead += '</tr>';
 		$("table#jmri-data thead").html(thead);
-		//build all data rows for table body, store item name in rows for later lookup
-		var tbody = '';
+		//build all data rows for table body
+		var tbody = '';	
 		data.forEach(function (item) {
-			jmri.socket.send(item.type, { name: item.data.name }); //request updates from JMRI for each item in list
+			if ($.inArray(item.type, ["networkService","configProfile","systemConnection"]) < 0) { //request updates from JMRI for each item in list 
+				jmri.socket.send(item.type, { name: item.data.name });                         //  , except those not (yet) handled properly in JMRI 		 
+			}
 			tbody += '<tr data-name="' + item.data.name + '">';
 			tbody += buildRow(item.data) + '</tr>';
 		});
@@ -208,7 +210,7 @@ $(document).ready(function () {
 		//everything calls console()
 		console: function (originalData) {
 			var data = JSON.parse(originalData);
-//			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
+jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
 			if ($.isArray(data)) {  //if its an array, 
 				rebuildTable(data); //  replace the table with the array list			
 			} else if ((data.type) && (data.type === "error")) {
