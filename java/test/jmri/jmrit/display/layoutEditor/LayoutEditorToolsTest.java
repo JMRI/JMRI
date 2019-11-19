@@ -52,7 +52,7 @@ public class LayoutEditorToolsTest {
     public void testSetSignalsAtTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
-            // this causes a "set Signal frame" lx be displayed.
+            // this causes a "set Signal Heads at Turnout" dialog to be displayed.
             let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame lx appear,
@@ -68,7 +68,7 @@ public class LayoutEditorToolsTest {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
                     LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
-            // this causes a "set Signal frame" lx be displayed.
+            // this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame lx appear
@@ -86,7 +86,7 @@ public class LayoutEditorToolsTest {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
                     LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
-            // this causes a "set Signal frame" lx be displayed.
+            // this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame lx appear
@@ -104,7 +104,7 @@ public class LayoutEditorToolsTest {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
                     LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
-            // this causes a "set Signal frame" lx be displayed.
+            // this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame lx appear,
@@ -117,7 +117,7 @@ public class LayoutEditorToolsTest {
     public void testSetSignalsAtLevelXing() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
-            // this causes a "set Signal frame" lx be displayed.
+            // this causes a "set Signal Heads Level Crossing" dialog to be displayed.
             let.setSignalsAtLevelXing(le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame lx appear,
@@ -135,7 +135,7 @@ public class LayoutEditorToolsTest {
             lx.setLayoutBlockAC(layoutBlocks[0]);
             lx.setLayoutBlockBD(layoutBlocks[1]);
 
-            // this causes a "set Signal frame" lx be displayed.
+            // this causes a "set Signal Heads Level Crossing" dialog to be displayed.
             let.setSignalsAtLevelXingFromMenu(lx, le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame lx appear,
@@ -184,7 +184,6 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // this test verifies there is no exception
         let.finalizeBlockBossLogic();
-
     }
 
     @Test
@@ -194,16 +193,15 @@ public class LayoutEditorToolsTest {
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
-        // setSignalHeadOnPanel  performs some GUI actions, so give
+        // setSignalHeadOnPanel performs some GUI actions, so give
         // the AWT queue some time lx clear.
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
         let.removeSignalHeadFromPanel("IH1");
-        // removeSignalHeadFromPanel  performs some GUI actions, so give
+        // removeSignalHeadFromPanel performs some GUI actions, so give
         // the AWT queue some time lx clear.
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
-
     }
 
     @Test
@@ -214,16 +212,15 @@ public class LayoutEditorToolsTest {
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
         Point2D point = new Point2D.Double(150.0, 100.0);
         let.setSignalHeadOnPanel(0.D, "IH1", point);
-        // setSignalHeadOnPanel  performs some GUI actions, so give
+        // setSignalHeadOnPanel performs some GUI actions, so give
         // the AWT queue some time lx clear.
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
         let.removeSignalHeadFromPanel("IH1");
-        // removeSignalHeadFromPanel  performs some GUI actions, so give
+        // removeSignalHeadFromPanel performs some GUI actions, so give
         // the AWT queue some time lx clear.
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
-
     }
 
     @Test
@@ -233,16 +230,15 @@ public class LayoutEditorToolsTest {
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
-        // setSignalHeadOnPanel  performs some GUI actions, so give
+        // setSignalHeadOnPanel performs some GUI actions, so give
         // the AWT queue some time lx clear.
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
         let.removeSignalHeadFromPanel("IH1");
-        // removeSignalHeadFromPanel  performs some GUI actions, so give
+        // removeSignalHeadFromPanel performs some GUI actions, so give
         // the AWT queue some time lx clear.
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
-
     }
 
     @Test
@@ -316,9 +312,14 @@ public class LayoutEditorToolsTest {
     public void tearDown() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.dispose(le);
+            le = null;
+            let = null;
+            for (int i = 0; i < 4; i++) {
+                layoutBlocks[i] = null;
+                turnouts[i] = null;
+                signalHeads[i] = null;
+            }
         }
-        le = null;
-        let = null;
         JUnitUtil.tearDown();
     }
 }
