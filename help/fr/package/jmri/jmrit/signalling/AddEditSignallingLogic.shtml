@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-11-->
+<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-11-->
 
 <html lang="fr">
 <head>
@@ -10,7 +10,8 @@
   <title>JMRI: Adding/Editing SignalMast Logic</title>
   <meta name="author" content="Kevin Dickerson">
   <meta name="keywords" content=
-  "JMRI help SignalMast Logic Add Edit"><!-- Style -->
+  "JMRI help SignalMast Logic Add Edit">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -24,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1><a name="AddingEditingRoutes" id="AddingEditingRoutes"></a>
       Ajout/Modifications Logiques de M&acirc;t de Signal</h1>
 

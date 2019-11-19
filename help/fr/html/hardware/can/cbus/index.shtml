@@ -3,8 +3,8 @@
 
 <html lang="fr">
 <head>
-<!-- UpDated  by Blorec Herv&#233;  2017-01-19-->
-<title>JMRI Hardware Support - MERG CBUS</title>
+<!-- Updated by Blorec Herv&#233;  2017-01-19-->
+<title>JMRI Mat&#233;riel - MERG CBUS</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,8 +17,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+		<!-- Page Body -->
 
 <h1>Structure Mat&#233;riel: CBUS MERG</h1>
 
@@ -141,7 +143,7 @@ la lettre type est "T"au lieu de "S", par exemple, <code> MT-18; +21</code>)
 <p>Pourrait &#234;tre &#233;crit, mais le sch&#233;ma est similaire aux Aiguillages ci-dessus,
 sauf que  la lettre type est "L"au lieu de "T", par exemple, <code>ML-18;+21</code>
 
-<a name="tools"></a><h2>Outils CBUS MERG JMRI</h2></a>
+<a name="tools"></a><h2>Outils CBUS MERG JMRI</h2>
 <img src="../images/MERG_Menu.png" alt="MERG menu" align="right" height="132" width="227">
 <p>Le menu MERG contient 5 outils:
 <ul>
@@ -164,5 +166,4 @@ sauf que  la lettre type est "L"au lieu de "T", par exemple, <code>ML-18;+21</co
  </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
 </body>
-</html>
 </html>

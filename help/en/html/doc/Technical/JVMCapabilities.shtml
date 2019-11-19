@@ -19,13 +19,14 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Java Version-Specific Features</h1>
       <p>This page
       contains information about the compatibility and features of

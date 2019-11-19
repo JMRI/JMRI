@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>L'&Eacute;diteur de R&eacute;seau</h1><a name="contents"
       id="contents"></a>
 
@@ -2381,7 +2381,9 @@
       panneau avec des cantons d&eacute;finis et signaux
       plac&eacute;s peuvent aider &agrave; d&eacute;cider o&ugrave;
       placer les cantons et les signaux avant de les installer sur
-      votre r&eacute;seau.</p><!--#include virtual="/Footer" -->
+      votre r&eacute;seau.</p>
+
+      <!--#include virtual="/Footer" -->
     </div>
   </div>
 </body>

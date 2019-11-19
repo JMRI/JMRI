@@ -22,9 +22,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: RPS Icon</h1>RPS is a system for measuring the
       positions of rolling stock on your layout. More information
       on RPS is available on the <a href=

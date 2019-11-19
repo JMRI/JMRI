@@ -66,7 +66,7 @@
 
         <h4>MERG CBUS</h4>
             <ul>
-                <li></li>
+                <li>CBUS Reporters now respond to relevant outgoing CBUS messages.</li>
             </ul>
 
         <h4>MQTT</h4>
@@ -262,6 +262,14 @@
         <h4>SoundTraxx</h4>
             <ul>
                 <li></li>
+            </ul>
+
+        <h4>TAMS</h4>
+            <ul>
+                <li>New definition for the 32.2 version of the 
+                Multiprotocol Decoder
+                by
+                Tams Elektronik GmbH</li>
             </ul>
 
         <h4>TCS</h4>

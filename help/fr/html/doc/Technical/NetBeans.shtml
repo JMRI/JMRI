@@ -11,24 +11,21 @@
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
-	<div id="mainContent">
-	    <!-- -------- -->
-	    <!--  Teaser  --> <!-- Optional -->
-	    <!-- -------- -->
-
-
-	    <h1>JMRI: Construire avec NetBeans</h1>
+<h1>JMRI: Construire avec NetBeans</h1>
  	<ul>
         <li><a href="#intro">Introduction</a></li>
         <li><a href="#installing">Obtention et Installation de NetBeans</a></li>
@@ -74,7 +71,7 @@
 
 	<p>En raison d'une gestion diff&#233;rente des caract&#232;res de Fin de Ligne	( <code>LF/CR LF</code> ) entre Windows et les autres syst&#232;mes - nomm&#233;ment Unix et OS X
 			( voir <a href="GitFAQ.shtml#lineends">Gestion des Fins de Lignes</a> ) - il est de la plus haute importance que tous les utilisateurs Windows
-	adoptent les r&#233;glages suivants pour leur environnement de d&#233;veloppement. Ceci est absolument n&#233;cessaire pour que Git ppuisse suivre les modifications individuelles sur les fichiers que vous soumettez. </P>
+	adoptent les r&#233;glages suivants pour leur environnement de d&#233;veloppement. Ceci est absolument n&#233;cessaire pour que Git ppuisse suivre les modifications individuelles sur les fichiers que vous soumettez. </p>
 	<p>Si vous ne suivez pas ces instructions, vous aurez ab&#238;mer les terminaisons de ligne dans les fichiers que vous soumettez, qui &#224; son tour va
 	rendre leur historique de r&#233;vision beaucoup plus difficile d'acc&#232;s. Dans ces conditions, les fichiers ne serons pas accept&#233;s lors d'un "pull request"</p>
 
@@ -94,24 +91,25 @@
 		  et l&#224; s&#233;lectionnez <code>Change Line Endings on Save</code> et ensuite <code>Install</code>.</p>
 	<p>Vous pouvez v&#233;rifier que le plug-in est proprement install&#233; en allant &#224; <code>Tools > Plugins > Installed</code>,
 			o&#249; vous pouvez voir quelque chose comme ceci (les versions peuvent diff&#233;r&#233;es):</p>
-	<p><a href="images/NetbeansChangeLineEndingsPluginInstalled.png"><img src="images/NetbeansChangeLineEndingsPluginInstalled.png" align="center" height="102" width="224"></a></p>
+	<p><a href="images/NetbeansChangeLineEndingsPluginInstalled.png"><img src="images/NetbeansChangeLineEndingsPluginInstalled.png" height="102" width="224"></a></p>
 
 	<p>Une fois le plug-in install&#233; et activ&#233;, il est n&#233;cessaire de le configurer pour le caract&#232;re de fin de ligne souhait&#233;, via l'onglet  <code>Tools > Options > Editor > Line Endings</code>.</p>
 	<p>Pour JMRI, nous voulons utiliser le caract&#232;re de fin de ligne du style Unix, <code>LF</code>.</p>
-	<p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><img src="images/NetbeansChangeLineEndingsPluginConfiguration.png" align="center" height="168" width="237"></a></p>
+	<p><a href="images/NetbeansChangeLineEndingsPluginConfiguration.png"><img src="images/NetbeansChangeLineEndingsPluginConfiguration.png" height="168" width="237"></a></p>
 
 	<p>Le plug-in peut &#234;tre activ&#233; depuis un bouton sur la barre d'outil
-	<a href="images/NetbeansChangeLineEndingsPluginEnabled.png"><img src="images/NetbeansChangeLineEndingsPluginEnabled.png" align="center" height="19" width="55"></a></p>
+	<a href="images/NetbeansChangeLineEndingsPluginEnabled.png"><img
+			src="images/NetbeansChangeLineEndingsPluginEnabled.png" height="19" width="55"></a></p>
 
 	<p>Et le plug-in peut &#234;tre desactiv&#233; depuis ce bouton
-	<a href="images/NetbeansChangeLineEndingsPluginDisabled.png"><img src="images/NetbeansChangeLineEndingsPluginDisabled.png" align="center" height="19" width="55"></a></p>
+	<a href="images/NetbeansChangeLineEndingsPluginDisabled.png"><img src="images/NetbeansChangeLineEndingsPluginDisabled.png" height="19" width="55"></a></p>
 
 	<p>Quand un fichier est sauvegard&#233; ( en supposant que le plug-in est configur&#233; et est activ&#233; ) et ce fichier n'a pas les caract&#232;res de fin de ligne correspondant au type configur&#233; par le plug-in, le message suivant s'affiche.</p>
-	<p><a href="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png"><img src="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png" align="center" height="50" width="174"></a></p>
+	<p><a href="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png"><img src="images/NetbeansChangeLineEndingsPluginPopUpWarmingUponSavingAFileWithImproperLineEndings.png" height="50" width="174"></a></p>
 
 	<p>Quand "OK" est s&#233;lectionn&#233;, le plug-in actualise les fins de lignes pour la forme configur&#233;e et sauvegarde le fichier. Si "CANCEL" est s&#233;lectionn&#233;, le fichier sera sauvegarder SANS changement des fins de lignes.</p>
 
-    <h2><a id="gituse" name="gituse"></a>UTilisation de NetBeans avec le r&#233;pertoire Git du Code JMRI</h2>
+    <h2><a id="gituse" name="gituse"></a>Utilisation de NetBeans avec le r&#233;pertoire Git du Code JMRI</h2>
     
     <p>Git fournit un r&#233;pertoire de Code JMRI par l'utilisation de l'outil Git.
 	Pour plus d'information sur la fa&#231;on dont JMRI utilise Git, voir l'Aide JMRI dans
@@ -199,7 +197,7 @@
 		</ul>
 		Vous pouvez r&#233;p&#233;ter ceci aussi souvent que vous le voulez quand vous travaillez sur vos changements.
 		&#192; chaque fois, les changements les plus r&#233;cents sont pouss&#233;s et rendu disponibles.
-		<P>Finalement, quand votre changement est pr&#234;t &#224; &#234;tre soumis, allez sur
+		<p>Finalement, quand votre changement est pr&#234;t &#224; &#234;tre soumis, allez sur
 		le site web de GitHub pour
 		<a href="gitdeveloper.shtml#pull">Remplir et soumettre un "Pull Request"</a>
 		<p>&#201;ventuellement, quelqu'un regardera le "Pull Request" et d&#233;cidera de
@@ -248,28 +246,28 @@
          et ajouter une d&#233;finition de variable avec le chemin d'acc&#232;s dans le r&#233;pertoire qui
          comprend l'ex&#233;cutable NSIS, tels que:</p>
      <p style="font-family: monospace"> nsis.home = C:Program Files (x86)NSIS</p>
-     <p> ou</p>
-		 <p style="font-family: monospace"> nsis.home=/opt/nsis/nsis-2.46/</p>
-                 <p>Si vous installez un outil "spotbugs", vous d&#233;finirez &#233;galement spotbugs.home
-                     dans ce fichier. Vous pouvez &#233;galement d&#233;finir plusieurs autres machines sp&#233;cifiques et
-         les informations sp&#233;cifiques utilisateur, comme d&#233;crit dans divers endroits du
-         fichier build.xml.<p>
+     <p>ou</p>
+	 <p style="font-family: monospace"> nsis.home=/opt/nsis/nsis-2.46/</p>
+			 <p>Si vous installez un outil "spotbugs", vous d&#233;finirez &#233;galement spotbugs.home
+				 dans ce fichier. Vous pouvez &#233;galement d&#233;finir plusieurs autres machines sp&#233;cifiques et
+	 les informations sp&#233;cifiques utilisateur, comme d&#233;crit dans divers endroits du
+	 fichier build.xml.</p>
      <p>Avec le paquet  NSIS install&#233; sur votre ordinateur, il est n&#233;cessaire de cr&#233;er un fichier appel&#233;
-				 local.properties dans le m&#234;me r&#233;pertoire que le fichier build.xml de JMRI. Ce fichier n'est
-				 sp&#233;cifiquement <i>pas</i> v&#233;rifi&#233; via SVN afin que vos chemins d'installation d'outils sp&#233;cifiques 
-				 &#224; la machine ne sont <i>pas</i> v&#233;rifi&#233; dans SVN. Cr&#233;er ce fichier,
-				 et ajouter une d&#233;finition de variable avec le chemin correcte pour le r&#233;pertoire qui
-				 inclus les ex&#233;cutables NSIS, tel que:</p>
+	 local.properties dans le m&#234;me r&#233;pertoire que le fichier build.xml de JMRI. Ce fichier n'est
+	 sp&#233;cifiquement <i>pas</i> v&#233;rifi&#233; via SVN afin que vos chemins d'installation d'outils sp&#233;cifiques
+	 &#224; la machine ne sont <i>pas</i> v&#233;rifi&#233; dans SVN. Cr&#233;er ce fichier,
+	 et ajouter une d&#233;finition de variable avec le chemin correcte pour le r&#233;pertoire qui
+	 inclus les ex&#233;cutables NSIS, tel que:</p>
     <p style="font-family: monospace">nsis.home=C:/Program  Files (x86)/NSIS</p>
     <p>ou</p>
     <p style="font-family: monospace">nsis.home=/opt/nsis/nsis-2.46/</p> 
     <p>Si vous installez un outil "spotbugs", vous devez aussi d&#233;finir spotbugs.home
         dans ce fichier. Vous pouvez aussi d&#233;finir plusieurs autres informations  machine-specific ou
-				user-specific, comme d&#233;crit dans des emplacements vari&#233;s dans le
-				fichier build.xml.</p>
+		user-specific, comme d&#233;crit dans des emplacements vari&#233;s dans le
+		fichier build.xml.</p>
 		<p>Avec le paquet NSIS install&#233; sur votre ordinateur, et build.xml proprement
-						modifi&#233;, le paquet Windows peut &#234;tre cr&#233;&#233; en ex&#233;cutant la
-						 cible ant "package-windows" dans build.xml.</p>
+		modifi&#233;, le paquet Windows peut &#234;tre cr&#233;&#233; en ex&#233;cutant la
+		cible ant "package-windows" dans build.xml.</p>
 
  		<h2><a id="xmltools">Utilisation des outils NetBeans XML</a></h2>
 
@@ -292,27 +290,27 @@
      <p> L'outil SpotBugs est un outil d'analyse de code statique qui examine le code source Java
          pour les questions de codage courantes. L'installation d'un outil SpotBugs permet une t&#226;che ant
          d&#233;finie dans le build.xml pour ex&#233;cuter l'analyse SpotBugs &#224; travers l'ensemble du code source Java
-         dans JMRI.<p>
-     <p> Il semble que le fichier build.xml ne soit pas configur&#233; pour permettre au "plug-in" NetBeans
-         SpotBugs de lancer l'analyse sur le code JMRI sauf sur un one-file-at-a-time-basis.
-         En tant que tel, il semble conseill&#233; de t&#233;l&#233;charger et d'installer 
+         dans JMRI.</p>
+     	<p> Il semble que le fichier build.xml ne soit pas configur&#233; pour permettre au "plug-in" NetBeans
+        SpotBugs de lancer l'analyse sur le code JMRI sauf sur un one-file-at-a-time-basis.
+        En tant que tel, il semble conseill&#233; de t&#233;l&#233;charger et d'installer
                                  l'outil appropri&#233; SpotBugs autonome pour votre syst&#232;me d'exploitation. Les t&#233;l&#233;chargements SpotBugs
                                  peuvent &#234;tre trouv&#233;s &#224; l'adresse du <a href="https://spotbugs.github.io">
                                      Site web SpotBugs </a>.
-     <p> Une fois que vous avez l'outil SpotBugs install&#233;, vous devez fournir un chemin vers le
-         r&#233;pertoire contenant l'ex&#233;cutable pour une utilisation par le fichier ant build.xml. 
-         Si n&#233;cessaire, cr&#233;ez le fichier local.properties dans le m&#234;me r&#233;pertoire que
-         le fichier JMRI build.xml. Dans le fichier local.properties, ajouter la variable
-         spotbugs.home avec un chemin vers l'ex&#233;cutable spotbugs, tels que: </p>
-     <p style="font-family: monospace"> spotbugs.home=C:/spotbugs-3.1.1</p>
-     <p>ou</p>
-                <p style="font-family: monospace"> spotbugs.home =/opt/spotbugs-3.1.1</p>
-                <p> Pour ex&#233;cuter l'outil SpotBugs sur le code JMRI,ex&#233;cutez la cible ant "spotbugs"
-                    qui est d&#233;fini dans build.xml. Dans NetBeans cela peut &#234;tre accompli 
-                    par un clic droit sur le fichier build.xml  dans le volet "Files" et " Run"ing La cible "SpotBugs".
-                    Quand SpotBugs est termin&#233;, la fen&#234;tre de sortie NetBeans va montrer
-                                le chemin vers un fichier de rapport au format HTML. Ouvrez ce fichier avec un navigateur 
-                                pour examiner les r&#233;sultats SpotBugs .<p>
+     	<p> Une fois que vous avez l'outil SpotBugs install&#233;, vous devez fournir un chemin vers le
+        r&#233;pertoire contenant l'ex&#233;cutable pour une utilisation par le fichier ant build.xml.
+        Si n&#233;cessaire, cr&#233;ez le fichier local.properties dans le m&#234;me r&#233;pertoire que
+        le fichier JMRI build.xml. Dans le fichier local.properties, ajouter la variable
+        spotbugs.home avec un chemin vers l'ex&#233;cutable spotbugs, tels que: </p>
+		<p style="font-family: monospace"> spotbugs.home=C:/spotbugs-3.1.1</p>
+		<p>ou</p>
+		<p style="font-family: monospace">spotbugs.home =/opt/spotbugs-3.1.1</p>
+		<p>Pour ex&#233;cuter l'outil SpotBugs sur le code JMRI,ex&#233;cutez la cible ant "spotbugs"
+		qui est d&#233;fini dans build.xml. Dans NetBeans cela peut &#234;tre accompli
+		par un clic droit sur le fichier build.xml  dans le volet "Files" et " Run"ing La cible "SpotBugs".
+		Quand SpotBugs est termin&#233;, la fen&#234;tre de sortie NetBeans va montrer
+		le chemin vers un fichier de rapport au format HTML. Ouvrez ce fichier avec un navigateur
+		pour examiner les r&#233;sultats SpotBugs.</p>
 
 
 		<h2><a id="compileIndividualFile"> NetBeans et la compilation des fichiers individuels</a></h2>
@@ -349,7 +347,7 @@
 			</p>
 
 			<p>
-    	Pour cr&#233;er le fichier "patch diff" <strong>[deprecated]</strong>( obsol������������������te ):
+    	Pour cr&#233;er le fichier "patch diff" <strong>[deprecated]</strong>( obsol&egrave;te ):
      <ul>
  
      <li> Depuis le menu [Team], s&#233;lectionnez "Export Diff Patch..."

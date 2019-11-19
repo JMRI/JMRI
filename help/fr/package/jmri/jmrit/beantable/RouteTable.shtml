@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Le Tableau Itin&eacute;raire</h1>
 
       <p>Un itin&eacute;raire se compose d'un ou plusieurs

@@ -19,10 +19,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
+
       <h1>Hardware Support: RFID Readers</h1>
       <em>RFID support in JMRI is rapidly evolving; the actual code might be ahead or
       behind the documentation on any given day.</em>

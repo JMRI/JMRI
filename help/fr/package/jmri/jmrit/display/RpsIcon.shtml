@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Ic&ocirc;ne RPS</h1>RPS est un syst&egrave;me
       permettant de mesurer les positions du mat&eacute;riel
       roulant sur votre r&eacute;seau. Plus d'informations sur RPS

@@ -7,22 +7,20 @@
 
   <title>SVN Subversion</title>
   <meta name="author" content="Bob Jacobsen">
-  <meta name="keywords" content=
-  "JMRI technical code SVN Subversion FAQ">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
-  <link rel="stylesheet" type="text/css" href="/css/default.css"
-  media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css"
-  media="print">
+  <meta name="keywords" content="JMRI technical code SVN Subversion FAQ">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: FAQ Subversion</h1>
 
@@ -38,10 +36,8 @@ En g&#233;n&#233;ral, nous gardons tout dans le contr&#244;le de r&#233;vision S
 besoin pour les diff&#233;rentes lignes de propri&#233;t&#233;s que nous avons utilis&#233; pour en avoir besoin dans CVS. Elles 
 ressemblent &#224;:
 <code>
-<pre>
 # La ligne suivante est maintenue par CVS, SVP ne rien changer.
 # $Revision$
-</pre>
 </code>
 
 <p>
@@ -52,9 +48,7 @@ tr&#232;s utile si nous pouvons identifier le contenu sp&#233;cifique qui d&#233
 Toutefois, pourles fichiers html, XML, python et properties, nous faisons:
 
 <code>
-<pre>
 svn propset svn:keywords "Date Revision Version Id Author" {}
-</pre>
 </code>
 
 De cette fa&#231;on, SVN remplira ces balises si/quand elles sont pr&#233;sentes et le fichier est modifi&#233;

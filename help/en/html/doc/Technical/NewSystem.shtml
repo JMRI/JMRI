@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -9,9 +8,6 @@
   <title>JMRI: Adding A New System</title>
   <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical system add">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -20,15 +16,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
+<!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-      <h1>JMRI Code: Adding A New System</h1>
+
+    <h1>JMRI Code: Adding A New System</h1>
 
         <p>This page describes the steps to add a new data-type,
         e.g. Powerline devices, to JMRI.</p>
@@ -123,7 +121,6 @@
 
           <dd>
             <p>At this point, make sure you can compile.</p>
-
           </dd>
 
 <!-- (The dl vs h3 structure is really messed up here and below) -->
@@ -259,7 +256,7 @@
             <p>Create a new system-specific `ActionListBundle.properties` file
             (src/jmri/jmrix/powerline/PowerlineActionListBundle.properties)
             to add appropriate action items. Make sure to update the
-            `getActionModelResourceBundle()` method of the SystemConnectionMemo
+              <code>getActionModelResourceBundle()</code> method of the SystemConnectionMemo
             to reference this newly created ActionListBundle.</p>
           </dd>
 
