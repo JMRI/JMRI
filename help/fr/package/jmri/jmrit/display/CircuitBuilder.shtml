@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22--> 
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22-->
 <html LANG="fr">
 <head>
 <title>JMRI: Item Palette Help</title>
@@ -41,7 +41,7 @@ affiche les &#233;tats des cantons et des chemins par la couleur sans alt&#233;r
 Les fichiers de panneaux pr&#233;alablement faits avec l'&#201;diteur de Panneau
 peuvent &#234;tre utilis&#233;s avec le G&#233;n&#233;rateur de circuits tant qu'ils peuvent &#234;tre charg&#233;s dans cette
 version de JMRI. Le G&#233;n&#233;rateur de Circuit va moderniser les ic&#244;nes de voie en
-ic&#244;nes Indicateur de Voie. Voir <A HREF="ItemPalette.shtml"> L'article Palette</A>
+ic&#244;nes Indicateur de Voie. Voir <a href="ItemPalette.shtml"> L'article Palette</a>
 pour plus d'informations sur les ic&#244;nes indicateurs de voie.
 </p>
 

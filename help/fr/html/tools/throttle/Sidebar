@@ -1,33 +1,25 @@
 <!-- Translated by Blorec Herv&#233; le 2012-01-21-->
 <!-- This is the common sidebar definition for html/tools/throttle pages -->
-<html lang="fr">
 <hr class="hide">
   <div id="side"> <!-- Block of text on left side of page -->
-    <div style="text-align: center"><b>Throttle Tool<br>User Guide</b></div>
-    <div style="text-align: center; font: xx-small; font-size: xx-small">Revision 2004.11.21<br>Based on JMRI 1.5.3</div>
-    <br>
-    <div style="text-align: center; font: x-small; font-size: x-small">
-      <a href="http://downloads.sourceforge.net/sourceforge/jmri/ThrottleDocs.1.5.3.pdf?download" title="Click to view this user guide in PDF format">Voir/Charger<BR>ce document utilisant <BR>Adobe Reader</a>
-    </div>
-    <br>
-    <dl>
-      <dt><a href="ThrottleTOC.shtml" title="Click to view the Throttle Tool Table of Contents"><center>TABLE DES MATI&#232;RES</center></a></dt>
-      <br>Fermer Fen&#238;tre R&#233;gulateur
-      <dt>R&#233;gulateurs avanc&#233;s</dt>
+
+  	<dl>
+      <dt><h3><a href="ThrottleTOC.shtml" title="Click to view the Throttle Tool Table of Contents">R&#233;gulateurs</a></h3>
+    </dt>
       <dd>
 	<ul>
-	  <li>The <a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateurs dans JMRI</a></li>
-	  <li>The <a href="BasicThrottleWindow.shtml"> Fen&#238;tre R&#233;gulateurs lui-m&#238;me</a></li>
-	  <li>The <a href="ThrottleWindowMenus.shtml">R&#233;gulateurs Fen&#238;tre menus</a></li>
-	  <li>The <a href="ThrottleToolBar.shtml">R&#233;gulateurs Fen&#238;tre Barre d'Outils</a></li>
-	  <li>The <a href="AdvancedThrottleControl.shtml">R&#233;gulateurs Fen&#238;tre de contr&#244;les</a></li>
-	  <li>The <a href="ThrottlesListWindow.shtml">R&#233;gulateurs Liste Fen&#238;tre</a></li>
-	  <li>The <a href="ThrottlesPreferencesPane.shtml">R&#233;gulateurs volet pr&#233;f&#233;rences</a><br>
+	  <li><a href="ToolsMenuThrottleEntry.shtml">Menu R&#233;gulateurs dans JMRI</a></li>
+	  <li><a href="BasicThrottleWindow.shtml">Fen&#238;tre R&#233;gulateurs lui-m&ecirc;me</a></li>
+	  <li><a href="ThrottleWindowMenus.shtml">R&#233;gulateurs Fen&ecirc;tre menus</a></li>
+	  <li><a href="ThrottleToolBar.shtml">R&#233;gulateurs Fen&ecirc;tre Barre d'Outils</a></li>
+	  <li><a href="AdvancedThrottleControl.shtml">R&#233;gulateurs Fen&ecirc;tre de contr&#244;les</a></li>
+	  <li><a href="ThrottlesListWindow.shtml">R&#233;gulateurs Liste Fen&ecirc;tre</a></li>
+	  <li><a href="ThrottlesPreferencesPane.shtml">R&#233;gulateurs volet pr&#233;f&#233;rences</a><br>
 	  </li>
 	</ul>
 	<br>
 	<ul>
-	  <li>The <a href="RostersMediaPane.shtml">Panneaux Media et Fonction &#233;tiquette dans DecoderPro</a></li>
+	  <li><a href="RostersMediaPane.shtml">Panneaux Media et Fonction &#233;tiquette dans DecoderPro</a></li>
 	  <li><a href="../scripting/Jynstruments.shtml">Jynstruments</a></li>
 	  <li><a href="HowToJMRIOrientedThrottle.shtml">Comment construire un R&#233;gulateur orient&#233; JMRI</a></li>
 	</ul>
@@ -104,4 +96,48 @@
 	</ul>
       </dd>
     </dl>
+
+		<dt><h3><a href="../index.shtml">Outils</a></h3></dt>
+		<dd>JMRI fournit des outils puissants pour travailler avec vos r&#233;seaux.
+		    <ul>
+				<li><a href="../Turnouts.shtml">Aiguillages</a></li>
+				<li><a href="../Lights.shtml">Lumi&#232;res</a></li>
+				<li><a href="../Sensors.shtml">Capteurs</a></li>
+				<li><a href="../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></li>
+				<li><a href="../consisttool/ConsistTool.shtml">Couplage</a></li>
+				<li><a href="../signaling/index.shtml">Signalisation</a></li>
+				<li><a href="../Blocks.shtml">Cantons</a></li>
+				<li><a href="../Reporters.shtml">Rapports</a></li>
+				<li><a href="../Memories.shtml">Variables M&#233;moire</a></li>
+				<li><a href="../Routes.shtml">Itin&#233;raires</a></li>
+				<li><a href="../LRoutes.shtml">LItin&#233;raires</a></li>
+		        <li><a href="../Sections.shtml">Sections</a></li>
+				<li><a href="../Logix.shtml">Logix</a></li>
+				<li><a href="../fastclock/index.shtml">Horloges Rapides</a></li>
+				<li><a href="../speedometer/index.shtml">Compteur</a></li>
+				<li><a href="../Audio.shtml">Audio</a></li>
+				<li><a href="../IdTags.shtml">Etiquettes IDs</a></li>
+
+		    <li><a href="../index.shtml#systemSpecificTools">Syst&#232;me-sp&#233;cifique...</a></li>
+		    </ul>
+		</dd>
+
+			<dt><h3><a href="../automation/index.shtml">Automatisation du R&#233;seau</a></h3></dt>
+	   	<dd>JMRI peut &#234;tre utilis&#233; pour automatiser des parties
+			de votre r&#233;seau, depuis le simple contr&#244;le d'un croisement
+			&#224; la circulation de trains en toile de fond.
+		<ul>
+	        <li><a href="../signaling/index.shtml">Signalisation</a></li>
+			<li><a href="../signaling/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></li>
+			<li><a href="../Routes.shtml">Itin&#233;raires</a></li>
+	        <li><a href="../fastclock/index.shtml">Horloges Rapides</a></li>
+	        <li><a href="../scripting/index.shtml">Script</a></li>
+	    </ul>
+		</dd>
+
+    <!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
+
   </div>

@@ -10,20 +10,16 @@
     <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content=
   "JMRI technical code xml schema usage">
-  <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-  <!-- are an arbitrary design pattern used by the update.pl script to -->
-  <!-- easily replace the common header/footer code for all the web pages -->
-  <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-  <!-- or change them to reflect your alternative logo -->
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-      <h1>JMRI: XML Schema Usage</h1>
+
+    <h1>JMRI: XML Schema Usage</h1>
       <p>JMRI uses XML for a number of
       purposes: to hold decoder definitions, for its <a href=
       "XmlPersistance.shtml">persistance system</a> for

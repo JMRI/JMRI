@@ -9,6 +9,11 @@ PRINT_SUMMARY=${PRINT_SUMMARY:-true}
 RUN_ORDER=${RUN_ORDER:-filesystem}
 HEADLESS=${HEADLESS:-false}
 SKIPINTERMITTENT=${SKIPINTERMITTENT:-true}
+
+# ensure Jython can cache JAR classes
+PYTHON_CACHEDIR="${HOME}/jython/cache"
+mkdir -p ${PYTHON_CACHEDIR}
+
 export MAVEN_OPTS=-Xmx1536m
 
 if [[ "${HEADLESS}" == "true" ]] ; then
@@ -31,7 +36,8 @@ if [[ "${HEADLESS}" == "true" ]] ; then
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
             -Djava.awt.headless=${HEADLESS} \
             -Djmri.skipTestsRequiringSeparateRunning=${SKIPINTERMITTENT} \
-            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'"
+            -Dcucumber.options="--tags 'not @Ignore' --tags 'not @Headed'" \
+            -Dpython.cachedir=${PYTHON_CACHEDIR}
     fi
 else
     if [[ "${SKIPINTERMITTENT}" == "true" ]] ; then
@@ -44,9 +50,11 @@ else
             -Djava.awt.headless=${HEADLESS} \
             -Djmri.skipTestsRequiringSeparateRunning=${SKIPINTERMITTENT} \
             -Djmri.skipschematests=true \
-            -Dcucumber.options="--tags 'not @Ignore'"
+            -Dcucumber.options="--tags 'not @Ignore'" \
+            -Dpython.cachedir=${PYTHON_CACHEDIR}
     else
         # run the SKIPINTERMITTENT tests separately
         ./scripts/run_flagged_tests_separately
     fi
 fi
+
