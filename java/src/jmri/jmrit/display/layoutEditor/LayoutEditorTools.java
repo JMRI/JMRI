@@ -687,17 +687,18 @@ public class LayoutEditorTools {
             for (LayoutTurnout t : layoutEditor.getLayoutTurnouts()) {
                 if (t.getTurnout() == turnout) {
                     layoutTurnout = t;
-                    if (t.isTurnoutTypeXover()) {
-                        JOptionPane.showMessageDialog(layoutEditor,
-                                Bundle.getMessage("InfoMessage1"), "",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        setSignalsCancelPressed(null);
-                        return false;
-                    } else if (isCrossover) {
-                        JOptionPane.showMessageDialog(layoutEditor,
-                                Bundle.getMessage("InfoMessage8"), "",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        setXoverSignalsCancelPressed(null);
+                    if (t.isTurnoutTypeXover() != isCrossover) {
+                        if (isCrossover) {
+                            JOptionPane.showMessageDialog(layoutEditor,
+                                    Bundle.getMessage("InfoMessage8"), "",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            setXoverSignalsCancelPressed(null);
+                        } else {
+                            JOptionPane.showMessageDialog(layoutEditor,
+                                    Bundle.getMessage("InfoMessage1"), "",
+                                    JOptionPane.INFORMATION_MESSAGE);
+                            setSignalsCancelPressed(null);
+                        }
                         return false;
                     }
                 }
