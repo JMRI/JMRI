@@ -1795,6 +1795,7 @@
                  public="yes"
                  use="true"
                  failonerror="true"
+                 source="8"
                  windowtitle="JMRI API">
 
             <packageset dir="${source}" defaultexcludes="yes">
@@ -1868,6 +1869,7 @@
                  public="yes"
                  use="true"
                  failonerror="true"
+                 source="8"
                  windowtitle="JMRI API">
 
             <packageset dir="${source}" defaultexcludes="yes">
@@ -1943,6 +1945,7 @@
                  version="false"
                  public="yes"
                  use="true"
+                 source="8"
                  windowtitle="JMRI API">
 
             <packageset dir="${source}" defaultexcludes="yes">
