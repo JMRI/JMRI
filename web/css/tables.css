@@ -8,3 +8,6 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 table.sortable th:hover {
 	cursor: pointer;
 }
+table:not(.signalMast):not(.signalHead) tbody td.state {
+	cursor: pointer;
+}
