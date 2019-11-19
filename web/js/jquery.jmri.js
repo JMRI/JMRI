@@ -199,6 +199,7 @@
             jmri.THROWN = 4;
             jmri.ACTIVE = 2;
             jmri.INACTIVE = 4;
+            jmri.INCONSISTENT = 8;
             // Getters and Setters
             jmri.getLight = function (name) {
                 if (jmri.socket) {

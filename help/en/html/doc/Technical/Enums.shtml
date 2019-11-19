@@ -10,14 +10,13 @@
 
 <!--#include virtual="/Style.shtml" -->
 </head>
-<!--#include virtual="/Header.shtml" -->
-
 <body>
+<!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
     <div id="mainContent">
 
-	    <h1>JMRI: Using Enums</h1>
+      <h1>JMRI: Using Enums</h1>
 	    
 	    <h2>The Minimal Enum</h2>
 	    

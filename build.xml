@@ -1520,6 +1520,8 @@
             <sysproperty key="jmri.shutdownmanager" value="jmri.util.MockShutDownManager" />
             <!-- <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/> no longer specify specific library -->
 
+            <sysproperty key="jmri.skipTestsRequiringSeparateRunning" value="true"/><!-- skip intermittent tests -->
+
             <sysproperty key="user.language" value="en"/>
             <sysproperty key="user.country" value="US"/>
 
@@ -2049,13 +2051,13 @@
     </target>
 
     <target name="scanhelp"
-            description="scan English-language help for HTML errors">
+            description="scan English + French language help for HTML errors">
         <exec executable="./scripts/tidy-check.sh"
               osFamily="unix"
               failonerror="true">
             <arg value="help/en/*/*"/>
+            <arg value="help/fr/*/*"/>
         </exec>
-
     </target>
 
     <target name="remakedecoderindex"

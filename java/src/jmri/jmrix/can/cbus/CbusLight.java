@@ -61,7 +61,7 @@ public class CbusLight extends AbstractLight implements CanListener {
                 return;
         }
         // connect
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     /**

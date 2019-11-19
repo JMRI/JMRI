@@ -6,28 +6,18 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.MouseEvent;
 import java.util.EventObject;
-import java.util.Objects;
-import javax.swing.AbstractCellEditor;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SpinnerListModel;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Pane providing a Cbus event table. Menu code copied from BeanTableFrame.
@@ -38,7 +28,7 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  */
 public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
 
-    private CbusNodeNVTableDataModel nodeNVModel;
+    private final CbusNodeNVTableDataModel nodeNVModel;
     private int largerFont;
     private JTable nodeNvTable;
 
@@ -76,10 +66,27 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
         tableModel.getColumn(CbusNodeNVTableDataModel.NV_CURRENT_HEX_COLUMN).setCellRenderer(getRenderer());
         tableModel.getColumn(CbusNodeNVTableDataModel.NV_CURRENT_BIT_COLUMN).setCellRenderer( getRenderer() );        
         
-        tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_COLUMN).setCellRenderer( new SpinnerRenderer() );
-        tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_COLUMN).setCellEditor( new NvSpinnerEditor() );
-        tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN).setCellRenderer(getRenderer());
-        tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN).setCellRenderer( getRenderer() );        
+        log.debug("_editable : {} , tot column {}",_editable, nodeNVModel.getColumnCount());
+        
+        if (_editable) {
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_COLUMN).setCellRenderer( new SpinnerRenderer() );
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_COLUMN).setCellEditor( new NvSpinnerEditor() );
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN).setCellRenderer(getRenderer());
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN).setCellRenderer( getRenderer() );
+        }
+        else {
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_COLUMN).setMinWidth(0);
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_COLUMN).setMaxWidth(0);
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_COLUMN).setWidth(0);
+            
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN).setMinWidth(0);
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN).setMaxWidth(0);
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_HEX_COLUMN).setWidth(0);
+            
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN).setMinWidth(0);
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN).setMaxWidth(0);
+            tableModel.getColumn(CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN).setWidth(0);
+        }
         
         JTextField f = new JTextField();
         largerFont = f.getFont().getSize()+2;
@@ -90,6 +97,15 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
         JScrollPane eventScroll = new JScrollPane(nodeNvTable);
 
         add(eventScroll);
+        
+    }
+    
+    private boolean _editable = true;
+    
+    protected void setNonEditable() {
+        
+        _editable = false;
+        // nodeNVModel.setUnEditable();
         
     }
     
@@ -119,7 +135,7 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
                 int oldval = (int) nodeNVModel.getValueAt(row, CbusNodeNVTableDataModel.NV_CURRENT_VAL_COLUMN);
                 int newval = (int) nodeNVModel.getValueAt(row, CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
                 
-                String string="";
+                String string;
                 if(arg1 != null){
                     string = arg1.toString();
                     f.setText(string.toUpperCase());
@@ -156,6 +172,10 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
         final JSpinner spinner = new JSpinner(new SpinnerNumberModel(0, 0, 255, 1));
 
         public NvSpinnerEditor() {
+            init();
+        }
+        
+        final void init() {
             spinner.addChangeListener(this);
         }
 
@@ -203,6 +223,6 @@ public class CbusNodeNVEditTablePane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-    // private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditTablePane.class);
+    private final static Logger log = LoggerFactory.getLogger(CbusNodeNVEditTablePane.class);
 
 }

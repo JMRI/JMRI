@@ -16,14 +16,15 @@
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-      <h1>JMRI: Extending the JMRI Programs</h1>
+
+    <h1>JMRI: Extending the JMRI Programs</h1>
 
       <p>The original goal of the JMRI project was to produce a library upon
       which people could use to build their own applications. Although some

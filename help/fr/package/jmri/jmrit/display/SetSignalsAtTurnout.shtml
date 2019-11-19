@@ -1,6 +1,6 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-<!-- UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-11-01-->
 
 <html lang="fr">
 <head>
@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>D&eacute;finir Signaux aux aiguillages</h1>
 
       <h2>Introduction</h2>

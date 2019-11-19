@@ -25,10 +25,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Uhlenbrock Intellibox</h1>
 
       <p>JMRI can communicate with an Uhlenbrock Intellibox via the
