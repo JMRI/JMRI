@@ -26,10 +26,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Fleischmann Twin Centre</h1>
 
       <p>JMRI can communicate with the Fleischmann Twin Centre

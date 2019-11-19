@@ -1,11 +1,9 @@
 <!-- Sidebar -->
 <!-- Updated Blorec Herv&#233; le 2016-09-05;  -->
-<html lang="fr">
 	<!-- This is the common sidebar definition for html/tools pages -->
 	<hr class="hide">
-	<div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">JMRI is...</div>
+	    <div style="text-align: center">JMRI c'est...</div>
 		 <dl>
 
 			<dt><h3><a href="index.shtml">Outils G&#233;n&#233;raux</a></h3></dt>

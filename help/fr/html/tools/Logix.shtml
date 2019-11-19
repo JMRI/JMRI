@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- Updated  by Blorec Herv&#233;  2017-01-03-->
+<!-- Updated by Blorec Herv&#233;  2017-01-03-->
 <html lang="fr">
 <head>
  <title>JMRI: Logix Documentation</title>
@@ -17,10 +17,12 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+        <!-- Page Body -->
 
-    <h1>JMRI: Documentation Logix</h1>
+<h1>JMRI: Documentation Logix</h1>
     
 	<p> Les Logix&trade; fournissent une capacit&#233; puissante &#224; JMRI pour surveiller une
 	ou plusieurs conditions sur un r&#233;seau, et prendre des mesures lorsque ces 	conditions changent d'une 
@@ -31,7 +33,7 @@
 	&#233;finie par l'utilisateur de mani&#232;re intuitive, sans que l'utilisateur ait &#224; se familiariser 
 	avec la logique math&#233;matique.</p>
 
-	<a name="contents"><h2>Contenus</h2></a>
+	<a name="contents"></a><h2>Contenus</h2>
 
 	<p>La documentation ci-dessous d&#233;crit Logix, et discute de sa configuration. La documentation est
 	divis&#233;e en sections; cliquez ci-dessous pour un acc&#232;s facile &#224; une section list&#233;e. Si 
@@ -54,6 +56,7 @@
 
 	<a  name="intro"></a>
 	<h3>Introduction aux  Logix et Conditions</h3>
+
 	<p> Un Logix est un petit groupe de Conditions concentr&#233;s sur une t&#226;che unique sur le
 	r&#233;seau. Chaque Condition peut &#234;tre consid&#233;r&#233; comme une d&#233;claration de la 
 	forme: <p> si (expression logique) alors (action).</p>
@@ -113,7 +116,7 @@
 	&#233;galement si un Logix est "Activ&#233;". La derni&#232;re colonne de la Table fournit un moyen simple de modifier un 
 	Logix et ses Conditions.
 	En cliquant sur la case de choix <b>S&#233;lectionner</b> pour un Logix, un menu d&#233;roulant Avec trois choix; 
-	<B>Modifier</b>, <b>Copier</b> et <b>Supprimer</b>.
+	<b>Modifier</b>, <b>Copier</b> et <b>Supprimer</b>.
 	Chaque choix ouvre un volet pour l'op&#233;ration correspondante.
 	</p>
 
@@ -167,7 +170,7 @@
 	tableau JMRI) s'il vous pla&#234;t. N'oubliez pas de passer &#224; une autre cellule dans le tableau 
 	de sorte que le programme est averti que vous avez termin&#233; votre inscription, sinon l'entr&#233;e ne 
 	peut pas prendre effet.</i></p>
-	<P> Cliquant <b>Calculer</b> sous le Tableau  Conditions provoquera un recalcul des
+	<p> Cliquant <b>Calculer</b> sous le Tableau  Conditions provoquera un recalcul des
 	Conditions du Logix. Les &#233;tats r&#233;sultant sont affich&#233;s dans
 	la colonne &#201;tat du tableau . Cependant, puisque que le Logix est en cours d'&#233;dition, ils sont
          inactifs et donc pas aucune mesure Condition ne sera prise. Lorsque l'&#233;dition du Logix
@@ -239,7 +242,7 @@
 	la variable d'&#233;tat est invers&#233;e. Par exemple, si "Capteur Actif CS5" est vrai,
 	"Capteur CS5 NOT Actif " sera faux, et vice versa. Notez que" Capteur
 	Actif CS5" n'est parfois pas la m&#234;me chose que" Capteur CS5 NOT Inactif", parce que
-	le Capteur CS5  peut &#234;tre dans l'&#233;tat INCONNU.</P>
+	le Capteur CS5  peut &#234;tre dans l'&#233;tat INCONNU.</p>
 	<p>Les expressions logiques sont lues comme des d&#233;clarations &#233;crites. Il est facile
 	de mettre en place une expression logique, d'&#233;valuer de nombreuses situations sur
 	le r&#233;seau. Par exemple, "si le canton 10 et le canton 11 sont
@@ -267,7 +270,7 @@
       	</p>	
 	<p>Si (ant&#233;c&#233;dent est vrai) puis (faire actions "changer le vrai" ).</p>
 	<p> si (ant&#233;c&#233;dent est faux), puis (faire actions "changer le faux" ).</p>
-	<p> si (changements d'&#233;tat ant&#233;c&#233;dent) puis (faire actions "sur le changement").</ul></p>
+	<p> si (changements d'&#233;tat ant&#233;c&#233;dent) puis (faire actions "sur le changement").</p>
 
 	<a name="editconditional"></a><h3>La fen&#234;tre Modifier Condition</h3>
 
@@ -287,7 +290,7 @@
         choix des op&#233;rateurs logiques &#224; utiliser dans l'ant&#233;c&#233;dent. Les choix sont:
         tous les <b>AND</b> , tous les <b>OR</b> ou le <b>Mixed</b> . Mixed permet &#224; l'utilisateur de
         sp&#233;cifier toute combinaison de AND, OR et NOT. Lorsque ce choix est fait
-        l'expression logique requiert des parenth&#232;ses afin d'&#234;tre sans ambigüit&#233;. Ainsi,
+        l'expression logique requiert des parenth&#232;ses afin d'&#234;tre sans ambig�it&#233;. Ainsi,
         lorsque ce choix est fait, un champ texte est affich&#233; afin que les parenth&#232;ses puissent &#234;tre
         ins&#233;r&#233;es et l'expression modifi&#233;e. Les variables d'&#233;tat sont repr&#233;sent&#233;es 
 	dans l'expression par leur num&#233;ro de ligne.</p>   
@@ -333,13 +336,13 @@
  	il doit correspondre &#224; une entit&#233; existante (capteur, aiguillage,
 	la lumi&#232;re, etc.) Il est utile d'ouvrir le tableau  de capteur lors de l'entr&#233;e du noms capteur
 	, ou le tableau  des aiguillages pour montrer les aiguillages disponibles, etc</p>
-	<b>Attention<p>:</b> Si vous utilisez des noms utilisateur pour sp&#233;cifier des variables d'&#233;tat 
+	<p><b>Attention:</b> Si vous utilisez des noms utilisateur pour sp&#233;cifier des variables d'&#233;tat
 	soyez prudent lorsque vous &#233;ditez vos noms utilisateur ou vous pouvez casser vos d&#233;finitions de 
 	variable d'&#233;tat. Le nom utilisateur sp&#233;cifi&#233; doit correspondre, caract&#232;re pour 
 	caract&#232;re, blancs, y compris, au nom d'utilisateur r&#233;el du capteur, aiguillage, etc, pour que
 	vos variables d'&#233;tat puissent travailler. Si vous voulez &#234;tre en mesure d'&#233;diter librement 
 	vos noms utilisateur, utilisez les noms syst&#232;me pour d&#233;finir vos variables d'&#233;tat.</p>
-	<p> A tout moment pendant l'entr&#233;e de l'&#233;tat des donn&#233;es variables, le bouton 	
+	<p>A tout moment pendant l'entr&#233;e de l'&#233;tat des donn&#233;es variables, le bouton
 	<b>V&#233;rifier les variables d'&#233;tat</b> peut &#234;tre cliqu&#233; pour v&#233;rifier les 
 	donn&#233;es saisies et d'&#233;valuer les variables d'&#233;tat. Lorsque ce bouton est enfonc&#233;, la 
 	v&#233;rification et l'&#233;valuation se poursuit jusqu'&#224; ce qu'elle
@@ -627,7 +630,7 @@
 		<li><b>Aiguillage Verrouill&#233;</b> : Verrouille ou d&#233;verrouille un aiguillage. Entrez le
 		nom pour l'aiguillage, et choisir l'op&#233;ration &#224; partir du menu contextuel.
 		Remarque, pour contr&#244;ler le type d'aiguillage verrouill&#233; aller &#224; la page <a
-		HREF="../../../help/fr/package/jmri/jmrit/beantable/TurnoutTable.shtml"> Tableau Aiguillages</A> 
+		HREF="../../../help/fr/package/jmri/jmrit/beantable/TurnoutTable.shtml"> Tableau Aiguillages</a>
 		et s&#233;lectionnez le mode de verrouillage.</li>
 		<li><b>R&#233;initialisation du Capteur retard&#233;</b> : D&#233;finit le capteur
 		&#233;cifi&#233; pour l'&#233;tat choisi apr&#232;s attente d'un nombre sp&#233;cifi&#233; de 
@@ -656,9 +659,8 @@
 		direction de l'aiguillage sp&#233;cifi&#233;. En effet l'attente pr&#233;c&#233;dente est 
 		annul&#233;e et une nouvelle p&#233;riode d'attente est d&#233;marr&#233;e.
 		En effet, le temps d'attente est red&#233;marr&#233;. L'aiguillage n'est pas orient&#233; tant que 
-		la plupart des p&#233;riodes d'attente r&#233;centes expirent.</li
-		<li>
-		<b>Annuler Temporisation Aiguillage</b> : Annule toutes les minuteries d'attente pour r&#233;gler
+		la plupart des p&#233;riodes d'attente r&#233;centes expirent.</li>
+		<li><b>Annuler Temporisation Aiguillage</b> : Annule toutes les minuteries d'attente pour r&#233;gler
 		les aiguillages sp&#233;cifi&#233;s dans tous les Conditions dans tous les Logixs. Sp&#233;cifiez 
 		l'aiguillage en entrant son nom. L'aiguillage n'est pas d&#233;fini; toutes les actions actives 
 		retard&#233;es pour l'orientation de l'aiguillage sp&#233;cifi&#233; sont annul&#233;es sans 
@@ -668,12 +670,12 @@
 		et <i> mn</i> sur une horloge de 24 heures. Cette action r&#232;gle l'horloge rapide &#224; 
 		l'heure sp&#233;cifi&#233;e ind&#233;pendamment du fait que l'horloge acc&#233;l&#233;r&#233;e tourne ou est 	
 		arr&#234;t&#233;e.</li>
-		<LI><B>D&#233;marrage Horloge Acc&#233;l&#233;r&#233;e</b>: D&#233;marre l'horloge acc&#233;l&#233;r&#233;e JMRI en cours 	
+		<li><b>D&#233;marrage Horloge Acc&#233;l&#233;r&#233;e</b>: D&#233;marre l'horloge acc&#233;l&#233;r&#233;e JMRI en cours
 		d'ex&#233;cution. Si l'horloge rapide est d&#233;j&#224; en cours, cette action n'a 
-		aucun effet.</LI>
-		<LI><B>Arr&#234;t Horloge acc&#233;l&#233;r&#233;e</b>: Suspend l'horloge acc&#233;l&#233;r&#233;e JMRI. Si l'l'horloge rapide 
-		ne fonctionne pas, cette action n'a aucun effet.</LI>
-		<li><B>Copiez M&#233;moire dans m&#233;moire</b> : Copie la valeur d'une variable de m&#233;moire
+		aucun effet.</li>
+		<li><b>Arr&#234;t Horloge acc&#233;l&#233;r&#233;e</b>: Suspend l'horloge acc&#233;l&#233;r&#233;e JMRI. Si l'l'horloge rapide
+		ne fonctionne pas, cette action n'a aucun effet.</li>
+		<li><b>Copiez M&#233;moire dans m&#233;moire</b> : Copie la valeur d'une variable de m&#233;moire
  		dans une autre variable en m&#233;moire. Pr&#233;cisez la m&#233;moire &#224; copier en entrant son
 		nom dans le champ le plus &#224; gauche. Pr&#233;cisez la m&#233;moire devant recevoir la valeur 
 		copi&#233;e en saisissant son nom dans le champ le plus &#224; droite.</li>
@@ -686,10 +688,10 @@
 		entrant son nom syst&#232;me ou nom utilisateur.</li>
 		<li><b>Efface M&#226;t de Signalisation manuel</b> : Efface l'emprise sur le m&#226;t de signalisation 
 		sp&#233;cifi&#233;. Sp&#233;cifiez le m&#226;t de signalisation en entrant son nom syst&#232;me ou nom 
-		utilisateur.</LI> 
+		utilisateur.</li>
 		<li><b>Mettre le M&#226;t de Signalisation &#201;teint</b> : D&#233;finit le m&#226;t de 
 		signalisation sp&#233;cifi&#233; pourqu'il ne s'allume pas. Sp&#233;cifiez le m&#226;t de 
-		signalisation en entrant son nom syst&#232;me ou nom utilisateur.</LI> 
+		signalisation en entrant son nom syst&#232;me ou nom utilisateur.</li>
 		<li><b>Effacer le M&#226;t de Signalisation &#201;teint</b> : D&#233;finit le m&#226;t de 
 		signalisation sp&#233;cifi&#233; pour s'allumer. Sp&#233;cifiez le m&#226;t de signalisation en 
 		entrant son nom du syst&#232;me ou nom d'utilisateur.</li>
@@ -704,24 +706,23 @@
 		aiguillages comprenant le parcours du bulletin.
 		Sp&#233;cifiez le bulletin en entrant son nom syst&#232;me ou nom utilisateur.</li>
 		<li><b>D&#233;part Automatique du Train</b> : D&#233;marre la lecture du script enregistr&#233; pour le train pr&#233;cis&#233; dans l'autorisation restrictive.
-Sp&#233;cifiez l'autorisation restrictive en entrant son nom du syst&#232;me ou nom d'utilisateur.</li>
-<li><b>D&#233;part Manuel du Train</b> : Sert une "autorisation" &#224; un op&#233;rateur qui ex&#233;cute manuellement les droits de circulation du train pour l'itin&#233;raire sous autorisation restrictive.
-Sp&#233;cifiez l'autorisation restrictive en entrant son nom syst&#232;me ou nom utilisateur.</li>
-<li><b>Train Command&#233; Automatiquement</b> :Questions de la commande sp&#233;cifi&#233;e pour un train automatique. Les commandes sont: ARR&#234;T, REPRISE, ABANDON.
-Sp&#233;cifiez l'autorisation restrictive du train en entrant son nom syst&#232;me ou nom utilisateur.</li>
-<li><b>R&#233;gler le Coefficient du R&#233;gulateur</b> : Augmente ou diminue les r&#233;glages du r&#233;gulateur d'un train en ex&#233;cution automatique par le facteur indiqu&#233;.
-Sp&#233;cifiez le bulletin du train en entrant son nom du syst&#232;me ou nom d'utilisateur.</li>
-<li><b>Attribuer des OCanton</b>: Attribue un Ocanton.
-Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom d'utilisateur.</li>
-<li><b>Fixer le Chemin du Canton</b>: Fixer l'aiguillage pour un chemin dans le Ocanton. 
-Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom d'utilisateur.</li>
-<li><b>D&#233;sattribuer OCanton</b> :D&#233;sattribue un Ocanton 
-Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom utilisateur.</li>
-<li><b>Fixer un Canton Hors-Service</b>: Fixe l'&#233;tat d'un Ocanton &#224; Hors-Service.
-Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom 'utilisateur.</li>
-<li><b>Annuler un Canton Hors-Service</b>:  Fixe l'&#233;tat d'un Ocanton &#224; &#233;tat normal.
-Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom utilisateur.</li>
-
+		Sp&#233;cifiez l'autorisation restrictive en entrant son nom du syst&#232;me ou nom d'utilisateur.</li>
+		<li><b>D&#233;part Manuel du Train</b> : Sert une "autorisation" &#224; un op&#233;rateur qui ex&#233;cute manuellement les droits de circulation du train pour l'itin&#233;raire sous autorisation restrictive.
+		Sp&#233;cifiez l'autorisation restrictive en entrant son nom syst&#232;me ou nom utilisateur.</li>
+		<li><b>Train Command&#233; Automatiquement</b> :Questions de la commande sp&#233;cifi&#233;e pour un train automatique. Les commandes sont: ARR&#234;T, REPRISE, ABANDON.
+		Sp&#233;cifiez l'autorisation restrictive du train en entrant son nom syst&#232;me ou nom utilisateur.</li>
+		<li><b>R&#233;gler le Coefficient du R&#233;gulateur</b> : Augmente ou diminue les r&#233;glages du r&#233;gulateur d'un train en ex&#233;cution automatique par le facteur indiqu&#233;.
+		Sp&#233;cifiez le bulletin du train en entrant son nom du syst&#232;me ou nom d'utilisateur.</li>
+		<li><b>Attribuer des OCanton</b>: Attribue un Ocanton.
+		Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom d'utilisateur.</li>
+		<li><b>Fixer le Chemin du Canton</b>: Fixer l'aiguillage pour un chemin dans le Ocanton.
+		Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom d'utilisateur.</li>
+		<li><b>D&#233;sattribuer OCanton</b> :D&#233;sattribue un Ocanton
+		Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom utilisateur.</li>
+		<li><b>Fixer un Canton Hors-Service</b>: Fixe l'&#233;tat d'un Ocanton &#224; Hors-Service.
+		Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom 'utilisateur.</li>
+		<li><b>Annuler un Canton Hors-Service</b>:  Fixe l'&#233;tat d'un Ocanton &#224; &#233;tat normal.
+		Sp&#233;cifi&#233; le OCanton en entrant son nom du syst&#232;me ou nom utilisateur.</li>
 	</ul>
 
 	<a name="notes"></a><h3> Notes compl&#233;mentaires</h3>
@@ -734,122 +735,129 @@ int&#233;r&#234;t pour les versions pr&#233;c&#233;dentes de Logix.
 Conditions?</b><br>
 Un groupe de Conditions a &#233;t&#233; choisi pour plusieurs raisons, notamment:
 	<ol>
-	<li><p> Un groupement de Conditions dans un Logix, et concentration des Logix sur une t&#226;che devrait finir par &#234;tre beaucoup plus convivial. Pensez &#224; un Logix avec plusieurs Conditions commandant un Feu de signalisation de trois aiguillages. La premi&#232;re tranche de Condition peut v&#233;rifier les conditions pour un aspect rouge, et de prendre les mesures appropri&#233;es. La seconde condition peut v&#233;rifier sur un autre aspect autoris&#233; qui, selon les r&#232;gles du chemin de fer pourrait &#234;tre mod&#233;lis&#233; d&#233;pendant de l'&#233;tat calcul&#233; &#224; la condition premi&#232;re. Autres Conditions serait de montrer d'autres apparences selon les r&#232;gles du chemin de fer. Donc, avec un seul Logix, un utilisateur doit &#234;tre capable de mettre en place la logique
-	n&#233;cessaire pour fixer les apparences logiques pour une T&#234;te de signal. Ainsi une fois le capteurs, les aiguillages, signaux et les Feuxs sont mises en place, un seul nouveau nom syst&#232;me, le nom du syst&#232;me de Logix, doit &#234;tre d&#233;fini et en garder la trace.
-	<li>Une autre raison pour le groupement de Conditions multiples est une op&#233;ration plus simple
-	. Moins d'auditeurs derri&#232;re les sc&#232;ne sont n&#233;cessaires pour accomplir la m&#234;me t&#226;che.
+		<li><p> Un groupement de Conditions dans un Logix, et concentration des Logix sur une t&#226;che devrait finir par &#234;tre beaucoup plus convivial. Pensez &#224; un Logix avec plusieurs Conditions commandant un Feu de signalisation de trois aiguillages. La premi&#232;re tranche de Condition peut v&#233;rifier les conditions pour un aspect rouge, et de prendre les mesures appropri&#233;es. La seconde condition peut v&#233;rifier sur un autre aspect autoris&#233; qui, selon les r&#232;gles du chemin de fer pourrait &#234;tre mod&#233;lis&#233; d&#233;pendant de l'&#233;tat calcul&#233; &#224; la condition premi&#232;re. Autres Conditions serait de montrer d'autres apparences selon les r&#232;gles du chemin de fer. Donc, avec un seul Logix, un utilisateur doit &#234;tre capable de mettre en place la logique
+		n&#233;cessaire pour fixer les apparences logiques pour une T&#234;te de signal. Ainsi une fois le capteurs, les aiguillages, signaux et les Feuxs sont mises en place, un seul nouveau nom syst&#232;me, le nom du syst&#232;me de Logix, doit &#234;tre d&#233;fini et en garder la trace.
+		<li>Une autre raison pour le groupement de Conditions multiples est une op&#233;ration plus simple
+		. Moins d'auditeurs derri&#232;re les sc&#232;ne sont n&#233;cessaires pour accomplir la m&#234;me t&#226;che.
 		M&#234;me si, suivant l'exemple ci-dessus, la logique de chaque aspect du M&#226;t de signalisation (chaque
 		condition) peut d&#233;pendre d'un capteur particulier (un canton d'occupation par exemple),
 		si les Conditions sont combin&#233;es en un seul Logix, seul  un interlocuteur est n&#233;cessaire
 		pour ce capteur. C'est une mise en oeuvre plus simple que d'avoir plusieurs &#233;couteurs.</li>
 	</ol>
-</li>
-<li><b>Comment est d&#233;marr&#233; un Logix ?</b><br>
-Le d&#233;marrage de Logix est semblable au d&#233;marrage d'une lumi&#232;re, un itin&#233;raire, ou
-autre entit&#233; JMRI fonctionnant en permanence. En interne un Logix a une proc&#233;dure
-"activer", qui est appel&#233;e lorsque le Logix est cr&#233;&#233;, apr&#232;s l'avoir
- &#233;dit&#233;, ou lorsqu'il est charg&#233; &#224; partir d'un fichier de configuration. Cette
-m&#233;thode d&#233;marre les auditeurs d'&#233;l&#233;ments dans les variables d'&#233;tat
-des Conditions du Logix. Lorsque l'un de ces deux auditeurs (en indiquant
-que la propri&#233;t&#233; regard&#233;e d'une variable d'&#233;tat a chang&#233;), le Logix
-est calcul&#233;, il en r&#233;sulte que des mesures appropri&#233;es soient prises, &#224; condition que le
-Logix soit activ&#233;.
+	</li>
+	<li><b>Comment est d&#233;marr&#233; un Logix ?</b><br>
+	Le d&#233;marrage de Logix est semblable au d&#233;marrage d'une lumi&#232;re, un itin&#233;raire, ou
+	autre entit&#233; JMRI fonctionnant en permanence. En interne un Logix a une proc&#233;dure
+	"activer", qui est appel&#233;e lorsque le Logix est cr&#233;&#233;, apr&#232;s l'avoir
+	 &#233;dit&#233;, ou lorsqu'il est charg&#233; &#224; partir d'un fichier de configuration. Cette
+	m&#233;thode d&#233;marre les auditeurs d'&#233;l&#233;ments dans les variables d'&#233;tat
+	des Conditions du Logix. Lorsque l'un de ces deux auditeurs (en indiquant
+	que la propri&#233;t&#233; regard&#233;e d'une variable d'&#233;tat a chang&#233;), le Logix
+	est calcul&#233;, il en r&#233;sulte que des mesures appropri&#233;es soient prises, &#224; condition que le
+	Logix soit activ&#233;.
 
-<p><b>Quel est l'&#233;tat ​​initial d'un Logix et ses conditions?</b>
-<p>Quand un Logix est cr&#233;&#233; ou modifi&#233;, l'&#233;tat initial de chaque Condition
-est vrai ou faux, comme indiqu&#233; dans la fen&#234;tre Modifier Logix. Quand un Logix est charg&#233;
-&#224; partir d'un fichier de configuration, l'&#233;tat initial de chaque condition est inconnue.
-<p> Logix est activ&#233; automatiquement lorsqu'il est cr&#233;&#233;.
-Un Logix peut &#234;tre activ&#233;/d&#233;sactiv&#233; par
-d&#233;cochant/cochant la case dans la colonne Activer dans le tableau Logix.
-Par exemple, vous voudrez peut-&#234;tre d&#233;sactiver un Logix alors que vous cr&#233;ez
-et d&#233;bog&#233;, jusqu'&#224; ce que vous soyez certain que vous l'avez mis en place correctement.
-Un Logix peut &#234;tre activ&#233; ou d&#233;sactiv&#233; de mani&#232;re dynamique par un autre Logix (voir actions permis
-actions <a href="#action"> dessus,</a>).
+	<li><b>Quel est l'&#233;tat ??initial d'un Logix et ses conditions?</b>
+	<p>Quand un Logix est cr&#233;&#233; ou modifi&#233;, l'&#233;tat initial de chaque Condition
+	est vrai ou faux, comme indiqu&#233; dans la fen&#234;tre Modifier Logix. Quand un Logix est charg&#233;
+	&#224; partir d'un fichier de configuration, l'&#233;tat initial de chaque condition est inconnue.
+	<p> Logix est activ&#233; automatiquement lorsqu'il est cr&#233;&#233;.
+	Un Logix peut &#234;tre activ&#233;/d&#233;sactiv&#233; par
+	d&#233;cochant/cochant la case dans la colonne Activer dans le tableau Logix.
+	Par exemple, vous voudrez peut-&#234;tre d&#233;sactiver un Logix alors que vous cr&#233;ez
+	et d&#233;bog&#233;, jusqu'&#224; ce que vous soyez certain que vous l'avez mis en place correctement.
+	Un Logix peut &#234;tre activ&#233; ou d&#233;sactiv&#233; de mani&#232;re dynamique par un autre Logix (voir actions permis
+	actions <a href="#action"> dessus</a>).
+	<p>
+	Lorsque JMRI stocke la configuration d'un r&#233;seau dans un fichier, par exemple un fichier de panneau, tout
+	Informations Logix, y compris l'&#233;tat activ&#233;/d&#233;sactiv&#233; du Logix, sont
+	enregisr&#233;s . Quand un Logix est charg&#233; depuis un fichier de configuration, il est activ&#233; ou d&#233;sactiv&#233;
+	 en fonction de ce qui a &#233;t&#233; enregistr&#233; dans le fichier de configuration .
+	Ceci est fait de sorte que les gens peuvent d&#233;sactiver leur Logix tout en les d&#233;bogant ,
+	mais encore sauver et restaurer la configuration selon vos besoins.</p></li>
 
-<p>
-Lorsque JMRI stocke la configuration d'un r&#233;seau dans un fichier, par exemple un fichier de panneau, tout
-Informations Logix, y compris l'&#233;tat activ&#233;/d&#233;sactiv&#233; du Logix, sont
-enregisr&#233;s . Quand un Logix est charg&#233; depuis un fichier de configuration, il est activ&#233; ou d&#233;sactiv&#233;
- en fonction de ce qui a &#233;t&#233; enregistr&#233; dans le fichier de configuration .
-Ceci est fait de sorte que les gens peuvent d&#233;sactiver leur Logix tout en les d&#233;bogant ,
-mais encore sauver et restaurer la configuration selon vos besoins.
-<p><li><b>Qu'est-ce qui se passe quand un programme JMRI d&#233;marre ou lorsqu'un fichier de configuration
-est charg&#233; par un programme JMRI ?,</b> 
-<p> Il s'agit d'une question complexe qui d&#233;pend de beaucoup de choses,
-comme, comment l'utilisateur a mis en place des &#233;valuations d'aiguillage, la d&#233;tection de Canton, etc
-Quand un fichier de configuration  est lu, les diff&#233;rentes entit&#233;s (capteurs, les aiguillages, les T&#234;tes de signal, etc )
-sont charg&#233;s dans un ordre presque al&#233;atoire, et,
-puisque la plupart des entit&#233;s vont se charger en &#233;tat INCONNU
- Le calcul d'un Logix imm&#233;diatement apr&#232;s le chargement du fichier complet de configuration,ne produira pas un d&#233;marrage propre
-Ainsi quand un Logix est charg&#233;, l'&#233;tat de chaque condition commence par INCONNU. Imm&#233;diatement apr&#232;s que le fichier complet de configuration ait &#233;t&#233; charg&#233;, toutes les Logix sont activ&#233;s, et alors tous les logix sont calcul&#233;s. L'&#233;tat des Conditions changes de INCONNU pour vrai ou faux. Mais l'&#233;tat calcul&#233; de la condition est "correct" si un ou plusieurs
-des variables d'&#233;tat est &#233;valu&#233;s &#224; partir d'une entit&#233; dans un &#233;tat INCONNU? Par exemple, pensez &#224; un aiguillage dans un &#233;tat inconnu
--- Aiguillage Droit et Aiguillage D&#233;vi&#233; ont &#233;t&#233; &#233;valu&#233;s tous les deux &#224; faux
-Lorsque JMRI enregistre la configuration du r&#233;seau dans un fichier, par exemple un fichier de panneau, toute
-informations Logix, y compris l'&#233;tat activ&#233;/d&#233;sactiv&#233; du Logix, est enregistr&#233;e
-. Quand un Logix est charg&#233; depuis un fichier de configuration, il est activ&#233; ou d&#233;sactiv&#233; statut
-est r&#233;gl&#233;e en fonction de ce qui a &#233;t&#233; enregistr&#233; dans le fichier de configuration .
-Ceci est fait de sorte que les gens peuvent d&#233;sactiver leur Logix tout en lesr d&#233;bogant,
-mais encore sauver et restaurer la configuration selon vos besoins. Comme les auditeurs continuent de tirer pour des variables d'&#233;tat, finalement chaque entit&#233; a son &#233;tat actuel correct et le Logix fonctionnera tr&#232;s bien. Vous pouvezsurveiller cette action en regardant les &#233;tats dans le Tableau Capteur, le Tableau Aiguillage, etc.les Conditions au d&#233;marrage certainement sont des choses &#224; se rappeler au d&#233;marrage d'un Logix.
+	<li><b>Qu'est-ce qui se passe quand un programme JMRI d&#233;marre ou lorsqu'un fichier de configuration
+	est charg&#233; par un programme JMRI ?,</b>
+	<p>Il s'agit d'une question complexe qui d&#233;pend de beaucoup de choses,
+	comme, comment l'utilisateur a mis en place des &#233;valuations d'aiguillage, la d&#233;tection de Canton, etc
+	Quand un fichier de configuration  est lu, les diff&#233;rentes entit&#233;s (capteurs, les aiguillages, les T&#234;tes de signal, etc )
+	sont charg&#233;s dans un ordre presque al&#233;atoire, et,
+	puisque la plupart des entit&#233;s vont se charger en &#233;tat INCONNU
+	Le calcul d'un Logix imm&#233;diatement apr&#232;s le chargement du fichier complet de configuration,ne produira pas un d&#233;marrage propre
+	Ainsi quand un Logix est charg&#233;, l'&#233;tat de chaque condition commence par INCONNU. Imm&#233;diatement apr&#232;s que le fichier complet de configuration ait &#233;t&#233; charg&#233;, toutes les Logix sont activ&#233;s, et alors tous les logix sont calcul&#233;s. L'&#233;tat des Conditions changes de INCONNU pour vrai ou faux. Mais l'&#233;tat calcul&#233; de la condition est "correct" si un ou plusieurs
+	des variables d'&#233;tat est &#233;valu&#233;s &#224; partir d'une entit&#233; dans un &#233;tat INCONNU? Par exemple, pensez &#224; un aiguillage dans un &#233;tat inconnu
+	-- Aiguillage Droit et Aiguillage D&#233;vi&#233; ont &#233;t&#233; &#233;valu&#233;s tous les deux &#224; faux
+	Lorsque JMRI enregistre la configuration du r&#233;seau dans un fichier, par exemple un fichier de panneau, toute
+	informations Logix, y compris l'&#233;tat activ&#233;/d&#233;sactiv&#233; du Logix, est enregistr&#233;e
+	. Quand un Logix est charg&#233; depuis un fichier de configuration, il est activ&#233; ou d&#233;sactiv&#233; statut
+	est r&#233;gl&#233;e en fonction de ce qui a &#233;t&#233; enregistr&#233; dans le fichier de configuration .
+	Ceci est fait de sorte que les gens peuvent d&#233;sactiver leur Logix tout en lesr d&#233;bogant,
+	mais encore sauver et restaurer la configuration selon vos besoins. Comme les auditeurs continuent de tirer pour des
+	variables d'&#233;tat, finalement chaque entit&#233; a son &#233;tat actuel correct et le Logix fonctionnera
+	tr&#232;s bien. Vous pouvezsurveiller cette action en regardant les &#233;tats dans le Tableau Capteur, le
+	Tableau Aiguillage, etc.les Conditions au d&#233;marrage certainement sont des choses &#224; se rappeler au
+	d&#233;marrage d'un Logix.</p></li>
 
-<li><b>Quand les D&#233;clencheurs de Calcul doivent &#234;tre d&#233;coch&#233;s dans une variable d'&#233;tat?</b>
-Normallement les d&#233;clencheurs de Calcul doivent &#234;tre coch&#233;sdans toute les variables d'&#233;tat,
-ainsi un changement dans la variable d'&#233;tat d&#233;clenchera le calcul d'un Logix. Il en r&#233;sulte que le Logix r&#233;agira rapidement aux changements sur le reseau, et le maintien de l'&#233;tat des signaux, aiguillages, etc comme vous le souhaitez. Il existe toutefois des situations o&#249; il est souhaitable de tester l'&#233;tat d'une entit&#233;, mais ne pas l'utiliser comme un d&#233;clencheur de calcul. Les paragraphes qui suivent d&#233;crivent un couple de ces situations, mais il en existe d'autres. </P>
-<p> Parfois, une "boucle logique" peut en r&#233;sulter si le d&#233;clenchement n'est pas supprim&#233;. Par exemple, si l'&#233;tat d'un aiguillage est test&#233; dans une variable d'&#233;tat, et l'aiguillage est fix&#233; par une action de la m&#234;me ou d'une autre condition du m&#234;me Logix, le d&#233;clenchement continu (une boucle logique) pourrait en r&#233;sulter. La meilleure fa&#231;on de r&#233;soudre ce dilemme est de tester l'aiguillage, sans l'utiliser comme une entit&#233; de d&#233;clenchement. Cela se fait en d&#233;cochant D&#233;clencheurs de Calcul dans <b>toutes</b> les variables d'&#233;tat o&#249; l'aiguillage est sp&#233;cifi&#233;.Si l'aiguillage est utilis&#233; dans les variables d'&#233;tat de plus d'une condition du Logix, il doit &#234;tre d&#233;coch&#233; partout o&#249; il est utilis&#233; pour supprimer l'utilisationr comme un d&#233;clencheur.</P>
-<p> Une autre situation se pr&#233;sente lorsque l'action temporis&#233;e du capteur est utilis&#233;e avec
-un capteur interne pour d&#233;clencher un second Logix apr&#232;s que le temps de retard se soit
-&#233;coul&#233;. Si le second Logix ne doit pas &#234;tre d&#233;clench&#233; avant que le temps de retard
-&#233;coul&#233;, l'ensemble de ces variables d'&#233;tat, &#224; l'exception de la capteur interne temporis&#233;,
-doit &#234;tre d&#233;coch&#233;e. Ce sc&#233;nario peut se produire, par exemple, si une condition
-tourne On quelque chose comme sa premi&#232;re action, et d&#233;fini un capteur temporis&#233; comme
+	<li><b>Quand les D&#233;clencheurs de Calcul doivent &#234;tre d&#233;coch&#233;s dans une variable d'&#233;tat?</b>
+	Normallement les d&#233;clencheurs de Calcul doivent &#234;tre coch&#233;sdans toute les variables d'&#233;tat,
+	ainsi un changement dans la variable d'&#233;tat d&#233;clenchera le calcul d'un Logix. Il en r&#233;sulte que le
+	Logix r&#233;agira rapidement aux changements sur le reseau, et le maintien de l'&#233;tat des signaux, aiguillages,
+	etc comme vous le souhaitez. Il existe toutefois des situations o&#249; il est souhaitable de tester l'&#233;tat
+	d'une entit&#233;, mais ne pas l'utiliser comme un d&#233;clencheur de calcul. Les paragraphes qui suivent
+	d&#233;crivent un couple de ces situations, mais il en existe d'autres.
+	<p> Parfois, une "boucle logique" peut en r&#233;sulter si le d&#233;clenchement n'est pas supprim&#233;. Par exemple, si l'&#233;tat d'un aiguillage est test&#233; dans une variable d'&#233;tat, et l'aiguillage est fix&#233; par une action de la m&#234;me ou d'une autre condition du m&#234;me Logix, le d&#233;clenchement continu (une boucle logique) pourrait en r&#233;sulter. La meilleure fa&#231;on de r&#233;soudre ce dilemme est de tester l'aiguillage, sans l'utiliser comme une entit&#233; de d&#233;clenchement. Cela se fait en d&#233;cochant D&#233;clencheurs de Calcul dans <b>toutes</b> les variables d'&#233;tat o&#249; l'aiguillage est sp&#233;cifi&#233;.Si l'aiguillage est utilis&#233; dans les variables d'&#233;tat de plus d'une condition du Logix, il doit &#234;tre d&#233;coch&#233; partout o&#249; il est utilis&#233; pour supprimer l'utilisationr comme un d&#233;clencheur.</p>
+	<p> Une autre situation se pr&#233;sente lorsque l'action temporis&#233;e du capteur est utilis&#233;e avec
+	un capteur interne pour d&#233;clencher un second Logix apr&#232;s que le temps de retard se soit
+	&#233;coul&#233;. Si le second Logix ne doit pas &#234;tre d&#233;clench&#233; avant que le temps de retard
+	&#233;coul&#233;, l'ensemble de ces variables d'&#233;tat, &#224; l'exception de la capteur interne temporis&#233;,
+	doit &#234;tre d&#233;coch&#233;e. Ce sc&#233;nario peut se produire, par exemple, si une condition
+	tourne On quelque chose comme sa premi&#232;re action, et d&#233;fini un capteur temporis&#233; comme
 	sa deuxi&#232;me action pour couper quelque chose apr&#232;s un certain d&#233;lai pr&#233;vu.</p></li>
 
-<li><b>Qu'est-ce qu'une "boucle logique" et comment peut-elle &#234;tre &#233;vit&#233;e? </b>
-
-<p>Une "boucle logique" r&#233;sulte quand le programme semble ralentir de mani&#232;re significative ou
-verrouiller par plusieurs Logixs qui sont continuellement d&#233;clench&#233;s en changeant les r&#233;f&#233;rences mutuellement
-. La meilleure fa&#231;on d'&#233;viter une "boucle logique" est d'&#234;tre conscient des situations
-qui peuvent conduire &#224; une boucle, et de planifier votre logique pour &#233;viter de telles situations. </p>
-<p> Une "boucle logique" peut survenir dans un m&#234;me Logix quand une variable d'&#233;tat (capteur,
-aiguillage, etc) qui d&#233;clenche le Logix est &#233;galement modifi&#233; par ce m&#234;me Logix. L'&#201;diteur Logix permet de d&#233;tecter certaines situations qui pourraient entra&#234;ner une boucle, et &#233;mettre un avertissement lorsque vous fermez le Logix. <b>tenir compte de ces avertissements!</b> Un avertissement
-ne signifie pas qu'une boucle sera certainement entra&#234;ner si vous continuez. Le message d'avertissement est un "appel au r&#233;veil" pour vous prevenir que vous devriez &#233;tudier soigneusement ce que vous faites pour s'assurer qu'une boucle ne se fera pas.</p>
-<p> Une situation plus complexe impliquant deux ou plusieurs Logixs peut &#233;galement entra&#234;ner
-une "boucle logique". Par exemple, si une Logix est d&#233;clench&#233; par le capteur A, et a une
-action qui modifie l'aiguillage B, et le Logix 2 est d&#233;clench&#233; par l'aiguillage B et change
-le capteur A, un potentiel de boucle existe car ces Logixs d&#233;clenchent l'un l'autre.
-Vous pouvez facilement &#233;tendre cette id&#233;e &#224; des cha&#234;nes de d&#233;clenchement (boucles) impliquant trois ou
-plus Logixs, et m&#234;me &#224; des interactions entre Logixs et les itin&#233;raires. Il n'ya pas de
-test dans le programme pour alerter sur des boucles comportant plusieurs Logixs. (D&#233;velopper
+	<li><b>Qu'est-ce qu'une "boucle logique" et comment peut-elle &#234;tre &#233;vit&#233;e?</b>
+	<p>Une "boucle logique" r&#233;sulte quand le programme semble ralentir de mani&#232;re significative ou
+	verrouiller par plusieurs Logixs qui sont continuellement d&#233;clench&#233;s en changeant les r&#233;f&#233;rences mutuellement
+	. La meilleure fa&#231;on d'&#233;viter une "boucle logique" est d'&#234;tre conscient des situations
+	qui peuvent conduire &#224; une boucle, et de planifier votre logique pour &#233;viter de telles situations. </p>
+	<p> Une "boucle logique" peut survenir dans un m&#234;me Logix quand une variable d'&#233;tat (capteur,
+	aiguillage, etc) qui d&#233;clenche le Logix est &#233;galement modifi&#233; par ce m&#234;me Logix. L'&#201;diteur Logix permet de d&#233;tecter certaines situations qui pourraient entra&#234;ner une boucle, et &#233;mettre un avertissement lorsque vous fermez le Logix. <b>tenir compte de ces avertissements!</b> Un avertissement
+	ne signifie pas qu'une boucle sera certainement entra&#234;ner si vous continuez. Le message d'avertissement est un "appel au r&#233;veil" pour vous prevenir que vous devriez &#233;tudier soigneusement ce que vous faites pour s'assurer qu'une boucle ne se fera pas.</p>
+	<p> Une situation plus complexe impliquant deux ou plusieurs Logixs peut &#233;galement entra&#234;ner
+	une "boucle logique". Par exemple, si une Logix est d&#233;clench&#233; par le capteur A, et a une
+	action qui modifie l'aiguillage B, et le Logix 2 est d&#233;clench&#233; par l'aiguillage B et change
+	le capteur A, un potentiel de boucle existe car ces Logixs d&#233;clenchent l'un l'autre.
+	Vous pouvez facilement &#233;tendre cette id&#233;e &#224; des cha&#234;nes de d&#233;clenchement (boucles) impliquant trois ou
+	plus Logixs, et m&#234;me &#224; des interactions entre Logixs et les itin&#233;raires. Il n'ya pas de
+	test dans le programme pour alerter sur des boucles comportant plusieurs Logixs. (D&#233;velopper
 	un tel test serait tr&#232;s difficile.)</p></li>
 
-<li><b> Que dois-je faire si je pense avoir une "boucle logique"? </b>
-<p> Quand elles se produisent, les "boucles logiques" peuvent &#234;tre un peu effrayantes &#224; d&#233;panner. Votre
-ordinateur peut sembler &#234;tre bloqu&#233; ou ralenti &#233;norm&#233;ment parce que la boucle utilise la plupart du temps disponible de l'ordinateur. Heureusement JMRI fournit des outils pour aider &#224; la conception et au d&#233;bogage. D&#233;cocher "Triggers calcul" pour une variable d'&#233;tat
-(voir ci-dessus), peut vous aider &#224; concevoir autour des boucles lorsque vous avez identifi&#233; le
-Logix &#224; l'origine du probl&#232;me de boucle. Pour contourner le verrou ou le probl&#232;me de ralentissement
-, d&#233;marrez avec tous vos Logixs d&#233;sactiv&#233;s (voir ci-dessous), puis leur permettre un
-par un jusqu'&#224; ce que vous d&#233;couvrirez la boucle.</p>
-<p> Si le fichier de panneau contenant Logixs charge automatiquement lorsque
-le programme d&#233;marre, appuyez et rel&#226;chez la touche Maj enfonc&#233;e quelques fois plus rapidement
-D&#232;s que vous voyez le petit &#233;cran de d&#233;marrage JMRI (la premi&#232;re chose que vous voyez pendant le
-d&#233;marrage). Votre fichier panneau sera charg&#233; avec tous les Logixs d&#233;sactiv&#233;s.</P>
-<p> Si vous chargez votre fichier de panneau manuellement en utilisant le menu Panneaux, avant de charger
-votre fichier, passez au menu <b>Debug</b> et s&#233;lectionnez <b>Charger Logixs D&#233;sactiv&#233;s</b> .
-Apr&#232;s avoir r&#233;pondu OK pour le message, chargez votre fichier de panneau comme vous le feriez normalement.
-Votre fichier de panneau sera charg&#233; avec tous les Logixs d&#233;sactiv&#233;s.</P>
-<p> Apr&#232;s avoir charg&#233; votre fichier de panneau, ouvrez le tableau Logix et v&#233;rifier que tous les
-Logixs sont d&#233;sactiv&#233;s. Si vous savez quel Logix est la cause du probl&#232;me, vous
-pouvez alors corriger ou supprimer, r&#233;activer les autres Logixs et enregistrer votre fichier panneau
-. Si vous ne savez pas quel Logix est &#224; l'origine du probl&#232;me, vous pouvez activer
-vos Logixs, un par un, jusqu'&#224; ce que la boucle se produise. Lorsque la boucle commence,
-vous savez que le dernier Logix que vous avez activ&#233; est au moins partiellement responsable du probl&#232;me. A ce stade, vous devriez relancer le programme avec tous les Logixs d&#233;sactiv&#233;s, et fixer ou supprimer le Logix que vous avez identifier.</p>
-<p><b>ATTENTION:</b> <b> Il est sage de sauvegarder votre fichier de panneau fr&#233;quemment lors de la saisie des
-Logixs.</b> Si une boucle logique se produit, il peut &#234;tre difficile, voir
-impossible, d'enregistrer votre fichier de panneau avant d'arr&#234;ter le programme.
-Rappelez-vous qu'un Logix est activ&#233; d&#232;s que vous cliquez sur <b>Terminer</b> de
-la fen&#234;tre Modifier Logix. Aussi, n'oubliez pas que frapper un bouton <b>Modifier</b> 
-dans le tableau Logix d&#233;sactive le Logix s&#233;lectionn&#233; avant de l'ouvrir pour l'&#233;dition,
-offrant un moyen possible de s'introduire dans une boucle delogique sans avoir &#224; red&#233;marrer le
+	<li><b> Que dois-je faire si je pense avoir une "boucle logique"?</b>
+	<p> Quand elles se produisent, les "boucles logiques" peuvent &#234;tre un peu effrayantes &#224; d&#233;panner. Votre
+	ordinateur peut sembler &#234;tre bloqu&#233; ou ralenti &#233;norm&#233;ment parce que la boucle utilise la plupart du temps disponible de l'ordinateur. Heureusement JMRI fournit des outils pour aider &#224; la conception et au d&#233;bogage. D&#233;cocher "Triggers calcul" pour une variable d'&#233;tat
+	(voir ci-dessus), peut vous aider &#224; concevoir autour des boucles lorsque vous avez identifi&#233; le
+	Logix &#224; l'origine du probl&#232;me de boucle. Pour contourner le verrou ou le probl&#232;me de ralentissement
+	, d&#233;marrez avec tous vos Logixs d&#233;sactiv&#233;s (voir ci-dessous), puis leur permettre un
+	par un jusqu'&#224; ce que vous d&#233;couvrirez la boucle.</p>
+	<p> Si le fichier de panneau contenant Logixs charge automatiquement lorsque
+	le programme d&#233;marre, appuyez et rel&#226;chez la touche Maj enfonc&#233;e quelques fois plus rapidement
+	D&#232;s que vous voyez le petit &#233;cran de d&#233;marrage JMRI (la premi&#232;re chose que vous voyez pendant le
+	d&#233;marrage). Votre fichier panneau sera charg&#233; avec tous les Logixs d&#233;sactiv&#233;s.</p>
+	<p> Si vous chargez votre fichier de panneau manuellement en utilisant le menu Panneaux, avant de charger
+	votre fichier, passez au menu <b>Debug</b> et s&#233;lectionnez <b>Charger Logixs D&#233;sactiv&#233;s</b> .
+	Apr&#232;s avoir r&#233;pondu OK pour le message, chargez votre fichier de panneau comme vous le feriez normalement.
+	Votre fichier de panneau sera charg&#233; avec tous les Logixs d&#233;sactiv&#233;s.</p>
+	<p> Apr&#232;s avoir charg&#233; votre fichier de panneau, ouvrez le tableau Logix et v&#233;rifier que tous les
+	Logixs sont d&#233;sactiv&#233;s. Si vous savez quel Logix est la cause du probl&#232;me, vous
+	pouvez alors corriger ou supprimer, r&#233;activer les autres Logixs et enregistrer votre fichier panneau
+	. Si vous ne savez pas quel Logix est &#224; l'origine du probl&#232;me, vous pouvez activer
+	vos Logixs, un par un, jusqu'&#224; ce que la boucle se produise. Lorsque la boucle commence,
+	vous savez que le dernier Logix que vous avez activ&#233; est au moins partiellement responsable du probl&#232;me. A ce stade, vous devriez relancer le programme avec tous les Logixs d&#233;sactiv&#233;s, et fixer ou supprimer le Logix que vous avez identifier.</p>
+	<p><b>ATTENTION:</b> <b> Il est sage de sauvegarder votre fichier de panneau fr&#233;quemment lors de la saisie des
+	Logixs.</b> Si une boucle logique se produit, il peut &#234;tre difficile, voir
+	impossible, d'enregistrer votre fichier de panneau avant d'arr&#234;ter le programme.
+	Rappelez-vous qu'un Logix est activ&#233; d&#232;s que vous cliquez sur <b>Terminer</b> de
+	la fen&#234;tre Modifier Logix. Aussi, n'oubliez pas que frapper un bouton <b>Modifier</b>
+	dans le tableau Logix d&#233;sactive le Logix s&#233;lectionn&#233; avant de l'ouvrir pour l'&#233;dition,
+	offrant un moyen possible de s'introduire dans une boucle delogique sans avoir &#224; red&#233;marrer le
 	programme.</p></li>
 </ul>
 

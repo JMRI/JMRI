@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <!-- Copyright Bob Jacobsen 2009 -->
   <!-- Copyright Walt Thompson 2010 -->
-  <!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
+  <!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12-->
   <!-- Translated  by Blorec Herv&#233; le 2011-11-5-->
 
   <title>JMRI: DecoderPro Service Mode Programmer</title>
@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: Op&eacute;rations Programmateur DecoderPro en Mode
       Service</h1><a name="contents" id="contents"></a>
 
