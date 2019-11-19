@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-<!-- UpDated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 -->
+<!-- Updated by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-14 -->
 <!-- Copyright Bob Jacobsen 2008 -->
 
 <html lang="en">
@@ -25,9 +25,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>OpenLCB: Parcourir la Configuration</h1>L'outil
       "Configurer Noeuds" OpenLCB vous permet de voir directement
       les noeuds de votre r&#233;seau OpenLCB et de faire quelques

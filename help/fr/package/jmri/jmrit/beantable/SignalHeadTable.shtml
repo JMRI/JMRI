@@ -24,9 +24,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Le Tableau T&ecirc;te de Signal</h1><a href=
       "images/SigHeadTable.png"><img src=
       "images/SigHeadTable.png" align=
@@ -119,7 +119,8 @@
       "../../../../html/apps/PanelPro/Panels.shtml">pages
       Panneaux</a>.</p>
 
-      <p>*CTC commande centralis&eacute;e manuelle </p>
+      <p>*CTC commande centralis&eacute;e manuelle</p>
+
       <!--#include virtual="/Footer" -->
     </div>
   </div>

@@ -26,9 +26,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Le Tableau &eacute;tiquette ID</h1>Vous pouvez utiliser
       le Tableau &eacute;tiquette ID pour regarder le contenu des
       objets IdTag JMRI.

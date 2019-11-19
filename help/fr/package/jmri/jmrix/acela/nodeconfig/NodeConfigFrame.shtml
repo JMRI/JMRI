@@ -29,8 +29,8 @@
 Merci d'avoir lu ceci, j'espère que les quelques minutes que vous consacrerez à la lecture vous épargneront des heures sur la route.
 <p>
 Si vous ne l'avez pas déjà fait, s'il vous plaît n'oubliez pas de lire davantage dans JMRI le support matériel sur <a href="../../../../../html/hardware/acela/index.shtml"> Acela </a> et le <a href="../../../../../html/hardware/acela/Names.shtml"> système Noms CTI Acela </a>. </p>
-<H2>Fichiers de configuration 
-</H2>
+<h2>Fichiers de configuration
+</h2>
 Juste pour être parfaitement clair, DecoderPro, PanelPro et SoundPro sont tous des environnements graphiques différents ou des interfaces utilisateur pour le même programme JMRI.
 <p>
 Vous pouvez faire quelque chose avec n'importe lequel de ces trois programmes, l'interface utilisateur a juste été adapté dans une tentative de rendre plus facile pour vous de pouvoir faire ce que vous voulez :
@@ -45,8 +45,8 @@ L'avantage est que vous pouvez configurer chaque configurateur pour avoir une co
 <p>
 L'inconvénient est que vous pouvez avoir besoin de mettre en place votre configuration plus d'une fois (ou copier-coller d'une configuration à l'autre), si vous souhaitez utiliser un autre configurateur graphique soyez certain qu'il contienne la même configuration.
 
-<H2> Sauvegardez vos fichiers de configuration
-</H2>
+<h2> Sauvegardez vos fichiers de configuration
+</h2>
  Tout est dit, chaque configurateur a un seul fichier de configuration (exemple pour DecoderPro c'est: DecoderProConfig2.xml).
 <p>
 Donc, si vous effectuez une modification et sauvegarder votre fichier de configuration (en appuyant sur le bouton Enregistrer de la fenêtre Préférences), vous écrivez un nouveau fichier de configuration et l'ancien sera perdu à jamais.
@@ -55,8 +55,8 @@ C'est bien beau jusqu'à ce que vous réalisiez que vous n'étiez pas connecté 
 <p>
     Donc, à nouveau, faites des copies de sauvegarde de vos fichiers de configuration (c'est à dire DecoderProConfig2.xml, PanelProConfig2.xml) souvent et de les stocker dans un endroit sûr.
 
-<H2> Connexion à votre système CTI Acela
-</H2>
+<h2> Connexion à votre système CTI Acela
+</h2>
 Il est fortement recommandé que vous laissez le logiciel JMRI découvrir votre réseau CTI Acela pour vous.
 <p>
 &Aacute; cette fin, les boutons Ajouter et Supprimer ont été désactivés pour le moment.

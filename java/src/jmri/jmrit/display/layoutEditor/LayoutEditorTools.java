@@ -13636,16 +13636,16 @@ public class LayoutEditorTools {
         }
         SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
         l.setSignalHead(signalName);
-        l.setIcon(Bundle.getMessage("SignalHeadStateRed"), signalIconEditor.getIcon(0));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingRed"), signalIconEditor.getIcon(1));
-        l.setIcon(Bundle.getMessage("SignalHeadStateYellow"), signalIconEditor.getIcon(2));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingYellow"), signalIconEditor.getIcon(3));
-        l.setIcon(Bundle.getMessage("SignalHeadStateGreen"), signalIconEditor.getIcon(4));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingGreen"), signalIconEditor.getIcon(5));
-        l.setIcon(Bundle.getMessage("SignalHeadStateDark"), signalIconEditor.getIcon(6));
-        l.setIcon(Bundle.getMessage("SignalHeadStateHeld"), signalIconEditor.getIcon(7));
-        l.setIcon(Bundle.getMessage("SignalHeadStateLunar"), signalIconEditor.getIcon(8));
-        l.setIcon(Bundle.getMessage("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
+        l.setIcon("SignalHeadStateRed", signalIconEditor.getIcon(0));
+        l.setIcon("SignalHeadStateFlashingRed", signalIconEditor.getIcon(1));
+        l.setIcon("SignalHeadStateYellow", signalIconEditor.getIcon(2));
+        l.setIcon("SignalHeadStateFlashingYellow", signalIconEditor.getIcon(3));
+        l.setIcon("SignalHeadStateGreen", signalIconEditor.getIcon(4));
+        l.setIcon("SignalHeadStateFlashingGreen", signalIconEditor.getIcon(5));
+        l.setIcon("SignalHeadStateDark", signalIconEditor.getIcon(6));
+        l.setIcon("SignalHeadStateHeld", signalIconEditor.getIcon(7));
+        l.setIcon("SignalHeadStateLunar", signalIconEditor.getIcon(8));
+        l.setIcon("SignalHeadStateFlashingLunar", signalIconEditor.getIcon(9));
         l.rotate(90);
         return l;
     }

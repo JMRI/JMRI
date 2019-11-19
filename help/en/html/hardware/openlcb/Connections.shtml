@@ -21,10 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>Hardware Support: OpenLCB - Connections</h1>
 
       <p>This page discusses how JMRI can connect to OpenLCB.</p>

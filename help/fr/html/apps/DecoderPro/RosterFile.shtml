@@ -4,8 +4,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- UpDated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
-
+<!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-03 -->
 <title>JMRI: Roster File Details</title>
 
 <!-- Style -->
@@ -19,10 +18,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<div>
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: Guide Utilisateur DecoderPro </h1>
 <h2>D&#233;tails des Fichiers Liste</h2>

@@ -3,7 +3,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- UpDated  by Blorec Herv&#233; le 2016-09-11-->
+<!-- Updated by Blorec Herv&#233; le 2016-09-11-->
 <title>JMRI: Defining Your Own Signaling System</title>
 
 <!-- Style -->
@@ -17,9 +17,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-    <div id="mBody">
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI: D&#233;finition de Votre Propre Syst&#232;me de Signalisation</h1>
 
@@ -63,7 +64,7 @@ Ensuite, fournir ces fichiers:
 
 Ce fichier fournit seulement une description mais il est important de le faire en premier
 de sorte que vous enregistrez les d&#233;tails de ce que vous avez fait.
-<P>
+<p>
 Si vous capturez un syst&#232;me r&#233;aliste,
 enregistrez ce que vous savez &#224; son sujet: compagnie ferroviaire, r&#233;gion/district, ann&#233;e,
 o&#249; vous avez trouv&#233; les information, etc.
@@ -195,7 +196,7 @@ dans un <a href="http://jmri.org/xml/signals/AAR-1946/appearance-SL-1-high-pbs.x
 Ensuite il y a l'&#233;l&#233;ment <code>&lt;appearances&gt;</code>, qui contient une s&#233;rie d'&#233;l&#233;ments de <code>&lt;appearance&gt;</code>
 qui d&#233;finissent comment apparaissent les divers Aspects sur ce type de m&#226;t de signalisation.
 Chaque aspect ne doit pas &#234;tre d&#233;fini dans chaque fichier, car
-chaque type de signal ne peut pas montrer tous les aspects.<p>
+chaque type de signal ne peut pas montrer tous les aspects.</p>
 
 <p>
 Chaque aspect que le signal peut montrer a besoin d'&#234;tre
@@ -340,8 +341,8 @@ Lexique:
     <li>* Apparence (du M&#226;t)= ce qu'il signifie ex: Rappel de ralentissement</li>
 </ul>
 
-<!--#include virtual="/Footer" -->
-  </div> 
- </div>
+        <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

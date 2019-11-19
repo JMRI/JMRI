@@ -17,11 +17,11 @@
 
 <body>
 <!--#include virtual="/Header" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar" -->
+  <div id="mainContent">
+    <!-- Page Body -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
-<div>
-<!-- Page Body -->
 <h1>R&#233;glages JMRI: Profils de Configuration</h1>
 
 <p><em> Les Profils de Configuration</em> permettent &#224; une simple application JMRI d&#39;&#234;tre lanc&#233;e avec une des multiples Configurations sp&#233;cifi&#233;es par l&#39;utilisateur. Un Profil de Configuration contient toutes les pr&#233;f&#233;rences telles qu&#39;elles ont &#233;t&#233; d&#233;finies dans le chapitre Pr&#233;f&#233;rences JMRI, et peut &#8211; optionnellement &#8211; inclure des fichiers utilisateur, un Inventaire, et de R&#233;gulateurs..</p>

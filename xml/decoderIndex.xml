@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.17.6ish+jake+20191115T0606Z+R763ced6dca on Thu Nov 14 22:06:28 PST 2019-->
-  <decoderIndex version="980">
+  <!--Written by JMRI version 4.17.6ish+jake+20191119T1638Z+R0ced0eeee9 on Tue Nov 19 08:39:24 PST 2019-->
+  <decoderIndex version="982">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -24991,6 +24991,16 @@
           <output name="3" label="Acceleration Delay" />
           <output name="4" label="Shunting gear" />
           <output name="5" label="Shunting light" />
+        </model>
+      </family>
+      <family name="Multiprotocol Decoder" mfg="Tams Elektronik GmbH" lowVersionID="23" highVersionID="23" file="TAMS_LD-G-32_2.xml">
+        <model model="LD-G-32.2" numOuts="6" numFns="14">
+          <output name="1" label="X1" />
+          <output name="2" label="X2" />
+          <output name="3" label="X3" />
+          <output name="4" label="Acceleration Delay" />
+          <output name="5" label="Shunting gear" />
+          <output name="6" label="Shunting light" />
         </model>
       </family>
       <family name="Digital LED Boards (WIB)" mfg="Tams Elektronik GmbH" lowVersionID="14" comment="Tams WIB-31, WIB-32, WIB-33" file="TAMS_WIB-30.xml">

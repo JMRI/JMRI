@@ -3,13 +3,10 @@ package jmri.jmrit.logix;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
-import jmri.jmrit.display.EditorScaffold;
-import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.List;
 
@@ -41,7 +38,9 @@ public class TrackerTableActionTest {
     @Test
     public void testTracking1() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -92,7 +91,9 @@ public class TrackerTableActionTest {
     @Test
     public void testTrackingDark() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -128,7 +129,9 @@ public class TrackerTableActionTest {
     @Test
     public void testMultipleTrackers() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
