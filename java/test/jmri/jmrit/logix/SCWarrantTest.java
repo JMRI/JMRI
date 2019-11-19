@@ -41,6 +41,7 @@ public class SCWarrantTest extends WarrantTest {
     @Test
     @Override
     public void testWarrant() throws JmriException {
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         sEast.setState(Sensor.INACTIVE);
         sWest.setState(Sensor.INACTIVE);
         sSouth.setState(Sensor.INACTIVE);

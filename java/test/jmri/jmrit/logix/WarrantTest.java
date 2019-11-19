@@ -319,6 +319,7 @@ public class WarrantTest {
         bNorth.setSensor("NorthSensor");
         bSouth.setSensor("IS4");
         warrant = new Warrant("IW0", "AllTestWarrant");
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
     }
 
     @After
