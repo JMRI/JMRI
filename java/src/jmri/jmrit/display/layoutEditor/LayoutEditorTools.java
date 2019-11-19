@@ -271,9 +271,10 @@ public class LayoutEditorTools {
             theContentPane.setLayout(new BoxLayout(theContentPane, BoxLayout.Y_AXIS));
 
             JPanel panel1 = new JPanel(new FlowLayout());
-            turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout"));
+            turnoutNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
             panel1.add(turnoutNameLabel);
             panel1.add(turnoutComboBox);
+            turnoutNameLabel.setLabelFor(turnoutComboBox);
             turnoutComboBox.setToolTipText(Bundle.getMessage("SignalsTurnoutNameHint"));
             theContentPane.add(panel1);
             theContentPane.add(new JSeparator(JSeparator.HORIZONTAL));
@@ -317,11 +318,10 @@ public class LayoutEditorTools {
 
             JPanel panel21 = new JPanel(new FlowLayout());
             JLabel throatContinuingLabel = new JLabel(
-                    Bundle.getMessage("MakeLabel",
-                            throatContinuing));
-
+                    Bundle.getMessage("MakeLabel", throatContinuing));
             panel21.add(throatContinuingLabel);
             panel21.add(throatContinuingSignalHeadComboBox);
+            throatContinuingLabel.setLabelFor(throatContinuingSignalHeadComboBox);
             theContentPane.add(panel21);
             throatContinuingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
@@ -336,10 +336,10 @@ public class LayoutEditorTools {
 
             JPanel panel31 = new JPanel(new FlowLayout());
             JLabel throatDivergingLabel = new JLabel(
-                    Bundle.getMessage("MakeLabel",
-                            throatDiverging));
+                    Bundle.getMessage("MakeLabel", throatDiverging));
             panel31.add(throatDivergingLabel);
             panel31.add(throatDivergingSignalHeadComboBox);
+            throatDivergingLabel.setLabelFor(throatDivergingSignalHeadComboBox);
             theContentPane.add(panel31);
             throatDivergingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
@@ -354,10 +354,10 @@ public class LayoutEditorTools {
 
             JPanel panel41 = new JPanel(new FlowLayout());
             JLabel continuingLabel = new JLabel(
-                    Bundle.getMessage("MakeLabel",
-                            continuing));
+                    Bundle.getMessage("MakeLabel", continuing));
             panel41.add(continuingLabel);
             panel41.add(continuingSignalHeadComboBox);
+            continuingLabel.setLabelFor(continuingSignalHeadComboBox);
             theContentPane.add(panel41);
             continuingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
@@ -372,10 +372,10 @@ public class LayoutEditorTools {
 
             JPanel panel51 = new JPanel(new FlowLayout());
             JLabel divergingLabel = new JLabel(
-                    Bundle.getMessage("MakeLabel",
-                            diverging));
+                    Bundle.getMessage("MakeLabel", diverging));
             panel51.add(divergingLabel);
             panel51.add(divergingSignalHeadComboBox);
+            divergingLabel.setLabelFor(divergingSignalHeadComboBox);
             theContentPane.add(panel51);
             divergingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
@@ -425,7 +425,8 @@ public class LayoutEditorTools {
                     + layoutTurnout.getTurnoutName());
             turnoutSignalsGetSaved(null);
         } else {
-            turnoutNameLabel.setText(Bundle.getMessage("BeanNameTurnout"));
+            turnoutNameLabel.setText(Bundle.getMessage("MakeLabel",
+                    Bundle.getMessage("BeanNameTurnout")));
         }
 
         if (!setSignalsAtTurnoutOpenFlag) {

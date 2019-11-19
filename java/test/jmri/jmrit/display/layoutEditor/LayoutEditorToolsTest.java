@@ -2,6 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
+import java.io.FileNotFoundException;
+import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
@@ -14,17 +16,22 @@ import jmri.util.junit.rules.RetryRule;
 import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.operators.JButtonOperator;
+import org.netbeans.jemmy.operators.JCheckBoxOperator;
+import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
+import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.util.Dumper;
 
 /**
  * Test simple functioning of LayoutEditorTools
  *
  * @author	Paul Bender Copyright (C) 2016
+ * @author	George Warner Copyright (C) 2019
  */
 public class LayoutEditorToolsTest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(3); // 3 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(5); // 5 second timeout for methods in this test class.
 
     // allow 2 retries of intermittent tests
     @Rule
@@ -57,27 +64,77 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
         // then closes it.
-        jfo.requestClose();
+        jFrameOperator.requestClose();
     }
 
     @Test
     public void testSetSignalsAtTurnoutWithDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
+            // create a new Layout Turnout here
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
                     LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
+            Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", to);
+            to.setTurnout(turnouts[0].getSystemName());
+            le.getLayoutTracks().add(to);
+
             // this causes a "set Signal Heads Turnout" dialog to be displayed.
-            let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
         });
+
         // the JFrameOperator waits for the set signal frame to appear
-        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
-        // then we find and press the "Done" button.
-        JButtonOperator jbo = new JButtonOperator(jfo, Bundle.getMessage("ButtonDone"));
-        jbo.press();
-        jfo.requestClose();
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+
+        // select the turnout from the popup menu
+        JLabelOperator JLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
+        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) JLabelOperator.getLabelFor());
+        jComboBoxOperator.selectItem(0);  //TODO:fix hardcoded index
+
+        JButtonOperator jButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("GetSaved"));
+        jButtonOperator.doClick();
+
+        JCheckBoxOperator jCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("PlaceAllHeads"));
+        jCheckBoxOperator.setSelected(true);
+
+        jCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetAllLogic"));
+        jCheckBoxOperator.setSelected(true);
+        jCheckBoxOperator.setSelected(false);
+
+        JLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("ThroatContinuing")));
+        jComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) JLabelOperator.getLabelFor());
+        jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+
+        JLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("ThroatDiverging")));
+        jComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) JLabelOperator.getLabelFor());
+        jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+
+        JLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("Continuing")));
+        jComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) JLabelOperator.getLabelFor());
+        jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
+
+        JLabelOperator = new JLabelOperator(jFrameOperator,
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("Diverging")));
+        jComboBoxOperator = new JComboBoxOperator(
+                (JComboBox) JLabelOperator.getLabelFor());
+        jComboBoxOperator.selectItem(4);  //TODO:fix hardcoded index
+
+        //dumpToXML();  // dump jemmy GUI info to xml file
+
+        jButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+        jButtonOperator.press();
+        jFrameOperator.requestClose();
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }
 
     @Test
@@ -87,15 +144,18 @@ public class LayoutEditorToolsTest {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
                     LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
+            to.setTurnout(turnouts[0].getSystemName());
+            le.getLayoutTracks().add(to);
+
             // this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame to appear
-        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
         // then we find and press the "Done" button.
-        JButtonOperator jbo = new JButtonOperator(jfo, Bundle.getMessage("ButtonCancel"));
+        JButtonOperator jbo = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel"));
         jbo.press();
-        jfo.requestClose();
+        jFrameOperator.requestClose();
     }
 
     @Test
@@ -106,13 +166,15 @@ public class LayoutEditorToolsTest {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
                     LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
+            to.setTurnout(turnouts[0].getSystemName());
+            le.getLayoutTracks().add(to);
             // this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
         // then closes it.
-        jfo.requestClose();
+        jFrameOperator.requestClose();
     }
 
     @Test
@@ -124,9 +186,9 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtLevelXing(le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
         // then closes it.
-        jfo.requestClose();
+        jFrameOperator.requestClose();
     }
 
     @Test
@@ -142,9 +204,9 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtLevelXingFromMenu(lx, le.signalIconEditor, le.getTargetFrame());
         });
         // the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jfo = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
         // then closes it.
-        jfo.requestClose();
+        jFrameOperator.requestClose();
     }
 
     @Test
@@ -308,6 +370,7 @@ public class LayoutEditorToolsTest {
                 NamedBeanHandle<Turnout> nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(toName, turnouts[i]);
                 if (nbh != null) {
                     signalHeads[i] = new SingleTurnoutSignalHead(sName, uName, nbh, SignalHead.GREEN, SignalHead.RED);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(signalHeads[i]);
                 }
             }
         }
@@ -327,4 +390,17 @@ public class LayoutEditorToolsTest {
         }
         JUnitUtil.tearDown();
     }
-}
+
+    // dump jemmy GUI info to xml file
+    private void dumpToXML() {
+        //grab component state
+        try {
+            Dumper.dumpAll(System.getProperty("user.home")
+                    + System.getProperty("file.separator")
+                    + "dump.xml");
+
+        } catch (FileNotFoundException e) {
+        }
+    }
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
+}   // class LayoutEditorToolsTest
