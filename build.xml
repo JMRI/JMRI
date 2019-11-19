@@ -1784,16 +1784,16 @@
 
     <target name="javadoc" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
-           maxmemory="512m"
-           overview="${source}/jmri/overview.html"
-           destdir="${doctarget}"
-           additionalparam="-breakiterator"
-           author="true"
-           version="false"
-           public="yes"
-           use="true"
-           failonerror="true"
-           windowtitle="JMRI API">
+                 maxmemory="512m"
+                 overview="${source}/jmri/overview.html"
+                 destdir="${doctarget}"
+                 additionalparam="-breakiterator"
+                 author="true"
+                 version="false"
+                 public="yes"
+                 use="true"
+                 failonerror="true"
+                 windowtitle="JMRI API">
 
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
@@ -1820,7 +1820,7 @@
             <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
             <group title="Web Services" packages="jmri.web:jmri.web.*:jmri.server:jmri.server.*"/>
             <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
-      <!-- Layout Connections last because so large -->
+            <!-- Layout Connections last because so large -->
             <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
 
             <classpath refid="compile.class.path"/>
@@ -1845,7 +1845,7 @@
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
             <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
-            <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
+            <link href="https://javadoc.io/doc/com.alexandriasoftware.swing/jinputvalidator/0.8.0/"/>
             <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
             <!-- The following archunit javadoc source doesn't have a package-list file, so can't be directly linked -->
             <!-- <link offline="true" href="https://www.javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0" >  -->
@@ -1857,16 +1857,16 @@
     <!-- keep the maxwarns value in sync with javadoc target -->
     <target name="javadoc-lint" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs">
         <javadoc packagenames="jmri.*, apps.*"
-           maxmemory="512m"
-           overview="${source}/jmri/overview.html"
-           destdir="${doctarget}"
-           additionalparam="-breakiterator"
-           author="true"
-           version="false"
-           public="yes"
-           use="true"
-           failonerror="true"
-           windowtitle="JMRI API">
+                 maxmemory="512m"
+                 overview="${source}/jmri/overview.html"
+                 destdir="${doctarget}"
+                 additionalparam="-breakiterator"
+                 author="true"
+                 version="false"
+                 public="yes"
+                 use="true"
+                 failonerror="true"
+                 windowtitle="JMRI API">
 
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
@@ -1880,6 +1880,7 @@
             <arg value="1650"/><!-- change from default 100 warnings; keep synced with pom.xml, other javadoc targets -->
             <arg value="-quiet"/>
             <arg value="-splitindex"/>
+            <arg value="-J-Dhttp.agent=javadoc"/>
 
             <!-- disable output of custom @navassoc tag - used for UML image generation -->
             <tag name="navassoc" enabled="false"/>
@@ -1892,7 +1893,7 @@
             <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
             <group title="Web Services" packages="jmri.web:jmri.web.*:jmri.server:jmri.server.*"/>
             <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
-      <!-- Layout Connections last because so large -->
+            <!-- Layout Connections last because so large -->
             <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
 
             <classpath refid="compile.class.path"/>
@@ -1924,23 +1925,23 @@
         </javadoc>
     </target>
 
-  <!-- The structure of the following should closely follow the  -->
-  <!-- main 'javadoc' target directly above. The only difference -->
-  <!-- is the doclet clause referencing the UML generator, the   -->
-  <!-- use of the public option in the main task definition, and -->
-  <!-- the execution of "dot" at the bottom.                     -->
-  <!-- Requires Graphviz from http://www.graphviz.org            -->
+    <!-- The structure of the following should closely follow the  -->
+    <!-- main 'javadoc' target directly above. The only difference -->
+    <!-- is the doclet clause referencing the UML generator, the   -->
+    <!-- use of the public option in the main task definition, and -->
+    <!-- the execution of "dot" at the bottom.                     -->
+    <!-- Requires Graphviz from http://www.graphviz.org            -->
     <target name="javadoc-uml" depends="init, jjdoc, compile-generated-source, plantuml" description="create Javadocs with UML">
         <javadoc packagenames="jmri.*, apps.*"
-           maxmemory="512m"
-           overview="${source}/jmri/overview.html"
-           destdir="${doctarget}"
-           additionalparam="-breakiterator"
-           author="true"
-           version="false"
-           public="yes"
-           use="true"
-           windowtitle="JMRI API">
+                 maxmemory="512m"
+                 overview="${source}/jmri/overview.html"
+                 destdir="${doctarget}"
+                 additionalparam="-breakiterator"
+                 author="true"
+                 version="false"
+                 public="yes"
+                 use="true"
+                 windowtitle="JMRI API">
 
             <packageset dir="${source}" defaultexcludes="yes">
                 <include name="jmri/**"/>
@@ -1960,12 +1961,12 @@
             <tag name="navassoc" enabled="false"/>
 
             <doclet name="org.umlgraph.doclet.UmlGraphDoc"
-                                  path="${libdir}/UmlGraph-5.7.jar">
+                    path="${libdir}/UmlGraph-5.7.jar">
                 <param name="-attributes"/>
                 <param name="-operations"/>
                 <param name="-qualify"/>
                 <param name="-types"/>
-                                <!-- <param name="-visibility"/> not used, as only showing public visibility -->
+                <!-- <param name="-visibility"/> not used, as only showing public visibility -->
                 <param name="-collapsible"/>  <!-- hide images at first on web pages -->
                 <param name="-inferdepvis" value="public"/> <!-- only show public -->
             </doclet>
@@ -1977,7 +1978,7 @@
             <group title="XML persistance" packages="jmri.configurexml:jmri.configurexml.*:apps.configurexml:apps.configurexml.*"/>
             <group title="Web Services" packages="jmri.web:jmri.web.*"/>
             <group title="Interface Server Support" packages="jmri.jmris:jmri.jmris.*"/>
-      <!-- Layout Connections last because so large -->
+            <!-- Layout Connections last because so large -->
             <group title="Layout Connections" packages="jmri.jmrix:jmri.jmrix.*"/>
 
             <classpath refid="compile.class.path"/>
@@ -2006,7 +2007,7 @@
             <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
             <!-- The following archunit javadoc source doesn't have a package-list file, so can't be directly linked -->
             <!-- <link offline="true" href="https://www.javadoc.io/doc/com.tngtech.archunit/archunit/0.11.0" >  -->
-       </javadoc>
+        </javadoc>
         <apply executable="dot" dest="${doctarget}" parallel="false">
             <arg value="-Tpng"/>
             <arg value="-o"/>
