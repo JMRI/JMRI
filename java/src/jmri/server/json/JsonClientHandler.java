@@ -83,7 +83,7 @@ public class JsonClientHandler {
      * @see #onMessage(JsonNode)
      */
     public void onMessage(String string) throws IOException {
-        if (string.equals("{\"type\":\"ping\"}")) {
+        if (string.startsWith("{\"type\":\"ping\"")) {
             // turn down the noise when debugging
             log.trace("Received from client: '{}'", string);
         } else {
@@ -172,6 +172,7 @@ public class JsonClientHandler {
                             Bundle.getMessage(this.connection.getLocale(), JsonException.ERROR_UNKNOWN_TYPE, type), id);
                 }
             } else {
+                log.warn("Data property of JSON message missing");
                 this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST,
                         Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"), id);
             }
@@ -180,6 +181,7 @@ public class JsonClientHandler {
                 this.connection.close();
             }
         } catch (JmriException je) {
+            log.warn("Unsupported operation attempted");
             this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(
                     this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()), id);
         } catch (JsonException je) {

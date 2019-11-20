@@ -11,6 +11,7 @@
  */
 
 var jmri = null;
+var first = false; //temp used for debugging
 
 //handle an error message returned via the websocket from the server
 //  parms: html error code, message is the message text
@@ -39,9 +40,7 @@ function rebuildTable(data) {
 		//build all data rows for table body
 		var tbody = '';	
 		data.forEach(function (item) {
-			if ($.inArray(item.type, ["networkService","configProfile","systemConnection"]) < 0) { //request updates from JMRI for each item in list 
-				jmri.socket.send(item.type, { name: item.data.name });                         //  , except those not (yet) handled properly in JMRI 		 
-			}
+			jmri.socket.send(item.type, { name: item.data.name }); //request updates from server
 			tbody += '<tr data-name="' + item.data.name + '">';
 			tbody += buildRow(item.data) + '</tr>';
 		});
@@ -210,7 +209,7 @@ $(document).ready(function () {
 		//everything calls console()
 		console: function (originalData) {
 			var data = JSON.parse(originalData);
-//			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
+			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
 			if ($.isArray(data)) {  //if its an array, 
 				rebuildTable(data); //  replace the table with the array list			
 			} else if ((data.type) && (data.type === "error")) {
