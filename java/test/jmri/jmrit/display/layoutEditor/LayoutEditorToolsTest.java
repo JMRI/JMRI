@@ -2,10 +2,10 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import java.io.FileNotFoundException;
 import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.implementation.SingleTurnoutSignalHead;
@@ -20,7 +20,6 @@ import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.util.Dumper;
 
 /**
  * Test simple functioning of LayoutEditorTools
@@ -31,7 +30,7 @@ import org.netbeans.jemmy.util.Dumper;
 public class LayoutEditorToolsTest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(5); // 5 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(10); // 5 second timeout for methods in this test class.
 
     // allow 2 retries of intermittent tests
     @Rule
@@ -39,9 +38,10 @@ public class LayoutEditorToolsTest {
 
     private LayoutEditor le = null;
     private LayoutEditorTools let = null;
-    private LayoutBlock layoutBlocks[] = {null, null, null, null};
-    private Turnout turnouts[] = {null, null, null, null};
-    private SignalHead signalHeads[] = {null, null, null, null};
+    private LayoutBlock layoutBlocks[] = {null, null, null, null, null};
+    private Turnout turnouts[] = {null, null, null, null, null};
+    private SignalHead signalHeads[] = {null, null, null, null, null};
+    private Sensor sensors[] = {null, null, null, null, null};
 
     @Test
     public void testCtor() {
@@ -99,11 +99,21 @@ public class LayoutEditorToolsTest {
         jButtonOperator.doClick();
 
         JCheckBoxOperator jCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("PlaceAllHeads"));
-        jCheckBoxOperator.setSelected(true);
+        jCheckBoxOperator.doClick();
 
-        jCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetAllLogic"));
-        jCheckBoxOperator.setSelected(true);
-        jCheckBoxOperator.setSelected(false);
+//        jCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetAllLogic"));
+//        jCheckBoxOperator.doClick();
+
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        //pressing "Done" should throw up an error dialog... dismiss it
+        Thread modalDialogOperatorThread1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread1.isAlive());
+        }, "modalDialogOperatorThread1 finished");
 
         JLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("ThroatContinuing")));
@@ -111,31 +121,73 @@ public class LayoutEditorToolsTest {
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
 
+        //pressing "Done" should throw up an error dialog... dismiss it
+        Thread modalDialogOperatorThread2 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread2.isAlive());
+        }, "modalDialogOperatorThread2 finished");
+
         JLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("ThroatDiverging")));
         jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
+        //pressing "Done" should throw up an error dialog... dismiss it
+        Thread modalDialogOperatorThread3 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread3.isAlive());
+        }, "modalDialogOperatorThread3 finished");
+
+        //NOTE: index used here because "Continuing" match against "ThroadContinuing"
         JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("Continuing")));
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("Continuing")), 1);
         jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
 
+        //pressing "Done" should throw up an error dialog... dismiss it
+        Thread modalDialogOperatorThread4 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread4.isAlive());
+        }, "modalDialogOperatorThread4 finished");
+
+        //NOTE: index used here because "Diverging" match against "ThroadDiverging"
         JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("Diverging")));
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("Diverging")), 1);
         jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(4);  //TODO:fix hardcoded index
 
         //dumpToXML();  // dump jemmy GUI info to xml file
+        //captureScreenshot();
+        
+        //TODO: Add failure case for SSL logic
+        //pressing "Done" should throw up an error dialog... dismiss it
+//        Thread modalDialogOperatorThread5 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+//                Bundle.getMessage("ErrorTitle"),
+//                Bundle.getMessage("ButtonOK"));  // NOI18N
+//        doneButtonOperator.doClick();
+//        JUnitUtil.waitFor(() -> {
+//            return !(modalDialogOperatorThread5.isAlive());
+//        }, "modalDialogOperatorThread5 finished");
+        doneButtonOperator.doClick();
 
-        jButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
-        jButtonOperator.press();
-        jFrameOperator.requestClose();
+        // deselect the "SetAllLogic" checkbox
+//        jCheckBoxOperator.doClick();
+
+        doneButtonOperator.doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
-    }
+    }   // testSetSignalsAtTurnoutWithDone
 
     @Test
     public void testSetSignalsAtTurnoutWithCancel() {
@@ -372,6 +424,11 @@ public class LayoutEditorToolsTest {
                     signalHeads[i] = new SingleTurnoutSignalHead(sName, uName, nbh, SignalHead.GREEN, SignalHead.RED);
                     InstanceManager.getDefault(jmri.SignalHeadManager.class).register(signalHeads[i]);
                 }
+
+//                sName = "IS" + i;
+//                uName = "sensor " + i;
+//                sensors[i] = InstanceManager.getDefault(SensorManager.class).newSensor(sName, uName);
+                //layoutBlocks[i].setOccupancySensorName(uName);
             }
         }
     }
@@ -390,17 +447,41 @@ public class LayoutEditorToolsTest {
         }
         JUnitUtil.tearDown();
     }
+//
 
-    // dump jemmy GUI info to xml file
-    private void dumpToXML() {
-        //grab component state
-        try {
-            Dumper.dumpAll(System.getProperty("user.home")
-                    + System.getProperty("file.separator")
-                    + "dump.xml");
-
-        } catch (FileNotFoundException e) {
-        }
-    }
-    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
+//    private void waitSeconds(int s) {
+//        try {
+//            //new QueueTool().waitEmpty(s * 1000);
+//
+//            //new EventTool().waitNoEvent(s * 1000);
+//
+//            //EventTool eventTool = new EventTool();
+//            //eventTool.getTimeouts().setTimeout("EventTool.WaitNoEventTimeout", Math.max(600, s * 1000));
+//            //eventTool.waitNoEvent(s * 1000);
+//
+//            //Thread.sleep(s * 1000);
+//        } catch (TimeoutExpiredException tee) {
+//            // Ignore
+//        }
+//    }
+    // save screenshot of GUI
+//    private void captureScreenshot() {
+//        //grab image
+//        PNGEncoder.captureScreen(System.getProperty("user.home")
+//                + System.getProperty("file.separator")
+//                + "screen.png");
+//    }
+//
+//    // dump jemmy GUI info to xml file
+//    private void dumpToXML() {
+//        //grab component state
+//        try {
+//            Dumper.dumpAll(System.getProperty("user.home")
+//                    + System.getProperty("file.separator")
+//                    + "dump.xml");
+//
+//        } catch (FileNotFoundException e) {
+//        }
+//    }
+//    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
 }   // class LayoutEditorToolsTest

@@ -10,6 +10,7 @@ import jmri.util.*;
 import jmri.util.junit.rules.*;
 import org.junit.*;
 import org.junit.rules.*;
+import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
@@ -831,7 +832,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(true);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertTrue("le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)", e.getHighlightSelectedBlock());
     }
 
@@ -842,7 +843,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(false);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", e.getHighlightSelectedBlock());
     }
 
