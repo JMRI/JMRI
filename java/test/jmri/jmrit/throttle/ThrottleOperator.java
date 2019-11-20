@@ -232,11 +232,11 @@ public class ThrottleOperator extends JFrameOperator {
         JToggleButtonOperator jbo = new JToggleButtonOperator(fb);
         jbo.clickForPopup();
         JPopupMenuOperator jpmo = new JPopupMenuOperator();
-	jpmo.pushMenuNoBlock(Bundle.getMessage("MenuItemProperties"));
+	    jpmo.pushMenuNoBlock(Bundle.getMessage("MenuItemProperties"));
    }
 
    public void toggleFunctionMomentary(int function){
-	openFunctionPopupMenu(function);
+	    openFunctionPopupMenu(function);
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ButtonEditFunction"));
         (new JCheckBoxOperator(jdo,Bundle.getMessage("CheckBoxLockable"))).doClick();
         (new JButtonOperator(jdo,Bundle.getMessage("ButtonOK"))).doClick();
@@ -298,15 +298,15 @@ public class ThrottleOperator extends JFrameOperator {
         JInternalFrameOperator jifo  = getControlPanelOperator();
         jifo.clickForPopup();
         JPopupMenuOperator jpmo = new JPopupMenuOperator();
-	jpmo.pushMenuNoBlock(Bundle.getMessage("ControlPanelProperties"));
+	    jpmo.pushMenuNoBlock(Bundle.getMessage("ControlPanelProperties"));
    }
 
    public void setSpeedStepDisplay(){
-	openControlPanelPopupMenu();
+	    openControlPanelPopupMenu();
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleEditSpeedControlPanel"));
         (new JRadioButtonOperator(jdo,Bundle.getMessage("ButtonDisplaySpeedSteps"))).doClick();
         (new JButtonOperator(jdo,Bundle.getMessage("ButtonOK"))).doClick();
-        
+         
    }
 
    public void setSpeedSpinner(int i){
@@ -320,6 +320,5 @@ public class ThrottleOperator extends JFrameOperator {
    public void speedSpinnerMinimum(){
         new JSpinnerOperator(getControlPanelOperator()).scrollToMinimum();
    }
-
 
 }

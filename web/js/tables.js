@@ -1,13 +1,10 @@
 /*
  * TablesServlet specific JavaScript
  * 
- * TODO: update other language NavBar.html, Tables.html
- * TODO: update json help with correct program references
  * TODO: add filter to tables
  * TODO: add enum descriptions to schema and use them for converting states, and 
  *         for calc'ing the "next" state
  * TODO: additional columns and changes for block, light, route
- * TODO: why does no configProfile show isAutoStart?
  */
 
 var jmri = null;
@@ -209,7 +206,7 @@ $(document).ready(function () {
 		//everything calls console()
 		console: function (originalData) {
 			var data = JSON.parse(originalData);
-			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
+//			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
 			if ($.isArray(data)) {  //if its an array, 
 				rebuildTable(data); //  replace the table with the array list			
 			} else if ((data.type) && (data.type === "error")) {
