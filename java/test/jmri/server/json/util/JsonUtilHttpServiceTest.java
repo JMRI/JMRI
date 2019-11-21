@@ -12,6 +12,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.awt.GraphicsEnvironment;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -31,6 +33,7 @@ import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerPreferences;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
@@ -261,6 +264,25 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     }
 
     /**
+     * Test of getSystemConnection method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if connection name not found
+     */
+    @Test
+    public void testGetSystemConnection() throws JsonException {
+        JsonNode result = service.getSystemConnection(locale, "Internal", 42);
+        validate(result);
+        // We should get back type, data and id
+        assertEquals(3, result.size());
+        // Data should exist and have at least 4 elements
+        assertTrue(result.path(JSON.DATA).size() >= 4);
+        assertEquals(JSON.SYSTEM_CONNECTION, result.path(JSON.TYPE).asText());
+        assertEquals("I", result.path(JSON.DATA).path(JSON.PREFIX).asText());
+        assertEquals("Internal", result.path(JSON.DATA).path(JSON.NAME).asText());
+        assertTrue(result.path(JSON.DATA).path(JSON.MFG).isNull());
+    }
+
+    /**
      * Test of getSystemConnections method, of class JsonUtilHttpService.
      *
      * @throws jmri.server.json.JsonException if messages are not schema valid
@@ -377,6 +399,23 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
+    }
+
+    /**
+     * Test of getConfigProfile method, of class JsonUtilHttpService. 
+     * only runs negative test that a profile is not found
+     *
+     */
+    @Test
+    public void testGetConfigProfile() {
+        try {
+            JsonNode result = service.getConfigProfile(locale, "non-existent-profile", 42);
+            validate(result);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
+        }
+        
     }
 
     /**

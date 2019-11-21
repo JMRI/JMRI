@@ -346,7 +346,7 @@ public class JsonUtilHttpService extends JsonHttpService {
             if (jn.get("data").get("name").textValue().equals(name)) { //check data.name for a match
                 return message(JSON.SYSTEM_CONNECTION, jn.get("data"), id);                
             }
-        };
+        }
         throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JSON.SYSTEM_CONNECTION, name), id);
     }
 
@@ -364,8 +364,8 @@ public class JsonUtilHttpService extends JsonHttpService {
             if (!config.getDisabled()) {
                 ObjectNode data = mapper.createObjectNode();
                 data.put(JSON.NAME, config.getConnectionName());
-                data.put(JSON.MFG, config.getManufacturer());
                 data.put(JSON.PREFIX, config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
+                data.put(JSON.MFG, config.getManufacturer());
                 data.put(JSON.DESCRIPTION, Bundle.getMessage(locale, "ConnectionSucceeded", config.getConnectionName(),
                         config.name(), config.getInfo()));
                 prefixes.add(config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
