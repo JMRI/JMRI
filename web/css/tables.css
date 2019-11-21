@@ -11,3 +11,7 @@ table.sortable th:hover {
 table:not(.signalMast):not(.signalHead) tbody td.state {
 	cursor: pointer;
 }
+table:not(.signalMast):not(.signalHead) tbody td.state:hover {
+	background: #ddd;
+	font-weight: bold;
+}
