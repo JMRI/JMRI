@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.io.File;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.display.AbstractEditorTestBase;
@@ -72,6 +73,9 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
 
+        //delete this file so we won't get the "<xxx> exists... do you want to replace?" dialog
+        new File("temp/Layout Editor Test Layout.xml").delete();
+
         // test the file -> delete panel menu item
         Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("StorePanelTitle"),
@@ -81,6 +85,9 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JUnitUtil.waitFor(() -> {
             return !(misc1.isAlive());
         }, "misc1 finished");
+
+        //clean up after ourselves...
+        new File("temp/Layout Editor Test Layout.xml").delete();
     }
 
     @Test
@@ -926,11 +933,10 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSideBottom"), "/");
 
         //float
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
-                + Bundle.getMessage("ToolBar") + "/"
-                + Bundle.getMessage("ToolBarSide") + "/"
-                + Bundle.getMessage("ToolBarSideFloat"), "/");
-
+//        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+//                + Bundle.getMessage("ToolBar") + "/"
+//                + Bundle.getMessage("ToolBarSide") + "/"
+//                + Bundle.getMessage("ToolBarSideFloat"), "/");
         //Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
