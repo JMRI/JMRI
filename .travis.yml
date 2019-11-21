@@ -42,7 +42,7 @@ before_script:
   - ./cc-test-reporter before-build
 
 script:
-  - if [[ "$PRINT_SUMMARY" == "false" ]] ; then travis_wait 70 ./scripts/travis.sh ; else ./scripts/travis.sh ; fi
+  - if [[ "$PRINT_SUMMARY" == "false" ]] ; then travis_wait 50 ./scripts/travis.sh ; else ./scripts/travis.sh ; fi
 
 cache:
   directories:
@@ -68,6 +68,7 @@ env:
   - HEADLESS=false STATIC=false 
   - HEADLESS=true STATIC=false
   - HEADLESS=true STATIC=true
+  - HEADLESS=false SKIPINTERMITTENT=false STATIC=true
 
 matrix:
   exclude:

@@ -66,6 +66,7 @@ public class MDITest {
     public void tearDown() {
         JUnitUtil.clearShutDownManager();  // eventually want to test ShutDownTasks?
         JUnitUtil.resetApplication();
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

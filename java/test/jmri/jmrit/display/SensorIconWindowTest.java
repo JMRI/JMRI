@@ -142,6 +142,7 @@ public class SensorIconWindowTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

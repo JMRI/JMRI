@@ -16,9 +16,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
     <h1>Adding / Editing Lights and Light Controllers</h1>
       <ul class="snav">
         <li><a href="#addLight">Adding a Light</a></li>

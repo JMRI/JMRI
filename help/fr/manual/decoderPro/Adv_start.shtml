@@ -13,12 +13,13 @@
 
 <body>
 <!--#include virtual="/Header" -->
-
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <a name="Top"></a>
-<h1><a name="Top">Advanced Programmer</a></h1>
+<h1>Advanced Programmer</h1>
 <h2>Roster Entry</h2>
 
 <div align="right">

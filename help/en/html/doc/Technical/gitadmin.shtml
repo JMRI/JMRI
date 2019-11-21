@@ -13,8 +13,8 @@
 <body>
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: GitHub Administration</h1>
 
       <h2>Background</h2>

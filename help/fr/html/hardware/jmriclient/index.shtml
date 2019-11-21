@@ -17,16 +17,18 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">>
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Support Mat&#233;riel: Connexion JMRIClient</h1>
 
 <p>La connexion JMRIClient fournit une m&#233;thode de connexion &#224; distance d'un programme JMRI &#224; un autre. Il peut &#234;tre utilis&#233; pour construire un panneau sur un ordinateur qui est connect&#233; au r&#233;seau directement, mais actuellement fait fonctionner le panneau sur un ordinateur sans connexion physique au r&#233;seau.</p>
 
- <p>La connexion JMRIClient peut aussi &#234;tre utilis&#233;e pour partager des informations entre deux opr&#233;rateurs voisins sans r&#233;pliquercompl&#232;tement les informations sur chaque ordinateur. Cette configuration est particuli&#232;rement utile sur les configurations modulaires o&#249; plusieurs constructeurs de module sont impliqu&#233;s. </P>  
+<p>La connexion JMRIClient peut aussi &#234;tre utilis&#233;e pour partager des informations entre deux opr&#233;rateurs voisins sans r&#233;pliquercompl&#232;tement les informations sur chaque ordinateur. Cette configuration est particuli&#232;rement utile sur les configurations modulaires o&#249; plusieurs constructeurs de module sont impliqu&#233;s. </p>
 
-a name="connecting"></a><h2>Connexion</h2>
+<a name="connecting"></a><h2>Connexion</h2>
 <h3>Le Serveur Simple JMRI</h3>
 
 <p>"Simple" dans ce cas, d&#233;signe en fait le protocole, pas le serveur
@@ -91,27 +93,26 @@ a indiqu&#233; qu'il s'int&#233;resse &#224; l'appareil.</p>
 
 <h2>Remarques sur l'utilisation </h2>
 <ol>
-<li> Si vous avez des logixs ou des itin&#233;raires, vous voulez probablement que ceux-ci
-ne s'ex&#233;cutent que sur une des deux machines.</li>
-<li> Pour tout renseignement sur une lumi&#232;re / aiguillage / capteur qui doivent &#234;tre restitu&#233; au client, il doit &#234;tre d&#233;fini sur le client.</li>
-<li> <p> L'inversion est d&#233;finie &#224; la fois pour les capteurs et les aiguillages. Si l'invertion est
+    <li> Si vous avez des logixs ou des itin&#233;raires, vous voulez probablement que ceux-ci
+    ne s'ex&#233;cutent que sur une des deux machines.</li>
+    <li> Pour tout renseignement sur une lumi&#232;re / aiguillage / capteur qui doivent &#234;tre restitu&#233; au client, il doit &#234;tre d&#233;fini sur le client.</li>
+    <li> <p> L'inversion est d&#233;finie &#224; la fois pour les capteurs et les aiguillages. Si l'invertion est
     activ&#233;e &#224; la fois par le client et le serveur, le dispositif r&#233;el aura
     un comportement normal lorsque le client l'utilisera.</p>
     <p> Celui-ci est int&#233;ressant, car il peut &#234;tre un bug ou pas un bug
-en fonction de votre cas d'utilisation.</p>
+    en fonction de votre cas d'utilisation.</p>
     <p> Si votre cas d'utilisation est que le client et les serveurs ont des panneaux en cours d'ex&#233;cution
-, alors vous pourriez consid&#233;rer cela comme un bug. Il existe deux solutions de contournement
-dans ce cas 1) charger un panneau sans configuration d'inversion sur le client ou 2)
-Ex&#233;cutez le panneau sur le serveur via une seconde instance de JMRI qui est
-agissant comme un client pour la premi&#232;re instance.</p>
-    <p> Si votre cas d'utilisation est que le serveur fournit juste les connexions, mais
-ne fait pas de logique, alors ce n'est pas un bug.</p>
-
+    , alors vous pourriez consid&#233;rer cela comme un bug. Il existe deux solutions de contournement
+    dans ce cas 1) charger un panneau sans configuration d'inversion sur le client ou 2)
+    Ex&#233;cutez le panneau sur le serveur via une seconde instance de JMRI qui est
+    agissant comme un client pour la premi&#232;re instance.</p>
+        <p> Si votre cas d'utilisation est que le serveur fournit juste les connexions, mais
+    ne fait pas de logique, alors ce n'est pas un bug.</p>
    </li>
 </ol>
 
-<!--#include virtual="/Footer" -->
- </div><!-- closes #mainContent-->
-</div> <!-- closes #mBody-->
+        <!--#include virtual="/Footer" -->
+        </div><!-- closes #mainContent-->
+    </div> <!-- closes #mBody-->
 </body>
 </html>
