@@ -230,7 +230,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         assertEquals(JSON.NETWORK_SERVICE, result.get(0).path(JSON.TYPE).asText());
         JsonNode data = result.get(0).path(JSON.DATA);
         assertFalse(data.isMissingNode());
-        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
+        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.USERNAME).asText());
         assertEquals(9999, data.path(JSON.PORT).asInt());
         assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
         assertEquals(NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());
@@ -308,7 +308,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         assertEquals(JSON.NETWORK_SERVICE, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
         assertFalse(data.isMissingNode());
-        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
+        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.USERNAME).asText());
         assertEquals(9999, data.path(JSON.PORT).asInt());
         assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
         assertEquals(NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());

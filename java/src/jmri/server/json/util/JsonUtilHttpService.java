@@ -209,7 +209,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     public JsonNode getNetworkService(Locale locale, String name, int id) throws JsonException {
         for (ZeroConfService service : InstanceManager.getDefault(ZeroConfServiceManager.class).allServices()) {
-            if (service.getName().equals(name)) {
+            if (service.getType().equals(name)) {
                 return this.getNetworkService(service, id);
             }
         }
@@ -218,7 +218,8 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     private JsonNode getNetworkService(ZeroConfService service, int id) {
         ObjectNode data = mapper.createObjectNode();
-        data.put(JSON.NAME, service.getName());
+        data.put(JSON.NAME, service.getType());
+        data.put(JSON.USERNAME, service.getName());
         data.put(JSON.PORT, service.getServiceInfo().getPort());
         data.put(JSON.TYPE, service.getType());
         Enumeration<String> pe = service.getServiceInfo().getPropertyNames();
