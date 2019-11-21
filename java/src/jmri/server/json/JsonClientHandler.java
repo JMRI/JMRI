@@ -83,7 +83,7 @@ public class JsonClientHandler {
      * @see #onMessage(JsonNode)
      */
     public void onMessage(String string) throws IOException {
-        if (string.startsWith("{\"type\":\"ping\"")) {
+        if (string.equals("{\"type\":\"ping\"}")) {
             // turn down the noise when debugging
             log.trace("Received from client: '{}'", string);
         } else {
