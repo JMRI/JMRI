@@ -6,6 +6,7 @@ import javax.swing.JComboBox;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
+import jmri.SensorManager;
 import jmri.SignalHead;
 import jmri.Turnout;
 import jmri.implementation.SingleTurnoutSignalHead;
@@ -13,6 +14,7 @@ import jmri.implementation.VirtualSignalHead;
 import jmri.util.JUnitUtil;
 import jmri.util.ThreadingUtil;
 import jmri.util.junit.rules.RetryRule;
+import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -101,13 +103,15 @@ public class LayoutEditorToolsTest {
         JCheckBoxOperator jCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("PlaceAllHeads"));
         jCheckBoxOperator.doClick();
 
-//        jCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetAllLogic"));
-//        jCheckBoxOperator.doClick();
+        // select the "SetAllLogic" checkbox
+        JCheckBoxOperator allLogicCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetAllLogic"));
+        allLogicCheckBoxOperator.doClick(); // click all on
+        allLogicCheckBoxOperator.doClick(); // click all off
 
         JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
 
         //pressing "Done" should throw up an error dialog... dismiss it
-        Thread modalDialogOperatorThread1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
@@ -122,7 +126,7 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
 
         //pressing "Done" should throw up an error dialog... dismiss it
-        Thread modalDialogOperatorThread2 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
@@ -137,7 +141,7 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
         //pressing "Done" should throw up an error dialog... dismiss it
-        Thread modalDialogOperatorThread3 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread3 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
@@ -145,7 +149,7 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread3.isAlive());
         }, "modalDialogOperatorThread3 finished");
 
-        //NOTE: index used here because "Continuing" match against "ThroadContinuing"
+        //NOTE: index used here because "Continuing" matches against "ThroadContinuing" above
         JLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("Continuing")), 1);
         jComboBoxOperator = new JComboBoxOperator(
@@ -153,7 +157,7 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
 
         //pressing "Done" should throw up an error dialog... dismiss it
-        Thread modalDialogOperatorThread4 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
@@ -161,30 +165,111 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread4.isAlive());
         }, "modalDialogOperatorThread4 finished");
 
-        //NOTE: index used here because "Diverging" match against "ThroadDiverging"
+        //NOTE: index used here because "Diverging" matches against "ThroadDiverging" above
         JLabelOperator = new JLabelOperator(jFrameOperator,
                 Bundle.getMessage("MakeLabel", Bundle.getMessage("Diverging")), 1);
         jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(4);  //TODO:fix hardcoded index
 
+        //NOTE: index used here because there are four identical buttons
+        JCheckBoxOperator checkBoxOperator0 = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetLogic"), 0);
+        checkBoxOperator0.doClick(); // click on
+
         //dumpToXML();  // dump jemmy GUI info to xml file
-        //captureScreenshot();
-        
-        //TODO: Add failure case for SSL logic
-        //pressing "Done" should throw up an error dialog... dismiss it
-//        Thread modalDialogOperatorThread5 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
-//                Bundle.getMessage("ErrorTitle"),
-//                Bundle.getMessage("ButtonOK"));  // NOI18N
-//        doneButtonOperator.doClick();
-//        JUnitUtil.waitFor(() -> {
-//            return !(modalDialogOperatorThread5.isAlive());
-//        }, "modalDialogOperatorThread5 finished");
+        //pressing "Done" should throw up ONE error dialog... dismiss it
+        Thread modalDialogOperatorThread5 = JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
+        //captureScreenshot();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread5.isAlive());
+        }, "modalDialogOperatorThread5 finished");
 
-        // deselect the "SetAllLogic" checkbox
-//        jCheckBoxOperator.doClick();
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            // this causes a "set Signal Heads Turnout" dialog to be displayed.
+            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+        });
 
+        // the JFrameOperator waits for the set signal frame to (re)appear
+        jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+        checkBoxOperator0 = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetLogic"), 0);
+        checkBoxOperator0.doClick(); // click off
+
+        //NOTE: index used here because there are four identical buttons
+        JCheckBoxOperator checkBoxOperator1 = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetLogic"), 1);
+        checkBoxOperator1.doClick(); // click 1st on
+        //pressing "Done" should throw up ONE error dialog... dismiss it
+        Thread modalDialogOperatorThread6 = JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread6.isAlive());
+        }, "modalDialogOperatorThread6 finished");
+
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            // this causes a "set Signal Heads Turnout" dialog to be displayed.
+            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+        });
+
+        // the JFrameOperator waits for the set signal frame to (re)appear
+        jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+        checkBoxOperator1 = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetLogic"), 1);
+        checkBoxOperator1.doClick(); // click off
+
+        //NOTE: index used here because there are four identical buttons
+        JCheckBoxOperator checkBoxOperator2 = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetLogic"), 2);
+        checkBoxOperator2.doClick(); // click 1st on
+        //pressing "Done" should throw up ONE error dialog... dismiss it
+        Thread modalDialogOperatorThread7 = JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread7.isAlive());
+        }, "modalDialogOperatorThread7 finished");
+
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            // this causes a "set Signal Heads Turnout" dialog to be displayed.
+            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+        });
+
+        // the JFrameOperator waits for the set signal frame to (re)appear
+        jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+        checkBoxOperator2 = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetLogic"), 2);
+        checkBoxOperator2.doClick(); // click off
+
+        //NOTE: index used here because there are four identical buttons
+        JCheckBoxOperator checkBoxOperator3 = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetLogic"), 3);
+        checkBoxOperator3.doClick(); // click 1st on
+        //pressing "Done" should throw up ONE error dialog... dismiss it
+        Thread modalDialogOperatorThread8 = JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread8.isAlive());
+        }, "modalDialogOperatorThread8 finished");
+
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            // this causes a "set Signal Heads Turnout" dialog to be displayed.
+            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+        });
+
+        // the JFrameOperator waits for the set signal frame to (re)appear
+        jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+        checkBoxOperator3 = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetLogic"), 3);
+        checkBoxOperator3.doClick(); // click off
+
+        //TODO: fix the other failure conditions (testing each one)
+        //layoutBlocks[i].setOccupancySensorName(uName);
+        // this time everything should work
         doneButtonOperator.doClick();
         jFrameOperator.waitClosed();    // make sure the dialog actually closed
     }   // testSetSignalsAtTurnoutWithDone
@@ -425,9 +510,11 @@ public class LayoutEditorToolsTest {
                     InstanceManager.getDefault(jmri.SignalHeadManager.class).register(signalHeads[i]);
                 }
 
-//                sName = "IS" + i;
-//                uName = "sensor " + i;
-//                sensors[i] = InstanceManager.getDefault(SensorManager.class).newSensor(sName, uName);
+                sName = "IS" + i;
+                uName = "sensor " + i;
+                sensors[i] = InstanceManager.getDefault(SensorManager.class).newSensor(sName, uName);
+                //TODO: don't do this here because he have to test the failure cases 
+                //(no sensor assigned to block) first
                 //layoutBlocks[i].setOccupancySensorName(uName);
             }
         }
@@ -443,6 +530,7 @@ public class LayoutEditorToolsTest {
                 layoutBlocks[i] = null;
                 turnouts[i] = null;
                 signalHeads[i] = null;
+                sensors[i] = null;
             }
         }
         JUnitUtil.tearDown();
@@ -464,7 +552,7 @@ public class LayoutEditorToolsTest {
 //            // Ignore
 //        }
 //    }
-    // save screenshot of GUI
+// save screenshot of GUI
 //    private void captureScreenshot() {
 //        //grab image
 //        PNGEncoder.captureScreen(System.getProperty("user.home")
