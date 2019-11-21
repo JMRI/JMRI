@@ -25,7 +25,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
     @Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
+    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
 
     @Before
     @Override

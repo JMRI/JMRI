@@ -2,9 +2,9 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import javax.swing.JOptionPane;
 import jmri.Block;
 import jmri.BlockManager;
@@ -361,7 +361,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         if (lc == null) {
             log.error("Block {} ({}) is not connected to Block {}", facingBlock.getDisplayName(),
                     facingBlock.getDisplayName(), protectedBlock.getDisplayName());
-
             return null;
         }
 
