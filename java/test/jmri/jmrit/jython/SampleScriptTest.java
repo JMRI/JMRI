@@ -81,6 +81,7 @@ public class SampleScriptTest {
         
     @After 
     public void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetWindows(false,false);
         jmri.util.JUnitUtil.tearDown();
     }
 

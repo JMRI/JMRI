@@ -23,11 +23,10 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Structure of External System Connections</h1>
 
       <p>This page is about how JMRI connects to external systems, e.g.

@@ -4,7 +4,6 @@
  * TODO: update other language NavBar.html, Tables.html
  * TODO: update json help with correct program references
  * TODO: add filter to tables
- * TODO: add button or dropdown to change state for selected items
  * TODO: add enum descriptions to schema and use them for converting states, and 
  *         for calc'ing the "next" state
  * TODO: additional columns and changes for block, light, route
@@ -33,20 +32,18 @@ function rebuildTable(data) {
 		//build header row from first row of data
 		var thead = '<tr>';
 		$.each(data[0].data, function (index, value) {
-			//			jmri.log("head " + index+"="+value);
 			thead += '<th>' + index + '</th>';
 		});
 		thead += '</tr>';
 		$("table#jmri-data thead").html(thead);
-		//build all data rows for table body, store item name in rows for later lookup
-		var tbody = '';
+		//build all data rows for table body
+		var tbody = '';	
 		data.forEach(function (item) {
-			jmri.socket.send(item.type, { name: item.data.name });
+			if ($.inArray(item.type, ["networkService","configProfile","systemConnection"]) < 0) { //request updates from JMRI for each item in list 
+				jmri.socket.send(item.type, { name: item.data.name });                         //  , except those not (yet) handled properly in JMRI 		 
+			}
 			tbody += '<tr data-name="' + item.data.name + '">';
-			$.each(item.data, function (index, value) {
-				tbody += '<td>' + displayCellValue($("html").data("table-type"), index, value) + '</td>'; //replace some values with descriptions
-			});
-			tbody += '</tr>';
+			tbody += buildRow(item.data) + '</tr>';
 		});
 		$("table#jmri-data tbody").html(tbody);
 		$("table#jmri-data").removeClass("hidden").addClass("show");
@@ -57,30 +54,74 @@ function rebuildTable(data) {
 	}
 	$("#activity-alert").removeClass("show").addClass("hidden");
 	hideEmptyColumns("table#jmri-data tr th");
+
+	//setup for clicking on state column to send state changes
+	$('table:not(.signalMast):not(.signalHead)').on('click', 'td.state', function (e) { 
+		tableType = $("html").data("table-type");
+		rowName = $(this).parent('tr').data('name');
+		currState = $(this).data('state');
+		jmri.socket.send(tableType, { 'name': rowName, 'state': getNextState(tableType, currState) }, 'post');
+	 });	
 }
 
+//returns the html for a single row from that row's data object
+function buildRow(data) {
+	var r = "";
+	tableType = $("html").data("table-type");
+	$.each(data, function (index, value) {
+		r += '<td class=' + index + " data-" + index + "='" + value + "'>" 
+			+ displayCellValue(tableType, index, value) + '</td>'; 
+	});
+	return r;
+}
+
+//find row by key and replace it with generated html for that row
 function replaceRow(key, data) {
-	jmri.log("in replaceRow: name='" + key + "'");
 	var row = $("table#jmri-data tr[data-name='" + key + "']");
 	if ($(row).length) {
-		var r = "";
-		$.each(data, function (index, value) {
-			r += '<td>' + displayCellValue($("html").data("table-type"), index, value) + '</td>'; //replace some values with descriptions
-		});
-		row.html(r);
+		row.html(buildRow(data));
 		hideEmptyColumns("table#jmri-data tr th");
 	} else {
 		jmri.log("row not found for name='" + key + "'");
 	}
 }
+//handle the toggling of the next value for clicks
+var getNextState = function(type, value){
+	var nextValue = (value=='4' ? '2' : '4');
+	return nextValue;
+};
 
 /* convert each cell into more human-readable form */
 function displayCellValue(type, colName, value) {
 	if (value == null) {
 		return ""; //return empty string for any null value
 	}
-	if ($.isArray(value)) {
-		return "array[" + value.length + "]"; //return array[size] for arrays						
+	if ($.isArray(value)) { 
+		if (value.length == 0) {
+			return "";
+		}
+		if (typeof value[0] === "object") { //check first item to see if associative array
+			ret = "";
+			comma = "";
+			value.forEach(function(item) { //return list
+				if (item.name)
+					ret += comma + item.name + " " + item.userName; //if named, list name and username only
+				else { 
+					Object.keys(item).forEach(function(key) { //otherwise list the array of pairs
+						ret += comma + key + ":" + item[key];
+					});
+				}
+				comma = ", ";
+			});
+			return ret;
+		}
+		ret = "";
+		comma = "";
+		value.forEach(function(item) { //otherwise build and return simple array list
+			ret += comma + item; 
+			comma = ", ";
+		});
+		return ret;
 	}
 	if (typeof value === "object") {
 		if (value.name) {
@@ -94,20 +135,20 @@ function displayCellValue(type, colName, value) {
 		switch (type) {
 			case "turnout":
 				switch (value) {
-					case 0: return "unknown";
-					case 2: return "closed";
-					case 4: return "thrown";
-					case 8: return "inconsistent";
+					case jmri.UNKNOWN: return "unknown";
+					case jmri.CLOSED: return "closed";
+					case jmri.THROWN: return "thrown";
+					case jmri.INCONSISTENT: return "inconsistent";
 					default: return value;
 				}
 			case "route":
 			case "sensor":
 			case "layoutBlock":
 				switch (value) {
-					case 0: return "unknown";
-					case 2: return "active";
-					case 4: return "inactive";
-					case 8: return "inconsistent";
+					case jmri.UNKNOWN: return "unknown";
+					case jmri.ACTIVE: return "active";
+					case jmri.INACTIVE: return "inactive";
+					case jmri.INCONSISTENT: return "inconsistent";
 					default: return value;
 				}
 			case "block":
@@ -119,7 +160,7 @@ function displayCellValue(type, colName, value) {
 				}
 			case "light":
 				switch (value) {
-					case 0: return "unknown";
+					case jmri.UNKNOWN: return "unknown";
 					case 2: return "on";
 					case 4: return "off";
 					default: return value;
@@ -128,7 +169,7 @@ function displayCellValue(type, colName, value) {
 				return value; //not special, just return the passed in value
 		}
 	}
-	return htmlEncode(value); //otherwise replace special characters
+	return value; //otherwise return unchanged value
 }
 
 //replace some special chars with html equivalents
@@ -169,7 +210,7 @@ $(document).ready(function () {
 		//everything calls console()
 		console: function (originalData) {
 			var data = JSON.parse(originalData);
-			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
+//			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
 			if ($.isArray(data)) {  //if its an array, 
 				rebuildTable(data); //  replace the table with the array list			
 			} else if ((data.type) && (data.type === "error")) {

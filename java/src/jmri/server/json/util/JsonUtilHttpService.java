@@ -85,8 +85,10 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getPanels(id);
             case JSON.RAILROAD:
                 return this.getRailroad(locale, id);
+            case JSON.SYSTEM_CONNECTION:
             case JSON.SYSTEM_CONNECTIONS:
                 return this.getSystemConnections(locale, id);
+            case JSON.CONFIG_PROFILE:
             case JSON.CONFIG_PROFILES:
                 return this.getConfigProfiles(locale, id);
             default:
@@ -100,10 +102,13 @@ public class JsonUtilHttpService extends JsonHttpService {
         switch (type) {
             case JSON.METADATA:
                 return this.getMetadata(locale, id);
+            case JSON.NETWORK_SERVICE:
             case JSON.NETWORK_SERVICES:
                 return this.getNetworkServices(locale, id);
+            case JSON.SYSTEM_CONNECTION:
             case JSON.SYSTEM_CONNECTIONS:
                 return this.getSystemConnections(locale, id);
+            case JSON.CONFIG_PROFILE:
             case JSON.CONFIG_PROFILES:
                 return this.getConfigProfiles(locale, id);
             default:

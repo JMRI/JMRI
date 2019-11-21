@@ -31,7 +31,6 @@ import jmri.util.JUnitUtil;
 public class LoadAtStartUpTest {
 
     @Test
-    @SuppressWarnings("null")
     public void testShowAndClose() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -189,6 +188,11 @@ public class LoadAtStartUpTest {
 
         Assert.assertTrue("All trains terminated", (d.getActiveTrainsList().isEmpty()));
 
+        JFrameOperator aw = new JFrameOperator("AutoTrains");
+
+        aw.requestClose();
+        dw.requestClose();
+
         // cleanup window
         JUnitUtil.dispose(d);
     }
@@ -204,6 +208,7 @@ public class LoadAtStartUpTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
     }

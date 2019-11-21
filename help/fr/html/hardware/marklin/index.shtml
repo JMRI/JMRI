@@ -15,8 +15,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Documentation Mat&#233;riel : Marklin Centrale CS 2</h1>
 <p>

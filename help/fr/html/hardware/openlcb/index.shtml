@@ -3,7 +3,6 @@
 <head>
 <!-- Updated by Herv&#233; Blorec le 2017-02-06-->
 <title>JMRI Hardware Support - OpenLCB</title>
-
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -15,8 +14,9 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
 
 <h1>Documentation Mat&#233;rielle: OpenLCB</h1>
 

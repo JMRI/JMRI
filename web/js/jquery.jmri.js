@@ -175,6 +175,10 @@
             };
             jmri.signalMasts = function (data) {
             };
+            jmri.systemConnection = function (name, data) {
+            };
+            jmri.systemConnections = function (data) {
+            };
             jmri.throttle = function (throttle, data) {
             };
             jmri.time = function (time, data) {
@@ -199,6 +203,7 @@
             jmri.THROWN = 4;
             jmri.ACTIVE = 2;
             jmri.INACTIVE = 4;
+            jmri.INCONSISTENT = 8;
             // Getters and Setters
             jmri.getLight = function (name) {
                 if (jmri.socket) {
