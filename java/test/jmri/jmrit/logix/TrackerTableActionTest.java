@@ -44,6 +44,9 @@ public class TrackerTableActionTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        panel.setVisible(false);
+
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
 
@@ -84,7 +87,6 @@ public class TrackerTableActionTest {
         Assert.assertEquals("Tkr1 1 Blocks Occupied", 1, occupied.size());
 
         tta.stopTracker(Tkr1, East);
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
         panel.dispose();
     }
 
@@ -97,6 +99,9 @@ public class TrackerTableActionTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        panel.setVisible(false);
+
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
 
@@ -122,7 +127,6 @@ public class TrackerTableActionTest {
         Assert.assertEquals("TkrD 1 Blocks Occupied", 1, occupied.size());
 
         tta.stopTracker(TkrD, FarWest);
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
         panel.dispose();
     }
 
@@ -135,6 +139,9 @@ public class TrackerTableActionTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        panel.setVisible(false);
+
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
         Assert.assertNotNull("TrackerTableAction not found", tta);
 
@@ -175,7 +182,6 @@ public class TrackerTableActionTest {
         occupied = TkrW.getBlocksOccupied();
         Assert.assertEquals("TkrW Blocks Occupied", 2, occupied.size());
 
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
         panel.dispose();
     }
 
