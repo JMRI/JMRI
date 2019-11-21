@@ -1,11 +1,8 @@
 package jmri.jmrit.consisttool;
 
-import apps.PerformActionModel;
-import apps.StartupActionsManager;
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
 import java.awt.event.ActionEvent;
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JComponent;
