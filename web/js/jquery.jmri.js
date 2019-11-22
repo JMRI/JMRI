@@ -175,6 +175,10 @@
             };
             jmri.signalMasts = function (data) {
             };
+            jmri.systemConnection = function (name, data) {
+            };
+            jmri.systemConnections = function (data) {
+            };
             jmri.throttle = function (throttle, data) {
             };
             jmri.time = function (time, data) {
