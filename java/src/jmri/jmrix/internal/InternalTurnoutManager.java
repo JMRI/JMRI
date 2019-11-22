@@ -1,5 +1,8 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import jmri.implementation.AbstractTurnout;
@@ -36,6 +39,12 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
 
             @Override
             protected void turnoutPushbuttonLockout(boolean b) {
+            }
+
+            @CheckReturnValue
+            @Override
+            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+                return suffix1.compareTo(suffix2);
             }
         };
     }

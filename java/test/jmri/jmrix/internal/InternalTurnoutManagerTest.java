@@ -1,10 +1,8 @@
 package jmri.jmrix.internal;
 
-import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 import org.junit.*;
 
 /**
@@ -82,6 +80,36 @@ public class InternalTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgr
         Assert.assertFalse("tSpaceLLEE not unique", list.contains(tSpaceLLEE));
         Assert.assertTrue(tSpaceLLEE != null);
         list.add(tSpaceLLEE);
+    }
+
+    @Test
+    public void testSystemNames() {
+        Turnout t1 = l.provide("IT1");
+        Turnout t2 = l.provide("IT01");
+        Assert.assertEquals("Turnout system name is correct", "IT1", t1.getSystemName());
+        Assert.assertEquals("Turnout system name is correct", "IT01", t2.getSystemName());
+    }
+
+    @Test
+    public void testCompareTo() {
+        Turnout t1 = l.provide("IT1");
+        Turnout t2 = l.provide("IT01");
+        Assert.assertNotEquals("Turnouts are different", t1, t2);
+        Assert.assertNotEquals("Turnout compareTo returns not zero", 0, t1.compareTo(t2));
+    }
+
+    @Test
+    public void testCompareSystemNameSuffix() {
+        Turnout t1 = l.provide("IT1");
+        Turnout t2 = l.provide("IT01");
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                -1, t1.compareSystemNameSuffix("01", "1", t2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, t1.compareSystemNameSuffix("1", "1", t2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, t1.compareSystemNameSuffix("01", "01", t2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                +1, t1.compareSystemNameSuffix("1", "01", t2));
     }
 
     // from here down is testing infrastructure
