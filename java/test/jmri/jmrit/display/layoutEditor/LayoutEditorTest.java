@@ -11,6 +11,7 @@ import jmri.util.*;
 import jmri.util.junit.rules.*;
 import org.junit.*;
 import org.junit.rules.*;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
@@ -905,39 +906,88 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    public void testToolBarPositionOptions() {
+    public void testToolBarPositionLeft() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
 
-        // try each possible option for toolbar location
-        // (default is top so we do it last...)
-        //
-        //Left
+        //switch to Left
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideLeft"), "/");
 
-        //Right
+        new EventTool().waitNoEvent(500);
+
+        //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
                 + Bundle.getMessage("ToolBarSide") + "/"
-                + Bundle.getMessage("ToolBarSideRight"), "/");
+                + Bundle.getMessage("ToolBarSideTop"), "/");
+    }
 
-        //Bottom
+    @Test
+    public void testToolBarPositionBottom() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
+
+        //switch to Bottom
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideBottom"), "/");
 
-        //float
-//        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
-//                + Bundle.getMessage("ToolBar") + "/"
-//                + Bundle.getMessage("ToolBarSide") + "/"
-//                + Bundle.getMessage("ToolBarSideFloat"), "/");
-        //Top
+        new EventTool().waitNoEvent(500);
+
+        //back to Top
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
+                + Bundle.getMessage("ToolBarSideTop"), "/");
+    }
+
+    @Test
+    public void testToolBarPositionRight() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
+
+        //switch to Right
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
+                + Bundle.getMessage("ToolBarSideRight"), "/");
+
+        new EventTool().waitNoEvent(500);
+
+        //back to Top
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
+                + Bundle.getMessage("ToolBarSideTop"), "/");
+    }
+
+    @Test
+    public void testToolBarPositionFloat() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
+
+        //switch to Float
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
+                + Bundle.getMessage("ToolBarSideFloat"), "/");
+
+        // bring this window back to the front...
+        jfo.activate();
+
+        //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
                 + Bundle.getMessage("ToolBarSide") + "/"
