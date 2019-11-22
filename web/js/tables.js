@@ -5,7 +5,6 @@
  * TODO: add enum descriptions to schema and use them for converting states, and 
  *         for calc'ing the "next" state
  * TODO: additional columns and changes for block, light, route
- * TODO: row skipped if json has an attribute named "length" with value=0 (e.g. blocks)
  * TODO: improve performance when client is sitting on page while lengthy list is loaded into JMRI
  */
 
@@ -32,8 +31,8 @@ function rebuildTable(data) {
 	if (data.length) {
 		//build header row from first row of data
 		var thead = '<tr>';
-		$.each(data[0].data, function (index, value) {
-			thead += '<th>' + index + '</th>';
+		$.each(Object.keys(data[0].data), function (index, value) {
+			thead += '<th>' + value + '</th>';
 		});
 		thead += '</tr>';
 		$("table#jmri-data thead").html(thead);
@@ -66,9 +65,10 @@ function rebuildTable(data) {
 function buildRow(data) {
 	var r = "";
 	tableType = $("html").data("table-type");
-	$.each(data, function (index, value) {
-		r += '<td class=' + index + " data-" + index + "='" + value + "'>" 
-			+ displayCellValue(tableType, index, value) + '</td>'; 
+	//note: syntax below required since some JMRI json objects have a "length" attribute equal 0
+	$.each(Object.keys(data), function (index, value) {
+		r += '<td class=' + value + " data-" + value + "='" + data[value] + "'>" 
+			+ displayCellValue(tableType, value, data[value]) + '</td>'; 
 	});
 	return r;
 }
