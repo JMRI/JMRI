@@ -1,5 +1,8 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import org.slf4j.Logger;
@@ -32,6 +35,12 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
         Sensor sen = new AbstractSensor(systemName, userName) {
             @Override
             public void requestUpdateFromLayout() {
+            }
+
+            @CheckReturnValue
+            @Override
+            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+                return suffix1.compareTo(suffix2);
             }
         };
         try {

@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -53,6 +52,36 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         Assert.assertTrue(null != lm.getBySystemName("IL21"));
         Assert.assertTrue(null != lm.getByUserName("my name"));
 
+    }
+
+    @Test
+    public void testSystemNames() {
+        Light l1 = l.provide("IL1");
+        Light l2 = l.provide("IL01");
+        Assert.assertEquals("Light system name is correct", "IL1", l1.getSystemName());
+        Assert.assertEquals("Light system name is correct", "IL01", l2.getSystemName());
+    }
+
+    @Test
+    public void testCompareTo() {
+        Light l1 = l.provide("IL1");
+        Light l2 = l.provide("IL01");
+        Assert.assertNotEquals("Lights are different", l1, l2);
+        Assert.assertNotEquals("Light compareTo returns not zero", 0, l1.compareTo(l2));
+    }
+
+    @Test
+    public void testCompareSystemNameSuffix() {
+        Light l1 = l.provide("IL1");
+        Light l2 = l.provide("IL01");
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                -1, l1.compareSystemNameSuffix("01", "1", l2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, l1.compareSystemNameSuffix("1", "1", l2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, l1.compareSystemNameSuffix("01", "01", l2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                +1, l1.compareSystemNameSuffix("1", "01", l2));
     }
 
     @Test

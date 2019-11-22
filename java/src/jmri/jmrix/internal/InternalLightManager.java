@@ -1,6 +1,9 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.Light;
+import jmri.NamedBean;
 import jmri.implementation.AbstractVariableLight;
 
 /**
@@ -33,6 +36,12 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
             @Override
             protected int getNumberOfSteps() {
                 return 100;
+            }
+
+            @CheckReturnValue
+            @Override
+            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, @Nonnull NamedBean n) {
+                return suffix1.compareTo(suffix2);
             }
         };
     }

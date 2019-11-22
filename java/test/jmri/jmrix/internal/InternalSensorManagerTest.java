@@ -57,6 +57,36 @@ public class InternalSensorManagerTest extends jmri.managers.AbstractSensorMgrTe
     }
 
     @Test
+    public void testSystemNames() {
+        Sensor s1 = l.provide("IS1");
+        Sensor s2 = l.provide("IS01");
+        Assert.assertEquals("Sensor system name is correct", "IS1", s1.getSystemName());
+        Assert.assertEquals("Sensor system name is correct", "IS01", s2.getSystemName());
+    }
+
+    @Test
+    public void testCompareTo() {
+        Sensor s1 = l.provide("IS1");
+        Sensor s2 = l.provide("IS01");
+        Assert.assertNotEquals("Sensors are different", s1, s2);
+        Assert.assertNotEquals("Sensor compareTo returns not zero", 0, s1.compareTo(s2));
+    }
+
+    @Test
+    public void testCompareSystemNameSuffix() {
+        Sensor s1 = l.provide("IS1");
+        Sensor s2 = l.provide("IS01");
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                -1, s1.compareSystemNameSuffix("01", "1", s2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, s1.compareSystemNameSuffix("1", "1", s2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                0, s1.compareSystemNameSuffix("01", "01", s2));
+        Assert.assertEquals("compareSystemNameSuffix returns correct value",
+                +1, s1.compareSystemNameSuffix("1", "01", s2));
+    }
+
+    @Test
     public void testSetGetDefaultState() {
 
         // confirm default
