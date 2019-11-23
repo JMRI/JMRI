@@ -92,7 +92,7 @@ public class LayoutEditorToolsTest {
     public void testSetSignalsAtTurnoutWithDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        //create a new Layout Turnout
+        //create a new Layout Turnout...
         layoutTurnout = new LayoutTurnout("Right Hand",
                 LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
                 33.0, 1.1, 1.2, le);
