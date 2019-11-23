@@ -33,7 +33,7 @@ public class RecursiveDescentParserTest {
     @Test
     public void testDaniel() throws ScriptException {
         
-        jmri.script.JmriScriptEngineManager scriptEngine = jmri.script.JmriScriptEngineManager.getDefault();
+        jmri.script.JmriScriptEngineManager scriptEngineManager = jmri.script.JmriScriptEngineManager.getDefault();
 /*        
         String myScript = ""
                 + "a = 15\n"
@@ -124,7 +124,7 @@ public class RecursiveDescentParserTest {
                 + "print not \"\"\n"
                 + "print \"\"\n";
         
-        scriptEngine.eval(myScript, scriptEngine.getEngineByExtension("py"));
+        scriptEngineManager.eval(myScript, scriptEngineManager.getEngineByName(jmri.script.JmriScriptEngineManager.PYTHON));
     }
     
     

@@ -7,12 +7,10 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
-import jmri.NamedBeanHandle;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
@@ -27,32 +25,43 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ExpressionLight
+ * Test ExpressionScript
  * 
  * @author Daniel Bergqvist 2018
  */
-public class ExpressionLightTest {
+public class ExpressionScriptTest {
 
+    private final String _scriptText = ""
+            + "import jmri\n"
+            + ""
+            + "class MyExpression(jmri.jmrit.logixng.digital.expressions.AbstractScriptDigitalExpression):\n"
+            + ""
+            + "  l = lights.provideLight(\"IL1\")\n"
+            + ""
+            + "  def registerScriptListeners(self):\n"
+            + "    self.l.addPropertyChangeListener(\"KnownState\", self);\n"
+            + ""
+            + "  def unregisterScriptListeners():\n"
+            + "    l.removePropertyChangeListener(\"KnownState\", this);\n"
+            + ""
+            + "  def evaluate(self):\n"
+            + "    return self.l.commandedState == ON\n"
+            + ""
+            + ""
+            + "params._scriptClass.set(MyExpression(params._parentExpression))\n";
+    
+    
     @Test
     public void testCtor() {
-        ExpressionLight t = new ExpressionLight("IQDE321", null);
+        ExpressionScript t = new ExpressionScript("IQDE321", null);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testDescription() {
-        ExpressionLight expressionLight = new ExpressionLight("IQDE321", null);
-        Assert.assertTrue("Get light".equals(expressionLight.getShortDescription()));
-        Assert.assertTrue("Light Not selected is On".equals(expressionLight.getLongDescription()));
-        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
-        expressionLight.setLight(light);
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionLight.setLightState(ExpressionLight.LightState.OFF);
-        Assert.assertTrue("Light IL1 is Off".equals(expressionLight.getLongDescription()));
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
-        Assert.assertTrue("Light IL1 is not Off".equals(expressionLight.getLongDescription()));
-        expressionLight.setLightState(ExpressionLight.LightState.OTHER);
-        Assert.assertTrue("Light IL1 is not Other".equals(expressionLight.getLongDescription()));
+        ExpressionScript expressionScript = new ExpressionScript("IQDE321", null);
+        Assert.assertTrue("Evaluate script".equals(expressionScript.getShortDescription()));
+        Assert.assertTrue("Evaluate script".equals(expressionScript.getLongDescription()));
     }
     
     @Test
@@ -79,15 +88,13 @@ public class ExpressionLightTest {
         
         conditionalNG.getChild(0).connect(socketIfThen);
         
-        ExpressionLight expressionLight =
-                new ExpressionLight(InstanceManager.getDefault(
+        ExpressionScript expressionScript =
+                new ExpressionScript(InstanceManager.getDefault(
                         DigitalExpressionManager.class).getAutoSystemName(), null);
         
-        expressionLight.setLight(light);
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionLight.setLightState(ExpressionLight.LightState.ON);
-        MaleSocket socketLight = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionLight);
-        socketIfThen.getChild(0).connect(socketLight);
+        expressionScript.setScript(_scriptText);
+        MaleSocket socketScript = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionScript);
+        socketIfThen.getChild(0).connect(socketScript);
         
         ActionAtomicBoolean actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
@@ -113,44 +120,25 @@ public class ExpressionLightTest {
     }
     
     @Test
-    public void testSetLight() {
-        // Test setLight() when listeners are registered
-        Light light = InstanceManager.getDefault(LightManager.class).provide("IT1");
-        Assert.assertNotNull("Light is not null", light);
-        ExpressionLight expression =
-                new ExpressionLight(
+    public void testSetScript() {
+        // Test setScript() when listeners are registered
+        Assert.assertNotNull("Script is not null", _scriptText);
+        ExpressionScript expression =
+                new ExpressionScript(
                         InstanceManager.getDefault(
                                 DigitalExpressionManager.class).getAutoSystemName(), null);
-        expression.setLight(light);
+        expression.setScript(_scriptText);
         
-        Assert.assertNotNull("Light is not null", expression.getLight());
+        Assert.assertNotNull("Script is not null", expression.getScriptText());
         expression.registerListeners();
         boolean thrown = false;
         try {
-            expression.setLight((String)null);
+            expression.setScript(null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setLight must not be called when listeners are registered");
-        
-        thrown = false;
-        try {
-            expression.setLight((NamedBeanHandle<Light>)null);
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setLight must not be called when listeners are registered");
-        
-        thrown = false;
-        try {
-            expression.setLight((Light)null);
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setLight must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setScript must not be called when listeners are registered");
     }
     
     @Test

@@ -239,36 +239,15 @@
 
       <h2>What are LogixNG?</h2>
 
-      <p>Except when it is being created or edited, a LogixNG is
-      "active", which means that the entities (turnouts, sensors,
-      lights, etc.) in logical expressions of the LogixNG's
+      <p>If a LogixNG is enabled and not is being created or edited,
+	  a LogixNG is "active", which means that the entities (turnouts,
+	  sensors, lights, etc.) in logical expressions of the LogixNG's
       ConditionalNGs are being monitored. Whenever the state of any
       of the monitored entities of a ConditionalNG changes, that
       ConditionalNG "calculates" its logical expression. If the
       result of the calculation changes the value of the logical
       expression, then the specified actions of the ConditionalNG are
       taken.</p>
-
-      <p>The monitored entities specified in the logical expression
-      of a ConditionalNG are called "State Variables" and the result
-      of the calculation is the <strong>state</strong> of the ConditionalNG. It
-      is the change of state of the ConditionalNG that causes it to
-      issue commands for its actions to occur. The logical
-      expression is also referred to as the "antecedent" of the
-      ConditionalNG and the group of actions to take is also called
-      the "consequent" of the ConditionalNG.</p>
-
-      <p>A LogixNG does not have a state as many JMRI entities do. A
-      LogixNG does have the capability of being "enabled" or
-      "disabled", however. When a LogixNG is disabled (not enabled),
-      the logical expressions of its ConditionalNGs are still
-      evaluated, but the actions specified in the ConditionalNGs are
-      not taken. Whether each LogixNG is enabled or disabled is saved
-      when the LogixNG is saved to disk, so a LogixNG that was disabled
-      when last stored will start up disabled when next loaded from
-      the configuration file. When a LogixNG that has been disabled
-      is enabled, the states of all its ConditionalNGs are set to
-      UNKNOWN, and all ConditionalNGs are calculated.</p>
 
       <h3>The LogixNG Table</h3>
 

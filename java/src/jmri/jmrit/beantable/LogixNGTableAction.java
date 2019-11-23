@@ -11,6 +11,8 @@ import java.awt.event.ItemListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -262,7 +264,7 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
              */
             @Override
             protected void configDeleteColumn(JTable table) {
-                JComboBox<String> editCombo = new JComboBox<String>();
+                JComboBox<String> editCombo = new JComboBox<>();
                 editCombo.addItem(Bundle.getMessage("ButtonSelect"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("ButtonEdit"));  // NOI18N
                 editCombo.addItem(Bundle.getMessage("BrowserButton"));  // NOI18N
@@ -765,11 +767,9 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
                 // Create LogixNG
                 JButton create = new JButton(Bundle.getMessage("ButtonCopy"));  // NOI18N
                 panel5.add(create);
-                create.addActionListener(new ActionListener() {
-                    @Override
-                    public void actionPerformed(ActionEvent e) {
-                        copyLogixNGPressed(e);
-                    }
+                create.addActionListener((ActionEvent e) -> {
+                    JOptionPane.showMessageDialog(null, "Copy is not implemented yet.", "Error", JOptionPane.ERROR_MESSAGE);
+//                    copyLogixNGPressed(e);
                 });
                 addLogixNGFrame.pack();
                 addLogixNGFrame.setVisible(true);
@@ -1261,7 +1261,7 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
     }
 
     /**
-     * Create and initialize the conditionals browser window.
+     * Create and initialize the conditionalNGs browser window.
      */
     void makeBrowserWindow() {
         JmriJFrame condBrowserFrame = new JmriJFrame(Bundle.getMessage("BrowserTitle"), false, true);   // NOI18N
@@ -1272,42 +1272,36 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
 
         // LogixNG header information
         JPanel topPanel = new JPanel();
-        String tStr = Bundle.getMessage("BrowserLogix") + " " + _curLogixNG.getSystemName() + "    " // NOI18N
+        String tStr = Bundle.getMessage("BrowserLogixNG") + " " + _curLogixNG.getSystemName() + "    " // NOI18N
                 + _curLogixNG.getUserName() + "    "
-                + (Boolean.valueOf(_curLogixNG.isEnabled())
+                + (_curLogixNG.isEnabled()
                         ? Bundle.getMessage("BrowserEnabled") // NOI18N
                         : Bundle.getMessage("BrowserDisabled"));  // NOI18N
         topPanel.add(new JLabel(tStr));
         contentPane.add(topPanel, BorderLayout.NORTH);
 
-        // Build the conditionals listing
-        JScrollPane scrollPane = null;
-//        JTextArea textContent = buildConditionalListing();
-        JTextArea textContent = new JTextArea();
-        scrollPane = new JScrollPane(textContent);
+        // Build the conditionalNGs listing
+        StringWriter writer = new StringWriter();
+        _curLogixNG.printTree(new PrintWriter(writer), "    ");
+        JTextArea textContent = new JTextArea(writer.toString());
+        JScrollPane scrollPane = new JScrollPane(textContent);
         contentPane.add(scrollPane);
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BorderLayout());
         JButton helpBrowse = new JButton(Bundle.getMessage("MenuHelp"));   // NOI18N
         bottomPanel.add(helpBrowse, BorderLayout.WEST);
-        helpBrowse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(condBrowserFrame,
-                        Bundle.getMessage("BrowserHelpText"),   // NOI18N
-                        Bundle.getMessage("BrowserHelpTitle"),  // NOI18N
-                        JOptionPane.INFORMATION_MESSAGE);
-            }
+        helpBrowse.addActionListener((ActionEvent e) -> {
+            JOptionPane.showMessageDialog(condBrowserFrame,
+                    Bundle.getMessage("BrowserHelpText"),   // NOI18N
+                    Bundle.getMessage("BrowserHelpTitle"),  // NOI18N
+                    JOptionPane.INFORMATION_MESSAGE);
         });
         JButton saveBrowse = new JButton(Bundle.getMessage("BrowserSaveButton"));   // NOI18N
         saveBrowse.setToolTipText(Bundle.getMessage("BrowserSaveButtonHint"));      // NOI18N
         bottomPanel.add(saveBrowse, BorderLayout.EAST);
-        saveBrowse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                saveBrowserPressed();
-            }
+        saveBrowse.addActionListener((ActionEvent e) -> {
+            saveBrowserPressed();
         });
         contentPane.add(bottomPanel, BorderLayout.SOUTH);
 
@@ -1354,7 +1348,7 @@ public class LogixNGTableAction extends AbstractTableAction<LogixNG> {
         }
 
         // Create the file content
-        String tStr = Bundle.getMessage("BrowserLogix") + " " + _curLogixNG.getSystemName() + "    "  // NOI18N
+        String tStr = Bundle.getMessage("BrowserLogixNG") + " " + _curLogixNG.getSystemName() + "    "  // NOI18N
                 + _curLogixNG.getUserName() + "    "
                 + (_curLogixNG.isEnabled()
                         ? Bundle.getMessage("BrowserEnabled")    // NOI18N

@@ -117,13 +117,13 @@ public class ExpressionSensorTest {
     @Test
     public void testSetSensor() {
         // Test setSensor() when listeners are registered
-        Sensor turnout = InstanceManager.getDefault(SensorManager.class).provide("IT1");
-        Assert.assertNotNull("Sensor is not null", turnout);
+        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IT1");
+        Assert.assertNotNull("Sensor is not null", sensor);
         ExpressionSensor expression =
                 new ExpressionSensor(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
                                 .getAutoSystemName(), null);
-        expression.setSensor(turnout);
+        expression.setSensor(sensor);
         
         Assert.assertNotNull("Sensor is not null", expression.getSensor());
         expression.registerListeners();

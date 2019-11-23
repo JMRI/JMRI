@@ -140,6 +140,22 @@ public class ExpressionMemory extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
+        switch (_memoryOperation) {
+            case LESS_THAN:
+                return false;
+            case LESS_THAN_OR_EQUAL:
+            case EQUAL:
+            case GREATER_THAN_OR_EQUAL:
+            case GREATER_THAN:
+            case NOT_EQUAL:
+            case IS_NULL:
+            case IS_NOT_NULL:
+            case MATCH_REGEX:
+            case NOT_MATCH_REGEX:
+        }
+        
+        
+        
         // Fix this later
         return false;
 /*        
@@ -230,8 +246,8 @@ public class ExpressionMemory extends AbstractDigitalExpression
         NOT_EQUAL(Bundle.getMessage("MemoryOperation_NotEqual"), true),
         IS_NULL(Bundle.getMessage("MemoryOperation_IsNull"), false),
         IS_NOT_NULL(Bundle.getMessage("MemoryOperation_IsNotNull"), false),
-        MATCH_REGEX(Bundle.getMessage("MemoryOperation_MatchRegEx"), false),
-        NOT_MATCH_REGEX(Bundle.getMessage("MemoryOperation_NotMatchRegEx"), false);
+        MATCH_REGEX(Bundle.getMessage("MemoryOperation_MatchRegEx"), true),
+        NOT_MATCH_REGEX(Bundle.getMessage("MemoryOperation_NotMatchRegEx"), true);
         
         private final String _text;
         private final boolean _extraValue;
@@ -254,11 +270,11 @@ public class ExpressionMemory extends AbstractDigitalExpression
     
     
     public enum Comparision {
-        CASE_SENSITIVE_VALUE(Bundle.getMessage("MemoryOperation_LessThan")),
-        CASE_INSENSITIVE_VALUE(Bundle.getMessage("MemoryOperation_LessThan")),
+        CASE_SENSITIVE_STRING_VALUE(Bundle.getMessage("MemoryOperation_LessThan")),
+        CASE_INSENSITIVE_STRING_VALUE(Bundle.getMessage("MemoryOperation_LessThan")),
         NUMERIC_VALUE(Bundle.getMessage("MemoryOperation_LessThan")),
-        CASE_SENSITIVE_MEMORY(Bundle.getMessage("MemoryOperation_LessThan")),
-        CASE_INSENSITIVE_MEMORY(Bundle.getMessage("MemoryOperation_LessThan")),
+        CASE_SENSITIVE_STRING_MEMORY(Bundle.getMessage("MemoryOperation_LessThan")),
+        CASE_INSENSITIVE_STRING_MEMORY(Bundle.getMessage("MemoryOperation_LessThan")),
         NUMERIC_MEMORY(Bundle.getMessage("MemoryOperation_LessThan"));
         
         private final String _text;
