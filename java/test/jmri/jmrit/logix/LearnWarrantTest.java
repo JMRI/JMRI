@@ -59,7 +59,6 @@ public class LearnWarrantTest {
          * OB1/WestSiding - OB6/EastSiding  Route {OB1, OB6}
         */
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         InstanceManager.getDefault(SensorManager.class);
