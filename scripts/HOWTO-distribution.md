@@ -155,7 +155,7 @@ We roll some general code maintenance items into the release process.
         grep -lr '\t' jython/ | grep '\.py'
 ```
 
-- Check for Nullable annotations, which should be @CheckForNull instead (OK to have two in FindBugsCheck, others should be removed)
+- Check for Nullable annotations, which should be @CheckForNull instead (OK to have two and four in FindBugsCheck respectively, others should be removed)
 ```
         grep -r javax.annotation.Nullable java/src java/test
         grep -r @Nullable java/src java/test
@@ -246,7 +246,7 @@ git push github
 
 - Check that the correct milestone is on all merged pulls. This is needed for the release note. Start with the list of PRs merged since the last test release was started:
 ```
-https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2019-09-10+
+https://github.com/JMRI/JMRI/pulls?utf8=✓&q=is%3Apr+is%3Amerged+no%3Amilestone++merged%3A%3E2019-10-31+
 ```
 where the date at the end should be the date (and optionally time) of the last release. For each, if it doesn't have the right milestone set, and is a change to the release code (e.g. isn't just a change to the CI settings or similar), add the current milestone.  
 
@@ -280,6 +280,7 @@ git commit -m"for next release 4.17.7" pom.xml
 git push github
 ```
 
+- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.  We do this now so that maintainers will put the next milestone on future PRs
 
 - Put the following comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note: (NOT FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE, see just below)
 
@@ -328,6 +329,9 @@ If you're developing any additional (post-4.17.7) changes that you want in the J
 - Click "Save". If needed, click "Enable".
 
 - The build will start shortly (or click "Build Now"). Wait for it to complete.
+
+================================================================================
+## Capture A Profile
 
 - On your local machine, open jvisualvm. Do 
 
@@ -443,9 +447,9 @@ Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.17.6+Rdf73700.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.6/JMRI.4.17.6+Rdf73700.dmg) | a020129314de1b141b153c3ad161dd8df3c54564ecbaceebcc1446abed7e423b
-[JMRI.4.17.6+Rdf73700.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.6/JMRI.4.17.6+Rdf73700.exe) | ac35681f915605c047f7c31ad76f35bbddb5b251dca2ac44ed1c7e62ab6986fc
-[JMRI.4.17.6+Rdf73700.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.6/JMRI.4.17.6+Rdf73700.tgz) | ca41d95f33bb7f5dfdd983a823507cb41b82c3d9fbba9d84760b1d1ddadb5aa0
+[JMRI.4.17.6+Rc861f38.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.6/JMRI.4.17.6+Rc861f38.dmg) | 7dce65a0bf9df31ed43148105614f159e13f35f6fea44bcc3756a20c5e7093fd
+[JMRI.4.17.6+Rc861f38.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.6/JMRI.4.17.6+Rc861f38.exe) | 01596ffdf16c443b7a600fd7e442b53642ab8604653cc2232a23ec1da4de4abb
+[JMRI.4.17.6+Rc861f38.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.6/JMRI.4.17.6+Rc861f38.tgz) | e293859e9b3096cb70265e75940f9e581c08a6120805b69f404dcfa4018ef508
 
 
 ```
@@ -459,8 +463,6 @@ Note there's a little progress bar that has to go across & "Uploading your relea
 - Click "Publish Release"
 
 - Wait for completion, which might be a while with big uploads
-
-- Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number. If there are any items open still (except the main "create release" one) either close them or change/remove the milestone.
 
 ====================================================================================
 ## Check for Unmerged Changes
