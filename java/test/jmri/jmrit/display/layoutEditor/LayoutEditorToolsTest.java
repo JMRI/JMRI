@@ -93,7 +93,7 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         //create a new Layout Turnout here
-        layoutTurnout = layoutTurnout = new LayoutTurnout("Right Hand",
+        layoutTurnout = new LayoutTurnout("Right Hand",
                 LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
                 33.0, 1.1, 1.2, le);
         Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
