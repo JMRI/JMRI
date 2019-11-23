@@ -32,7 +32,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
 
     private final HashMap<LayoutBlock, LayoutBlockListener> layoutBlockListeners = new HashMap<>();
     private final LayoutBlocksListener layoutBlocksListener = new LayoutBlocksListener();
-    private static final Logger log = LoggerFactory.getLogger(JsonLayoutBlockServiceFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonLayoutBlockSocketService.class);
 
     public JsonLayoutBlockSocketService(JsonConnection connection) {
         super(connection, new JsonLayoutBlockHttpService(connection.getObjectMapper()));
