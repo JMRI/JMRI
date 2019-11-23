@@ -10,9 +10,11 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Turnout;
+import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
 import jmri.util.junit.rules.RetryRule;
+import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.ComponentChooser;
@@ -23,6 +25,7 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 /**
  *
  * @author Paul Bender Copyright (C) 2017
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutTrackEditorsTest {
 
@@ -137,7 +140,7 @@ public class LayoutTrackEditorsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Create empty block edit dialog
-        Thread segmentBlockError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread segmentBlockError = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "")).doClick();
@@ -325,7 +328,7 @@ public class LayoutTrackEditorsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         // Invoke layout block editor with no block assigned
-        Thread turnoutBlockAError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread turnoutBlockAError = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 0).doClick();
@@ -333,7 +336,7 @@ public class LayoutTrackEditorsTest {
             return !(turnoutBlockAError.isAlive());
         }, "turnoutBlockAError finished");
 
-        Thread turnoutBlockBError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread turnoutBlockBError = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 1).doClick();
@@ -341,7 +344,7 @@ public class LayoutTrackEditorsTest {
             return !(turnoutBlockBError.isAlive());
         }, "turnoutBlockBError finished");
 
-        Thread turnoutBlockCError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread turnoutBlockCError = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 2).doClick();
@@ -349,7 +352,7 @@ public class LayoutTrackEditorsTest {
             return !(turnoutBlockCError.isAlive());
         }, "turnoutBlockCError finished");
 
-        Thread turnoutBlockDError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread turnoutBlockDError = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("CreateEdit"), 3).doClick();
@@ -495,7 +498,7 @@ public class LayoutTrackEditorsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Invoke layout block editor with no block assigned
-        Thread slipBlockError = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread slipBlockError = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "")).doClick();
@@ -583,7 +586,7 @@ public class LayoutTrackEditorsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         // Invoke layout block editor with no block assigned
-        Thread xingBlock1Error = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread xingBlock1Error = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "AC")).doClick();
@@ -591,7 +594,7 @@ public class LayoutTrackEditorsTest {
             return !(xingBlock1Error.isAlive());
         }, "xingBlock1Error finished");
 
-        Thread xingBlock2Error = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread xingBlock2Error = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "BD")).doClick();
@@ -650,7 +653,7 @@ public class LayoutTrackEditorsTest {
         addRayTrackJButtonOperator.doClick();
 
         // Delete the 5th ray
-        Thread deleteRay = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread deleteRay = JemmyUtil.createModalDialogOperatorThread(
                 "Warning", "Yes");  // NOI18N
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDelete"), 4).doClick();
         JUnitUtil.waitFor(() -> {
@@ -695,7 +698,7 @@ public class LayoutTrackEditorsTest {
         jtxt.setText("qqq");
 
         // Move focus
-        Thread badRayAngleModalDialogOperatorThread = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread badRayAngleModalDialogOperatorThread = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         jtxt = new JTextFieldOperator(jFrameOperator, 3);
@@ -751,7 +754,7 @@ public class LayoutTrackEditorsTest {
                 (JTextField) jLabelOperator.getLabelFor());
         jtxt.setText("xyz");
 
-        Thread badAngle = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread badAngle = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
 
@@ -770,7 +773,7 @@ public class LayoutTrackEditorsTest {
                 (JTextField) jLabelOperator.getLabelFor());
         jtxt.setText("abc");
 
-        Thread badRadius = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread badRadius = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
 
@@ -785,19 +788,19 @@ public class LayoutTrackEditorsTest {
     }
 
     public void createTurnouts() {
-        turnout0 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT101");
+        turnout0 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT101");
         turnout0.setUserName("Turnout 101");
         turnout0.setCommandedState(Turnout.CLOSED);
 
-        turnout1 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT102");
+        turnout1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT102");
         turnout1.setUserName("Turnout 102");
         turnout1.setCommandedState(Turnout.CLOSED);
     }
 
     public void createBlocks() {
-        Block block1 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB1");
+        Block block1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
         block1.setUserName("Blk 1");
-        Block block2 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB2");
+        Block block2 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB2");
         block2.setUserName("Blk 2");
     }
 
@@ -808,9 +811,9 @@ public class LayoutTrackEditorsTest {
         InstanceManager.setDefault(BlockManager.class, new BlockManager());
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
-            jmri.util.JUnitUtil.resetInstanceManager();
-            jmri.util.JUnitUtil.initInternalTurnoutManager();
-            jmri.util.JUnitUtil.initInternalSensorManager();
+            JUnitUtil.resetInstanceManager();
+            JUnitUtil.initInternalTurnoutManager();
+            JUnitUtil.initInternalSensorManager();
 
             layoutEditor = new LayoutEditor();
             layoutTrackEditors = layoutEditor.getLayoutTrackEditors();

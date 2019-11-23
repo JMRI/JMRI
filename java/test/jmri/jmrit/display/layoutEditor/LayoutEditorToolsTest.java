@@ -18,6 +18,7 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.SignalHead;
+import jmri.SignalHeadManager;
 import jmri.Turnout;
 import jmri.implementation.SingleTurnoutSignalHead;
 import jmri.implementation.VirtualSignalHead;
@@ -43,7 +44,7 @@ import org.netbeans.jemmy.operators.JLabelOperator;
 public class LayoutEditorToolsTest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); //5 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(10); //10 second timeout for methods in this test class.
 
     //allow 2 retries of intermittent tests
     @Rule
@@ -51,16 +52,17 @@ public class LayoutEditorToolsTest {
 
     private LayoutEditor le = null;
     private LayoutEditorTools let = null;
-    private LayoutBlock layoutBlocks[] = {null, null, null, null, null};
-    private Turnout turnouts[] = {null, null, null, null, null};
-    private SignalHead signalHeads[] = {null, null, null, null, null};
-    private Sensor sensors[] = {null, null, null, null, null};
 
-    LayoutTurnout layoutTurnout = null;
-    PositionablePoint positionablePoint1 = null;
-    PositionablePoint positionablePoint2 = null;
-    PositionablePoint positionablePoint3 = null;
-    PositionablePoint positionablePoint4 = null;
+    //these all have to contain the same number of elements
+    private LayoutBlock layoutBlocks[] = new LayoutBlock[5];
+    private Turnout turnouts[] = new Turnout[5];
+    private SignalHead signalHeads[] = new SignalHead[5];
+    private Sensor sensors[] = new Sensor[5];
+
+    private LayoutTurnout layoutTurnout = null;
+    private PositionablePoint positionablePoint1 = null;
+    private PositionablePoint positionablePoint2 = null;
+    private PositionablePoint positionablePoint3 = null;
 
     @Test
     public void testCtor() {
@@ -86,6 +88,7 @@ public class LayoutEditorToolsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
         //then closes it.
         jFrameOperator.requestClose();
+        jFrameOperator.waitClosed();    // make sure the dialog closed
     }
 
     @Test
@@ -243,7 +246,7 @@ public class LayoutEditorToolsTest {
 //
         //this time everything should work
         doneButtonOperator.doClick();
-        jFrameOperator.waitClosed();    //make sure the dialog actually closed
+        jFrameOperator.waitClosed();    //make sure the dialog closed
     }   //testSetSignalsAtTurnoutWithDone
 
     /*
@@ -260,12 +263,15 @@ public class LayoutEditorToolsTest {
         //pressing "Done" should throw up a "all connections have not been defined"  (InfoMessage7)
         //error dialog... dismiss it
         Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
-                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("MessageTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread1.isAlive());
         }, "modalDialogOperatorThread1 finished");
+
+        // make sure the dialog closed
+        jfoSignalsAtTurnout.waitClosed();
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -291,12 +297,15 @@ public class LayoutEditorToolsTest {
         //pressing "Done" should throw up a "the next signal... apparently is not yet defined."  (InfoMessage5)
         //error dialog... dismiss it
         Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
-                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("MessageTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread2.isAlive());
         }, "modalDialogOperatorThread2 finished");
+
+        // make sure the dialog closed
+        jfoSignalsAtTurnout.waitClosed();
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -309,12 +318,15 @@ public class LayoutEditorToolsTest {
         //pressing "Done" should throw up a "blocks have not been defined around this item."  (InfoMessage6)
         //error dialog... dismiss it
         Thread modalDialogOperatorThread3 = JemmyUtil.createModalDialogOperatorThread(
-                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("MessageTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread3.isAlive());
         }, "modalDialogOperatorThread3 finished");
+
+        // make sure the dialog closed
+        jfoSignalsAtTurnout.waitClosed();
 
         //assign block to track segment
         int lbIndex[] = {2, 3, 1, 1};
@@ -328,12 +340,15 @@ public class LayoutEditorToolsTest {
         //pressing "Done" should throw up a "block XXX doesn''t have an occupancy sensor"  (InfoMessage4)
         //error dialog... dismiss it
         Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
-                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("MessageTitle"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread4.isAlive());
         }, "modalDialogOperatorThread4 finished");
+
+        // make sure the dialog closed
+        jfoSignalsAtTurnout.waitClosed();
 
         //assign Occupancy Sensor to block
         layoutBlocks[lbIndex[idx]].setOccupancySensorName(sensors[lbIndex[idx]].getUserName());
@@ -344,7 +359,8 @@ public class LayoutEditorToolsTest {
         });
 
         doneButtonOperator.doClick();
-        jfoSignalsAtTurnout.waitClosed();    // make sure the dialog actually closed
+        // make sure the dialog closed
+        jfoSignalsAtTurnout.waitClosed();
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -386,6 +402,7 @@ public class LayoutEditorToolsTest {
         JButtonOperator jbo = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel"));
         jbo.press();
         jFrameOperator.requestClose();
+        jFrameOperator.waitClosed();    // make sure the dialog closed
     }
 
     @Test
@@ -405,6 +422,7 @@ public class LayoutEditorToolsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
         //then closes it.
         jFrameOperator.requestClose();
+        jFrameOperator.waitClosed();    // make sure the dialog closed
     }
 
     @Test
@@ -419,6 +437,7 @@ public class LayoutEditorToolsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
         //then closes it.
         jFrameOperator.requestClose();
+        jFrameOperator.waitClosed();    // make sure the dialog closed
     }
 
     @Test
@@ -437,6 +456,7 @@ public class LayoutEditorToolsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
         //then closes it.
         jFrameOperator.requestClose();
+        jFrameOperator.waitClosed();    // make sure the dialog closed
     }
 
     @Test
@@ -455,7 +475,7 @@ public class LayoutEditorToolsTest {
     public void testGetHeadFromNameValid() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        InstanceManager.getDefault(SignalHeadManager.class).register(h);
 
         Assert.assertEquals("signal head for valid name", h, let.getHeadFromName("IH1"));
     }
@@ -485,7 +505,7 @@ public class LayoutEditorToolsTest {
     public void testSetSignalHeadOnPanelAtXYIntAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
@@ -503,7 +523,7 @@ public class LayoutEditorToolsTest {
     public void testSetSignalHeadOnPanelAtPointAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
         Point2D point = new Point2D.Double(150.0, 100.0);
         let.setSignalHeadOnPanel(0.D, "IH1", point);
@@ -522,7 +542,7 @@ public class LayoutEditorToolsTest {
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
@@ -540,7 +560,7 @@ public class LayoutEditorToolsTest {
     public void testGetSignalHeadIcon() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertNotNull("Signal head icon for panel", let.getSignalHeadIcon("IH1"));
     }
 
@@ -548,7 +568,7 @@ public class LayoutEditorToolsTest {
     public void testIsHeadOnPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel", let.isHeadOnPanel(h));
     }
 
@@ -556,7 +576,7 @@ public class LayoutEditorToolsTest {
     public void testIsHeadAssignedAnywhere() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel", let.isHeadAssignedAnywhere(h));
     }
 
@@ -564,7 +584,7 @@ public class LayoutEditorToolsTest {
     public void testRemoveSignalHeadAssignment() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         //just verify this doesn't thrown an error.
         let.removeAssignment(h);
     }
@@ -573,7 +593,7 @@ public class LayoutEditorToolsTest {
     public void testInitializeBlockBossLogic() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertTrue("Signal head block boss logic started", let.initializeBlockBossLogic("IH1"));
     }
 
@@ -582,12 +602,14 @@ public class LayoutEditorToolsTest {
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            jmri.util.JUnitUtil.resetProfileManager();
+            JUnitUtil.resetProfileManager();
+
             le = new LayoutEditor();
             le.setVisible(true);
+
             let = le.getLETools();
 
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < layoutBlocks.length; i++) {
                 String sBlockName = "IB" + i;
                 String uBlockName = "Block " + i;
                 layoutBlocks[i] = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(sBlockName, uBlockName);
@@ -619,7 +641,7 @@ public class LayoutEditorToolsTest {
             JUnitUtil.dispose(le);
             le = null;
             let = null;
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < layoutBlocks.length; i++) {
                 layoutBlocks[i] = null;
                 turnouts[i] = null;
                 signalHeads[i] = null;
@@ -629,25 +651,16 @@ public class LayoutEditorToolsTest {
         JUnitUtil.tearDown();
     }
 //
-
-// private void waitSeconds(int s) {
-//     try {
-//         //QueueTool().waitEmpty waits until queue has been empty for X milliseconds
-//         //new QueueTool().waitEmpty(s * 1000);
 //
-//         //EventTool().waitNoEvent waits until queue has been empty for X milliseconds
-//         //new EventTool().waitNoEvent(s * 1000);
+//    private void waitSeconds(int s) {
+//        //waits until queue has been empty for X milliseconds
+//        //new QueueTool().waitEmpty(s * 1000);
 //
-//         //EventTool eventTool = new EventTool();
-//         //eventTool.getTimeouts().setTimeout("EventTool.WaitNoEventTimeout", Math.max(600, s * 1000));
-//         //eventTool.waitNoEvent(s * 1000);
+//        //wait until no event is registered for a given number of milliseconds
+//        new EventTool().waitNoEvent(s * 1000);
+//    }
 //
-//         //Thread.sleep(s * 1000);
-//     } catch (TimeoutExpiredException tee) {
-//         //Ignore
-//     }
-// }
-//save screenshot of GUI
+//    //save screenshot of GUI
 //    private void captureScreenshot() {
 //        //grab image
 //        PNGEncoder.captureScreen(System.getProperty("user.home")
@@ -655,16 +668,17 @@ public class LayoutEditorToolsTest {
 //                + "screen.png");
 //    }
 //
-// //dump jemmy GUI info to xml file
-// private void dumpToXML() {
-//     //grab component state
-//     try {
-//         Dumper.dumpAll(System.getProperty("user.home")
-//                 + System.getProperty("file.separator")
-//                 + "dump.xml");
+//   //dump jemmy GUI info to xml file
+//   private void dumpToXML() {
+//        //grab component state
+//        try {
+//            Dumper.dumpAll(System.getProperty("user.home")
+//                    + System.getProperty("file.separator")
+//                    + "dump.xml");
 //
-//     } catch (FileNotFoundException e) {
-//     }
-// }
-// private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
+//        } catch (FileNotFoundException e) {
+//        }
+//    }
+//
+    //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
 }   //class LayoutEditorToolsTest

@@ -147,62 +147,73 @@ public class PositionablePoint extends LayoutTrack {
             switch (newType) {
                 default:
                 case ANCHOR: {
-                    ident = layoutEditor.getFinder().uniqueName("A", 1);
-                    type = ANCHOR;
-                    if (connect1 != null) {
-                        if (connect1.getConnect1() == PositionablePoint.this) {
-                            connect1.setArrowEndStart(false);
-                            connect1.setBumperEndStart(false);
-                        }
-                        if (connect1.getConnect2() == PositionablePoint.this) {
-                            connect1.setArrowEndStop(false);
-                            connect1.setBumperEndStop(false);
-                        }
-                    }
-                    if (connect2 != null) {
-                        if (connect2.getConnect1() == PositionablePoint.this) {
-                            connect2.setArrowEndStart(false);
-                            connect2.setBumperEndStart(false);
-                        }
-                        if (connect2.getConnect2() == PositionablePoint.this) {
-                            connect2.setArrowEndStop(false);
-                            connect2.setBumperEndStop(false);
-                        }
-                    }
+                    setTypeAnchor();
                     break;
                 }
                 case END_BUMPER: {
-                    ident = layoutEditor.getFinder().uniqueName("EB", 1);
-                    type = END_BUMPER;
-                    if (connect1 != null) {
-                        if (connect1.getConnect1() == PositionablePoint.this) {
-                            connect1.setArrowEndStart(false);
-                            connect1.setBumperEndStart(true);
-                        }
-                        if (connect1.getConnect2() == PositionablePoint.this) {
-                            connect1.setArrowEndStop(false);
-                            connect1.setBumperEndStop(true);
-                        }
-                    }
+                    setTypeEndBumper();
                     break;
                 }
                 case EDGE_CONNECTOR: {
-                    ident = layoutEditor.getFinder().uniqueName("EC", 1);
-                    type = EDGE_CONNECTOR;
-                    if (connect1 != null) {
-                        if (connect1.getConnect1() == PositionablePoint.this) {
-                            connect1.setBumperEndStart(false);
-                        }
-                        if (connect1.getConnect2() == PositionablePoint.this) {
-                            connect1.setBumperEndStop(false);
-                        }
-                    }
+                    setTypeEdgeConnector();
                     break;
                 }
             }
             layoutEditor.repaint();
         }
-        layoutEditor.repaint();
+    }
+
+    private void setTypeAnchor() {
+        ident = layoutEditor.getFinder().uniqueName("A", 1);
+        type = ANCHOR;
+        if (connect1 != null) {
+            if (connect1.getConnect1() == PositionablePoint.this) {
+                connect1.setArrowEndStart(false);
+                connect1.setBumperEndStart(false);
+            }
+            if (connect1.getConnect2() == PositionablePoint.this) {
+                connect1.setArrowEndStop(false);
+                connect1.setBumperEndStop(false);
+            }
+        }
+        if (connect2 != null) {
+            if (connect2.getConnect1() == PositionablePoint.this) {
+                connect2.setArrowEndStart(false);
+                connect2.setBumperEndStart(false);
+            }
+            if (connect2.getConnect2() == PositionablePoint.this) {
+                connect2.setArrowEndStop(false);
+                connect2.setBumperEndStop(false);
+            }
+        }
+    }
+
+    private void setTypeEndBumper() {
+        ident = layoutEditor.getFinder().uniqueName("EB", 1);
+        type = END_BUMPER;
+        if (connect1 != null) {
+            if (connect1.getConnect1() == PositionablePoint.this) {
+                connect1.setArrowEndStart(false);
+                connect1.setBumperEndStart(true);
+            }
+            if (connect1.getConnect2() == PositionablePoint.this) {
+                connect1.setArrowEndStop(false);
+                connect1.setBumperEndStop(true);
+            }
+        }
+    }
+
+    private void setTypeEdgeConnector() {
+        ident = layoutEditor.getFinder().uniqueName("EC", 1);
+        type = EDGE_CONNECTOR;
+        if (connect1 != null) {
+            if (connect1.getConnect1() == PositionablePoint.this) {
+                connect1.setBumperEndStart(false);
+            }
+            if (connect1.getConnect2() == PositionablePoint.this) {
+                connect1.setBumperEndStop(false);
+            }
+        }
     }
 
     public TrackSegment getConnect1() {
@@ -1346,7 +1357,7 @@ public class PositionablePoint extends LayoutTrack {
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Anchor")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setType(ANCHOR);
+                setTypeAnchor();
             }
         }));
 
@@ -1361,7 +1372,7 @@ public class PositionablePoint extends LayoutTrack {
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EndBumper")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setType(END_BUMPER);
+                setTypeEndBumper();
             }
         }));
 
@@ -1370,7 +1381,7 @@ public class PositionablePoint extends LayoutTrack {
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EdgeConnector")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setType(EDGE_CONNECTOR);
+                setTypeEdgeConnector();
             }
         }));
 
