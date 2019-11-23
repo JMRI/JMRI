@@ -5,27 +5,27 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        jmri.jmrit.AbstractIdentifyTest.class,
+/*        jmri.jmrit.AbstractIdentifyTest.class,
         BundleTest.class,
         DccLocoAddressSelectorTest.class,
         MemoryContentsTest.class,
         SoundTest.class,
         XmlFileTest.class,
-        jmri.jmrit.automat.PackageTest.class,
+        jmri.jmrit.automat.PackageTest.class,*/
         jmri.jmrit.beantable.PackageTest.class,
-        jmri.jmrit.blockboss.PackageTest.class,
+/*        jmri.jmrit.blockboss.PackageTest.class,
         jmri.jmrit.catalog.PackageTest.class,
         jmri.jmrit.conditional.PackageTest.class,
         jmri.jmrit.ctc.PackageTest.class,
-        jmri.jmrit.decoderdefn.PackageTest.class,
+        jmri.jmrit.decoderdefn.PackageTest.class,*/
         jmri.jmrit.dispatcher.PackageTest.class,
-        jmri.jmrit.display.PackageTest.class,
+/*        jmri.jmrit.display.PackageTest.class,
         jmri.jmrit.entryexit.PackageTest.class,
         jmri.jmrit.jython.PackageTest.class,
-        jmri.jmrit.log.PackageTest.class,
+        jmri.jmrit.log.PackageTest.class,*/
         jmri.jmrit.logix.PackageTest.class,
         jmri.jmrit.operations.PackageTest.class,
-        jmri.jmrit.progsupport.PackageTest.class,
+/*        jmri.jmrit.progsupport.PackageTest.class,
         jmri.jmrit.mastbuilder.PackageTest.class,
         jmri.jmrit.mailreport.PackageTest.class,
         jmri.jmrit.powerpanel.PackageTest.class,
@@ -65,7 +65,7 @@ import org.junit.runners.Suite;
         DebugMenuTest.class,
         LogixLoadActionTest.class,
         XmlFileCheckActionTest.class,
-        jmri.jmrit.cabsignals.PackageTest.class
+        jmri.jmrit.cabsignals.PackageTest.class*/
 })
 
 /**

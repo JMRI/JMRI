@@ -24,7 +24,7 @@ import jmri.util.junit.TestClassMainMethod;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         jmri.PackageTest.class,
-        apps.PackageTest.class,
+//        apps.PackageTest.class,
         // at the end, we check for logging messages again
         jmri.util.Log4JErrorIsErrorTest.class
 })

@@ -1,13 +1,11 @@
 /*
  * TablesServlet specific JavaScript
  * 
- * TODO: update other language NavBar.html, Tables.html
- * TODO: update json help with correct program references
  * TODO: add filter to tables
  * TODO: add enum descriptions to schema and use them for converting states, and 
  *         for calc'ing the "next" state
  * TODO: additional columns and changes for block, light, route
- * TODO: why does no configProfile show isAutoStart?
+ * TODO: improve performance when client is sitting on page while lengthy list is loaded into JMRI
  */
 
 var jmri = null;
@@ -24,6 +22,8 @@ function showError(code, message) {
 
 //parm is the array of items from which to build table
 function rebuildTable(data) {
+	tableType = $("html").data("table-type");
+	if (data[0] && data[0].type !== tableType) return; //skip if new array doesn't match this page
 	$("#activity-alert").removeClass("hidden").addClass("show");
 	$("table#jmri-data").removeClass("show").addClass("hidden");
 	$("#warning-no-data").removeClass("show").addClass("hidden");
@@ -31,15 +31,15 @@ function rebuildTable(data) {
 	if (data.length) {
 		//build header row from first row of data
 		var thead = '<tr>';
-		$.each(data[0].data, function (index, value) {
-			thead += '<th>' + index + '</th>';
+		$.each(Object.keys(data[0].data), function (index, value) {
+			thead += '<th>' + value + '</th>';
 		});
 		thead += '</tr>';
 		$("table#jmri-data thead").html(thead);
-		//build all data rows for table body, store item name in rows for later lookup
-		var tbody = '';
+		//build all data rows for table body
+		var tbody = '';	
 		data.forEach(function (item) {
-			jmri.socket.send(item.type, { name: item.data.name }); //request updates from JMRI for each item in list
+			jmri.socket.send(item.type, { name: item.data.name }); //request updates from server
 			tbody += '<tr data-name="' + item.data.name + '">';
 			tbody += buildRow(item.data) + '</tr>';
 		});
@@ -54,8 +54,7 @@ function rebuildTable(data) {
 	hideEmptyColumns("table#jmri-data tr th");
 
 	//setup for clicking on state column to send state changes
-	$('table:not(.signalMast):not(.signalHead)').on('click', 'td.state', function (e) { 
-		tableType = $("html").data("table-type");
+	$('table.idTag, table.route, table.sensor, table.turnout').on('click', 'td.state', function (e) { 
 		rowName = $(this).parent('tr').data('name');
 		currState = $(this).data('state');
 		jmri.socket.send(tableType, { 'name': rowName, 'state': getNextState(tableType, currState) }, 'post');
@@ -66,9 +65,10 @@ function rebuildTable(data) {
 function buildRow(data) {
 	var r = "";
 	tableType = $("html").data("table-type");
-	$.each(data, function (index, value) {
-		r += '<td class=' + index + " data-" + index + "='" + value + "'>" 
-			+ displayCellValue(tableType, index, value) + '</td>'; 
+	//note: syntax below required since some JMRI json objects have a "length" attribute equal 0
+	$.each(Object.keys(data), function (index, value) {
+		r += '<td class=' + value + " data-" + value + "='" + data[value] + "'>" 
+			+ displayCellValue(tableType, value, data[value]) + '</td>'; 
 	});
 	return r;
 }
@@ -213,7 +213,7 @@ $(document).ready(function () {
 				rebuildTable(data); //  replace the table with the array list			
 			} else if ((data.type) && (data.type === "error")) {
 				showError(data.data.code, data.data.message); //display any errors returned
-			} else if ((data.type) && (data.type !== "hello") && (data.type !== "pong")) {
+			} else if ((data.type) && (!data.type.match("pong|hello|goodbye"))) { //skip control messages
 				replaceRow(data.data.name, data.data); //if single item, update the row
 			}
 		},
