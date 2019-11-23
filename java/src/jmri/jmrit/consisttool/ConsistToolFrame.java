@@ -186,7 +186,6 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
 
         // general GUI config
         setTitle(Bundle.getMessage("ConsistToolTitle"));
-        //getContentPane().setLayout(new GridLayout(4,1));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         JMenuBar menuBar = new JMenuBar();
@@ -318,23 +317,6 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
                 JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
             return; // do not delete
         }
-        /*
-         * get the list of locomotives to delete
-         */
- /*ArrayList<DccLocoAddress> addressList = tempConsist.getConsistList();
-            addressList.forEach((locoaddress)->{
-                if (log.isDebugEnabled()) {
-                    log.debug("Deleting Locomotive: " + locoaddress.toString());
-                }
-                try {
-                    tempConsist.remove(locoaddress);
-                } catch (Exception ex) {
-                    log.error("Error removing address "
-                            + locoaddress.toString()
-                            + " from consist "
-                            + address.toString());
-                }
-            });*/
         try {
             consistManager.delConsist(address);
         } catch (Exception ex) {
@@ -511,25 +493,22 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
                 resetLocoButton.setEnabled(false);
                 locoDirectionNormal.setEnabled(false);
             } else {
-                locoSelector.setEnabled(true);
-                locoRosterBox.setEnabled(true);
-                addLocoButton.setEnabled(true);
-                resetLocoButton.setEnabled(true);
-                locoDirectionNormal.setEnabled(false);
-                // if there aren't any locomotives in the consist,
-                // don't let the user change the direction
-                locoDirectionNormal.setEnabled(consistModel.getRowCount() != 0);
+                enableGuiControls();
             }
         } else {
-            locoSelector.setEnabled(true);
-            locoRosterBox.setEnabled(true);
-            addLocoButton.setEnabled(true);
-            resetLocoButton.setEnabled(true);
-            locoDirectionNormal.setEnabled(false);
-            // if there aren't any locomotives in the consist, don't let
-            // the user change the direction
-            locoDirectionNormal.setEnabled(consistModel.getRowCount() != 0);
+            enableGuiControls();
         }
+    }
+
+    private void enableGuiControls(){
+        locoSelector.setEnabled(true);
+        locoRosterBox.setEnabled(true);
+        addLocoButton.setEnabled(true);
+        resetLocoButton.setEnabled(true);
+        locoDirectionNormal.setEnabled(false);
+        // if there aren't any locomotives in the consist, don't let
+        // the user change the direction
+        locoDirectionNormal.setEnabled(consistModel.getRowCount() != 0);
     }
 
     public void addLocoButtonActionPerformed(ActionEvent e) {
