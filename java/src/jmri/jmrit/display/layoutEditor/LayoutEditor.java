@@ -20,90 +20,33 @@ import java.awt.Rectangle;
 import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseWheelEvent;
-import java.awt.event.MouseWheelListener;
-import java.awt.event.WindowEvent;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyVetoException;
+import java.awt.event.*;
+import java.awt.geom.*;
+import java.beans.*;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.stream.*;
 import javax.annotation.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.TitledBorder;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
-import javax.swing.event.PopupMenuEvent;
-import javax.swing.event.PopupMenuListener;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.ConfigureManager;
-import jmri.InstanceManager;
-import jmri.InvokeOnGuiThread;
-import jmri.JmriException;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
+import javax.swing.border.*;
+import javax.swing.event.*;
+import javax.swing.filechooser.*;
+import jmri.*;
 import jmri.NamedBean.DisplayOptions;
-import jmri.Reporter;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
-import jmri.SignalMast;
-import jmri.SignalMastLogic;
-import jmri.SignalMastLogicManager;
-import jmri.SignalMastManager;
-import jmri.TransitManager;
-import jmri.Turnout;
-import jmri.UserPreferencesManager;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.jmrit.dispatcher.DispatcherAction;
-import jmri.jmrit.dispatcher.DispatcherFrame;
-import jmri.jmrit.display.AnalogClock2Display;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.LocoIcon;
-import jmri.jmrit.display.MultiSensorIcon;
-import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.PositionableJComponent;
-import jmri.jmrit.display.PositionableLabel;
-import jmri.jmrit.display.PositionablePopupUtil;
-import jmri.jmrit.display.ReporterIcon;
-import jmri.jmrit.display.SensorIcon;
-import jmri.jmrit.display.SignalHeadIcon;
-import jmri.jmrit.display.SignalMastIcon;
-import jmri.jmrit.display.ToolTip;
+import jmri.jmrit.dispatcher.*;
+import jmri.jmrit.display.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.ColorUtil;
-import jmri.util.FileChooserFilter;
-import jmri.util.FileUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.MathUtil;
-import jmri.util.SystemType;
-import jmri.util.swing.JComboBoxUtil;
-import jmri.util.swing.JmriColorChooser;
+import jmri.util.*;
+import jmri.util.swing.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -3506,7 +3449,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     }
 
-    boolean translateTrack(float xDel, float yDel) {
+    public boolean translateTrack(float xDel, float yDel) {
         Point2D delta = new Point2D.Double(xDel, yDel);
         layoutTrackList.forEach((lt) -> {
             lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta));
@@ -3521,7 +3464,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    boolean scaleTrack(float xFactor, float yFactor) {
+    public boolean scaleTrack(float xFactor, float yFactor) {
         layoutTrackList.forEach((lt) -> {
             lt.scaleCoords(xFactor, yFactor);
         });
@@ -5132,7 +5075,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         redrawPanel();
     }
 
-    protected void clearSelectionGroups() {
+    public void clearSelectionGroups() {
         selectionActive = false;
         _positionableSelection.clear();
         _layoutTrackSelection.clear();
@@ -7462,7 +7405,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Add a Reporter Icon to the panel
      */
-    void addReporter(@Nonnull Reporter reporter, int xx, int yy) {
+    public void addReporter(@Nonnull Reporter reporter, int xx, int yy) {
         ReporterIcon l = new ReporterIcon(this);
         l.setReporter(reporter);
         l.setLocation(xx, yy);
@@ -8906,11 +8849,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (shapeButton.isSelected()) {
             //log.warn("drawShapeInProgress: selectedObject: " + selectedObject);
             if ((selectedObject != null)) {
-//                    && (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType))) {
-//                log.warn("drawShapeInProgress: selectedHitPointType: " + selectedHitPointType);
-//                log.warn("beginLocation: " + beginLocation);
-//                log.warn("currentLocation: " + currentLocation);
-
                 g2.setColor(Color.DARK_GRAY);
                 g2.setStroke(new BasicStroke(3.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
                 g2.draw(new Line2D.Double(beginLocation, currentLocation));

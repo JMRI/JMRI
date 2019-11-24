@@ -1,32 +1,26 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JSpinner;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
 import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /*******************************************************************************
  * Handle changing layout editor drawing options.
- * 
+ *
  * since 4.15.6 blockDefaultColor, blockOccupiedColor and blockAlternativeColor added here.
- * Color settings blockDefaultColor, blockOccupiedColor and blockAlternativeColor respects the original solution. 
- * It would be useful to drop the original defaultTrackColor, defaultOccupiedTrackColor 
- * and defaultAlternativeTrackColor variables In {@link LayoutEditor} and use only those of 
- * {@link LayoutTrackDrawingOptions}. 
- * 
+ * Color settings blockDefaultColor, blockOccupiedColor and blockAlternativeColor respects the original solution.
+ * It would be useful to drop the original defaultTrackColor, defaultOccupiedTrackColor
+ * and defaultAlternativeTrackColor variables In {@link LayoutEditor} and use only those of
+ * {@link LayoutTrackDrawingOptions}.
+ *
  * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutTrackDrawingOptionsDialog extends JDialog {
@@ -81,7 +75,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         blockOccupiedColorButton = new javax.swing.JButton();
         javax.swing.JLabel blockAlternativeColorLabel = new javax.swing.JLabel();
         blockAlternativeColorButton = new javax.swing.JButton();
-        
+
         mainlineLabel = new javax.swing.JLabel();
         railCountLabel = new javax.swing.JLabel();
         mainRailCountSpinner = new javax.swing.JSpinner();
@@ -168,7 +162,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 30.0;
         optionsPanel.add(sidelineLabel, gridBagConstraints);
-        
+
         // 2 -------------------------------------------------------------------
         railCountLabel.setText(Bundle.getMessage("RailCountLabelText"));
         railCountLabel.setToolTipText(Bundle.getMessage("RailCountToolTip"));
@@ -994,19 +988,19 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     /***************************************************************************
      * OK button action performed.
      * Non-systemic color adjustment solution for blockDefaultColor, blockOccupiedColor and blockAlternativeColor.
-     * 
+     *
      * @param evt event
      */
     private void okButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_okButtonActionPerformed
         log.debug("okButtonActionPerformed({}", evt);
-        
-        // ----------------------------------------            
+
+        // ----------------------------------------
         layoutEditor.setDefaultTrackColor(ltdOptions.getBlockDefaultColor());
         layoutEditor.setDefaultOccupiedTrackColor(ltdOptions.getBlockOccupiedColor());
         layoutEditor.setDefaultAlternativeTrackColor(ltdOptions.getBlockAlternativeColor());
         layoutEditor.setDirty();
         layoutEditor.redrawPanel();
-        // ----------------------------------------            
+        // ----------------------------------------
 
         ltdOptions.setName(layoutEditor.getLayoutName());
         layoutEditor.setLayoutTrackDrawingOptions(ltdOptions);
@@ -1018,18 +1012,18 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
     /***************************************************************************
      * Apply button action performed.
      * Non-systemic color adjustment solution for blockDefaultColor, blockOccupiedColor and blockAlternativeColor.
-     * 
+     *
      * @param evt event
      */
     private void applyButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_applyButtonActionPerformed
-        
-        // ----------------------------------------            
+
+        // ----------------------------------------
         layoutEditor.setDefaultTrackColor(ltdOptions.getBlockDefaultColor());
         layoutEditor.setDefaultOccupiedTrackColor(ltdOptions.getBlockOccupiedColor());
         layoutEditor.setDefaultAlternativeTrackColor(ltdOptions.getBlockAlternativeColor());
         layoutEditor.setDirty();
         layoutEditor.redrawPanel();
-        // ----------------------------------------            
+        // ----------------------------------------
 
         LayoutTrackDrawingOptions ltdo = new LayoutTrackDrawingOptions(ltdOptions);
         ltdo.setName(layoutEditor.getLayoutName());
@@ -1052,7 +1046,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
                     break;
                 }
             }
-        } 
+        }
     }//GEN-LAST:event_presetsComboBoxActionPerformed
 
     private void cancelButtonActionPerformed(ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
@@ -1313,7 +1307,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         log.info("*blockAlternativeColorButtonActionPerformed({})", newColor);
     }//GEN-LAST:event_blockAlternativeColorButtonActionPerformed
 
-    
+
     private void mainBlockLineDashPercentageX10SpinnerStateChanged(ChangeEvent evt) {//GEN-FIRST:event_mainBlockLineDashPercentageX10SpinnerStateChanged
         JSpinner spinner = (JSpinner) evt.getSource();
         Integer value = (Integer) spinner.getValue();
@@ -1339,7 +1333,7 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
         blockDefaultColorButton.setBackground(ltdOptions.getBlockDefaultColor());
         blockOccupiedColorButton.setBackground(ltdOptions.getBlockOccupiedColor());
         blockAlternativeColorButton.setBackground(ltdOptions.getBlockAlternativeColor());
-        
+
         mainBallastColorButton.setBackground(ltdOptions.getMainBallastColor());
         mainBallastWidthSpinner.setValue(ltdOptions.getMainBallastWidth());
         mainBlockLineDashPercentageX10Spinner.setValue(ltdOptions.getMainBlockLineDashPercentageX10());
@@ -1580,11 +1574,11 @@ public class LayoutTrackDrawingOptionsDialog extends JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton applyButton;
-    
+
     private javax.swing.JButton blockDefaultColorButton;
     private javax.swing.JButton blockOccupiedColorButton;
     private javax.swing.JButton blockAlternativeColorButton;
-    
+
     private javax.swing.JLabel ballastWidthLabel;
     private javax.swing.JLabel blockLineDashPercentageX10Label;
     private javax.swing.JLabel blockLineWidthLabel;

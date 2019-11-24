@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,8 +17,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -794,7 +795,7 @@ public class LevelXing extends LayoutTrack {
 
     }
 
-    protected void updateBlockInfo() {
+    public void updateBlockInfo() {
         LayoutBlock blockAC = getLayoutBlockAC();
         LayoutBlock blockBD = getLayoutBlockBD();
         LayoutBlock b1 = null;
@@ -1358,7 +1359,7 @@ public class LevelXing extends LayoutTrack {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove().
      */
-    void dispose() {
+    public void dispose() {
         if (popup != null) {
             popup.removeAll();
         }
@@ -1368,7 +1369,7 @@ public class LevelXing extends LayoutTrack {
     /**
      * Remove this object from display and persistance.
      */
-    void remove() {
+    public void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }

@@ -1455,7 +1455,7 @@ public class LayoutTurnout extends LayoutTrack {
     }
 
     // updates connectivity for blocks assigned to this turnout and connected track segments
-    protected void updateBlockInfo() {
+    public void updateBlockInfo() {
         LayoutBlock bA = null;
         LayoutBlock bB = null;
         LayoutBlock bC = null;
@@ -3250,7 +3250,7 @@ public class LayoutTurnout extends LayoutTrack {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see {@link #remove()}
      */
-    void dispose() {
+    public void dispose() {
         if (popup != null) {
             popup.removeAll();
         }
@@ -3260,7 +3260,7 @@ public class LayoutTurnout extends LayoutTrack {
     /**
      * Remove this object from display and persistance.
      */
-    void remove() {
+    public void remove() {
         // if a turnout has been activated, deactivate it
         deactivateTurnout();
         // remove from persistance by flagging inactive
