@@ -9210,7 +9210,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Collections.sort(layoutShapes, new Comparator<LayoutShape>() {
             @Override
             public int compare(LayoutShape lhs, LayoutShape rhs) {
-                // -1 == less than, +1 == greater than, 0 == equal
+                // -1 == less than, 0 == equal, +1 == greater than
                 return Integer.signum(lhs.getLevel() - rhs.getLevel());
             }
         });
