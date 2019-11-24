@@ -65,7 +65,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     JFileChooser fileChooser;
     // AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
 
-    private final static String prefix = "IAB";
+    private final static String PREFIX = "IAB";
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioBufferFrame(String title, AudioTableDataModel model) {
@@ -190,7 +190,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     @SuppressWarnings("UnnecessaryBoxing")
     public void resetFrame() {
         synchronized (lock) {
-            sysName.setText(prefix + nextCounter()); // NOI18N
+            sysName.setText(PREFIX + nextCounter()); // NOI18N
         }
         userName.setText(null);
         url.setText(null);
@@ -257,7 +257,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     void applyPressed(ActionEvent e) {
         String sName = sysName.getText();
-        if (entryError(sName, prefix, "" + counter)) {
+        if (entryError(sName, PREFIX, "" + counter)) {
             return;
         }
         String user = userName.getText();

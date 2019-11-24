@@ -6,6 +6,9 @@
 #  
 # The list of test files that fail goes into /failed_files.txt
 #
+# Assumes that a build step i.e. "ant tests" has already taken place, so that 
+# individual test classes are ready to run. 
+#
 
 rm -f ./failed_files.txt
 touch ./failed_files.txt

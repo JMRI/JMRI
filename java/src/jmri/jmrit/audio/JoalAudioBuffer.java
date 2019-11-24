@@ -110,6 +110,12 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      * @return true, if initialisation successful
      */
     private boolean init() {
+        // Check that the JoalAudioFactory exists
+        if (al == null) {
+            log.warn("Al Factory not yet initialised");
+            return false;
+        }
+
         // Try to create an empty buffer that will hold the actual sound data
         al.alGenBuffers(1, dataStorageBuffer, 0);
         if (JoalAudioFactory.checkALError()) {

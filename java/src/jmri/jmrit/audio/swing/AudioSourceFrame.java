@@ -79,7 +79,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     JSpinner fadeOutTime = new JSpinner();
     JLabel fadeTimeUnitsLabel = new JLabel(Bundle.getMessage("UnitMS"));
 
-    private final static String prefix = "IAS";
+    private final static String PREFIX = "IAS";
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioSourceFrame(String title, AudioTableDataModel model) {
@@ -274,7 +274,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     @Override
     public void resetFrame() {
         synchronized (lock) {
-            sysName.setText(prefix + nextCounter());
+            sysName.setText(PREFIX + nextCounter());
         }
         userName.setText(null);
         assignedBuffer.setSelectedIndex(0);
@@ -336,24 +336,24 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
         assignedBuffer.removeAllItems();
         assignedBuffer.addItem("Select buffer from list");
-        am.getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
-            Audio a = am.getAudio(s);
+        am.getNamedBeanSet(Audio.BUFFER).stream().forEach((s) -> {
+            Audio a = am.getAudio(s.getSystemName());
             if (a != null) {
                 String u = a.getUserName();
                 if (u != null) {
                     assignedBuffer.addItem(u);
                 } else {
-                    assignedBuffer.addItem(s);
+                    assignedBuffer.addItem(s.getSystemName());
                 }
             } else {
-                assignedBuffer.addItem(s);
+                assignedBuffer.addItem(s.getSystemName());
             }
         });
     }
 
     private void applyPressed(ActionEvent e) {
         String sName = sysName.getText();
-        if (entryError(sName, prefix, "" + counter)) {
+        if (entryError(sName, PREFIX, "" + counter)) {
             return;
         }
         String user = userName.getText();
