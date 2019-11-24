@@ -61,6 +61,7 @@ else
     else        
         # run the SKIPINTERMITTENT tests separately
         mvn antrun:run -Danttarget=tests
+        mvn antrun:run -Danttarget=run-sh
         ./scripts/run_flagged_tests_separately
     fi
 fi
