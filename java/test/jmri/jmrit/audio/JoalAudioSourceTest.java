@@ -7,6 +7,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -18,8 +19,10 @@ public class JoalAudioSourceTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeNotNull(JoalAudioFactory.getAL()); // Run test method only when JOAL is present.
+
         JoalAudioSource l = new JoalAudioSource("test");
-        
+
         Assert.assertNotNull("exists", l);
         Assert.assertEquals("test", l.getSystemName());
         Assert.assertEquals(jmri.Audio.STATE_STOPPED, l.getState());
@@ -29,10 +32,8 @@ public class JoalAudioSourceTest {
 
     @Test
     public void testC2Stringtor() {
-        Assume.assumeNotNull(JoalAudioFactory.getAL()); // Run test method only when JOAL is present.
-
         JoalAudioSource l = new JoalAudioSource("testsysname","testusername");
-        
+
         Assert.assertNotNull("exists", l);
         Assert.assertEquals("testsysname", l.getSystemName());
         Assert.assertEquals("testusername", l.getUserName());
