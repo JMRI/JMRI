@@ -34,7 +34,6 @@ public class VSDListenerTest {
         InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
 
         jmri.util.JUnitAppender.suppressErrorMessage("Unhandled audio format type 0");
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         JUnitUtil.tearDown();
     }
 }
