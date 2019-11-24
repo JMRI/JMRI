@@ -197,7 +197,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 //      activeAudioFactory = new LWJGLAudioFactory();
 //      if (activeAudioFactory.init()) return;
 //
-//      // Next try JOAL
+        // Next try JOAL
         log.debug("Try to initialise JoalAudioFactory");
         activeAudioFactory = new JoalAudioFactory();
         if (activeAudioFactory.init()) return;

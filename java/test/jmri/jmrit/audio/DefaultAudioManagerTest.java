@@ -56,7 +56,6 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
         try {
             l.provideAudio("IAB1");
             l.provideAudio("IAB2");
-        
         } catch (AudioException ex) {
             canCreateBuffers = false;
         }
@@ -67,9 +66,38 @@ public class DefaultAudioManagerTest extends jmri.managers.AbstractManagerTestBa
         result = l.getNamedBeanSet(Audio.BUFFER).size();
         Assert.assertEquals("Verify that we get two buffers", expResult, result);
 
+        // Now let's create a couple of sources and bind those to the buffers
+        boolean canCreateSources = true;
+        try {
+            AudioSource s = (AudioSource) l.provideAudio("IAS1");
+            s.setAssignedBuffer((AudioBuffer) l.getNamedBean("IAB1"));
+            s = (AudioSource) l.provideAudio("IAS2");
+            s.setAssignedBuffer((AudioBuffer) l.getNamedBean("IAB2"));
+        } catch (AudioException ex) {
+            canCreateSources = false;
+        }
+
+        Assert.assertTrue("Verify sources created without error", canCreateSources);
+
+        expResult = 2;
+        result = l.getNamedBeanSet(Audio.SOURCE).size();
+        Assert.assertEquals("Verify that we get two sources", expResult, result);
+
+        // Now verify Sources and Buffers are bound
+        // First pairing
+        AudioSource s = (AudioSource) l.getAudio("IAS1");
+        AudioBuffer b = (AudioBuffer) l.getAudio("IAB1");
+        AudioBuffer ab = s.getAssignedBuffer();
+        Assert.assertEquals("Verify AudioSource IAS1 bound to AudioBuffer IAB1", b, ab);
+        // Second pairing
+        s = (AudioSource) l.getAudio("IAS1");
+        b = (AudioBuffer) l.getAudio("IAB1");
+        ab = s.getAssignedBuffer();
+        Assert.assertEquals("Verify AudioSource IAS1 bound to AudioBuffer IAB1", b, ab);
+
         // Now verify that the complete set of Audio objects is returned
-        // 1 Listener & 2 Buffers
-        expResult = 3;
+        // 1 Listener, 2 Buffers & 2 Sources
+        expResult = 5;
         result = l.getNamedBeanSet().size();
         Assert.assertEquals("Verify that we get two buffers & one listener", expResult, result);
     }
