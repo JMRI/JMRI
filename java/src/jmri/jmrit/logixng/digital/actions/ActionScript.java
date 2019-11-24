@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.digital.expressions;
+package jmri.jmrit.logixng.digital.actions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -11,33 +11,33 @@ import javax.script.SimpleBindings;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalExpression;
-import jmri.jmrit.logixng.DigitalExpressionManager;
+import jmri.jmrit.logixng.DigitalAction;
+import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.script.JmriScriptEngineManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Evaluates a script.
+ * Executes a script.
  * 
  * @author Daniel Bergqvist Copyright 2019
  */
-public class ExpressionScript extends AbstractDigitalExpression
+public class ActionScript extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private ExpressionScript _template;
+    private ActionScript _template;
     private String _scriptText;
-    private AbstractScriptDigitalExpression _scriptClass;
+    private AbstractScriptDigitalAction _scriptClass;
     private boolean _listenersAreRegistered = false;
 
-    public ExpressionScript(String sys, String user)
+    public ActionScript(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
     
-    private ExpressionScript(ExpressionScript template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
+    private ActionScript(ActionScript template) {
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _template = template;
         if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
     }
@@ -45,7 +45,7 @@ public class ExpressionScript extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public Base getNewObjectBasedOnTemplate() {
-        return new ExpressionScript(this);
+        return new ActionScript(this);
     }
     
     private void loadScript() {
@@ -99,17 +99,11 @@ public class ExpressionScript extends AbstractDigitalExpression
     public boolean isExternal() {
         return true;
     }
-    
-    /** {@inheritDoc} */
-    @Override
-    public boolean evaluate() {
-        return _scriptClass.evaluate();
-    }
 
     /** {@inheritDoc} */
     @Override
-    public void reset() {
-        // Do nothing.
+    public void execute() {
+        _scriptClass.execute();
     }
 
     @Override
@@ -171,17 +165,17 @@ public class ExpressionScript extends AbstractDigitalExpression
     
     public class ScriptParams {
         
-        public final AtomicReference<AbstractScriptDigitalExpression> _scriptClass
+        public final AtomicReference<AbstractScriptDigitalAction> _scriptClass
                 = new AtomicReference<>();
         
-        public final DigitalExpression _parentExpression;
+        public final DigitalAction _parentAction;
         
-        public ScriptParams(DigitalExpression parentExpression) {
-            _parentExpression  = parentExpression;
+        public ScriptParams(DigitalAction parentExpression) {
+            _parentAction  = parentExpression;
         }
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ExpressionScript.class);
+    private final static Logger log = LoggerFactory.getLogger(ActionScript.class);
     
 }

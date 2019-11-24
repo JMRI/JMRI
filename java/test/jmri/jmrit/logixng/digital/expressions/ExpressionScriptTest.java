@@ -32,6 +32,8 @@ import org.junit.Test;
 public class ExpressionScriptTest {
 
     private final String _scriptText = ""
+            + "import java\n"
+            + "import java.beans\n"
             + "import jmri\n"
             + ""
             + "class MyExpression(jmri.jmrit.logixng.digital.expressions.AbstractScriptDigitalExpression):\n"
@@ -45,7 +47,19 @@ public class ExpressionScriptTest {
             + "    l.removePropertyChangeListener(\"KnownState\", this);\n"
             + ""
             + "  def evaluate(self):\n"
+            + "    if self.l is None:\n"
+            + "      raise java.lang.NullPointerException()\n"
             + "    return self.l.commandedState == ON\n"
+            + ""
+            + "  def vetoableChange(self,evt):\n"
+            + "    if (\"CanDelete\" == evt.getPropertyName()):\n"
+            + "      if (isinstance(evt.getOldValue(),jmri.Light)):\n"
+            + "        if (evt.getOldValue() is self.l):\n"
+            + "          raise java.beans.PropertyVetoException(self.getDisplayName(), evt)\n"
+            + "    if (\"DoDelete\" == evt.getPropertyName()):\n"
+            + "      if (isinstance(evt.getOldValue(),jmri.Light)):\n"
+            + "        if (evt.getOldValue() is self.l):\n"
+            + "          self.l = None\n"
             + ""
             + ""
             + "params._scriptClass.set(MyExpression(params._parentExpression))\n";
@@ -143,14 +157,20 @@ public class ExpressionScriptTest {
     
     @Test
     public void testVetoableChange() throws PropertyVetoException {
+        // This test calls expression.evaluate() to see if the script still has
+        // the light registered. Once the light is deleted, expression.evaluate()
+        // will throw a NullPointerException.
+        
         // Get the expression and set the light
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         Assert.assertNotNull("Light is not null", light);
-        ExpressionLight expression =
-                new ExpressionLight(
+        light.setCommandedState(Light.ON);
+        
+        ExpressionScript expression =
+                new ExpressionScript(
                         InstanceManager.getDefault(
                                 DigitalExpressionManager.class).getAutoSystemName(), null);
-        expression.setLight(light);
+        expression.setScript(_scriptText);
         
         // Get some other light for later use
         Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IM99");
@@ -159,19 +179,19 @@ public class ExpressionScriptTest {
         
         // Test vetoableChange() for some other propery
         expression.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
+        Assert.assertTrue("Evaluate returns true", expression.evaluate());
         
         // Test vetoableChange() for a string
         expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
+        Assert.assertTrue("Evaluate returns true", expression.evaluate());
         expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
+        Assert.assertTrue("Evaluate returns true", expression.evaluate());
         
         // Test vetoableChange() for another light
         expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherLight, null));
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
+        Assert.assertTrue("Evaluate returns true", expression.evaluate());
         expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherLight, null));
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
+        Assert.assertTrue("Evaluate returns true", expression.evaluate());
         
         // Test vetoableChange() for its own light
         boolean thrown = false;
@@ -182,9 +202,15 @@ public class ExpressionScriptTest {
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
         expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
-        Assert.assertNull("Light is null", expression.getLight());
+        thrown = false;
+        try {
+            // If DoDelete has done its job, evaluate() will throw a NullPointerException.
+            expression.evaluate();
+        } catch (NullPointerException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     // The minimal setup for log4J

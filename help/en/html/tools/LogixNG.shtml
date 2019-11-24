@@ -83,6 +83,8 @@
 
         <li><a href="#notes">Additional Notes</a></li>
 
+        <li><a href="#scripts">Scripts</a></li>
+
         <li><a href="#actions_expressions">List of actions and expressions</a></li>
       </ul>
 
@@ -119,7 +121,7 @@
 	  as children, which allows the user to build a complex structure
 	  with simple building blocks.</p>
 
-	  <p>Example:<br />
+	  <p>Example:<br>
 	  One common root of the tree is the IfThenElse action. It has one
 	  child expression and one or two child actions. It evaluates the
 	  expression and if the expression answers <strong>true</strong>, the
@@ -996,6 +998,53 @@
           loop without restarting the program.</p>
         </li>
       </ul>
+
+
+
+	  <a name="scripts" id="scripts"></a>
+
+      <h2>Scripts</h2>
+
+      <p>All types of LogixNG actions and expressions may use
+	  Python/Jython scripts. Below follows the description of
+	  scripts for digital expressions, but the same pattern
+	  applies to all the types of actions and expressions.</p>
+
+      <p>The digital expression that handles scripts is
+	  ExpressionScript.</p>
+
+      <p>The script that is executed by ExpressionScript must
+	  declare a class that extend the class AbstractScriptDigitalExpression.
+	  The script must override the method evaluate(). For a
+	  script that listen to other beans, it's recommended to
+	  also override the methods registerScriptListeners() and
+	  unregisterScriptListeners().</p>
+
+	  <p>When called, the script must tell the caller which
+	  class to use. It does that by setting the variable
+	  params._scriptClass.set(instance)</p>
+
+      <p>Example of a digital expression script:</p>
+
+      <div style="margin-left: 2em;"><p><code>
+      import jmri<br>
+      <br>
+      class MyExpression(jmri.jmrit.logixng.digital.expressions.AbstractScriptDigitalExpression):<br>
+      <br>
+      &nbsp;&nbsp;l = lights.provideLight(\"IL1\")<br>
+      <br>
+      &nbsp;&nbsp;def registerScriptListeners(self):<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;self.l.addPropertyChangeListener(\"KnownState\", self);<br>
+      <br>
+      &nbsp;&nbsp;def unregisterScriptListeners():<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;l.removePropertyChangeListener(\"KnownState\", this);<br>
+      <br>
+      &nbsp;&nbsp;def evaluate(self):<br>
+      &nbsp;&nbsp;&nbsp;&nbsp;return self.l.commandedState == ON<br>
+      <br>
+      params._scriptClass.set(MyExpression(params._parentExpression))<br>
+      </code></p></div>
+
 
 
       <a name="digital_actions" id="digital_actions"></a>
