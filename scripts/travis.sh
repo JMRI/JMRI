@@ -7,8 +7,10 @@ set -ev
 # set defaults if not already set
 PRINT_SUMMARY=${PRINT_SUMMARY:-true}
 RUN_ORDER=${RUN_ORDER:-filesystem}
+
 HEADLESS=${HEADLESS:-false}
 SKIPINTERMITTENT=${SKIPINTERMITTENT:-true}
+STATIC=${STATIC:-false}
 
 # ensure Jython can cache JAR classes
 PYTHON_CACHEDIR="${HOME}/jython/cache"
@@ -16,6 +18,10 @@ mkdir -p ${PYTHON_CACHEDIR}
 
 export MAVEN_OPTS=-Xmx1536m
 
+# ensure that working directory is really clean
+mvn antrun:run -Danttarget=realclean
+
+# execute a specific set of tests
 if [[ "${HEADLESS}" == "true" ]] ; then
     if [[ "${STATIC}" == "true" ]] ; then
         # compile with ECJ for warnings or errors
@@ -52,8 +58,9 @@ else
             -Djmri.skipschematests=true \
             -Dcucumber.options="--tags 'not @Ignore'" \
             -Dpython.cachedir=${PYTHON_CACHEDIR}
-    else
+    else        
         # run the SKIPINTERMITTENT tests separately
+        mvn antrun:run -Danttarget=tests
         ./scripts/run_flagged_tests_separately
     fi
 fi
