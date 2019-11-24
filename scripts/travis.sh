@@ -18,9 +18,6 @@ mkdir -p ${PYTHON_CACHEDIR}
 
 export MAVEN_OPTS=-Xmx1536m
 
-# ensure that working directory is really clean
-mvn antrun:run -Danttarget=realclean
-
 # execute a specific set of tests
 if [[ "${HEADLESS}" == "true" ]] ; then
     if [[ "${STATIC}" == "true" ]] ; then
