@@ -47,26 +47,32 @@ public class LayoutEditorChecksTest {
     @Test
     public void checkToolsMenuExists() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        String toolsMenuTitle = Bundle.getMessage("MenuTools");
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
+        String checkMenuTitle = Bundle.getMessage("CheckMenuTitle");
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
 
-        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, Bundle.getMessage("MenuTools"));
-        toolsJMO.pushMenu(Bundle.getMessage("MenuTools")
-                + "/" + Bundle.getMessage("CheckMenuTitle"), "/");
+        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle, "/");
 //        Assert.assertEquals("Menu Item Count", 17, checkJMO.getItemCount());
     }
 
     @Test
     public void checkCheckUnConnectedTracks() {
-        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, Bundle.getMessage("MenuTools"));
-        toolsJMO.pushMenu(Bundle.getMessage("MenuTools") + "/"
-                + Bundle.getMessage("CheckMenuTitle") + "/"
+        String toolsMenuTitle = Bundle.getMessage("MenuTools");
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
+        String checkMenuTitle = Bundle.getMessage("CheckMenuTitle");
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+
+        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + Bundle.getMessage("CheckUnConnectedTracksMenuTitle"), "/");
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
         //log.error("firstToolsMenuItem.getText(): " + firstMenuItem.getText());
         Assert.assertEquals("firstToolsMenuItem.getText(): ",
-                Bundle.getMessage("CheckMenuTitle"),
-                checkMenuItem.getText());
+                checkMenuTitle, checkMenuItem.getText());
 
         JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
         JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
@@ -74,21 +80,25 @@ public class LayoutEditorChecksTest {
         Assert.assertEquals("firstCheckMenuItem.getText(): ",
                 Bundle.getMessage("CheckUnConnectedTracksMenuTitle"),
                 checkSubMenuItem.getText());
+        //TODO:validate results
     }
 
     @Test
     public void checkCheckUnBlockedTracks() {
-        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, Bundle.getMessage("MenuTools"));
-        toolsJMO.pushMenu(Bundle.getMessage("MenuTools") + "/"
-                + Bundle.getMessage("CheckMenuTitle") + "/"
+        String toolsMenuTitle = Bundle.getMessage("MenuTools");
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
+        String checkMenuTitle = Bundle.getMessage("CheckMenuTitle");
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+
+        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + Bundle.getMessage("CheckUnBlockedTracksMenuTitle"), "/");
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
         //log.error("firstToolsMenuItem.getText(): " + firstMenuItem.getText());
         Assert.assertEquals("firstToolsMenuItem.getText(): ",
-                Bundle.getMessage("CheckMenuTitle"),
-                checkMenuItem.getText());
+                checkMenuTitle, checkMenuItem.getText());
 
         JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
         JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
@@ -96,21 +106,25 @@ public class LayoutEditorChecksTest {
         Assert.assertEquals("firstCheckMenuItem.getText(): ",
                 Bundle.getMessage("CheckUnBlockedTracksMenuTitle"),
                 checkSubMenuItem.getText());
+        //TODO:validate results
     }
 
     @Test
     public void checkCheckNonContiguousBlocks() {
-        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, Bundle.getMessage("MenuTools"));
-        toolsJMO.pushMenu(Bundle.getMessage("MenuTools") + "/"
-                + Bundle.getMessage("CheckMenuTitle") + "/"
+        String toolsMenuTitle = Bundle.getMessage("MenuTools");
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
+        String checkMenuTitle = Bundle.getMessage("CheckMenuTitle");
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+
+        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + Bundle.getMessage("CheckNonContiguousBlocksMenuTitle"), "/");
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
         //log.error("firstToolsMenuItem.getText(): " + firstMenuItem.getText());
         Assert.assertEquals("firstToolsMenuItem.getText(): ",
-                Bundle.getMessage("CheckMenuTitle"),
-                checkMenuItem.getText());
+                checkMenuTitle, checkMenuItem.getText());
 
         JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
         JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
@@ -118,21 +132,25 @@ public class LayoutEditorChecksTest {
         Assert.assertEquals("firstCheckMenuItem.getText(): ",
                 Bundle.getMessage("CheckNonContiguousBlocksMenuTitle"),
                 checkSubMenuItem.getText());
+        //TODO:validate results
     }
 
     @Test
     public void checkCheckUnnecessaryAnchors() {
-        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, Bundle.getMessage("MenuTools"));
-        toolsJMO.pushMenu(Bundle.getMessage("MenuTools") + "/"
-                + Bundle.getMessage("CheckMenuTitle") + "/"
+        String toolsMenuTitle = Bundle.getMessage("MenuTools");
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
+        String checkMenuTitle = Bundle.getMessage("CheckMenuTitle");
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+
+        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + Bundle.getMessage("CheckUnnecessaryAnchorsMenuTitle"), "/");
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
         //log.error("firstToolsMenuItem.getText(): " + firstMenuItem.getText());
         Assert.assertEquals("firstToolsMenuItem.getText(): ",
-                Bundle.getMessage("CheckMenuTitle"),
-                checkMenuItem.getText());
+                checkMenuTitle, checkMenuItem.getText());
 
         JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
         JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
@@ -141,6 +159,7 @@ public class LayoutEditorChecksTest {
         Assert.assertEquals("firstCheckMenuItem.getText(): ",
                 Bundle.getMessage("CheckUnnecessaryAnchorsMenuTitle"),
                 checkSubMenuItem.getText());
+        //TODO:validate results
     }
 
     // The minimal setup for log4J
