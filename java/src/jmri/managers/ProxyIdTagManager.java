@@ -8,6 +8,7 @@ import jmri.Manager;
 import jmri.Reporter;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.SortedSet;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
@@ -40,7 +41,8 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public boolean isInitialised() {
-        return InstanceManager.getNullableDefault(IdTagManager.class) != null;
+        return defaultManager!= null &&
+                getManagerList().stream().noneMatch(o->((IdTagManager)o).isInitialised());
     }
 
     /**
@@ -70,11 +72,21 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      */
     @Override
     public IdTag getIdTag(String name) {
+        init();
         return super.getNamedBean(name);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public SortedSet<IdTag> getNamedBeanSet() {
+        init();
+        return super.getNamedBeanSet();
     }
 
     @Override
     protected IdTag makeBean(int i, String systemName, String userName) {
+        init();
         return ((IdTagManager) getMgr(i)).newIdTag(systemName, userName);
     }
 
@@ -96,6 +108,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      */
     @Override
     public IdTag provideIdTag(String name) throws IllegalArgumentException {
+        init();
         return super.provideNamedBean(name);
     }
 
@@ -107,6 +120,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      */
     @Override
     public IdTag getBySystemName(String systemName) {
+        init();
         return super.getBeanBySystemName(systemName);
     }
 
@@ -118,6 +132,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      */
     @Override
     public IdTag getByUserName(String userName) {
+        init();
         return super.getBeanByUserName(userName);
     }
 
@@ -151,11 +166,13 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      */
     @Override
     public IdTag newIdTag(String systemName, String userName) {
+        init();
         return newNamedBean(systemName, userName);
     }
 
     @Override
     public IdTag getByTagID(String tagID) {
+        init();
         return getBySystemName(makeSystemName(tagID));
     }
 
@@ -218,8 +235,8 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
-        List<IdTag> out = new ArrayList<>();
-        return out;
+        init();
+        return new ArrayList<>();
     }
 
 }

@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 

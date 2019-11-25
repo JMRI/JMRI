@@ -26,6 +26,8 @@
  * consists(data array)
  * engine(name, data)
  * engines(data array)
+ * idTag(name, state, data)
+ * idTags(data array)
  * layoutBlock(name, value, data)
  * layoutBlocks(data array)
  * light(name, state, data)
@@ -120,6 +122,10 @@
             jmri.engine = function (name, data) {
             };
             jmri.engines = function (data) {
+            };
+            jmri.idTag = function (name, state, data) {
+            };
+            jmri.idTags = function (data) {
             };
             jmri.layoutBlock = function (name, value, data) {
             };
@@ -305,6 +311,31 @@
                     });
                 }
             };
+            jmri.getIdTag = function (name) {
+                if (jmri.socket) {
+                    jmri.socket.send("idTag", { name: name });
+                } else {
+                    $.getJSON(jmri.url + "idTag/" + name, function (json) {
+                        jmri.idTag(json.data.name, json.data.state, json.data);
+                    });
+                }
+            };
+            jmri.setIdTag = function (name, state) {
+                if (jmri.socket) {
+                    jmri.socket.send("idTag", { name: name, state: state }, 'post');
+                } else {
+                    $.ajax({
+                        url: jmri.url + "idTag/" + name,
+                        type: "POST",
+                        data: JSON.stringify({ state: state }),
+                        contentType: "application/json; charset=utf-8",
+                        success: function (json) {
+                            jmri.idTag(json.data.name, json.data.state, json.data);
+                            jmri.getIdTag(json.data.name, json.data.state);
+                        }
+                    });
+                }
+            };
             jmri.getLayoutBlock = function (name) {
                 if (jmri.socket) {
                     jmri.socket.send("layoutBlock", { name: name });
@@ -348,6 +379,9 @@
                         break;
                     case "block":
                         jmri.getBlock(name);
+                        break;
+                    case "idTag":
+                        jmri.getIdTag(name);
                         break;
                     case "layoutBlock":
                         jmri.getLayoutBlock(name);
@@ -399,6 +433,9 @@
                         break;
                     case "block":
                         jmri.setBlock(name, state, 'post');
+                        break;
+                    case "idTag":
+                        jmri.setIdTag(name, state, 'post');
                         break;
                     case "layoutBlock":
                         jmri.setLayoutBlock(name, state, 'post');
@@ -769,6 +806,12 @@
                 },
                 engines: function (e) {
                     jmri.engines(e.data);
+                },
+                idTag: function (e) {
+                    jmri.idTag(e.data.name, e.data.state, e.data);
+                },
+                idTags: function (e) {
+                    jmri.idTags(e.data);
                 },
                 layoutBlock: function (e) {
                     jmri.layoutBlock(e.data.name, e.data.value, e.data);

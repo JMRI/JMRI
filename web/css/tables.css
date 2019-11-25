@@ -1,3 +1,5 @@
+/* stylesheet for TablesServlet */
+
 .jumbotron {
     padding: 0;
     margin-bottom: 0;
@@ -8,6 +10,11 @@ table.sortable th:not(.sorttable_sorted):not(.sorttable_sorted_reverse):not(.sor
 table.sortable th:hover {
 	cursor: pointer;
 }
-table:not(.signalMast):not(.signalHead) tbody td.state {
+table.idTag   td.state:hover,
+table.route   td.state:hover,
+table.sensor  td.state:hover,
+table.turnout td.state:hover {
 	cursor: pointer;
+	background: #ddd;
+	font-weight: bold;
 }
