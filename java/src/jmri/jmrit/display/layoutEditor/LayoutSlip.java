@@ -1679,6 +1679,19 @@ public class LayoutSlip extends LayoutTurnout {
             return ((getTurnoutAState() == tso.getTurnoutAState())
                     && (getTurnoutBState() == tso.getTurnoutBState()));
         }
+
+    /**
+     * Hash on the header
+     */
+    @Override
+    public int hashCode() {
+        int result = 7;
+        result = (37 * result) + getTurnoutAState();
+        result = (37 * result) + getTurnoutBState();
+
+        return result;
+    }
+        
     }   // class TurnoutState
 
     /*
