@@ -10,8 +10,6 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalExpression;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class for scripts that implements a digital expression.
@@ -150,8 +148,5 @@ public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExp
     @Override
     public void disposeMe() {
     }
-    
-    
-    private final static Logger log = LoggerFactory.getLogger(AbstractScriptDigitalExpression.class);
     
 }
