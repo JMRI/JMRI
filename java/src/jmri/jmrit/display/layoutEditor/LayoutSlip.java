@@ -1663,9 +1663,17 @@ public class LayoutSlip extends LayoutTurnout {
             }
         }
 
-        public boolean equals(TurnoutState ts) {
-            return ((getTurnoutAState() != ts.getTurnoutAState())
-                    || (getTurnoutBState() != ts.getTurnoutBState()));
+        public boolean equals(Object object) {
+            if (this == object) {
+                return true;
+            }
+            if (!(object instanceof TurnoutState)) {
+                return false;
+            }
+            TurnoutState other = (TurnoutState) object;
+
+            return ((getTurnoutAState() != other.getTurnoutAState())
+                    || (getTurnoutBState() != other.getTurnoutBState()));
         }
     }   // class TurnoutState
 
