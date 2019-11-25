@@ -33,6 +33,7 @@
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
         <surefire.version>2.20</surefire.version>
+        <failsafe.version>2.20</failsafe.version>
         <jqassistant.version>1.6.0</jqassistant.version>
     </properties>
     <scm>
@@ -407,6 +408,18 @@
                     <reuseForks>false</reuseForks>
                     -->
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>

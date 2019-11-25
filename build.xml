@@ -299,6 +299,7 @@
         <include name="**/*.class" />
         <!-- Exclude classes necessary for testing only from the code coverage report-->
         <exclude name="**/*Test*.class" />
+        <exclude name="**/*IT*.class" />
         <!-- Exclude testing infrastructure classes -->
         <exclude name="**/*Scaffold.class" />
         <exclude name="**/*JUnit*.class" />
@@ -1418,6 +1419,12 @@
             <test name="jmri.HeadLessTest" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
+            <batchtest outfile="junit-results">
+                <formatter type="xml"/>
+                <fileset dir="${source}">
+                    <include name="**/*IT*.java"/>
+                </fileset>
+            </batchtest>
 
         </junit>
         </jacoco:coverage>
@@ -1497,6 +1504,13 @@
             <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
             </test>
+            <batchtest> 
+                <formatter usefile="no" type="brief"/>
+                <fileset dir="${source}">
+                    <include name="**/*IT*.java"/>
+                </fileset>
+                <formatter usefile="no" type="brief"/>
+            </batchtest>
         </junit>
         <fail>
             <condition>
@@ -1533,6 +1547,12 @@
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
+            <batchtest outfile="junit-results">
+                <formatter type="xml"/>
+                <fileset dir="${src.test}">
+                    <include name="**/*IT*.java"/>
+                </fileset>
+            </batchtest>
         </junit>
         </jacoco:coverage>
         <fail>
@@ -1594,6 +1614,12 @@
             <test name="apps.tests.AllTest" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
+            <batchtest outfile="junit-results">
+                <formatter type="xml"/>
+                <fileset dir="${source}">
+                    <include name="**/*IT*.java"/>
+                </fileset>
+            </batchtest>
         </junit>
 
         </jacoco:coverage>
@@ -1616,10 +1642,10 @@
 
             <classpath refid="test.class.path"/>
 
-            <test name="jmri.RunCucumberTest">
+            <test name="jmri.RunCucumberIT">
                 <formatter usefile="no" type="brief"/>
             </test>
-            <test name="apps.RunCucumberTest">
+            <test name="apps.RunCucumberIT">
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
