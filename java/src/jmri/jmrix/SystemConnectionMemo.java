@@ -1,6 +1,8 @@
 package jmri.jmrix;
 
 import apps.startup.StartupActionModelUtil;
+
+import java.util.Comparator;
 import java.util.Enumeration;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -8,6 +10,7 @@ import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ConsistManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.beans.Bean;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
@@ -23,7 +26,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */
-abstract public class SystemConnectionMemo extends Bean {
+public abstract class SystemConnectionMemo extends Bean {
 
     public static final String DISABLED = "ConnectionDisabled";
     public static final String USER_NAME = "ConnectionNameChanged";
@@ -48,7 +51,7 @@ abstract public class SystemConnectionMemo extends Bean {
             while (!setSystemPrefix(prefix + x)) {
                 x++;
             }
-            log.debug("created system prefix {}", prefix + x);
+            log.debug("created system prefix {}{}", prefix, x);
         }
 
         if (!setUserName(userName)) {
@@ -56,7 +59,7 @@ abstract public class SystemConnectionMemo extends Bean {
             while (!setUserName(userName + x)) {
                 x++;
             }
-            log.debug("created user name {}", prefix + x);
+            log.debug("created user name {}{}", prefix, x);
         }
         addToActionList();
         // reset to null so these get set by the first setPrefix/setUserName
@@ -169,10 +172,9 @@ abstract public class SystemConnectionMemo extends Bean {
                 return true; // we have a consist manager already
             } else if (provides(jmri.CommandStation.class)) {
                 return true; // we can construct an NMRAConsistManager
-            } else if (provides(jmri.AddressedProgrammerManager.class)) {
-                return true; // we can construct a DccConsistManager
             } else {
-                return false;
+                // true if we can construct a DccConsistManager
+                return provides(jmri.AddressedProgrammerManager.class);
             }
         } else {
             return false; // nothing, by default
@@ -185,15 +187,15 @@ abstract public class SystemConnectionMemo extends Bean {
      * the type, and <strong>must</strong> return null if provides() is false
      * for the type.
      *
-     * @param <T> Type of manager to get
-     * @param T   Type of manager to get
+     * @param <T>  Type of manager to get
+     * @param type Type of manager to get
      * @return The manager or null if provides() is false for T
      * @see #provides(java.lang.Class)
      */
     @OverridingMethodsMustInvokeSuper
     @SuppressWarnings("unchecked") // dynamic checking done on cast of getConsistManager
-    public <T> T get(Class<?> T) {
-        if (T.equals(ConsistManager.class)) {
+    public <T> T get(Class<?> type) {
+        if (type.equals(ConsistManager.class)) {
             return (T) getConsistManager();
         } else {
             return null; // nothing, by default
@@ -222,7 +224,9 @@ abstract public class SystemConnectionMemo extends Bean {
         this.propertyChangeSupport.firePropertyChange(DISABLED, oldDisabled, disabled);
     }
 
-    abstract protected ResourceBundle getActionModelResourceBundle();
+    public abstract Comparator<NamedBean> getNamedBeanComparator();
+
+    protected abstract ResourceBundle getActionModelResourceBundle();
 
     protected final void addToActionList() {
         StartupActionModelUtil util = StartupActionModelUtil.getDefault();
@@ -297,6 +301,6 @@ abstract public class SystemConnectionMemo extends Bean {
 
     private ConsistManager consistManager = null;
 
-    private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class);
+    private static final Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class);
 
 }
