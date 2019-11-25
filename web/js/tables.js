@@ -23,7 +23,10 @@ function showError(code, message) {
 //parm is the array of items from which to build table
 function rebuildTable(data) {
 	tableType = $("html").data("table-type");
-	if (data[0] && data[0].type !== tableType) return; //skip if new array doesn't match this page
+	if (data[0] && data[0].type !== tableType) { //skip if new array doesn't match this page
+		jmri.log("incoming type '" + data[0].type + "' does not match current page '" + tableType + "', ignoring.");
+		return; 
+	}
 	$("#activity-alert").removeClass("hidden").addClass("show");
 	$("table#jmri-data").removeClass("show").addClass("hidden");
 	$("#warning-no-data").removeClass("show").addClass("hidden");
@@ -208,7 +211,7 @@ $(document).ready(function () {
 		//everything calls console()
 		console: function (originalData) {
 			var data = JSON.parse(originalData);
-//			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
+			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
 			if ($.isArray(data)) {  //if its an array, 
 				rebuildTable(data); //  replace the table with the array list			
 			} else if ((data.type) && (data.type === "error")) {
