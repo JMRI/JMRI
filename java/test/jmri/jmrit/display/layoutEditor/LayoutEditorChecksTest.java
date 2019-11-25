@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.ANCHOR;
-
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
@@ -20,8 +18,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.operators.JMenuOperator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -38,7 +34,7 @@ public class LayoutEditorChecksTest {
     private LayoutEditor layoutEditor = null;
     private LayoutEditorChecks layoutEditorChecks = null;
     private LayoutTurnout ltRH = null, ltLH = null;
-    private PositionablePoint pp = null;
+    //private PositionablePoint pp = null;
 
     private EditorFrameOperator layoutEditorEFO = null;
 
@@ -168,9 +164,9 @@ public class LayoutEditorChecksTest {
             layoutEditor.getLayoutTracks().add(ltRH);
 
             point = MathUtil.add(point, delta);
-            PositionablePoint pp = new PositionablePoint("A1", ANCHOR, point, layoutEditor);
-            Assert.assertNotNull("PositionablePoint", pp);
-            layoutEditor.getLayoutTracks().add(pp);
+            //PositionablePoint pp = new PositionablePoint("A1", ANCHOR, point, layoutEditor);
+            //Assert.assertNotNull("PositionablePoint", pp);
+            //layoutEditor.getLayoutTracks().add(pp);
 
             point = MathUtil.add(point, delta);
             ltLH = new LayoutTurnout("Left Hand", LayoutTurnout.LH_TURNOUT,
@@ -188,6 +184,6 @@ public class LayoutEditorChecksTest {
         }
         JUnitUtil.tearDown();
     }
-    private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorChecksTest.class);
+    //private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorChecksTest.class);
 
 }
