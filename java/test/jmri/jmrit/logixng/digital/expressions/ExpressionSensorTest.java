@@ -207,7 +207,6 @@ public class ExpressionSensorTest {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initInternalSensorManager();
     }
 
     @After

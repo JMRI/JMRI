@@ -5,6 +5,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
@@ -15,7 +17,6 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.Is_IsNot_Enum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,10 +30,13 @@ public class ExpressionMemory extends AbstractDigitalExpression
 
     private ExpressionMemory _template;
     private NamedBeanHandle<Memory> _memoryHandle;
-    private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private MemoryOperation _memoryOperation = MemoryOperation.EQUAL;
+    private CompareTo _compareTo = CompareTo.VALUE;
+    private boolean _caseInsensitive = false;
+    private String _constantValue = "";
+    private NamedBeanHandle<Memory> _otherMemoryHandle;
     private boolean _listenersAreRegistered = false;
-
+    
     public ExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
@@ -92,20 +96,36 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return _memoryHandle;
     }
     
-    public void set_Is_IsNot(Is_IsNot_Enum is_IsNot) {
-        _is_IsNot = is_IsNot;
+    public void setConstantValue(String constantValue) {
+        _constantValue = constantValue;
     }
     
-    public Is_IsNot_Enum get_Is_IsNot() {
-        return _is_IsNot;
+    public String getConstantValue() {
+        return _constantValue;
     }
     
-    public void setMemoryState(MemoryOperation state) {
-        _memoryOperation = state;
+    public void setMemoryOperation(MemoryOperation memoryOperation) {
+        _memoryOperation = memoryOperation;
     }
     
-    public MemoryOperation getMemoryState() {
+    public MemoryOperation getMemoryOperation() {
         return _memoryOperation;
+    }
+
+    public void setCompareTo(CompareTo compareTo) {
+        _compareTo = compareTo;
+    }
+    
+    public CompareTo getCompareTo() {
+        return _compareTo;
+    }
+
+    public void setCaseInsensitive(boolean caseInsensitive) {
+        _caseInsensitive = caseInsensitive;
+    }
+    
+    public boolean getCaseInsensitive() {
+        return _caseInsensitive;
     }
 
     @Override
@@ -137,35 +157,165 @@ public class ExpressionMemory extends AbstractDigitalExpression
         return true;
     }
     
+    private String getString(Object o) {
+        if (o != null) {
+            return o.toString();
+        }
+        return null;
+    }
+    
+    /**
+     * Compare two values using the comparator set using the comparison
+     * instructions in {@link #setNum1(int)}.
+     *
+     * <strong>Note:</strong> {@link #getNum1()} must be one of {@link #LESS_THAN},
+     * {@link #LESS_THAN_OR_EQUAL}, {@link #EQUAL},
+     * {@link #GREATER_THAN_OR_EQUAL}, or {@link #GREATER_THAN}.
+     *
+     * @param value1          left side of the comparison
+     * @param value2          right side of the comparison
+     * @param caseInsensitive true if comparison should be case insensitive;
+     *                        false otherwise
+     * @return true if values compare per getNum1(); false otherwise
+     */
+    private boolean compare(String value1, String value2, boolean caseInsensitive) {
+        if (value1 == null) {
+            return value2 == null;
+        } else {
+            if (value2 == null) {
+                return false;
+            }
+            value1 = value1.trim();
+            value2 = value2.trim();
+        }
+        try {
+            int n1 = Integer.parseInt(value1);
+            try {
+                int n2 = Integer.parseInt(value2);
+                log.debug("Compare numbers: n1= {} to n2= {}", n1, n2);
+                switch (_memoryOperation) // both are numbers
+                {
+                    case LESS_THAN:
+                        return (n1 < n2);
+                    case LESS_THAN_OR_EQUAL:
+                        return (n1 <= n2);
+                    case EQUAL:
+                        return (n1 == n2);
+                    case NOT_EQUAL:
+                        return (n1 == n2);
+                    case GREATER_THAN_OR_EQUAL:
+                        return (n1 >= n2);
+                    case GREATER_THAN:
+                        return (n1 > n2);
+                    default:
+                        throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
+                }
+            } catch (NumberFormatException nfe) {
+                return false;   // n1 is a number, n2 is not
+            }
+        } catch (NumberFormatException nfe) {
+            try {
+                Integer.parseInt(value2);
+                return false;     // n1 is not a number, n2 is
+            } catch (NumberFormatException ex) { // OK neither a number
+            }
+        }
+        log.debug("Compare Strings: value1= {} to value2= {}", value1, value2);
+        int compare;
+        if (caseInsensitive) {
+            compare = value1.compareToIgnoreCase(value2);
+        } else {
+            compare = value1.compareTo(value2);
+        }
+        switch (_memoryOperation) {
+            case LESS_THAN:
+                if (compare < 0) {
+                    return true;
+                }
+                break;
+            case LESS_THAN_OR_EQUAL:
+                if (compare <= 0) {
+                    return true;
+                }
+                break;
+            case EQUAL:
+                if (compare == 0) {
+                    return true;
+                }
+                break;
+            case NOT_EQUAL:
+                if (compare != 0) {
+                    return true;
+                }
+                break;
+            case GREATER_THAN_OR_EQUAL:
+                if (compare >= 0) {
+                    return true;
+                }
+                break;
+            case GREATER_THAN:
+                if (compare > 0) {
+                    return true;
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
+        }
+        return false;
+    }
+    
+    private boolean matchRegex(String memoryValue, String regex) {
+        Pattern pattern = Pattern.compile(regex);
+        Matcher m = pattern.matcher(memoryValue);
+        return m.matches();
+    }
+    
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
+        // ConditionalVariable, line 661:  boolean compare(String value1, String value2, boolean caseInsensitive) {
+        String memoryValue = getString(_memoryHandle.getBean().getValue());
+        String otherValue = null;
+        
+        switch (_compareTo) {
+            case VALUE:
+                otherValue = _constantValue;
+                break;
+            case MEMORY:
+                otherValue = getString(_otherMemoryHandle.getBean().getValue());
+                break;
+            default:
+                throw new IllegalArgumentException("_compareTo has unknown value: "+_compareTo.name());
+        }
+        
         switch (_memoryOperation) {
             case LESS_THAN:
-                return false;
+                // fall through
             case LESS_THAN_OR_EQUAL:
+                // fall through
             case EQUAL:
-            case GREATER_THAN_OR_EQUAL:
-            case GREATER_THAN:
+                // fall through
             case NOT_EQUAL:
+                // fall through
+            case GREATER_THAN_OR_EQUAL:
+                // fall through
+            case GREATER_THAN:
+                return compare(memoryValue, otherValue, _caseInsensitive);
+                
             case IS_NULL:
+                return memoryValue == null;
             case IS_NOT_NULL:
+                return memoryValue != null;
+                
             case MATCH_REGEX:
+                return matchRegex(memoryValue, otherValue);
+                
             case NOT_MATCH_REGEX:
+                return !matchRegex(memoryValue, otherValue);
+                
+            default:
+                throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
         }
-        
-        
-        
-        // Fix this later
-        return false;
-/*        
-        MemoryOperation currentMemoryState = MemoryOperation.get(_memoryHandle.getBean().getCommandedState());
-        if (_is_IsNot == Is_IsNot_Enum.IS) {
-            return currentMemoryState == _memoryOperation;
-        } else {
-            return currentMemoryState != _memoryOperation;
-        }
-*/        
     }
 
     /** {@inheritDoc} */
@@ -197,7 +347,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
         } else {
             memoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage(locale, "Memory_Long", memoryName, _is_IsNot.toString(), _memoryOperation._text);
+        return Bundle.getMessage(locale, "Memory_Long", memoryName, _memoryOperation._text);
     }
     
     /** {@inheritDoc} */
@@ -269,17 +419,13 @@ public class ExpressionMemory extends AbstractDigitalExpression
     }
     
     
-    public enum Comparision {
-        CASE_SENSITIVE_STRING_VALUE(Bundle.getMessage("MemoryOperation_LessThan")),
-        CASE_INSENSITIVE_STRING_VALUE(Bundle.getMessage("MemoryOperation_LessThan")),
-        NUMERIC_VALUE(Bundle.getMessage("MemoryOperation_LessThan")),
-        CASE_SENSITIVE_STRING_MEMORY(Bundle.getMessage("MemoryOperation_LessThan")),
-        CASE_INSENSITIVE_STRING_MEMORY(Bundle.getMessage("MemoryOperation_LessThan")),
-        NUMERIC_MEMORY(Bundle.getMessage("MemoryOperation_LessThan"));
+    public enum CompareTo {
+        VALUE(Bundle.getMessage("CompareTo_Value")),
+        MEMORY(Bundle.getMessage("CompareTo_Memory"));
         
         private final String _text;
         
-        private Comparision(String text) {
+        private CompareTo(String text) {
             this._text = text;
         }
         

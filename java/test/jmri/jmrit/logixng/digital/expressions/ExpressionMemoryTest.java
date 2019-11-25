@@ -6,8 +6,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandle;
-import jmri.Turnout;
-import jmri.TurnoutManager;
+import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -27,38 +27,36 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ExpressionTurnout
+ * Test ExpressionMemory
  * 
  * @author Daniel Bergqvist 2018
  */
-public class ExpressionTurnoutTest {
+public class ExpressionMemoryTest {
 
     @Test
     public void testCtor() {
-        ExpressionTurnout t = new ExpressionTurnout("IQDE321", null);
+        ExpressionMemory t = new ExpressionMemory("IQDE321", null);
         Assert.assertNotNull("exists",t);
     }
     
     @Test
     public void testDescription() {
-        ExpressionTurnout expressionTurnout = new ExpressionTurnout("IQDE321", null);
-        Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));
-        Assert.assertTrue("Turnout Not selected is Thrown".equals(expressionTurnout.getLongDescription()));
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        expressionTurnout.setTurnout(turnout);
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.CLOSED);
-        Assert.assertTrue("Turnout IT1 is Closed".equals(expressionTurnout.getLongDescription()));
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
-        Assert.assertTrue("Turnout IT1 is not Closed".equals(expressionTurnout.getLongDescription()));
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.OTHER);
-        Assert.assertTrue("Turnout IT1 is not Other".equals(expressionTurnout.getLongDescription()));
+        ExpressionMemory expressionMemory = new ExpressionMemory("IQDE321", null);
+        Assert.assertEquals("Compare memory", expressionMemory.getShortDescription());
+        Assert.assertEquals("Memory Not selected is Thrown", expressionMemory.getLongDescription());
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        expressionMemory.setMemory(memory);
+        expressionMemory.setConstantValue("A value");
+        Assert.assertEquals("Memory IT1 is Closed", expressionMemory.getLongDescription());
+        expressionMemory.setConstantValue("Another value");
+        Assert.assertEquals("Memory IT1 is not Closed", expressionMemory.getLongDescription());
+        Assert.assertEquals("Memory IT1 is not Other", expressionMemory.getLongDescription());
     }
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        turnout.setCommandedState(Turnout.CLOSED);
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        memory.setValue("A value");
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
@@ -75,15 +73,15 @@ public class ExpressionTurnoutTest {
         MaleSocket socketIfThen = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThen);
         conditionalNG.getChild(0).connect(socketIfThen);
         
-        ExpressionTurnout expressionTurnout =
-                new ExpressionTurnout(
+        ExpressionMemory expressionMemory =
+                new ExpressionMemory(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
                                 .getAutoSystemName(), null);
-        expressionTurnout.setTurnout(turnout);
-        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
-        MaleSocket socketTurnout = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout);
-        socketIfThen.getChild(0).connect(socketTurnout);
+        expressionMemory.setMemory(memory);
+        expressionMemory.setCompareTo(ExpressionMemory.CompareTo.VALUE);
+        expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.EQUAL);
+        MaleSocket socketMemory = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionMemory);
+        socketIfThen.getChild(0).connect(socketMemory);
         
         ActionAtomicBoolean actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
@@ -92,107 +90,107 @@ public class ExpressionTurnoutTest {
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Throw the switch. This should not execute the conditional.
-        turnout.setCommandedState(Turnout.THROWN);
+        memory.setValue("Another value");
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Close the switch. This should not execute the conditional.
-        turnout.setCommandedState(Turnout.CLOSED);
+        memory.setValue("A third value");
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Throw the switch. This should execute the conditional.
-        turnout.setCommandedState(Turnout.THROWN);
+        memory.setValue("A forth value");
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
     }
     
     @Test
-    public void testSetTurnout() {
-        // Test setTurnout() when listeners are registered
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        Assert.assertNotNull("Turnout is not null", turnout);
-        ExpressionTurnout expression =
-                new ExpressionTurnout(
+    public void testSetMemory() {
+        // Test setMemory() when listeners are registered
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IT1");
+        Assert.assertNotNull("Memory is not null", memory);
+        ExpressionMemory expression =
+                new ExpressionMemory(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
                                 .getAutoSystemName(), null);
-        expression.setTurnout(turnout);
+        expression.setMemory(memory);
         
-        Assert.assertNotNull("Turnout is not null", expression.getTurnout());
+        Assert.assertNotNull("Memory is not null", expression.getMemory());
         expression.registerListeners();
         boolean thrown = false;
         try {
-            expression.setTurnout((String)null);
+            expression.setMemory((String)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setTurnout must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
         
         thrown = false;
         try {
-            expression.setTurnout((NamedBeanHandle<Turnout>)null);
+            expression.setMemory((NamedBeanHandle<Memory>)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setTurnout must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
         
         thrown = false;
         try {
-            expression.setTurnout((Turnout)null);
+            expression.setMemory((Memory)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setTurnout must not be called when listeners are registered");
+        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
     }
     
     @Test
     public void testVetoableChange() throws PropertyVetoException {
-        // Get the expression and set the turnout
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        Assert.assertNotNull("Turnout is not null", turnout);
-        ExpressionTurnout expression =
-                new ExpressionTurnout(
+        // Get the expression and set the memory
+        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IT1");
+        Assert.assertNotNull("Memory is not null", memory);
+        ExpressionMemory expression =
+                new ExpressionMemory(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
                                 .getAutoSystemName(), null);
-        expression.setTurnout(turnout);
+        expression.setMemory(memory);
         
-        // Get some other turnout for later use
-        Turnout otherTurnout = InstanceManager.getDefault(TurnoutManager.class).provide("IM99");
-        Assert.assertNotNull("Turnout is not null", otherTurnout);
-        Assert.assertNotEquals("Turnout is not equal", turnout, otherTurnout);
+        // Get some other memory for later use
+        Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
+        Assert.assertNotNull("Memory is not null", otherMemory);
+        Assert.assertNotEquals("Memory is not equal", memory, otherMemory);
         
         // Test vetoableChange() for some other propery
         expression.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, expression.getTurnout().getBean());
+        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
         
         // Test vetoableChange() for a string
         expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, expression.getTurnout().getBean());
+        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
         expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Turnout matches", turnout, expression.getTurnout().getBean());
+        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
         
-        // Test vetoableChange() for another turnout
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherTurnout, null));
-        Assert.assertEquals("Turnout matches", turnout, expression.getTurnout().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherTurnout, null));
-        Assert.assertEquals("Turnout matches", turnout, expression.getTurnout().getBean());
+        // Test vetoableChange() for another memory
+        expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherMemory, null));
+        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
+        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherMemory, null));
+        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
         
-        // Test vetoableChange() for its own turnout
+        // Test vetoableChange() for its own memory
         boolean thrown = false;
         try {
-            expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", turnout, null));
+            expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", memory, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         
-        Assert.assertEquals("Turnout matches", turnout, expression.getTurnout().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", turnout, null));
-        Assert.assertNull("Turnout is null", expression.getTurnout());
+        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
+        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", memory, null));
+        Assert.assertNull("Memory is null", expression.getMemory());
     }
     
     // The minimal setup for log4J
@@ -200,7 +198,7 @@ public class ExpressionTurnoutTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initMemoryManager();
     }
 
     @After
