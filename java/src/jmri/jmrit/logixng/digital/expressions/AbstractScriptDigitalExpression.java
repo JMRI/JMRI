@@ -124,7 +124,7 @@ public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExp
     
     /** {@inheritDoc} */
     @Override
-    public void registerListenersForThisClass() {
+    public final void registerListenersForThisClass() {
         if (!_listenersAreRegistered) {
             registerScriptListeners();
             _listenersAreRegistered = true;
@@ -133,7 +133,7 @@ public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExp
     
     /** {@inheritDoc} */
     @Override
-    public void unregisterListenersForThisClass() {
+    public final void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
             unregisterScriptListeners();
             _listenersAreRegistered = false;
