@@ -43,14 +43,14 @@ public class ExpressionMemoryTest {
     public void testDescription() {
         ExpressionMemory expressionMemory = new ExpressionMemory("IQDE321", null);
         Assert.assertEquals("Compare memory", expressionMemory.getShortDescription());
-        Assert.assertEquals("Memory Not selected is Thrown", expressionMemory.getLongDescription());
+        Assert.assertEquals("Memory Not selected is equal to \"\"", expressionMemory.getLongDescription());
         Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         expressionMemory.setMemory(memory);
         expressionMemory.setConstantValue("A value");
-        Assert.assertEquals("Memory IT1 is Closed", expressionMemory.getLongDescription());
+        Assert.assertEquals("Memory IM1 is equal to \"A value\"", expressionMemory.getLongDescription());
         expressionMemory.setConstantValue("Another value");
-        Assert.assertEquals("Memory IT1 is not Closed", expressionMemory.getLongDescription());
-        Assert.assertEquals("Memory IT1 is not Other", expressionMemory.getLongDescription());
+        Assert.assertEquals("Memory IM1 is equal to \"Another value\"", expressionMemory.getLongDescription());
+        Assert.assertEquals("Memory IM1 is equal to \"Another value\"", expressionMemory.getLongDescription());
     }
     
     @Test
@@ -80,6 +80,7 @@ public class ExpressionMemoryTest {
         expressionMemory.setMemory(memory);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.VALUE);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.EQUAL);
+        expressionMemory.setConstantValue("New value");
         MaleSocket socketMemory = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionMemory);
         socketIfThen.getChild(0).connect(socketMemory);
         
@@ -89,19 +90,22 @@ public class ExpressionMemoryTest {
         
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Throw the switch. This should not execute the conditional.
-        memory.setValue("Another value");
+        // Set the memory. This should not execute the conditional.
+        memory.setValue("Other value");
+        memory.setValue("New value");
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Close the switch. This should not execute the conditional.
-        memory.setValue("A third value");
+        // Set the memory. This should not execute the conditional.
+        memory.setValue("Other value");
+        memory.setValue("New value");
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Throw the switch. This should execute the conditional.
-        memory.setValue("A forth value");
+        // Set the memory. This should execute the conditional.
+        memory.setValue("Other value");
+        memory.setValue("New value");
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
     }

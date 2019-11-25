@@ -168,15 +168,18 @@ public class ExpressionMemory extends AbstractDigitalExpression
      * Compare two values using the comparator set using the comparison
      * instructions in {@link #setNum1(int)}.
      *
-     * <strong>Note:</strong> {@link #getNum1()} must be one of {@link #LESS_THAN},
-     * {@link #LESS_THAN_OR_EQUAL}, {@link #EQUAL},
-     * {@link #GREATER_THAN_OR_EQUAL}, or {@link #GREATER_THAN}.
+     * <strong>Note:</strong> {@link #_memoryOperation} must be one of
+     * {@link #MemoryOperation.LESS_THAN},
+     * {@link #MemoryOperation.LESS_THAN_OR_EQUAL},
+     * {@link #MemoryOperation.EQUAL},
+     * {@link #MemoryOperation.GREATER_THAN_OR_EQUAL},
+     * or {@link #MemoryOperation.GREATER_THAN}.
      *
      * @param value1          left side of the comparison
      * @param value2          right side of the comparison
      * @param caseInsensitive true if comparison should be case insensitive;
      *                        false otherwise
-     * @return true if values compare per getNum1(); false otherwise
+     * @return true if values compare per _memoryOperation; false otherwise
      */
     private boolean compare(String value1, String value2, boolean caseInsensitive) {
         if (value1 == null) {
@@ -347,7 +350,58 @@ public class ExpressionMemory extends AbstractDigitalExpression
         } else {
             memoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage(locale, "Memory_Long", memoryName, _memoryOperation._text);
+        
+        String otherMemoryName;
+        if (_otherMemoryHandle != null) {
+            otherMemoryName = _otherMemoryHandle.getBean().getDisplayName();
+        } else {
+            otherMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
+        }
+        
+        String message;
+        String other;
+        switch (_compareTo) {
+            case VALUE:
+                message = "Memory_Long_CompareConstant";
+                other = _constantValue;
+                break;
+                
+            case MEMORY:
+                message = "Memory_Long_CompareMemory";
+                other = otherMemoryName;
+                break;
+                
+            default:
+                throw new IllegalArgumentException("_compareTo has unknown value: "+_compareTo.name());
+        }
+        
+        switch (_memoryOperation) {
+            case LESS_THAN:
+                // fall through
+            case LESS_THAN_OR_EQUAL:
+                // fall through
+            case EQUAL:
+                // fall through
+            case NOT_EQUAL:
+                // fall through
+            case GREATER_THAN_OR_EQUAL:
+                // fall through
+            case GREATER_THAN:
+                return Bundle.getMessage(locale, message, memoryName, _memoryOperation._text, other);
+                
+            case IS_NULL:
+                // fall through
+            case IS_NOT_NULL:
+                return Bundle.getMessage(locale, "Memory_Long_CompareNull", memoryName, _memoryOperation._text);
+                
+            case MATCH_REGEX:
+                // fall through
+            case NOT_MATCH_REGEX:
+                return Bundle.getMessage(locale, "Memory_Long_CompareRegex", memoryName, _memoryOperation._text);
+                
+            default:
+                throw new IllegalArgumentException("_memoryOperation has unknown value: "+_memoryOperation.name());
+        }
     }
     
     /** {@inheritDoc} */
@@ -360,7 +414,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered && (_memoryHandle != null)) {
-            _memoryHandle.getBean().addPropertyChangeListener("KnownState", this);
+            _memoryHandle.getBean().addPropertyChangeListener("value", this);
             _listenersAreRegistered = true;
         }
     }
@@ -369,7 +423,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
     @Override
     public void unregisterListenersForThisClass() {
         if (_listenersAreRegistered) {
-            _memoryHandle.getBean().removePropertyChangeListener("KnownState", this);
+            _memoryHandle.getBean().removePropertyChangeListener("value", this);
             _listenersAreRegistered = false;
         }
     }
@@ -420,42 +474,8 @@ public class ExpressionMemory extends AbstractDigitalExpression
     
     
     public enum CompareTo {
-        VALUE(Bundle.getMessage("CompareTo_Value")),
-        MEMORY(Bundle.getMessage("CompareTo_Memory"));
-        
-        private final String _text;
-        
-        private CompareTo(String text) {
-            this._text = text;
-        }
-        
-        @Override
-        public String toString() {
-            return _text;
-        }
-        
-    }
-    
-    
-    // Should the memory be used as is, or should it be converted using toString()
-    // or toReportString() methods? The toReportString() will return null if the
-    // memory does not contains a report.
-    public enum TypeOfValue {
-        AS_IS(Bundle.getMessage("TypeOfValue_AsIs")),
-        TO_STRING(Bundle.getMessage("TypeOfValue_ToString")),
-        TO_REPORT(Bundle.getMessage("TypeOfValue_ToReport"));
-        
-        private final String _text;
-        
-        private TypeOfValue(String text) {
-            this._text = text;
-        }
-        
-        @Override
-        public String toString() {
-            return _text;
-        }
-        
+        VALUE,
+        MEMORY;
     }
     
     
