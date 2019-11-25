@@ -71,7 +71,6 @@ public class VSDecoderPaneTest extends jmri.util.swing.JmriPanelTest {
     @After
     @Override
     public void tearDown() {
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         JUnitUtil.tearDown();
     }
 
