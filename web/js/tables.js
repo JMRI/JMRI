@@ -54,7 +54,7 @@ function rebuildTable(data) {
 	hideEmptyColumns("table#jmri-data tr th");
 
 	//setup for clicking on state column to send state changes
-	$('table.idTag, table.route, table.sensor, table.turnout').on('click', 'td.state', function (e) { 
+	$('table.idTag, table.light, table.route, table.sensor, table.turnout').on('click', 'td.state', function (e) { 
 		rowName = $(this).parent('tr').data('name');
 		currState = $(this).data('state');
 		jmri.socket.send(tableType, { 'name': rowName, 'state': getNextState(tableType, currState) }, 'post');
