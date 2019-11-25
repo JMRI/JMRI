@@ -1,13 +1,6 @@
 package jmri.jmrit.mailreport;
 
-import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
-import java.awt.Insets;
-import java.awt.Rectangle;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -15,7 +8,10 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
+
 import javax.swing.JFrame;
+
+import apps.gui.GuiLafPreferencesManager;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -100,6 +96,8 @@ public class ReportContext {
 
         File panel = jmri.configurexml.LoadXmlUserAction.getCurrentFile();
         addString("Current panel file: " + (panel == null ? "[none]" : panel.getPath()) + "   ");
+        
+        addString("Locale: " + InstanceManager.getDefault(GuiLafPreferencesManager.class).getLocale());
 
         //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");

@@ -1,16 +1,14 @@
 /*
  * TablesServlet specific JavaScript
  * 
- * TODO: update other language NavBar.html, Tables.html
- * TODO: update json help with correct program references
  * TODO: add filter to tables
  * TODO: add enum descriptions to schema and use them for converting states, and 
  *         for calc'ing the "next" state
  * TODO: additional columns and changes for block, light, route
- * TODO: why does no configProfile show isAutoStart?
  */
 
 var jmri = null;
+var first = false; //temp used for debugging
 
 //handle an error message returned via the websocket from the server
 //  parms: html error code, message is the message text
@@ -39,9 +37,7 @@ function rebuildTable(data) {
 		//build all data rows for table body
 		var tbody = '';	
 		data.forEach(function (item) {
-			if ($.inArray(item.type, ["networkService","configProfile","systemConnection"]) < 0) { //request updates from JMRI for each item in list 
-				jmri.socket.send(item.type, { name: item.data.name });                         //  , except those not (yet) handled properly in JMRI 		 
-			}
+			jmri.socket.send(item.type, { name: item.data.name }); //request updates from server
 			tbody += '<tr data-name="' + item.data.name + '">';
 			tbody += buildRow(item.data) + '</tr>';
 		});

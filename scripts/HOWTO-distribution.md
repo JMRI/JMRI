@@ -177,7 +177,7 @@ We roll some general code maintenance items into the release process.
         ant
 ```
 
-- This is a good place to make sure CATS still builds, see the [doc page](http://jmri.org/help/en/html/doc/Technical/CATS.shtml) - note that CATS has not been updated to compile cleanly with JMRI 4.*
+- This is a good place to make sure CATS still builds, see the [doc page](https://www.jmri.org/help/en/html/doc/Technical/CATS.shtml) - note that CATS has not been updated to compile cleanly with JMRI 4.*
         
 - If you fixed anything, commit it back. 
 
@@ -437,7 +437,7 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
 
 ```   
 
-[Release notes](http://jmri.org/releasenotes/jmri4.17.6.shtml)
+[Release notes](https://www.jmri.org/releasenotes/jmri4.17.6.shtml)
 
 Checksums:
 
@@ -540,7 +540,7 @@ git push github
 
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/WebSite/) to speed it along; note there are multiple components that need to run)
 
-- Check the [web page](http://jmri.org) just in case you didn't push properly, etc
+- Check the [web page](https://www.jmri.org) just in case you didn't push properly, etc
 
 ====================================================================================
 ## Announcement and Post-release Steps
@@ -559,18 +559,18 @@ This is the next in a series of test releases that will culminate in a productio
 - Alt: We're getting close to the end of the development series, so we'd appreciate feedback on whether or not this release works for your layout.
 
 If you are currently using JMRI 4.9.6 or earlier, we strongly recommend that you first update to JMRI 4.12 and make sure that's running OK before updating to this test release. There have been a number of changes in serial port support, panel file format and configuration options since those earlier releases, and moving to the stable JMRI 4.12 release is a good way to work through any possible problems.
-<http://jmri.org/releasenotes/jmri4.12.shtml>
+<https://www.jmri.org/releasenotes/jmri4.12.shtml>
 
-If you use JMRI on Linux or Mac and are updating from JMRI 4.7.3 or earlier, there’s a necessary migration step. (Not needed on Windows) Please see the JMRI 4.12 release note for details: <http://jmri.org/releasenotes/jmri4.12.shtml#migration>
+If you use JMRI on Linux or Mac and are updating from JMRI 4.7.3 or earlier, there’s a necessary migration step. (Not needed on Windows) Please see the JMRI 4.12 release note for details: <https://www.jmri.org/releasenotes/jmri4.12.shtml#migration>
 
 For more information on the issues, new features and bug fixes in 4.17.6 please see the release note:   
-<http://jmri.org/releasenotes/jmri4.17.6.shtml>
+<https://www.jmri.org/releasenotes/jmri4.17.6.shtml>
 
 Note that JMRI is made available under the GNU General Public License. For more information, please see our copyright and licensing page.
-<http://jmri.org/Copyright.html>
+<https://www.jmri.org/Copyright.html>
 
 The download links, along with lots of other information which we hope you'll read, can be found on the release note page:
-<http://jmri.org/releasenotes/jmri4.17.6.shtml>
+<https://www.jmri.org/releasenotes/jmri4.17.6.shtml>
 
 - Close the [4.17.6 release GitHub Issue](https://github.com/JMRI/JMRI/issues) with a note saying that
 ```
