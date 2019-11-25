@@ -14,6 +14,8 @@ import jmri.NamedBean;
 import jmri.beans.Bean;
 import jmri.implementation.DccConsistManager;
 import jmri.implementation.NmraConsistManager;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -224,7 +226,16 @@ public abstract class SystemConnectionMemo extends Bean {
         this.propertyChangeSupport.firePropertyChange(DISABLED, oldDisabled, disabled);
     }
 
-    public abstract Comparator<NamedBean> getNamedBeanComparator();
+    /**
+     * Get the Comparator to be used for two NamedBeans. This is typically an
+     * {@link NamedBeanComparator}, but may be any Comparator that works for
+     * this connection type.
+     * 
+     * @param <B>  the type of NamedBean
+     * @param type the class of NamedBean
+     * @return the Comparator
+     */
+    public abstract <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type);
 
     protected abstract ResourceBundle getActionModelResourceBundle();
 

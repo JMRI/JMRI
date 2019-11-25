@@ -62,7 +62,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
             
     public AbstractManager(SystemConnectionMemo memo) {
         this.memo = memo;
-        this._beans = new TreeSet<>(memo.getNamedBeanComparator());
+        this._beans = new TreeSet<>(memo.getNamedBeanComparator(getNamedBeanClass()));
         registerSelf();
     }
 
@@ -213,8 +213,8 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
             // system names are treated as the same. For example LT1 and LT01.
             if (_beans.contains(s)) {
                 final AtomicReference<String> oldSysName = new AtomicReference<>();
-                Comparator<NamedBean> c = memo.getNamedBeanComparator();
-                _beans.forEach((NamedBean t) -> {
+                Comparator<E> c = memo.getNamedBeanComparator(getNamedBeanClass());
+                _beans.forEach(t -> {
                     if (c.compare(s, t) == 0) {
                         oldSysName.set(t.getSystemName());
                     }
