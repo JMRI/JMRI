@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
+
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -16,8 +17,8 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -849,7 +850,7 @@ public class LevelXing extends LayoutTrack {
      */
     public boolean isMainlineAC() {
         if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
-                || ((connectB != null) && (((TrackSegment) connectB).isMainline()))) {
+                || ((connectC != null) && (((TrackSegment) connectC).isMainline()))) {
             return true;
         } else {
             return false;
