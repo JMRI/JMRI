@@ -273,7 +273,7 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
      */
     @Override
     public Class<NamedBean> getNamedBeanClass() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return NamedBean.class;
     }
 
     private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
