@@ -33,6 +33,8 @@
     <!-- Things you might want to set:                                                   -->
     <!--    # JVM arguments to pass to the JVM running the JMRI application              -->
     <!--    jvm.args=                                                                    -->
+    <!--    # JVM arguments to pass to the JVM running single tests                      -->
+    <!--    test-single.jvmargs=                                                         -->
     <!--    # paths to append to the classpath                                           -->
     <!--    cp.append=                                                                   -->
     <!--    # paths to prepend to the classpath                                          -->
@@ -91,6 +93,9 @@
         <not>
             <isset property="jvm.args"/>
         </not>
+    </condition>
+    <condition property="test-single.jvmargs" value="">
+        <not><isset property="test-single.jvmargs"/></not>
     </condition>
     <condition property="cp.append" value="">
         <not>
@@ -710,7 +715,6 @@
         <property name="test.test" value="${test.includes}Test"/>
     </target>
     <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single">
-        <property name="test-single.jvmargs" value=""/>
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -735,7 +739,6 @@
     </target>
 
     <target depends="-test-single-src,-test-single-test,tests,runtime-library-selection" description="Run single unit test." name="test-single-coverage">
-        <property name="test-single.jvmargs" value=""/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
