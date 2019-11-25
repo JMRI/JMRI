@@ -62,6 +62,11 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         return 'B';
     }
 
+    @Override
+    public Class<Block> getNamedBeanClass() {
+        return Block.class;
+    }
+
     private boolean saveBlockPath = true;
 
     @CheckReturnValue

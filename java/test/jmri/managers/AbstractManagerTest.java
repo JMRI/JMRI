@@ -79,6 +79,10 @@ public class AbstractManagerTest {
             throw new UnsupportedOperationException("Not supported.");
         }
         
+        @Override
+        public Class<MyBean> getNamedBeanClass() {
+            return MyBean.class;
+        }
     }
     
     private class MyBean extends jmri.implementation.AbstractNamedBean {

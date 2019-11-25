@@ -5,6 +5,7 @@ import java.util.Objects;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,6 +80,14 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Reporter> getNamedBeanClass() {
+        return Reporter.class;
     }
 
     /** {@inheritDoc} */

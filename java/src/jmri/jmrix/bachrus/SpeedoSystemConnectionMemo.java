@@ -1,7 +1,10 @@
 package jmri.jmrix.bachrus;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -58,6 +61,11 @@ public class SpeedoSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     protected ResourceBundle getActionModelResourceBundle() {
         // No Actions at start up to return
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

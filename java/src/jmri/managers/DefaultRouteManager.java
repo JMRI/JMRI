@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Route;
 import jmri.RouteManager;
+import jmri.SignalHead;
 import jmri.implementation.DefaultRoute;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -122,6 +123,14 @@ public class DefaultRouteManager extends AbstractManager<Route>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameRoutes" : "BeanNameRoute");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Route> getNamedBeanClass() {
+        return Route.class;
     }
 
     @Override

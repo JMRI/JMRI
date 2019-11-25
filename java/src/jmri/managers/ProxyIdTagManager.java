@@ -6,6 +6,8 @@ import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.Manager;
 import jmri.Reporter;
+import jmri.SignalHead;
+
 import java.util.List;
 import java.util.ArrayList;
 import jmri.InstanceManager;
@@ -170,6 +172,14 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameIdTags" : "BeanNameIdTag");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<IdTag> getNamedBeanClass() {
+        return IdTag.class;
     }
 
     private boolean stateSaved = false;

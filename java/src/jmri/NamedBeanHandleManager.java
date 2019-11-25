@@ -45,7 +45,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class NamedBeanHandleManager extends AbstractManager implements InstanceManagerAutoDefault {
+public class NamedBeanHandleManager extends AbstractManager<NamedBean> implements InstanceManagerAutoDefault {
 
     public NamedBeanHandleManager() {
         // use Internal memo as connection for this manager
@@ -265,6 +265,15 @@ public class NamedBeanHandleManager extends AbstractManager implements InstanceM
     @CheckReturnValue
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNames" : "BeanName");
+    }
+
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<NamedBean> getNamedBeanClass() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     private final static Logger log = LoggerFactory.getLogger(NamedBeanHandleManager.class);
