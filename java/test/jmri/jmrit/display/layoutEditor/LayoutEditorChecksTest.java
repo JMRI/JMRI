@@ -5,6 +5,9 @@ import static jmri.jmrit.display.layoutEditor.PositionablePoint.ANCHOR;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JPopupMenu;
 import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
@@ -17,6 +20,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.operators.JMenuOperator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -59,6 +64,20 @@ public class LayoutEditorChecksTest {
         toolsJMO.pushMenu(Bundle.getMessage("MenuTools") + "/"
                 + Bundle.getMessage("CheckMenuTitle") + "/"
                 + Bundle.getMessage("CheckUnConnectedTracksMenuTitle"), "/");
+
+        JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
+        JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
+        //log.error("firstToolsMenuItem.getText(): " + firstMenuItem.getText());
+        Assert.assertEquals("firstToolsMenuItem.getText(): ",
+                Bundle.getMessage("CheckMenuTitle"),
+                checkMenuItem.getText());
+
+        JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
+        JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
+        JMenuItem checkSubMenuItem = (JMenuItem) checkPopupMenu.getComponent(0);
+        Assert.assertEquals("firstCheckMenuItem.getText(): ",
+                Bundle.getMessage("CheckUnConnectedTracksMenuTitle"),
+                checkSubMenuItem.getText());
     }
 
     @Test
@@ -67,6 +86,20 @@ public class LayoutEditorChecksTest {
         toolsJMO.pushMenu(Bundle.getMessage("MenuTools") + "/"
                 + Bundle.getMessage("CheckMenuTitle") + "/"
                 + Bundle.getMessage("CheckUnBlockedTracksMenuTitle"), "/");
+
+        JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
+        JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
+        //log.error("firstToolsMenuItem.getText(): " + firstMenuItem.getText());
+        Assert.assertEquals("firstToolsMenuItem.getText(): ",
+                Bundle.getMessage("CheckMenuTitle"),
+                checkMenuItem.getText());
+
+        JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
+        JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
+        JMenuItem checkSubMenuItem = (JMenuItem) checkPopupMenu.getComponent(1);
+        Assert.assertEquals("firstCheckMenuItem.getText(): ",
+                Bundle.getMessage("CheckUnBlockedTracksMenuTitle"),
+                checkSubMenuItem.getText());
     }
 
     @Test
@@ -75,6 +108,20 @@ public class LayoutEditorChecksTest {
         toolsJMO.pushMenu(Bundle.getMessage("MenuTools") + "/"
                 + Bundle.getMessage("CheckMenuTitle") + "/"
                 + Bundle.getMessage("CheckNonContiguousBlocksMenuTitle"), "/");
+
+        JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
+        JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
+        //log.error("firstToolsMenuItem.getText(): " + firstMenuItem.getText());
+        Assert.assertEquals("firstToolsMenuItem.getText(): ",
+                Bundle.getMessage("CheckMenuTitle"),
+                checkMenuItem.getText());
+
+        JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
+        JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
+        JMenuItem checkSubMenuItem = (JMenuItem) checkPopupMenu.getComponent(2);
+        Assert.assertEquals("firstCheckMenuItem.getText(): ",
+                Bundle.getMessage("CheckNonContiguousBlocksMenuTitle"),
+                checkSubMenuItem.getText());
     }
 
     @Test
@@ -83,14 +130,21 @@ public class LayoutEditorChecksTest {
         toolsJMO.pushMenu(Bundle.getMessage("MenuTools") + "/"
                 + Bundle.getMessage("CheckMenuTitle") + "/"
                 + Bundle.getMessage("CheckUnnecessaryAnchorsMenuTitle"), "/");
-    }
 
-    @Test
-    public void checkCheckUnConnectedTracksMenu() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
+        JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
+        //log.error("firstToolsMenuItem.getText(): " + firstMenuItem.getText());
+        Assert.assertEquals("firstToolsMenuItem.getText(): ",
+                Bundle.getMessage("CheckMenuTitle"),
+                checkMenuItem.getText());
 
-        EditorFrameOperator jfo = new EditorFrameOperator(layoutEditor);
+        JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
+        JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
 
+        JMenuItem checkSubMenuItem = (JMenuItem) checkPopupMenu.getComponent(3);
+        Assert.assertEquals("firstCheckMenuItem.getText(): ",
+                Bundle.getMessage("CheckUnnecessaryAnchorsMenuTitle"),
+                checkSubMenuItem.getText());
     }
 
     // The minimal setup for log4J
@@ -134,5 +188,6 @@ public class LayoutEditorChecksTest {
         }
         JUnitUtil.tearDown();
     }
+    private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorChecksTest.class);
 
 }
