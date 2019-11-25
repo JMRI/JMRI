@@ -19,9 +19,9 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
+import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -1310,13 +1310,15 @@ public class PositionablePoint extends LayoutTrack {
             public void actionPerformed(ActionEvent e) {
                 ident = layoutEditor.getFinder().uniqueName("EB", 1);
                 type = END_BUMPER;
-                if (connect1.getConnect1() == PositionablePoint.this) {
-                    connect1.setArrowEndStart(false);
-                    connect1.setBumperEndStart(true);
-                }
-                if (connect1.getConnect2() == PositionablePoint.this) {
-                    connect1.setArrowEndStop(false);
-                    connect1.setBumperEndStop(true);
+                if (connect1 != null) {
+                    if (connect1.getConnect1() == PositionablePoint.this) {
+                        connect1.setArrowEndStart(false);
+                        connect1.setBumperEndStart(true);
+                    }
+                    if (connect1.getConnect2() == PositionablePoint.this) {
+                        connect1.setArrowEndStop(false);
+                        connect1.setBumperEndStop(true);
+                    }
                 }
                 layoutEditor.repaint();
             }

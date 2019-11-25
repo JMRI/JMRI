@@ -53,12 +53,12 @@ public class LayoutEditorChecksTest {
         Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
 
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle, "/");
+        toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle, "/");
 //        Assert.assertEquals("Menu Item Count", 17, checkJMO.getItemCount());
     }
 
     @Test
-    public void checkCheckUnConnectedTracks() {
+    public void testCheckUnConnectedTracks() {
         String toolsMenuTitle = Bundle.getMessage("MenuTools");
         Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         String checkMenuTitle = Bundle.getMessage("CheckMenuTitle");
@@ -67,7 +67,7 @@ public class LayoutEditorChecksTest {
         Assert.assertNotNull("checkUnConnectedTracksMenuTitle not null", checkUnConnectedTracksMenuTitle);
 
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle + "/"
+        toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + checkUnConnectedTracksMenuTitle, "/");
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
@@ -86,7 +86,7 @@ public class LayoutEditorChecksTest {
     }
 
     @Test
-    public void checkCheckUnBlockedTracks() {
+    public void testCheckUnBlockedTracks() {
         String toolsMenuTitle = Bundle.getMessage("MenuTools");
         Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         String checkMenuTitle = Bundle.getMessage("CheckMenuTitle");
@@ -95,7 +95,7 @@ public class LayoutEditorChecksTest {
         Assert.assertNotNull("checkUnBlockedTracksMenuTitle not null", checkUnBlockedTracksMenuTitle);
 
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle + "/"
+        toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + checkUnBlockedTracksMenuTitle, "/");
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
@@ -114,7 +114,7 @@ public class LayoutEditorChecksTest {
     }
 
     @Test
-    public void checkCheckNonContiguousBlocks() {
+    public void testCheckNonContiguousBlocks() {
         String toolsMenuTitle = Bundle.getMessage("MenuTools");
         Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         String checkMenuTitle = Bundle.getMessage("CheckMenuTitle");
@@ -123,7 +123,7 @@ public class LayoutEditorChecksTest {
         Assert.assertNotNull("checkNonContiguousBlocksMenuTitle not null", checkNonContiguousBlocksMenuTitle);
 
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle + "/"
+        toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + checkNonContiguousBlocksMenuTitle, "/");
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
@@ -142,7 +142,7 @@ public class LayoutEditorChecksTest {
     }
 
     @Test
-    public void checkCheckUnnecessaryAnchors() {
+    public void testCheckUnnecessaryAnchors() {
         String toolsMenuTitle = Bundle.getMessage("MenuTools");
         Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         String checkMenuTitle = Bundle.getMessage("CheckMenuTitle");
@@ -151,7 +151,7 @@ public class LayoutEditorChecksTest {
         Assert.assertNotNull("checkUnnecessaryAnchorsMenuTitle not null", checkUnnecessaryAnchorsMenuTitle);
 
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle + "/"
+        toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + checkUnnecessaryAnchorsMenuTitle, "/");
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
@@ -212,5 +212,4 @@ public class LayoutEditorChecksTest {
         JUnitUtil.tearDown();
     }
     //private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorChecksTest.class);
-
 }
