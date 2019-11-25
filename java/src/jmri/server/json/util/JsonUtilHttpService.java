@@ -412,6 +412,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     private JsonNode getConfigProfile(Profile p, ProfileManager pm, int id) {
         boolean isActiveProfile = (p == pm.getActiveProfile());
+        boolean isNextProfile = (p == pm.getNextActiveProfile());
         // isAutoStart is only possibly true for active profile
         boolean isAutoStart = (isActiveProfile && pm.isAutoStartActiveProfile());
         ObjectNode data = mapper.createObjectNode();
@@ -420,6 +421,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.put(JSON.NAME, p.getId());
         data.put(JSON.IS_ACTIVE_PROFILE, isActiveProfile);
         data.put(JSON.IS_AUTO_START, isAutoStart);
+        data.put(JSON.IS_NEXT_PROFILE, isNextProfile);
         return message(JSON.CONFIG_PROFILE, data, id);
     }
 
