@@ -404,7 +404,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient int numLayoutTurntables = 0;
     private transient int numShapes = 0;
 
-    public transient LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
+    private transient LayoutEditorFindItems finder = new LayoutEditorFindItems(this);
 
     @Nonnull
     public LayoutEditorFindItems getFinder() {

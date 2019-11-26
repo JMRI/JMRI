@@ -1,10 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.NONE;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -1178,7 +1173,7 @@ public class PositionablePoint extends LayoutTrack {
                         if ((connect1 != null) && (connect2 != null)) {
                             // who is my connect2 connected to (that's not me)?
                             LayoutTrack newConnect2 = null;
-                            int newType2 = TRACK;
+                            int newType2 = LayoutTrack.TRACK;
                             if (connect2.connect1 == pp_this) {
                                 newConnect2 = connect2.connect2;
                                 newType2 = connect2.type2;
@@ -1199,7 +1194,7 @@ public class PositionablePoint extends LayoutTrack {
                                     PositionablePoint pp = (PositionablePoint) newConnect2;
                                     pp.replaceTrackConnection(connect2, connect1);
                                 } else {
-                                    layoutEditor.setLink(newConnect2, newType2, connect1, TRACK);
+                                    layoutEditor.setLink(newConnect2, newType2, connect1, LayoutTrack.TRACK);
                                 }
                                 // connect the track at my connect1 to the newConnect2
                                 if (connect1.getConnect1() == pp_this) {
@@ -1682,7 +1677,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected int findHitPointType(Point2D hitPoint, boolean useRectangles, boolean requireUnconnected) {
-        int result = NONE;  // assume point not on connection
+        int result = LayoutTrack.NONE;  // assume point not on connection
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
@@ -1690,7 +1685,7 @@ public class PositionablePoint extends LayoutTrack {
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double distance, minDistance = POSITIVE_INFINITY;
+        double distance, minDistance = Float.POSITIVE_INFINITY;
 
         if (!requireUnconnected || (getConnect1() == null)
                 || ((getType() == ANCHOR) && (getConnect2() == null))) {
@@ -1700,12 +1695,12 @@ public class PositionablePoint extends LayoutTrack {
             if (distance < minDistance) {
                 minDistance = distance;
                 minPoint = p;
-                result = POS_POINT;
+                result = LayoutTrack.POS_POINT;
             }
         }
         if ((useRectangles && !r.contains(minPoint))
                 || (!useRectangles && (minDistance > circleRadius))) {
-            result = NONE;
+            result = LayoutTrack.NONE;
         }
         return result;
     }   // findHitPointType
@@ -1719,7 +1714,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public Point2D getCoordsForConnectionType(int connectionType) {
         Point2D result = getCoordsCenter();
-        if (connectionType != POS_POINT) {
+        if (connectionType != LayoutTrack.POS_POINT) {
             log.error("Invalid connection type " + connectionType); //I18IN
         }
         return result;
@@ -1731,7 +1726,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public LayoutTrack getConnection(int connectionType) throws jmri.JmriException {
         LayoutTrack result = null;
-        if (connectionType == POS_POINT) {
+        if (connectionType == LayoutTrack.POS_POINT) {
             result = getConnect1();
             if (null == result) {
                 result = getConnect2();
@@ -1748,11 +1743,11 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
-        if ((type != TRACK) && (type != NONE)) {
+        if ((type != LayoutTrack.TRACK) && (type != LayoutTrack.NONE)) {
             log.error("unexpected type of connection to positionable point - " + type);
             throw new jmri.JmriException("unexpected type of connection to positionable point - " + type);
         }
-        if (connectionType != POS_POINT) {
+        if (connectionType != LayoutTrack.POS_POINT) {
             log.error("Invalid Connection Type " + connectionType); //I18IN
             throw new jmri.JmriException("Invalid Connection Type " + connectionType);
         }
@@ -1767,7 +1762,7 @@ public class PositionablePoint extends LayoutTrack {
     @Override
     public boolean isDisconnected(int connectionType) {
         boolean result = false;
-        if (connectionType == POS_POINT) {
+        if (connectionType == LayoutTrack.POS_POINT) {
             result = ((getConnect1() == null) || (getConnect2() == null));
         } else {
             log.error("Invalid connection type " + connectionType); //I18IN
@@ -1810,7 +1805,7 @@ public class PositionablePoint extends LayoutTrack {
      */
     @Override
     protected void highlightUnconnected(Graphics2D g2, int specificType) {
-        if ((specificType == NONE) || (specificType == POS_POINT)) {
+        if ((specificType == LayoutTrack.NONE) || (specificType == LayoutTrack.POS_POINT)) {
             if ((getConnect1() == null)
                     || ((getType() == ANCHOR) && (getConnect2() == null))) {
                 g2.fill(layoutEditor.trackControlCircleAt(getCoordsCenter()));
@@ -1928,7 +1923,7 @@ public class PositionablePoint extends LayoutTrack {
                     }
                     lc.setDirection(Path.computeDirection(p1, p2));
                     // save Connections
-                    lc.setConnections(ts1, ts2, TRACK, this);
+                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
                     results.add(lc);
                 }
             }
@@ -1956,7 +1951,7 @@ public class PositionablePoint extends LayoutTrack {
                     //In this instance work out the direction of the first track relative to the positionable poin.
                     lc.setDirection(Path.computeDirection(p1, getCoordsCenter()));
                     // save Connections
-                    lc.setConnections(ts1, ts2, TRACK, this);
+                    lc.setConnections(ts1, ts2, LayoutTrack.TRACK, this);
                     results.add(lc);
                 }
             }
@@ -1973,7 +1968,7 @@ public class PositionablePoint extends LayoutTrack {
 
         if ((getConnect1() == null)
                 || ((getType() == ANCHOR) && (getConnect2() == null))) {
-            result.add(Integer.valueOf(POS_POINT));
+            result.add(Integer.valueOf(LayoutTrack.POS_POINT));
         }
         return result;
     }

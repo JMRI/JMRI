@@ -1,10 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TRACK;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.EDGE_CONNECTOR;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.END_BUMPER;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -657,7 +652,7 @@ public class TrackSegment extends LayoutTrack {
             Point2D p, minPoint = MathUtil.zeroPoint2D;
 
             double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-            double distance, minDistance = POSITIVE_INFINITY;
+            double distance, minDistance = Float.POSITIVE_INFINITY;
 
             if (isCircle()) {
                 p = getCoordsCenterCircle();
@@ -685,7 +680,7 @@ public class TrackSegment extends LayoutTrack {
             }
             if (result == NONE) {
                 if (r.contains(getCentreSeg())) {
-                    result = TRACK;
+                    result = LayoutTrack.TRACK;
                 }
             }
         }
@@ -902,14 +897,14 @@ public class TrackSegment extends LayoutTrack {
         boolean hasEC1 = false;
         if (type1 == POS_POINT) {
             PositionablePoint pp = (PositionablePoint) connect1;
-            if (pp.getType() == EDGE_CONNECTOR) {
+            if (pp.getType() == PositionablePoint.EDGE_CONNECTOR) {
                 hasEC1 = true;
             }
         }
         boolean hasEC2 = false;
         if (type2 == POS_POINT) {
             PositionablePoint pp = (PositionablePoint) connect2;
-            if (pp.getType() == EDGE_CONNECTOR) {
+            if (pp.getType() == PositionablePoint.EDGE_CONNECTOR) {
                 hasEC2 = true;
             }
         }
@@ -937,8 +932,8 @@ public class TrackSegment extends LayoutTrack {
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == EDGE_CONNECTOR));
-                setArrowEndStop((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == EDGE_CONNECTOR));
+                setArrowEndStart((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.EDGE_CONNECTOR));
+                setArrowEndStop((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.EDGE_CONNECTOR));
                 setArrowStyle(1);
             });
             jcbmi.setSelected(arrowStyle == 1);
@@ -948,8 +943,8 @@ public class TrackSegment extends LayoutTrack {
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == EDGE_CONNECTOR));
-                setArrowEndStop((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == EDGE_CONNECTOR));
+                setArrowEndStart((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.EDGE_CONNECTOR));
+                setArrowEndStop((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.EDGE_CONNECTOR));
                 setArrowStyle(2);
             });
             jcbmi.setSelected(arrowStyle == 2);
@@ -959,8 +954,8 @@ public class TrackSegment extends LayoutTrack {
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == EDGE_CONNECTOR));
-                setArrowEndStop((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == EDGE_CONNECTOR));
+                setArrowEndStart((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.EDGE_CONNECTOR));
+                setArrowEndStop((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.EDGE_CONNECTOR));
                 setArrowStyle(3);
             });
             jcbmi.setSelected(arrowStyle == 3);
@@ -970,8 +965,8 @@ public class TrackSegment extends LayoutTrack {
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == EDGE_CONNECTOR));
-                setArrowEndStop((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == EDGE_CONNECTOR));
+                setArrowEndStart((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.EDGE_CONNECTOR));
+                setArrowEndStop((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.EDGE_CONNECTOR));
                 setArrowStyle(4);
             });
             jcbmi.setSelected(arrowStyle == 4);
@@ -981,8 +976,8 @@ public class TrackSegment extends LayoutTrack {
             arrowsCountMenu.add(jcbmi);
             jcbmi.setToolTipText(Bundle.getMessage("DecorationStyleMenuToolTip"));
             jcbmi.addActionListener((java.awt.event.ActionEvent e3) -> {
-                setArrowEndStart((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == EDGE_CONNECTOR));
-                setArrowEndStop((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == EDGE_CONNECTOR));
+                setArrowEndStart((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.EDGE_CONNECTOR));
+                setArrowEndStop((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.EDGE_CONNECTOR));
                 setArrowStyle(5);
             });
             jcbmi.setSelected(arrowStyle == 5);
@@ -1238,14 +1233,14 @@ public class TrackSegment extends LayoutTrack {
         boolean hasEB1 = false;
         if (type1 == POS_POINT) {
             PositionablePoint pp = (PositionablePoint) connect1;
-            if (pp.getType() == END_BUMPER) {
+            if (pp.getType() == PositionablePoint.END_BUMPER) {
                 hasEB1 = true;
             }
         }
         boolean hasEB2 = false;
         if (type2 == POS_POINT) {
             PositionablePoint pp = (PositionablePoint) connect2;
-            if (pp.getType() == END_BUMPER) {
+            if (pp.getType() == PositionablePoint.END_BUMPER) {
                 hasEB2 = true;
             }
         }
@@ -1300,10 +1295,10 @@ public class TrackSegment extends LayoutTrack {
 
                 endBumperMenu.add(enableCheckBoxMenuItem);
                 enableCheckBoxMenuItem.addActionListener((java.awt.event.ActionEvent e3) -> {
-                    if ((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == END_BUMPER)) {
+                    if ((type1 == POS_POINT) && (((PositionablePoint) connect1).getType() == PositionablePoint.END_BUMPER)) {
                         setBumperEndStart(enableCheckBoxMenuItem.isSelected());
                     }
-                    if ((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == END_BUMPER)) {
+                    if ((type2 == POS_POINT) && (((PositionablePoint) connect2).getType() == PositionablePoint.END_BUMPER)) {
                         setBumperEndStop(enableCheckBoxMenuItem.isSelected());
                     }
                 });
@@ -1611,7 +1606,7 @@ public class TrackSegment extends LayoutTrack {
             if (!pt.getWestBoundSensorName().isEmpty()) {
                 result.add(pt.getWestBoundSensorName());
             }
-            if (pt.getType() == EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
+            if (pt.getType() == PositionablePoint.EDGE_CONNECTOR && pt.getLinkedPoint() != null) {
                 result.add(Bundle.getMessage("DeleteECisActive"));   // NOI18N
             }
         }
@@ -1675,7 +1670,7 @@ public class TrackSegment extends LayoutTrack {
         Point2D p = getCentreSeg();
         PositionablePoint newAnchor = layoutEditor.addAnchor(p);
         // link it to me
-        layoutEditor.setLink(newAnchor, POS_POINT, this, TRACK);
+        layoutEditor.setLink(newAnchor, POS_POINT, this, LayoutTrack.TRACK);
 
         //get unique name for a new track segment
         String name = layoutEditor.getFinder().uniqueName("T", 1);
@@ -1702,11 +1697,11 @@ public class TrackSegment extends LayoutTrack {
             PositionablePoint pp = (PositionablePoint) connect2;
             pp.replaceTrackConnection(this, newTrackSegment);
         } else {
-            layoutEditor.setLink(connect2, type2, newTrackSegment, TRACK);
+            layoutEditor.setLink(connect2, type2, newTrackSegment, LayoutTrack.TRACK);
         }
 
         // link the new anchor to the new track segment
-        layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, TRACK);
+        layoutEditor.setLink(newAnchor, POS_POINT, newTrackSegment, LayoutTrack.TRACK);
 
         // link me to the new newAnchor
         connect2 = newAnchor;
