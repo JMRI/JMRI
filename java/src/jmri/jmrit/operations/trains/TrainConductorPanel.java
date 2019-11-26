@@ -3,11 +3,7 @@ package jmri.jmrit.operations.trains;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,23 +110,28 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         addButtonAction(moveButton);
 
         if (_train != null) {
-            textTrainDescription.setText(_train.getDescription());
+            textTrainDescription.setText(TrainCommon.getTextColorString(_train.getDescription()));
+            textTrainDescription.setForeground(TrainCommon.getTextColor(_train.getDescription()));
+            
             // show train comment box only if there's a comment
             if (_train.getComment().equals(Train.NONE)) {
                 textTrainCommentPane.setVisible(false);
             } else {
-                textTrainCommentPane.setText(_train.getComment());
+                textTrainCommentPane.setText(TrainCommon.getTextColorString(_train.getComment()));
+                textTrainCommentPane.setForeground(TrainCommon.getTextColor(_train.getComment()));
             }
             // show route comment box only if there's a route comment
             if (_train.getRoute() != null) {
                 textTrainRouteCommentPane.setVisible(
                         !_train.getRoute().getComment().equals(Route.NONE) && Setup.isPrintRouteCommentsEnabled());
-                textTrainRouteCommentPane.setText(_train.getRoute().getComment());
+                textTrainRouteCommentPane.setText(TrainCommon.getTextColorString(_train.getRoute().getComment()));
+                textTrainRouteCommentPane.setForeground(TrainCommon.getTextColor(_train.getRoute().getComment()));
             }
 
             // Does this train have a unique railroad name?
             if (!_train.getRailroadName().equals(Train.NONE)) {
-                textRailRoadName.setText(_train.getRailroadName());
+                textRailRoadName.setText(TrainCommon.getTextColorString(_train.getRailroadName()));
+                textRailRoadName.setForeground(TrainCommon.getTextColor(_train.getRailroadName()));
             } else {
                 textRailRoadName.setText(Setup.getRailroadName());
             }
@@ -174,14 +175,18 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE));
                     textTrainRouteLocationCommentPane.setText(rl.getComment());
                     textTrainRouteLocationCommentPane.setForeground(rl.getCommentColor());
+                    
                     textLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
                             ? rl.getLocation().getName() : TrainCommon.splitString(rl.getLocation().getName()));
                     pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled() &&
                             !rl.getDepartureTime().equals(RouteLocation.NONE));
                     textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
+                    
                     textLocationCommentPane.setVisible(!rl.getLocation().getComment().equals(Location.NONE) &&
                             Setup.isPrintLocationCommentsEnabled());
-                    textLocationCommentPane.setText(rl.getLocation().getComment());
+                    textLocationCommentPane.setText(TrainCommon.getTextColorString(rl.getLocation().getComment()));
+                    textLocationCommentPane.setForeground(TrainCommon.getTextColor(rl.getLocation().getComment()));
+                    
                     textNextLocationName.setText(trainManager.isShowLocationHyphenNameEnabled()
                             ? _train.getNextLocationName() : TrainCommon.splitString(_train.getNextLocationName()));
 
