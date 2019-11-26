@@ -1422,7 +1422,7 @@
             </test>
             <batchtest todir="${testreport}">
                 <formatter type="xml"/>
-                <fileset dir="${source}">
+                <fileset dir="${test}">
                     <include name="**/*IT*.java"/>
                 </fileset>
             </batchtest>
@@ -1507,7 +1507,7 @@
             </test>
             <batchtest todir="${testreport}"> 
                 <formatter usefile="no" type="brief"/>
-                <fileset dir="${source}">
+                <fileset dir="${test}">
                     <include name="**/*IT*.java"/>
                 </fileset>
                 <formatter usefile="no" type="brief"/>
@@ -1550,7 +1550,7 @@
             </test>
             <batchtest todir="${testreport}"> 
                 <formatter type="xml"/>
-                <fileset dir="${src.test}">
+                <fileset dir="${test}">
                     <include name="**/*IT*.java"/>
                 </fileset>
             </batchtest>
@@ -1617,7 +1617,7 @@
             </test>
             <batchtest todir="${testreport}"> 
                 <formatter type="xml"/>
-                <fileset dir="${source}">
+                <fileset dir="${test}">
                     <include name="**/*IT*.java"/>
                 </fileset>
             </batchtest>
