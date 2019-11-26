@@ -906,11 +906,23 @@ public class LayoutTrackEditors {
     private LayoutSlip layoutSlip = null;
 
     private JmriJFrame editLayoutSlipFrame = null;
-    private JButton editLayoutSlipBlockButton;
+    private JButton editLayoutSlipBlockAButton = null;
+    private JButton editLayoutSlipBlockBButton = null;
+    private JButton editLayoutSlipBlockCButton = null;
+    private JButton editLayoutSlipBlockDButton = null;
+
     private NamedBeanComboBox<Turnout> editLayoutSlipTurnoutAComboBox;
     private NamedBeanComboBox<Turnout> editLayoutSlipTurnoutBComboBox;
+
     private JCheckBox editLayoutSlipHiddenBox = new JCheckBox(Bundle.getMessage("HideSlip"));
-    private NamedBeanComboBox<Block> editLayoutSlipBlockNameComboBox = new NamedBeanComboBox<>(
+
+    private NamedBeanComboBox<Block> editLayoutSlipBlockANameComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
+    private NamedBeanComboBox<Block> editLayoutSlipBlockBNameComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
+    private NamedBeanComboBox<Block> editLayoutSlipBlockCNameComboBox = new NamedBeanComboBox<>(
+            InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
+    private NamedBeanComboBox<Block> editLayoutSlipBlockDNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
 
     private boolean editLayoutSlipOpen = false;
@@ -992,30 +1004,71 @@ public class LayoutTrackEditors {
             panel33.add(editLayoutSlipHiddenBox);
             contentPane.add(panel33);
 
-            // setup block name
-            JPanel panel3 = new JPanel();
-            panel3.setLayout(new FlowLayout());
-            JLabel block1NameLabel = new JLabel(Bundle.getMessage("BlockID"));  // NOI18N
-            panel3.add(block1NameLabel);
-            block1NameLabel.setLabelFor(editLayoutSlipBlockNameComboBox);
-            panel3.add(editLayoutSlipBlockNameComboBox);
-            LayoutEditor.setupComboBox(editLayoutSlipBlockNameComboBox, false, true, true);
-            editLayoutSlipBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
+            // setup block A name
+            JPanel panel3a = new JPanel();
+            panel3a.setLayout(new FlowLayout());
+            JLabel blockANameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "A")));  // NOI18N
+            panel3a.add(blockANameLabel);
+            blockANameLabel.setLabelFor(editLayoutSlipBlockANameComboBox);
+            panel3a.add(editLayoutSlipBlockANameComboBox);
+            LayoutEditor.setupComboBox(editLayoutSlipBlockANameComboBox, false, true, true);
+            editLayoutSlipBlockANameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
 
-            contentPane.add(panel3);
-            // set up Edit Block buttons
-            JPanel panel4 = new JPanel();
-            panel4.setLayout(new FlowLayout());
-            // Edit Block
-            panel4.add(editLayoutSlipBlockButton = new JButton(Bundle.getMessage("EditBlock", "")));  // NOI18N
-            editLayoutSlipBlockButton.addActionListener(
-                    (ActionEvent event) -> {
-                        editLayoutSlipEditBlockPressed(event);
-                    }
-            );
-            editLayoutSlipBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
+            panel3a.add(editLayoutSlipBlockAButton = new JButton(Bundle.getMessage("EditBlock", "A")));  // NOI18N
+            editLayoutSlipBlockAButton.addActionListener((ActionEvent event) -> {
+                editLayoutSlipEditBlockPressed(event);
+            });
+            editLayoutSlipBlockAButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block A  // NOI18N
+            contentPane.add(panel3a);
 
-            contentPane.add(panel4);
+            // setup block B name
+            JPanel panel3b = new JPanel();
+            panel3b.setLayout(new FlowLayout());
+            JLabel blockBNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "B")));  // NOI18N
+            panel3b.add(blockBNameLabel);
+            blockBNameLabel.setLabelFor(editLayoutSlipBlockBNameComboBox);
+            panel3b.add(editLayoutSlipBlockBNameComboBox);
+            LayoutEditor.setupComboBox(editLayoutSlipBlockBNameComboBox, false, true, true);
+            editLayoutSlipBlockBNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
+            panel3b.add(editLayoutSlipBlockBButton = new JButton(Bundle.getMessage("EditBlock", "B")));  // NOI18N
+            editLayoutSlipBlockBButton.addActionListener((ActionEvent event) -> {
+                editLayoutSlipEditBlockPressed(event);
+            });
+            editLayoutSlipBlockBButton.setToolTipText(Bundle.getMessage("EditBlockHint", "B")); // empty value for block B  // NOI18N
+            contentPane.add(panel3b);
+
+            // setup block C name
+            JPanel panel3c = new JPanel();
+            panel3c.setLayout(new FlowLayout());
+            JLabel blockCNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "C")));  // NOI18N
+            panel3c.add(blockCNameLabel);
+            blockCNameLabel.setLabelFor(editLayoutSlipBlockCNameComboBox);
+            panel3c.add(editLayoutSlipBlockCNameComboBox);
+            LayoutEditor.setupComboBox(editLayoutSlipBlockCNameComboBox, false, true, true);
+            editLayoutSlipBlockCNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
+            panel3c.add(editLayoutSlipBlockCButton = new JButton(Bundle.getMessage("EditBlock", "C")));  // NOI18N
+            editLayoutSlipBlockCButton.addActionListener((ActionEvent event) -> {
+                editLayoutSlipEditBlockPressed(event);
+            });
+            editLayoutSlipBlockCButton.setToolTipText(Bundle.getMessage("EditBlockHint", "C")); // empty value for block C // NOI18N
+            contentPane.add(panel3c);
+
+            // setup block D name
+            JPanel panel3d = new JPanel();
+            panel3d.setLayout(new FlowLayout());
+            JLabel blockDNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Block_ID", "D")));  // NOI18N
+            panel3d.add(blockDNameLabel);
+            blockDNameLabel.setLabelFor(editLayoutSlipBlockDNameComboBox);
+            panel3d.add(editLayoutSlipBlockDNameComboBox);
+            LayoutEditor.setupComboBox(editLayoutSlipBlockDNameComboBox, false, true, true);
+            editLayoutSlipBlockDNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
+
+            panel3d.add(editLayoutSlipBlockDButton = new JButton(Bundle.getMessage("EditBlock", "D")));  // NOI18N
+            editLayoutSlipBlockDButton.addActionListener((ActionEvent event) -> {
+                editLayoutSlipEditBlockPressed(event);
+            });
+            editLayoutSlipBlockDButton.setToolTipText(Bundle.getMessage("EditBlockHint", "D")); // empty value for block D  // NOI18N
+            contentPane.add(panel3d);
 
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
@@ -1041,8 +1094,14 @@ public class LayoutTrackEditors {
                 layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutSlipTurnoutBComboBox, currentTurnouts));
 
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
-        editLayoutSlipBlockNameComboBox.getEditor().setItem(bm.getBlock(layoutSlip.getBlockName()));
-        editLayoutSlipBlockNameComboBox.setEnabled(!hasNxSensorPairs(layoutSlip.getLayoutBlock()));
+        editLayoutSlipBlockANameComboBox.getEditor().setItem(bm.getBlock(layoutSlip.getBlockName()));
+        editLayoutSlipBlockANameComboBox.setEnabled(!hasNxSensorPairs(layoutSlip.getLayoutBlock()));
+        editLayoutSlipBlockBNameComboBox.getEditor().setItem(bm.getBlock(layoutSlip.getBlockBName()));
+        editLayoutSlipBlockBNameComboBox.setEnabled(!hasNxSensorPairs(layoutSlip.getLayoutBlockB()));
+        editLayoutSlipBlockCNameComboBox.getEditor().setItem(bm.getBlock(layoutSlip.getBlockCName()));
+        editLayoutSlipBlockCNameComboBox.setEnabled(!hasNxSensorPairs(layoutSlip.getLayoutBlockC()));
+        editLayoutSlipBlockDNameComboBox.getEditor().setItem(bm.getBlock(layoutSlip.getBlockDName()));
+        editLayoutSlipBlockDNameComboBox.setEnabled(!hasNxSensorPairs(layoutSlip.getLayoutBlockD()));
 
         editLayoutSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -1220,31 +1279,86 @@ public class LayoutTrackEditors {
 
     private TestState testPanel;
 
-    private void editLayoutSlipEditBlockPressed(ActionEvent a) {
+    private void editLayoutSlipEditBlockPressed(ActionEvent actionEvent) {
+        Object object = actionEvent.getSource();
+        int blockIndex = 0;
+        String newName = null;
+        String oldName = null;
+        LayoutBlock layoutBlock = null;
+
+        if (object == editLayoutSlipBlockAButton) {
+            blockIndex = 1;
+            oldName = layoutSlip.getBlockName();
+            newName = editLayoutSlipBlockANameComboBox.getSelectedItemDisplayName();
+            layoutBlock = layoutSlip.getLayoutBlock();
+        } else if (object == editLayoutSlipBlockBButton) {
+            blockIndex = 2;
+            oldName = layoutSlip.getBlockBName();
+            newName = editLayoutSlipBlockBNameComboBox.getSelectedItemDisplayName();
+            layoutBlock = layoutSlip.getLayoutBlockB();
+        } else if (object == editLayoutSlipBlockCButton) {
+            blockIndex = 3;
+            oldName = layoutSlip.getBlockCName();
+            newName = editLayoutSlipBlockCNameComboBox.getSelectedItemDisplayName();
+            layoutBlock = layoutSlip.getLayoutBlockC();
+        } else if (object == editLayoutSlipBlockDButton) {
+            blockIndex = 4;
+            oldName = layoutSlip.getBlockDName();
+            newName = editLayoutSlipBlockDNameComboBox.getSelectedItemDisplayName();
+            layoutBlock = layoutSlip.getLayoutBlockD();
+        } else {
+            log.error("Invalid Edit Block button pressed");
+            return;
+        }
         // check if a block name has been entered
-        String newName = editLayoutSlipBlockNameComboBox.getSelectedItemDisplayName();
         if (newName == null) {
             newName = "";
         }
-        if (!layoutSlip.getBlockName().equals(newName)) {
+
+        if (!oldName.equals(newName)) {
             // get new block, or null if block has been removed
-            layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            editLayoutSlipNeedsRedraw = true;
-            editLayoutSlipNeedsBlockUpdate = true;
+            layoutBlock = layoutEditor.provideLayoutBlock(newName);
+            switch (blockIndex) {
+                case 1: {
+                    layoutSlip.setLayoutBlock(layoutBlock);
+                    break;
+                }
+                case 2: {
+                    layoutSlip.setLayoutBlockB(layoutBlock);
+                    break;
+                }
+                case 3: {
+                    layoutSlip.setLayoutBlockC(layoutBlock);
+                    break;
+                }
+                case 4: {
+                    layoutSlip.setLayoutBlockD(layoutBlock);
+                    break;
+                }
+                default: {
+                    log.error("Invalid blockIndex");
+                }
+            }
         }
+
+        editLayoutSlipNeedsRedraw = true;
+        editLayoutSlipNeedsBlockUpdate = true;
+
         // check if a block exists to edit
-        if (layoutSlip.getLayoutBlock() == null) {
+        if (layoutBlock == null) {
             JOptionPane.showMessageDialog(editLayoutSlipFrame,
                     Bundle.getMessage("Error1"),
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
             return;
         }
-        layoutSlip.getLayoutBlock().editLayoutBlock(editLayoutSlipFrame);
+        layoutBlock.editLayoutBlock(editLayoutSlipFrame);
+
         editLayoutSlipNeedsRedraw = true;
         layoutEditor.setDirty();
     }
 
     private void editLayoutSlipDonePressed(ActionEvent a) {
+        //setup the turnouts
         String newName = editLayoutSlipTurnoutAComboBox.getSelectedItemDisplayName();
         if (newName == null) {
             newName = "";
@@ -1271,7 +1385,8 @@ public class LayoutTrackEditors {
             editLayoutSlipNeedsRedraw = true;
         }
 
-        newName = editLayoutSlipBlockNameComboBox.getSelectedItemDisplayName();
+        //setup the blocks
+        newName = editLayoutSlipBlockANameComboBox.getSelectedItemDisplayName();
         if (newName == null) {
             newName = "";
         }
@@ -1282,6 +1397,41 @@ public class LayoutTrackEditors {
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLayoutSlipNeedsBlockUpdate = true;
         }
+        newName = editLayoutSlipBlockBNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) {
+            newName = "";
+        }
+        if (!layoutSlip.getBlockBName().equals(newName)) {
+            // get new block, or null if block has been removed
+            layoutSlip.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
+            editLayoutSlipNeedsRedraw = true;
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            editLayoutSlipNeedsBlockUpdate = true;
+        }
+        newName = editLayoutSlipBlockCNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) {
+            newName = "";
+        }
+        if (!layoutSlip.getBlockCName().equals(newName)) {
+            // get new block, or null if block has been removed
+            layoutSlip.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
+            editLayoutSlipNeedsRedraw = true;
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            editLayoutSlipNeedsBlockUpdate = true;
+        }
+        newName = editLayoutSlipBlockDNameComboBox.getSelectedItemDisplayName();
+        if (newName == null) {
+            newName = "";
+        }
+        if (!layoutSlip.getBlockDName().equals(newName)) {
+            // get new block, or null if block has been removed
+            layoutSlip.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
+            editLayoutSlipNeedsRedraw = true;
+            layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
+            editLayoutSlipNeedsBlockUpdate = true;
+        }
+
+        //update slip turnout states
         for (LayoutSlip.TurnoutState ts : layoutSlip.getTurnoutStates().values()) {
             ts.updateStatesFromCombo();
         }
