@@ -2,6 +2,7 @@ package jmri.server.json.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.awt.GraphicsEnvironment;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -143,6 +144,9 @@ public class JsonUtilSocketServiceTest {
             Assert.assertEquals("Error Message", "Unable to access panel .",
                     ex.getMessage());
         }
+        JsonNode data = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "Switchboard/json%20test%20switchboard");
+        instance.onMessage(JSON.PANEL, data, JSON.GET, locale, 42);
+        
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
     }
