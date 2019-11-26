@@ -211,7 +211,7 @@ $(document).ready(function () {
 		//everything calls console()
 		console: function (originalData) {
 			var data = JSON.parse(originalData);
-			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
+//			jmri.log("in console: data=" + JSON.stringify(data).substr(0, 180) + "...");
 			if ($.isArray(data)) {  //if its an array, 
 				rebuildTable(data); //  replace the table with the array list			
 			} else if ((data.type) && (data.type === "error")) {
