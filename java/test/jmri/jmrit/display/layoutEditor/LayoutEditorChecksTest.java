@@ -32,6 +32,7 @@ public class LayoutEditorChecksTest {
     @Rule    // allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
+    //LayoutEditorChecks Bundle Strings
     String toolsMenuTitle = Bundle.getMessage("MenuTools");
     String checkMenuTitle = Bundle.getMessage("CheckMenuTitle");
     String checkUnConnectedTracksMenuTitle = Bundle.getMessage("CheckUnConnectedTracksMenuTitle");
@@ -53,15 +54,21 @@ public class LayoutEditorChecksTest {
     }
 
     @Test
-    public void checkToolsMenuExists() {
+    public void testBundleStrings() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+
         Assert.assertNotNull("checkUnConnectedTracksMenuTitle not null", checkUnConnectedTracksMenuTitle);
         Assert.assertNotNull("checkUnBlockedTracksMenuTitle not null", checkUnBlockedTracksMenuTitle);
         Assert.assertNotNull("checkNonContiguousBlocksMenuTitle not null", checkNonContiguousBlocksMenuTitle);
         Assert.assertNotNull("checkUnnecessaryAnchorsMenuTitle not null", checkUnnecessaryAnchorsMenuTitle);
+    }
+
+    @Test
+    public void checkToolsMenuExists() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
         toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle, "/");
