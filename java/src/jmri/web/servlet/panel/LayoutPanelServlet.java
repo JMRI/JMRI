@@ -78,6 +78,8 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
         panel.setAttribute("defaultalternativetrackcolor", editor.getDefaultAlternativeTrackColor());
         panel.setAttribute("defaulttextcolor", editor.getDefaultTextColor());
         panel.setAttribute("turnoutcirclecolor", editor.getTurnoutCircleColor());
+        panel.setAttribute("turnoutcirclethrowncolor", editor.getTurnoutCircleThrownColor());
+        panel.setAttribute("turnoutfillcontrolcircles", (editor.isTurnoutFillControlCircles()) ? "yes" : "no");
 
         // include positionable elements
         List<Positionable> contents = editor.getContents();
