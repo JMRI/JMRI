@@ -135,11 +135,14 @@ public class JsonUtilSocketServiceTest {
         JsonMockConnection connection = new JsonMockConnection((DataOutputStream) null);
         JsonNode empty = connection.getObjectMapper().createObjectNode();
         JsonUtilSocketService instance = new JsonUtilSocketService(connection);
-        instance.onMessage(JSON.PANELS, empty, JSON.GET, locale, 42);
-        JsonNode message = connection.getMessage();
-        Assert.assertNotNull("Message is not null", message);
-        Assert.assertTrue("Message is array", message.isArray());
-        Assert.assertEquals("Array has one element", 1, message.size());
+        try {
+            instance.onMessage(JSON.PANELS, empty, JSON.GET, locale, 42);
+            Assert.fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            Assert.assertEquals("HTTP Not Found", 404, ex.getCode());
+            Assert.assertEquals("Error Message", "Unable to access panel .",
+                    ex.getMessage());
+        }
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
     }
