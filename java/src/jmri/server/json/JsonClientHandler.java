@@ -181,7 +181,7 @@ public class JsonClientHandler {
                 this.connection.close();
             }
         } catch (JmriException je) {
-            log.warn("Unsupported operation attempted");
+            log.warn("Unsupported operation attempted {}", root);
             this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(
                     this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()), id);
         } catch (JsonException je) {
