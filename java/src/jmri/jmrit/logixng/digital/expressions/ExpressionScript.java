@@ -169,7 +169,7 @@ public class ExpressionScript extends AbstractDigitalExpression
     }
     
     
-    public class ScriptParams {
+    public static class ScriptParams {
         
         public final AtomicReference<AbstractScriptDigitalExpression> _scriptClass
                 = new AtomicReference<>();

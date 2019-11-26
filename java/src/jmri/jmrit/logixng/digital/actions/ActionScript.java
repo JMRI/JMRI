@@ -163,7 +163,7 @@ public class ActionScript extends AbstractDigitalAction
     }
     
     
-    public class ScriptParams {
+    public static class ScriptParams {
         
         public final AtomicReference<AbstractScriptDigitalAction> _scriptClass
                 = new AtomicReference<>();

@@ -205,7 +205,7 @@ public class ExpressionMemory extends AbstractDigitalExpression
                     case EQUAL:
                         return (n1 == n2);
                     case NOT_EQUAL:
-                        return (n1 == n2);
+                        return (n1 != n2);
                     case GREATER_THAN_OR_EQUAL:
                         return (n1 >= n2);
                     case GREATER_THAN:
