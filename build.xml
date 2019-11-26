@@ -456,6 +456,7 @@
             <fileset file="jacoco.exec"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="coveragereport"/>
+            <fileset file="testreport"/>
             <fileset file="tests.log"/>
             <fileset file="cucumber-results.xml"/>
             <!-- .gitignore runtime artifacts -->
@@ -1392,7 +1393,7 @@
 
     <target name="logheadlesstest" depends="tests, runtime-library-selection" description="run headlesstest test suite with jacoco output">
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="perBatch" dir="." timeout="3600000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1416,10 +1417,10 @@
             <!-- use different log4j settings to pick up additional coverage -->
             <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
 
-            <test name="jmri.HeadLessTest" outfile="junit-results">
+            <test name="jmri.HeadLessTest" todir="${testreport}" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
-            <batchtest outfile="junit-results">
+            <batchtest todir="${testreport}">
                 <formatter type="xml"/>
                 <fileset dir="${source}">
                     <include name="**/*IT*.java"/>
@@ -1486,7 +1487,7 @@
     </target>
 
     <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
-        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="perBatch" dir="." errorProperty="test.failed" failureProperty="test.failed">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1504,7 +1505,7 @@
             <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
             </test>
-            <batchtest> 
+            <batchtest todir="${testreport}"> 
                 <formatter usefile="no" type="brief"/>
                 <fileset dir="${source}">
                     <include name="**/*IT*.java"/>
@@ -1522,7 +1523,7 @@
     <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
         <!-- identical to ci-test target except test output is different -->
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-        <junit haltonerror="false" haltonfailure="false" printsummary="yes" showoutput="yes" fork="yes" maxmemory="2048m" dir="." errorProperty="test.failed" failureProperty="test.failed">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" showoutput="yes" fork="perBatch" maxmemory="2048m" dir="." errorProperty="test.failed" failureProperty="test.failed">
 
             <sysproperty key="cucumber.options" value="--tags 'not @Ignore'"/>
             <sysproperty key="wdm.forceCache" value="true"/>
@@ -1544,10 +1545,10 @@
 
             <classpath refid="test.class.path"/>
             
-            <test name="apps.tests.AllTest" outfile="junit-results">
+            <test name="apps.tests.AllTest" outfile="junit-results" todir="${testreport}">
                 <formatter type="xml"/>
             </test>
-            <batchtest outfile="junit-results">
+            <batchtest todir="${testreport}"> 
                 <formatter type="xml"/>
                 <fileset dir="${src.test}">
                     <include name="**/*IT*.java"/>
@@ -1590,7 +1591,7 @@
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run AllTest test suite with jacoco output">
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
-        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
+        <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="perBatch" dir="." timeout="3600000">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
@@ -1611,10 +1612,10 @@
             <!-- use different log4j settings to pick up additional coverage -->
             <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
 
-            <test name="apps.tests.AllTest" outfile="junit-results">
+            <test name="apps.tests.AllTest" todir="${testreport}" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
-            <batchtest outfile="junit-results">
+            <batchtest todir="${testreport}"> 
                 <formatter type="xml"/>
                 <fileset dir="${source}">
                     <include name="**/*IT*.java"/>
