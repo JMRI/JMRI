@@ -1,11 +1,9 @@
 package jmri.managers;
 
-import java.text.DecimalFormat;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Route;
 import jmri.RouteManager;
-import jmri.SignalHead;
 import jmri.implementation.DefaultRoute;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
@@ -56,7 +54,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
             return r;
         }
         // Route does not exist, create a new route
-        r = new DefaultRoute(systemName, userName);
+        r = new DefaultRoute(validateSystemNameFormat(systemName), userName);
         // save in the maps
         register(r);
 
@@ -116,7 +114,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
     @Deprecated
-    static public DefaultRouteManager instance() {
+    public static DefaultRouteManager instance() {
         return InstanceManager.getDefault(DefaultRouteManager.class);
     }
 
@@ -134,10 +132,10 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     @Override
-    public Route provide(String name) throws IllegalArgumentException {
+    public Route provide(String name) {
         return provideRoute(name, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
 
 }
