@@ -10,10 +10,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.ProvidingManager;
+import jmri.Reportable;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
 
@@ -22,6 +27,8 @@ import jmri.server.json.JsonNamedBeanHttpService;
  * @author Randall Wood
  */
 public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
+
+    private static final Logger log = LoggerFactory.getLogger(JsonMemoryHttpService.class);
 
     public JsonMemoryHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -32,10 +39,29 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
         ObjectNode root = this.getNamedBean(memory, name, type, locale, id);
         ObjectNode data = root.with(DATA);
         if (memory != null) {
-            if (memory.getValue() == null) {
+            Object val = memory.getValue();
+            if (val == null) {
                 data.putNull(VALUE);
             } else {
-                data.put(VALUE, memory.getValue().toString());
+                //convert memory to a string, logic copied from jmri.jmrit.display.layoutEditor.MemoryIcon
+                String s = "";
+                if (val instanceof String) {
+                    s = (String) val;
+                } else if (val instanceof javax.swing.ImageIcon) {
+                    log.warn("ImageIcon not yet supported");
+                } else if (val instanceof Number) {
+                    s = val.toString();
+                } else if (val instanceof jmri.IdTag){
+                    // most IdTags are Reportable objects, so 
+                    // this needs to be before Reportable
+                    s = ((jmri.IdTag)val).getDisplayName();
+                } else if (val instanceof Reportable) {
+                    s = ((Reportable)val).toReportString();
+                } else {
+                    log.warn("can't return current value of memory '{}', val='{}' of Class '{}'", 
+                            name, val, val.getClass().getName());
+                }
+                data.put(VALUE, s);
             }
         }
         return root;
