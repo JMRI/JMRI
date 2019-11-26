@@ -26,9 +26,9 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
 
 //    private ActionTurnout _template;
     private NamedBeanHandle<Memory> _memoryHandle;
-    private NamedBeanHandle<Memory> _copyFromMemoryHandle;
-    private MemoryOperation _memoryOperation = MemoryOperation.SET_TO_NULL;
-    private String _newStringValue = "";
+    private NamedBeanHandle<Memory> _copyToMemoryHandle;
+    private MemoryOperation _memoryOperation = MemoryOperation.SET_TO_STRING;
+    private String _newValue = "";
     
     public ActionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
@@ -84,48 +84,56 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         return _memoryHandle;
     }
     
-    public void setCopyFromMemoryName(String memoryName) {
+    public void setCopyToMemoryName(String memoryName) {
         MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
         Memory memory = memoryManager.getMemory(memoryName);
         if (memory != null) {
-            _copyFromMemoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memoryName, memory);
+            _copyToMemoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memoryName, memory);
             memoryManager.addVetoableChangeListener(this);
         } else {
-            _copyFromMemoryHandle = null;
+            _copyToMemoryHandle = null;
             memoryManager.removeVetoableChangeListener(this);
         }
     }
     
-    public void setCopyFromMemory(NamedBeanHandle<Memory> handle) {
-        _copyFromMemoryHandle = handle;
-        if (_copyFromMemoryHandle != null) {
+    public void setCopyToMemory(NamedBeanHandle<Memory> handle) {
+        _copyToMemoryHandle = handle;
+        if (_copyToMemoryHandle != null) {
             InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
         } else {
             InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
         }
     }
     
-    public void setCopyFromMemory(@CheckForNull Memory memory) {
+    public void setCopyToMemory(@CheckForNull Memory memory) {
         if (memory != null) {
-            _copyFromMemoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
+            _copyToMemoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(memory.getDisplayName(), memory);
             InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
         } else {
-            _copyFromMemoryHandle = null;
+            _copyToMemoryHandle = null;
             InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
         }
     }
     
-    public NamedBeanHandle<Memory> getCopyFromMemory() {
-        return _copyFromMemoryHandle;
+    public NamedBeanHandle<Memory> getCopyToMemory() {
+        return _copyToMemoryHandle;
     }
     
-    public void setTurnoutState(MemoryOperation state) {
+    public void setMemoryOperation(MemoryOperation state) {
         _memoryOperation = state;
     }
     
-    public MemoryOperation getTurnoutState() {
+    public MemoryOperation getMemoryOperation() {
         return _memoryOperation;
+    }
+    
+    public void setNewValue(String newValue) {
+        _newValue = newValue;
+    }
+    
+    public String getNewValue() {
+        return _newValue;
     }
     
     @Override
@@ -164,20 +172,24 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         
         ThreadingUtil.runOnLayout(() -> {
             switch (_memoryOperation) {
-                case SET_TO_STRING:
-                    memory.setValue(_newStringValue);
-                    break;
-                    
                 case SET_TO_NULL:
                     memory.setValue(null);
                     break;
                     
+                case SET_TO_STRING:
+                    memory.setValue(_newValue);
+                    break;
+                    
                 case COPY_MEMORY:
-                    memory.setValue(_copyFromMemoryHandle.getBean().getValue());
+                    if (_copyToMemoryHandle != null) {
+                        _copyToMemoryHandle.getBean().setValue(memory.getValue());
+                    } else {
+                        log.error("setMemory should copy to memory but destination memory is null");
+                    }
                     break;
                     
                 default:
-                    log.error("_memoryOperation has invalid value: {}", _memoryOperation.name());
+                    throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _memoryOperation.name());
             }
         });
     }
@@ -205,7 +217,24 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         } else {
             memoryName = Bundle.getMessage(locale, "BeanNotSelected");
         }
-        return Bundle.getMessage(locale, "Memory_Long", memoryName, _memoryOperation._text);
+        
+        String copyToMemoryName;
+        if (_copyToMemoryHandle != null) {
+            copyToMemoryName = _copyToMemoryHandle.getBean().getDisplayName();
+        } else {
+            copyToMemoryName = Bundle.getMessage(locale, "BeanNotSelected");
+        }
+        
+        switch (_memoryOperation) {
+            case SET_TO_NULL:
+                return Bundle.getMessage(locale, "Memory_Long_Null", memoryName);
+            case SET_TO_STRING:
+                return Bundle.getMessage(locale, "Memory_Long_Value", memoryName, _newValue);
+            case COPY_MEMORY:
+                return Bundle.getMessage(locale, "Memory_Long_CopyMemory", memoryName, copyToMemoryName);
+            default:
+                throw new IllegalArgumentException("_memoryOperation has invalid value: {}" + _memoryOperation.name());
+        }
     }
     
     /** {@inheritDoc} */
@@ -231,21 +260,9 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     
     
     public enum MemoryOperation {
-        SET_TO_STRING(Bundle.getMessage("MemoryOperation_SetToString")),
-        SET_TO_NULL(Bundle.getMessage("MemoryOperation_SetToNull")),
-        COPY_MEMORY(Bundle.getMessage("MemoryOperation_CopyMemory"));
-        
-        private final String _text;
-        
-        private MemoryOperation(String text) {
-            this._text = text;
-        }
-        
-        @Override
-        public String toString() {
-            return _text;
-        }
-        
+        SET_TO_NULL,
+        SET_TO_STRING,
+        COPY_MEMORY;
     }
     
     private final static Logger log = LoggerFactory.getLogger(ActionMemory.class);

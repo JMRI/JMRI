@@ -166,14 +166,14 @@ public class ExpressionMemory extends AbstractDigitalExpression
     
     /**
      * Compare two values using the comparator set using the comparison
-     * instructions in {@link #setNum1(int)}.
+     * instructions in {@link #_memoryOperation}.
      *
      * <strong>Note:</strong> {@link #_memoryOperation} must be one of
-     * {@link #MemoryOperation.LESS_THAN},
-     * {@link #MemoryOperation.LESS_THAN_OR_EQUAL},
-     * {@link #MemoryOperation.EQUAL},
-     * {@link #MemoryOperation.GREATER_THAN_OR_EQUAL},
-     * or {@link #MemoryOperation.GREATER_THAN}.
+     * {@link #ExpressionMemory.MemoryOperation.LESS_THAN},
+     * {@link #ExpressionMemory.MemoryOperation.LESS_THAN_OR_EQUAL},
+     * {@link #ExpressionMemory.MemoryOperation.EQUAL},
+     * {@link #ExpressionMemory.MemoryOperation.GREATER_THAN_OR_EQUAL},
+     * or {@link #ExpressionMemory.MemoryOperation.GREATER_THAN}.
      *
      * @param value1          left side of the comparison
      * @param value2          right side of the comparison
