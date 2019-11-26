@@ -86,7 +86,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                 if (name == null) {
                     return this.getPanels(id);
                 }
-                return this.getPanelByName(locale, name, id);
+                return this.getPanel(locale, name, id);
             case JSON.RAILROAD:
                 return this.getRailroad(locale, id);
             case JSON.SYSTEM_CONNECTION:
@@ -276,14 +276,14 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @throws JsonException if panel not found
      */
     @SuppressWarnings("null")
-    public JsonNode getPanelByName(Locale locale, String name, int id) throws JsonException {
+    public JsonNode getPanel(Locale locale, String name, int id) throws JsonException {
         ArrayNode an = getPanels(JSON.XML, id);
         for (JsonNode jn : an) { //loop through panels
             if (jn.get("data").get("name").textValue().equals(name)) { //check data.name for a match
                 return message(JSON.PANEL, jn.get("data"), id);                
             }
         }
-        throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JSON.SYSTEM_CONNECTION, name), id);
+        throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JSON.PANEL, name), id);
     }
 
 
