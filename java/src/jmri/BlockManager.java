@@ -249,16 +249,16 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     @Nonnull
     public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
-
         getNamedBeanSet().stream().forEach(b -> {
-            Object obj;
-            if ((b != null && (obj = b.getValue()) != null) &&
-                    ((obj instanceof RosterEntry && obj == re) ||
-                            (obj.toString().equals(re.getId()) || obj.toString().equals(re.getDccAddress())))) {
-                blockList.add(b);
+            if (b != null) {
+                Object obj = b.getValue();
+                if ((obj instanceof RosterEntry && obj == re) ||
+                        obj.toString().equals(re.getId()) ||
+                        obj.toString().equals(re.getDccAddress())) {
+                    blockList.add(b);
+                }
             }
         });
-
         return blockList;
     }
 
