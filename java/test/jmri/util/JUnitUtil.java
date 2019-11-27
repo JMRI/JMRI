@@ -167,6 +167,8 @@ public class JUnitUtil {
     
     static private boolean isLoggingInitialized = false;
     static private String initPrefsDir = null;
+
+    static final boolean _allowSystemPrintln = true;        // set false at final commit
     /**
      * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
      * annotated method.
@@ -312,6 +314,10 @@ public class JUnitUtil {
         Level severity = Level.ERROR; // level at or above which we'll complain
         boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
         String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
+        if (_allowSystemPrintln  && unexpectedMessageSeen) {
+            System.err.println("Unexpected error message:");
+            System.err.println(unexpectedMessageContent);
+        }
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
