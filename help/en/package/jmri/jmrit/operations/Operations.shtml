@@ -353,6 +353,8 @@
         <li><a href="#Automation">Automation</a></li>
 
         <li><a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a></li>
+        
+        <li><a href="#ExportTimetable">Export Timetable</a></li>
        </ul></li>
 
       <li><a href="#SwitcherService">Switcher Service (Local)</a></li>
@@ -4988,7 +4990,7 @@
      href="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more information.
    </p>
 
-   <a name="Export Timetable" id="ExportTimetable"></a>
+   <a name="ExportTimetable" id="ExportTimetable"></a>
    <h4>Export Timetable</h4>
    The export Timetable tool produces comma separated value (CSV) file for the Timetable application. You can also use
    the "Import from OperationsPro..." found in the Timetable application to create and import in one step. The
