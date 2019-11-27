@@ -3,6 +3,7 @@ package jmri.jmrix;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.NamedBean;
+import jmri.util.NamedBeanPreferNumericComparator;
 
 /**
  * A SystemConnectionMemo that does not get registered its prefix registered
@@ -31,7 +32,7 @@ public class ConflictingSystemConnectionMemo extends SystemConnectionMemo {
 
     @Override
     public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
-        return (o1, o2) -> o1.getSystemName().compareTo(o2.getSystemName());
+        return new NamedBeanPreferNumericComparator();
     }
 
     @Override
