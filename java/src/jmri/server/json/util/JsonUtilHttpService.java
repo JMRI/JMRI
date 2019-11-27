@@ -81,8 +81,12 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getNetworkService(locale, name, id);
             case JSON.NODE:
                 return this.getNode(locale, id);
+            case JSON.PANEL:
             case JSON.PANELS:
-                return this.getPanels(id);
+                if (name == null) {
+                    return this.getPanels(id);
+                }
+                return this.getPanel(locale, name, id);
             case JSON.RAILROAD:
                 return this.getRailroad(locale, id);
             case JSON.SYSTEM_CONNECTION:
@@ -111,6 +115,9 @@ public class JsonUtilHttpService extends JsonHttpService {
             case JSON.NETWORK_SERVICE:
             case JSON.NETWORK_SERVICES:
                 return this.getNetworkServices(locale, id);
+            case JSON.PANEL:
+            case JSON.PANELS:
+                return this.getPanels(id);
             case JSON.SYSTEM_CONNECTION:
             case JSON.SYSTEM_CONNECTIONS:
                 return this.getSystemConnections(locale, id);
@@ -259,6 +266,26 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.set(JSON.FORMER_NODES, nodes);
         return message(JSON.NODE, data, id);
     }
+    /**
+     * return a JSON {@link jmri.server.json.JSON#NODE} message containing the
+     *   requested panel details
+     * @param locale  the client's Locale
+     * @param name   panel name to return
+     * @param id     message id set by client
+     * @return the JSON panel message.
+     * @throws JsonException if panel not found
+     */
+    @SuppressWarnings("null")
+    public JsonNode getPanel(Locale locale, String name, int id) throws JsonException {
+        ArrayNode an = getPanels(JSON.XML, id);
+        for (JsonNode jn : an) { //loop through panels
+            if (jn.get("data").get("name").textValue().equals(name)) { //check data.name for a match
+                return message(JSON.PANEL, jn.get("data"), id);                
+            }
+        }
+        throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JSON.PANEL, name), id);
+    }
+
 
     public ObjectNode getPanel(Editor editor, String format, int id) {
         if (editor.getAllowInFrameServlet()) {
@@ -292,7 +319,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         return null;
     }
 
-    public JsonNode getPanels(String format, int id) {
+    public ArrayNode getPanels(String format, int id) {
         ArrayNode root = mapper.createArrayNode();
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor,
         // SwitchboardEditor)
@@ -311,7 +338,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         return root;
     }
 
-    public JsonNode getPanels(int id) {
+    public ArrayNode getPanels(int id) {
         return this.getPanels(JSON.XML, id);
     }
 
@@ -412,6 +439,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     private JsonNode getConfigProfile(Profile p, ProfileManager pm, int id) {
         boolean isActiveProfile = (p == pm.getActiveProfile());
+        boolean isNextProfile = (p == pm.getNextActiveProfile());
         // isAutoStart is only possibly true for active profile
         boolean isAutoStart = (isActiveProfile && pm.isAutoStartActiveProfile());
         ObjectNode data = mapper.createObjectNode();
@@ -420,6 +448,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.put(JSON.NAME, p.getId());
         data.put(JSON.IS_ACTIVE_PROFILE, isActiveProfile);
         data.put(JSON.IS_AUTO_START, isAutoStart);
+        data.put(JSON.IS_NEXT_PROFILE, isNextProfile);
         return message(JSON.CONFIG_PROFILE, data, id);
     }
 
