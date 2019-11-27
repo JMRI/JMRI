@@ -95,7 +95,7 @@ public class LayoutEditorChecksTest {
 ///        Assert.assertEquals("Menu Item Count", 17, checkJMO.getItemCount());
     }
 
-    @Test
+    ///@Test
     public void testFoo() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
@@ -104,14 +104,14 @@ public class LayoutEditorChecksTest {
         dumpScreen();
     }
 
-    ///@Test
+    @Test
     public void testCheckUnConnectedTracks() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
         toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + checkUnConnectedTracksMenuTitle, "/");
 
-        new QueueTool().waitEmpty(20);
+        new QueueTool().waitEmpty();
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -208,8 +208,8 @@ public class LayoutEditorChecksTest {
         //TODO:validate results
     }   //testCheckUnnecessaryAnchors
 
-    @BeforeClass
-    public static void setUpClass() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
@@ -255,11 +255,11 @@ public class LayoutEditorChecksTest {
             ts2 = addNewTrackSegment(pp, LayoutTrack.POS_POINT, ltLH, LayoutTrack.TURNOUT_A);
 
             //wait for layout editor to finish drawing
-            new QueueTool().waitEmpty(20);
+            new QueueTool().waitEmpty();
         }
     }
 
-    private static TrackSegment addNewTrackSegment(
+    private TrackSegment addNewTrackSegment(
             @CheckForNull LayoutTrack c1, int t1,
             @CheckForNull LayoutTrack c2, int t2) {
         TrackSegment result = null;
@@ -276,8 +276,8 @@ public class LayoutEditorChecksTest {
         return result;
     }
 
-    @AfterClass
-    public static void tearDownClass() {
+    @After
+    public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.dispose(layoutEditor);
             layoutEditor = null;
@@ -288,31 +288,35 @@ public class LayoutEditorChecksTest {
         JUnitUtil.tearDown();
     }
 
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
-        }
-    }
+//    @Before
+//    public void setUp() {
+//        JUnitUtil.setUp();
+//        if (!GraphicsEnvironment.isHeadless()) {
+//            JUnitUtil.resetProfileManager();
+//        }
+//    }
+//
+//    @After
+//    public void tearDown() {
+//        JUnitUtil.tearDown();
+//    }
 
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
+    
     //TODO: remove or comment out for production
     private int indent_level = 0;
 
-    private void dumpMenuElement(MenuElement jMenuElement) {
-        String tabs = "";
+    private String getSpaces(int cnt) {
+        String result = "";
         for (int i = 0; i < indent_level; i++) {
-            tabs += " ";
+            result += " ";
         }
-        System.out.println(tabs + "jMenuElement.getText(): " + ((JMenu) jMenuElement).getText());
+        return result;
+    }
+
+    private void dumpMenuElement(MenuElement jMenuElement) {
+        System.out.println(getSpaces(indent_level) + "jMenuElement.getText(): " + ((JMenu) jMenuElement).getText());
         indent_level += 4;
-        MenuElement resultsMenuElements[] = jMenuElement.getSubElements();
-        for (MenuElement resultsMenuElement : resultsMenuElements) {
+        for (MenuElement resultsMenuElement : jMenuElement.getSubElements()) {
             dumpMenuElement(resultsMenuElement);
         }
         indent_level -= 4;
