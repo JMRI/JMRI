@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.util.NamedBeanPreferNumericComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -270,7 +271,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
 
     @Override
     public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
-        return (o1, o2) -> o1.getSystemName().compareTo(o2.getSystemName());
+        return new NamedBeanPreferNumericComparator<>();
     }
 
     @Override
@@ -286,6 +287,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSystemConnectionMemo.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSystemConnectionMemo.class);
 
 }
