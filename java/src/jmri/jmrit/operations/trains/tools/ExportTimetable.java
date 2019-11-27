@@ -124,12 +124,20 @@ public class ExportTimetable extends XmlFile {
             file = new File(name);
         }
 
+        FileOutputStream out = null;
         PrintWriter fileOut = null;
         try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
+            out = new FileOutputStream(file);
+            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(out, "UTF-8")), // NOI18N
                     true); // NOI18N
         } catch (Exception e) {
             log.error("Can not open export timetable CSV file: " + file.getName());
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e1) {
+                }
+            }
             return;
         }
 
