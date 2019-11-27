@@ -2,18 +2,21 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.io.*;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JOptionPane;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -117,7 +120,6 @@ public class ExportTimetable extends XmlFile {
         }
     }
 
-    @SuppressFBWarnings(value = "OS_OPEN_STREAM_EXCEPTION_PATH", justification="Someone smarter than me can fix")
     public void writeFile(String name) {
         log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
@@ -126,147 +128,198 @@ public class ExportTimetable extends XmlFile {
             file = new File(name);
         }
 
-        PrintWriter fileOut = null;
-        try {
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
-                    true); // NOI18N
+        try (PrintWriter fileOut = new PrintWriter(
+                new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), true)) {
+
+            // Layout field
+            // "Layout", "layout name", "scale", fastClock, throttles, "metric"
+            String line =
+                    "Layout" +
+                            del +
+                            ESC +
+                            Setup.getRailroadName() +
+                            ESC +
+                            del +
+                            "HO" +
+                            del +
+                            "4" +
+                            del +
+                            "0" +
+                            del +
+                            "No";
+            fileOut.println(line);
+
+            // TrainType field
+            // "TrainType", "type name", color number
+            line = "TrainType" +
+                    del +
+                    "Freight_Black" +
+                    del +
+                    "#000000";
+            fileOut.println(line);
+
+            line = "TrainType" +
+                    del +
+                    "Freight_Red" +
+                    del +
+                    jmri.util.ColorUtil.colorToHexString(java.awt.Color.RED);
+            fileOut.println(line);
+
+            line = "TrainType" +
+                    del +
+                    "Freight_Blue" +
+                    del +
+                    jmri.util.ColorUtil.colorToHexString(java.awt.Color.BLUE);
+            fileOut.println(line);
+
+            line = "TrainType" +
+                    del +
+                    "Freight_Yellow" +
+                    del +
+                    jmri.util.ColorUtil.colorToHexString(java.awt.Color.YELLOW);
+            fileOut.println(line);
+
+            // Segment fields
+            // "Segment", "segment name"
+            line = "Segment" +
+                    del +
+                    ESC +
+                    "Locations" +
+                    ESC;
+            fileOut.println(line);
+
+            // Station fields
+            // "Station", "station name", distance, doubleTrack, sidings,
+            // staging
+
+            // provide a list of locations to use, use either a route called
+            // "Timetable" or alphabetically
+            List<Location> locationList = new ArrayList<Location>();
+
+            Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Timetable");
+            if (route != null) {
+                for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                    locationList.add(rl.getLocation());
+                }
+
+            } else
+                for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
+                    locationList.add(location);
+                }
+
+            double distance = 0.0;
+            for (Location location : locationList) {
+                distance += 1.0;
+                line = "Station" +
+                        del +
+                        ESC +
+                        location.getName() +
+                        ESC +
+                        del +
+                        distance +
+                        del +
+                        "No" +
+                        del +
+                        "0" +
+                        del +
+                        (location.isStaging() ? location.getTrackList().size() : "0");
+                fileOut.println(line);
+            }
+
+            // Schedule fields
+            // "Schedule", "schedule name", "effective date", startHour,
+            // duration
+
+            line = "Schedule" + del + "default" + del + "Today" + del + "0" + del + "24";
+            fileOut.println(line);
+
+            // Train fields
+            // "Train", "train name", "train description", type, defaultSpeed,
+            // starttime, throttle, notes
+
+            int type = 1; // cycle through the 4 train types (chart colors)
+            int defaultSpeed = 4;
+
+            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
+                line = "Train" +
+                        del +
+                        ESC +
+                        train.getName() +
+                        ESC +
+                        del +
+                        ESC +
+                        train.getDescription() +
+                        ESC +
+                        del +
+                        type++ +
+                        del +
+                        defaultSpeed +
+                        del +
+                        train.getDepartTimeMinutes() +
+                        del +
+                        "0" +
+                        del +
+                        ESC +
+                        train.getComment() +
+                        ESC;
+                fileOut.println(line);
+
+                // reset train types
+                if (type > 4) {
+                    type = 1;
+                }
+
+                // Stop fields
+                // "Stop", station, duration, nextSpeed, stagingTrack, notes
+                for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
+                    // calculate station stop
+                    int station = 0;
+                    for (Location location : locationList) {
+                        station++;
+                        if (rl.getLocation() == location) {
+                            break;
+                        }
+                    }
+                    int duration = 0;
+                    if ((rl != train.getRoute().getDepartsRouteLocation() && !rl.getLocation().isStaging())) {
+                        if (train.isBuilt()) {
+                            duration = train.getWorkTimeAtLocation(rl);
+                        } else {
+                            duration = rl.getMaxCarMoves() * Setup.getSwitchTime();
+                        }
+                    }
+                    line = "Stop" +
+                            del +
+                            station +
+                            del +
+                            duration +
+                            del +
+                            "0" +
+                            del +
+                            "0" +
+                            del +
+                            ESC +
+                            rl.getComment() +
+                            ESC;
+
+                    fileOut.println(line);
+                    // break;
+                }
+            }
+
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
+                            new Object[]{defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
+
+            fileOut.flush();
+            fileOut.close();
         } catch (IOException e) {
             log.error("Can not open export timetable CSV file: " + file.getName());
             return;
         }
-
-        // Layout field
-        // "Layout", "layout name", "scale", fastClock, throttles, "metric"
-        String line =
-                "Layout" +
-                        del +
-                        ESC +
-                        Setup.getRailroadName() +
-                        ESC +
-                        del +
-                        "HO" +
-                        del +
-                        "4" +
-                        del +
-                        "0" +
-                        del +
-                        "No";
-        fileOut.println(line);
-        
-        // TrainType field
-        // "TrainType", "type name", color number
-        line = "TrainType" +
-                del +
-                "Freight";
-        fileOut.println(line);
-
-        // Segment fields
-        // "Segment", "segment name"
-        line = "Segment" +
-                del +
-                ESC +
-                "Locations" +
-                ESC;
-        fileOut.println(line);
-
-        // Station fields
-        // "Station", "station name", distance, doubleTrack, sidings, staging
-
-        double distance = 0.0;
-        for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-            distance += 1.0;
-            line = "Station" +
-                    del +
-                    ESC +
-                    location.getName() +
-                    ESC +
-                    del +
-                    distance +
-                    del +
-                    "No" +
-                    del +
-                    "0" +
-                    del +
-                    "0";
-            fileOut.println(line);
-        }
-
-        // Schedule fields
-        // "Schedule", "schedule name", "effective date", startHour, duration
-
-        line = "Schedule" + del + "default" + del + "Today" + del + "0" + del + "24";
-        fileOut.println(line);
-
-        // Train fields
-        // "Train", "train name", "train description", type, defaultSpeed,
-        // starttime, throttle, notes
-
-        for (
-
-        Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
-            line = "Train" +
-                    del +
-                    ESC +
-                    train.getName() +
-                    ESC +
-                    del +
-                    ESC +
-                    train.getDescription() +
-                    ESC +
-                    del +
-                    "0" +
-                    del +
-                    "1" +
-                    del +
-                    train.getDepartTimeMinutes() +
-                    del +
-                    "0" +
-                    del +
-                    ESC +
-                    train.getComment() +
-                    ESC;
-            fileOut.println(line);
-
-            // Stop fields
-            // "Stop", station, duration, nextSpeed, stagingTrack, notes
-            for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                // calculate station stop
-                int station = 0;
-                for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-                    station++;
-                    if (rl.getLocation() == location) {
-                        break;
-                    }
-                }
-                int duration = rl.getMaxCarMoves() * Setup.getSwitchTime();
-                line = "Stop" +
-                        del +
-                        station +
-                        del +
-                        duration +
-                        del +
-                        "0" +
-                        del +
-                        "0" +
-                        del +
-                        ESC +
-                        rl.getComment() +
-                        ESC;
-
-                fileOut.println(line);
-                // break;
-            }
-        }
-
-        JOptionPane.showMessageDialog(null,
-                MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
-                        new Object[]{defaultOperationsFilename()}),
-                Bundle.getMessage("ExportComplete"), JOptionPane.INFORMATION_MESSAGE);
-
-        fileOut.flush();
-        fileOut.close();
     }
-    
+
     public File getExportFile() {
         return findFile(defaultOperationsFilename());
     }
