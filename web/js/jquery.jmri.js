@@ -39,6 +39,8 @@
  * metadata(data array)
  * networkService(name, data)
  * networkServices(data array)
+ * panel(name, value, data)
+ * panels(data array)
  * power(state)
  * railroad(name)
  * reporter(name, value, data)
@@ -148,6 +150,10 @@
             jmri.networkService = function (name, data) {
             };
             jmri.networkServices = function (data) {
+            };
+            jmri.panel = function (name, value, data) {
+            };
+            jmri.panels = function (data) {
             };
             jmri.power = function (state) {
             };
@@ -845,6 +851,12 @@
                 },
                 networkServices: function (e) {
                     jmri.networkServices(e.data);
+                },
+                panel: function (e) {
+                    jmri.panel(e.data.name, e.data.value, e.data);
+                },
+                panels: function (e) {
+                    jmri.panels(e.data);
                 },
                 power: function (e) {
                     jmri.power(e.data.state);
