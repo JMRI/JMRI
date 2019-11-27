@@ -32,7 +32,7 @@ public class ConflictingSystemConnectionMemo extends SystemConnectionMemo {
 
     @Override
     public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
-        return new NamedBeanPreferNumericComparator();
+        return new NamedBeanPreferNumericComparator<>();
     }
 
     @Override
