@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.Location;
@@ -116,6 +117,7 @@ public class ExportTimetable extends XmlFile {
         }
     }
 
+    @SuppressFBWarnings(value = "OS_OPEN_STREAM_EXCEPTION_PATH", justification="Someone smarter than me can fix")
     public void writeFile(String name) {
         log.debug("writeFile {}", name);
         // This is taken in large part from "Java and XML" page 368
@@ -124,20 +126,12 @@ public class ExportTimetable extends XmlFile {
             file = new File(name);
         }
 
-        FileOutputStream out = null;
         PrintWriter fileOut = null;
         try {
-            out = new FileOutputStream(file);
-            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(out, "UTF-8")), // NOI18N
+            fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
                     true); // NOI18N
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Can not open export timetable CSV file: " + file.getName());
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e1) {
-                }
-            }
             return;
         }
 
