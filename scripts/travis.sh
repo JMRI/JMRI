@@ -26,14 +26,14 @@ if [[ "${HEADLESS}" == "true" ]] ; then
         mvn antrun:run -Danttarget=tests-warnings-check
         # run SpotBugs only on headless, failing build if bugs are found
         # SpotBugs configuration is in pom.xml
-        mvn clean verify -U -P travis-spotbugs --batch-mode
+        mvn clean test -U -P travis-spotbugs --batch-mode
         # run Javadoc
         mvn javadoc:javadoc -U --batch-mode
         # check html
         mvn exec:exec -P travis-scanhelp
     else
         # run headless tests
-        mvn verify -U -P travis-headless --batch-mode \
+        mvn test -U -P travis-headless --batch-mode \
             -Dsurefire.printSummary=${PRINT_SUMMARY} \
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
