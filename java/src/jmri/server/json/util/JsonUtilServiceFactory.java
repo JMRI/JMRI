@@ -22,6 +22,7 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
                 JSON.NETWORK_SERVICE,
                 JSON.NETWORK_SERVICES,
                 JSON.NODE,
+                JSON.PANEL,
                 JSON.PANELS,
                 JSON.RAILROAD,
                 JSON.SYSTEM_CONNECTION,
