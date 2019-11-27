@@ -11,6 +11,7 @@ table.sortable th:hover {
 	cursor: pointer;
 }
 table.idTag   td.state:hover,
+table.light   td.state:hover,
 table.route   td.state:hover,
 table.sensor  td.state:hover,
 table.turnout td.state:hover {

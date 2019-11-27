@@ -23,7 +23,10 @@ function showError(code, message) {
 //parm is the array of items from which to build table
 function rebuildTable(data) {
 	tableType = $("html").data("table-type");
-	if (data[0] && data[0].type !== tableType) return; //skip if new array doesn't match this page
+	if (data[0] && data[0].type !== tableType) { //skip if new array doesn't match this page
+		jmri.log("incoming type '" + data[0].type + "' does not match current page '" + tableType + "', ignoring.");
+		return; 
+	}
 	$("#activity-alert").removeClass("hidden").addClass("show");
 	$("table#jmri-data").removeClass("show").addClass("hidden");
 	$("#warning-no-data").removeClass("show").addClass("hidden");
@@ -54,7 +57,7 @@ function rebuildTable(data) {
 	hideEmptyColumns("table#jmri-data tr th");
 
 	//setup for clicking on state column to send state changes
-	$('table.idTag, table.route, table.sensor, table.turnout').on('click', 'td.state', function (e) { 
+	$('table.idTag, table.light, table.route, table.sensor, table.turnout').on('click', 'td.state', function (e) { 
 		rowName = $(this).parent('tr').data('name');
 		currState = $(this).data('state');
 		jmri.socket.send(tableType, { 'name': rowName, 'state': getNextState(tableType, currState) }, 'post');
