@@ -2,7 +2,9 @@ package jmri.jmrit.operations.trains.tools;
 
 import java.io.*;
 import java.text.MessageFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -131,181 +133,12 @@ public class ExportTimetable extends XmlFile {
         try (PrintWriter fileOut = new PrintWriter(
                 new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), true)) {
 
-            // Layout field
-            // "Layout", "layout name", "scale", fastClock, throttles, "metric"
-            String line =
-                    "Layout" +
-                            del +
-                            ESC +
-                            Setup.getRailroadName() +
-                            ESC +
-                            del +
-                            "HO" +
-                            del +
-                            "4" +
-                            del +
-                            "0" +
-                            del +
-                            "No";
-            fileOut.println(line);
-
-            // TrainType field
-            // "TrainType", "type name", color number
-            line = "TrainType" +
-                    del +
-                    "Freight_Black" +
-                    del +
-                    "#000000";
-            fileOut.println(line);
-
-            line = "TrainType" +
-                    del +
-                    "Freight_Red" +
-                    del +
-                    jmri.util.ColorUtil.colorToHexString(java.awt.Color.RED);
-            fileOut.println(line);
-
-            line = "TrainType" +
-                    del +
-                    "Freight_Blue" +
-                    del +
-                    jmri.util.ColorUtil.colorToHexString(java.awt.Color.BLUE);
-            fileOut.println(line);
-
-            line = "TrainType" +
-                    del +
-                    "Freight_Yellow" +
-                    del +
-                    jmri.util.ColorUtil.colorToHexString(java.awt.Color.YELLOW);
-            fileOut.println(line);
-
-            // Segment fields
-            // "Segment", "segment name"
-            line = "Segment" +
-                    del +
-                    ESC +
-                    "Locations" +
-                    ESC;
-            fileOut.println(line);
-
-            // Station fields
-            // "Station", "station name", distance, doubleTrack, sidings,
-            // staging
-
-            // provide a list of locations to use, use either a route called
-            // "Timetable" or alphabetically
-            List<Location> locationList = new ArrayList<Location>();
-
-            Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Timetable");
-            if (route != null) {
-                for (RouteLocation rl : route.getLocationsBySequenceList()) {
-                    locationList.add(rl.getLocation());
-                }
-
-            } else
-                for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
-                    locationList.add(location);
-                }
-
-            double distance = 0.0;
-            for (Location location : locationList) {
-                distance += 1.0;
-                line = "Station" +
-                        del +
-                        ESC +
-                        location.getName() +
-                        ESC +
-                        del +
-                        distance +
-                        del +
-                        "No" +
-                        del +
-                        "0" +
-                        del +
-                        (location.isStaging() ? location.getTrackList().size() : "0");
-                fileOut.println(line);
-            }
-
-            // Schedule fields
-            // "Schedule", "schedule name", "effective date", startHour,
-            // duration
-
-            line = "Schedule" + del + "default" + del + "Today" + del + "0" + del + "24";
-            fileOut.println(line);
-
-            // Train fields
-            // "Train", "train name", "train description", type, defaultSpeed,
-            // starttime, throttle, notes
-
-            int type = 1; // cycle through the 4 train types (chart colors)
-            int defaultSpeed = 4;
-
-            for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
-                line = "Train" +
-                        del +
-                        ESC +
-                        train.getName() +
-                        ESC +
-                        del +
-                        ESC +
-                        train.getDescription() +
-                        ESC +
-                        del +
-                        type++ +
-                        del +
-                        defaultSpeed +
-                        del +
-                        train.getDepartTimeMinutes() +
-                        del +
-                        "0" +
-                        del +
-                        ESC +
-                        train.getComment() +
-                        ESC;
-                fileOut.println(line);
-
-                // reset train types
-                if (type > 4) {
-                    type = 1;
-                }
-
-                // Stop fields
-                // "Stop", station, duration, nextSpeed, stagingTrack, notes
-                for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
-                    // calculate station stop
-                    int station = 0;
-                    for (Location location : locationList) {
-                        station++;
-                        if (rl.getLocation() == location) {
-                            break;
-                        }
-                    }
-                    int duration = 0;
-                    if ((rl != train.getRoute().getDepartsRouteLocation() && !rl.getLocation().isStaging())) {
-                        if (train.isBuilt()) {
-                            duration = train.getWorkTimeAtLocation(rl);
-                        } else {
-                            duration = rl.getMaxCarMoves() * Setup.getSwitchTime();
-                        }
-                    }
-                    line = "Stop" +
-                            del +
-                            station +
-                            del +
-                            duration +
-                            del +
-                            "0" +
-                            del +
-                            "0" +
-                            del +
-                            ESC +
-                            rl.getComment() +
-                            ESC;
-
-                    fileOut.println(line);
-                    // break;
-                }
-            }
+            loadLayout(fileOut);
+            loadTrainTypes(fileOut);
+            loadSegment(fileOut);
+            loadStations(fileOut);
+            loadSchedule(fileOut);
+            loadTrains(fileOut);
 
             JOptionPane.showMessageDialog(null,
                     MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
@@ -317,6 +150,202 @@ public class ExportTimetable extends XmlFile {
         } catch (IOException e) {
             log.error("Can not open export timetable CSV file: " + file.getName());
             return;
+        }
+    }
+
+    /*
+     * "Layout", "layout name", "scale", fastClock, throttles, "metric"
+     */
+    private void loadLayout(PrintWriter fileOut) {
+        String line = "Layout" +
+                del +
+                ESC +
+                Setup.getRailroadName() +
+                ESC +
+                del +
+                "HO" +
+                del +
+                "4" +
+                del +
+                "0" +
+                del +
+                "No";
+        fileOut.println(line);
+    }
+
+    /*
+     * "TrainType", "type name", color number
+     */
+    private void loadTrainTypes(PrintWriter fileOut) {
+        String line = "TrainType" +
+                del +
+                "Freight_Black" +
+                del +
+                jmri.util.ColorUtil.colorToHexString(java.awt.Color.BLACK);
+        fileOut.println(line);
+
+        line = "TrainType" +
+                del +
+                "Freight_Red" +
+                del +
+                jmri.util.ColorUtil.colorToHexString(java.awt.Color.RED);
+        fileOut.println(line);
+
+        line = "TrainType" +
+                del +
+                "Freight_Blue" +
+                del +
+                jmri.util.ColorUtil.colorToHexString(java.awt.Color.BLUE);
+        fileOut.println(line);
+
+        line = "TrainType" +
+                del +
+                "Freight_Yellow" +
+                del +
+                jmri.util.ColorUtil.colorToHexString(java.awt.Color.YELLOW);
+        fileOut.println(line);
+    }
+
+    /*
+     * "Segment", "segment name"
+     */
+    private void loadSegment(PrintWriter fileOut) {
+        String line = "Segment" +
+                del +
+                ESC +
+                "Locations" +
+                ESC;
+        fileOut.println(line);
+    }
+
+    List<Location> locationList = new ArrayList<Location>();
+
+    /*
+     * "Station", "station name", distance, doubleTrack, sidings, staging
+     */
+    private void loadStations(PrintWriter fileOut) {
+        // provide a list of locations to use, use either a route called
+        // "Timetable" or alphabetically
+
+        Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Timetable");
+        if (route != null) {
+            for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                locationList.add(rl.getLocation());
+            }
+
+        } else
+            for (Location location : InstanceManager.getDefault(LocationManager.class).getLocationsByNameList()) {
+                locationList.add(location);
+            }
+
+        double distance = 0.0;
+        for (Location location : locationList) {
+            distance += 1.0;
+            String line = "Station" +
+                    del +
+                    ESC +
+                    location.getName() +
+                    ESC +
+                    del +
+                    distance +
+                    del +
+                    "No" +
+                    del +
+                    "0" +
+                    del +
+                    (location.isStaging() ? location.getTrackList().size() : "0");
+            fileOut.println(line);
+        }
+    }
+
+    /*
+     * "Schedule", "schedule name", "effective date", startHour, duration
+     */
+    private void loadSchedule(PrintWriter fileOut) {
+        // create schedule name based on date and time
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy_MM_dd kk:mm");
+        String scheduleName = simpleDateFormat.format(Calendar.getInstance().getTime());
+
+        String line = "Schedule" + del + scheduleName + del + "Today" + del + "0" + del + "24";
+        fileOut.println(line);
+    }
+
+    /*
+     * "Train", "train name", "train description", type, defaultSpeed,
+     * starttime, throttle, notes
+     */
+    private void loadTrains(PrintWriter fileOut) {
+        int type = 1; // cycle through the 4 train types (chart colors)
+        int defaultSpeed = 4;
+
+        for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
+            if (!train.isBuildEnabled()) {
+                continue;
+            }
+
+            String line = "Train" +
+                    del +
+                    ESC +
+                    train.getName() +
+                    ESC +
+                    del +
+                    ESC +
+                    train.getDescription() +
+                    ESC +
+                    del +
+                    type++ +
+                    del +
+                    defaultSpeed +
+                    del +
+                    train.getDepartTimeMinutes() +
+                    del +
+                    "0" +
+                    del +
+                    ESC +
+                    train.getComment() +
+                    ESC;
+            fileOut.println(line);
+
+            // reset train types
+            if (type > 4) {
+                type = 1;
+            }
+
+            // Stop fields
+            // "Stop", station, duration, nextSpeed, stagingTrack, notes
+            for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
+                // calculate station stop
+                int station = 0;
+                for (Location location : locationList) {
+                    station++;
+                    if (rl.getLocation() == location) {
+                        break;
+                    }
+                }
+                int duration = 0;
+                if ((rl != train.getRoute().getDepartsRouteLocation() && !rl.getLocation().isStaging())) {
+                    if (train.isBuilt()) {
+                        duration = train.getWorkTimeAtLocation(rl);
+                    } else {
+                        duration = rl.getMaxCarMoves() * Setup.getSwitchTime();
+                    }
+                }
+                line = "Stop" +
+                        del +
+                        station +
+                        del +
+                        duration +
+                        del +
+                        "0" +
+                        del +
+                        "0" +
+                        del +
+                        ESC +
+                        rl.getComment() +
+                        ESC;
+
+                fileOut.println(line);
+            }
         }
     }
 
