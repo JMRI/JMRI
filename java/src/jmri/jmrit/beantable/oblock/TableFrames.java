@@ -161,10 +161,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.META_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.META_DOWN_MASK));
         } else {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_X, InputEvent.CTRL_DOWN_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_T);
         editMenu.add(menuItem);
@@ -174,10 +174,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.META_DOWN_MASK));
         } else {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_C, InputEvent.CTRL_DOWN_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_C);
         editMenu.add(menuItem);
@@ -187,10 +187,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         menuItem.addActionListener(actionListener);
         if (SystemType.isMacOSX()) {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.META_DOWN_MASK));
         } else {
             menuItem.setAccelerator(
-                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
+                    KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_DOWN_MASK));
         }
         menuItem.setMnemonic(KeyEvent.VK_P);
         editMenu.add(menuItem);
