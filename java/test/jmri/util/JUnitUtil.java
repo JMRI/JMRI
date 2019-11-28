@@ -313,10 +313,6 @@ public class JUnitUtil {
         Level severity = Level.ERROR; // level at or above which we'll complain
         boolean unexpectedMessageSeen = JUnitAppender.unexpectedMessageSeen(severity);
         String unexpectedMessageContent = JUnitAppender.unexpectedMessageContent(severity);
-        if (unexpectedMessageSeen) {
-            System.err.println("Unexpected error message:");
-            System.err.println(unexpectedMessageContent);
-        }
         JUnitAppender.verifyNoBacklog();
         JUnitAppender.resetUnexpectedMessageFlags(severity);
         Assert.assertFalse("Unexpected "+severity+" or higher messages emitted: "+unexpectedMessageContent, unexpectedMessageSeen);
