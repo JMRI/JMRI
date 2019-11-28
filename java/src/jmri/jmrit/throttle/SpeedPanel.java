@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.Throttle;
 import jmri.jmrit.roster.RosterEntry;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -54,7 +55,7 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
      * Set the AddressPanel this throttle control is listening for new throttle
      * event
      *
-     * @param addressPanel - reference to the addresspanel
+     * @param addressPanel  reference to the addresspanel
      */
     public void setAddressPanel(AddressPanel addressPanel) {
         this.addressPanel = addressPanel;
@@ -98,10 +99,10 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (e.getPropertyName().equals("SpeedSetting")) {
+        if (e.getPropertyName().equals(Throttle.SPEEDSETTING)) {
             currentThrottleVol = ((Float) e.getNewValue()).floatValue();
             scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile, currentThrottleVol, currentIsForward));
-        } else if (e.getPropertyName().equals("IsForward")) {
+        } else if (e.getPropertyName().equals(Throttle.ISFORWARD)) {
             currentIsForward = (boolean) e.getNewValue();
             scaleSpeedLabel.setText(updateSpeedLabel(useSpeedProfile, currentThrottleVol, currentIsForward));
         }
@@ -112,9 +113,9 @@ public class SpeedPanel extends JInternalFrame implements java.beans.PropertyCha
 
     /**
      *
-     * @param useSpeedProfile - are we using speed profile
-     * @param throttleVolume  - throttle position (percent of 1)
-     * @param isForward       - true if going forward.
+     * @param useSpeedProfile  are we using speed profile
+     * @param throttleVolume   throttle position (percent of 1)
+     * @param isForward        true if going forward.
      * @return a string for displaying speed if available
      */
     private String updateSpeedLabel(boolean useSpeedProfile, float throttleVolume, boolean isForward) {

@@ -1,6 +1,8 @@
 package jmri.util.managers;
 
+import jmri.InstanceManager;
 import jmri.SignalHead;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractSignalHeadManager;
 
 /**
@@ -13,7 +15,7 @@ import jmri.managers.AbstractSignalHeadManager;
 public class SignalHeadManagerThrowExceptionScaffold extends AbstractSignalHeadManager {
 
     public SignalHeadManagerThrowExceptionScaffold() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
     
     /** {@inheritDoc} */

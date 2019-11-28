@@ -1,0 +1,38 @@
+version: "2" # CodeClimate API version is a string, not a number
+checks:
+  argument-count:
+    config:
+      threshold: 4 # CodeClimate default
+  complex-logic:
+    config:
+      threshold: 4 # CodeClimate default
+  file-lines:
+    config:
+      threshold: 250 # CodeClimate default
+  method-complexity:
+    config:
+      threshold: 20 # AKA Cognitive Complexity. 5 is CodeClimate default
+  method-count:
+    config:
+      threshold: 20 # CodeClimate default
+  method-lines:
+    config:
+      threshold: 25 # CodeClimate default
+  nested-control-flow:
+    config:
+      threshold: 4 # CodeClimate default
+  return-statements:
+    config:
+      threshold: 4 # CodeClimate default
+  similar-code:
+    config:
+      threshold: 40 # language-specific defaults. an override will affect all languages.
+                    # Java default is documented at 40, but seems smaller
+      exclude_patterns:
+      - "**/Bundle.java"
+  identical-code:
+    config:
+      threshold: 40 # language-specific defaults. an override will affect all languages.
+                    # Java default is documented at 40, but seems smaller
+      exclude_patterns:
+      - "**/Bundle.java"

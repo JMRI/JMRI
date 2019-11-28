@@ -12,6 +12,7 @@ import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.util.Collections;
 import java.util.Enumeration;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -30,29 +31,25 @@ import org.slf4j.LoggerFactory;
 import purejavacomm.CommPortIdentifier;
 
 /**
- * Abstract base class for common implementation of the ConnectionConfig
+ * Abstract base class for common implementation of the SerialConnectionConfig.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  */
 abstract public class AbstractSerialConnectionConfig extends AbstractConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process
+     * Ctor for an object being created during load process.
      *
      * @param p port being configured
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST", justification = "Thought to be safe as default connection config")
     public AbstractSerialConnectionConfig(jmri.jmrix.PortAdapter p) {
-        this((jmri.jmrix.SerialPortAdapter) p);
+            this((jmri.jmrix.SerialPortAdapter) p);
     }
 
     public AbstractSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         adapter = p;
         addToActionList();
-    }
-
-    @Override
-    public jmri.jmrix.SerialPortAdapter getAdapter() {
-        return adapter;
     }
 
     /**
@@ -64,13 +61,19 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         addToActionList();
     }
 
+    @Override
+    public jmri.jmrix.SerialPortAdapter getAdapter() {
+        return adapter;
+    }
+
     protected boolean init = false;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void checkInitDone() {
-        if (log.isDebugEnabled()) {
-            log.debug("init called for {}", name());
-        }
+        log.debug("init called for {}", name());
         if (init) {
             return;
         }
@@ -79,7 +82,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             @Override
             public void actionPerformed(ActionEvent e) {
                 adapter.configureBaudRate((String) baudBox.getSelectedItem());
-                p.setComboBoxLastSelection(adapter.getClass().getName() + ".baud", (String) baudBox.getSelectedItem());
+                p.setComboBoxLastSelection(adapter.getClass().getName() + ".baud", (String) baudBox.getSelectedItem()); // NOI18N
             }
         });
 
@@ -129,6 +132,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 }
             });
         }
+
         portBox.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -138,13 +142,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             @Override
             public void focusLost(FocusEvent e) {
             }
-
         });
 
-        for (String i : options.keySet()) {
-            final String item = i;
-            if (options.get(i).getComponent() instanceof JComboBox) {
-                ((JComboBox<?>) options.get(i).getComponent()).addActionListener((ActionEvent e) -> {
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            final String item = entry.getKey();
+            if (entry.getValue().getComponent() instanceof JComboBox) {
+                ((JComboBox<?>) entry.getValue().getComponent()).addActionListener((ActionEvent e) -> {
                     adapter.setOptionState(item, options.get(item).getItem());
                 });
             }
@@ -157,9 +160,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public void updateAdapter() {
         log.debug("updateAdapter() to {}", systemPrefixField.getText());
         adapter.setPort(PortNameMapper.getPortFromName((String) portBox.getSelectedItem()));
-        adapter.configureBaudRate((String) baudBox.getSelectedItem());
-        for (String i : options.keySet()) {
-            adapter.setOptionState(i, options.get(i).getItem());
+        adapter.configureBaudRateFromIndex(baudBox.getSelectedIndex()); // manage by index, not item value
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            adapter.setOptionState(entry.getKey(), entry.getValue().getItem());
         }
 
         if (adapter.getSystemConnectionMemo() != null && !adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
@@ -177,8 +180,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
     /**
-     * Load the adapter with an appropriate object
-     * <i>unless</I> its already been set.
+     * {@inheritDoc}
      */
     @Override
     abstract protected void setInstance();
@@ -291,6 +293,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     String value;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @SuppressWarnings("UseOfObsoleteCollectionType")
     public void loadDetails(final JPanel details) {
@@ -318,18 +323,18 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         try {
             v = getPortNames();
             if (log.isDebugEnabled()) {
-                log.debug("loadDetails called in class " + this.getClass().getName());
-                log.debug("adapter class: " + adapter.getClass().getName());
-                log.debug("loadDetails called for " + name());
+                log.debug("loadDetails called in class {}", this.getClass().getName());
+                log.debug("adapter class: {}", adapter.getClass().getName());
+                log.debug("loadDetails called for {}", name());
                 if (v != null) {
-                    log.debug("Found " + v.size() + " ports");
+                    log.debug("Found {} ports", v.size());
                 } else {
                     log.debug("Zero-length port vector");
                 }
             }
         } catch (java.lang.UnsatisfiedLinkError e1) {
             log.error("UnsatisfiedLinkError - the serial library has not been installed properly");
-            log.error("java.library.path=" + System.getProperty("java.library.path", "<unknown>"));
+            log.error("java.library.path={}", System.getProperty("java.library.path", "<unknown>"));
             javax.swing.JOptionPane.showMessageDialog(null, "Failed to load comm library.\nYou have to fix that before setting preferences.");
             return;
         }
@@ -342,22 +347,28 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         refreshPortBox();
 
-        baudList = adapter.validBaudRates();
+        baudList = adapter.validBaudRates(); // when not supported should not return null, but an empty String[] {}
         // need to remove ActionListener before addItem() or action event will occur
         if (baudBox.getActionListeners().length > 0) {
             baudBox.removeActionListener(baudBox.getActionListeners()[0]);
         }
+        // rebuild baudBox combo list
         baudBox.removeAllItems();
         if (log.isDebugEnabled()) {
-            log.debug("after remove, " + baudBox.getItemCount() + " items, first is "
-                    + baudBox.getItemAt(0));
+            log.debug("after remove, {} items, first is {}", baudBox.getItemCount(),
+                    baudBox.getItemAt(0));
+        }
+
+        // empty array means: baud not supported by adapter (but extends serialConnConfig)
+        if (baudList.length == 0) {
+            log.debug("empty array received from adapter");
         }
         for (String baudList1 : baudList) {
             baudBox.addItem(baudList1);
         }
         if (log.isDebugEnabled()) {
-            log.debug("after reload, " + baudBox.getItemCount() + " items, first is "
-                    + baudBox.getItemAt(0));
+            log.debug("after reload, {} items, first is {}", baudBox.getItemCount(),
+                    baudBox.getItemAt(0));
         }
 
         if (baudList.length > 1) {
@@ -371,9 +382,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         NUMOPTIONS = NUMOPTIONS + options.size();
 
         portBoxLabel = new JLabel(Bundle.getMessage("SerialPortLabel"));
-
         baudBoxLabel = new JLabel(Bundle.getMessage("BaudRateLabel"));
-        baudBox.setSelectedItem(adapter.getCurrentBaudRate());
+        if (baudBox.getItemCount() > 0) { // skip when adapter returned an empty array (= spotbug's preference)
+            baudBox.setSelectedIndex(adapter.getCurrentBaudIndex());
+        }
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener((ItemEvent e) -> {
@@ -385,6 +397,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "BC_UNCONFIRMED_CAST_OF_RETURN_VALUE",
+        justification = "Type is checked before casting")
     protected void showAdvancedItems() {
         _details.removeAll();
         cL.anchor = GridBagConstraints.WEST;
@@ -402,8 +416,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (!isPortAdvanced()) {
             stdrows++;
         }
-        for (String item : options.keySet()) {
-            if (!options.get(item).isAdvanced()) {
+        for (Map.Entry<String, Option> entry : options.entrySet()) {
+            if (!entry.getValue().isAdvanced()) {
                 stdrows++;
             }
         }
@@ -424,7 +438,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 gbLayout.setConstraints(portBoxLabel, cL);
                 gbLayout.setConstraints(portBox, cR);
 
-                //panel.add(row1Label);
                 _details.add(portBoxLabel);
                 _details.add(portBox);
                 i++;
@@ -439,14 +452,15 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 _details.add(baudBox);
                 i++;
             }
-            for (String item : options.keySet()) {
-                if (options.get(item).isAdvanced()) {
+
+            for (Map.Entry<String, Option> entry : options.entrySet()) {
+                if (entry.getValue().isAdvanced()) {
                     cR.gridy = i;
                     cL.gridy = i;
-                    gbLayout.setConstraints(options.get(item).getLabel(), cL);
-                    gbLayout.setConstraints(options.get(item).getComponent(), cR);
-                    _details.add(options.get(item).getLabel());
-                    _details.add(options.get(item).getComponent());
+                    gbLayout.setConstraints(entry.getValue().getLabel(), cL);
+                    gbLayout.setConstraints(entry.getValue().getComponent(), cR);
+                    _details.add(entry.getValue().getLabel());
+                    _details.add(entry.getValue().getComponent());
                     i++;
                 }
             }
@@ -506,9 +520,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     @Override
     public void setManufacturer(String manufacturer) {
-        if (adapter != null) {
-            adapter.setManufacturer(manufacturer);
-        }
+        setInstance();
+        adapter.setManufacturer(manufacturer);
     }
 
     @Override
@@ -566,7 +579,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 boolean isSelected,
                 boolean cellHasFocus) {
 
-            String displayName = name;
             setOpaque(index > -1);
             setForeground(Color.black);
             list.setSelectionForeground(Color.black);
@@ -576,14 +588,14 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 setBackground(list.getBackground());
             }
             if (invalidPort != null) {
-                String port = PortNameMapper.getPortFromName(displayName);
+                String port = PortNameMapper.getPortFromName(name);
                 if (port.equals(invalidPort)) {
                     list.setSelectionForeground(Color.red);
                     setForeground(Color.red);
                 }
             }
 
-            setText(displayName);
+            setText(name);
 
             return this;
         }
@@ -600,7 +612,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
      */
     @SuppressWarnings("UseOfObsoleteCollectionType")
     protected synchronized static void updateSerialPortNames(String portName, JComboBox<String> portCombo, Vector<String> portList) {
-        for (Entry<String, SerialPortFriendlyName> en : PortNameMapper.getPortNameMap().entrySet()) {
+        for (Map.Entry<String, SerialPortFriendlyName> en : PortNameMapper.getPortNameMap().entrySet()) {
             en.getValue().setValidPort(false);
         }
         for (int i = 0; i < portList.size(); i++) {

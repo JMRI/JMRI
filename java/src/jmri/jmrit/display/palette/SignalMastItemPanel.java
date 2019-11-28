@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (c) 2010, 2011
  * @author Egbert Broerse 2017
  */
-public class SignalMastItemPanel extends TableItemPanel<SignalMast> implements ListSelectionListener {
+public class SignalMastItemPanel extends TableItemPanel<SignalMast> {
 
     SignalMast _mast;
     private HashMap<String, NamedIcon> _iconMastMap;

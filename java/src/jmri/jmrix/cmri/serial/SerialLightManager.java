@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.managers.AbstractLightManager;
@@ -7,28 +8,27 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for CMRI serial systems
- * <P>
- * System names are "CLnnn", where nnn is the bit number without padding.
- * <P>
+ * Implement LightManager for CMRI serial systems.
+ * <p>
+ * System names are "CLnnn", where C is the user-configurable system prefix,
+ * nnn is the bit number without padding.
+ * <p>
  * Based in part on SerialTurnoutManager.java
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
 public class SerialLightManager extends AbstractLightManager {
 
-    private CMRISystemConnectionMemo _memo = null;
-
     public SerialLightManager(CMRISystemConnectionMemo memo) {
-        _memo = memo;
+        super(memo);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return _memo.getSystemPrefix();
+    public CMRISystemConnectionMemo getMemo() {
+        return (CMRISystemConnectionMemo) memo;
     }
 
     /**
@@ -45,26 +45,26 @@ public class SerialLightManager extends AbstractLightManager {
     public Light createNewLight(String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
-        int nAddress = -1;
-        nAddress = _memo.getNodeAddressFromSystemName(systemName);
+        int nAddress;
+        nAddress = getMemo().getNodeAddressFromSystemName(systemName);
         if (nAddress == -1) {
-            return (null);
+            return null;
         }
-        int bitNum = _memo.getBitFromSystemName(systemName);
+        int bitNum = getMemo().getBitFromSystemName(systemName);
         if (bitNum == 0) {
-            return (null);
+            return null;
         }
-        String conflict = "";
-        conflict = _memo.isOutputBitFree(nAddress, bitNum);
+        String conflict;
+        conflict = getMemo().isOutputBitFree(nAddress, bitNum);
         if (!conflict.equals("")) {
             log.error("Assignment conflict with " + conflict + ".  Light not created.");
             notifyLightCreationError(conflict, bitNum);
-            return (null);
+            return null;
         }
         // Validate the systemName
-        if (_memo.validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
-            lgt = new SerialLight(systemName, userName,_memo);
-            if (!_memo.validSystemNameConfig(systemName, 'L',_memo.getTrafficController())) {
+        if (getMemo().validSystemNameFormat(systemName, 'L') == NameValidity.VALID) {
+            lgt = new SerialLight(systemName, userName,getMemo());
+            if (!getMemo().validSystemNameConfig(systemName, 'L',getMemo().getTrafficController())) {
                 log.warn("Light system Name does not refer to configured hardware: "
                         + systemName);
             }
@@ -87,8 +87,16 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    public String validateSystemNameFormat(String systemName, Locale locale) {
+        return getMemo().validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return _memo.validSystemNameFormat(systemName, 'L');
+        return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 
     /**
@@ -99,17 +107,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return _memo.validSystemNameConfig(systemName, 'L',_memo.getTrafficController());
-    }
-
-    /**
-     * Public method to normalize a system name.
-     *
-     * @return a normalized system name if system name has a valid format, else returns ""
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return _memo.normalizeSystemName(systemName);
+        return getMemo().validSystemNameConfig(systemName, 'L',getMemo().getTrafficController());
     }
 
     /**
@@ -120,7 +118,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String convertSystemNameToAlternate(String systemName) {
-        return _memo.convertSystemNameToAlternate(systemName);
+        return getMemo().convertSystemNameToAlternate(systemName);
     }
 
     /**
@@ -128,8 +126,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);

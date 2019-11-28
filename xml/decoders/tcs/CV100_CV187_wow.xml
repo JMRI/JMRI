@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
-<!-- $Id: CV100_CV187_wow.xml 29241 2015-05-09 16:40:42Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -49,7 +48,7 @@
     <label>Mars/Gyra Max Brightness</label>
     <label xml:lang="it">Luminosità max.Mars/Gyra</label>
   </variable>
-  <variable CV="117" default="213" item="Function 2 behavior" exclude="220">
+  <variable CV="117" default="3" item="Function 2 behavior" exclude="220">
     <decVal/>
     <label>Ditch Light Blink Rate</label>
     <label xml:lang="it">Freq.lampeggio Luci Ditch</label>
@@ -390,31 +389,19 @@
     <label xml:lang="it">Luminosità Smorzam.Luci Retro</label>
     <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
   </variable>
-  <variable item="EMF Option 1" CV="182" mask="XXXXXXXV" default="0" tooltip="Special BEMF setting for 3-Pole Motors">
+  <variable item="EMF Option 1" CV="182" mask="XXXXXXXV" default="0">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>3-Pole Motor</label>
+    <label>Alternate BEMF</label>
+    <tooltip>Alternate BEMF code for small motors, coreless motors, and 3-pole motors</tooltip>
   </variable>
   <variable item="Advanced Group 2 Option 2" CV="182" mask="XXXXXXVX" default="1" tooltip="Disables Stop on DC for Keep Alive">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Enable Keep Alive</label>
   </variable>
-  <variable item="Advanced Group 1 Option 1" CV="182" mask="XXXXXVXX" default="0" exclude="220">
+  <variable item="Advanced Group 1 Option 1" CV="182" mask="XXXXXVXX" default="1">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
     <label>2x Function Packets Required</label>
 	<tooltip>Two function packets must be received before changing function state, if using SPROG set to disabled</tooltip>
-  </variable>
-  <variable item="Advanced Group 1 Option 1" CV="182" mask="XXXXXVXX" default="1" include="220">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-    <label>2x Function Packets Required</label>
-	<tooltip>Two function packets must be received before changing function state, if using SPROG set to disabled</tooltip>
-  </variable>
-  <variable item="EMF Option 2" CV="182" mask="XXXXVXXX" default="0" exclude="220">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>Motor delay</label>
-  </variable>
-  <variable item="EMF Option 2" CV="182" mask="XXXXVXXX" default="1" include="220">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>Motor delay</label>
   </variable>
   <variable item="Brake Rate 1" CV="183" default="32" tooltip="Larger number longer it will take to stop">
  	 <decVal/>

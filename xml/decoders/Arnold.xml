@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Alain CARASSO" version="1.1" lastUpdated="20170126"/>
   <!-- Added undocumented CV19 consist                          -->
   <version author="Alain CARASSO" version="1" lastUpdated="20100714"/>
@@ -84,31 +85,9 @@
         <label>DCC or Marklin</label>
       </variable>
     <!-- CV 19 -->
-      <variable
-            label="Consist Address"
-            CV="19"
-            mask="XVVVVVVV"
-            default="0"
-            item="Consist Address"
-            tooltip="CV19-XVVVVVVV  (0 -127) default=0">
-            <decVal
-                min="0"
-                max="127"
-                />
-      </variable>
-      <variable
-            label="Consist Direction"
-            CV="19"
-            mask="VXXXXXXX"
-            default="0"
-            item="Consist Direction"
-            tooltip="CV19-VXXXXXXX  default=0">
-            <enumVal>
-                <enumChoice choice="Forward"></enumChoice>
-                <enumChoice choice="Reverse"></enumChoice>
-              </enumVal>
-      </variable> 
-    <!-- CV 19 -->
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <variable item="Lenz BM1 Management" CV="27" comment="0 not managed, 1 FW, 2 Reverse, 3 both" default="0">
         <decVal max="3"/>
         <label>Lenz BM1 Management</label>

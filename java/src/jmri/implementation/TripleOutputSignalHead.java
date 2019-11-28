@@ -9,17 +9,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Drive a single searchlight signal head via three "Turnout" objects.
- * <P>
+ * <p>
  * "Triple Output RGB" to differentiate from the existing RYG triple output
  * head; The class name fits in with the quad output name which is the
  * equivalent discrete lamp head.
- * <P>
+ * <p>
  * The three Turnout objects are provided during construction, and each drives a
  * specific color (RED, GREEN and BLUE). Normally, "THROWN" is on, and "CLOSED"
  * is off.
- * <P>
+ * <p>
  * Red = Red Green = Green Yellow = Red and Green Lunar = Red, Green and Blue
- * <P>
+ * <p>
  * This class doesn't currently listen to the Turnout's to see if they've been
  * changed via some other mechanism.
  *
@@ -42,11 +42,10 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     @Override
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
-        if (mLit == false) {
+        if (!mLit) {
             mRed.getBean().setCommandedState(Turnout.CLOSED);
             mBlue.getBean().setCommandedState(Turnout.CLOSED);
             mGreen.getBean().setCommandedState(Turnout.CLOSED);
-            return;
         } else if (!mFlashOn
                 && ((mAppearance == FLASHGREEN)
                 || (mAppearance == FLASHYELLOW)
@@ -56,8 +55,6 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
             mRed.getBean().setCommandedState(Turnout.CLOSED);
             mBlue.getBean().setCommandedState(Turnout.CLOSED);
             mGreen.getBean().setCommandedState(Turnout.CLOSED);
-            return;
-
         } else {
             switch (mAppearance) {
                 case RED:
@@ -106,7 +103,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
         super.dispose();
     }
 
-    NamedBeanHandle<Turnout> mBlue;
+    private NamedBeanHandle<Turnout> mBlue;
 
     public NamedBeanHandle<Turnout> getBlue() {
         return mBlue;
@@ -117,7 +114,7 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     }
 
     // claim support for Lunar aspects
-    final static private int[] validStates = new int[]{
+    private final static int[] validStates = new int[]{
         DARK,
         RED,
         LUNAR,
@@ -128,26 +125,45 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
         FLASHYELLOW,
         FLASHGREEN
     };
-    final static private String[] validStateNames = new String[]{
-        Bundle.getMessage("SignalHeadStateDark"),
-        Bundle.getMessage("SignalHeadStateRed"),
-        Bundle.getMessage("SignalHeadStateLunar"),
-        Bundle.getMessage("SignalHeadStateYellow"),
-        Bundle.getMessage("SignalHeadStateGreen"),
-        Bundle.getMessage("SignalHeadStateFlashingRed"),
-        Bundle.getMessage("SignalHeadStateFlashingLunar"),
-        Bundle.getMessage("SignalHeadStateFlashingYellow"),
-        Bundle.getMessage("SignalHeadStateFlashingGreen")
+    private static final String[] validStateKeys = new String[]{
+        "SignalHeadStateDark",
+        "SignalHeadStateRed",
+        "SignalHeadStateLunar",
+        "SignalHeadStateYellow",
+        "SignalHeadStateGreen",
+        "SignalHeadStateFlashingRed",
+        "SignalHeadStateFlashingLunar",
+        "SignalHeadStateFlashingYellow",
+        "SignalHeadStateFlashingGreen"
     };
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] getValidStates() {
         return Arrays.copyOf(validStates, validStates.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getValidStateKeys() {
+        return Arrays.copyOf(validStateKeys, validStateKeys.length); // includes int for Lunar
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] getValidStateNames() {
-        return Arrays.copyOf(validStateNames, validStateNames.length);
+        String[] stateNames = new String[validStateKeys.length];
+        int i = 0;
+        for (String stateKey : validStateKeys) {
+            stateNames[i++] = Bundle.getMessage(stateKey);
+        }
+        return stateNames;
     }
 
     @Override
@@ -168,4 +184,5 @@ public class TripleOutputSignalHead extends DoubleTurnoutSignalHead {
     void readOutput() { }
 
     private final static Logger log = LoggerFactory.getLogger(TripleOutputSignalHead.class);
+
 }

@@ -93,27 +93,33 @@ public class AddProfileDialog extends javax.swing.JDialog {
 
         profileName.setText("");
         profileName.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
             public void changedUpdate(DocumentEvent e) {
                 profileNameActionPerformed(null);
             }
+            @Override
             public void insertUpdate(DocumentEvent e) {
                 profileNameActionPerformed(null);
             }
+            @Override
             public void removeUpdate(DocumentEvent e) {
                 profileNameActionPerformed(null);
             }
         });
         profileName.addFocusListener(new FocusAdapter() {
+            @Override
             public void focusLost(FocusEvent evt) {
                 profileNameFocusLost(evt);
             }
         });
         profileName.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 profileNameActionPerformed(evt);
             }
         });
         profileName.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyTyped(KeyEvent evt) {
                 profileNameKeyTyped(evt);
             }
@@ -126,16 +132,19 @@ public class AddProfileDialog extends javax.swing.JDialog {
         profileLocation.setText(ProfileManager.getDefault().getDefaultSearchPath().getPath());
         profileLocation.setMinimumSize(new Dimension(14, 128));
         profileLocation.addFocusListener(new FocusAdapter() {
+            @Override
             public void focusLost(FocusEvent evt) {
                 profileLocationFocusLost(evt);
             }
         });
         profileLocation.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 profileLocationActionPerformed(evt);
             }
         });
         profileLocation.addKeyListener(new KeyAdapter() {
+            @Override
             public void keyTyped(KeyEvent evt) {
                 profileLocationKeyTyped(evt);
             }
@@ -145,6 +154,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
         profileFolder.setText(ProfileManager.getDefault().getDefaultSearchPath().getPath());
         profileFolder.setEnabled(false);
         profileFolder.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 profileFolderActionPerformed(evt);
             }
@@ -152,6 +162,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
 
         btnBrowse.setText(bundle.getString("AddProfileDialog.btnBrowse.text")); // NOI18N
         btnBrowse.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 btnBrowseActionPerformed(evt);
             }
@@ -161,6 +172,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
 
         btnCancel.setText(bundle.getString("AddProfileDialog.btnCancel.text")); // NOI18N
         btnCancel.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 btnCancelActionPerformed(evt);
             }
@@ -168,6 +180,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
 
         btnOk.setText(bundle.getString("AddProfileDialog.btnOk.text")); // NOI18N
         btnOk.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
                 btnOkActionPerformed(evt);
             }

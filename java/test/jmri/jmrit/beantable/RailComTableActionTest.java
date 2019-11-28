@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import jmri.IdTag;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -10,7 +11,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class RailComTableActionTest extends AbstractTableActionBase {
+public class RailComTableActionTest extends AbstractTableActionBase<IdTag> {
 
     @Test
     public void testCTor() {
@@ -26,6 +27,11 @@ public class RailComTableActionTest extends AbstractTableActionBase {
     @Test
     public void testGetClassDescription() {
         Assert.assertEquals("RailCom Table Action class description", "RailCom Locos", a.getClassDescription());
+    }
+
+    @Override
+    public String getAddFrameName(){
+        return Bundle.getMessage("TitleAddIdTag");
     }
 
     // The minimal setup for log4J

@@ -12,6 +12,7 @@ import org.jdom2.Element;
  *
  * @author Pete Cressman Copyright (c) 2012
  */
+@Deprecated     // Very unlikely to have been used for 2+ years or more. Usefulness doubtful.  
 public class LocoLabelXml extends PositionableRectangleXml {
 
     public LocoLabelXml() {

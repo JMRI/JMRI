@@ -4,22 +4,22 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Assert;
 
 /**
  * JUnit tests for the SerialAddress utility class.
  *
- * @author	Dave Duchamp Copyright 2004
+ * @author Dave Duchamp Copyright 2004
  * @author Bob Jacobsen Copyright 2007, 2008
-  */
-public class SerialAddressTest extends TestCase {
+ */
+public class SerialAddressTest {
 
     private SerialTrafficControlScaffold tcis = null;
- 
-   // service routine for testing regular expressions
+
+    // service routine for testing regular expressions
     Matcher checkRegex(String regex, String string, boolean OK) {
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(string);
@@ -30,12 +30,13 @@ public class SerialAddressTest extends TestCase {
     // Checking a regular expression used for parsing;
     // This just takes the regex out of the code and tries it directly,
     // so if there's something wrong with it we know early
+    @Test
     public void testRegExTurnout() {
         Matcher m;
         String pattern = SerialAddress.turnoutRegex;
 
         // check turnout match in default format
-        m = checkRegex(pattern, "T12", true);
+        m = checkRegex(pattern, "GT12", true);
         Assert.assertEquals("6 groups", 6, m.groupCount());
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "T", m.group(1));
@@ -43,7 +44,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("group 2", null, m.group(2));
 
         // check turnout match in two-part
-        m = checkRegex(pattern, "T12B4", true);
+        m = checkRegex(pattern, "GT12B4", true);
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "T", m.group(1));
         Assert.assertEquals("group 6", null, m.group(6));
@@ -60,12 +61,13 @@ public class SerialAddressTest extends TestCase {
     // Checking a regular expression used for parsing;
     // This just takes the regex out of the code and tries it directly,
     // so if there's something wrong with it we know early
+    @Test
     public void testRegExSensor() {
         Matcher m;
         String pattern = SerialAddress.sensorRegex;
 
         // check sensor match in default format
-        m = checkRegex(pattern, "S12", true);
+        m = checkRegex(pattern, "GS12", true);
         Assert.assertEquals("6 groups", 6, m.groupCount());
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
@@ -73,7 +75,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("group 2", null, m.group(2));
 
         // check sensor match in two-part
-        m = checkRegex(pattern, "S12B4", true);
+        m = checkRegex(pattern, "GS12B4", true);
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
         Assert.assertEquals("group 6", null, m.group(6));
@@ -83,7 +85,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("group 5", "4", m.group(5));
         Assert.assertEquals("group 6", null, m.group(6));
 
-        m = checkRegex(pattern, "S12a4", true);
+        m = checkRegex(pattern, "GS12a4", true);
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
         Assert.assertEquals("group 6", null, m.group(6));
@@ -98,19 +100,20 @@ public class SerialAddressTest extends TestCase {
     // Checking a regular expression used for parsing;
     // This just takes the regex out of the code and tries it directly,
     // so if there's something wrong with it we know early
+    @Test
     public void testRegExHost() {
         Matcher m;
         String pattern = SerialAddress.allRegex;
 
         // check sensor match in default format
-        m = checkRegex(pattern, "S12", true);
+        m = checkRegex(pattern, "GS12", true);
         Assert.assertEquals("6 groups", 6, m.groupCount());
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
         Assert.assertEquals("group 6", "12", m.group(6));
         Assert.assertEquals("group 2", null, m.group(2));
 
-        m = checkRegex(pattern, "L14007", true);
+        m = checkRegex(pattern, "GL14007", true);
         Assert.assertEquals("6 groups", 6, m.groupCount());
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "L", m.group(1));
@@ -118,7 +121,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("group 2", null, m.group(2));
 
         // check sensor match in two-part
-        m = checkRegex(pattern, "S12B4", true);
+        m = checkRegex(pattern, "GS12B4", true);
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
         Assert.assertEquals("group 6", null, m.group(6));
@@ -128,7 +131,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("group 5", "4", m.group(5));
         Assert.assertEquals("group 6", null, m.group(6));
 
-        m = checkRegex(pattern, "S12a4", true);
+        m = checkRegex(pattern, "GS12a4", true);
         //Assert.assertEquals("group 1", "G", m.group(1));
         Assert.assertEquals("group 1", "S", m.group(1));
         Assert.assertEquals("group 6", null, m.group(6));
@@ -140,6 +143,7 @@ public class SerialAddressTest extends TestCase {
 
     }
 
+    @Test
     public void testGetNodeFromSystemName() {
         SerialNode d = new SerialNode(14, SerialNode.NODE2002V6, tcis);
         SerialNode c = new SerialNode(17, SerialNode.NODE2002V1, tcis);
@@ -157,10 +161,12 @@ public class SerialAddressTest extends TestCase {
     //////////////////////////////////////////////
     // service routine for testing validSystemNameFormat, prefix = "G")
     void checkValidSystemNameFormatName(String name, char letter, boolean OK) {
-        Assert.assertTrue((OK ? "" : "in") + "valid format - " + name, (SerialAddress.validSystemNameFormat(name, letter, "G") != jmri.Manager.NameValidity.VALID) ^ OK);
+        Assert.assertTrue((OK ? "" : "in") + "valid format - " + name,
+                (SerialAddress.validSystemNameFormat(name, letter, "G") != jmri.Manager.NameValidity.VALID) ^ OK);
     }
 
-    public void testValidateSystemNameFormat() {
+    @Test
+    public void testValidSystemNameFormat() {
         checkValidSystemNameFormatName("GL1302", 'L', true);
         checkValidSystemNameFormatName("GL1B302", 'L', true);
         checkValidSystemNameFormatName("GL", 'L', false);
@@ -210,6 +216,7 @@ public class SerialAddressTest extends TestCase {
         checkValidSystemNameFormatName("GL2B5x", 'L', false);
     }
 
+    @Test
     public void testGetBitFromSystemName() {
         Assert.assertEquals("GL102", 102, SerialAddress.getBitFromSystemName("GL102", "G"));
         Assert.assertEquals("GS2002", 2, SerialAddress.getBitFromSystemName("GS2002", "G"));
@@ -229,6 +236,7 @@ public class SerialAddressTest extends TestCase {
         Assert.assertEquals("GL11B2048", 2048, SerialAddress.getBitFromSystemName("GL11B2048", "G"));
     }
 
+    @Test
     public void testValidSystemNameConfig() {
         SerialNode d = new SerialNode(4, SerialNode.NODE2002V6, tcis);
         SerialNode c = new SerialNode(10, SerialNode.NODE2002V1, tcis);
@@ -245,7 +253,7 @@ public class SerialAddressTest extends TestCase {
         //JUnitAppender.assertWarnMessage("invalid bit number 133 in GL10133"); // *
         //JUnitAppender.assertWarnMessage("invalid system name GL10133"); // *
 
-        Assert.assertTrue("invalid config GL10B133", !SerialAddress.validSystemNameConfig("GL10B133", 'L',tcis));
+        Assert.assertTrue("invalid config GL10B133", !SerialAddress.validSystemNameConfig("GL10B133", 'L', tcis));
         //JUnitAppender.assertWarnMessage("invalid bit number 133 in GL10B133"); // *
         //JUnitAppender.assertWarnMessage("invalid system name GL10B133"); // *
 
@@ -287,19 +295,23 @@ public class SerialAddressTest extends TestCase {
         JUnitAppender.assertWarnMessage("invalid system name GL11B107; no such node");
     }
 
+    @Test
     public void testConvertSystemNameToAlternate() {
         Assert.assertEquals("convert GL14107", "GL14B107", SerialAddress.convertSystemNameToAlternate("GL14107", "G"));
         Assert.assertEquals("convert GS1107", "GS1B107", SerialAddress.convertSystemNameToAlternate("GS1B107", "G"));
         Assert.assertEquals("convert GT4107", "GT4B107", SerialAddress.convertSystemNameToAlternate("GT4107", "G"));
-        Assert.assertEquals("convert GL14B307", "GL14B307", SerialAddress.convertSystemNameToAlternate("GL14B307", "G"));
+        Assert.assertEquals("convert GL14B307", "GL14B307",
+                SerialAddress.convertSystemNameToAlternate("GL14B307", "G"));
         Assert.assertEquals("convert GL1B207", "GL1B207", SerialAddress.convertSystemNameToAlternate("GL1B207", "G"));
         Assert.assertEquals("convert GS4B207", "GS4B207", SerialAddress.convertSystemNameToAlternate("GS4B207", "G"));
-        Assert.assertEquals("convert GL14B308", "GL14B308", SerialAddress.convertSystemNameToAlternate("GL14B308", "G"));
+        Assert.assertEquals("convert GL14B308", "GL14B308",
+                SerialAddress.convertSystemNameToAlternate("GL14B308", "G"));
 
         Assert.assertEquals("convert GL128B7", "", SerialAddress.convertSystemNameToAlternate("GL128B7", "G"));
         //JUnitAppender.assertWarnMessage("invalid node number 128 in GL128B7"); // *
     }
 
+    @Test
     public void testNormalizeSystemName() {
         Assert.assertEquals("normalize GL14107", "GL14107", SerialAddress.normalizeSystemName("GL14107", "G"));
         Assert.assertEquals("normalize GL01107", "GL1107", SerialAddress.normalizeSystemName("GL01107", "G"));
@@ -320,33 +332,16 @@ public class SerialAddressTest extends TestCase {
         //JUnitAppender.assertWarnMessage("invalid node number 128 in GL128B7"); // *
     }
 
-    // from here down is testing infrastructure
-    public SerialAddressTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {SerialAddressTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(SerialAddressTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         tcis = new SerialTrafficControlScaffold(new GrapevineSystemConnectionMemo());
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

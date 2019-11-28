@@ -1,0 +1,86 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Support - IEEE801254</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+
+      <h1>Hardware Support: IEEE_802.15.4</h1>
+
+      <ul class="snav">
+        <!-- TOC -->
+
+        <li><a href="#hardware">Hardware</a></li>
+
+        <li><a href="#limitations">Limitations</a></li>
+
+        <li><a href="#connecting">Connecting</a></li>
+
+        <li><a href="#tools">Tools</a></li>
+
+        <li><a href="#documentation">Documentation</a></li>
+      </ul><a name="hardware" id="hardware"></a>
+
+      <h2>Supported Hardware</h2>
+
+      <h3>IEEE_802.15.4</h3>
+      <p>Please report your experience</p>
+
+      <h2>Limitations</h2>
+
+      <ul>
+        <li>Please report your experience</li>
+      </ul>
+
+      <a name="connecting" id="connecting"></a>
+      <h2>Connecting</h2>
+      <p>Via USB. Please report your experience</p>
+
+      <a name="tools" id="tools"></a>
+      <h2>JMRI IEEE_802.15.4 Tools</h2>
+
+      <ul>
+        <li>Nodes can be configured with the <a href=
+        "../../../package/jmri/jmrix/ieee802154/nodeconfig/NodeConfigFrame.shtml">
+        Configure Nodes</a> tool</li>
+      </ul>
+
+      <a name="documentation" id="documentation"></a>
+      <h2>Documentation</h2>
+
+      <h3>JMRI Help</h3>
+
+      <p>Naming of IEEE801254 outputs is described on a
+      <a href="Names.shtml">separate page</a>.</p>
+
+      <h3>Third Party info</h3>
+
+      <p>More information on the IEEE_802.15.4 protocol and hardware can be found on the
+      <a href="https://en.wikipedia.org/wiki/IEEE_802.15.4">wikipedia IEEE_802.15.4 web
+      site</a>.</p>
+
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

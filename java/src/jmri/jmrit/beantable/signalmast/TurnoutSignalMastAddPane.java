@@ -17,8 +17,8 @@ import jmri.util.swing.BeanSelectCreatePanel;
 import org.openide.util.lookup.ServiceProvider;
 
 /**
- * A pane for configuring TurnoutSignalMast objects
- * <P>
+ * A pane for configuring TurnoutSignalMast objects.
+ *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2017, 2018
  * @since 4.11.2
@@ -38,7 +38,6 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
         turnoutMastScroll = new JScrollPane(turnoutMastPanel);
         turnoutMastScroll.setBorder(BorderFactory.createEmptyBorder());
         add(turnoutMastScroll);
-
     }
 
     /** {@inheritDoc} */
@@ -60,8 +59,7 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
 
     /** {@inheritDoc} */
     @Override
-    public void setAspectNames(@Nonnull
-            SignalAppearanceMap map, SignalSystem sigSystem) {
+    public void setAspectNames(@Nonnull SignalAppearanceMap map, @Nonnull SignalSystem sigSystem) {
         Enumeration<String> aspects = map.getAspects();
         log.debug("setAspectNames(...)");
 
@@ -73,9 +71,9 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
         }
 
         turnoutMastPanel.removeAll();
-        for (String aspect : turnoutAspect.keySet()) {
-            log.trace("   aspect: {}", aspect);
-            turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
+        for (Map.Entry<String, TurnoutAspectPanel> entry : turnoutAspect.entrySet()) {
+            log.trace("   aspect: {}", entry.getKey());
+            turnoutMastPanel.add(entry.getValue().getPanel());
         }
 
         turnoutMastPanel.add(resetPreviousState);
@@ -157,14 +155,14 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
         name = currentMast.getSystemName();
         
         // load a new or existing mast
-        for (String aspect : turnoutAspect.keySet()) {
-            turnoutAspect.get(aspect).setReference(name + ":" + aspect);
-            turnoutMastPanel.add(turnoutAspect.get(aspect).getPanel());
-            if (turnoutAspect.get(aspect).isAspectDisabled()) {
-                currentMast.setAspectDisabled(aspect);
+        for (Map.Entry<String, TurnoutAspectPanel> entry : turnoutAspect.entrySet()) {
+            entry.getValue().setReference(name + ":" + entry.getKey());
+            turnoutMastPanel.add(entry.getValue().getPanel());
+            if (entry.getValue().isAspectDisabled()) {
+                currentMast.setAspectDisabled(entry.getKey());
             } else {
-                currentMast.setAspectEnabled(aspect);
-                currentMast.setTurnout(aspect, turnoutAspect.get(aspect).getTurnoutName(), turnoutAspect.get(aspect).getTurnoutState());
+                currentMast.setAspectEnabled(entry.getKey());
+                currentMast.setTurnout(entry.getKey(), entry.getValue().getTurnoutName(), entry.getValue().getTurnoutState());
             }
         }
         currentMast.resetPreviousStates(resetPreviousState.isSelected());
@@ -312,4 +310,5 @@ public class TurnoutSignalMastAddPane extends SignalMastAddPane {
     }
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TurnoutSignalMastAddPane.class);
+
 }

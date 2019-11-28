@@ -66,21 +66,23 @@ public class TimeLock implements Lock {
      */
     @Override
     public boolean isLockClear() {
-        InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName).setValue("");
         // if this route isn't in effect, then permitted
         if (beans != null) {
             for (BeanSetting bean : beans) {
-                if ( ! bean.check()) return true;
+                if ( ! bean.check()) {
+                    lockLogger.setStatus(this, "");
+                    return true;
+                }
             }
         }
         
         for (SignalHeadSection section : list) {
             if (section.isRunningTime()) {
-                InstanceManager.getDefault(MemoryManager.class).provideMemory(logMemoryName)
-                    .setValue("Locked: "+section.getStation()+" running time");
+                lockLogger.setStatus(this, "Locked: "+section.getStation()+" running time");
                 return false;
             }
         }
+        lockLogger.setStatus(this, "");
         return true;
     }
     

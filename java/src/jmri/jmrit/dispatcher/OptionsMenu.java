@@ -23,6 +23,7 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import jmri.InstanceManager;
 import jmri.Scale;
+import jmri.ScaleManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -116,7 +117,7 @@ public class OptionsMenu extends JMenu {
     JCheckBox extraColorForAllocatedCheckBox = new JCheckBox(Bundle.getMessage("ExtraColorForAllocatedBox"));
     JCheckBox nameInAllocatedBlockCheckBox = new JCheckBox(Bundle.getMessage("NameInAllocatedBlockBox"));
     JCheckBox supportVSDecoderCheckBox = new JCheckBox(Bundle.getMessage("SupportVSDecoder"));
-    JComboBox<String> layoutScaleBox = new JComboBox<>();
+    JComboBox<Scale> layoutScaleBox = new JComboBox<>();
     JRadioButton scaleFeet = new JRadioButton(Bundle.getMessage("ScaleFeet"));
     JRadioButton scaleMeters = new JRadioButton(Bundle.getMessage("ScaleMeters"));
     JCheckBox openDispatcherWithPanel = new JCheckBox(Bundle.getMessage("OpenDispatcherWithPanelBox"));
@@ -261,7 +262,7 @@ public class OptionsMenu extends JMenu {
             p15.add(new JLabel(Bundle.getMessage("minThrottleInterval") + ":"));
             minThrottleIntervalSpinner.setToolTipText(Bundle.getMessage("minThrottleIntervalHint"));
             p15.add(minThrottleIntervalSpinner);
-            p15.add(new JLabel(Bundle.getMessage("ms")));
+            p15.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
             optionsPane.add(p15);
 
             JPanel p17 = new JPanel();
@@ -269,7 +270,7 @@ public class OptionsMenu extends JMenu {
             p17.add(new JLabel(Bundle.getMessage("fullRampTime") + " :"));
             fullRampTimeSpinner.setToolTipText(Bundle.getMessage("fullRampTimeHint", Bundle.getMessage("RAMP_FAST")));
             p17.add(fullRampTimeSpinner);
-            p17.add(new JLabel(Bundle.getMessage("ms")));
+            p17.add(new JLabel(Bundle.getMessage("LabelMilliseconds")));
             optionsPane.add(p17);
 
             JPanel p18 = new JPanel();
@@ -363,7 +364,7 @@ public class OptionsMenu extends JMenu {
         dispatcher.setNameInAllocatedBlock(nameInAllocatedBlockCheckBox.isSelected());
         dispatcher.setRosterEntryInBlock(rosterInBlockCheckBox.isSelected());
         dispatcher.setSupportVSDecoder(supportVSDecoderCheckBox.isSelected());
-        dispatcher.setScale(layoutScaleBox.getSelectedIndex() + 1);
+        dispatcher.setScale((Scale) layoutScaleBox.getSelectedItem());
         dispatcher.setUseScaleMeters(scaleMeters.isSelected());
         dispatcher.setMinThrottleInterval((int) minThrottleIntervalSpinner.getValue());
         dispatcher.setFullRampTime((int) fullRampTimeSpinner.getValue());
@@ -424,10 +425,14 @@ public class OptionsMenu extends JMenu {
 
     private void initializeScaleCombo() {
         layoutScaleBox.removeAllItems();
-        for (int i = 0; i < Scale.NUM_SCALES; i++) {
-            layoutScaleBox.addItem(Scale.getScaleID(i + 1));
+        for (Scale scale : ScaleManager.getScales()) {
+            if (scale.getScaleName().equals("CUSTOM")) {  // No custom support yet, don't show.
+                continue;
+            }
+            layoutScaleBox.addItem(scale);
         }
-        layoutScaleBox.setSelectedIndex(dispatcher.getScale() - 1);
+        jmri.util.swing.JComboBoxUtil.setupComboBoxMaxRows(layoutScaleBox);
+        layoutScaleBox.setSelectedItem(dispatcher.getScale());
     }
 
     private void initializeStoppingSpeedCombo() {
@@ -440,4 +445,5 @@ public class OptionsMenu extends JMenu {
     }
 
     private final static Logger log = LoggerFactory.getLogger(OptionsMenu.class);
+
 }

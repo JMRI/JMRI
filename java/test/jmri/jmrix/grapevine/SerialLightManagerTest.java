@@ -2,6 +2,9 @@ package jmri.jmrix.grapevine;
 
 import jmri.Light;
 import jmri.util.JUnitUtil;
+
+import java.beans.PropertyVetoException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -62,6 +65,23 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
 
     }
 
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        testRegisterDuplicateSystemName(l,
+                l.makeSystemName("1107"),
+                l.makeSystemName("1109"));
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("1107");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
+    }
+
     /**
      * Number of light to test. Use 9th output on node 1.
      */
@@ -79,7 +99,9 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTestBa
     // The minimal setup for log4J
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class);

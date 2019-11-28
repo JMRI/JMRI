@@ -7,14 +7,15 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.nodeconfigmanager.NodeConfigManagerAction;
 
 /**
- * Definition of objects to handle configuring a layout connection via an C/MRI
+ * Definition of objects to handle configuring a layout connection via a C/MRI
  * SerialDriverAdapter object.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003
  * @author Chuck Catania Copyright (C) 2017
-
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
+
+    public final static String NAME = Bundle.getMessage("TypeSerial");
 
     /**
      * Ctor for an object being created during load process; Swing init is
@@ -25,14 +26,23 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
     }
 
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
     }
 
-    JButton b;
+    @Override
+    public String name() {
+        return NAME;
+    }
 
+    private JButton b;
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
 
@@ -51,15 +61,14 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
     }
 
-    @Override
-    public String name() {
-        return "Serial";
-    }
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SerialDriverAdapter();
         }
     }
+
 }

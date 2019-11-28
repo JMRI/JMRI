@@ -63,6 +63,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
 
@@ -84,11 +85,11 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
             public ProgrammingMode getBestMode() { return ProgrammingMode.DIRECTMODE; }
 
             @Override
-            public void writeCV(int i, int j, ProgListener l) {}
+            public void writeCV(String i, int j, ProgListener l) {}
             @Override
             public void confirmCV(String i, int j, ProgListener l) {}
             @Override
-            public void readCV(int i, ProgListener l) {}
+            public void readCV(String i, ProgListener l) {}
             @Override
             public void timeout() {}
             @Override
@@ -97,6 +98,7 @@ public class AbstractProgrammerTest extends jmri.ProgrammerTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {
         programmer = null;
         JUnitUtil.tearDown();

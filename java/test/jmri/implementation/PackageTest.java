@@ -11,6 +11,7 @@ import org.junit.runners.Suite;
         // implementations
         AbstractAudioTest.class,
         AbstractSensorTest.class,
+        AbstractStringIOTest.class,
         AccessoryOpsModeProgrammerFacadeTest.class,
         OpsModeDelayedProgrammerFacadeTest.class,
         AddressedHighCvProgrammerFacadeTest.class,
@@ -20,6 +21,7 @@ import org.junit.runners.Suite;
         DefaultConditionalActionTest.class,
         DefaultIdTagTest.class,
         DefaultLogixTest.class,
+        ActiveLogixTest.class,
         DefaultSignalSystemTest.class,
         DefaultSignalAppearanceMapTest.class,
         MultiIndexProgrammerFacadeTest.class,
@@ -38,6 +40,7 @@ import org.junit.runners.Suite;
         NmraConsistTest.class,
         MatrixSignalMastTest.class,
         DefaultRailComTest.class,
+        DefaultCabSignalTest.class,
 
         // sub-packages
         jmri.implementation.swing.PackageTest.class,

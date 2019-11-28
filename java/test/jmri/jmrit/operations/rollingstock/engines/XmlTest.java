@@ -5,9 +5,7 @@ import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import org.jdom2.JDOMException;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -175,12 +173,13 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("e1 model Weight Tons", "100", InstanceManager.getDefault(EngineModels.class).getModelWeight("e1 model"));
         Assert.assertEquals("e1 model hp", "e1 hp", InstanceManager.getDefault(EngineModels.class).getModelHorsepower("e1 model"));
 
-        e1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find engine by original id
-        e2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find engine by original id
-        e3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find engine by original id
-        e4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find engine by original id
-        e5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find engine by original id
-        e6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find engine by original id
+        // verify engines can be gotten using current road and number
+        e1 = manager.getByRoadAndNumber("newRoad", "New Test Number e1");
+        e2 = manager.getByRoadAndNumber("e2 Road", "X Test Number e2");
+        e3 = manager.getByRoadAndNumber("e3 Road", "X Test Number e3");
+        e4 = manager.getByRoadAndNumber("PC", "Test Number 4");
+        e5 = manager.getByRoadAndNumber("e5Road", "New Test Number e5");
+        e6 = manager.getByRoadAndNumber("SP", "Test Number 6");
 
         Assert.assertNotNull("engine e1 exists", e1);
         Assert.assertNotNull("engine e2 exists", e2);
@@ -306,12 +305,13 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("e1 model Weight Tons", "001", InstanceManager.getDefault(EngineModels.class).getModelWeight("e1 X model"));
         Assert.assertEquals("e1 model hp", "e1 hp", InstanceManager.getDefault(EngineModels.class).getModelHorsepower("e1 X model"));
 
-        e1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find engine by original id
-        e2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find engine by original id
-        e3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find engine by original id
-        e4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find engine by original id
-        e5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find engine by original id
-        e6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find engine by original id
+        // verify engines can be gotten using current road and number
+        e1 = manager.getByRoadAndNumber("OLDRoad", "X Test Number e1");
+        e2 = manager.getByRoadAndNumber("e2 Road", "X Test Number e2");
+        e3 = manager.getByRoadAndNumber("e3 Road", "X Test Number e3");
+        e4 = manager.getByRoadAndNumber("PC", "Test Number 4");
+        e5 = manager.getByRoadAndNumber("e5Road", "New Test Number e5");
+        e6 = manager.getByRoadAndNumber("SP", "Test Number 6");
 
         Assert.assertNotNull("engine e1 exists", e1);
         Assert.assertNotNull("engine e2 exists", e2);
@@ -368,18 +368,4 @@ public class XmlTest extends OperationsTestCase {
     }
 
     // TODO: Add test for import
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
-    }
-
 }

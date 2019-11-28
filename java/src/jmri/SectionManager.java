@@ -1,47 +1,42 @@
 package jmri;
 
-import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
-
 /**
  * Basic Implementation of a SectionManager.
- * <P>
+ * <p>
  * This doesn't have a "new" interface, since Sections are independently
  * implemented, instead of being system-specific.
- * <P>
- * Note that Section system names must begin with IY, and be followed by a
- * string, usually, but not always, a number. All alphabetic characters in a
- * Section system name must be upper case. This is enforced when a Section is
- * created.
- * <BR>
+ * <p>
+ * Note that Section system names must begin with system prefix and type character,
+ * usually IY, and be followed by a string, usually, but not always, a number. This
+ * is enforced when a Section is created.
+ * <br>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * </P><P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * </P>
  *
  * @author Dave Duchamp Copyright (C) 2008
  */
-public class SectionManager extends AbstractManager<Section> implements PropertyChangeListener, InstanceManagerAutoDefault {
+public class SectionManager extends AbstractManager<Section> implements InstanceManagerAutoDefault {
 
     public SectionManager() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(BlockManager.class).addVetoableChangeListener(this);
     }
@@ -49,11 +44,6 @@ public class SectionManager extends AbstractManager<Section> implements Property
     @Override
     public int getXMLOrder() {
         return Manager.SECTIONS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -77,8 +67,8 @@ public class SectionManager extends AbstractManager<Section> implements Property
             return null;
         }
         String sysName = systemName;
-        if ((sysName.length() < 2) || (!sysName.substring(0, 2).equals("IY"))) {
-            sysName = "IY" + sysName;
+        if (!sysName.startsWith(getSystemNamePrefix())) {
+            sysName = makeSystemName(sysName);
         }
         // Check that Section does not already exist
         Section y;
@@ -88,45 +78,24 @@ public class SectionManager extends AbstractManager<Section> implements Property
                 return null;
             }
         }
-        String sName = sysName.toUpperCase().trim();
         y = getBySystemName(sysName);
-        if (y == null) {
-            y = getBySystemName(sName);
-        }
         if (y != null) {
             return null;
         }
         // Section does not exist, create a new Section
-        y = new Section(sName, userName);
+        y = new Section(sysName, userName);
         // save in the maps
         register(y);
-        /*The following keeps trace of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them*/
-        if (systemName.startsWith("IY:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoSectionRef) {
-                    lastAutoSectionRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
-            }
-        }
+
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return y;
     }
 
     public Section createNewSection(String userName) {
-        int nextAutoSectionRef = lastAutoSectionRef + 1;
-        StringBuilder b = new StringBuilder("IY:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoSectionRef);
-        b.append(nextNumber);
-        return createNewSection(b.toString(), userName);
+        return createNewSection(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoSectionRef = 0;
 
     /**
      * Remove an existing Section.
@@ -155,27 +124,12 @@ public class SectionManager extends AbstractManager<Section> implements Property
         return getBySystemName(name);
     }
 
-    public Section getBySystemName(String name) {
-        String key = name.toUpperCase();
+    public Section getBySystemName(String key) {
         return _tsys.get(key);
     }
 
     public Section getByUserName(String key) {
         return _tuser.get(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
     }
 
     /**
@@ -187,14 +141,14 @@ public class SectionManager extends AbstractManager<Section> implements Property
      *         sections
      */
     public int validateAllSections(jmri.util.JmriJFrame frame, LayoutEditor lePanel) {
-        List<String> list = getSystemNameList();
+        Set<Section> set = getNamedBeanSet();
         int numSections = 0;
         int numErrors = 0;
-        if (list.size() <= 0) {
+        if (set.size() <= 0) {
             return -2;
         }
-        for (int i = 0; i < list.size(); i++) {
-            String s = getBySystemName(list.get(i)).validate(lePanel);
+        for (Section section : set) {
+            String s = section.validate(lePanel);
             if (!s.equals("")) {
                 log.error(s);
                 numErrors++;
@@ -216,14 +170,14 @@ public class SectionManager extends AbstractManager<Section> implements Property
         if (lePanel == null) {
             return -1;
         }
-        List<String> list = getSystemNameList();
+        Set<Section> set = getNamedBeanSet();
         int numSections = 0;
         int numErrors = 0;
-        if (list.size() <= 0) {
+        if (set.size() <= 0) {
             return -2;
         }
-        for (int i = 0; i < list.size(); i++) {
-            int errors = getBySystemName(list.get(i)).placeDirectionSensors(lePanel);
+        for (Section section : set) {
+            int errors = section.placeDirectionSensors(lePanel);
             numErrors = numErrors + errors;
             numSections++;
         }
@@ -243,14 +197,13 @@ public class SectionManager extends AbstractManager<Section> implements Property
             return -1;
         }
         jmri.jmrit.display.layoutEditor.ConnectivityUtil cUtil = lePanel.getConnectivityUtil();
-        List<String> list = getSystemNameList();
-        if (list.size() <= 0) {
+        Set<Section> set = getNamedBeanSet();
+        if (set.size() <= 0) {
             return -2;
         }
         int numErrors = 0;
-        ArrayList<String> sensorList = new ArrayList<>();
-        for (int i = 0; i < list.size(); i++) {
-            Section s = getBySystemName(list.get(i));
+        List<String> sensorList = new ArrayList<>();
+        for (Section s : set) {
             String name = s.getReverseBlockingSensorName();
             if ((name != null) && (!name.equals(""))) {
                 sensorList.add(name);
@@ -261,9 +214,7 @@ public class SectionManager extends AbstractManager<Section> implements Property
             }
         }
         jmri.SignalHeadManager shManager = InstanceManager.getDefault(jmri.SignalHeadManager.class);
-        List<String> signalList = shManager.getSystemNameList();
-        for (int j = 0; j < signalList.size(); j++) {
-            SignalHead sh = shManager.getBySystemName(signalList.get(j));
+        for (SignalHead sh : shManager.getNamedBeanSet()) {
             if (!cUtil.removeSensorsFromSignalHeadLogic(sensorList, sh)) {
                 numErrors++;
             }
@@ -275,9 +226,7 @@ public class SectionManager extends AbstractManager<Section> implements Property
      * Initialize all blocking sensors that exist - sets them to 'ACTIVE'
      */
     public void initializeBlockingSensors() {
-        List<String> list = getSystemNameList();
-        for (int i = 0; i < list.size(); i++) {
-            Section s = getBySystemName(list.get(i));
+        for (Section s : getNamedBeanSet()) {
             try {
                 if (s.getForwardBlockingSensor() != null) {
                     s.getForwardBlockingSensor().setState(Sensor.ACTIVE);
@@ -292,8 +241,8 @@ public class SectionManager extends AbstractManager<Section> implements Property
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSection");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSections" : "BeanNameSection");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SectionManager.class);

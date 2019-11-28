@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * Table data model for display of DCC packet contents
  *
  * @author	Bob Jacobsen Copyright (C) 2005
-  */
+ */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel {
 
     static public final int ADDRESSCOLUMN = 0;
@@ -233,7 +233,7 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel {
     /**
      * Find the display key from the current input line. A later input line that
      * maps to the same key will overwrite the earlier line.
-     * <P>
+     * <p>
      * The current implementation is address+type, so that separate lines will
      * be used for each type sent to the same address.
      *

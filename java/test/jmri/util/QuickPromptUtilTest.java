@@ -1,11 +1,11 @@
 package jmri.util;
 
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.util.function.Predicate;
+import org.junit.*;
 
 /**
  *
@@ -29,5 +29,74 @@ public class QuickPromptUtilTest {
     public void tearDown() {
         jmri.util.JUnitUtil.tearDown();
     }
+    
+    /**
+     * Checks that int predicate works well.
+     */
+    @Test
+    public void testIntRangePredicate() {
+        doTestIntRangePredicate("someValue");
+    }
+    
+    @Test
+    public void testIntRangePredicateWithLabel() {
+        doTestIntRangePredicate("someValue");
+    }
+    
+    private void doTestIntRangePredicate(String label) {
+        Predicate<Integer> pr = new QuickPromptUtil.IntRangePredicate(
+                null, 10, label);
+        assertTrue(pr.test(-1));
+        assertTrue(pr.test(5));
+        try {
+            assertTrue(pr.test(15));
+            fail("Exception expected");
+        } catch (IllegalArgumentException ex) {
+            if (label != null) {
+                assertTrue(ex.getLocalizedMessage().contains(label));
+            }
+            assertTrue(ex.getLocalizedMessage().contains("10"));
+            assertFalse(ex.getLocalizedMessage().contains("null"));
+        }
+        
+        pr = new QuickPromptUtil.IntRangePredicate(
+                10, null, label);
+        assertTrue(pr.test(15));
 
+        try {
+            assertTrue(pr.test(5));
+            fail("Exception expected");
+        } catch (IllegalArgumentException ex) {
+            if (label != null) {
+                assertTrue(ex.getLocalizedMessage().contains(label));
+            }
+            assertTrue(ex.getLocalizedMessage().contains("10"));
+            assertFalse(ex.getLocalizedMessage().contains("null"));
+        }
+        
+        pr = new QuickPromptUtil.IntRangePredicate(
+                10, 20, label);
+        assertTrue(pr.test(15));
+
+        try {
+            assertTrue(pr.test(5));
+            fail("Exception expected");
+        } catch (IllegalArgumentException ex) {
+            if (label != null) {
+                assertTrue(ex.getLocalizedMessage().contains(label));
+            }
+            assertTrue(ex.getLocalizedMessage().contains("10"));
+            assertFalse(ex.getLocalizedMessage().contains("null"));
+        }
+        try {
+            assertTrue(pr.test(25));
+            fail("Exception expected");
+        } catch (IllegalArgumentException ex) {
+            if (label != null) {
+                assertTrue(ex.getLocalizedMessage().contains(label));
+            }
+            assertTrue(ex.getLocalizedMessage().contains("20"));
+            assertFalse(ex.getLocalizedMessage().contains("null"));
+        }
+    }
 }

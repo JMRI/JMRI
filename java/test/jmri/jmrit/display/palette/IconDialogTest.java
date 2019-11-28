@@ -23,12 +23,13 @@ public class IconDialogTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         new EditorScaffold();
-        PickListModel<Turnout> tableModel = PickListModel.turnoutPickModelInstance(); // N11N
+        PickListModel<Turnout> tableModel = PickListModel.turnoutPickModelInstance();
         DisplayFrame df = new DisplayFrame("Icon Dialog Test");
         Editor editor = new EditorScaffold();
         TableItemPanel<Turnout> tip = new TableItemPanel<>(df,"IS01","",tableModel,editor);
         IconDialog t = new IconDialog("Icon","Icon",tip,null);
         Assert.assertNotNull("exists",t);
+        JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
     }
 

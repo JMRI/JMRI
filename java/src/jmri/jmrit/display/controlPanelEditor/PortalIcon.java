@@ -5,10 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
+
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
@@ -151,7 +154,12 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         return _status;
     }
 
-    /* currently Portals do not have an instance manager - !!!todo? */
+    @Override
+    public void remove() {
+        ((ControlPanelEditor)_editor).getCircuitBuilder().deletePortalIcon(this);
+        super.remove();
+    }
+
     @Override
     public NamedBean getNamedBean() {
         return getPortal();
@@ -212,15 +220,15 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
                 }
             } else if ("UserName".equals(e.getPropertyName())) {
                 setName((String) e.getNewValue());
-                ((ControlPanelEditor) getEditor()).getCircuitBuilder().changePortalName(
-                        (String) e.getOldValue(), (String) e.getNewValue());
             }
         }
     }
 
     @Override
     public String getNameString() {
-        return getPortal().getDescription();
+        Portal p = getPortal();
+        if (p == null) return "No Portal Defined";
+        return p.getDescription();
     }
 
     /**

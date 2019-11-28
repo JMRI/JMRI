@@ -30,16 +30,14 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
     JTable locoTable;
     JScrollPane locoScroll;
 
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.tams.swing.locodatabase.TamsLocoBundle");
-
     String[] speed = {"126", "14", "27", "28"};
-    String[] fmt = {"DCC", "MM1", "MM2"};
+    String[] fmt = {"DCC", "MM1", "MM2"}; // NOI18N
 
     JTextField addr = new JTextField(5);
     JTextField name = new JTextField(10);
     JComboBox<String> speedBox = new JComboBox<String>(speed);
     JComboBox<String> formatBox = new JComboBox<String>(fmt);
-    JButton addButton = new JButton(rb.getString("AddLoco"));
+    JButton addButton = new JButton(Bundle.getMessage("AddLoco"));
 
     public LocoDataPane() {
         super();
@@ -63,13 +61,13 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
         JPanel pane1 = new JPanel();
         pane1.setLayout(new FlowLayout());
 
-        pane1.add(new JLabel(rb.getString("Address")));
+        pane1.add(new JLabel(Bundle.getMessage("Address"))); // TODO reuse props key in NBB/JmrixBundle?
         pane1.add(addr);
-        pane1.add(new JLabel(rb.getString("Name")));
+        pane1.add(new JLabel(Bundle.getMessage("Name"))); // TODO reuse props key in NBB/JmrixBundle?
         pane1.add(name);
-        pane1.add(new JLabel(rb.getString("Steps")));
+        pane1.add(new JLabel(Bundle.getMessage("Steps")));
         pane1.add(speedBox);
-        pane1.add(new JLabel(rb.getString("Format")));
+        pane1.add(new JLabel(Bundle.getMessage("Format")));
         pane1.add(formatBox);
         pane1.add(addButton);
 
@@ -92,7 +90,7 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
     void addLoco() {
         if (addr.getText() == null || addr.getText().equals("")) {
             log.error("Require an address to be entered");
-            JOptionPane.showMessageDialog(null, rb.getString("ErrorNullAddress"), "Error",
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNullAddress"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
 
@@ -100,8 +98,8 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
         try {
             Integer.valueOf(addr.getText());
         } catch (NumberFormatException nx) {
-            log.error("Unable to convert " + addr.getText() + " to a number");
-            JOptionPane.showMessageDialog(null, rb.getString("ErrorNotNumber"), "Error",
+            log.error("Unable to convert {} to a number", addr.getText());
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("ErrorNotNumber"), Bundle.getMessage("ErrorTitle"),
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -127,7 +125,7 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
 
     @Override
     public String getTitle() {
-        return rb.getString("Title");
+        return Bundle.getMessage("Title");
     }
 
     @Override
@@ -145,7 +143,7 @@ public class LocoDataPane extends jmri.jmrix.tams.swing.TamsPanel {
     static public class Default extends jmri.jmrix.tams.swing.TamsNamedPaneAction {
 
         public Default() {
-            super(rb.getString("Title"),
+            super(Bundle.getMessage("Title"),
                     new jmri.util.swing.sdi.JmriJFrameInterface(),
                     LocoDataPane.class.getName(),
                     jmri.InstanceManager.getDefault(TamsSystemConnectionMemo.class));

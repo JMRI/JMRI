@@ -2,13 +2,14 @@ package jmri.jmrix.nce;
 
 import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTestBase;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 
 /**
  * JUnit tests for the NcePowerManager class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
 
     // service routines to simulate receiving on, off from interface
@@ -85,6 +86,7 @@ public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
     public void tearDown() {
         controller = null;
         p = null;
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         jmri.util.JUnitUtil.tearDown();
     }
 
@@ -93,13 +95,13 @@ public class NcePowerManagerTest extends AbstractPowerManagerTestBase {
     // state readback by sending messages & getting a reply
     @Override
     @Test
-    @Ignore("no unsolicted message, so do not run test")
+    @NotApplicable("no unsolicted message, so do not run test")
     public void testStateOn() throws JmriException {
     }
 
     @Override
     @Test
-    @Ignore("no unsolicted message, so do not run test")
+    @NotApplicable("no unsolicted message, so do not run test")
     public void testStateOff() throws JmriException {
     }
 

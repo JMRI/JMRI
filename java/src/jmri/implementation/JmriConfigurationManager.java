@@ -1,11 +1,13 @@
 package jmri.implementation;
 
-import apps.AppsBase;
-import apps.gui3.EditConnectionPreferencesDialog;
-import apps.gui3.TabbedPreferencesAction;
 import java.awt.GraphicsEnvironment;
-import java.io.File;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -13,14 +15,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ServiceLoader;
 import java.util.concurrent.atomic.AtomicBoolean;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
+
+import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.KeyStroke;
+import javax.swing.TransferHandler;
+import javax.swing.event.ListSelectionEvent;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import apps.AppsBase;
+import apps.gui3.tabbedpreferences.EditConnectionPreferencesDialog;
+import apps.gui3.tabbedpreferences.TabbedPreferencesAction;
 import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -28,15 +40,14 @@ import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.jmrit.XmlFile;
-import jmri.profile.AddProfileDialog;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.spi.PreferencesManager;
 import jmri.util.FileUtil;
+import jmri.util.SystemType;
+import jmri.util.com.sun.TransferActionListener;
 import jmri.util.prefs.HasConnectionButUnableToConnectException;
 import jmri.util.prefs.InitializationException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -186,7 +197,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         log.debug("loading {} ...", url);
         try {
             if (url == null
-                    || (new File(url.toURI())).getName().equals("ProfileConfig.xml") //NOI18N
+                    || (new File(url.toURI())).getName().equals(Profile.CONFIG_FILENAME)
                     || (new File(url.toURI())).getName().equals(Profile.CONFIG)) {
                 Profile profile = ProfileManager.getDefault().getActiveProfile();
                 List<PreferencesManager> providers = new ArrayList<>(InstanceManager.getList(PreferencesManager.class));
@@ -219,63 +230,24 @@ public class JmriConfigurationManager implements ConfigureManager {
                             list = new JList<>(errors.toArray(new String[errors.size()]));
                         }
                         
-                        List<String> errorList = errors;
-                        
                         if (isUnableToConnect.get()) {
-                            if (errors.size() > 1) {
-                                errorList.add(0, Bundle.getMessage("InitExMessageListHeader"));
-                            }
-                            errorList.add("");
-                            errorList.add(Bundle.getMessage("InitExMessageLogs")); // NOI18N
-                            
-                            ErrorDialog dialog = new ErrorDialog(errorList);
-                            
-                            switch (dialog.result) {
-                                case NEW_PROFILE:
-                                    AddProfileDialog apd = new AddProfileDialog(null, true, false);
-                                    apd.setLocationRelativeTo(null);
-                                    apd.setVisible(true);
-                                    // Restart program
-                                    AppsBase.handleRestart();
-                                    break;
-                                    
-                                case EDIT_CONNECTIONS:
-                                   if (EditConnectionPreferencesDialog.showDialog()) {
-                                        // Restart program
-                                        AppsBase.handleRestart();
-                                        break;
-                                    } else {
-                                        // Quit program
-                                        AppsBase.handleQuit();
-                                        break;
-                                    }
-                                    
-                                case RESTART_PROGRAM:
-                                    // Restart program
-                                    AppsBase.handleRestart();
-                                    break;
-                                    
-                                case EXIT_PROGRAM:
-                                default:
-                                    // Exit program
-                                    AppsBase.handleQuit();
-                            }
+                            handleConnectionError(errors, list);
+                        } else {
+                            JOptionPane.showMessageDialog(null,
+                                    new Object[]{
+                                        (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
+                                        list,
+                                        "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
+                                        Bundle.getMessage("InitExMessageLogs"), // NOI18N
+                                        Bundle.getMessage("InitExMessagePrefs"), // NOI18N
+                                    },
+                                    Bundle.getMessage("InitExMessageTitle", Application.getApplicationName()), // NOI18N
+                                    JOptionPane.ERROR_MESSAGE);
+                            (new TabbedPreferencesAction()).actionPerformed();
                         }
-                        
-                        JOptionPane.showMessageDialog(null,
-                                new Object[]{
-                                    (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
-                                    list,
-                                    "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
-                                    Bundle.getMessage("InitExMessageLogs"), // NOI18N
-                                    Bundle.getMessage("InitExMessagePrefs"), // NOI18N
-                                },
-                                Bundle.getMessage("InitExMessageTitle", Application.getApplicationName()), // NOI18N
-                                JOptionPane.ERROR_MESSAGE);
-                        (new TabbedPreferencesAction()).actionPerformed();
                     }
                 }
-                if (url != null && (new File(url.toURI())).getName().equals("ProfileConfig.xml")) { // NOI18N
+                if (url != null && (new File(url.toURI())).getName().equals(Profile.CONFIG_FILENAME)) {
                     log.debug("Loading legacy configuration...");
                     return this.legacy.load(url, registerDeferred);
                 }
@@ -285,12 +257,107 @@ public class JmriConfigurationManager implements ConfigureManager {
             log.error("Unable to get File for {}", url);
             throw new JmriException(ex.getMessage(), ex);
         }
-        // make this url the default "Save Panels..." file
+        // make this url the default "Store Panels..." file
         JFileChooser ufc = jmri.configurexml.StoreXmlUserAction.getUserFileChooser();
         ufc.setSelectedFile(new File(FileUtil.urlToURI(url)));
 
         return this.legacy.load(url, registerDeferred);
         // return true; // always return true once legacy support is dropped
+    }
+
+    /**
+     * Show a dialog with options Quit, Restart, Change profile, Edit connections
+     * @param errors the list of error messages
+     * @param list A JList or a String with error message(s)
+     */
+    private void handleConnectionError(List<String> errors, Object list) {
+        List<String> errorList = errors;
+
+        errorList.add(" "); // blank line below errors
+        errorList.add(Bundle.getMessage("InitExMessageLogs"));
+
+        Object[] options = new Object[] {
+            Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()),
+            Bundle.getMessage("ErrorDialogButtonContinue"),
+            Bundle.getMessage("ErrorDialogButtonEditConnections")
+        };
+
+        if (list instanceof JList) {
+            JPopupMenu popupMenu = new JPopupMenu();
+            JMenuItem copyMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
+            TransferActionListener copyActionListener = new TransferActionListener();
+            copyMenuItem.setActionCommand((String) TransferHandler.getCopyAction().getValue(Action.NAME));
+            copyMenuItem.addActionListener(copyActionListener);
+            if (SystemType.isMacOSX()) {
+                copyMenuItem.setAccelerator(
+                        KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.META_MASK));
+            } else {
+                copyMenuItem.setAccelerator(
+                        KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+            }
+            copyMenuItem.setMnemonic(KeyEvent.VK_C);
+            copyMenuItem.setEnabled(((JList)list).getSelectedIndex() != -1);
+            popupMenu.add(copyMenuItem);
+
+            JMenuItem copyAllMenuItem = new JMenuItem(Bundle.getMessage("MenuItemCopyAll"));
+            ActionListener copyAllActionListener = (ActionEvent e) -> {
+                StringBuilder text = new StringBuilder();
+                for (int i=0; i < ((JList)list).getModel().getSize(); i++) {
+                    text.append(((JList)list).getModel().getElementAt(i).toString());
+                    text.append(System.getProperty("line.separator")); // NOI18N
+                }
+                Clipboard systemClipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+                systemClipboard.setContents(new StringSelection(text.toString()), null);
+            };
+            copyAllMenuItem.setActionCommand("copyAll"); // NOI18N
+            copyAllMenuItem.addActionListener(copyAllActionListener);
+            popupMenu.add(copyAllMenuItem);
+
+            ((JList) list).setComponentPopupMenu(popupMenu);
+
+            ((JList) list).addListSelectionListener((ListSelectionEvent e) -> {
+                copyMenuItem.setEnabled(((JList)e.getSource()).getSelectedIndex() != -1);
+            });
+        }
+
+        JOptionPane pane = new JOptionPane(
+                new Object[] {
+                    (list instanceof JList) ? Bundle.getMessage("InitExMessageListHeader") : null,
+                    list,
+                    "<html><br></html>", // Add a visual break between list of errors and notes // NOI18N
+                    Bundle.getMessage("InitExMessageLogs"), // NOI18N
+                    Bundle.getMessage("ErrorDialogConnectLayout"), // NOI18N
+                },
+                JOptionPane.ERROR_MESSAGE,
+                JOptionPane.DEFAULT_OPTION,
+                null,
+                options
+        );
+
+        JDialog dialog = pane.createDialog(null, Bundle.getMessage("InitExMessageTitle", Application.getApplicationName())); // NOI18N
+        dialog.setVisible(true);
+        Object selectedValue = pane.getValue();
+
+        if (Bundle.getMessage("ErrorDialogButtonQuitProgram", Application.getApplicationName()).equals(selectedValue)) {
+            // Exit program
+            AppsBase.handleQuit();
+
+        } else if (Bundle.getMessage("ErrorDialogButtonContinue").equals(selectedValue)) {
+            // Do nothing. Let the program continue
+
+        } else if (Bundle.getMessage("ErrorDialogButtonEditConnections").equals(selectedValue)) {
+           if (EditConnectionPreferencesDialog.showDialog()) {
+                // Restart program
+                AppsBase.handleRestart();
+            } else {
+                // Quit program
+                AppsBase.handleQuit();
+            }
+
+        } else {
+            // Exit program
+            AppsBase.handleQuit();
+        }
     }
 
     @Override
@@ -351,89 +418,4 @@ public class JmriConfigurationManager implements ConfigureManager {
         return legacy.getValidate();
     }
 
-
-
-    private static final class ErrorDialog extends JDialog {
-        
-        enum Result {
-            EXIT_PROGRAM,
-            RESTART_PROGRAM,
-            NEW_PROFILE,
-            EDIT_CONNECTIONS,
-        }
-        
-        
-        Result result = Result.EXIT_PROGRAM;
-
-        ErrorDialog(List<String> list) {
-            super();
-            setTitle(Bundle.getMessage("ErrorDialogTitle"));
-            setModal(true);
-            JPanel contentPanel = new JPanel();
-            contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-            JPanel panel = new JPanel();
-            panel.add(new JLabel(Bundle.getMessage("InitExMessageListHeader")));
-            contentPanel.add(panel);
-
-            JPanel marginPanel = new JPanel();
-            marginPanel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-            marginPanel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5,5,5,5));
-            contentPanel.add(marginPanel);
-            JPanel borderPanel = new JPanel();
-            borderPanel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-            borderPanel.setBorder(javax.swing.BorderFactory.createLineBorder(java.awt.Color.black));
-            marginPanel.add(borderPanel);
-            panel = new JPanel();
-            panel.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            panel.setBorder(javax.swing.BorderFactory.createEmptyBorder(5,5,5,5));
-            for (String s : list) {
-                // Remove html
-                s = s.replaceAll("\\<html\\>.*\\<\\/html\\>", "");
-                JLabel label = new JLabel(s);
-                label.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-                panel.add(label);
-            }
-            borderPanel.add(panel);
-
-            panel = new JPanel();
-            JButton button = new JButton(Bundle.getMessage("ErrorDialogButtonExitProgram"));
-            button.addActionListener((ActionEvent a) -> {
-                result = Result.EXIT_PROGRAM;
-                dispose();
-            });
-            panel.add(button);
-            
-            button = new JButton(Bundle.getMessage("ErrorDialogButtonRestartProgram"));
-            button.addActionListener((ActionEvent a) -> {
-                result = Result.RESTART_PROGRAM;
-                dispose();
-            });
-            panel.add(button);
-            
-            button = new JButton(Bundle.getMessage("ErrorDialogButtonNewProfile"));
-            button.addActionListener((ActionEvent a) -> {
-                result = Result.NEW_PROFILE;
-                dispose();
-            });
-            panel.add(button);
-            
-            button = new JButton(Bundle.getMessage("ErrorDialogButtonEditConnections"));
-            button.addActionListener((ActionEvent a) -> {
-                result = Result.EDIT_CONNECTIONS;
-                dispose();
-            });
-            panel.add(button);
-            
-            contentPanel.add(panel);
-            
-            setContentPane(contentPanel);
-            pack();
-            
-            // Center dialog on screen
-            setLocationRelativeTo(null);
-            setVisible(true);
-        }
-    }
-    
 }

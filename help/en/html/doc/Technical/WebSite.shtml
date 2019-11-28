@@ -121,7 +121,7 @@
         <li>contact -
         </ul>
         <p>Finally, some of the site is generated from the JMRI source itself, as opposed to being contained in
-        the source.  The <a href="http://jmri.org/JavaDoc/doc">Javadoc</a> is one such section, along with some of the
+        the source.  The <a href="http://jmri.org/JavaDoc/doc/">Javadoc</a> is one such section, along with some of the
         <a href="http://jmri.org/xml/XSLT">human-readable information</a> about defined decoders.
 
         <h2>Updating the jmri.org site</h2>
@@ -130,9 +130,15 @@
         project's Jenkins build servers.  The directories listed above constitute most of the site,
         and this content is updated from the JMRI repository without any additional work.</p>
         <ul>
-        <li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">static content from JMRI/JMRI repository, e.g. help, xml, etc in JMRI distributions</a>
-        <li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">static content from JMRI/website repository, e.g. website-only information</a>
-        <li><a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">static content from JMRI/website-legal repository, e.g. content around the JMRI-Katzer legal case</a>
+        <li><a href=
+        "http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20JMRI%20repository/">static
+        content from JMRI/JMRI repository, e.g. help, xml, etc in JMRI distributions</a></li>
+        <li><a href=
+        "http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/">static
+        content from JMRI/website repository, e.g. website-only information</a></li>
+        <li><a href=
+        "http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website-legal%20repository/">static
+        content from JMRI/website-legal repository, e.g. content around the JMRI-Katzer legal case</a></li>
         </ul>
 
         <p>The regeneration of the Javadoc and xml content involves
@@ -155,8 +161,8 @@
         <ol>
             <li>To make sure that your local server has the right options enabled, edit the Apache web server's configuration file.
             <ul>
-            <li>On Mac OS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file
-            <li>On Mac OS X 10.5 (Leopard) and later, this is the /etc/apache2/httpd.conf file
+                <li>On Mac OS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file
+                <li>On Mac OS X 10.5 (Leopard) and later, this is the /etc/apache2/httpd.conf file
             </ul>
             Once you've located the file, open it with your favorite
             editor (You'll need to authenticate with the administrator password to
@@ -244,9 +250,9 @@
         <pre>
         LoadModule php5_module libexec/apache2/libphp5.so
         </pre>
-
+            </li>
         </ul>
-
+            </li>
         <li>Install the JMRI files to be served:
             <ul>
             <li><a name="link"></a>Check out both the JMRI/JMRI
@@ -266,10 +272,11 @@
         symbolic links that let your web server see the top of the JMRI web site as if the files
         were directly present.
         </ul>
-        <li>Restart your computer to reinitialize the web server.
+        <li>Restart your computer to reinitialize the web server.</li>
         <li>Test it by trying to display the URL
         <a href="http://localhost/">http://localhost/index.shtml</a>,
         which should get you a JMRI top-level page.
+        </li>
         </ol>
 
         <a name="catalog"></a>

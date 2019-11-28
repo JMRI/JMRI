@@ -1,5 +1,6 @@
 package jmri.jmrix.tmcc;
 
+import jmri.SpeedStepMode;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -26,6 +27,28 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
         boolean expResult = true;
         boolean result = instance.getIsForward();
         Assert.assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getSpeedStepMode method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testGetSpeedStepMode() {
+        SpeedStepMode expResult = SpeedStepMode.TMCC_32;
+        SpeedStepMode result = instance.getSpeedStepMode();
+        Assert.assertEquals(expResult, result);
+    }
+    
+    /**
+     * Test of getSpeedIncrement method, of class AbstractThrottle.
+     */
+    @Test
+    @Override
+    public void testGetSpeedIncrement() {
+        float expResult = SpeedStepMode.TMCC_32.increment;
+        float result = instance.getSpeedIncrement();
+        Assert.assertEquals(expResult, result, 0.0);
     }
 
     /**
@@ -263,7 +286,9 @@ public class SerialThrottleTest extends jmri.jmrix.AbstractThrottleTest {
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SerialThrottleTest.class);

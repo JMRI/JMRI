@@ -3,21 +3,22 @@ package jmri.jmrit.decoderdefn;
 import java.util.List;
 import javax.swing.JComboBox;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Tests for DecoderIndexFile class
+ * Tests for DecoderIndexFile class.
  *
  * @author	Bob Jacobsen, Copyright (c) 2001, 2002
-  */
-public class DecoderIndexFileTest extends TestCase {
+ */
+public class DecoderIndexFileTest {
 
+    @Test
     public void testLoading() {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
@@ -28,6 +29,7 @@ public class DecoderIndexFileTest extends TestCase {
         // success here is getting to the end
     }
 
+    @Test
     public void testMfgSection() {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
@@ -40,6 +42,7 @@ public class DecoderIndexFileTest extends TestCase {
         Assert.assertEquals("Digitrax name from id ", "Digitrax", di.mfgNameFromId("129"));
     }
 
+    @Test
     public void testReadFamilySection() {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
@@ -54,6 +57,7 @@ public class DecoderIndexFileTest extends TestCase {
         Assert.assertEquals("1st decoder family ", "FX2 family", (di.decoderList.get(4)).getFamily());
     }
 
+    @Test
     public void testReadFamily1() {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
@@ -70,6 +74,7 @@ public class DecoderIndexFileTest extends TestCase {
         Assert.assertEquals("2nd decoder family ", "NMRA S&RP definitions", (di.decoderList.get(1)).getFamily());
     }
 
+    @Test
     public void testReadFamily2() {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
@@ -102,6 +107,7 @@ public class DecoderIndexFileTest extends TestCase {
         Assert.assertEquals("2nd decoder numOuts ", 1, (di.decoderList.get(2)).getNumOutputs());
     }
 
+    @Test
     public void testMatchingDecoderList() {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
@@ -125,6 +131,7 @@ public class DecoderIndexFileTest extends TestCase {
         Assert.assertEquals("Found with version 21 ", 1, l3.size());
     }
 
+    @Test
     public void testMatchingComboBox() {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
@@ -148,6 +155,7 @@ public class DecoderIndexFileTest extends TestCase {
         Assert.assertEquals("Found with version 21 ", 1, l3.getItemCount());
     }
 
+    @Test
     public void testMatchingVersionRange() {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
@@ -236,33 +244,16 @@ public class DecoderIndexFileTest extends TestCase {
         return;
     }
 
-    // from here down is testing infrastructure
-    public DecoderIndexFileTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", DecoderIndexFileTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(DecoderIndexFileTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(DecoderIndexFileTest.class);
+
 }

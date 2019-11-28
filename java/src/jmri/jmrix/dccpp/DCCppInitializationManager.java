@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Giorgio Terdina Copyright (C) 2007
  * @author Mark Underwood Copyright (C) 2015
+ * @author Harald Barth Copyright (C) 2019
  *
  * Based on XNetInitializationManager by Paul Bender and Giorgio Terdina
  */
@@ -23,9 +24,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 
     @Override
     protected void init() {
-        if (log.isDebugEnabled()) {
-            log.debug("Init called");
-        }
+	log.debug("DCCppInitializationManager init() called");
 
         String base_station = "Unknown";
         String code_build = "Unknown";
@@ -39,7 +38,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 
         /* First, we load things that should work on all systems */
         jmri.InstanceManager.store(systemMemo.getPowerManager(), jmri.PowerManager.class);
-        log.debug("Power Manager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
+        log.debug("PowerManager: {}", jmri.InstanceManager.getDefault(jmri.PowerManager.class));
 
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
 
@@ -58,11 +57,11 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         }
         systemMemo.setCommandStation(systemMemo.getDCCppTrafficController().getCommandStation());
         jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
-        systemMemo.setTurnoutManager(new jmri.jmrix.dccpp.DCCppTurnoutManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setTurnoutManager(new jmri.jmrix.dccpp.DCCppTurnoutManager(systemMemo));
         jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
-        systemMemo.setLightManager(new jmri.jmrix.dccpp.DCCppLightManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setLightManager(new jmri.jmrix.dccpp.DCCppLightManager(systemMemo));
         jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
-        systemMemo.setSensorManager(new jmri.jmrix.dccpp.DCCppSensorManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
+        systemMemo.setSensorManager(new jmri.jmrix.dccpp.DCCppSensorManager(systemMemo));
         jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
         systemMemo.setMultiMeter(new DCCppMultiMeter(systemMemo));
         jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MultiMeter.class);

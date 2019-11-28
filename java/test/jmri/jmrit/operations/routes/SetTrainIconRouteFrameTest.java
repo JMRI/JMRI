@@ -1,17 +1,18 @@
 package jmri.jmrit.operations.routes;
 
 import java.awt.GraphicsEnvironment;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsTestCase;
-import jmri.util.JUnitOperationsUtil;
-import jmri.util.JUnitUtil;
-import jmri.util.swing.JemmyUtil;
-import org.junit.After;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsTestCase;
+import jmri.util.JUnitOperationsUtil;
+import jmri.util.JUnitUtil;
+import jmri.util.swing.JemmyUtil;
 
 /**
  *
@@ -30,7 +31,9 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
     @Test
     public void testCTorRoute() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame("Southbound Main Route");
+        Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Southbound Main Route");
+        Assert.assertNotNull(route);
+        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(route);
         Assert.assertNotNull("exists",t);
         JUnitUtil.dispose(t);
     }
@@ -40,7 +43,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Route route = InstanceManager.getDefault(RouteManager.class).getRouteByName("Southbound Main Route");
         Assert.assertNotNull(route);
-        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(route.getName());
+        SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(route);
         Assert.assertNotNull("exists",t);
         
         JemmyUtil.enterClickAndLeave(t.placeButton);
@@ -85,12 +88,6 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         super.setUp();
  
         JUnitOperationsUtil.initOperationsData();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(SetTrainIconRouteFrameTest.class);

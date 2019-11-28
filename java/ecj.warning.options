@@ -2,61 +2,180 @@
 # See the java/ecj.warning.options-ci file for those used during CI operations
 # The two files should be the same _except_ for warn vs err at start of lines with + signs
 
--warn:-unusedImport
+# for compiling the test directory, the java/ecj.warning.options-test file overrides this
 
--warn:+assertIdentifier
--warn:-boxing
--warn:+charConcat
--warn:+conditionAssign
--warn:+constructorName 
--warn:+discouraged
--warn:+enumSwitch
--warn:+fallthrough
+#
+# Group (macro) checks - some still need to be sorted out
+#
+-warn:+hiding
+  # about 200 cases of members hiding superclass members
 -warn:-fieldHiding
--warn:+finalBound
--warn:+finally 
--warn:+forbidden
--warn:-hiding
--warn:-indirectStatic 
--warn:+intfAnnotation
--warn:+intfNonInherited
--warn:+javadoc
+  # very large number of places where parameters are named for members
 -warn:-localHiding 
--warn:+maskedCatchBlocks
--warn:+noEffectAssign
--warn:+null
--warn:-over-ann
--warn:+pkgDefaultMethod
--warn:-raw
--warn:+semicolon
--warn:+specialParamHiding
--warn:+staticReceiver
--warn:+suppress
--warn:-syntheticAccess
--warn:-tasks(<task1>|...|<taskN>)
 -warn:+typeHiding
--warn:+unchecked
--warn:-unqualified-field-access
--warn:-unqualifiedField
--warn:+unusedLabel
--warn:+unusedLocal
--warn:+unusedPrivate
--warn:-unusedThrown 
--warn:+uselessTypeCheck
--warn:+varargsCast
--warn:-warningToken
-
--warn:-deadCode
--warn:-emptyBlock
--warn:-paramAssign
--warn:-unnecessaryElse
-
--warn:+dep-ann
--warn:+deprecation
--warn:-allDeprecation
 
 -warn:-allJavadoc
 -warn:-javadoc
+
+-warn:+invalidJavadoc
+-warn:+invalidJavadocTag
+-warn:+invalidJavadocTagDep
+-warn:+invalidJavadocTagNotVisible
+
+-warn:-missingJavadocTags
+-warn:+missingJavadocTagsMethod
+-warn:+missingJavadocTagsOverriding
+
+-warn:-missingJavadocComments
+-warn:-missingJavadocCommentsOverriding
+
+-warn:+static-access
+  # This tags Turnout.INCONSISTENT in favor of NamedBean.INCONSISTENT
+-warn:-indirectStatic 
+-warn:+staticReceiver
+
+-warn:+unused
+  # This tags valid "new jmri.util.WaitHandler(this);" constructs
+-warn:-unusedAllocation
+-warn:-unusedImport
+-warn:+unusedLabel
+-warn:+unusedLocal
+-warn:-unusedParam
+-warn:+unusedParamImplementing
+-warn:+unusedParamIncludeDoc
+-warn:+unusedParamOverriding
+-warn:+unusedPrivate
+-warn:-unusedThrown 
+-warn:+unusedThrownIncludeDocComment
+-warn:+unusedThrownExemptExceptionThrowable
+-warn:+unusedThrownWhenOverriding
+  # This tags 800+ of form List<FileMeta> files = new LinkedList<FileMeta>(); 
+-warn:-unusedTypeArgs
+-warn:+unusedTypeParameter
+
+
+#
+# Checks we choose to enforce
+#
+
+-warn:+allDeprecation
+-warn:+allOver-ann
+-warn:+assertIdentifier
+-warn:+charConcat
+-warn:+conditionAssign
+-warn:+constructorName
+-warn:+compareIdentical
+-warn:+dep-ann
+-warn:+deprecation
+-warn:+discouraged
+-warn:+enumIdentifier
+-warn:+enumSwitch
+-warn:+fallthrough
+-warn:+finalBound
+-warn:+finally 
+-warn:+forbidden
+-warn:+hashCode
+-warn:+includeAssertNull
+-warn:+inheritNullAnnot
+-warn:+intfAnnotation
+  # redundant super-interfaces
+-warn:+intfRedundant
+
+-warn:+intfNonInherited
+-warn:+maskedCatchBlocks
+-warn:+noEffectAssign
+-warn:+nonnullNotRepeated
+-warn:+null
+-warn:+nullAnnot
+-warn:+nullAnnotConflict
+-warn:+nullAnnotRedundant
+-warn:+nullDereference
+-warn:+nullUncheckedConversion
+-warn:+over-ann
+-warn:+pkgDefaultMethod
+-warn:+semicolon
+-warn:+specialParamHiding
+-warn:+suppress
+-warn:+switchDefault
+-warn:+unavoidableGenericProblems
+-warn:+unchecked
+-warn:+uselessTypeCheck
+-warn:+varargsCast
+
+#
+# Checks we choose not to enforce as our common style
+#
+
+  # no real cost to using implicit boxing/unboxing, and it's just easier
+-warn:-boxing
+
+  # non-NLS string literals (mostly missing // $ NON-NLS)
 -warn:-nls
+
+  # many of these in the code, and "final" for parameters is a matter of style
+-warn:-paramAssign
+
+  # JMRI doesn't anticipate use of Java serialization
 -warn:-serial
+
+  # maybe a good idea, but too expensive now
+-warn:-super
+
+  # many of these aleady in the code, and the value is not clear
+-warn:-syntheticAccess
+
+  # we don't require "this." in every variable access to reduce verbosity
+-warn:-unqualifiedField
+-warn:-unqualified-field-access
+
+  # our APIs routinely have "may need in future" parameters
 -warn:-unusedArgument
+
+  # missing enum switch cases even when default case is present; `default` can be convenient
+-warn:-enumSwitchPedantic
+
+
+#
+# Checks we're warning on, working to reduce, but not enforcing
+#
+
+
+#
+# Checks we will eventually put in place, but would be burdensome now
+#
+
+  # 14 outstanding items
+-warn:-deadCode
+
+  # missing synch in synchronized method override
+  # 22 outstanding items
+-warn:-syncOverride
+
+  # raw type instead of parameterized type 
+  # 159 outstanding items (some likely to be in APIs)
+-warn:-raw
+
+  # this tags some NetBeans and FindBugs tokens in @SuppressWarnings  
+  # Until that's fixed, useful to run occasionally to find "Unnecessary" annotations
+-warn:-warningToken
+
+
+#
+# Checks still to be characterized
+#
+
+-warn:-all-static-method
+-warn:-emptyBlock
+
+-warn:-allDeadCode
+
+  # flags methods that can be made static because they don't access data member
+  # but that just seems distracting somehow
+-warn:-static-method
+
+  # We often seem to _prefer_ the terminal else instead of bottom return
+-warn:-unnecessaryElse
+
+#-warn:-tasks(<task1>|...|<taskN>)
+
+

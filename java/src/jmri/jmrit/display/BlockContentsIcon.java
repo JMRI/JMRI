@@ -2,6 +2,8 @@ package jmri.jmrit.display;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
@@ -10,6 +12,7 @@ import javax.swing.JTextField;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
+import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
@@ -17,19 +20,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An icon to display the value contained within a Block.<P>
+ * An icon to display the value contained within a Block.
  *
  * @author Bob Jacobsen Copyright (c) 2004
  */
-public class BlockContentsIcon extends MemoryIcon implements java.beans.PropertyChangeListener {
+public class BlockContentsIcon extends MemoryIcon {
 
-    NamedIcon defaultIcon = null;
+    private NamedIcon defaultIcon = null;
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Block> namedBlock;
 
-    /**
-     * {@inheritDoc}
-     */
     public BlockContentsIcon(String s, Editor editor) {
         super(s, editor);
         resetDefaultIcon();
@@ -44,11 +44,12 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         setDisplayLevel(Editor.LABELS);
         defaultIcon = s;
         _popupUtil.setJustification(LEFT);
-        log.debug("BlockContentsIcon ctor= " + BlockContentsIcon.class.getName());
+        log.debug("BlockContentsIcon ctor= {}", BlockContentsIcon.class.getName());
         this.setTransferHandler(new TransferHandler());
     }
 
     @Override
+    @Nonnull
     public Positionable deepClone() {
         BlockContentsIcon pos = new BlockContentsIcon("", _editor);
         return finishClone(pos);
@@ -58,11 +59,9 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
         pos.setBlock(namedBlock);
         pos.setOriginalLocation(getOriginalX(), getOriginalY());
         if (map != null) {
-            java.util.Iterator<String> iterator = map.keySet().iterator();
-            while (iterator.hasNext()) {
-                String key = iterator.next();
-                String url = map.get(key).getName();
-                pos.addKeyAndIcon(NamedIcon.getIconByName(url), key);
+            for (Map.Entry<String, NamedIcon> entry : map.entrySet()) {
+                String url = entry.getValue().getName();
+                pos.addKeyAndIcon(NamedIcon.getIconByName(url), entry.getKey());
             }
         }
         return super.finishClone(pos);
@@ -75,7 +74,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     /**
-     * Attached a named Block to this display item
+     * Attach a named Block to this display item.
      *
      * @param pName Used as a system/user name to lookup the Block object
      */
@@ -91,7 +90,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     /**
-     * Attached a named Block to this display item
+     * Attach a named Block to this display item.
      *
      * @param m The Block object
      */
@@ -129,14 +128,13 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     @Override
+    @Nonnull
     public String getNameString() {
         String name;
         if (namedBlock == null) {
             name = Bundle.getMessage("NotConnected");
-        } else if (getBlock().getUserName() != null) {
-            name = getBlock().getUserName() + " (" + getBlock().getSystemName() + ")";
         } else {
-            name = getBlock().getSystemName();
+            name = getBlock().getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME);
         }
         return name;
     }
@@ -217,7 +215,7 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     /**
-     * Text edits cannot be done to Block text - override
+     * Text edits cannot be done to Block text - override.
      */
     @Override
     public boolean setTextEditMenu(JPopupMenu popup) {
@@ -231,13 +229,11 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     /**
-     * Drive the current state of the display from the state of the Block Value
+     * Drive the current state of the display from the state of the Block Value.
      */
     @Override
     public void displayState() {
-        if (log.isDebugEnabled()) {
-            log.debug("displayState");
-        }
+        log.debug("displayState");
         if (namedBlock == null) {  // use default if not connected yet
             setIcon(defaultIcon);
             updateSize();
@@ -338,4 +334,5 @@ public class BlockContentsIcon extends MemoryIcon implements java.beans.Property
     }
 
     private final static Logger log = LoggerFactory.getLogger(BlockContentsIcon.class);
+
 }

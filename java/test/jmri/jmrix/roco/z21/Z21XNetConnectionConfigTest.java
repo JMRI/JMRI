@@ -14,14 +14,16 @@ public class Z21XNetConnectionConfigTest extends jmri.jmrix.AbstractStreamConnec
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         cc = new Z21XNetConnectionConfig();
     }
 
     @After
+    @Override
     public void tearDown() {
-        cc=null;
+        cc = null;
         JUnitUtil.tearDown();
     }
 

@@ -13,7 +13,7 @@ import org.openide.util.lookup.ServiceProvider;
 
 /**
  * A pane for configuring LNCPSignalMast objects
- * <P>
+ *
  * @see jmri.jmrit.beantable.signalmast.SignalMastAddPane
  * @author Bob Jacobsen Copyright (C) 2018
  * @since 4.11.2
@@ -37,16 +37,19 @@ public class LNCPSignalMastAddPane extends jmri.jmrit.beantable.signalmast.DccSi
     }
 
     /** {@inheritDoc} */
+    @Override
     protected String getNamePrefix() {
         return "F$lncpsm:";
     }
 
     /** {@inheritDoc} */
+    @Override
     protected DccSignalMast constructMast(String name) {
         return new LNCPSignalMast(name);
     }
 
     /** {@inheritDoc} */
+    @Override
     protected boolean usableCommandStation(CommandStation cs) {
         return cs instanceof jmri.jmrix.loconet.SlotManager;
     }

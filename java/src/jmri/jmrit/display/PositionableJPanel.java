@@ -411,9 +411,9 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     public void updateSize() {
         invalidate();
         setSize(maxWidth(), maxHeight());
-        if (log.isDebugEnabled()) {
-//            javax.swing.JTextField text = (javax.swing.JTextField)_popupUtil._textComponent;
-            log.debug("updateSize: {}, text: w={} h={}",
+        if (log.isTraceEnabled()) {
+            // the following fails when run on Jenkins under Xvfb with an NPE in non-JMRI code
+            log.trace("updateSize: {}, text: w={} h={}",
                     _popupUtil.toString(),
                     getFontMetrics(_popupUtil.getFont()).stringWidth(_popupUtil.getText()),
                     getFontMetrics(_popupUtil.getFont()).getHeight());

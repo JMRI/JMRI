@@ -16,7 +16,7 @@ public class NceLightManagerTest {
 
     @Test
     public void testCTor() {
-        NceLightManager t = new NceLightManager(tcis,"N");
+        NceLightManager t = new NceLightManager(tcis.getAdapterMemo());
         Assert.assertNotNull("exists",t);
     }
 
@@ -29,6 +29,7 @@ public class NceLightManagerTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

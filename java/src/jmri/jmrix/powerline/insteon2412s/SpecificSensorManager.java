@@ -11,12 +11,12 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Manage the system-specific Sensor implementation.
- * <P>
+ * <p>
  * System names are "PSann", where a is the unit id, nn is the unit number
  * without padding.
- * <P>
+ * <p>
  * Sensors are numbered from 1.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008, 2009
  * @author Ken Cameron, (C) 2009, 2010 sensors from poll replies Converted to multiple connection
  * @author kcameron Copyright (C) 2011
@@ -39,6 +39,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
         processForPollReq(r);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     private void processForPollReq(SerialReply l) {
         if ((l.getElement(0) & 0xFF) == Constants.HEAD_STX) {
             // process the POLL_REQ_X10 and update/create sensors as needed

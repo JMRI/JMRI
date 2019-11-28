@@ -49,6 +49,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.jmrit.roster.Roster;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
+import jmri.util.prefs.InitializationException;
+
 import org.jdom2.JDOMException;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -98,6 +100,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
         jScrollPane1 = new JScrollPane();
         profilesTbl = new JTable() {
             //Implement table cell tool tips.
+            @Override
             public String getToolTipText(MouseEvent e) {
                 try {
                     return getValueAt(rowAtPoint(e.getPoint()), -1).toString();
@@ -122,6 +125,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
             jScrollPane3 = new JScrollPane();
             searchPathsTbl = new JTable() {
                 //Implement table cell tool tips.
+                @Override
                 public String getToolTipText(MouseEvent e) {
                     try {
                         return getValueAt(rowAtPoint(e.getPoint()), -1).toString();
@@ -472,7 +476,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                                 p.getName(), chooser.getSelectedFile().getName()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successTitle"),
                         JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException | JDOMException ex) {
+            } catch (IOException | JDOMException | InitializationException ex) {
                 log.warn("Unable to export profile \"{}\" to {}", p.getName(), chooser.getSelectedFile().getPath(), ex);
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorMessage",

@@ -9,14 +9,16 @@ import org.junit.Test;
 
 /**
  * EliteXNetSystemConnectionMemoTest.java
- *
- * Description:	tests for the jmri.jmrix.lenz.EliteXNetSystemConnectionMemo class
+ * <p>
+ * Description:	tests for the jmri.jmrix.lenz.EliteXNetSystemConnectionMemo
+ * class
  *
  * @author	Paul Bender
  */
 public class EliteXNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
     @Test
+    @Override
     public void testCtor() {
         EliteXNetSystemConnectionMemo t = (EliteXNetSystemConnectionMemo) scm;
         Assert.assertNotNull(t);
@@ -28,11 +30,11 @@ public class EliteXNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnecti
 
     @Test
     public void testXNetTrafficControllerSetCtor() {
-        EliteXNetSystemConnectionMemo t = (EliteXNetSystemConnectionMemo)scm;
+        EliteXNetSystemConnectionMemo t = (EliteXNetSystemConnectionMemo) scm;
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         Assert.assertNotNull(t);
         // the default constructor does not set the traffic controller
-        Assert.assertNotEquals(tc,t.getXNetTrafficController());
+        Assert.assertNotEquals(tc, t.getXNetTrafficController());
         // so we need to do this ourselves.
         t.setXNetTrafficController(tc);
         Assert.assertNotNull(t.getXNetTrafficController());
@@ -58,15 +60,16 @@ public class EliteXNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnecti
         XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
 
         EliteXNetSystemConnectionMemo memo = new EliteXNetSystemConnectionMemo(tc);
-        memo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(tc,memo.getSystemPrefix()));
-        memo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(tc,memo.getSystemPrefix()));
-        memo.setTurnoutManager(new EliteXNetTurnoutManager(tc,memo.getSystemPrefix()));
+        memo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(memo));
+        memo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(memo));
+        memo.setTurnoutManager(new EliteXNetTurnoutManager(memo));
         scm = memo;
     }
 
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

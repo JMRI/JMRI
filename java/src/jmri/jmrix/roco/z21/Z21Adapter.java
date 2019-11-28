@@ -20,20 +20,10 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     protected static int COMMUNICATION_UDP_PORT = java.lang.Integer.parseInt(rb.getString("z21UDPPort1"));
     protected static String DEFAULT_IP_ADDRESS = rb.getString("defaultZ21IPAddress");
 
-    private javax.swing.Timer keepAliveTimer; // Timer used to periodically
-    // send a message to both
-    // ports to keep the ports
-    // open
-    private static final int keepAliveTimeoutValue = 30000; // Interval
-    // to send a message
-    // Must be < 60s.
-
     private DatagramSocket socket = null;
 
     public Z21Adapter() {
         super(new Z21SystemConnectionMemo());
-        // COMMUNICATION_UDP_PORT = java.lang.Integer.parseInt(rb.getString("z21UDPPort1"));
-        // DEFAULT_IP_ADDRESS = rb.getString("defaultZ21IPAddress");
         setHostName(DEFAULT_IP_ADDRESS);
         setPort(COMMUNICATION_UDP_PORT);
         allowConnectionRecovery = true; // all classes derived from this class
@@ -91,8 +81,6 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
                     m_HostName, ConnectionStatus.CONNECTION_UP);
         }
 
-        keepAliveTimer();
-
     }
 
     /*
@@ -123,41 +111,20 @@ public class Z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
      */
     @Override
     protected void resetupConnection() {
-    }
-
-    /*
-     * Set up the keepAliveTimer, and start it.
-     */
-    private void keepAliveTimer() {
-        if (keepAliveTimer == null) {
-            keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue, new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    // If the timer times out, send a request for status
-                    Z21Adapter.this.getSystemConnectionMemo().getTrafficController()
-                            .sendz21Message(
-                                    jmri.jmrix.roco.z21.Z21Message.getSerialNumberRequestMessage(),
-                                    null);
-                }
-            });
-        }
-        keepAliveTimer.stop();
-        keepAliveTimer.setInitialDelay(keepAliveTimeoutValue);
-        keepAliveTimer.setRepeats(true);
-        keepAliveTimer.start();
+        // UDP connection is re-established for each message.
     }
 
     @Override
     public void dispose(){
        super.dispose();
-       keepAliveTimer.stop();
-       keepAliveTimer = null;
-       socket.close();
+       if(opened) {
+          socket.close();
+       }
        opened = false;
        allowConnectionRecovery = false; // disposing of the object should 
                                         // result in not allowing reconnection.
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Z21Adapter.class);
+    private static final Logger log = LoggerFactory.getLogger(Z21Adapter.class);
 
 }

@@ -1,6 +1,7 @@
 package jmri.jmrix.ieee802154.serialdriver.configurexml;
 
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.*;
 import org.junit.*;
 import jmri.jmrix.ieee802154.serialdriver.ConnectionConfig;
 
@@ -15,6 +16,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
@@ -22,6 +24,7 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;
@@ -31,12 +34,14 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
     @Test
     @Override
     @Ignore("requires a traffic controller to pass")
+    @ToDo("parent class test fails, needs further setup or re-implmentation")
     public void storeTest(){
     }
 
     @Test(timeout=5000)
     @Override
     @Ignore("requires a traffic controller to pass")
+    @ToDo("parent class test fails, needs further setup or re-implmentation")
     public void loadTest() throws jmri.configurexml.JmriConfigureXmlException {
     }
 

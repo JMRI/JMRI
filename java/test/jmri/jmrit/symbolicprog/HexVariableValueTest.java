@@ -3,9 +3,11 @@ package jmri.jmrit.symbolicprog;
 import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test the HexVariableValue class
@@ -48,21 +50,47 @@ public class HexVariableValueTest extends AbstractVariableValueTestBase {
     }
 
     // end of abstract members
-    // from here down is testing infrastructure
-    public HexVariableValueTest(String s) {
-        super(s);
+
+    // test the handling of radix masks
+    @Test
+    public void testBaseMasks20() {
+        HashMap<String, CvValue> v = createCvMap();
+        CvValue cv = new CvValue("81", p);
+        cv.setValue(0);
+        v.put("81", cv);
+        // create a variable pointed at CV 81, check name
+        VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "3", 0, 19, v, null, null);
+        checkValue(variable, "value object initially contains ", "0");
+
+        // pretend you've edited the value & manually notify
+        setValue(variable, "2");
+        // check variable value
+        checkValue(variable, "value object contains ", "2");
+        // see if the CV was updated
+        Assert.assertEquals("cv value", 6, cv.getValue());
+        
+        // now check that other parts are maintained
+        cv.setValue(1+2*3+3*3*20);
+        // check variable value
+        checkValue(variable, "value object contains ", "2");
+        // see if the CV was updated
+        Assert.assertEquals("cv value", (1+2*3+3*3*20), cv.getValue());
+
+        // and try setting another value
+        setValue(variable, "15");
+        checkValue(variable, "value object contains ", "15");
+        Assert.assertEquals("cv value", (1+15*3+3*3*20), cv.getValue());                
     }
 
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", HexVariableValueTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
+    @Before
+    @Override
+    public void setUp() {
+        super.setUp();
     }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(HexVariableValueTest.class);
-        return suite;
+    
+    @After
+    @Override
+    public void tearDown() {
+        super.tearDown();
     }
-
 }

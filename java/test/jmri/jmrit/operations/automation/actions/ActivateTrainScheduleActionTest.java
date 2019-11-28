@@ -4,9 +4,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.automation.AutomationItem;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -53,6 +51,10 @@ public class ActivateTrainScheduleActionTest extends OperationsTestCase {
         
         // set "Monday" as the active 
         automationItem.setTrainSchedule(tsm.getScheduleByName("Monday"));
+        
+        String message = action.getActionString();
+        Assert.assertTrue("message contains train schedule name", message.contains("Monday"));
+        
         automationItem.doAction();
         // confirm change
         Assert.assertEquals("active schedule", tsm.getScheduleByName("Monday").getId(), tsm.getTrainScheduleActiveId());
@@ -67,18 +69,6 @@ public class ActivateTrainScheduleActionTest extends OperationsTestCase {
         Assert.assertNotNull("exists",action);
         // 7 days of the week, plus null at start
         Assert.assertEquals("default schedules", 8, action.getComboBox().getItemCount());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ActivateTrainScheduleActionTest.class);

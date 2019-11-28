@@ -1,8 +1,10 @@
 package jmri.util.managers;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
+import jmri.InstanceManager;
 import jmri.Memory;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.DefaultMemoryManager;
 
 /**
@@ -15,7 +17,7 @@ import jmri.managers.DefaultMemoryManager;
 public class MemoryManagerThrowExceptionScaffold extends DefaultMemoryManager {
 
     public MemoryManagerThrowExceptionScaffold() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
     
     /** {@inheritDoc} */
@@ -50,7 +52,7 @@ public class MemoryManagerThrowExceptionScaffold extends DefaultMemoryManager {
     
     /** {@inheritDoc} */
     @Override
-    public Memory newMemory(@Nonnull String systemName, @Nullable String userName) {
+    public Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     

@@ -40,9 +40,15 @@ public class Profile implements Comparable<Profile> {
     public static final String CONFIG = "profile.xml"; // NOI18N
     public static final String SHARED_PROPERTIES = PROFILE + "/" + PROPERTIES; // NOI18N
     public static final String SHARED_CONFIG = PROFILE + "/" + CONFIG; // NOI18N
+    /**
+     * {@value #CONFIG_FILENAME} may be present in older profiles
+     */
     public static final String CONFIG_FILENAME = "ProfileConfig.xml"; // NOI18N
     public static final String UI_CONFIG = "user-interface.xml"; // NOI18N
     public static final String SHARED_UI_CONFIG = PROFILE + "/" + UI_CONFIG; // NOI18N
+    /**
+     * {@value #UI_CONFIG_FILENAME} may be present in older profiles
+     */
     public static final String UI_CONFIG_FILENAME = "UserPrefsProfileConfig.xml"; // NOI18N
     /**
      * The filename extension for JMRI profile directories. This is needed for
@@ -78,9 +84,10 @@ public class Profile implements Comparable<Profile> {
      * @param path Location to store the profile; {@value #EXTENSION} will be
      *             appended to this path if needed.
      * @throws java.io.IOException If unable to create the profile at path
+     * @throws IllegalArgumentException If a profile already exists at or within path
      */
     public Profile(@Nonnull String name, @Nonnull String id, @Nonnull File path) throws IOException, IllegalArgumentException {
-        File pathWithExt; // path with extention
+        File pathWithExt; // path with extension
         if (path.getName().endsWith(EXTENSION)) {
             pathWithExt = path;
         } else {
@@ -96,6 +103,8 @@ public class Profile implements Comparable<Profile> {
             throw new IllegalArgumentException(path + " contains a profile in a subdirectory."); // NOI18N
         }
         if (Profile.inProfile(path) || Profile.inProfile(pathWithExt)) {
+            if (Profile.inProfile(path)) log.warn("Exception: Path {} is within an existing profile.", path, new Exception("traceback")); // NOI18N
+            if (Profile.inProfile(pathWithExt)) log.warn("Exception: pathWithExt {} is within an existing profile.", pathWithExt, new Exception("traceback")); // NOI18N
             throw new IllegalArgumentException(path + " is within an existing profile."); // NOI18N
         }
         this.name = name;
@@ -145,7 +154,7 @@ public class Profile implements Comparable<Profile> {
      * @throws java.io.IOException If the profile's preferences cannot be read.
      */
     protected Profile(@Nonnull File path, @Nonnull String id, boolean isReadable) throws IOException {
-        File pathWithExt; // path with extention
+        File pathWithExt; // path with extension
         if (path.getName().endsWith(EXTENSION)) {
             pathWithExt = path;
         } else {
@@ -267,6 +276,10 @@ public class Profile implements Comparable<Profile> {
         return hash;
     }
 
+    /**
+     * {@inheritDoc}
+     * This tests for equal ID values
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -352,7 +365,7 @@ public class Profile implements Comparable<Profile> {
      * @since 3.9.4
      */
     public static boolean isProfile(File path) {
-        if (path.isDirectory()) {
+        if (path.exists() && path.isDirectory()) {
             // version 2
             if ((new File(path, SHARED_PROPERTIES)).canRead()) {
                 return true;
@@ -374,4 +387,6 @@ public class Profile implements Comparable<Profile> {
         String thatString = "" + o.getName() + o.getPath();
         return thisString.compareTo(thatString);
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Profile.class);
 }

@@ -8,23 +8,24 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test VariableTableModel table methods.
  *
  * @author	Bob Jacobsen Copyright 2005
  */
-public class VariableTableModelTest extends TestCase {
+public class VariableTableModelTest {
 
     ProgDebugger p = new ProgDebugger();
 
+    @Test
     public void testStart() {
         // create one with some dummy arguments
         new VariableTableModel(
@@ -35,6 +36,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Can we create a table?
+    @Test
     public void testVarTableCreate() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, null);  // CvTableModel ref is null for this test
@@ -42,6 +44,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check column count member fn, column names
+    @Test
     public void testVarTableColumnCount() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, null);
@@ -50,6 +53,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check loading two columns, three rows
+    @Test
     public void testVarTableLoad_2_3() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
@@ -118,6 +122,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check creating a longaddr type, walk through its programming
+    @Test
     public void testVarTableLoadLongAddr() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
@@ -161,6 +166,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check creating a speed table, then finding it by name
+    @Test
     public void testVarSpeedTable() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
@@ -198,6 +204,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check creating an enumvar with various groupings
+    @Test
     public void testVarEnumVar() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
@@ -257,6 +264,7 @@ public class VariableTableModelTest extends TestCase {
 
     }
 
+    @Test
     public void testSetDefault() {
         // set up a decoder to match against
         DecoderFile df = createDecoderFile("p", "m", "f");
@@ -296,6 +304,7 @@ public class VariableTableModelTest extends TestCase {
     }
     
     // Check creating an enumvar with various groupings and element-based includes/excludes
+    @Test
     public void testVarEnumVarIncludeExclude0() {
         //set up the test
         int itemCount = 30;
@@ -318,6 +327,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check creating an enumvar with various groupings and element-based includes/excludes
+    @Test
     public void testVarEnumVarIncludeExclude1() {
         //set up the test
         int itemCount = 30;
@@ -341,6 +351,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check creating an enumvar with various groupings and element-based includes/excludes
+    @Test
     public void testVarEnumVarIncludeExclude2() {
         //set up the test
         int itemCount = 30;
@@ -364,6 +375,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check creating an enumvar with various groupings and element-based includes/excludes
+    @Test
     public void testVarEnumVarIncludeExclude3() {
         //set up the test
         int itemCount = 30;
@@ -387,6 +399,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check creating an enumvar with various groupings and element-based includes/excludes
+    @Test
     public void testVarEnumVarIncludeExclude4() {
         //set up the test
         int itemCount = 30;
@@ -412,6 +425,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check creating an enumvar with various groupings and element-based includes/excludes
+    @Test
     public void testVarEnumVarIncludeExclude5() {
         //set up the test
         int itemCount = 30;
@@ -434,6 +448,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check creating an enumvar with various groupings and element-based includes/excludes
+    @Test
     public void testVarEnumVarIncludeExclude6() {
         //set up the test
         int itemCount = 30;
@@ -632,6 +647,7 @@ public class VariableTableModelTest extends TestCase {
     // End commom setup routines for testVarEnumVarIncludeExclude tests
 
     // Check creating bogus XML (unknown variable type)
+    @Test
     public void testVarTableLoadBogus() {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p)) {
@@ -676,6 +692,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check can read simple file
+    @Test
     public void testVarTableLoadFileSimple() throws Exception {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
@@ -696,6 +713,7 @@ public class VariableTableModelTest extends TestCase {
     }
 
     // Check can read complex file
+    @Test
     public void testVarTableLoadFileComplex() throws Exception {
         String[] args = {"CV", "Name"};
         VariableTableModel t = new VariableTableModel(null, args, new CvTableModel(null, p));
@@ -715,31 +733,13 @@ public class VariableTableModelTest extends TestCase {
 
     }
 
-    // from here down is testing infrastructure
-    public VariableTableModelTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", VariableTableModelTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(VariableTableModelTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

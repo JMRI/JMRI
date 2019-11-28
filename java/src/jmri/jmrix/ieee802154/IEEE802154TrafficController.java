@@ -5,6 +5,7 @@ import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRNodeTrafficController;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractNode;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -287,6 +288,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      *
      * @param nodeAddress text of hex node address
      */
+    @SuppressFBWarnings(value="VO_VOLATILE_INCREMENT", justification="synchronized method provides locking")
     public synchronized void deleteNode(String nodeAddress) {
         // find the serial node
         int index = 0;

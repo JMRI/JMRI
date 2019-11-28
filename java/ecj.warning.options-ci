@@ -1,62 +1,148 @@
-# These are the CI (fussy) settings used for the warnings and tests-warnings Ant targets
+# These are the CI (fussy) settings used for the warnings-ci and tests-warnings-ci Ant targets
 # See the java/ecj.warning.options file for those used during development ant operations
 # The two files should be the same _except_ for warn vs err at start of lines with + signs
 
--warn:-unusedImport
-
--err:+assertIdentifier
--warn:-boxing
--err:+charConcat
--err:+conditionAssign
--err:+constructorName 
--err:+discouraged
--err:+enumSwitch
--err:+fallthrough
--warn:-fieldHiding
--err:+finalBound
--err:+finally 
--err:+forbidden
--warn:-hiding
--warn:-indirectStatic 
--err:+intfAnnotation
--err:+intfNonInherited
--err:+javadoc
--warn:-localHiding 
--err:+maskedCatchBlocks
--err:+noEffectAssign
--err:+null
--warn:-over-ann
--err:+pkgDefaultMethod
--warn:-raw
--err:+semicolon
--err:+specialParamHiding
--err:+staticReceiver
--err:+suppress
--warn:-syntheticAccess
--warn:-tasks(<task1>|...|<taskN>)
+# Group (macro) checks - these need to be sorted out
+-err:+hiding
+  # about 200 cases of memebers hiding superclass members
+-err:-fieldHiding
+  # very large number of cases of parameters named for locals
+-err:-localHiding 
 -err:+typeHiding
--err:+unchecked
--warn:-unqualified-field-access
--warn:-unqualifiedField
--err:+unusedLabel
--err:+unusedLocal
--err:+unusedPrivate
--warn:-unusedThrown 
--err:+uselessTypeCheck
--err:+varargsCast
--warn:-warningToken
-
--warn:-deadCode
--warn:-emptyBlock
--warn:-paramAssign
--warn:-unnecessaryElse
-
--warn:+dep-ann
--warn:-deprecation
--warn:-allDeprecation
 
 -warn:-allJavadoc
 -warn:-javadoc
+
+-err:+invalidJavadoc
+-err:+invalidJavadocTag
+-err:+invalidJavadocTagDep
+-err:+invalidJavadocTagNotVisible
+
+-warn:-missingJavadocTags
+-err:+missingJavadocTagsMethod
+-err:+missingJavadocTagsOverriding
+
+-warn:-missingJavadocComments
+-warn:-missingJavadocCommentsOverriding
+
+-err:+static-access
+  # This tags Turnout.INCONSISTENT in favor of NamedBean.INCONSISTENT
+-err:-indirectStatic 
+-err:+staticReceiver
+
+-err:+unused
+  # This tags valid "new jmri.util.WaitHandler(this);" constructs
+-err:-unusedAllocation
+-err:-unusedImport
+-err:+unusedLabel
+-err:+unusedLocal
+-err:-unusedParam
+-err:+unusedParamImplementing
+-err:+unusedParamIncludeDoc
+-err:+unusedParamOverriding
+-err:+unusedPrivate
+-err:-unusedThrown 
+-err:+unusedThrownIncludeDocComment
+-err:+unusedThrownExemptExceptionThrowable
+-err:+unusedThrownWhenOverriding
+  # This tags 800+ of form List<FileMeta> files = new LinkedList<FileMeta>(); 
+-err:-unusedTypeArgs
+-err:+unusedTypeParameter
+
+
+# Checks we choose to enforce
+-err:+allDeprecation
+-err:+allOver-ann
+-err:+assertIdentifier
+-err:+charConcat
+-err:+conditionAssign
+-err:+constructorName
+-err:+compareIdentical
+-err:+dep-ann
+-err:+deprecation
+-err:+discouraged
+-err:+enumIdentifier
+-err:+enumSwitch
+-err:+fallthrough
+-err:+finalBound
+-err:+finally 
+-err:+forbidden
+-err:+hashCode
+-err:+includeAssertNull
+-err:+inheritNullAnnot
+-err:+intfAnnotation
+  # redundant super-interfaces
+-err:+intfRedundant
+
+-err:+intfNonInherited
+-err:+maskedCatchBlocks
+-err:+noEffectAssign
+-err:+nonnullNotRepeated
+-err:+null
+-err:+nullAnnot
+-err:+nullAnnotConflict
+-err:+nullAnnotRedundant
+-err:+nullDereference
+-err:+nullUncheckedConversion
+-err:+over-ann
+-err:+pkgDefaultMethod
+-err:+semicolon
+-err:+specialParamHiding
+-err:+suppress
+-err:+switchDefault
+-err:+unavoidableGenericProblems
+-err:+unchecked
+-err:+uselessTypeCheck
+-err:+varargsCast
+
+
+# Checks we choose not to enforce as our common style
+-warn:-boxing
 -warn:-nls
+-warn:-paramAssign
 -warn:-serial
+-warn:-super
+-warn:-syntheticAccess
+-warn:-unqualifiedField
+-warn:-unqualified-field-access
 -warn:-unusedArgument
+
+
+#
+# Checks we're warning on, working to reduce, but not enforcing
+#
+
+
+
+# Checks we will eventually put in place, but would be burdensome now
+
+    # 14 outstanding items
+-warn:-deadCode
+
+    # 22 outstanding items
+-warn:-syncOverride
+
+    # 159 outstanding items
+-warn:-raw
+
+    # this tags some FindBugs labels?  But still useful to run occasionally
+-warn:-warningToken
+
+
+# Checks still to be characterized
+
+-warn:-all-static-method
+-warn:-emptyBlock
+
+-warn:-allDeadCode
+
+  # flags methods that can be made static because they don't access data member
+  # but that just seems distracting somehow
+-warn:-static-method
+
+  # We often seem to _prefer_ the terminal else instead of bottom return
+-warn:-unnecessaryElse
+
+#-warn:-tasks(<task1>|...|<taskN>)
+
+

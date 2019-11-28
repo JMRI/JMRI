@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
@@ -11,17 +12,16 @@ import org.slf4j.LoggerFactory;
 /**
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under 
  * the terms of version 2 of the GNU General Public License as published 
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
- * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
  */
@@ -33,7 +33,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author Mark Underwood 2011
  */
-@SuppressWarnings("serial")
 public class LoadVSDFileAction extends AbstractAction {
 
     /**
@@ -85,48 +84,31 @@ public class LoadVSDFileAction extends AbstractAction {
             // give up if no file selected
         }
 
-        loadVSDFile(fileChooser.getSelectedFile());
+        loadVSDFile(fileChooser.getSelectedFile().toString());
 
         // Store the last used directory
         try {
             last_path = fileChooser.getCurrentDirectory().getCanonicalPath();
         } catch (java.io.IOException err) {
-            log.debug("Error getting current directory: " + err);
+            log.debug("Error getting current directory", err);
             last_path = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
         }
     }
 
-    public static boolean loadVSDFile(java.io.File f) {
-        VSDFile vsdfile;
-        // Create a VSD (zip) file.
-        try {
-            vsdfile = new VSDFile(f);
-            log.debug("VSD File name = {}", vsdfile.getName());
-            if (vsdfile.isInitialized()) {
-                VSDecoderManager.instance().loadProfiles(vsdfile);
-            }
-            // Cleanup and close files.
-            vsdfile.close();
-
-            if (!vsdfile.isInitialized()) {
-                JOptionPane.showMessageDialog(null, vsdfile.getStatusMessage(),
+    public static boolean loadVSDFile(String fp) {
+        // Check whether the file exists
+        File file = new File(fp);
+        if (!file.exists()) {
+            log.error("Cannot locate VSD File");
+            if (!GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(null, "Cannot locate VSD File",
                         Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
             }
-
-            return vsdfile.isInitialized();
-
-        } catch (java.util.zip.ZipException ze) {
-            log.error("ZipException opening file " + f.toString(), ze);
-            return false;
-        } catch (java.io.IOException ze) {
-            log.error("IOException opening file " + f.toString(), ze);
             return false;
         }
-    }
 
-    public static boolean loadVSDFile(String fp) {
+        // Check config.xml
         VSDFile vsdfile;
-
         try {
             // Create a VSD (zip) file.
             vsdfile = new VSDFile(fp);
@@ -136,7 +118,14 @@ public class LoadVSDFileAction extends AbstractAction {
             }
             // Cleanup and close files.
             vsdfile.close();
+
+            if (!vsdfile.isInitialized() && !GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(null, vsdfile.getStatusMessage(),
+                        Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
+            }
+
             return vsdfile.isInitialized();
+
         } catch (java.util.zip.ZipException ze) {
             log.error("ZipException opening file " + fp, ze);
             return false;
@@ -160,7 +149,6 @@ public class LoadVSDFileAction extends AbstractAction {
          */
     }
 
-    // initialize logging
     private static final Logger log = LoggerFactory.getLogger(LoadVSDFileAction.class);
 
 }

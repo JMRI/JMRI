@@ -1,25 +1,12 @@
 package jmri.implementation;
 
 import jmri.Audio;
+import jmri.InstanceManager;
 
 /**
  * Base implementation of the Audio class.
- * <P>
- * Specific implementations will extend this base class.
- *
  * <p>
- * Audio bean system names are always upper case.
- * <hr>
- * This file is part of JMRI.
- * <P>
- * JMRI is free software; you can redistribute it and/or modify it under the
- * terms of version 2 of the GNU General Public License as published by the Free
- * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
- * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
- * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * Specific implementations will extend this base class.
  *
  * @author Matthew Harris copyright (c) 2009
  */
@@ -35,7 +22,7 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * @param systemName Audio object system name (e.g. IAS1, IAB4)
      */
     public AbstractAudio(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     /**
@@ -45,7 +32,7 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * @param userName   Audio object user name
      */
     public AbstractAudio(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     @Override
@@ -71,6 +58,12 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * cleanup routines.
      */
     abstract protected void cleanup();
+
+    @Override
+    public void dispose() {
+        InstanceManager.getDefault(jmri.AudioManager.class).deregister(this);
+        super.dispose();
+    }
 
     /**
      * Static method to round a float value to the specified number of decimal

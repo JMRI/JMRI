@@ -13,6 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="ronald@wirkuhns.de" version="3" lastUpdated="2019/05/01"/>
+  <!-- set highVersionID from 42 to 32 -->
   <version author="ronald@wirkuhns.de" version="2" lastUpdated="2016/12/14"/>
   <!-- add translation to german in splitted files -->
   <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20160123"/>
@@ -29,7 +31,7 @@
   <!-- V 1 new file -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
-      <model model="MX649 version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="253">
+      <model model="MX649 version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="253">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -56,7 +58,7 @@
         </output>
         <size length="20" width="11" height="4" units="mm"/>
       </model>
-      <model model="MX649R version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="253">
+      <model model="MX649R version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAmedium" numOuts="6" numFns="14" productID="253">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -83,7 +85,7 @@
         </output>
         <size length="20" width="11" height="4" units="mm"/>
       </model>
-      <model model="MX649F version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
+      <model model="MX649F version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -110,7 +112,7 @@
         </output>
         <size length="28" width="10.5" height="4" units="mm"/>
       </model>
-      <model model="MX649N version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
+      <model model="MX649N version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>
@@ -137,7 +139,7 @@
         </output>
         <size length="28" width="10.5" height="4" units="mm"/>
       </model>
-      <model model="MX649L version 32+" lowVersionID="32" highVersionID="42" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
+      <model model="MX649L version 32+" lowVersionID="32" highVersionID="32" maxInputVolts="30V" maxMotorCurrent="0.8A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" connector="NMRAsmall" numOuts="6" numFns="14" productID="253">
         <output name="1" label="Front Light">
           <label xml:lang="de">Lvor</label>
           <label xml:lang="cs">Přední světla</label>

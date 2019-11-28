@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 2019 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,7 +12,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <!-- Volumes -->
     <variable CV="57" default="143" item="Sound Steam Chuffs Step 1" tooltip="Set to zero for cam input">
         <decVal/>
@@ -44,7 +46,7 @@
     </variable>
     <variable CV="61" default="120" tooltip="Unit is 0.25 seconds" item="Sound Random Min">
         <decVal/>
-        <label>Random Sound - Shortest Interval</label>
+        <label>Minimum time between sounds</label>
         <label xml:lang="it">Suoni Casuali-Intervallo corto</label>
         <label xml:lang="de">Zufallsound - Minimaler Abstand</label>
         <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
@@ -52,7 +54,7 @@
     </variable>
     <variable CV="62" default="200" tooltip="Unit is 0.25 seconds" item="Sound Random Max">
         <decVal/>
-        <label>Random Sound - Longest Interval</label>
+        <label>Maximum time between sounds</label>
         <label xml:lang="it">Suoni Casuali-Intervallo lungo</label>
         <label xml:lang="de">Zufallsound - Maximaler Abstand</label>
         <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
@@ -70,16 +72,16 @@
     </variable>
     <variable CV="64" default="100" item="Sound Brake On">
         <decVal/>
-        <label>Brake On Threshold</label>
+        <label>Brake Sound On Threshold</label>
         <label xml:lang="it">Soglia Inizio intervento Freno</label>
         <label xml:lang="de">Bremsgeräusch - Einschaltschwelle</label>
         <label xml:lang="ca">Límit a la frenada</label>
     </variable>
     <variable CV="65" default="25" item="Sound Brake Off">
         <decVal/>
-        <!--label>Brake Off Threshold</label>
+        <label>Brake Sound Off Threshold</label>
         <label xml:lang="it">Soglia Fine intervento Freno</label>
-        <label xml:lang="de">Bremsgeräusch - Abschaltschwelle</label-->
+        <label xml:lang="de">Bremsgeräusch - Abschaltschwelle</label>
     </variable>
     <variable CV="114" mask="VXXXXXXX" default="1" item="Heavy Load Option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -90,7 +92,7 @@
     <variable CV="114" mask="XVVVVVVV" default="6" item="Heavy Load">
         <decVal max="127"/>
         <label>Sound acceleration amount</label>
-        <label xml:lang="de">Acceleration-Wert erhöhen</label>
+        <label xml:lang="de">Beschleunigungs-Wert erhöhen</label>
         <label xml:lang="ca">Quantitat so acceleració</label>
     </variable>
     <variable CV="115" mask="VXXXXXXX" default="0" item="Coast Mode Option 1">
@@ -102,10 +104,10 @@
     <variable CV="115" mask="XVVVVVVV" default="6" item="Coast Mode">
         <decVal max="127"/>
         <label>Sound deceleration amount</label>
-        <label xml:lang="de">Acceleration-Wert verringern</label>
+        <label xml:lang="de">Beschleunigungs-Wert verringern</label>
         <label xml:lang="ca">Quantitat de so en desacceleració</label>
     </variable>
-    <variable CV="124" mask="XXXXXVXX" default="1" item="Sound Option 1">
+    <variable CV="124" mask="XXXXXVXX" default="1" item="ESU V4 Starting Delay">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Delay Starting if Drive Sound Enabled</label>
         <label xml:lang="it">Ritardo accensione Motore se Suono Abilitato</label>
@@ -124,16 +126,16 @@
         <label>Smoke Unit Minimum Steam Chuff Duration</label>
         <label xml:lang="it">Durata Min.Chuff per Gener.Fumo</label>
         <label xml:lang="de">Minimale Dauer</label>
-       <tooltip xml:lang="de">die Einheit sind 0.0041 sec</tooltip>
-		<label xml:lang="ca">Unitat mínima de duració de xuf</label>
+        <tooltip xml:lang="de">die Einheit sind 0.0041 sec</tooltip>
+        <label xml:lang="ca">Unitat mínima de duració de xuf</label>
     </variable>
     <variable CV="142" default="122" tooltip="Unit is .0041 seconds" item="ESU V4 Function Settings Smoke Chuffs Slider 3">
         <decVal/>
         <label>Smoke Unit Maximum Steam Chuff Duration</label>
         <label xml:lang="it">Durata Max.Chuff per Gener.Fumo</label>
         <label xml:lang="de">Maximale Dauer</label>
-       <tooltip xml:lang="de">die Einheit sind 0.0041 sec</tooltip>
-		<label xml:lang="ca">Unitat màxima de duració de xuf</label>
+        <tooltip xml:lang="de">die Einheit sind 0.0041 sec</tooltip>
+        <label xml:lang="ca">Unitat màxima de duració de xuf</label>
     </variable>
     <variable CV="143" default="102" item="ESU V4 Function Settings Smoke Chuffs Slider 1">
         <decVal/>
@@ -484,7 +486,7 @@
         <label>Min sound playback speed</label>
         <label xml:lang="it">Velocità Min.riproduzione suono</label>
         <label xml:lang="de">Minimale Abspielgeschwindigkeit</label>
-         <label xml:lang="ca">Velocitat mínima de reproducció del so</label>
+        <label xml:lang="ca">Velocitat mínima de reproducció del so</label>
     </variable>
     <variable CV="16.1.350" default="128" item="Sound Max Speed 12">
         <decVal/>
@@ -829,84 +831,84 @@
         <label xml:lang="de">Maximale Abspielgeschwindigkeit</label>
         <label xml:lang="ca">Velocitat màxima de reproducció del so</label>
     </variable>
-    <variable CV="16.1.451" default="128" item="Sound Volume Random">
+    <variable CV="16.1.451" default="128" item="Sound Volume 25">
         <decVal max="128"/>
         <label>Random Sounds volume</label>
         <label xml:lang="it">Volume Suoni Casuali</label>
         <label xml:lang="de">Zufallsgeräusch Lautstärke</label>
         <label xml:lang="ca">Volum dels sons aleatoris</label>
     </variable>
-    <variable CV="16.1.452" mask="XXXXXXXV" default="0" item="Sound Drive Random">
+    <variable CV="16.1.452" mask="XXXXXXXV" default="0" item="Sound Drive 25">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
         <label>Requires Drive Sound</label>
         <label xml:lang="it">Richiede unità.Suono</label>
         <label xml:lang="de">nur bei Fahrt</label>
         <label xml:lang="ca">Requereix so de conducció</label>
     </variable>
-    <variable CV="16.1.453" default="128" item="Sound Min Speed Random">
+    <variable CV="16.1.453" default="128" item="Sound Min Speed 25">
         <decVal/>
         <label>Min sound playback speed</label>
         <label xml:lang="it">Velocità Min.riproduzione suono</label>
         <label xml:lang="de">Minimale Abspielgeschwindigkeit</label>
         <label xml:lang="ca">Velocitat mínima de reproducció del so</label>
     </variable>
-    <variable CV="16.1.454" default="128" item="Sound Max Speed Random">
+    <variable CV="16.1.454" default="128" item="Sound Max Speed 25">
         <decVal/>
         <label>Max sound playback speed</label>
         <label xml:lang="it">Velocità Max.riproduzione suono</label>
         <label xml:lang="de">Maximale Abspielgeschwindigkeit</label>
         <label xml:lang="ca">Velocitat màxima de reproducció del so</label>
     </variable>
-    <variable CV="16.1.459" default="128" item="Sound Volume Brake">
+    <variable CV="16.1.459" default="128" item="Sound Volume 26">
         <decVal max="128"/>
         <label>Brake Sound volume</label>
         <label xml:lang="it">Volume Freni</label>
         <label xml:lang="de">Bremsgeräusch Lautstärke</label>
         <label xml:lang="ca">Volum de la frenada</label>
     </variable>
-    <variable CV="16.1.460" mask="XXXXXXXV" default="0" item="Sound Drive Brake">
+    <variable CV="16.1.460" mask="XXXXXXXV" default="0" item="Sound Drive 26">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
         <label>Requires Drive Sound</label>
         <label xml:lang="it">Richiede unità.Suono</label>
         <label xml:lang="de">nur bei Fahrt</label>
         <label xml:lang="ca">Requereix so de conducció</label>
     </variable>
-    <variable CV="16.1.461" default="128" item="Sound Min Speed Brake">
+    <variable CV="16.1.461" default="128" item="Sound Min Speed 26">
         <decVal/>
         <label>Min sound playback speed</label>
         <label xml:lang="it">Velocità Min.riproduzione suono</label>
         <label xml:lang="de">Minimale Abspielgeschwindigkeit</label>
         <label xml:lang="ca">Velocitat mínima de reproducció del so</label>
     </variable>
-    <variable CV="16.1.462" default="128" item="Sound Max Speed Brake">
+    <variable CV="16.1.462" default="128" item="Sound Max Speed 26">
         <decVal/>
         <label>Max sound playback speed</label>
         <label xml:lang="it">Velocità Max.riproduzione suono</label>
         <label xml:lang="de">Maximale Abspielgeschwindigkeit</label>
         <label xml:lang="ca">Velocitat màxima de reproducció del so</label>
     </variable>
-    <variable CV="16.1.467" default="128" item="Sound Volume Gear Shift">
+    <variable CV="16.1.467" default="128" item="Sound Volume 27">
         <decVal max="128"/>
         <label>Gear Shift Sound volume</label>
         <label xml:lang="it">Volume Cambio Marcia</label>
         <label xml:lang="de">Schaltgeräusch Lautstärke</label>
         <label xml:lang="ca">Volum canvi de marxa</label>
     </variable>
-    <variable CV="16.1.468" mask="XXXXXXXV" default="0" item="Sound Drive Gear Shift">
+    <variable CV="16.1.468" mask="XXXXXXXV" default="0" item="Sound Drive 27">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
         <label>Requires Drive Sound</label>
         <label xml:lang="it">Richiede unità.Suono</label>
         <label xml:lang="de">nur bei Fahrt</label>
         <label xml:lang="ca">Requereiex so de conducció</label>
     </variable>
-    <variable CV="16.1.469" default="128" item="Sound Min Speed Gear Shift">
+    <variable CV="16.1.469" default="128" item="Sound Min Speed 27">
         <decVal/>
         <label>Min sound playback speed</label>
         <label xml:lang="it">Velocità Min.riproduzione suono</label>
         <label xml:lang="de">Minimale Abspielgeschwindigkeit</label>
         <label xml:lang="ca">Velocitat mínima de reproducció del so</label>
     </variable>
-    <variable CV="16.1.470" default="128" item="Sound Max Speed Gear Shift">
+    <variable CV="16.1.470" default="128" item="Sound Max Speed 27">
         <decVal/>
         <label>Max sound playback speed</label>
         <label xml:lang="it">Velocità Max.riproduzione suono</label>

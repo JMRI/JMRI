@@ -2,6 +2,7 @@ package jmri.implementation.configurexml;
 
 import java.util.List;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.SignalAppearanceMap;
 import jmri.Turnout;
 import jmri.implementation.TurnoutSignalMast;
@@ -10,10 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML configuration for DefaultSignalMastManager objects.
+ * Handle XML configuration for TurnoutSignalMast objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * 
  */
 public class TurnoutSignalMastXml
         extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -87,7 +87,13 @@ public class TurnoutSignalMastXml
     public boolean load(Element shared, Element perNode) {
         TurnoutSignalMast m;
         String sys = getSystemName(shared);
-        m = new jmri.implementation.TurnoutSignalMast(sys);
+        try {
+            m = (TurnoutSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class)
+                    .provideCustomSignalMast(sys, TurnoutSignalMast.class);
+        } catch (JmriException e) {
+            log.error("Failed to load TurnoutSignalMast {}: {}", sys, e);
+            return false;
+        }
 
         if (getUserName(shared) != null) {
             m.setUserName(getUserName(shared));
@@ -136,9 +142,6 @@ public class TurnoutSignalMastXml
                 && shared.getChild("resetPreviousStates").getText().equals("yes")) {
             m.resetPreviousStates(true);
         }
-
-        InstanceManager.getDefault(jmri.SignalMastManager.class)
-                .register(m);
 
         return true;
     }

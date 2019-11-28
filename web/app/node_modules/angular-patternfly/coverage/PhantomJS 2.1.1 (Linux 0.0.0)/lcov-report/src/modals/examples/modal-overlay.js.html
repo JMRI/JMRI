@@ -1,0 +1,783 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/modals/examples/modal-overlay.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/modals/examples/modal-overlay.js</span></h1>
+    <h2>
+        Statements: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">100% <small>(0 / 0)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">src/modals/examples/</a> &#187; modal-overlay.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</td><td class="line-coverage"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
+ * @ngdoc directive
+ * @name patternfly.modals.componenet:pfModalOverlay
+ * @element pfModalOverlay
+ * @restrict E
+ *
+ * @description
+ * The Modal Overlay pattern provides a way to quickly load and display important information to the user without navigating
+ * away from the current page. It utilizes the {@link https://angular-ui.github.io/bootstrap/#modal Angular UI modal}
+ * and Patternfly styling. Use cases for Modal Overlays can vary a great deal, but some examples include the following:
+ * &lt;ul&gt;
+ * &lt;li&gt;To remind or prompt users
+ * &lt;li&gt;To load dialogs that require user input before advancing
+ * &lt;li&gt;To load tasks which require a user’s full attention, such as stepping through a wizard flow
+ * &lt;li&gt;To present important information or warnings
+ * &lt;/ul&gt;
+ *
+ * @param {boolean} showModal Flag for setting modal to hide/show by default
+ * @param {function} onClose Function to call when the modal is closed&lt;br/&gt;
+ * Note: the parameter passed to the on-close function must be named 'dismissCause'
+ * @param {string} modalId Id of the modal
+ * @param {string} modalTitle The title of the modal displayed in the header
+ * @param {string} modalBodyTemplate Path to html template for modal body
+ * @param {array} actionButtons array of button objects. Each button can have the following properties:&lt;br/&gt;
+ * &lt;ul style='list-style-type: none'&gt;
+ * &lt;li&gt;.label        - the text to display on the button
+ * &lt;li&gt;.class        - (optional) classes to add to the button
+ * &lt;li&gt;.actionFn     - (optional) user defined function to call when the button is clicked. May optionally return false
+ * to prevent closing the modal. For example to perfrom asynchronous validations.
+ * &lt;li&gt;.isDisabled   - (optional) boolean true if the button should be disabled by default
+ * &lt;li&gt;.isCancel     - (optional) boolean true if the button should cancel and dismiss the modal
+ * &lt;/ul&gt;
+ * @param {string=} titleId Id of the title. "modalTitle" by default
+ * @param {boolean=} hideCloseIcon Flag indicating that the modal should hide the 'x' close icon.
+ * @param {boolean=} backgroundClose Flag indicating that the modal should close if user clicks background. False by default
+ * @param {function=} onBackgroundClick Function to call when the user clicks the background.
+ * Return true if clicking background should close the modal, false otherwise.&lt;br/&gt;
+ * Note: backgroundClose needs to be set to true in order for the onBackgroundClick event to fire.
+ * @param {boolean=} isForm Flag indicating that the modal body will contain a form which should be valid before an action button is enabled
+ * @param {object=} modalBodyScope Object containing the scope for the modalBodyTemplate
+ *
+ * @example
+ &lt;example module="patternfly.modals.demo"&gt;
+&nbsp;
+ &lt;file name="modules.js"&gt;
+   angular.module('patternfly.modals.demo', ['patternfly.modals', 'patternfly.notification']);
+ &lt;/file&gt;
+&nbsp;
+ &lt;file name="index.html"&gt;
+ &lt;div ng-controller="DemoModalOverlayCtrl" class="example-container"&gt;
+    &lt;button ng-click="open()" class="btn btn-default"&gt;Launch Form Example&lt;/button&gt;
+    &lt;pf-modal-overlay show-modal="showModal"
+          on-close="onClose(dismissCause)"
+          modal-id="modalId"
+          modal-title="modalTitle"
+          background-close="backgroundClose"
+          on-background-click="onBackgroundClick"
+          is-form="isForm"
+          modal-body-template="template"
+          modal-body-scope="formScope"
+          action-buttons="actionButtons"&gt;
+    &lt;/pf-modal-overlay&gt;
+&nbsp;
+   &lt;button ng-click="open2()" class="btn btn-default"&gt;Launch Confirmation Example&lt;/button&gt;
+   &lt;pf-modal-overlay show-modal="showModal2"
+         on-close="onClose2(dismissCause)"
+         modal-id="modalId2"
+         modal-title="modalTitle2"
+         title-id="titleId2"
+         hide-close-icon="hideCloseIcon2"
+         modal-body-template="template2"
+         action-buttons="actionButtons2"&gt;
+    &lt;/pf-modal-overlay&gt;
+   &lt;div&gt;
+      &lt;label class="actions-label"&gt;Actions: &lt;/label&gt;
+   &lt;/div&gt;
+   &lt;div&gt;
+      &lt;textarea rows="3" class="col-md-12"&gt;{{actionsText}}&lt;/textarea&gt;
+   &lt;/div&gt;
+ &lt;/div&gt;
+ &lt;/file&gt;
+&nbsp;
+ &lt;file name="script.js"&gt;
+ angular.module('patternfly.modals.demo').controller('DemoModalOverlayCtrl', function( $scope, $timeout ) {
+&nbsp;
+      $scope.actionsText = "";
+&nbsp;
+      // first example
+      $scope.open = function () {
+          $scope.showModal = true;
+       };
+      $scope.onClose = function(dismissCause) {
+          $scope.showModal = false;
+          $scope.actionsText = "First Modal closed via: " + dismissCause + "\n" + $scope.actionsText;
+       };
+&nbsp;
+      $scope.modalId = "demoModal1";
+      $scope.modalTitle = "First Demo Title";
+      $scope.backgroundClose = true;
+      $scope.onBackgroundClick = function() {
+        if(!$scope.formScope.allowBackgroundDismissal) {
+          $scope.actionsText = "Backdrop clicked, but dismissal using background is not allowed\n" + $scope.actionsText;
+          $scope.formScope.showNotAllowedMsg = true;
+          return false;
+        }
+        $scope.formScope.showNotAllowedMsg = false;
+        return true;
+      };
+      $scope.isForm = true;
+      $scope.template = "demo-form.html";
+      $scope.formScope = {
+        inputs: {
+          first: "",
+          second: "test",
+          third: ""
+        },
+        allowBackgroundDismissal: false,
+        showNotAllowedMsg: false,
+        maxLength: 6,
+        firstInputInvalid: false,
+        validating: false,
+        formErrorNotification: {
+          type: "danger",
+          header: "Input is not valid.",
+          message: "Fix the errors below to continue saving."
+        }
+      };
+      $scope.actionButtons = [
+          {
+            label: "Cancel",
+            isCancel: true
+          },
+          {
+            label: "Save",
+            class: "btn-primary custom-class",
+            actionFn: function() {
+              $scope.actionsText = "inputs {" +
+                    "\n    first: " + $scope.formScope.inputs.first +
+                    "\n    second: " + $scope.formScope.inputs.second +
+                    "\n    third: " + $scope.formScope.inputs.third +
+                    "\n}" + $scope.actionsText;
+              $scope.formScope.firstInputInvalid = false;
+              $scope.formScope.validating = true;
+              $timeout(function () {
+                $scope.formScope.validating = false;
+                if ($scope.formScope.inputs.first === 'apples') {
+                  $scope.showModal = false;
+                } else {
+                  $scope.formScope.firstInputInvalid = true;
+                }
+              }, 3000);
+              return false;
+            }
+          }];
+&nbsp;
+      // second example
+      $scope.open2 = function () {
+          $scope.showModal2 = true;
+       };
+      $scope.onClose2 = function(dismissCause) {
+          $scope.showModal2 = false;
+          $scope.actionsText = "Second Modal closed via: " + dismissCause + "\n" + $scope.actionsText;
+       };
+&nbsp;
+      $scope.modalId2 = "demoModal2";
+      $scope.modalTitle2 = "Second Demo Title";
+      $scope.titleId2 = "demoTitle2";
+      $scope.hideCloseIcon2 = true;
+      $scope.template2 = "demo-info.html";
+      $scope.actionButtons2 = [
+          {
+            label: "Cancel",
+            isCancel: true
+          },
+          {
+            label: "OK",
+            class: "btn-primary"
+          }];
+ });
+ &lt;/file&gt;
+&nbsp;
+ &lt;file name="demo-form.html"&gt;
+   &lt;ng-form name="demoForm" class="form-horizontal"&gt;
+     &lt;pf-inline-notification ng-if="$ctrl.modalBodyScope.firstInputInvalid"
+       pf-notification-type="$ctrl.modalBodyScope.formErrorNotification.type"
+       pf-notification-header="$ctrl.modalBodyScope.formErrorNotification.header"
+       pf-notification-message="$ctrl.modalBodyScope.formErrorNotification.message"&gt;
+     &lt;/pf-inline-notification&gt;
+     &lt;div class="form-group"&gt;
+       &lt;label class="col-sm-3 control-label required-pf" for="textInput"&gt;Field One&lt;/label&gt;
+       &lt;div class="col-sm-9"
+            ng-class="{ 'has-error': demoForm.fieldOne.$dirty &amp;&amp; demoForm.fieldOne.$touched &amp;&amp; $ctrl.modalBodyScope.firstInputInvalid}"&gt;
+        &lt;input type="text" id="textInput" name="fieldOne" class="form-control"
+               ng-model="$ctrl.modalBodyScope.inputs.first" ng-required="true"/&gt;
+         &lt;div class="has-error" ng-show="$ctrl.modalBodyScope.firstInputInvalid"&gt;
+           &lt;span class="help-block"&gt;
+             Invalid value for Field One.  Only acceptable value is 'apples'
+           &lt;/span&gt;
+         &lt;/div&gt;
+       &lt;/div&gt;
+     &lt;/div&gt;
+     &lt;div class="form-group"&gt;
+       &lt;label class="col-sm-3 control-label" for="textInput2"&gt;Field Two&lt;/label&gt;
+       &lt;div class="col-sm-9"
+            ng-class="{ 'has-error': demoForm.fieldTwo.$dirty &amp;&amp; demoForm.fieldTwo.$touched &amp;&amp; demoForm.fieldTwo.$error.maxlength}" &gt;
+         &lt;input type="text" name="fieldTwo" id="textInput2" class="form-control"
+                ng-model="$ctrl.modalBodyScope.inputs.second"
+                ng-maxlength="$ctrl.modalBodyScope.maxLength" /&gt;
+         &lt;div class="has-error" ng-show="demoForm.fieldTwo.$error.maxlength"&gt;
+           &lt;span class="help-block"&gt;
+             Field Two exceeds max length of {{$ctrl.modalBodyScope.maxLength}}!
+           &lt;/span&gt;
+         &lt;/div&gt;
+       &lt;/div&gt;
+     &lt;/div&gt;
+     &lt;div class="form-group"&gt;
+       &lt;label class="col-sm-3 control-label" for="textInput3"&gt;Field Three&lt;/label&gt;
+       &lt;div class="col-sm-9"&gt;
+         &lt;input type="text" id="textInput3" class="form-control" ng-model="$ctrl.modalBodyScope.inputs.third"/&gt;
+       &lt;/div&gt;
+     &lt;/div&gt;
+     &lt;div class="form-group"&gt;
+       &lt;div class="col-sm-offset-3 col-sm-9"&gt;
+         &lt;div class="checkbox"&gt;
+           &lt;label&gt;
+              &lt;input type="checkbox" ng-model="$ctrl.modalBodyScope.allowBackgroundDismissal"&gt; Allow background dismissal
+           &lt;/label&gt;
+         &lt;/div&gt;
+         &lt;div ng-show="$ctrl.modalBodyScope.showNotAllowedMsg" class="col-sm-12 has-error"&gt;
+            &lt;span class="help-block"&gt;Background dismissal is not allowed!&lt;/span&gt;
+         &lt;/div&gt;
+       &lt;/div&gt;
+     &lt;/div&gt;
+     &lt;div ng-if="$ctrl.modalBodyScope.validating"&gt;
+       &lt;div class="spinner spinner-lg blank-slate-pf-icon"&gt;&lt;/div&gt;
+     &lt;/div&gt;
+   &lt;/ng-form&gt;
+ &lt;/file&gt;
+&nbsp;
+ &lt;file name="demo-info.html"&gt;
+   &lt;div class="row"&gt;
+    &lt;div class="col-md-12"&gt;Donec consequat dignissim neque, sed suscipit quam egestas in. Fusce bibendum laoreet lectus commodo interdum. Vestibulum odio ipsum, tristique et ante vel, iaculis placerat nulla. Suspendisse iaculis urna feugiat lorem semper, ut iaculis risus tempus.&lt;/div&gt;
+   &lt;/div&gt;
+ &lt;/file&gt;
+ &lt;/example&gt;
+ */
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Sep 05 2019 13:34:22 GMT-0400 (EDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

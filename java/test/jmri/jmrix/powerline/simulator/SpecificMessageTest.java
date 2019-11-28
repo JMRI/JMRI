@@ -8,7 +8,7 @@ import org.junit.*;
  * JUnit tests for the cm11.SpecficMessage class.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2009
-  */
+ */
 public class SpecificMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     private SerialMessage msg;

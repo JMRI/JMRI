@@ -6,21 +6,41 @@ import javax.annotation.Nonnull;
 import org.jdom2.Element;
 
 /**
- * IdTag represents a tag that might be attached to a specific piece of rolling
- * stock to uniquely identify it.
- * <P>
- * An example would be an RFID-tag.
+ * IdTag is a pre-parsed representation of an identification message from the
+ * layout.  One use of an IdTag is a device that might be attached to any 
+ * specific piece of rolling stock to uniquely identify it.
+ * <p>
+ * Examples include
+ * <ul>
+ *   <li>RFID-tag.</li>
+ *   <li>Digitrax Transponding Decoders</li>
+ *   <li>RailCom tags</li>
+ * </ul>
+ * <p>
+ * Each IdTag contains the following information:
+ * <ul>
+ *   <li>A System Name</li>
+ *   <li>A User Name (which may be null)</li>
+ *   <li>A TagID<li>
+ *   <li>A reference to the last reporter to see the tag, which may be null</li>
+ *   <li>The date and time the last reporter saw the tag, which may be null</li>
+ *   <li>A list of key/value pairs holding properties</li>
+ * </ul>
+ * <p>
+ * The system name is of the form IDxxxx where xxxx is the same value as the TagID.
+ * <p>
+ * The list of key value pairs is maintained by the reporters parsing and 
+ * updating the list.  This information may vary between implementations.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris Copyright (C) 2011
  * @since 2.11.4

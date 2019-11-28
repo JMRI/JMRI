@@ -2,8 +2,8 @@ package jmri.jmrix;
 
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
-    private static final ResourceBundle acb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     public static final String NONE_SELECTED = Bundle.getMessage("noneSelected");
     public static final String NO_PORTS_FOUND = Bundle.getMessage("noPortsFound");
     public static final String NONE = Bundle.getMessage("none");
@@ -188,14 +187,21 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                         }
                     } else {
                         Class<?> cl = Class.forName(className);
-                        config = (ConnectionConfig) cl.newInstance();
-                        modeBox.addItem(config.name());
+                        config = (ConnectionConfig) cl.getDeclaredConstructor().newInstance();
+                        if( !(config instanceof StreamConnectionConfig)) {
+                           // only include if the connection is not a 
+                           // StreamConnection.  Those connections require
+                           // additional context.
+                           modeBox.addItem(config.name());
+                        } else {
+                               continue;
+                        }
                     }
                     classConnectionList[n++] = config;
                 } catch (NullPointerException e) {
                     log.error("Attempt to load {} failed.", className, e);
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                    log.debug("Attempt to load {} failed: {}.", className, e);
+                } catch (InvocationTargetException | ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
+                    log.error("Attempt to load {} failed: {}.", className, e);
                 }
             }
             if ((modeBox.getSelectedIndex() == 0) && (p.getComboBoxLastSelection((String) manuBox.getSelectedItem()) != null)) {
@@ -249,13 +255,21 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 try {
                     jmri.jmrix.ConnectionConfig config;
                     Class<?> cl = Class.forName(classConnectionNameList1);
-                    config = (jmri.jmrix.ConnectionConfig) cl.newInstance();
-                    modeBox.addItem(config.name());
+                    config = (jmri.jmrix.ConnectionConfig) cl.getDeclaredConstructor().newInstance();
+                    if( !(config instanceof StreamConnectionConfig)) {
+                        // only include if the connection is not a 
+                        // StreamConnection.  Those connections require
+                        // additional context.
+                        modeBox.addItem(config.name());
+                    } else {
+                        continue;
+                    }
                     classConnectionList[n++] = config;
                     if (classConnectionNameList.length == 1) {
                         modeBox.setSelectedIndex(1);
                     }
-                } catch (NullPointerException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+                } catch (InvocationTargetException | NullPointerException | ClassNotFoundException 
+                                | InstantiationException | IllegalAccessException | NoSuchMethodException e) {
                     log.warn("Attempt to load {} failed: {}", classConnectionNameList1, e);
                 }
             }
@@ -280,8 +294,8 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
                 ccCurrent.dispose();
             }
             ccCurrent = classConnectionList[current];
-            classConnectionList[current].loadDetails(details);
-            classConnectionList[current].setManufacturer((String) manuBox.getSelectedItem());
+            ccCurrent.setManufacturer((String) manuBox.getSelectedItem());
+            ccCurrent.loadDetails(details);
         } else {
             if (ccCurrent != null) {
                 ccCurrent.dispose();
@@ -358,7 +372,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public String getPreferencesItemText() {
-        return acb.getString("MenuConnections"); // NOI18N
+        return Bundle.getMessage("MenuConnections"); // NOI18N
     }
 
     @Override

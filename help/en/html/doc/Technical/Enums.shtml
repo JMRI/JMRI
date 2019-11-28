@@ -1,0 +1,246 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+
+    <title>
+ 	JMRI: Using Enums
+    </title>
+    <meta name="author" content="YOUR NAME HERE">
+    <meta name="keywords" content="SOME KEYWORDS">
+
+<!--#include virtual="/Style.shtml" -->
+</head>
+<body>
+<!--#include virtual="/Header.shtml" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
+    <div id="mainContent">
+
+      <h1>JMRI: Using Enums</h1>
+	    
+	    <h2>The Minimal Enum</h2>
+	    
+	    <p>The minimal enum is really small. Here's
+	        an example of embedding an enum in a class to 
+	        represent seven different constants:</p>
+	        
+<pre style="font-family: monospace;">
+        class MyClass {
+            public enum Day {
+                SUNDAY, MONDAY, TUESDAY, WEDNESDAY, 
+                THURSDAY, FRIDAY, SATURDAY
+            }
+
+            void checkParty(Day day) {
+                if (day == Day.FRIDAY) { 
+                    doParty();
+                }
+            }
+        }
+</pre>
+        
+        <ul>
+        <li>This shows a lightweight enum embedded in one class, 
+            but you can also define them independently.
+        <li>Another class can refer to this as 
+            <code>MyClass.Day</code> and <code>MyClass.Day.FRIDAY</code>
+        </ul>
+        <p>
+	    Examples of use:</p>
+	    
+<pre style="font-family: monospace;">
+        for (Day day : Day.values()) {
+            // do what you want
+        }
+</pre>
+
+<pre style="font-family: monospace;">
+        String whichDay = "THURSDAY";
+        Day day = Day.valueOf(whichDay);
+        checkParty(day);          // disappointment!
+        checkParty(Day.TUESDAY);  // disappointment!
+</pre>	      
+	      
+	      <p>
+	      Note there are no meaningful integer values for this.</p>
+	      
+	      <h2>Migrating Integer Constants to Enum</h2>
+	      
+	      <p>If you have a set of constants like</p>
+	      
+<pre style="font-family: monospace;">
+	      static final int DOG  = 1;
+	      static final int CAT  = 2;
+	      static final int FISH = 3;
+	      static final int BIRD = 12;
+</pre>
+	      
+	      <p>converting those to an enum can make them more type-safe.</p>
+	      
+<pre style="font-family: monospace;">
+	      public enum Pet {
+	        DOG(1),
+	        CAT(2),
+	        FISH(3),
+	        BIRD(12);
+	        
+	        private final int value;
+	        Pet(int v) { value = v; }
+	        int asInt() { return value; }
+	      }
+</pre>
+	      
+	      <p>To use this, just replace "int" with "Pet" where-ever one is 
+	      defined or passed as a parameter. Then compile and see
+	      what else needs to be changed; if you're not doing arithmetic 
+	      with the constants (in which case maybe they're not enums), 
+	      there shouldn't be much else that needs to be changed.</p>
+	      
+<pre style="font-family: monospace;">
+        void check(int val) {
+            switch (val) {
+                case DOG: 
+                    // do stuff and return
+                case CAT:
+                    // do stuff and return
+                default:
+                    // do stuff and return
+            }
+        }
+</pre>
+	         
+	        <p>becomes</p>
+
+<pre style="font-family: monospace;">
+        void check(Pet val) {
+            switch (val) {
+                case DOG: 
+                    // do stuff and return
+                case CAT:
+                    // do stuff and return
+                default:
+                    // do stuff and return
+            }
+        }
+</pre>
+	        
+	      <p>(The only change was in the 1st line)</p>
+	        
+	      <h2>Adding String Values</h2>
+	        
+            <p>Sometimes you want the elements to also have 
+            user-readable names separate from the
+            names of the individual items.  For example,
+            you might want to call it TUESDAY in the code, 
+            but have it provide "Tuesday" for pretty printing.</p>
+	        
+<pre style="font-family: monospace;">
+    public enum NamedPet {
+        DOG(1, "Dog"),
+        CAT(2, "Cat"),
+        FISH(3, "Fish"),
+        BIRD(12, "Bird");
+
+        private final int value;
+        private final String name;
+        Pet(int v, string s) { 
+            value = v; 
+            name = s;
+        }
+        int asInt() { return value; }
+        String toString() { return name; }
+    }
+</pre>
+	        
+            <p>
+            Note that you might want to internationalize these in the constructor.
+            See 
+            <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/LocoAddress.java">java/src/jmri/LocoAddress.java</a> for an example of this.
+            </p>
+	    
+            <p>
+            In general, you should <u>not</u> build a lot of 
+            code to convert between ints and Enums or between Strings and enums.
+            That's a code smell that indicates something wrong with how you're 
+            using the enums.  If users have to select a specific one, for example, provide a combobox
+            of values, don't have them type a String that you then have to error-check and 
+            convert. </p>
+
+            <p>
+            The one exception to this is the ConvertXML persistance system,
+            which wants to convert your enum values to and from String values
+            to store and load in XML files, and may also need to convert from the numeric values for
+            historical reasons. See below.</p>
+            
+	      <h2>ConvertXML</h2>
+          
+	       <p>
+	       Enums can provide interfaces. We use the 
+	       <code>StringConvertibleEnum</code> and
+	       <code>IntConvertibleEnum</code> 
+	       interfaces as flags.
+
+
+            <h4>Migration</h4>
+            
+            Start writing a new schema that only allows the specific elements, 
+            but make sure your code can take the old numeric values.
+            Since the file contains the schema it obeys, this is OK.
+            
+            But it might require a lot of migrations if you do this
+            between test releases....
+            
+            
+
+            <h4>Schema limiting to a set of specific enum values</h4>
+            
+<pre style="font-family: monospace;">
+        &lt;xs:attribute name="connection" default="unspecified" &gt;
+          &lt;xs:simpleType&gt;
+            &lt;xs:restriction base="xs:token" &gt;
+              &lt;xs:enumeration value="unspecified"/&gt;
+              &lt;xs:enumeration value="plug"/&gt;
+              &lt;xs:enumeration value="wire"/&gt;
+              &lt;xs:enumeration value="solder"/&gt;
+              &lt;xs:enumeration value="LED"/&gt;
+              &lt;xs:enumeration value="bulb"/&gt;
+              &lt;xs:enumeration value="other"/&gt;
+            &lt;/xs:restriction&gt;
+          &lt;/xs:simpleType&gt;
+        &lt;/xs:attribute&gt;
+</pre>
+
+            <h4>Schema also permitting older numeric values</h4>
+            
+<pre style="font-family: monospace;">
+        &lt;xs:attribute name="size"&gt;
+         &lt;xs:simpleType&gt;
+          &lt;xs:union&gt;
+           &lt;xs:simpleType&gt;
+            &lt;xs:restriction base="xs:positive-integer"&gt;
+              &lt;xs:maxInclusive="10"/&gt;
+            &lt;/xs:restriction&gt;
+           &lt;/xs:simpleType&gt;
+           &lt;xs:simpleType&gt;
+            &lt;xs:restriction base="xs:NMTOKEN"&gt;
+             &lt;xs:enumeration value="small"/&gt;
+             &lt;xs:enumeration value="medium"/&gt;
+             &lt;xs:enumeration value="large"/&gt;
+            &lt;/xs:restriction&gt;
+           &lt;/xs:simpleType&gt;
+          &lt;/xs:union&gt;
+         &lt;/xs:simpleType&gt;
+        &lt;/xs:attribute&gt;
+</pre>
+
+            This can also be used for elements (which is the generally prefered approach)
+            
+
+
+	    
+<!--#include virtual="/Footer.shtml" -->
+
+</div><!-- closes #mainContent-->
+</div> <!-- closes #mBody, was opened by Sidebar -->
+</body>
+</html>

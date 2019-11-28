@@ -152,11 +152,6 @@ public class OutputBits {
         return m;
     }
 
-    @Deprecated
-    public static OutputBits instance() {
-        return null;
-    }
-
     private final static Logger log = LoggerFactory.getLogger(OutputBits.class);
 
 }

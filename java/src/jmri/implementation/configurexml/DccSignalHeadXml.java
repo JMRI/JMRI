@@ -50,12 +50,13 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
         } else {
             element.addContent(new Element("useAddressOffSet").addContent("no"));
         }
+        element.addContent(new Element("packetsendcount").addContent(Integer.toString(p.getDccSignalHeadPacketSendCount())));
 
         for (int i = 0; i < p.getValidStates().length; i++) {
-            String aspect = p.getValidStateNames()[i];
+            String aspect = p.getValidStateKeys()[i];
             //String address = p.getOutputForAppearance(i);
             Element el = new Element("aspect");
-            el.setAttribute("defines", aspect);
+            el.setAttribute("defines", aspect); // non-localized appearance property key
             el.addContent(new Element("number").addContent(Integer.toString(p.getOutputForAppearance(p.getValidStates()[i]))));
             element.addContent(el);
         }
@@ -83,9 +84,14 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
             }
         }
 
+        if (shared.getChild("packetsendcount") != null) {
+            h.setDccSignalHeadPacketSendCount(Integer.parseInt(shared.getChild("packetsendcount").getValue()));
+        }
+
         List<Element> list = shared.getChildren("aspect");
         for (Element e : list) {
-            String aspect = e.getAttribute("defines").getValue();
+            String aspect = e.getAttribute("defines").getValue(); // migrated to store non-localized key 4.15.6
+            // previous versions store localized appearance name as defines value
             int number = -1;
             try {
                 String value = e.getChild("number").getValue();
@@ -97,7 +103,8 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
             int indexOfAspect = -1;
 
             for (int i = 0; i < h.getValidStates().length; i++) {
-                if (h.getValidStateNames()[i].equals(aspect)) {
+                if (h.getValidStateKeys()[i].equals(aspect) || h.getValidStateNames()[i].equals(aspect)) {
+                    // matching to stateKey is preferred to allow changing locale without errors
                     indexOfAspect = i;
                     break;
                 }
@@ -117,4 +124,5 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
     }
 
     private final static Logger log = LoggerFactory.getLogger(DccSignalHeadXml.class);
+
 }

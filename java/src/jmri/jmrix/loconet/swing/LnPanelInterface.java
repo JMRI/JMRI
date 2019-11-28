@@ -16,8 +16,8 @@ public interface LnPanelInterface {
      * <p>
      * This needs to be connected to the initContext() method in implementing
      * classes.
-     * <p>
-     * @param memo - a {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} object
+     *
+     * @param memo  a {@link jmri.jmrix.loconet.LocoNetSystemConnectionMemo} object
      */
     public void initComponents(LocoNetSystemConnectionMemo memo);
 

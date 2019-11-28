@@ -11,11 +11,11 @@ import org.slf4j.LoggerFactory;
  * extend to uses in other software products. If you wish to use this code,
  * algorithm or these message formats outside of JMRI, please contact MRC Inc
  * for separate permission.
- * <p>
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2004
  * @author Kevin Dickerson Copyright (C) 2014
  * @author kcameron Copyright (C) 2014
-  */
+ */
 public class MrcMessage {
 
     // create a new one

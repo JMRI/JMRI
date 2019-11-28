@@ -27,6 +27,7 @@ import org.junit.runners.Suite;
         BeanTablePaneTest.class,
         EnablingCheckboxRendererTest.class,
         IdTagTableActionTest.class,
+        IdTagTableTabActionTest.class,
         LightTableActionTest.class,
         LightTableTabActionTest.class,
         ListedTableActionTest.class,
@@ -56,6 +57,6 @@ import org.junit.runners.Suite;
  * Tests for classes in the jmri.jmrit.beantable package
  *
  * @author	Bob Jacobsen Copyright 2004
-  */
+ */
 public class PackageTest {
 }

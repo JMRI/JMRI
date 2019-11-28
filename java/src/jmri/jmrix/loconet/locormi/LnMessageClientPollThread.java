@@ -1,8 +1,8 @@
 package jmri.jmrix.loconet.locormi;
 
 import jmri.jmrix.loconet.LocoNetMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author Alex Shepherd Copyright (c) 2002
@@ -10,12 +10,11 @@ import org.slf4j.LoggerFactory;
 class LnMessageClientPollThread extends Thread {
 
     LnMessageClient parent = null;
-    private final static Logger log = LoggerFactory.getLogger(LnMessageClientPollThread.class);
 
-    LnMessageClientPollThread(LnMessageClient lnParent) {
+    LnMessageClientPollThread(@Nonnull LnMessageClient lnParent) {
         parent = lnParent;
         this.setDaemon(true);
-        this.setName("LnMessageClientPollThread "+lnParent);
+        this.setName("LnMessageClientPollThread " + lnParent);
         this.start();
     }
 
@@ -24,6 +23,11 @@ class LnMessageClientPollThread extends Thread {
         try {
             Object[] lnMessages = null;
             while (!Thread.interrupted()) {
+                if (parent.lnMessageBuffer == null) {
+                    // no work to do
+                    return;
+                }
+
                 lnMessages = parent.lnMessageBuffer.getMessages(parent.pollTimeout);
 
                 if (lnMessages != null) {
@@ -39,4 +43,7 @@ class LnMessageClientPollThread extends Thread {
             log.warn("Exception: ", ex);
         }
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LnMessageClientPollThread.class);
+
 }

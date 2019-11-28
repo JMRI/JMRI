@@ -6,14 +6,14 @@ import jmri.Turnout;
 
 /**
  * Drive a single signal head via four "Turnout" objects.
- * <P>
+ * <p>
  * After much confusion, the user-level terminology was changed to call these
  * "Triple Output"; the class name remains the same to reduce recoding.
- * <P>
+ * <p>
  * The four Turnout objects are provided during construction, and each drives a
  * specific color (RED, YELLOW, GREEN, and LUNAR). Normally, "THROWN" is on, and
  * "CLOSED" is off.
- * <P>
+ * <p>
  * This class doesn't currently listen to the Turnout's to see if they've been
  * changed via some other mechanism.
  *
@@ -85,7 +85,7 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
     }
 
     // claim support for Lunar aspects
-    final static private int[] validStates = new int[]{
+    private final static int[] validStates = new int[]{
         DARK,
         RED,
         LUNAR,
@@ -96,26 +96,45 @@ public class QuadOutputSignalHead extends TripleTurnoutSignalHead {
         FLASHYELLOW,
         FLASHGREEN
     };
-    final static private String[] validStateNames = new String[]{
-        Bundle.getMessage("SignalHeadStateDark"),
-        Bundle.getMessage("SignalHeadStateRed"),
-        Bundle.getMessage("SignalHeadStateLunar"),
-        Bundle.getMessage("SignalHeadStateYellow"),
-        Bundle.getMessage("SignalHeadStateGreen"),
-        Bundle.getMessage("SignalHeadStateFlashingRed"),
-        Bundle.getMessage("SignalHeadStateFlashingLunar"),
-        Bundle.getMessage("SignalHeadStateFlashingYellow"),
-        Bundle.getMessage("SignalHeadStateFlashingGreen")
+    private static final String[] validStateKeys = new String[]{
+            "SignalHeadStateDark",
+            "SignalHeadStateRed",
+            "SignalHeadStateLunar",
+            "SignalHeadStateYellow",
+            "SignalHeadStateGreen",
+            "SignalHeadStateFlashingRed",
+            "SignalHeadStateFlashingLunar",
+            "SignalHeadStateFlashingYellow",
+            "SignalHeadStateFlashingGreen"
     };
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] getValidStates() {
         return Arrays.copyOf(validStates, validStates.length);
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getValidStateKeys() {
+        return Arrays.copyOf(validStateKeys, validStateKeys.length); // includes int for Lunar
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] getValidStateNames() {
-        return Arrays.copyOf(validStateNames, validStateNames.length);
+        String[] stateNames = new String[validStateKeys.length];
+        int i = 0;
+        for (String stateKey : validStateKeys) {
+            stateNames[i++] = Bundle.getMessage(stateKey);
+        }
+        return stateNames;
     }
 
     @Override

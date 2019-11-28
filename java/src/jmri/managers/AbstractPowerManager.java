@@ -11,7 +11,7 @@ import java.time.Instant;
  * Base PowerManager implementation for controlling layout power.
  * <p>
  * These are registered when they are added to the InstanceManager
- * <P>
+ *
  * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2010
  */
 abstract public class AbstractPowerManager implements PowerManager {
@@ -50,6 +50,30 @@ abstract public class AbstractPowerManager implements PowerManager {
     @Override
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.addPropertyChangeListener(propertyName, listener);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return pcs.getPropertyChangeListeners();
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return pcs.getPropertyChangeListeners(propertyName);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+        pcs.removePropertyChangeListener(propertyName, listener);
     }
 
     // a class for listening for power state changes

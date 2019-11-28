@@ -1,0 +1,363 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+
+  <title>JMRI Hardware Support - Connecting to a Digitrax DCS52</title>
+  <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="B. Milhaupt">
+  <meta name="keywords" content=
+  "Digitrax DCS Command Station DCS52 java model railroad JMRI install windows">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+
+      <h1>Hardware Support: Connecting to a Digitrax DCS52</h1><br>
+
+      <p>JMRI may be connected to the Digitrax DCS52 in any
+      of a wide variety of ways.  Since the DCS52 has a built-in USB interface,
+      it is possible to simply plug a USB cable into the computer and the DCS52,
+      and configure JMRI to suit this connection.  It is also possible to use
+      another LocoNet interface device, such as a LocoBuffer-USB, Digitrax PR3,
+      or Digitrax PR4, to interface a computer to LocoNet, and connect that LocoNet
+      to the DCS52.  JMRI does not prefer any one connection method over any
+      other method.  Choose one which is suitable for your needs.</p>
+
+      <p>If a USB cable is used to connect the JMRI computer to the DCS52's USB
+      connection, JMRI may be configured in one of two modes.  If the computer
+      will only be used for decoder programming, and JMRI will not need access to
+      LocoNet features other than the DCS52 "programming track", then JMRI may
+      be configured to use a "connection" where the DCS52 USB interface is
+      placed into a mode where it acts as a standalone decoder
+      programmer.  In this mode, JMRI will access the DCS52 dedicated
+      programming track connections.  This mimics the "standalone programmer"
+      configuration which the PR2 provides, and which the PR3 and PR4 can support.</p>
+
+      <p>Alternately, when JMRI will be used to access LocoNet resources which
+      go beyond simply the DCS52 programming track, then JMRI should be configured
+      to act as a general-purpose LocoNet interface.  The JMRI "connection" should
+      be configured so that the "command station" type specifies the type of
+      command station which is being used.</p>
+
+    <p>The table below summarizes these possibilities.</p>
+      <table border="3">
+          <tr><td align="center" rowspan="2"><strong>Connection Type</strong></td>
+              <td align="center" rowspan="2"><strong>Usage</strong></td>
+              <td colspan="2" align="center"><strong>Settings in JMRI Connection Profile</strong></td>
+              <td align="center" rowspan="2"><strong>Available JMRI Capabilities</strong></td></tr>
+          <tr><td align="center"><strong>System Connection</strong></td>
+              <td align="center"><strong>JMRI Command Station Type</strong></td></tr>
+          <tr><td rowspan="9" align="center">USB cable from computer to DCS52 USB connector</td>
+              <td rowspan="2" align="center">Decoder Programming</td>
+              <td rowspan="2" align="center">"<em>DCS52 USB Interface</em>"</td>
+              <td rowspan="2" align="center">"<em>DCS52 Standalone Programmer</em>"</td>
+              <td>Program decoder CVs on the dedicated programming track</td></tr>
+        <tr><td>Operate one loco on the dedicated programming track</td>
+        <tr><td rowspan="7" align="center">LocoNet Interface, Decoder Programming</td>
+            <td rowspan="7" align="center">"<em>DCS52 USB Interface</em>"</td>
+            <td rowspan="7" align="center">"<em>DCS52 (Zephyr Express Command Station)</em>"</td>
+            <td>Program decoder CVs on the dedicated programming track and/or the main track</td></tr>
+        <tr><td>Control one or more locos on the main track</td></tr>
+        <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
+        <tr><td>Configure some LocoNet devices</td></tr>
+        <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
+        <tr><td>Update firmware on some LocoNet devices</td></tr>
+        <tr><td>etc.</td></tr>
+        <tr><td rowspan="7" align="center">LocoNet Interface, Decoder Programming</td>
+            <td rowspan="7" align="center">Computer Connection to something other than the DCS52 USB connector</td>
+            <td rowspan="7" align="center">Something other than "DCS52 USB Interface"</td>
+            <td rowspan="7" align="center">"<em>DCS52 (Zephyr Express Command Station)</em>"</td>
+            <td>Program decoder CVs on the dedicated programming track</td></tr>
+        <tr><td>Control one or more locos on the main track</td></tr>
+        <tr><td>Control and monitor LocoNet-connected Switches, Sensors, and Transponding</td></tr>
+        <tr><td>Configure some LocoNet devices</td></tr>
+        <tr><td>Control or monitor the LocoNet Fast Clock</td></tr>
+        <tr><td>Update firmware on some LocoNet devices</td></tr>
+        <tr><td>etc.</td></tr>
+      </table>
+
+      <p>Note that it is possible to use the DCS52 in a "booster" mode, and rely upon
+      some other command station.  If this configuration is used, the "command station"
+      specified for the JMRI connection should match the device which is actually
+      acting as the command station.</p>
+
+      <h2>Choosing the configuration profile "command station" setting</h2>
+
+      <p>When setting up a JMRI "connection profile", which "command station" should
+      you use when configuring JMRI?  That depends on what you
+      intend to do with JMRI.</p>
+      <ul>
+          <li>If you will <em>only</em> use JMRI to program decoders on
+      the dedicated programming track, then configuring the connection for the
+      "command station" type of "DCS52 Standalone Programmer" mode
+      is a good choice.  In this mode, JMRI will be able to read and write decoder
+      CV values.  In this mode, you may also use a JMRI throttle to select and
+      control the locomotive on the dedicated programming track, subject to the
+      ability of the DCS52 to supply sufficient current to the decoder.  JMRI will
+      <em>not</em> be able to access LocoNet peripherals and JMRI throttles will <em>not</em>
+      be able to control decoders via the "main track".</li>
+
+      <li><p>If you wish JMRI to be able to control decoders via the DCS52 main track
+      outputs, and access LocoNet devices, then configuring the connection for the
+      "command station" type of "DCS52 Standalone Programmer" mode
+      is a good choice.  In this mode, JMRI is able to control decoders connected
+      via the main track outputs and access LocoNet devices.   JMRI may also
+      perform decoder programming via the dedicated programming track, but JMRI
+      throttles will <em>not</em> be able to run decoders which are on the dedicated
+      programming track.</p></li>
+      <li>If you think that both modes may be useful to you, you should consider
+      setting up <em>two</em> configuration profiles.  Then, when you start
+      JMRI, you may select the configuration profile which suits the way you want
+      to use JMRI.  And to switch to the other mode, you may simply quit JMRI and
+      re-start it, and select the other profile, so that you may perform the other
+      type of work.</li>
+      </ul>
+
+      <h2>DCS52 USB interface as a stand-alone decoder programmer</h2>
+      <p><img src="images/DCS52StandaloneProgrammerConnections.png"
+              alt="Typical connections for DCS52 for use as standalone programmer"
+              width="300"></p>
+
+      <p>When the DCS52 USB interface is configured to act as a programmer, it acts
+      upon the dedicated programming track via the "programming track" connections
+      on the DCS52. When JMRI is properly configured, JMRI
+      can use the DCS52 programming track to access decoder CVs when the decoder is
+      connected to the programming track.</p>
+
+      <p>This JMRI configuration may also be used to download sound information into
+      Digitrax sound decoders and, within its limited current
+      capability, run one locomotive to test it. When used with
+      Digitrax SFX decoders, "neutral mode" allows you to vary the
+      speed without the motor moving the decoder, so you can hear
+      how the locomotive sound reacts to varying speeds.</p>
+
+      <p>In this mode of operations, JMRI will not have access to LocoNet-based
+      devices.</p>
+
+      <h3>Setup for the DCS52 acting as a standalone programmer</h3>
+
+      <p>To use the DCS52 programming track, connect the DCS52 to its
+      power supply and connect a dedicated piece of track which you'll
+      use as the programming track to the DCS52 "programming track"
+      terminals. Finally, connect a USB cable
+      between the DCS52 and your computer.</p>
+
+      <p>To set up JMRI to use the DCS52 via the dedicated
+      decoder programming track mode:</p>
+
+      <ul>
+        <li>Start the program.</li>
+
+        <li>Open the Preferences window from the Edit menu and
+        configure the connection by:
+
+          <ul>
+              <li>For the "<strong>System Connection</strong>" setting, select "DCS52 USB Interface"</li>
+
+            <li>Under "<strong>Serial Port</strong>", select the serial port that's connected to the
+            DCS52</li>
+
+            <li>In the "<strong>Command station type</strong>" option,
+            select the type of command station you've got on your
+            LocoNet. Typically, this will be "<code><strong>DCS52
+            USB Interface as standalone programmer</strong></code>".</li>
+
+            <li>In the advanced settings, the speed will be fixed
+            at 57,600 baud.</li>
+
+            <li>In the advanced settings, the "Flow Control" option
+            defaults to "Use Hardware Flow Control", which is the
+            preferred setting for the DCS52. You should try that
+            first, as it is the most reliable mode. Only if you
+            can't reliably program decoders using that choice, and
+            only after checking that you're using the right port,
+            should you select "None" for this preference and try
+            again.</li>
+          </ul>
+        </li>
+
+        <li>Click Save at the bottom of the preferences window,
+        quit the program and restart.</li>
+      </ul>
+
+      <p>The "connection" preferences should look similar to this image:</p>
+      <img src="images/DCS52StandConnProfile.png" alt="Sample configuration profile with DCS52 USB interface as a standalone programmer" width="500">
+
+      <h3>DCS52 USB Interface in Standalone Programming Mode Usage Hints</h3>
+
+      <ul>
+          <li>You can use a JMRI throttle to control the locomotive
+      connected to the DCS52 Programmer track. Use the JMRI Power Control
+      or the "Power" menu item on the Throttle's menu bar to turn
+      on track power, and then you can operate the locomotive
+      normally via a JMRI throttle.</li>
+
+      <li>The DCS52 can only provide very limited current to the programming track, so Digitrax
+      has built a "neutral mode" into their sound decoders. When
+      JMRI and the DCS52 is running a Digitrax sound decoder, the
+      motor is disconnected to reduce the current load. You can
+      still ramp the speed up and down with the throttle and listen
+      to how the sound responds, but the motor won't move the
+      locomotive.
+      <ul>
+          <li>To implement that "neutral mode" described
+      above, the DCS52 automatically writes CV128 to 0 or 1. This
+      happens when a JMRI throttle is used to run the locomotive on
+      the DCS52 programming track, and there's nothing JMRI can do to
+      prevent it. Unfortunately, this can interfere with the CV
+      programming on some non-Digitrax decoders. For example, it
+      will set the "Master Volume" CV128 on some SoundTraxx
+      decoders to a very low volume.</li>
+
+      <li>If you are working with a decoder that uses CV128
+      for something, you should either not use a JMRI throttle to
+      run the locomotive on the DCS52 programming track, or remember
+      to rewrite CV128 with the right value just before removing
+      the locomotive from the track.</li>
+      </ul></li>
+
+      <li>Other decoders, including decoders from other
+      manufacturers, may draw enough motor current to trip the DCS52
+      internal circuit breakers. This will cause JMRI to mark track
+      power as "off". Just wait a couple seconds and turn the track
+      power back on to recover.</li>
+
+      <li>If the DCS52 is in its "Decoder CV programming" mode and JMRI is used to
+          access decoder CVs, then the DCS52 display may show programming-related
+          information that is not strictly accurate.  This is because the DCS52
+          cannot easily discriminate between CV accesses made via its keypad and
+          CV accesses made via other sources.</li>
+
+      <li>It is possible run trains via the DCS52 controls and/or LocoNet-based
+          throttles  when JMRI is programming a decoder on the DCS52 programming track.</li>
+
+      </ul>
+
+      <h2>DCS52 USB interface as a LocoNet Interface</h2>
+      <p><img src="images/DCS52LocoNetInterfaceConnections.png"
+              alt="Typical connections for DCS52 acting as a LocoNet interface"
+              width="300"></p>
+
+      <p>When acting as an interface, the DCS52 USB connection allows JMRI to
+      interact with devices connected to LocoNet. This includes
+      programming decoders on a programming track attached to a
+      LocoNet command station. Where the LocoNet command station
+      supports "programming on the main", JMRI is able to make use
+      of that feature.</p>
+
+      <h3>Setup for the DCS52 acting as a LocoNet interface</h3>
+      <p>To use the DCS52 USB connection as a LocoNet interface, connect a LocoNet cable to
+      a LocoNet connector on the DCS52. Connect an appropriate power
+      supply to the DCS52, per the Digitrax instructions for the DCS52.  The
+      DCS52 USB interface will not be able to communicate with LocoNet unless
+      the DCS52 is properly powered. Finally, connect an appropriate USB cable between the
+      DCS52 USB connector and your computer.</p>
+
+      <p>To set up a JMRI application to use the DCS52 as an
+      interface to a LocoNet which includes a LocoNet command
+      station:</p>
+
+      <ul>
+        <li>Start the program.</li>
+
+        <li>Open the Preferences window from the Edit menu and
+        configure the connection by:
+
+          <ul>
+              <li>For the "<strong>System Connection</strong>" setting, select "DCS52 USB Interface"</li>
+
+            <li>Under "<strong>Serial Port</strong>", select the serial port that's connected to the
+            DCS52</li>
+
+            <li>In the "<strong>Command station type</strong>" option,
+            select the type of command station you've got on your
+            LocoNet. Typically, this will be "<code><strong>DCS52
+            (Zephyr Express command station)</strong></code>", but, if you have configured
+            your DCS52 to act only as a booster, you should select the command
+            station option which matches the active command station.</li>
+
+            <li>In the advanced settings, the speed will be fixed
+            at 57,600 baud.</li>
+
+            <li>In the advanced settings, the "Flow Control" option
+            defaults to "Use Hardware Flow Control", which is the
+            preferred setting for the DCS52. You should try that
+            first, as it is the most reliable mode. Only if you
+            can't reliably program decoders using that choice, and
+            only after checking that you're using the right port,
+            should you select "None" for this preference and try
+            again.</li>
+          </ul>
+        </li>
+
+        <li>Click Save at the bottom of the preferences window,
+        quit the program and restart.</li>
+      </ul>
+
+      <p>The "connection" preferences should look similar to this image:</p>
+
+      <img src="images/DCS52LocoNetInterfaceConnProfile.png" alt="Sample configuration profile with DCS52 USB interface as a LocoNet interface" width="500">
+
+      <h2>DCS52 connected via some other LocoNet Interface</h2>
+      <p>JMRI may connect to the LocoNet via a LocoNet interface other than the
+      DCS52 USB connector.  When connected in this fashion, see the
+      JMRI documentation associated with the LocoNet interface which is being
+      used.</p>
+
+      <h1>Drivers</h1>
+
+      The DCS52 needs to have a driver installed when used with any Microsoft
+      Windows Operating System.  See the Digitrax
+      <a href=
+         "http://www.digitrax.com/downloads/">"Downloads"</a> page for drivers.
+      At the time this help page was written, Digitrax provides Windows drivers
+      for the PR3 device.  Those drivers are suitable for use with the DCS52.
+      Make sure to follow any instructions, particularly any instructions
+      about the order of installing the drivers and plugging in the
+      device.
+
+      <p>You don't need to install a separate driver when using
+      current versions of Mac OS X or Linux.</p>
+
+      <h1>See Also</h1>
+      <ul>
+          <li><a href="Digitrax.shtml">JMRI's general Digitrax support page</a></li>
+          <li>The JMRI <a href="../../apps/DecoderPro/Roster.shtml">Rosters</a> page.</li>
+          <li>The JMRI <a href="CommandStationConfig.shtml">
+                  Command Station Configuration</a> page describes how to configure 
+                  command station OpSw settings.</li> 
+
+          <li>For more information on the DCS52 itself, please consult the Digitrax
+          web site:
+          <ul><li>The Digitrax <a href=
+                                  "http://www.digitrax.com/products/command-stations-boosters/DCS52/">DCS52</a> product page.</li>
+              <li>The Digitrax <a href=
+                                  "http://www.digitrax.com/tsd/product/DCS52/">DCS52 Support</a> page.</li>
+              <li>Drivers for Windows-based machines may be found at the Digitrax
+                  <a href="http://www.digitrax.com/downloads/">Downloads</a> page.
+                  Note: Use the Digitrax PR3 drivers with the DCS52.</li>
+          </ul>
+      </ul>
+
+      <p>LocoNet&reg; is a registered trademark of <a href=
+      "http://www.digitrax.com">Digitrax, Inc.</a></p>
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

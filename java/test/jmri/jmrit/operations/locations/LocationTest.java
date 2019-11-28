@@ -9,7 +9,6 @@ import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,7 +21,7 @@ import org.junit.Test;
  * read/write Track: AcceptsDropTrain, AcceptsDropRoute Track:
  * AcceptsPickupTrain, AcceptsPickupRoute Track: CheckScheduleValid Track: XML
  * read/write Location: Track support <-- I am here Location: XML read/write
- * <p>
+ *
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class LocationTest extends OperationsTestCase {
@@ -684,9 +683,4 @@ public class LocationTest extends OperationsTestCase {
         InstanceManager.getDefault(jmri.jmrit.operations.rollingstock.cars.CarTypes.class).addName("Boxcar");
     }
 
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
-    }
 }

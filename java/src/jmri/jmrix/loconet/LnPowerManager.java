@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * PowerManager implementation for controlling layout power
+ * PowerManager implementation for controlling layout power.
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
  */
 public class LnPowerManager
         extends jmri.managers.AbstractPowerManager
-        implements PowerManager, LocoNetListener {
+        implements LocoNetListener {
 
     public LnPowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
         // standard LocoNet - connect
         if (memo.getLnTrafficController() == null) {
-            log.error("Power Manager Created, yet there is no Traffic Controller");
+            log.error("PowerManager Created, yet there is no Traffic Controller");
             return;
         }
         this.tc = memo.getLnTrafficController();
@@ -213,7 +213,7 @@ public class LnPowerManager
 
     /**
      * Returns whether command station supports IDLE funcitonality
-     * <p>
+     *
      * @return true if connection's command station supports IDLE state, else false
      */
     @Override

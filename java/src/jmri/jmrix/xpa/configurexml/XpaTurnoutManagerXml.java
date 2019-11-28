@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring XpaTurnoutManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
@@ -31,8 +31,6 @@ public class XpaTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
 
     @Override
     public boolean load(Element shared, Element perNode) {
-        // create the master object
-        XpaTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(shared, perNode);
     }

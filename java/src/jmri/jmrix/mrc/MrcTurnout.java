@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * New MRC implementation of the Turnout interface From Xpa+Modem implementation
  * of the Turnout interface.
- * <P>
+ * <p>
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Martin Wade Copyright (C) 2014

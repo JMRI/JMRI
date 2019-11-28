@@ -48,7 +48,7 @@ public class ConditionalVariable {
     // It may be over written by the antecedent statement in the Conditional to which this variable
     // belongs.
     private Operator _opern = Operator.NONE;
-    private int _type = Conditional.TYPE_NONE;
+    private Conditional.Type _type = Conditional.Type.NONE;
     private String _name = "";
     private String _dataString = "";
     private int _num1 = 0;
@@ -79,7 +79,7 @@ public class ConditionalVariable {
      * @param name the device name
      * @param trigger true if actions should be performed if triggered
      */
-    public ConditionalVariable(boolean not, Operator opern, int type, String name, boolean trigger) {
+    public ConditionalVariable(boolean not, Operator opern, Conditional.Type type, String name, boolean trigger) {
         _not = not;
         // setOpern does some checks of opern
         _opern = opern;
@@ -88,9 +88,9 @@ public class ConditionalVariable {
         _triggersActions = trigger;
         _guiName = "";
         try {
-            int itemType = Conditional.TEST_TO_ITEM[_type];
+            Conditional.ItemType itemType = type.getItemType();
             switch (itemType) {
-                case Conditional.ITEM_TYPE_SENSOR:
+                case SENSOR:
                     try {
                         Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, sn);
@@ -98,7 +98,7 @@ public class ConditionalVariable {
                         log.error("invalid sensor name= \"" + _name + "\" in state variable");
                     }
                     break;
-                case Conditional.ITEM_TYPE_TURNOUT:
+                case TURNOUT:
                     try {
                         Turnout tn = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, tn);
@@ -106,7 +106,7 @@ public class ConditionalVariable {
                         log.error("invalid turnout name= \"" + _name + "\" in state variable");
                     }
                     break;
-                case Conditional.ITEM_TYPE_MEMORY:
+                case MEMORY:
                     try {
                         Memory my = InstanceManager.memoryManagerInstance().provideMemory(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, my);
@@ -114,7 +114,7 @@ public class ConditionalVariable {
                         log.error("invalid memory name= \"" + _name + "\" in state variable");
                     }
                     break;
-                case Conditional.ITEM_TYPE_LIGHT:
+                case LIGHT:
                     try {
                         Light l = InstanceManager.lightManagerInstance().provideLight(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, l);
@@ -122,7 +122,7 @@ public class ConditionalVariable {
                         log.error("invalid light name= \"" + _name + "\" in state variable");
                     }
                     break;
-                case Conditional.ITEM_TYPE_SIGNALHEAD:
+                case SIGNALHEAD:
                     SignalHead s = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(_name);
                     if (s == null) {
                         log.error("invalid signalhead name= \"" + _name + "\" in state variable");
@@ -130,7 +130,7 @@ public class ConditionalVariable {
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, s);
                     break;
-                case Conditional.ITEM_TYPE_SIGNALMAST:
+                case SIGNALMAST:
                     try {
                         SignalMast sm = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(_name);
                         _namedBean = nbhm.getNamedBeanHandle(_name, sm);
@@ -138,7 +138,7 @@ public class ConditionalVariable {
                         log.error("invalid signalmast name= \"" + _name + "\" in state variable");
                     }
                     break;
-                case Conditional.ITEM_TYPE_ENTRYEXIT:
+                case ENTRYEXIT:
                     NamedBean nb = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getBySystemName(_name);
                     if (nb == null) {
                         log.error("invalid entry exit name= \"" + _name + "\" in state variable");
@@ -146,7 +146,7 @@ public class ConditionalVariable {
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, nb);
                     break;
-                case Conditional.ITEM_TYPE_CONDITIONAL:
+                case CONDITIONAL:
                     Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
                     if (c == null) {
                         log.error("invalid conditional; name= \"" + _name + "\" in state variable");
@@ -154,7 +154,7 @@ public class ConditionalVariable {
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, c);
                     break;
-                case Conditional.ITEM_TYPE_WARRANT:
+                case WARRANT:
                     Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
                     if (w == null) {
                         log.error("invalid warrant name= \"" + _name + "\" in state variable");
@@ -162,7 +162,7 @@ public class ConditionalVariable {
                     }
                     _namedBean = nbhm.getNamedBeanHandle(_name, w);
                     break;
-                case Conditional.ITEM_TYPE_OBLOCK:
+                case OBLOCK:
                     OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(_name);
                     if (b == null) {
                         log.error("invalid block name= \"" + _name + "\" in state variable");
@@ -199,11 +199,11 @@ public class ConditionalVariable {
         _opern = opern;
     }
 
-    public int getType() {
+    public Conditional.Type getType() {
         return _type;
     }
 
-    public void setType(int type) {
+    public void setType(Conditional.Type type) {
         _type = type;
     }
 
@@ -221,42 +221,42 @@ public class ConditionalVariable {
     public void setName(String name) {
         _name = name;
         NamedBean bean = null;
-        int itemType = Conditional.TEST_TO_ITEM[_type];
+        Conditional.ItemType itemType = _type.getItemType();
 
         try {
             switch (itemType) {
-                case Conditional.TYPE_NONE:
+                case NONE:
                     break;
-                case Conditional.ITEM_TYPE_CLOCK:
+                case CLOCK:
                     break; // no beans for these, at least that I know of
-                case Conditional.ITEM_TYPE_SENSOR:
+                case SENSOR:
                     bean = InstanceManager.sensorManagerInstance().provideSensor(_name);
                     break;
-                case Conditional.ITEM_TYPE_TURNOUT:
+                case TURNOUT:
                     bean = InstanceManager.turnoutManagerInstance().provideTurnout(_name);
                     break;
-                case Conditional.ITEM_TYPE_LIGHT:
+                case LIGHT:
                     bean = InstanceManager.lightManagerInstance().getLight(_name);
                     break;
-                case Conditional.ITEM_TYPE_MEMORY:
+                case MEMORY:
                     bean = InstanceManager.memoryManagerInstance().provideMemory(_name);
                     break;
-                case Conditional.ITEM_TYPE_SIGNALMAST:
+                case SIGNALMAST:
                     bean = InstanceManager.getDefault(jmri.SignalMastManager.class).provideSignalMast(_name);
                     break;
-                case Conditional.ITEM_TYPE_SIGNALHEAD:
+                case SIGNALHEAD:
                     bean = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(_name);
                     break;
-                case Conditional.ITEM_TYPE_CONDITIONAL:
+                case CONDITIONAL:
                     bean = InstanceManager.getDefault(jmri.ConditionalManager.class).getConditional(_name);
                     break;
-                case Conditional.ITEM_TYPE_WARRANT:
+                case WARRANT:
                     bean = InstanceManager.getDefault(WarrantManager.class).getWarrant(_name);
                     break;
-                case Conditional.ITEM_TYPE_OBLOCK:
+                case OBLOCK:
                     bean = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(_name);
                     break;
-                case Conditional.ITEM_TYPE_ENTRYEXIT:
+                case ENTRYEXIT:
                     bean = jmri.InstanceManager.getDefault(jmri.jmrit.entryexit.EntryExitPairs.class).getNamedBean(_name);
                     break;
                 default:
@@ -292,7 +292,7 @@ public class ConditionalVariable {
     }
 
     public String getDataString() {
-        if (Conditional.TEST_TO_ITEM[_type] == Conditional.ITEM_TYPE_MEMORY
+        if (_type.getItemType() == Conditional.ItemType.MEMORY
                 && _namedBeanData != null) {
             return _namedBeanData.getName();
         }
@@ -301,7 +301,8 @@ public class ConditionalVariable {
 
     public void setDataString(String data) {
         _dataString = data;
-        if (data != null && !data.equals("") && Conditional.TEST_TO_ITEM[_type] == Conditional.ITEM_TYPE_MEMORY) {
+        if (data != null && !data.equals("")
+                && _type.getItemType() == Conditional.ItemType.MEMORY) {
             NamedBean bean = InstanceManager.memoryManagerInstance().getMemory(data);
             if (bean != null) {
                 _namedBeanData = nbhm.getNamedBeanHandle(data, bean);
@@ -383,7 +384,7 @@ public class ConditionalVariable {
     }
 
     public String getTestTypeString() {
-        return getTestTypeString(_type);
+        return _type.getTestTypeString();
     }
 
     /**
@@ -413,60 +414,60 @@ public class ConditionalVariable {
     public boolean evaluate() {
         boolean result = true;
         // evaluate according to state variable type
-        int itemType = Conditional.TEST_TO_ITEM[_type];
+        Conditional.ItemType itemType = _type.getItemType();
         log.debug("evaluate: \"{}\" type= {} itemType= {}", getName(), _type, itemType);
         switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 //Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(getName());
                 Sensor sn = (Sensor) getBean();
                 if (sn == null) {
                     log.error("invalid sensor name= \"{}\" in state variable", getName());
                     return false;
                 }
-                if (_type == Conditional.TYPE_SENSOR_ACTIVE) {
+                if (_type == Conditional.Type.SENSOR_ACTIVE) {
                     result = sn.getState() == Sensor.ACTIVE;
                 } else {
                     result = sn.getState() == Sensor.INACTIVE;
                 }
                 break;
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 Turnout t = (Turnout) getBean();
                 if (t == null) {
                     log.error("invalid turnout name= \"{}\" in state variable", getName());
                     return false;
                 }
-                if (_type == Conditional.TYPE_TURNOUT_THROWN) {
+                if (_type == Conditional.Type.TURNOUT_THROWN) {
                     result = t.getKnownState() == Turnout.THROWN;
                 } else {
                     result = t.getKnownState() == Turnout.CLOSED;
                 }
                 break;
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 Light lgt = (Light) getBean();
                 if (lgt == null) {
                     log.error("invalid light name= \"{}\" in state variable", getName());
                     return false;
                 }
-                if (_type == Conditional.TYPE_LIGHT_ON) {
+                if (_type == Conditional.Type.LIGHT_ON) {
                     result = lgt.getState() == Light.ON;
                 } else {
                     result = lgt.getState() == Light.OFF;
                 }
                 break;
-            case Conditional.ITEM_TYPE_SIGNALMAST:
+            case SIGNALMAST:
                 SignalMast f = (SignalMast) getBean();
                 if (f == null) {
                     log.error("invalid signal mast name= \"{}\" in state variable", getName());
                     return false;
                 }
                 switch (_type) {
-                    case Conditional.TYPE_SIGNAL_MAST_LIT:
+                    case SIGNAL_MAST_LIT:
                         result = f.getLit();
                         break;
-                    case Conditional.TYPE_SIGNAL_MAST_HELD:
+                    case SIGNAL_MAST_HELD:
                         result = f.getHeld();
                         break;
-                    case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
+                    case SIGNAL_MAST_ASPECT_EQUALS:
                         if (f.getAspect() == null) {
                             result = false;
                         } else {
@@ -477,51 +478,51 @@ public class ConditionalVariable {
                         log.warn("unexpected type {} in ITEM_TYPE_SIGNALMAST", _type);
                 }
                 break;
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
+            case SIGNALHEAD:
                 SignalHead h = (SignalHead) getBean();
                 if (h == null) {
                     log.error("invalid signal head name= \"{}\" in state variable", getName());
                     return false;
                 }
                 switch (_type) {
-                    case Conditional.TYPE_SIGNAL_HEAD_RED:
+                    case SIGNAL_HEAD_RED:
                         result = h.getAppearance() == SignalHead.RED;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
+                    case SIGNAL_HEAD_YELLOW:
                         result = h.getAppearance() == SignalHead.YELLOW;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_GREEN:
+                    case SIGNAL_HEAD_GREEN:
                         result = h.getAppearance() == SignalHead.GREEN;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_DARK:
+                    case SIGNAL_HEAD_DARK:
                         result = h.getAppearance() == SignalHead.DARK;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
+                    case SIGNAL_HEAD_FLASHRED:
                         result = h.getAppearance() == SignalHead.FLASHRED;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
+                    case SIGNAL_HEAD_FLASHYELLOW:
                         result = h.getAppearance() == SignalHead.FLASHYELLOW;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
+                    case SIGNAL_HEAD_FLASHGREEN:
                         result = h.getAppearance() == SignalHead.FLASHGREEN;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
+                    case SIGNAL_HEAD_LUNAR:
                         result = h.getAppearance() == SignalHead.LUNAR;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
+                    case SIGNAL_HEAD_FLASHLUNAR:
                         result = h.getAppearance() == SignalHead.FLASHLUNAR;
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_LIT:
+                    case SIGNAL_HEAD_LIT:
                         result = h.getLit();
                         break;
-                    case Conditional.TYPE_SIGNAL_HEAD_HELD:
+                    case SIGNAL_HEAD_HELD:
                         result = h.getHeld();
                         break;
                     default:
                         result = false;
                 }
                 break;
-            case Conditional.ITEM_TYPE_MEMORY:
+            case MEMORY:
                 Memory m = (Memory) getBean();
                 if (m == null) {
                     log.error("invalid memory name= \"{}\" in state variable", getName());
@@ -532,10 +533,10 @@ public class ConditionalVariable {
                 if (m.getValue() != null) {
                     value1 = m.getValue().toString();
                 }
-                boolean caseInsensitive = ((_type == Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE)
-                        || (_type == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE));
-                if ((_type == Conditional.TYPE_MEMORY_COMPARE)
-                        || (_type == Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE)) {
+                boolean caseInsensitive = ((_type == Conditional.Type.MEMORY_EQUALS_INSENSITIVE)
+                        || (_type == Conditional.Type.MEMORY_COMPARE_INSENSITIVE));
+                if ((_type == Conditional.Type.MEMORY_COMPARE)
+                        || (_type == Conditional.Type.MEMORY_COMPARE_INSENSITIVE)) {
                     Memory m2;
                     if (_namedBeanData != null) {
                         m2 = (Memory) _namedBeanData.getBean();
@@ -555,7 +556,7 @@ public class ConditionalVariable {
                 }
                 result = compare(value1, value2, caseInsensitive);
                 break;
-            case Conditional.ITEM_TYPE_CONDITIONAL:
+            case CONDITIONAL:
                 Conditional c = InstanceManager.getDefault(jmri.ConditionalManager.class).getBySystemName(getName());
                 if (c == null) {
                     c = InstanceManager.getDefault(jmri.ConditionalManager.class).getByUserName(getName());
@@ -564,32 +565,32 @@ public class ConditionalVariable {
                         return false;
                     }
                 }
-                if (_type == Conditional.TYPE_CONDITIONAL_TRUE) {
+                if (_type == Conditional.Type.CONDITIONAL_TRUE) {
                     result = c.getState() == Conditional.TRUE;
                 } else {
                     result = c.getState() == Conditional.FALSE;
                 }
                 break;
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 Warrant w = InstanceManager.getDefault(WarrantManager.class).getWarrant(getName());
                 if (w == null) {
                     log.error("invalid Warrant name= \"{}\" in state variable", getName());
                     return false;
                 }
                 switch (_type) {
-                    case Conditional.TYPE_ROUTE_FREE:
+                    case ROUTE_FREE:
                         result = w.routeIsFree();
                         break;
-                    case Conditional.TYPE_ROUTE_OCCUPIED:
+                    case ROUTE_OCCUPIED:
                         result = w.routeIsOccupied();
                         break;
-                    case Conditional.TYPE_ROUTE_ALLOCATED:
+                    case ROUTE_ALLOCATED:
                         result = w.isAllocated();
                         break;
-                    case Conditional.TYPE_ROUTE_SET:
+                    case ROUTE_SET:
                         result = w.hasRouteSet();
                         break;
-                    case Conditional.TYPE_TRAIN_RUNNING:
+                    case TRAIN_RUNNING:
                         // not in either RUN or LEARN state
                         result = !(w.getRunMode() == Warrant.MODE_NONE);
                         break;
@@ -597,7 +598,7 @@ public class ConditionalVariable {
                         result = false;
                 }
                 break;
-            case Conditional.ITEM_TYPE_CLOCK:
+            case CLOCK:
                 Timebase fastClock = InstanceManager.getDefault(jmri.Timebase.class);
                 Date currentTime = fastClock.getTime();
                 int currentMinutes = (currentTime.getHours() * 60) + currentTime.getMinutes();
@@ -612,7 +613,7 @@ public class ConditionalVariable {
                     result = beginTime <= currentMinutes || currentMinutes <= endTime;
                 }
                 break;
-            case Conditional.ITEM_TYPE_OBLOCK:
+            case OBLOCK:
                 OBlock b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(getName());
                 if (b == null) {
                     log.error("invalid OBlock name= \"{}\" in state variable", getName());
@@ -620,9 +621,9 @@ public class ConditionalVariable {
                 }
                 result = b.statusIs(_dataString);
                 break;
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
+            case ENTRYEXIT:
                 NamedBean e = getBean();
-                if (_type == Conditional.TYPE_ENTRYEXIT_ACTIVE) {
+                if (_type == Conditional.Type.ENTRYEXIT_ACTIVE) {
                     result = e.getState() == 0x02;
                 } else {
                     result = e.getState() == 0x04;
@@ -757,216 +758,33 @@ public class ConditionalVariable {
      * @param t the type
      * @return the localized description
      */
-    public static String getItemTypeString(int t) {
+    public static String getItemTypeString(Conditional.ItemType t) {
         switch (t) {
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 return Bundle.getMessage("BeanNameSensor"); // NOI18N
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 return Bundle.getMessage("BeanNameTurnout"); // NOI18N
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 return Bundle.getMessage("BeanNameLight"); // NOI18N
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
+            case SIGNALHEAD:
                 return Bundle.getMessage("BeanNameSignalHead"); // NOI18N
-            case Conditional.ITEM_TYPE_SIGNALMAST:
+            case SIGNALMAST:
                 return Bundle.getMessage("BeanNameSignalMast"); // NOI18N
-            case Conditional.ITEM_TYPE_MEMORY:
+            case MEMORY:
                 return Bundle.getMessage("BeanNameMemory"); // NOI18N
-            case Conditional.ITEM_TYPE_CONDITIONAL:
+            case CONDITIONAL:
                 return Bundle.getMessage("BeanNameConditional"); // NOI18N
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 return Bundle.getMessage("BeanNameWarrant"); // NOI18N
-            case Conditional.ITEM_TYPE_CLOCK:
+            case CLOCK:
                 return Bundle.getMessage("FastClock"); // NOI18N
-            case Conditional.ITEM_TYPE_OBLOCK:
+            case OBLOCK:
                 return Bundle.getMessage("BeanNameOBlock"); // NOI18N
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
-                return Bundle.getMessage("EntryExit"); // NOI18N
+            case ENTRYEXIT:
+                return Bundle.getMessage("BeanNameEntryExit"); // NOI18N
             default:
                 return "";
         }
-    }
-
-    /**
-     * Get state name from Variable Test Type, used to fill ConditionalVariable
-     * config GUI state combo box.
-     *
-     * @param t the state
-     * @return the localized description
-     */
-    public static String describeState(int t) {
-        switch (t) {
-            case Conditional.TYPE_NONE:
-                return ""; // NOI18N
-            case Conditional.TYPE_SENSOR_ACTIVE:
-                return Bundle.getMessage("SensorStateActive"); // NOI18N
-            case Conditional.TYPE_SENSOR_INACTIVE:
-                return Bundle.getMessage("SensorStateInactive"); // NOI18N
-            case Conditional.TYPE_TURNOUT_THROWN:
-                return Bundle.getMessage("TurnoutStateThrown"); // NOI18N
-            case Conditional.TYPE_TURNOUT_CLOSED:
-                return Bundle.getMessage("TurnoutStateClosed"); // NOI18N
-            case Conditional.TYPE_CONDITIONAL_TRUE:
-                return Bundle.getMessage("True"); // NOI18N
-            case Conditional.TYPE_CONDITIONAL_FALSE:
-                return Bundle.getMessage("False"); // NOI18N
-            case Conditional.TYPE_LIGHT_ON:
-                return rbx.getString("LightOn"); // NOI18N
-            case Conditional.TYPE_LIGHT_OFF:
-                return rbx.getString("LightOff"); // NOI18N
-            case Conditional.TYPE_MEMORY_EQUALS:
-                return rbx.getString("StateMemoryEquals"); // NOI18N
-            case Conditional.TYPE_MEMORY_COMPARE:
-                return rbx.getString("StateMemoryCompare"); // NOI18N
-            case Conditional.TYPE_FAST_CLOCK_RANGE:
-                return ""; // NOI18N
-            // signal head appearance state text uses Bundle method
-            case Conditional.TYPE_SIGNAL_HEAD_RED:
-                return Bundle.getMessage("SignalHeadStateRed"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                return Bundle.getMessage("SignalHeadStateYellow"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                return Bundle.getMessage("SignalHeadStateGreen"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                return Bundle.getMessage("SignalHeadStateDark"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                return Bundle.getMessage("SignalHeadStateFlashingRed"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                return Bundle.getMessage("SignalHeadStateFlashingYellow"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                return Bundle.getMessage("SignalHeadStateFlashingGreen"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                return Bundle.getMessage("SignalHeadStateHeld"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
-                return Bundle.getMessage("SignalHeadStateLunar"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
-                return Bundle.getMessage("SignalHeadStateFlashingLunar"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                return Bundle.getMessage("SignalHeadStateLit"); // NOI18N
-
-            case Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE:
-                return rbx.getString("StateMemoryEqualsInsensitive"); // NOI18N
-            case Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE:
-                return rbx.getString("StateMemoryCompareInsensitive"); // NOI18N
-            case Conditional.TYPE_ROUTE_FREE:
-                return rbx.getString("StateRouteFree"); // NOI18N
-            case Conditional.TYPE_ROUTE_OCCUPIED:
-                return rbx.getString("stateRouteOccupied"); // NOI18N
-            case Conditional.TYPE_ROUTE_ALLOCATED:
-                return rbx.getString("StateRouteReserved"); // NOI18N
-            case Conditional.TYPE_ROUTE_SET:
-                return rbx.getString("StateRouteIsSet"); // NOI18N
-            case Conditional.TYPE_TRAIN_RUNNING:
-                return rbx.getString("StateTrainRunning"); // NOI18N
-            case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
-                return rbx.getString("TypeSignalMastAspectEquals"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS:
-                return rbx.getString("TypeSignalHeadAspectEquals"); // NOI18N
-            // signal mast held and lit state text uses Bundle method
-            case Conditional.TYPE_SIGNAL_MAST_LIT:
-                return Bundle.getMessage("SignalMastStateLit"); // NOI18N
-            case Conditional.TYPE_SIGNAL_MAST_HELD:
-                return Bundle.getMessage("SignalMastStateHeld"); // NOI18N
-
-            case Conditional.TYPE_ENTRYEXIT_ACTIVE:
-                return Bundle.getMessage("SensorStateActive"); // NOI18N
-            case Conditional.TYPE_ENTRYEXIT_INACTIVE:
-                return Bundle.getMessage("SensorStateInactive"); // NOI18N
-            default:
-                log.warn("Unhandled condition type: {}", t); // NOI18N
-                return "<none>"; // NOI18N
-        }
-    }
-
-    /**
-     * Convert Variable Test Type to Text String. Used in Logix
-     * GUI Maintenance tools.
-     *
-     * @param t the type
-     * @return the localized state description
-     */
-    public static String getTestTypeString(int t) {
-        switch (t) {
-            case Conditional.TYPE_NONE:
-                return "";
-            case Conditional.TYPE_SENSOR_ACTIVE:
-                return rbx.getString("TypeSensorActive"); // NOI18N
-            case Conditional.TYPE_SENSOR_INACTIVE:
-                return rbx.getString("TypeSensorInactive"); // NOI18N
-            case Conditional.TYPE_TURNOUT_THROWN:
-                return rbx.getString("TypeTurnoutThrown"); // NOI18N
-            case Conditional.TYPE_TURNOUT_CLOSED:
-                return rbx.getString("TypeTurnoutClosed"); // NOI18N
-            case Conditional.TYPE_CONDITIONAL_TRUE:
-                return rbx.getString("TypeConditionalTrue"); // NOI18N
-            case Conditional.TYPE_CONDITIONAL_FALSE:
-                return rbx.getString("TypeConditionalFalse"); // NOI18N
-            case Conditional.TYPE_LIGHT_ON:
-                return rbx.getString("TypeLightOn"); // NOI18N
-            case Conditional.TYPE_LIGHT_OFF:
-                return rbx.getString("TypeLightOff"); // NOI18N
-            case Conditional.TYPE_MEMORY_EQUALS:
-                return rbx.getString("TypeMemoryEquals"); // NOI18N
-            case Conditional.TYPE_MEMORY_COMPARE:
-                return rbx.getString("TypeMemoryCompare"); // NOI18N
-            case Conditional.TYPE_FAST_CLOCK_RANGE:
-                return rbx.getString("TypeFastClockRange"); // NOI18N
-            // signal head appearance state text uses Bundle method
-            case Conditional.TYPE_SIGNAL_HEAD_RED:
-                return Bundle.getMessage("SignalHeadStateRed"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_YELLOW:
-                return Bundle.getMessage("SignalHeadStateYellow"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_GREEN:
-                return Bundle.getMessage("SignalHeadStateGreen"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_DARK:
-                return Bundle.getMessage("SignalHeadStateDark"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_FLASHRED:
-                return Bundle.getMessage("SignalHeadStateFlashingRed"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW:
-                return Bundle.getMessage("SignalHeadStateFlashingYellow"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN:
-                return Bundle.getMessage("SignalHeadStateFlashingGreen"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_LIT:
-                return Bundle.getMessage("SignalHeadStateLit"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_HELD:
-                return Bundle.getMessage("SignalHeadStateHeld"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_LUNAR:
-                return Bundle.getMessage("SignalHeadStateLunar"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR:
-                return Bundle.getMessage("SignalHeadStateFlashingLunar"); // NOI18N
-
-            case Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE:
-                return rbx.getString("TypeMemoryEqualsInsensitive"); // NOI18N
-            case Conditional.TYPE_MEMORY_COMPARE_INSENSITIVE:
-                return rbx.getString("TypeMemoryCompareInsensitive"); // NOI18N
-            case Conditional.TYPE_ROUTE_FREE:
-                return rbx.getString("TypeWarrantRouteFree"); // NOI18N
-            case Conditional.TYPE_ROUTE_OCCUPIED:
-                return rbx.getString("TypeWarrantRouteOccupied"); // NOI18N
-            case Conditional.TYPE_ROUTE_ALLOCATED:
-                return rbx.getString("TypeWarrantRouteAllocated"); // NOI18N
-            case Conditional.TYPE_ROUTE_SET:
-                return rbx.getString("TypeRouteIsSet"); // NOI18N
-            case Conditional.TYPE_TRAIN_RUNNING:
-                return rbx.getString("TypeTrainRunning"); // NOI18N
-            case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
-                return rbx.getString("TypeSignalMastAspectEquals"); // NOI18N
-            case Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS:
-                return rbx.getString("TypeSignalHeadAspectEquals"); // NOI18N
-            // signal mast held and lit state text uses Bundle method
-            case Conditional.TYPE_SIGNAL_MAST_LIT:
-                return Bundle.getMessage("SignalMastStateLit"); // NOI18N
-            case Conditional.TYPE_SIGNAL_MAST_HELD:
-                return Bundle.getMessage("SignalMastStateHeld"); // NOI18N
-
-            case Conditional.TYPE_ENTRYEXIT_ACTIVE:
-                return rbx.getString("TypeEntryExitActive"); // NOI18N
-            case Conditional.TYPE_ENTRYEXIT_INACTIVE:
-                return rbx.getString("TypeEntryExitInactive"); // NOI18N
-            default:
-                // fall though
-                break;
-        }
-        return Bundle.getMessage("NONE");
     }
 
     public static String getCompareOperationString(int index) {
@@ -1015,68 +833,68 @@ public class ConditionalVariable {
      * @return the conditional action type or -1 if if string does not
      * correspond to an action Data as defined in ConditionalAction
      */
-    public static int stringToVariableTest(String str) {
+    public static Conditional.Type stringToVariableTest(String str) {
         if (str.equals(Bundle.getMessage("SignalHeadStateRed"))) { // NOI18N
-            return Conditional.TYPE_SIGNAL_HEAD_RED;
+            return Conditional.Type.SIGNAL_HEAD_RED;
         } else if (str.equals(Bundle.getMessage("SignalHeadStateYellow"))) { // NOI18N
-            return Conditional.TYPE_SIGNAL_HEAD_YELLOW;
+            return Conditional.Type.SIGNAL_HEAD_YELLOW;
         } else if (str.equals(Bundle.getMessage("SignalHeadStateGreen"))) { // NOI18N
-            return Conditional.TYPE_SIGNAL_HEAD_GREEN;
+            return Conditional.Type.SIGNAL_HEAD_GREEN;
         } else if (str.equals(Bundle.getMessage("SignalHeadStateDark"))) { // NOI18N
-            return Conditional.TYPE_SIGNAL_HEAD_DARK;
+            return Conditional.Type.SIGNAL_HEAD_DARK;
         } else if (str.equals(Bundle.getMessage("SignalHeadStateFlashingRed"))) { // NOI18N
-            return Conditional.TYPE_SIGNAL_HEAD_FLASHRED;
+            return Conditional.Type.SIGNAL_HEAD_FLASHRED;
         } else if (str.equals(Bundle.getMessage("SignalHeadStateFlashingYellow"))) { // NOI18N
-            return Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW;
+            return Conditional.Type.SIGNAL_HEAD_FLASHYELLOW;
         } else if (str.equals(Bundle.getMessage("SignalHeadStateFlashingGreen"))) { // NOI18N
-            return Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN;
+            return Conditional.Type.SIGNAL_HEAD_FLASHGREEN;
         } else if (str.equals(Bundle.getMessage("SignalHeadStateLunar"))) { // NOI18N
-            return Conditional.TYPE_SIGNAL_HEAD_LUNAR;
+            return Conditional.Type.SIGNAL_HEAD_LUNAR;
         } else if (str.equals(Bundle.getMessage("SignalHeadStateFlashingLunar"))) { // NOI18N
-            return Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR;
+            return Conditional.Type.SIGNAL_HEAD_FLASHLUNAR;
         }
         // empty strings can occur frequently with types that have no integer data
         if (str.length() > 0) {
             log.warn("Unexpected parameter to stringToVariableTest({})", str);
         }
-        return -1;
+        return Conditional.Type.ERROR;
     }
 
     @Override
     public String toString() {
-        String type = getTestTypeString(_type);
-        int itemType = Conditional.TEST_TO_ITEM[_type];
+        String type = _type.getTestTypeString();
+        Conditional.ItemType itemType = _type.getItemType();
         switch (itemType) {
-            case Conditional.ITEM_TYPE_SENSOR:
+            case SENSOR:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                         new Object[]{Bundle.getMessage("BeanNameSensor"), getName(), type});
-            case Conditional.ITEM_TYPE_TURNOUT:
+            case TURNOUT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                         new Object[]{Bundle.getMessage("BeanNameTurnout"), getName(), type});
-            case Conditional.ITEM_TYPE_LIGHT:
+            case LIGHT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                         new Object[]{Bundle.getMessage("BeanNameLight"), getName(), type});
-            case Conditional.ITEM_TYPE_SIGNALHEAD:
-                if ((_type == Conditional.TYPE_SIGNAL_HEAD_LIT)
-                        || (_type == Conditional.TYPE_SIGNAL_HEAD_HELD)) {
+            case SIGNALHEAD:
+                if ((_type == Conditional.Type.SIGNAL_HEAD_LIT)
+                        || (_type == Conditional.Type.SIGNAL_HEAD_HELD)) {
                     return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                             new Object[]{Bundle.getMessage("BeanNameSignalHead"), getName(), type});
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("SignalHeadStateDescrpt"),
                             new Object[]{Bundle.getMessage("BeanNameSignalHead"), getName(), type});
                 }
-            case Conditional.ITEM_TYPE_SIGNALMAST:
-                if ((_type == Conditional.TYPE_SIGNAL_MAST_LIT)
-                        || (_type == Conditional.TYPE_SIGNAL_MAST_HELD)) {
+            case SIGNALMAST:
+                if ((_type == Conditional.Type.SIGNAL_MAST_LIT)
+                        || (_type == Conditional.Type.SIGNAL_MAST_HELD)) {
                     return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                             new Object[]{Bundle.getMessage("BeanNameSignalMast"), getName(), type}); // NOI18N
                 } else {
                     return java.text.MessageFormat.format(rbx.getString("SignalMastStateDescrpt"),
                             new Object[]{Bundle.getMessage("BeanNameSignalMast"), getName(), _dataString}); // NOI18N
                 }
-            case Conditional.ITEM_TYPE_MEMORY:
-                if ((_type == Conditional.TYPE_MEMORY_EQUALS)
-                        || (_type == Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE)) {
+            case MEMORY:
+                if ((_type == Conditional.Type.MEMORY_EQUALS)
+                        || (_type == Conditional.Type.MEMORY_EQUALS_INSENSITIVE)) {
                     return java.text.MessageFormat.format(rbx.getString("MemoryValueDescrpt"),
                             new Object[]{Bundle.getMessage("BeanNameMemory"), getName(), // NOI18N
                                 getCompareSymbols(_num1), _dataString});
@@ -1085,24 +903,24 @@ public class ConditionalVariable {
                             new Object[]{Bundle.getMessage("BeanNameMemory"), getName(), // NOI18N
                                 getCompareSymbols(_num1), _dataString});
                 }
-            case Conditional.ITEM_TYPE_CONDITIONAL:
+            case CONDITIONAL:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                         new Object[]{Bundle.getMessage("BeanNameConditional"), getGuiName(), type}); // NOI18N
-            case Conditional.ITEM_TYPE_WARRANT:
+            case WARRANT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                         new Object[]{rbx.getString("WarrantRoute"), getName(), type});
-            case Conditional.ITEM_TYPE_CLOCK:
+            case CLOCK:
                 return java.text.MessageFormat.format(rbx.getString("FastClockDescrpt"),
                         new Object[]{Bundle.getMessage("FastClock"),
                             LogixTableAction.formatTime(_num1 / 60, _num1 - ((_num1 / 60) * 60)),
                             LogixTableAction.formatTime(_num2 / 60, _num2 - ((_num2 / 60) * 60))});
-            case Conditional.ITEM_TYPE_OBLOCK:
+            case OBLOCK:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
                         new Object[]{rbx.getString("OBlockStatus"), getName(), _dataString});
-            case Conditional.ITEM_TYPE_ENTRYEXIT:
+            case ENTRYEXIT:
                 return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
-                        new Object[]{Bundle.getMessage("EntryExit"), getBean().getUserName(), type}); // NOI18N
-            case Conditional.TYPE_NONE:
+                        new Object[]{Bundle.getMessage("BeanNameEntryExit"), getBean().getUserName(), type}); // NOI18N
+            case NONE:
                 return getName() + " type " + type;
             default:
                 // fall through

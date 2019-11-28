@@ -5,10 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Stands in for the NceTrafficController class
+ * Stands in for the NceTrafficController class.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NceTrafficControlScaffold extends NceTrafficController {
 
     public NceTrafficControlScaffold() {
@@ -61,6 +61,16 @@ public class NceTrafficControlScaffold extends NceTrafficController {
      */
     public int numListeners() {
         return cmdListeners.size();
+    }
+
+    /**
+     * Get the port name for this connection from the TrafficController.
+     *
+     * @return the name of the port
+     */
+    @Override
+    public String getPortName() {
+        return jmri.jmrix.JmrixConfigPane.NONE_SELECTED; 
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceTrafficControlScaffold.class);

@@ -11,7 +11,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * switch settings on the new Digitrax PR2
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2005, 2006
-  */
+ */
 public class PR2Adapter extends LocoBufferAdapter {
 
     public PR2Adapter() {
@@ -22,17 +22,12 @@ public class PR2Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Always use flow control, not considered a user-setable option
+     * Always use flow control, not considered a user-settable option
      */
     @Override
     protected void setSerialPort(SerialPort activeSerialPort) throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = 57600;  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validBaudNumber().length; i++) {
-            if (validBaudRates()[i].equals(mBaudRate)) {
-                baud = validBaudNumber()[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 
@@ -43,8 +38,8 @@ public class PR2Adapter extends LocoBufferAdapter {
         }
         configureLeadsAndFlowControl(activeSerialPort, flow);
         log.info("PR2 adapter"
-                +(activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
-                +activeSerialPort.getFlowControlMode()
+                + (activeSerialPort.getFlowControlMode() == SerialPort.FLOWCONTROL_RTSCTS_OUT ? " set hardware flow control, mode=" : " set no flow control, mode=")
+                + activeSerialPort.getFlowControlMode()
                 + " RTSCTS_OUT=" + SerialPort.FLOWCONTROL_RTSCTS_OUT
                 + " RTSCTS_IN=" + SerialPort.FLOWCONTROL_RTSCTS_IN);
     }
@@ -75,11 +70,10 @@ public class PR2Adapter extends LocoBufferAdapter {
 
         // start operation
         packets.startThreads();
-
     }
 
     /**
-     * Get an array of valid baud rates.
+     * {@inheritDoc}
      */
     @Override
     public String[] validBaudRates() {
@@ -87,18 +81,23 @@ public class PR2Adapter extends LocoBufferAdapter {
     }
 
     /**
-     * Get an array of valid baud rates as integers. This allows subclasses to
-     * change the arrays of speeds.
+     * {@inheritDoc}
      */
     @Override
-    public int[] validBaudNumber() {
+    public int[] validBaudNumbers() {
         return new int[]{57600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     // Option 1 does flow control, inherited from LocoBufferAdapter
 
     /**
      * The PR2 has one mode
+     * @return a String[] containing appropriate options
      */
     public String[] commandStationOptions() {
         return new String[]{jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_PR2_ALONE.getName()};

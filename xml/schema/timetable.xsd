@@ -33,6 +33,7 @@
     <xs:sequence>
       <xs:element type="xs:integer" name="layout_id"/>
       <xs:element type="xs:string" name="layout_name"/>
+      <xs:element type="xs:string" name="scale" maxOccurs="1" minOccurs="0"/>
       <xs:element type="xs:integer" name="fast_clock"/>
       <xs:element type="xs:integer" name="throttles"/>
       <xs:element type="yesNoType" name="metric"/>
@@ -88,7 +89,6 @@
     <xs:sequence>
       <xs:element type="xs:integer" name="schedule_id"/>
       <xs:element type="xs:integer" name="layout_id"/>
-      <xs:element type="xs:string" name="schedule_name"/>
       <xs:element type="xs:string" name="eff_date"/>
       <xs:element type="xs:integer" name="start_hour"/>
       <xs:element type="xs:integer" name="duration"/>

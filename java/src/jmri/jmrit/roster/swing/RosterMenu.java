@@ -105,11 +105,11 @@ public class RosterMenu extends JMenu {
 
         // Need a frame here, but are not passed one
         Frame newFrame = new Frame();
-        AbstractAction printAction = new PrintRosterAction(Bundle.getMessage("MenuItemPrint"), newFrame, false);
+        AbstractAction printAction = new PrintRosterAction(Bundle.getMessage("MenuItemPrintSummary"), newFrame, false);
         printAction.setEnabled(false);
         AbstractAction listAction = new PrintListAction(Bundle.getMessage("MenuItemPrintList"), newFrame, false);
         listAction.setEnabled(false);
-        AbstractAction previewAction = new PrintRosterAction(Bundle.getMessage("MenuItemPreview"), newFrame, true);
+        AbstractAction previewAction = new PrintRosterAction(Bundle.getMessage("MenuItemPreviewSummary"), newFrame, true);
         previewAction.setEnabled(false);
         AbstractAction previewListAction = new PrintListAction(Bundle.getMessage("MenuItemPreviewList"), newFrame, true);
         previewListAction.setEnabled(false);
@@ -163,9 +163,6 @@ public class RosterMenu extends JMenu {
                 speedProfileAction.setEnabled(true);
                 break;
             case SELECTMENU:
-                printAction.setEnabled(true);
-                previewAction.setEnabled(true);
-                break;
             case ENTRYMENU:
                 printAction.setEnabled(true);
                 previewAction.setEnabled(true);

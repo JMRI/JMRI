@@ -8,7 +8,7 @@ import org.junit.*;
  * Tests for TrackCircuitSection class in the jmri.jmrit.ussctc package
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
+ */
 public class TrackCircuitSectionTest {
 
     @Test
@@ -93,16 +93,16 @@ public class TrackCircuitSectionTest {
         JUnitUtil.initConfigureManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initShutDownManager();
         
         indicator = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1"); indicator.setUserName("Sec 1 track output");
 
         sensor = InstanceManager.getDefault(SensorManager.class).provideSensor("IS2"); sensor.setUserName("Sec1 track input");
 
-        codeline = new CodeLine("Code Sequencer Start", "IT101", "IT102", "IT103", "IT104");
+        codeline = new CodeLine("Code Indication Start", "Code Send Start", "IT101", "IT102", "IT103", "IT104");
         
         requestIndicationStart = false;
         station = new Station("test", codeline, new CodeButton("IS221", "IS222")) {
+            @Override
             public void requestIndicationStart() {
                 requestIndicationStart = true;
             }

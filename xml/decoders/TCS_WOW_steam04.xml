@@ -29,6 +29,8 @@
 	<!-- add read me pane -->
 	<version author="Michael Mosher" version="9" lastUpdated="20180917"/>
 	<!-- change default values for sound functions with no sound mapped to 65535 -->
+	<version author="Michael Mosher" version="10" lastUpdated="20191111"/>
+	<!-- Add CV 177-181 & new bit in CV182 -->
    <decoder>
       <family name="WOW Steam Sound Set 4" mfg="Train Control Systems">
          <model model="WOW Steam 101 SS4" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin" lowVersionID="4" highVersionID="4" productID="130">
@@ -104,6 +106,7 @@
       <variables>
          <xi:include href="http://jmri.org/xml/decoders/tcs/CV1_CV99_wow.xml"/>
          <xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV187_wow.xml"/>
+         <xi:include href="http://jmri.org/xml/decoders/tcs/CV177_CV182_wow.xml"/>
          <variable item="Sound Option 4" CV="248" default="4" readOnly="yes">
             <decVal/>
             <label>Sound Set</label>
@@ -3002,6 +3005,7 @@
 			<factReset label="Quick Lighting Preset: Modified Trolley" CV="8" default="12"/>
       </resets>
    </decoder>
+   <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlTrimPane.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
    <xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>

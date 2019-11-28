@@ -12,7 +12,7 @@ import org.junit.Before;
  * Tests for the jmri.jmrix.grapevine.SerialTurnout class, low address.
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class SerialTurnoutTest extends AbstractTurnoutTestBase {
 
     private GrapevineSystemConnectionMemo memo = null; 
@@ -21,8 +21,8 @@ public class SerialTurnoutTest extends AbstractTurnoutTestBase {
     @Before
     @Override
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
 
         // prepare an interface
         memo = new GrapevineSystemConnectionMemo();

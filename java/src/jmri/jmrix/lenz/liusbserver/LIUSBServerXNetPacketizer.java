@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This is an extension of the XNetPacketizer to handle the device specific
  * requirements of the LIUSB Server.
- * <P>
+ * <p>
  * In particular, LIUSBServerXNetPacketizer counts the number of commands
  * received.
  *
@@ -62,7 +62,7 @@ public class LIUSBServerXNetPacketizer extends XNetPacketizer {
                             }
                         } catch (InterruptedException e) {
                             Thread.currentThread().interrupt(); // retain if needed later
-                            log.error("retry wait interupted");
+                            log.error("retry wait interrupted");
                         }
                     } else {
                         log.warn("sendMessage: port not ready for data sending: {}", m.toString());

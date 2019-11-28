@@ -3,7 +3,7 @@ package jmri.jmrix.srcp;
 /**
  * Encodes a message to an SRCP server. The SRCPReply class handles the response
  * from the command station.
- * <P>
+ *
  * The {@link SRCPReply} class handles the response from the command station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2004, 2008
@@ -70,7 +70,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
 
     /**
-     * @param bus - a bus number
+     * @param bus  a bus number
      * @return an SRCPMessage to initialize programming on the given bus.
      */
     static public SRCPMessage getProgMode(int bus) {
@@ -80,7 +80,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * @param bus - a bus number
+     * @param bus  a bus number
      * @return an SRCPMessage to terminate programming on the given bus.
      */
     static public SRCPMessage getExitProgMode(int bus) {
@@ -90,8 +90,8 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * @param bus - a bus number
-     * @param cv - the CV to read.
+     * @param bus  a bus number
+     * @param cv  the CV to read.
      * @return an SRCPMessage to read the given CV in direct mode the given bus.
      */
     static public SRCPMessage getReadDirectCV(int bus, int cv) {
@@ -102,9 +102,9 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * @param bus - a bus number
-     * @param cv - the CV to read.
-     * @param val - a value for the CV.
+     * @param bus  a bus number
+     * @param cv  the CV to read.
+     * @param val  a value for the CV.
      * @return an SRCPMessage to check the given cv has the given val using the given bus.
      */
     static public SRCPMessage getConfirmDirectCV(int bus, int cv, int val) {
@@ -116,9 +116,9 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * @param bus - a bus number
-     * @param cv - the CV to write.
-     * @param val - a value for the CV.
+     * @param bus  a bus number
+     * @param cv  the CV to write.
+     * @param val  a value for the CV.
      * @return an SRCPMessage to write the given value to the provided cv using the given bus.
      */
     static public SRCPMessage getWriteDirectCV(int bus, int cv, int val) {
@@ -129,9 +129,9 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * @param bus - a bus number
-     * @param cv - the CV to read.
-     * @param bit - the bit to read.
+     * @param bus  a bus number
+     * @param cv  the CV to read.
+     * @param bit  the bit to read.
      * @return an SRCPMessage to read the given bit of the given CV uisng the provided bus.
      */
     static public SRCPMessage getReadDirectBitCV(int bus, int cv, int bit) {
@@ -142,10 +142,10 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * @param bus - a bus number
-     * @param cv - the CV to read.
-     * @param bit - the bit to read.
-     * @param val - the value to check
+     * @param bus  a bus number
+     * @param cv  the CV to read.
+     * @param bit  the bit to read.
+     * @param val  the value to check
      * @return an SRCPMessage to verify the given bit of the given CV has the given val uisng the provided bus.
      */
     static public SRCPMessage getConfirmDirectBitCV(int bus, int cv, int bit, int val) {
@@ -157,10 +157,10 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * @param bus - a bus number
-     * @param cv - the CV to write.
-     * @param bit - the bit to write
-     * @param val - the value to write
+     * @param bus  a bus number
+     * @param cv  the CV to write.
+     * @param bit  the bit to write
+     * @param val  the value to write
      * @return an SRCPMessage to write the given value to the given bit of the given CV uisng the provided bus.
      */
     static public SRCPMessage getWriteDirectBitCV(int bus, int cv, int bit, int val) {
@@ -171,8 +171,8 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * @param bus - a bus number
-     * @param reg - a register to read.  Restricted to valuse less than 8.
+     * @param bus  a bus number
+     * @param reg  a register to read.  Restricted to valuse less than 8.
      * @return an SRCPMessage to read the provided register using the given bus.
      * @throws IllegalArgumentException if the register value is out of range.
      */
@@ -187,9 +187,9 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * @param bus - a bus number
-     * @param reg - a register to read.  Restricted to valuse less than 8.
-     * @param val - a value for the register
+     * @param bus  a bus number
+     * @param reg  a register to read.  Restricted to valuse less than 8.
+     * @param val  a value for the register
      * @return an SRCPMessage to verify the provided register has the expected val using the given bus.
      * @throws IllegalArgumentException if the register value is out of range.
      */
@@ -204,9 +204,9 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * @param bus - a bus number
-     * @param reg - a register to write.  Restricted to valuse less than 8.
-     * @param val - a value for the register
+     * @param bus  a bus number
+     * @param reg  a register to write.  Restricted to valuse less than 8.
+     * @param val  a value for the register
      * @return an SRCPMessage to write the given value to the provided register using the given bus.
      * @throws IllegalArgumentException if the register value is out of range.
      */

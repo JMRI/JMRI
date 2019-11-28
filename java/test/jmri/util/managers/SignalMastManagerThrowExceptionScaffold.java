@@ -1,7 +1,9 @@
 package jmri.util.managers;
 
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 import jmri.SignalMast;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.DefaultSignalMastManager;
 
 /**
@@ -14,7 +16,7 @@ import jmri.managers.DefaultSignalMastManager;
 public class SignalMastManagerThrowExceptionScaffold extends DefaultSignalMastManager {
 
     public SignalMastManagerThrowExceptionScaffold() {
-        super();
+        super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
     
     /** {@inheritDoc} */

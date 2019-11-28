@@ -97,16 +97,16 @@
         <name xml:lang="nl">Bouw Loclijst opnieuw op</name>
         <adapter>jmri.jmrit.roster.RecreateRosterAction</adapter>
     </node>
-    <node name="Validate XML File">
-        <name xml:lang="fr">Valider Fichier XML</name>
-        <name xml:lang="it">Convalida file XML</name>
-        <name xml:lang="da">Valider XML Fil</name>
-        <name xml:lang="de">Verifizierung einer XML Datei</name>
-        <name xml:lang="cs">Validovat XML soubor</name>
-        <name xml:lang="es">Validar fichero XML</name>
-        <name xml:lang="ja_JP">XML\u30d5\u30a1\u30a4\u30eb\u3092\u8a8d\u8a3c</name>
-		<name xml:lang="ca">Validar el fitxer XML</name>
-        <name xml:lang="nl">Valideer XML bestand</name>
+    <node name="Validate XML File...">
+        <name xml:lang="fr">Valider Fichier XML...</name>
+        <name xml:lang="it">Convalida file XML...</name>
+        <name xml:lang="da">Valider XML Fil...</name>
+        <name xml:lang="de">Verifizierung einer XML Datei...</name>
+        <name xml:lang="cs">Validovat XML soubor...</name>
+        <name xml:lang="es">Validar fichero XML...</name>
+        <name xml:lang="ja_JP">XML\u30d5\u30a1\u30a4\u30eb\u3092\u8a8d\u8a3c...</name>
+		<name xml:lang="ca">Validar el fitxer XML...</name>
+        <name xml:lang="nl">Valideer XML bestand...</name>
         <adapter>jmri.jmrit.XmlFileValidateAction</adapter>
     </node>
     <node>separator</node><!-- separator -->
@@ -301,7 +301,7 @@
         <name xml:lang="cs">Předvolby...</name>
         <name xml:lang="nl">Voorkeuren...</name>
         <mnemonic>s</mnemonic>
-        <adapter>apps.gui3.TabbedPreferencesAction</adapter>
+        <adapter>apps.gui3.tabbedpreferences.TabbedPreferencesAction</adapter>
     </node>
   </node>
 
@@ -501,7 +501,7 @@
         <name xml:lang="da">Ny Kørekontrol</name>
         <name xml:lang="de">Neuer Fahrregler</name>
 		<name xml:lang="ca">Regulador Nou</name>
-        <name xml:lang="cs">Nový lokoovladač</name>
+        <name xml:lang="cs">Nový ovladač</name>
         <name xml:lang="nl">Nieuwe Rijregelaar</name>
         <adapter>jmri.jmrit.throttle.ThrottleCreationAction</adapter>
     </node>
@@ -510,7 +510,7 @@
         <name xml:lang="it">Carica formato di default Palmare</name>
         <name xml:lang="de">Lade Standardfahrregler</name>
 		<name xml:lang="ca">Llegeix format de reguladors per defecte</name>
-        <name xml:lang="cs">Načíst výchozí rozvržení lokoovladače</name>
+        <name xml:lang="cs">Načíst výchozí rozvržení ovladače</name>
         <name xml:lang="nl">Open Rijregelaar</name>
         <adapter>jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction</adapter>
     </node>

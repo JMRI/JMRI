@@ -1,0 +1,1333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>15</minor>
+    <test>5</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1</systemName>
+      <userName>West</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+      <userName>WestExit.sen</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+      <userName>WestJunction.sen</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4</systemName>
+      <userName>WestMain.sen</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS5</systemName>
+      <userName>EastMain.sen</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS6</systemName>
+      <userName>EastJunction.sen</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS7</systemName>
+      <userName>EastExit.sen</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS8</systemName>
+      <userName>East.sen</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS9</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS100</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS101</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT1</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT2</systemName>
+    </turnout>
+  </turnouts>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="3:58 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
+  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
+    <oblock systemName="OB1" userName="West" length="2540.0" units="false" curve="0" permissive="false" speedNotch="">
+      <userName>West</userName>
+      <sensor systemName="West" />
+      <path pathName="Main" blockName="OB1" toPortal="West-WestExit" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="West-WestExit">
+        <fromBlock blockName="OB1">
+          <path pathName="Main" blockName="OB1" />
+        </fromBlock>
+        <toBlock blockName="OB2">
+          <path pathName="Main" blockName="OB2" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OB2" userName="WestExit" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
+      <userName>WestExit</userName>
+      <sensor systemName="WestExit.sen" />
+      <path pathName="Main" blockName="OB2" fromPortal="WestExit-WestJunction" toPortal="West-WestExit" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="West-WestExit">
+        <fromBlock blockName="OB1">
+          <path pathName="Main" blockName="OB1" />
+        </fromBlock>
+        <toBlock blockName="OB2">
+          <path pathName="Main" blockName="OB2" />
+        </toBlock>
+      </portal>
+      <portal portalName="WestExit-WestJunction">
+        <fromBlock blockName="OB2">
+          <path pathName="Main" blockName="OB2" />
+        </fromBlock>
+        <toBlock blockName="OB3">
+          <path pathName="Main" blockName="OB3" />
+          <path pathName="Diverge" blockName="OB3" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OB3" userName="WestJunction" length="2540.0" units="false" curve="0" permissive="false" speedNotch="">
+      <userName>WestJunction</userName>
+      <sensor systemName="WestJunction.sen" />
+      <path pathName="Main" blockName="OB3" fromPortal="WestJunction-EastMain" toPortal="WestExit-WestJunction" fromDirection="0" toDirection="0" length="0.0">
+        <setting turnout="IT1" set="2" />
+      </path>
+      <path pathName="Diverge" blockName="OB3" fromPortal="WestJunction-WestMain" toPortal="WestExit-WestJunction" fromDirection="0" toDirection="0" length="2540.0">
+        <setting turnout="IT1" set="4" />
+      </path>
+      <portal portalName="WestExit-WestJunction">
+        <fromBlock blockName="OB2">
+          <path pathName="Main" blockName="OB2" />
+        </fromBlock>
+        <toBlock blockName="OB3">
+          <path pathName="Main" blockName="OB3" />
+          <path pathName="Diverge" blockName="OB3" />
+        </toBlock>
+      </portal>
+      <portal portalName="WestJunction-WestMain">
+        <fromBlock blockName="OB3">
+          <path pathName="Diverge" blockName="OB3" />
+        </fromBlock>
+        <toBlock blockName="OB4">
+          <path pathName="Siding" blockName="OB4" />
+        </toBlock>
+      </portal>
+      <portal portalName="WestJunction-EastMain">
+        <fromBlock blockName="OB3">
+          <path pathName="Main" blockName="OB3" />
+        </fromBlock>
+        <toBlock blockName="OB5">
+          <path pathName="Main" blockName="OB5" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OB4" userName="WestSiding" length="1905.0" units="false" curve="0" permissive="false" speedNotch="">
+      <userName>WestSiding</userName>
+      <sensor systemName="WestMain.sen" />
+      <path pathName="Siding" blockName="OB4" fromPortal="EastJunction-WestSiding" toPortal="WestJunction-WestMain" fromDirection="0" toDirection="0" length="1905.0" />
+      <portal portalName="WestJunction-WestMain">
+        <fromBlock blockName="OB3">
+          <path pathName="Diverge" blockName="OB3" />
+        </fromBlock>
+        <toBlock blockName="OB4">
+          <path pathName="Siding" blockName="OB4" />
+        </toBlock>
+      </portal>
+      <portal portalName="EastJunction-WestSiding">
+        <fromBlock blockName="OB6">
+          <path pathName="Divergent" blockName="OB6" />
+        </fromBlock>
+        <toBlock blockName="OB4">
+          <path pathName="Siding" blockName="OB4" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OB5" userName="EastMain" length="2540.0" units="false" curve="0" permissive="false" speedNotch="">
+      <userName>EastMain</userName>
+      <sensor systemName="EastMain.sen" />
+      <path pathName="Main" blockName="OB5" fromPortal="EastJunction-EastMain" toPortal="WestJunction-EastMain" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="WestJunction-EastMain">
+        <fromBlock blockName="OB3">
+          <path pathName="Main" blockName="OB3" />
+        </fromBlock>
+        <toBlock blockName="OB5">
+          <path pathName="Main" blockName="OB5" />
+        </toBlock>
+      </portal>
+      <portal portalName="EastJunction-EastMain">
+        <fromBlock blockName="OB6">
+          <path pathName="Main" blockName="OB6" />
+        </fromBlock>
+        <toBlock blockName="OB5">
+          <path pathName="Main" blockName="OB5" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OB6" userName="EastJunction" length="1270.0" units="false" curve="0" permissive="false" speedNotch="">
+      <userName>EastJunction</userName>
+      <sensor systemName="EastJunction.sen" />
+      <path pathName="Divergent" blockName="OB6" fromPortal="EastExit-EastJunction" toPortal="EastJunction-WestSiding" fromDirection="0" toDirection="0" length="0.0">
+        <setting turnout="IT2" set="4" />
+      </path>
+      <path pathName="Main" blockName="OB6" fromPortal="EastJunction-EastMain" toPortal="EastExit-EastJunction" fromDirection="0" toDirection="0" length="1270.0">
+        <setting turnout="IT2" set="2" />
+      </path>
+      <portal portalName="EastJunction-WestSiding">
+        <fromBlock blockName="OB6">
+          <path pathName="Divergent" blockName="OB6" />
+        </fromBlock>
+        <toBlock blockName="OB4">
+          <path pathName="Siding" blockName="OB4" />
+        </toBlock>
+      </portal>
+      <portal portalName="EastJunction-EastMain">
+        <fromBlock blockName="OB6">
+          <path pathName="Main" blockName="OB6" />
+        </fromBlock>
+        <toBlock blockName="OB5">
+          <path pathName="Main" blockName="OB5" />
+        </toBlock>
+      </portal>
+      <portal portalName="EastExit-EastJunction">
+        <fromBlock blockName="OB6">
+          <path pathName="Divergent" blockName="OB6" />
+          <path pathName="Main" blockName="OB6" />
+        </fromBlock>
+        <toBlock blockName="OB7">
+          <path pathName="Main" blockName="OB7" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OB7" userName="EastExit" length="1905.0" units="false" curve="0" permissive="false" speedNotch="">
+      <userName>EastExit</userName>
+      <sensor systemName="EastExit.sen" />
+      <path pathName="Main" blockName="OB7" fromPortal="East-EastExit" toPortal="EastExit-EastJunction" fromDirection="0" toDirection="0" length="1905.0" />
+      <portal portalName="EastExit-EastJunction">
+        <fromBlock blockName="OB6">
+          <path pathName="Divergent" blockName="OB6" />
+          <path pathName="Main" blockName="OB6" />
+        </fromBlock>
+        <toBlock blockName="OB7">
+          <path pathName="Main" blockName="OB7" />
+        </toBlock>
+      </portal>
+      <portal portalName="East-EastExit">
+        <fromBlock blockName="OB8">
+          <path pathName="Main" blockName="OB8" />
+        </fromBlock>
+        <toBlock blockName="OB7">
+          <path pathName="Main" blockName="OB7" />
+        </toBlock>
+      </portal>
+    </oblock>
+    <oblock systemName="OB8" userName="East" length="2540.0" units="false" curve="0" permissive="false" speedNotch="">
+      <userName>East</userName>
+      <sensor systemName="East.sen" />
+      <path pathName="Main" blockName="OB8" toPortal="East-EastExit" fromDirection="0" toDirection="0" length="0.0" />
+      <portal portalName="East-EastExit">
+        <fromBlock blockName="OB8">
+          <path pathName="Main" blockName="OB8" />
+        </fromBlock>
+        <toBlock blockName="OB7">
+          <path pathName="Main" blockName="OB7" />
+        </toBlock>
+      </portal>
+    </oblock>
+  </oblocks>
+  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml">
+    <warrant systemName="IW1" userName="WestBoundStart" wtype="normal">
+      <blockOrder pathName="Main" entryName="" exitName="East-EastExit">
+        <block systemName="OB8" userName="East" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="East-EastExit" exitName="EastExit-EastJunction">
+        <block systemName="OB7" userName="EastExit" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="EastExit-EastJunction" exitName="EastJunction-EastMain">
+        <block systemName="OB6" userName="EastJunction" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="EastJunction-EastMain" exitName="WestJunction-EastMain">
+        <block systemName="OB5" userName="EastMain" />
+      </blockOrder>
+      <throttleCommand time="0" command="F0" value="true" block="OB8" />
+      <throttleCommand time="100" command="Set Sensor" value="active" block="IS101" />
+      <throttleCommand time="100" command="Set Sensor" value="active" block="IS100" />
+      <throttleCommand time="100" command="Forward" value="true" block="OB8" />
+      <throttleCommand time="0" command="Speed" value="0.04" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.084" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.1324" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.18564" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.24420401" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.30862442" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.37948686" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.45743555" block="OB8" />
+      <throttleCommand time="478" command="NoOp" value="Enter Block" block="OB7" />
+      <throttleCommand time="21" command="Speed" value="0.5" block="OB7" />
+      <throttleCommand time="3334" command="NoOp" value="Enter Block" block="OB6" />
+      <throttleCommand time="2234" command="NoOp" value="Enter Block" block="OB5" />
+      <throttleCommand time="866" command="Speed" value="0.45743555" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.37948686" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.30862442" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.24420401" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.18564" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.1324" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.084" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.04" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.0" block="OB5" />
+      <throttleCommand time="100" command="Set Sensor" value="inactive" block="IS101" />
+      <throttleCommand time="100" command="Wait Sensor" value="inactive" block="IS100" />
+      <throttleCommand time="100" command="Run Warrant" value="0" block="IW3" />
+      <train trainId="" dccAddress="123" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="GoWest" />
+    </warrant>
+    <warrant systemName="IW2" userName="EastBoundStart" wtype="normal">
+      <blockOrder pathName="Main" entryName="" exitName="West-WestExit">
+        <block systemName="OB1" userName="West" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="West-WestExit" exitName="WestExit-WestJunction">
+        <block systemName="OB2" userName="WestExit" />
+      </blockOrder>
+      <blockOrder pathName="Diverge" entryName="WestExit-WestJunction" exitName="WestJunction-WestMain">
+        <block systemName="OB3" userName="WestJunction" />
+      </blockOrder>
+      <blockOrder pathName="Siding" entryName="WestJunction-WestMain" exitName="EastJunction-WestSiding">
+        <block systemName="OB4" userName="WestSiding" />
+      </blockOrder>
+      <throttleCommand time="0" command="F0" value="true" block="OB1" />
+      <throttleCommand time="100" command="Set Sensor" value="active" block="IS100" />
+      <throttleCommand time="100" command="Set Sensor" value="active" block="IS101" />
+      <throttleCommand time="100" command="Forward" value="true" block="OB1" />
+      <throttleCommand time="0" command="Speed" value="0.04" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.084" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.1324" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.18564" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.24420401" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.30862442" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.37948686" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.45743555" block="OB1" />
+      <throttleCommand time="478" command="NoOp" value="Enter Block" block="OB2" />
+      <throttleCommand time="21" command="Speed" value="0.5" block="OB2" />
+      <throttleCommand time="2216" command="NoOp" value="Enter Block" block="OB3" />
+      <throttleCommand time="4776" command="Speed" value="0.45743555" block="OB3" />
+      <throttleCommand time="207" command="NoOp" value="Enter Block" block="OB4" />
+      <throttleCommand time="292" command="Speed" value="0.37948686" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.30862442" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.24420401" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.18564" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.1324" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.084" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.04" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.0" block="OB4" />
+      <throttleCommand time="100" command="Set Sensor" value="inactive" block="IS100" />
+      <throttleCommand time="100" command="Wait Sensor" value="inactive" block="IS101" />
+      <throttleCommand time="100" command="Run Warrant" value="0" block="IW4" />
+      <train trainId="" dccAddress="321" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="GoEast" />
+    </warrant>
+    <warrant systemName="IW3" userName="WestBoundFinish" wtype="normal">
+      <blockOrder pathName="Main" entryName="" exitName="WestJunction-EastMain">
+        <block systemName="OB5" userName="EastMain" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="WestJunction-EastMain" exitName="WestExit-WestJunction">
+        <block systemName="OB3" userName="WestJunction" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="WestExit-WestJunction" exitName="West-WestExit">
+        <block systemName="OB2" userName="WestExit" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="West-WestExit" exitName="">
+        <block systemName="OB1" userName="West" />
+      </blockOrder>
+      <throttleCommand time="0" command="F0" value="true" block="OB5" />
+      <throttleCommand time="100" command="Forward" value="true" block="OB5" />
+      <throttleCommand time="0" command="Speed" value="0.04" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.084" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.1324" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.18564" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.24420401" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.30862442" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.37948686" block="OB5" />
+      <throttleCommand time="500" command="Speed" value="0.45743555" block="OB5" />
+      <throttleCommand time="478" command="NoOp" value="Enter Block" block="OB3" />
+      <throttleCommand time="21" command="Speed" value="0.5" block="OB3" />
+      <throttleCommand time="4451" command="NoOp" value="Enter Block" block="OB2" />
+      <throttleCommand time="2234" command="NoOp" value="Enter Block" block="OB1" />
+      <throttleCommand time="866" command="Speed" value="0.45743555" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.37948686" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.30862442" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.24420401" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.18564" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.1324" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.084" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.04" block="OB1" />
+      <throttleCommand time="500" command="Speed" value="0.0" block="OB1" />
+      <train trainId="" dccAddress="123" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="GoWest" />
+    </warrant>
+    <warrant systemName="IW4" userName="EastBoundFinish" wtype="normal">
+      <blockOrder pathName="Siding" entryName="" exitName="EastJunction-WestSiding">
+        <block systemName="OB4" userName="WestSiding" />
+      </blockOrder>
+      <blockOrder pathName="Divergent" entryName="EastJunction-WestSiding" exitName="EastExit-EastJunction">
+        <block systemName="OB6" userName="EastJunction" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="EastExit-EastJunction" exitName="East-EastExit">
+        <block systemName="OB7" userName="EastExit" />
+      </blockOrder>
+      <blockOrder pathName="Main" entryName="East-EastExit" exitName="">
+        <block systemName="OB8" userName="East" />
+      </blockOrder>
+      <throttleCommand time="0" command="F0" value="true" block="OB4" />
+      <throttleCommand time="100" command="Forward" value="true" block="OB4" />
+      <throttleCommand time="0" command="Speed" value="0.04" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.084" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.1324" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.18564" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.24420401" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.30862442" block="OB4" />
+      <throttleCommand time="500" command="Speed" value="0.37948686" block="OB4" />
+      <throttleCommand time="432" command="NoOp" value="Enter Block" block="OB6" />
+      <throttleCommand time="67" command="Speed" value="0.45743555" block="OB6" />
+      <throttleCommand time="500" command="Speed" value="0.5" block="OB6" />
+      <throttleCommand time="1736" command="NoOp" value="Enter Block" block="OB7" />
+      <throttleCommand time="3352" command="NoOp" value="Enter Block" block="OB8" />
+      <throttleCommand time="866" command="Speed" value="0.45743555" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.37948686" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.30862442" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.24420401" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.18564" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.1324" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.084" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.04" block="OB8" />
+      <throttleCommand time="500" command="Speed" value="0.0" block="OB8" />
+      <train trainId="" dccAddress="321" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="GoEast" />
+    </warrant>
+  </warrants>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon May 18 10:30:41 PDT 2015" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="TrainMeetTest" x="454" y="606" height="280" width="691" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none" redBackground="211" greenBackground="189" blueBackground="146" state="0" shapeSelect="yes">
+    <icons>
+      <visible>
+        <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
+      </visible>
+      <path_edit>
+        <url>program:resources/icons/greenSquare.gif</url>
+      </path_edit>
+      <hidden>
+        <url>program:resources/icons/Invisible.gif</url>
+      </hidden>
+      <to_arrow>
+        <url>program:resources/icons/track/toArrow.gif</url>
+      </to_arrow>
+      <from_arrow>
+        <url>program:resources/icons/track/fromArrow.gif</url>
+      </from_arrow>
+    </icons>
+    <indicatorturnouticon x="251" y="84" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+      <tooltip>OBlock "WestJunction"</tooltip>
+      <turnout>IT1</turnout>
+      <occupancyblock>OB3</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmaps family="LeftTurnout">
+        <OccupiedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </OccupiedTrack>
+        <ClearTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ClearTrack>
+        <AllocatedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </AllocatedTrack>
+        <DontUseTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </DontUseTrack>
+        <PositionTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </PositionTrack>
+        <ErrorTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/LeftTO/os-lefthand-west-closed-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-thrown-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/LeftTO/os-lefthand-west-error-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ErrorTrack>
+      </iconmaps>
+      <paths>
+        <path>Main</path>
+        <path>WestSiding</path>
+        <path>Diverge</path>
+      </paths>
+    </indicatorturnouticon>
+    <indicatortrackicon x="288" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "EastMain"</tooltip>
+      <occupancyblock>OB5</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="214" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "WestJunction"</tooltip>
+      <occupancyblock>OB3</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+        <path>WestSiding</path>
+        <path>Diverge</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatorturnouticon x="362" y="84" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+      <tooltip>OBlock "EastJunction"</tooltip>
+      <turnout>IT2</turnout>
+      <occupancyblock>OB6</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmaps family="RightTurnout">
+        <OccupiedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-yellow.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </OccupiedTrack>
+        <ClearTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-black.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ClearTrack>
+        <AllocatedTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-green.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </AllocatedTrack>
+        <DontUseTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-gray.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </DontUseTrack>
+        <PositionTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-blue.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </PositionTrack>
+        <ErrorTrack>
+          <BeanStateUnknown url="program:resources/icons/track/line/RightTO/os-righthand-east-unknown-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateUnknown>
+          <TurnoutStateClosed url="program:resources/icons/track/line/RightTO/os-righthand-east-closed-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateClosed>
+          <TurnoutStateThrown url="program:resources/icons/track/line/RightTO/os-righthand-east-thrown-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </TurnoutStateThrown>
+          <BeanStateInconsistent url="program:resources/icons/track/line/RightTO/os-righthand-east-error-red.gif" degrees="180" scale="1.0">
+            <rotation>0</rotation>
+          </BeanStateInconsistent>
+        </ErrorTrack>
+      </iconmaps>
+      <paths>
+        <path>Main</path>
+        <path>WestSiding</path>
+        <path>SidingToSiding</path>
+        <path>EastSiding</path>
+        <path>Divergent</path>
+      </paths>
+    </indicatorturnouticon>
+    <indicatortrackicon x="325" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "EastMain"</tooltip>
+      <occupancyblock>OB5</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="325" y="84" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "WestSiding"</tooltip>
+      <occupancyblock>WestSiding</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Siding</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="436" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "EastExit"</tooltip>
+      <occupancyblock>OB7</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="399" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "EastJunction"</tooltip>
+      <occupancyblock>EastJunction</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Divergent</path>
+        <path>Main</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="473" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "EastExit"</tooltip>
+      <occupancyblock>EastExit</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="510" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "East"</tooltip>
+      <occupancyblock>East</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="288" y="84" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "WestSiding"</tooltip>
+      <occupancyblock>WestSiding</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Siding</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="177" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "WestExit"</tooltip>
+      <occupancyblock>OB2</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+        <path>WestSiding</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="547" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "East"</tooltip>
+      <occupancyblock>East</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="140" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "WestExit"</tooltip>
+      <occupancyblock>OB2</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="103" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "West"</tooltip>
+      <occupancyblock>OB1</occupancyblock>
+      <showTrainName>no</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+        <path>WestSiding</path>
+      </paths>
+    </indicatortrackicon>
+    <indicatortrackicon x="66" y="108" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "West"</tooltip>
+      <occupancyblock>OB1</occupancyblock>
+      <showTrainName>yes</showTrainName>
+      <iconmap family="BlockSegment">
+        <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </OccupiedTrack>
+        <ClearTrack url="program:resources/icons/track/line/TrackSeg/block-black.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ClearTrack>
+        <AllocatedTrack url="program:resources/icons/track/line/TrackSeg/block-green.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </AllocatedTrack>
+        <DontUseTrack url="program:resources/icons/track/line/TrackSeg/block-gray.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </DontUseTrack>
+        <PositionTrack url="program:resources/icons/track/line/TrackSeg/block-blue.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </PositionTrack>
+        <ErrorTrack url="program:resources/icons/track/line/TrackSeg/block-red.gif" degrees="0" scale="1.0">
+          <rotation>0</rotation>
+        </ErrorTrack>
+      </iconmap>
+      <paths>
+        <path>Main</path>
+      </paths>
+    </indicatortrackicon>
+    <sensoricon sensor="West" x="98" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>West (IS1)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/flashyellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/white.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallBlueJewel" />
+    </sensoricon>
+    <sensoricon sensor="IS2" x="170" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>West (IS1)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/flashyellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/white.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallBlueJewel" />
+    </sensoricon>
+    <sensoricon sensor="IS3" x="246" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>West (IS1)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/flashyellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/white.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallBlueJewel" />
+    </sensoricon>
+    <sensoricon sensor="IS5" x="318" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>West (IS1)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/flashyellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/white.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallBlueJewel" />
+    </sensoricon>
+    <sensoricon sensor="IS6" x="393" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>West (IS1)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/flashyellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/white.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallBlueJewel" />
+    </sensoricon>
+    <sensoricon sensor="IS7" x="469" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>West (IS1)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/flashyellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/white.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallBlueJewel" />
+    </sensoricon>
+    <sensoricon sensor="IS8" x="541" y="135" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>West (IS1)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/flashyellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/white.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallBlueJewel" />
+    </sensoricon>
+    <sensoricon sensor="IS4" x="322" y="58" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>West (IS1)</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/flashyellow.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/blue.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/white.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/red.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallBlueJewel" />
+    </sensoricon>
+    <PortalIcon x="129" y="99" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="West-WestExit" toBlockName="WestExit" fromBlockName="West" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "West-WestExit" between OBlocks "West" and "WestExit"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="203" y="99" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="WestExit-WestJunction" toBlockName="WestJunction" fromBlockName="WestExit" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "WestExit-WestJunction" between OBlocks "WestExit" and "WestJunction"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="278" y="77" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="WestJunction-WestMain" toBlockName="WestSiding" fromBlockName="WestJunction" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "WestJunction-WestMain" between OBlocks "WestJunction" and "WestSiding"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="279" y="100" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="WestJunction-EastMain" toBlockName="EastMain" fromBlockName="WestJunction" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "WestJunction-EastMain" between OBlocks "WestJunction" and "EastMain"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="350" y="74" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="EastJunction-WestSiding" toBlockName="WestSiding" fromBlockName="EastJunction" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "EastJunction-WestSiding" between OBlocks "EastJunction" and "WestSiding"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="351" y="102" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="EastJunction-EastMain" toBlockName="EastMain" fromBlockName="EastJunction" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "EastJunction-EastMain" between OBlocks "EastJunction" and "EastMain"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="424" y="101" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="EastExit-EastJunction" toBlockName="EastExit" fromBlockName="EastJunction" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "EastExit-EastJunction" between OBlocks "EastJunction" and "EastExit"</tooltip>
+    </PortalIcon>
+    <PortalIcon x="499" y="100" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="East-EastExit" toBlockName="EastExit" fromBlockName="East" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+      <tooltip>Portal "East-EastExit" between OBlocks "East" and "null"</tooltip>
+    </PortalIcon>
+    <sensoricon sensor="IS100" x="283" y="123" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS100</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/flashred.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/flashgreen.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/flashwhite.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallRedJewel" />
+    </sensoricon>
+    <sensoricon sensor="IS101" x="358" y="67" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+      <tooltip>IS101</tooltip>
+      <active url="program:resources/icons/smallschematics/LEDs/flashred.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </active>
+      <inactive url="program:resources/icons/smallschematics/LEDs/flashgreen.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inactive>
+      <unknown url="program:resources/icons/smallschematics/LEDs/gray.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </unknown>
+      <inconsistent url="program:resources/icons/smallschematics/LEDs/flashwhite.gif" degrees="0" scale="1.0">
+        <rotation>0</rotation>
+      </inconsistent>
+      <iconmaps family="SmallRedJewel" />
+    </sensoricon>
+  </paneleditor>
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Tue Apr 09 15:44:24 PDT 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Tue Apr 09 15:44:36 PDT 2019</date>
+      <filename>/C:/jmriPanels/MeetTest.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Tue Apr 09 15:28:38 PDT 2019</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Tue Apr 09 15:28:46 PDT 2019</date>
+          <filename>/C:/jmriPanels/MeetTest.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Tue Apr 09 14:44:24 PDT 2019</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Tue Apr 09 14:44:35 PDT 2019</date>
+              <filename>/C:/jmriPanels/MeetTest.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Tue Apr 09 13:07:26 PDT 2019</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Tue Apr 09 13:07:34 PDT 2019</date>
+                  <filename>/C:/jmriPanels/MeetTest.xml</filename>
+                  <filehistory>
+                    <operation>
+                      <type>app</type>
+                      <date>Tue Apr 09 11:11:05 PDT 2019</date>
+                      <filename>JMRI program</filename>
+                    </operation>
+                    <operation>
+                      <type>Load OK</type>
+                      <date>Tue Apr 09 11:11:14 PDT 2019</date>
+                      <filename>/C:/jmriPanels/MeetTest.xml</filename>
+                      <filehistory>
+                        <operation>
+                          <type>app</type>
+                          <date>Mon Apr 08 16:26:00 PDT 2019</date>
+                          <filename>JMRI program</filename>
+                        </operation>
+                        <operation>
+                          <type>Load OK</type>
+                          <date>Mon Apr 08 16:26:09 PDT 2019</date>
+                          <filename>/C:/jmriPanels/MeetTest.xml</filename>
+                        </operation>
+                        <operation>
+                          <type>Store</type>
+                          <date>Mon Apr 08 17:12:06 PDT 2019</date>
+                          <filename />
+                        </operation>
+                      </filehistory>
+                    </operation>
+                    <operation>
+                      <type>Store</type>
+                      <date>Tue Apr 09 11:38:53 PDT 2019</date>
+                      <filename />
+                    </operation>
+                  </filehistory>
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Tue Apr 09 13:15:10 PDT 2019</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Tue Apr 09 15:11:41 PDT 2019</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Tue Apr 09 15:42:50 PDT 2019</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Tue Apr 09 15:58:02 PDT 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.15.5ish+pete_+2019-04-09T22:44:15Z+R13a897e5c9 on Tue Apr 09 15:58:02 PDT 2019-->
+</layout-config>

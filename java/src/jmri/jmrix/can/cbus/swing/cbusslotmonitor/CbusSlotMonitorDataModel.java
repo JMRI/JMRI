@@ -1,25 +1,16 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-import javax.swing.JLabel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.TimerTask;
+import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.Timer;
-
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.Objects;
-
-import jmri.Block;
-import jmri.BlockManager;
 import jmri.InstanceManager;
-import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-import jmri.jmrit.roster.RosterEntry;
-
+import jmri.DccLocoAddress;
+import jmri.util.swing.TextAreaFIFO;
+import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -28,124 +19,75 @@ import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
-import jmri.Path;
-import jmri.SignalMast;
+import jmri.util.ThreadingUtil;
+import jmri.util.TimerUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of Cbus events
+ * Table data model for display of Cbus Command Station Sessions and various Tools
  *
- * @author Steve Young (c) 2018
+ * @author Steve Young (c) 2018 2019
  * @see CbusSlotMonitorPane
  * 
  */
 public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
+    private TextAreaFIFO tablefeedback;
+    private TrafficController tc;
+    private ArrayList<CbusSlotMonitorSession> _mainArray;
+
     protected int _contype=0; //  pane console message type
     protected String _context=null; // pane console text
+    private int cmndstat_fw =0; // command station firmware  TODO - get from node table
 
-    private PropertyChangeListener _cconSignalMastListener = null;
-    private int pFromDir[] = new int[50];
-    
-    private int cmndstat_fw =0;
-    
-    
-    private ArrayList<Integer> cmndstatarr;
-    private ArrayList<Integer> sessionidarr;
-    private ArrayList<Integer> throttlecountarr;
-    private ArrayList<String> functionarr;
-    private ArrayList<Integer> locoidarr;
-    private ArrayList<Boolean> locolongarr;
-    private ArrayList<String> namearr;
-    private ArrayList<Integer> directionarr;
-    private ArrayList<Integer> speedarr;
-    private ArrayList<String> speedsteparr;
-    private ArrayList<String> alttdarr;
-    private ArrayList<String> currblockarr;
-    private ArrayList<String> blockdirarr;
-    private ArrayList<Block> blockarr;
-    private ArrayList<String> nextblockarr;
-    private ArrayList<String> nextsignalarr;
-    private ArrayList<String> nextaspectarr;
-    private ArrayList<PropertyChangeListener> mBlockListeners;
-    private ArrayList<SignalMast> sigListeners;
-    private ArrayList<Block> mBlockList;
-    
-    CanSystemConnectionMemo memo;
-    TrafficController tc;
+    static public int CS_TIMEOUT = 2000; // command station timeout for estop and track messages
+    static private int MAX_LINES = 5000;
     
     // column order needs to match list in column tooltips
-
     static public final int SESSION_ID_COLUMN = 0; 
-
     static public final int LOCO_ID_COLUMN = 1;
-    static public final int LOCO_ID_LONG_COLUMN = 2; 
-    static public final int LOCO_COMMANDED_SPEED_COLUMN = 3;    
-    static public final int LOCO_DIRECTION_COLUMN = 4;
-    static public final int SPEED_STEP_COLUMN = 5;
-    static public final int NUM_THROTTLES = 97;
-    static public final int FUNCTION_LIST = 96;
-    static public final int ALT_TD = 6;
-    static public final int CURRENT_BLOCK = 7;
-    static public final int BLOCK_DIR = 8;
-    static public final int NEXT_BLOCK = 9;
-    static public final int NEXT_SIGNAL = 10;
-    static public final int NEXT_ASPECT = 11;
-
-    static public final int LOCO_NAME_COLUMN = 98;
-    static public final int CMND_STATION_ID_COLUMN = 99;
+    static public final int ESTOP_COLUMN = 2;
+    static public final int LOCO_ID_LONG_COLUMN = 3;
+    static public final int LOCO_COMMANDED_SPEED_COLUMN = 4;    
+    static public final int LOCO_DIRECTION_COLUMN = 5;
+    static public final int FUNCTION_LIST = 6;
+    static public final int SPEED_STEP_COLUMN = 7;
+    static public final int LOCO_CONSIST_COLUMN = 8;
+    static public final int FLAGS_COLUMN = 9;
     
-    static public final int MAX_COLUMN = 12;
+    static public final int MAX_COLUMN = 10;
+    
+    static protected final int[] startupColumns = {0,1,2,4,5,6,9};
     
     CbusSlotMonitorDataModel(CanSystemConnectionMemo memo, int row, int column) {
         
-        cmndstatarr = new ArrayList<Integer>();
-        sessionidarr = new ArrayList<Integer>();
-        throttlecountarr = new ArrayList<Integer>();
-        functionarr = new ArrayList<String>();
-        locoidarr = new ArrayList<Integer>();
-        locolongarr = new ArrayList<Boolean>();
-        namearr = new ArrayList<String>();
-        directionarr = new ArrayList<Integer>();
-        speedarr = new ArrayList<Integer>();
-        speedsteparr = new ArrayList<String>();
-        alttdarr = new ArrayList<String>();
-        currblockarr = new ArrayList<String>();
-        blockdirarr = new ArrayList<String>();
-        blockarr = new ArrayList<Block>();
-        nextblockarr = new ArrayList<String>();
-        nextsignalarr = new ArrayList<String>();
-        nextaspectarr = new ArrayList<String>();
-        sigListeners = new ArrayList<SignalMast>();
-        mBlockListeners = new ArrayList<PropertyChangeListener>();
-        
+        _mainArray = new ArrayList<CbusSlotMonitorSession>();
+
         // connect to the CanInterface
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        addTc(tc);
+        tablefeedback = new TextAreaFIFO(MAX_LINES);
         
-        initblocks();
-        
-        getcmdstatversion();
+    }
+    
+    TextAreaFIFO tablefeedback(){
+        return tablefeedback;
     }
 
-    // order needs to match column list top of dtabledatamodel
+    // order needs to match column list top of tabledatamodel
     static protected final String[] columnToolTips = {
-        ("tt c1"),
-        ("tt c2"),
-        ("tt c3"),
-        ("tt c4"),
-        ("tt c5"),
-        ("tt c6"),
-        ("tt c7"),
-        ("tt c8"),
-        ("tt c9"),
-        ("tt c10"),
-        ("tt c11"),
-        ("tt c12"),
-        ("tt c13"),
-        ("tt c14"),
-        ("tt c15")
+        ("Session ID"),
+        null, // loco id
+        null, // estop
+        ("If Loco ID heard by long address format"),
+        ("Speed Commanded by throttle / CAB"),
+        ("Forward or Reverse"),
+        ("Any Functions set to ON"),
+        ("Speed Steps"),
+        null, // consist id
+        null // flags
 
     }; // Length = number of items in array should (at least) match number of columns
     
@@ -154,7 +96,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      */
     @Override
     public int getRowCount() {
-        return cmndstatarr.size();
+        return _mainArray.size();
     }
 
     @Override
@@ -162,53 +104,38 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         return MAX_COLUMN;
     }
 
-    
     /**
      * Returns String of column name from column int
      * used in table header
      * @param col int col number
      */
     @Override
-    public String getColumnName(int col) { // not in any order
+    public String getColumnName(int col) {
         switch (col) {
-            case CMND_STATION_ID_COLUMN:
-                // return Bundle.getMessage("CanID");
-                return ("Cmnd Station");
             case SESSION_ID_COLUMN:
-                return ("Session");
+                return Bundle.getMessage("OPC_SN"); // Session
             case LOCO_ID_COLUMN:
-                return ("Loco ID");
+                return Bundle.getMessage("LocoID"); // Loco ID
             case LOCO_ID_LONG_COLUMN:
-                return ("Long");
-            case LOCO_NAME_COLUMN:
-                return ("Name");
+                return Bundle.getMessage("Long"); // Long
+            case LOCO_CONSIST_COLUMN:
+                return Bundle.getMessage("OPC_CA"); // Consist ID
             case LOCO_DIRECTION_COLUMN:
-                return ("Direction");
+                return Bundle.getMessage("TrafficDirection"); // Direction
             case LOCO_COMMANDED_SPEED_COLUMN:
-                return ("Speed (Commanded)");   
+                return Bundle.getMessage("Speed");
+            case ESTOP_COLUMN:
+                return Bundle.getMessage("EStop");
             case SPEED_STEP_COLUMN:
-                return ("Steps");
-            case NUM_THROTTLES:
-                return ("Num. Throttles");
+                return Bundle.getMessage("Steps");
+            case FLAGS_COLUMN:
+                return Bundle.getMessage("OPC_FL"); // Flags
             case FUNCTION_LIST:
-                return("Functions");
-            case ALT_TD:
-                return("TD Alt");
-            case CURRENT_BLOCK:
-                return("Block");
-            case BLOCK_DIR:
-                return("Direction of Block");
-            case NEXT_BLOCK:
-                return("Next Block");
-            case NEXT_SIGNAL:
-                return("Next Signal");
-            case NEXT_ASPECT:
-                return("Next Aspect");
+                return Bundle.getMessage("Functions");
             default:
                 return "unknown"; // NOI18N
         }
     }
-
 
     /**
     * Returns int of startup column widths
@@ -216,43 +143,25 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     */
     public static int getPreferredWidth(int col) {
         switch (col) {
-            case CMND_STATION_ID_COLUMN:
-                return new JTextField(4).getPreferredSize().width;
-            case SESSION_ID_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
+            case SPEED_STEP_COLUMN:
             case LOCO_ID_LONG_COLUMN:
+            case LOCO_CONSIST_COLUMN:
                 return new JTextField(3).getPreferredSize().width;
             case LOCO_ID_COLUMN:
+            case FLAGS_COLUMN:
                 return new JTextField(4).getPreferredSize().width;
-            case LOCO_NAME_COLUMN:
-                return new JTextField(10).getPreferredSize().width;
-            case LOCO_DIRECTION_COLUMN:
-                return new JTextField(5).getPreferredSize().width;
+            case SESSION_ID_COLUMN:
             case LOCO_COMMANDED_SPEED_COLUMN:
-                return new JTextField(3).getPreferredSize().width;
-            case SPEED_STEP_COLUMN:
-                return new JTextField(3).getPreferredSize().width;
-            case NUM_THROTTLES:
-                return new JTextField(3).getPreferredSize().width;
+            case ESTOP_COLUMN:
+                return new JTextField(5).getPreferredSize().width;
             case FUNCTION_LIST:
                 return new JTextField(6).getPreferredSize().width;
-            case ALT_TD:
-                return new JTextField(4).getPreferredSize().width;
-            case CURRENT_BLOCK:
-                return new JTextField(6).getPreferredSize().width;
-            case BLOCK_DIR:
-                return new JTextField(6).getPreferredSize().width;
-            case NEXT_BLOCK:
-                return new JTextField(6).getPreferredSize().width;
-            case NEXT_SIGNAL:
-                return new JTextField(6).getPreferredSize().width;
-            case NEXT_ASPECT:
-                return new JTextField(6).getPreferredSize().width;
+            case LOCO_DIRECTION_COLUMN:
+                return new JTextField(8).getPreferredSize().width;
             default:
-                return new JLabel(" <unknown> ").getPreferredSize().width; // NOI18N
+                return new JTextField(8).getPreferredSize().width;
         }
     }
-    
     
     /**
     * Returns column class type.
@@ -260,40 +169,21 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case CMND_STATION_ID_COLUMN:
-                return Integer.class;
             case SESSION_ID_COLUMN:
+            case LOCO_ID_COLUMN:
+            case LOCO_CONSIST_COLUMN:
+            case LOCO_COMMANDED_SPEED_COLUMN:
                 return Integer.class;
             case LOCO_ID_LONG_COLUMN:
                 return Boolean.class;
-            case LOCO_ID_COLUMN:
-                return Integer.class;
-            case LOCO_NAME_COLUMN:
-                return String.class;
             case LOCO_DIRECTION_COLUMN:
-                return String.class;
-            case LOCO_COMMANDED_SPEED_COLUMN:
-                return Integer.class;
-            case NUM_THROTTLES:
-                return Integer.class;
             case FUNCTION_LIST:
-                return String.class;
+            case FLAGS_COLUMN:
             case SPEED_STEP_COLUMN:
                 return String.class;
-            case ALT_TD:
-                return String.class;
-            case CURRENT_BLOCK:
-                return String.class;
-            case BLOCK_DIR:
-                return String.class;
-            case NEXT_BLOCK:
-                return String.class;
-            case NEXT_SIGNAL:
-                return String.class;
-            case NEXT_ASPECT:
-                return String.class;
+            case ESTOP_COLUMN:
+                return JButton.class;
             default:
-                log.error("no column class located");
                 return null;
         }
     }
@@ -305,7 +195,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-            case ALT_TD:
+            case ESTOP_COLUMN:
                 return true;
             default:
                 return false;
@@ -317,7 +207,6 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
-     * </p>
      */
     public void configureTable(JTable cmdStatTable) {
         // allow reordering of the columns
@@ -331,7 +220,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
             int width = getPreferredWidth(i);
             cmdStatTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
-        cmdStatTable.sizeColumnsToFit(-1);
+       // cmdStatTable.sizeColumnsToFit(-1);
+       tablefeedback.setEditable ( false );
     }
 
     /**
@@ -342,65 +232,26 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
-            case CMND_STATION_ID_COLUMN:
-                if ( cmndstatarr.get(row) > -1 ) {
-                    return cmndstatarr.get(row);
-                } else {
-                    return null;
-                }
             case SESSION_ID_COLUMN:
-                if ( sessionidarr.get(row) > 0 ) {
-                    return sessionidarr.get(row);
-                } else {
-                    return null;
-                }
+                return _mainArray.get(row).getSessionId();
             case LOCO_ID_COLUMN:
-                return locoidarr.get(row);
+                return _mainArray.get(row).getLocoAddr().getNumber();
             case LOCO_ID_LONG_COLUMN:
-                return locolongarr.get(row);
-            case LOCO_NAME_COLUMN:
-                return namearr.get(row);
-            case LOCO_DIRECTION_COLUMN:  // on or off event  1 is on, 0 is off, null unknown
-                if ( directionarr.get(row) > -1 ) {
-                    if ( directionarr.get(row) == 1 ) {
-                        return("Forward");
-                    } else {
-                        return("Reverse");
-                    }
-                } else {
-                    return "";
-                }
+                return _mainArray.get(row).getLocoAddr().isLongAddress();
+            case LOCO_CONSIST_COLUMN:
+                return _mainArray.get(row).getConsistId();
+            case FLAGS_COLUMN:
+                return _mainArray.get(row).getFlagString();
+            case LOCO_DIRECTION_COLUMN: 
+                return _mainArray.get(row).getDirection();
             case LOCO_COMMANDED_SPEED_COLUMN:
-                int speed=speedarr.get(row);
-                if ( speed > -1 ) {
-                    return speed;
-                } else {
-                    return null;
-                }
-                
-            case NUM_THROTTLES:
-                return throttlecountarr.get(row);
+                return _mainArray.get(row).getCommandedSpeed();
+            case ESTOP_COLUMN:
+                return new NamedIcon("resources/icons/throttles/estop.png", "resources/icons/throttles/estop.png");
             case FUNCTION_LIST:
-                return functionarr.get(row);
+                return _mainArray.get(row).getFunctionString();
             case SPEED_STEP_COLUMN:
-                if ( (speedsteparr.get(row)).isEmpty() ) {
-                    return "128";
-                }
-                else {
-                    return speedsteparr.get(row);
-                } 
-            case ALT_TD:
-                return alttdarr.get(row);
-            case CURRENT_BLOCK:
-                return currblockarr.get(row);
-            case BLOCK_DIR:
-                return blockdirarr.get(row);
-            case NEXT_BLOCK:
-                return nextblockarr.get(row);
-            case NEXT_SIGNAL:
-                return nextsignalarr.get(row);
-            case NEXT_ASPECT:
-                return nextaspectarr.get(row);
+                return _mainArray.get(row).getSpeedSteps();
             default:
                 log.error("internal state inconsistent with table request for row {} col {}", row, col);
                 return null;
@@ -415,186 +266,81 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     @Override
     public void setValueAt(Object value, int row, int col) {
         // log.debug("427 set valueat called row: {} col: {}", row, col);
-        if (col == CMND_STATION_ID_COLUMN) {
-            cmndstatarr.set(row, (Integer) value);
-            Runnable r = new Notify(-1, this);
-            javax.swing.SwingUtilities.invokeLater(r);
+        if (col == SESSION_ID_COLUMN) {
+            _mainArray.get(row).setSessionId( (Integer) value );
+            updateGui(row,col);
         }
-        else if (col == SESSION_ID_COLUMN) {
-            sessionidarr.set(row, (Integer) value);
-            Runnable r = new Notify(row, this);
-            javax.swing.SwingUtilities.invokeLater(r);
+        else if (col == LOCO_CONSIST_COLUMN) {
+            _mainArray.get(row).setConsistId( (Integer) value );
+            updateGui(row,col);
         }
-        else if (col == LOCO_ID_LONG_COLUMN) {
-            locolongarr.set(row, (Boolean) value);
-        }
-        else if (col == LOCO_ID_COLUMN) {
-            locoidarr.set(row, (Integer) value);
-            Runnable r = new Notify(row, this);
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
-        else if (col == LOCO_NAME_COLUMN) {
-            namearr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);
-            }
         else if (col == LOCO_COMMANDED_SPEED_COLUMN) {
-            String speedflags = String.format("%8s", 
-            Integer.toBinaryString((Integer) value & 0xFF)).replace(' ', '0');
-            int decimal = Integer.parseInt((speedflags.substring(1)), 2);
-            speedarr.set(row, decimal);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);
+            _mainArray.get(row).setDccSpeed( (Integer) value );
+            updateGui(row,col);
+            updateGui(row,LOCO_DIRECTION_COLUMN);
         }
-        else if (col == LOCO_DIRECTION_COLUMN) {
-            String speedflags = String.format("%8s", 
-            Integer.toBinaryString((Integer) value & 0xFF)).replace(' ', '0');
+        else if (col == ESTOP_COLUMN) {
             
-            int olddir = directionarr.get(row);
-            int newdir = Integer.parseInt(String.valueOf(speedflags.charAt(0)));
+            int stopspeed=1;
+            if ( _mainArray.get(row).getDirection().equals(Bundle.getMessage("FWD")) ) {
+                if ( _mainArray.get(row).getSpeedSteps().equals("128") ) {
+                    stopspeed=129;
+                }
+            }
             
-            directionarr.set(row, newdir);
-            if (olddir != newdir) {
-                log.debug("direction changed");
-                // potentially use in editing current block direction ?
-            }
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
-        else if (col == NUM_THROTTLES) {
-            throttlecountarr.set(row, (Integer) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);
-            }
-        else if (col == FUNCTION_LIST) {
-            functionarr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);
+            CanMessage m = new CanMessage(tc.getCanid());
+            m.setNumDataElements(3);
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+            m.setElement(0, CbusConstants.CBUS_DSPD);
+            m.setElement(1, _mainArray.get(row).getSessionId() );
+            m.setElement(2, stopspeed);
+            tc.sendCanMessage(m, null);
+            
         }
         else if (col == SPEED_STEP_COLUMN) {
-            speedsteparr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);
+            _mainArray.get(row).setSpeedSteps( (String) value );
+            updateGui(row,col);
         }
-        else if (col == ALT_TD) {
-            alttdarr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);            
+        else {
+            log.warn("Failed to set value at column {}",col);
         }
-        else if (col == CURRENT_BLOCK) {
-            currblockarr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);            
-        }
-        else if (col == BLOCK_DIR) {
-            blockdirarr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);            
-        }
-        else if (col == NEXT_BLOCK) {
-            nextblockarr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);            
-        }
-        else if (col == NEXT_SIGNAL) {
-            nextsignalarr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);            
-        }
-        else if (col == NEXT_ASPECT) {
-            nextaspectarr.set(row, (String) value);
-            Runnable r = new Notify(row, this); 
-            javax.swing.SwingUtilities.invokeLater(r);            
-        }
-    }
-
-
-    /**
-     * Remove Row from table
-     * @param row int row number
-     */    
-    void removeRow(int row) {
-
-        _context = Bundle.getMessage("TableConfirmDelete");
-        
-        cmndstatarr.remove(row);
-        sessionidarr.remove(row);
-        locolongarr.remove(row);
-        locoidarr.remove(row); 
-        namearr.remove(row);
-        directionarr.remove(row);
-        speedarr.remove(row);
-        speedsteparr.remove(row);
-        alttdarr.remove(row);
-        currblockarr.remove(row);
-        blockdirarr.remove(row);
-        nextblockarr.remove(row);
-        nextsignalarr.remove(row);
-        nextaspectarr.remove(row);
-        sigListeners.remove(row);
-        throttlecountarr.remove(row);
-        functionarr.remove(row);
-        
-        Runnable r = new Notify(row, this);
-        javax.swing.SwingUtilities.invokeLater(r);
-        addToLog(3,_context);
     }
     
-    public int createnewrow(int locoid, Boolean islong){
-        // log.warn("createnewrow {}",locoid);
-        locoidarr.add(locoid);
-        locolongarr.add(islong);
-        cmndstatarr.add(-1);
-        sessionidarr.add(-1);        
-        namearr.add("");
-        directionarr.add(-1);
-        speedarr.add(-1);
-        speedsteparr.add("");
-        alttdarr.add("");
-        currblockarr.add("");
-        blockdirarr.add("");
-        nextblockarr.add("");
-        blockarr.add(null);
-        nextsignalarr.add(null);
-        nextaspectarr.add(null);
-        sigListeners.add(null);
-        throttlecountarr.add(0);
-        functionarr.add("");
+    private void updateGui(int row,int col) {
+        ThreadingUtil.runOnGUI( ()->{
+            fireTableCellUpdated(row, col); 
+        });
         
-        Runnable r = new Notify(getRowCount(), this);   // -1 in first arg means all
-        javax.swing.SwingUtilities.invokeLater(r);
+    }
+
+    private int createnewrow(int locoid, Boolean islong){
         
-        return getRowCount();
+        DccLocoAddress addr = new DccLocoAddress(locoid,islong );
+        CbusSlotMonitorSession newSession = new CbusSlotMonitorSession(addr);
+        
+        _mainArray.add(newSession);
+        
+        ThreadingUtil.runOnGUI( ()->{
+            fireTableRowsInserted((getRowCount()-1), (getRowCount()-1));
+        });
+        return getRowCount()-1;
     }
     
-    // return row number for a loco address, creates new row if no existing
-    public int gettablerow(int locoid, Boolean islong){
+    // returning the row number not the session
+    // so that any updates go through the table model
+    // and are updated in the GUI
+    private int provideTableRow( DccLocoAddress addr ) {
         for (int i = 0; i < getRowCount(); i++) {
-            // log.warn("check {} for locoid {}",i,locoid);
-            if (locoid==locoidarr.get(i))  {
+            if ( addr.equals(_mainArray.get(i).getLocoAddr() ) )  {
                 return i;
             }
         }
-        return createnewrow(locoid,islong);
+        return createnewrow(addr.getNumber(),addr.isLongAddress());
     }
     
-    public int getrowfromblock(String blockval){
+    private int getrowfromsession(int sessionid){
         for (int i = 0; i < getRowCount(); i++) {
-            String altd = alttdarr.get(i);
-            String locoidstr = locoidarr.get(i).toString();
-            if (Objects.equals(blockval,altd)) {
-                return i;
-            }
-            if (Objects.equals(blockval,locoidstr)) {
-                return i;
-            }
-        }
-        return -1;
-    }    
-    
-    public int getrowfromsession(int sessionid){
-        for (int i = 0; i < getRowCount(); i++) {
-            if (sessionid==sessionidarr.get(i))  {
+            if (sessionid==_mainArray.get(i).getSessionId() )  {
                 return i;
             }
         }
@@ -610,24 +356,26 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }
     
     /**
-     * @param m canmessage
+     * @param m outgoing CanMessage
      */
     @Override
-    public void message(CanMessage m) { // outgoing cbus message
-        // see CbusThrottleManager
+    public void message(CanMessage m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
-        // process is false as outgoing message
+        // process is false as outgoing
         
         if (opc==CbusConstants.CBUS_PLOC) {
             int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
             boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
-            processploc(false,m.getElement(1),rcvdIntAddr,rcvdIsLong,m.getElement(4),
+            processploc(false,m.getElement(1),new DccLocoAddress(rcvdIntAddr,rcvdIsLong),m.getElement(4),
             m.getElement(5),m.getElement(6),m.getElement(7));
         }
         else if (opc==CbusConstants.CBUS_RLOC) {
             int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
             boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
-            processrloc(false,rcvdIntAddr,rcvdIsLong);
+            processrloc(false,new DccLocoAddress(rcvdIntAddr,rcvdIsLong));
         }
         else if (opc==CbusConstants.CBUS_DSPD) {
             processdspd(false,m.getElement(1),m.getElement(2));
@@ -642,21 +390,57 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         else if (opc==CbusConstants.CBUS_GLOC) {
             int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
             boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
-            processgloc(false,rcvdIntAddr,rcvdIsLong,m.getElement(3));
+            processgloc(false,new DccLocoAddress(rcvdIntAddr,rcvdIsLong),m.getElement(3));
         }
         else if (opc==CbusConstants.CBUS_ERR) {
             processerr(false,m.getElement(1),m.getElement(2),m.getElement(3));
         }
         else if (opc==CbusConstants.CBUS_STMOD) {
             processstmod(false,m.getElement(1),m.getElement(2));
-        }  
+        }
+        else if (opc==CbusConstants.CBUS_DFUN) {
+            processdfun(false,m.getElement(1),m.getElement(2),m.getElement(3));
+        }
+        else if (opc==CbusConstants.CBUS_DFNON) {
+            processdfnon(false,m.getElement(1),m.getElement(2),true);
+        }
+        else if (opc==CbusConstants.CBUS_DFNOF) {
+            processdfnon(false,m.getElement(1),m.getElement(2),false); // same routine as DFNON
+        }
+        else if (opc==CbusConstants.CBUS_PCON) {
+            processpcon(false,m.getElement(1),m.getElement(2));
+        }
+        else if (opc==CbusConstants.CBUS_KCON) {
+            processpcon(false,m.getElement(1),0); // same routine as PCON
+        }
+        else if (opc==CbusConstants.CBUS_DFLG) {
+            processdflg(false,m.getElement(1),m.getElement(2));
+        }
+        else if (opc==CbusConstants.CBUS_ESTOP) {
+            processestop(false);
+        }
+        else if (opc==CbusConstants.CBUS_RTON) {
+            processrton(false);
+        }
+        else if (opc==CbusConstants.CBUS_RTOF) {
+            processrtof(false);
+        }
+        else if (opc==CbusConstants.CBUS_TON) {
+            processton(false);
+        }
+        else if (opc==CbusConstants.CBUS_TOF) {
+            processtof(false);
+        }
     }
 
     /**
-     * @param m canmessage
+     * @param m incoming cbus CanReply
      */
     @Override
-    public void reply(CanReply m) { // incoming cbus message
+    public void reply(CanReply m) {
+        if ( m.isExtended() || m.isRtr() ) {
+            return;
+        }
         int opc = CbusMessage.getOpcode(m);
         // log.warn(" opc {}",opc);
         // process is true as incoming message
@@ -671,13 +455,16 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         if (opc==CbusConstants.CBUS_PLOC) {
             int rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
             boolean rcvdIsLong = (m.getElement(2) & 0xc0) != 0;
-            processploc(true,m.getElement(1),rcvdIntAddr,rcvdIsLong,m.getElement(4),
+            DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
+            
+            processploc(true,m.getElement(1),addr,m.getElement(4),
             m.getElement(5),m.getElement(6),m.getElement(7));
         }
         else if (opc==CbusConstants.CBUS_RLOC) {
             int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
             boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
-            processrloc(true,rcvdIntAddr,rcvdIsLong);
+            DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
+            processrloc(true,addr);
         }
         else if (opc==CbusConstants.CBUS_DSPD) {
             processdspd(true,m.getElement(1),m.getElement(2));
@@ -691,7 +478,8 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         else if (opc==CbusConstants.CBUS_GLOC) {
             int rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
             boolean rcvdIsLong = (m.getElement(1) & 0xc0) != 0;
-            processgloc(true,rcvdIntAddr,rcvdIsLong,m.getElement(3));
+            DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
+            processgloc(true,addr,m.getElement(3));
         }
         else if (opc==CbusConstants.CBUS_ERR) {
             processerr(true,m.getElement(1),m.getElement(2),m.getElement(3));
@@ -699,47 +487,74 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         else if (opc==CbusConstants.CBUS_STMOD) {
             processstmod(true,m.getElement(1),m.getElement(2));
         }        
-    }
-
-    // ploc sent from a command station to a throttle
-    public void processploc(boolean messagein, int session, int locoid, Boolean islong, int speeddir, int fa, int fb, int fc) {
-        _context = ( Bundle.getMessage("CBUS_CMND_BR") + Bundle.getMessage("CNFO_PLOC",session) + locoid);
-        addToLog(1,_context); 
-        int row=gettablerow(locoid,islong);
-        if (row < 0 ) {
-            log.error("Invalid Row");
-        } else {
-            setValueAt(session, row, SESSION_ID_COLUMN);
-            setValueAt(speeddir, row, LOCO_COMMANDED_SPEED_COLUMN);
-            setValueAt(speeddir, row, LOCO_DIRECTION_COLUMN);
-            // int currthrottles = throttlecountarr.get(gettablerow(locoid))+1;
-            // setValueAt(currthrottles, gettablerow(locoid), NUM_THROTTLES);
+        else if (opc==CbusConstants.CBUS_DFUN) {
+            processdfun(true,m.getElement(1),m.getElement(2),m.getElement(3));
+        }
+        else if (opc==CbusConstants.CBUS_DFNON) {
+            processdfnon(true,m.getElement(1),m.getElement(2),true);
+        }
+        else if (opc==CbusConstants.CBUS_DFNOF) {
+            processdfnon(true,m.getElement(1),m.getElement(2),false);  // same routine as DFNON
+        }
+        else if (opc==CbusConstants.CBUS_PCON) {
+            processpcon(true,m.getElement(1),m.getElement(2));
+        }
+        else if (opc==CbusConstants.CBUS_KCON) {
+            processpcon(true,m.getElement(1),0); // same routine as PCON
+        }
+        else if (opc==CbusConstants.CBUS_DFLG) {
+            processdflg(true,m.getElement(1),m.getElement(2));
+        }
+        else if (opc==CbusConstants.CBUS_ESTOP) {
+            processestop(true);
+        }
+        else if (opc==CbusConstants.CBUS_RTON) {
+            processrton(true);
+        }
+        else if (opc==CbusConstants.CBUS_RTOF) {
+            processrtof(true);
+        }
+        else if (opc==CbusConstants.CBUS_TON) {
+            processton(true);
+        }
+        else if (opc==CbusConstants.CBUS_TOF) {
+            processtof(true);
         }
     }
     
+    // ploc sent from a command station to a throttle
+    private void processploc(boolean messagein, int session, DccLocoAddress addr,
+        int speeddir, int fa, int fb, int fc) {
+        // log.debug( Bundle.getMessage("CBUS_CMND_BR") + Bundle.getMessage("CNFO_PLOC",session,locoid));
+        
+        int row = provideTableRow(addr);
+        setValueAt(session, row, SESSION_ID_COLUMN);
+        setValueAt(speeddir, row, LOCO_COMMANDED_SPEED_COLUMN);
+        processdfun( messagein, session, 1, fa);
+        processdfun( messagein, session, 2, fb);
+        processdfun( messagein, session, 3, fc);
+
+    }
+    
     // kloc sent from throttle to command station to release loco, which will continue at current speed
-    public void processkloc(boolean messagein, int session) {
+    private void processkloc(boolean messagein, int session) {
+        int row=getrowfromsession(session);
         String messagedir;
         if (messagein){ // external throttle
             messagedir = Bundle.getMessage("CBUS_IN_CAB");
         } else { // jmri throttle
             messagedir = Bundle.getMessage("CBUS_OUT_CMD");
         }
-        _context = (messagedir + Bundle.getMessage("CNFO_KLOC",session));
-        addToLog(1,_context);
-        int row=getrowfromsession(session);
+        log.debug("{} {}",messagedir,Bundle.getMessage("CNFO_KLOC",session));
         if ( row > -1 ) {
             setValueAt(0, row, SESSION_ID_COLUMN); // Session restored by sending QLOC if v4 firmware
-           // int currthrottles = throttlecountarr.get(row)-1;
-           // setValueAt(currthrottles, row, NUM_THROTTLES);
             
             // version 4 fw maintains version number, so to check this request session details from command station
             // if this is sent with the v3 firmware then a popup error comes up from cbus throttlemanager when 
             // errStr is populated in the switch error clauses in canreply.
             // check if version 4
-            if ( ( cmndstat_fw > 3 ) && ( speedarr.get(row) > 0 )) {
-                _context = (Bundle.getMessage("CBUS_OUT_CMD") + Bundle.getMessage("QuerySession8a",session));
-                addToLog(1,_context);
+            if ( ( cmndstat_fw > 3 ) && ( _mainArray.get(row).getCommandedSpeed() > 0 )) {
+                log.debug("{} {}",Bundle.getMessage("CBUS_OUT_CMD"),Bundle.getMessage("QuerySession8a",session));
                 CanMessage m = new CanMessage(tc.getCanid());
                 m.setNumDataElements(2);
                 CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
@@ -751,51 +566,41 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
     }    
 
     // rloc sent from throttle to command station to get loco
-    public void processrloc(boolean messagein, int address, boolean islong) {
-        int row = gettablerow(address,islong); // add to table if not already
-        if (log.isDebugEnabled()) {
-            log.debug ("processrloc row {}",row);
-        }
-        String messagedir;
-        if (messagein){ // external throttle
-            messagedir = Bundle.getMessage("CBUS_IN_CAB");
-        } else { // jmri throttle
-            messagedir = Bundle.getMessage("CBUS_OUT_CMD");
-        }
-        _context = (messagedir + Bundle.getMessage("CNFO_RLOC") + address);
-        addToLog(1,_context);
+    private void processrloc(boolean messagein, DccLocoAddress addr ) {
+        
+        int row = provideTableRow(addr);
+        log.debug("new table row {}",row);
+
     }
     
     // gloc sent from throttle to command station to get loco
-    public void processgloc(boolean messagein, int address, Boolean islong, int flags) {
-        int row = gettablerow(address,islong); // add to table if not already
-        if (log.isDebugEnabled()) {
-            log.debug ("processgloc row {}",row);
-        }
-        String messagedir;
+    private void processgloc(boolean messagein, DccLocoAddress addr, int flags) {
+        int row = provideTableRow(addr);
+        log.debug ("processgloc row {}",row);
+        StringBuilder flagstring = new StringBuilder();
         if (messagein){ // external throttle
-            messagedir = Bundle.getMessage("CBUS_IN_CAB");
+            flagstring.append(Bundle.getMessage("CBUS_IN_CAB"));
         } else { // jmri throttle
-            messagedir = Bundle.getMessage("CBUS_OUT_CMD");
+            flagstring.append(Bundle.getMessage("CBUS_OUT_CMD"));
         }
 
         boolean stealmode = ((flags >> 0 ) & 1) != 0;
         boolean sharemode = ((flags >> 1 ) & 1) != 0;
         // log.debug("stealmode {} sharemode {} ",stealmode,sharemode);
         if (stealmode){
-            _context = (messagedir + Bundle.getMessage("CNFO_GLOC_ST") + address );
+            flagstring.append(Bundle.getMessage("CNFO_GLOC_ST") + addr );
         }
         else if (sharemode){
-            _context = (messagedir + Bundle.getMessage("CNFO_GLOC_SH") + address );
+            flagstring.append(Bundle.getMessage("CNFO_GLOC_SH") + addr );
         }
         else {
-            _context = (messagedir + Bundle.getMessage("CNFO_GLOC") + address );
+            flagstring.append(Bundle.getMessage("CNFO_GLOC") + addr );
         }
-        addToLog(1,_context);
+        addToLog(1,flagstring.toString());
     }
     
     // stmod sent from throttle to cmmnd station if speed steps not 128 / set service mode / sound mode
-    public void processstmod(boolean messagein, int session, int flags) {
+    private void processstmod(boolean messagein, int session, int flags) {
         int row=getrowfromsession(session);
         if ( row > -1 ) {
             String messagedir;
@@ -818,68 +623,117 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 speedstep="14";
             }        
             else if ((sm0) && (!sm1)){
-                speedstep="28 Interleave";
+                speedstep="28I";
             }        
             else if ((sm0) && (sm1)){
                 speedstep="28";
-            }        
-            _context = (messagedir + Bundle.getMessage("CNFO_STMOD",session,speedstep,servicemode,soundmode));
-            addToLog(1,_context);
+            }
+            log.debug("{} {}",messagedir,Bundle.getMessage("CNFO_STMOD",session,speedstep,servicemode,soundmode));
             setValueAt(speedstep, row, SPEED_STEP_COLUMN);
         }
     }
 
     // DKEEP sent as keepalive from throttle to command station 
-    public void processdkeep(boolean messagein, int session) {
-        // log.warn("processing dkeep");
+    private void processdkeep(boolean messagein, int session) {
         int row=getrowfromsession(session);
         if ( row < 0 ) {
-            _context = ("Requesting loco details for session " + session );
-            addToLog(1,_context);
+            log.debug("Requesting loco details for session {}.",session );
         }
     }
     
     // DSPD sent from throttle to command station , speed / direction
-    public void processdspd(boolean messagein, int session, int speeddir) {
+    private void processdspd(boolean messagein, int session, int speeddir) {
         // log.warn("processing dspd");
         int row=getrowfromsession(session);
         if ( row > -1 ) {
             setValueAt(speeddir, row, LOCO_COMMANDED_SPEED_COLUMN);
-            setValueAt(speeddir, row, LOCO_DIRECTION_COLUMN);
         }
     }
 
     // DFLG sent from throttle to command station to notify engine change in flags
-    public void processdflg(boolean messagein, int high, int low, int flags) {
-        log.warn("processing dflg");   
+    private void processdflg(boolean messagein, int session, int flags) {
+        // log.debug("processing dflg session {} flag int {}",session,flags);
+        int row=getrowfromsession(session);
+        if ( row>-1 ) {
+            
+            _mainArray.get(row).setFlags(flags);
+            updateGui(row,SPEED_STEP_COLUMN);
+            updateGui(row,FLAGS_COLUMN);
+        }            
     }
 
     // DFNON Sent by a cab to turn on a specific loco function, alternative method to DFUN
-    public void processdfnon(boolean messagein, int high, int low, int flags) {
-        log.warn("processing dfnon");   
+    // also used to process function responses from DFNOF
+    private void processdfnon(boolean messagein, int session, int function, boolean trueorfalse) {
+        int row=getrowfromsession(session);
+        if ( row>-1 && function>-1 && function<29 ) {
+            _mainArray.get(row).setFunction(function,trueorfalse);
+            updateGui(row,FUNCTION_LIST);
+        }
     }    
-    
-    // DFNOF Sent by a cab to turn on a specific loco function, alternative method to DFUN
-    public void processdfnof(boolean messagein, int high, int low, int flags) {
-        log.warn("processing dfnof");   
-    }
 
     // DFUN Sent by a cab to trigger loco function
-    public void processdfun(boolean messagein, int high, int low, int flags) {
-        log.warn("processing dfun");   
+    // also used to process function responses from PLOC
+    private void processdfun(boolean messagein, int session, int range, int functionbyte) {
+        //  log.warn("processing dfun, session {} range {} functionbyte {}",session,range,functionbyte);
+        int row=getrowfromsession(session);
+        if ( row > -1 ) {
+            if ( range == 1 ) {
+                _mainArray.get(row).setFunction(0, ((functionbyte & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0));
+                _mainArray.get(row).setFunction(1, ((functionbyte & CbusConstants.CBUS_F1) == CbusConstants.CBUS_F1));
+                _mainArray.get(row).setFunction(2, ((functionbyte & CbusConstants.CBUS_F2) == CbusConstants.CBUS_F2));
+                _mainArray.get(row).setFunction(3, ((functionbyte & CbusConstants.CBUS_F3) == CbusConstants.CBUS_F3));
+                _mainArray.get(row).setFunction(4, ((functionbyte & CbusConstants.CBUS_F4) == CbusConstants.CBUS_F4));
+            }
+            else if ( range == 2 ) {
+                _mainArray.get(row).setFunction(5, ((functionbyte & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5));
+                _mainArray.get(row).setFunction(6, ((functionbyte & CbusConstants.CBUS_F6) == CbusConstants.CBUS_F6));
+                _mainArray.get(row).setFunction(7, ((functionbyte & CbusConstants.CBUS_F7) == CbusConstants.CBUS_F7));
+                _mainArray.get(row).setFunction(8, ((functionbyte & CbusConstants.CBUS_F8) == CbusConstants.CBUS_F8));
+            }
+            else if ( range == 3 ) {
+                _mainArray.get(row).setFunction(9, ((functionbyte & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9));
+                _mainArray.get(row).setFunction(10, ((functionbyte & CbusConstants.CBUS_F10) == CbusConstants.CBUS_F10));
+                _mainArray.get(row).setFunction(11, ((functionbyte & CbusConstants.CBUS_F11) == CbusConstants.CBUS_F11));
+                _mainArray.get(row).setFunction(12, ((functionbyte & CbusConstants.CBUS_F12) == CbusConstants.CBUS_F12));
+            }
+            else if ( range == 4 ) {
+                _mainArray.get(row).setFunction(13, ((functionbyte & CbusConstants.CBUS_F13) == CbusConstants.CBUS_F13));
+                _mainArray.get(row).setFunction(14, ((functionbyte & CbusConstants.CBUS_F14) == CbusConstants.CBUS_F14));
+                _mainArray.get(row).setFunction(15, ((functionbyte & CbusConstants.CBUS_F15) == CbusConstants.CBUS_F15));
+                _mainArray.get(row).setFunction(16, ((functionbyte & CbusConstants.CBUS_F16) == CbusConstants.CBUS_F16));
+                _mainArray.get(row).setFunction(17, ((functionbyte & CbusConstants.CBUS_F17) == CbusConstants.CBUS_F17));
+                _mainArray.get(row).setFunction(18, ((functionbyte & CbusConstants.CBUS_F18) == CbusConstants.CBUS_F18));
+                _mainArray.get(row).setFunction(19, ((functionbyte & CbusConstants.CBUS_F19) == CbusConstants.CBUS_F19));
+                _mainArray.get(row).setFunction(20, ((functionbyte & CbusConstants.CBUS_F20) == CbusConstants.CBUS_F20));
+            }
+            else if ( range == 5 ) {
+                _mainArray.get(row).setFunction(21, ((functionbyte & CbusConstants.CBUS_F21) == CbusConstants.CBUS_F21));
+                _mainArray.get(row).setFunction(22, ((functionbyte & CbusConstants.CBUS_F22) == CbusConstants.CBUS_F22));
+                _mainArray.get(row).setFunction(23, ((functionbyte & CbusConstants.CBUS_F23) == CbusConstants.CBUS_F23));
+                _mainArray.get(row).setFunction(24, ((functionbyte & CbusConstants.CBUS_F24) == CbusConstants.CBUS_F24));
+                _mainArray.get(row).setFunction(25, ((functionbyte & CbusConstants.CBUS_F25) == CbusConstants.CBUS_F25));
+                _mainArray.get(row).setFunction(26, ((functionbyte & CbusConstants.CBUS_F26) == CbusConstants.CBUS_F26));
+                _mainArray.get(row).setFunction(27, ((functionbyte & CbusConstants.CBUS_F27) == CbusConstants.CBUS_F27));
+                _mainArray.get(row).setFunction(28, ((functionbyte & CbusConstants.CBUS_F28) == CbusConstants.CBUS_F28));
+            }
+            updateGui(row,FUNCTION_LIST);
+        }
     }
     
     // ERR sent by command station
-    public void processerr(boolean messagein, int one, int two, int errnum) {
+    private void processerr(boolean messagein, int one, int two, int errnum) {
         // log.warn("processing err");
         int rcvdIntAddr = (one & 0x3f) * 256 + two;
-        boolean rcvdIsLong = (one & 0xc0) != 0;        
+        // boolean rcvdIsLong = (one & 0xc0) != 0;
+        // DccLocoAddress addr = new DccLocoAddress(rcvdIntAddr,rcvdIsLong);
+        
         StringBuilder buf = new StringBuilder();
         if (messagein){ // external throttle
             buf.append( Bundle.getMessage("CBUS_CMND_BR"));
         } else { // jmri throttle
             buf.append( Bundle.getMessage("CBUS_OUT_CMD"));
-        }        
+        }
         
         switch (errnum) {
             case 1:
@@ -887,12 +741,10 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 buf.append(rcvdIntAddr);
                 break;
             case 2:
-                buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN"));
-                buf.append(rcvdIntAddr);
+                buf.append(Bundle.getMessage("ERR_LOCO_ADDRESS_TAKEN",rcvdIntAddr));
                 break;
             case 3:
-                buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT"));
-                buf.append(one);
+                buf.append(Bundle.getMessage("ERR_SESSION_NOT_PRESENT",one));
                 break;
             case 4:
                 buf.append(Bundle.getMessage("ERR_CONSIST_EMPTY"));
@@ -910,10 +762,9 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
                 buf.append(rcvdIntAddr);
                 break;
             case 8:
-                buf.append(Bundle.getMessage("ERR_SESSION_CANCELLED"));
-                buf.append(one);
+                buf.append(Bundle.getMessage("ERR_SESSION_CANCELLED",one));
                 // cancel session number in table
-                int row = gettablerow(rcvdIntAddr,rcvdIsLong);
+                int row = getrowfromsession(one);
                 if ( row > -1 ) {
                     setValueAt(0, row, SESSION_ID_COLUMN);
                 }
@@ -925,186 +776,113 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         addToLog(1,_context);
     }
     
-    // RDCC3 RDCC4 RDCC5 RDCC6
+    // PCON sent by throttle to add to consist
+    // also used to process remove from consist KCON
+    private void processpcon(boolean messagein, int session, int consist){
+        log.debug("processing pcon");
+        int row=getrowfromsession(session);
+        if ( row>-1 ) {
+            
+            int consistaddr = (consist & 0x7f);
+            setValueAt(consistaddr, row, LOCO_CONSIST_COLUMN);
+            
+            StringBuilder buf = new StringBuilder();
+            buf.append( Bundle.getMessage("CNFO_PCON",session,consistaddr));
+            if ((consist & 0x80) == 0x80){
+                buf.append( Bundle.getMessage("FWD"));
+            } else {
+                buf.append( Bundle.getMessage("REV"));
+            }
+            addToLog(1,buf.toString() );
+        }
+    }
     
-    public void getcmdstatversion(){
+    private void processestop(boolean messagein){
+        addToLog(1,"Command station acknowledges estop");
+        clearEStopTask();
+    }
+    
+    private void processrton(boolean messagein){
+        setPowerTask();
+    }
+    
+    private void processrtof(boolean messagein){
+        setPowerTask(); 
+    }
+    
+    private void processton(boolean messagein){
+        clearPowerTask();
+        log.debug("Track on confirmed from command station.");
+    }
+
+    private void processtof(boolean messagein){
+        clearPowerTask();
+        log.debug("Track off confirmed from command station.");
+    }
+    
+    public void sendcbusestop(){
+        log.info("Sending Command Station e-stop");
         CanMessage m = new CanMessage(tc.getCanid());
         m.setNumDataElements(1);
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-        m.setElement(0, CbusConstants.CBUS_RSTAT);
+        m.setElement(0, CbusConstants.CBUS_RESTP);
         tc.sendCanMessage(m, null);
+        
+        // start a timer to monitor if timeout, ie if command station doesn't respond
+        setEstopTask();
     }
     
-    // Adds changelistener to blocks
-    public void initblocks(){
-        mBlockList=null;
-        mBlockList = new ArrayList<>();
-        BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
-        Set<Block> blockSet = bmgr.getNamedBeanSet();
-        int i = 0;
-        for (Block b : blockSet) {
-            mBlockList.add(b);
-            final int index = i; 
-            PropertyChangeListener listener = (PropertyChangeEvent e) -> {
-                handleBlockChange(index,e);
-            };
-            b.addPropertyChangeListener(listener);
-            mBlockListeners.add(listener);
-            i++;
+    private TimerTask eStopTask;
+    
+    private void clearEStopTask() {
+        if (eStopTask != null ) {
+            eStopTask.cancel();
+            eStopTask = null;
         }
     }
     
-    /**
-     * Handle tasks when block changes
-     *
-     * @param e propChgEvent
-     */
-    private void handleBlockChange(int index, PropertyChangeEvent e) {
-        Block b = mBlockList.get(index);
-        
-        if ((e.getPropertyName().equals("state")) || (e.getPropertyName().equals("direction"))) {
-            Object val = b.getValue();
-            if (val == null) {
-                return; 
+    private void setEstopTask() {
+        eStopTask = new TimerTask() {
+            @Override
+            public void run() {
+                eStopTask = null;
+                addToLog(1,("Send Estop No Response received from command station."));
+                log.info("Send Estop No Response received from command station.");
             }
-            String strval = val.toString();
-            int row = getrowfromblock(strval);
-            if (row > -1 ) {
-                blockarr.set(row,b);
-                String blockname = b.getUserName();
-                String directionstr = Path.decodeDirection(b.getDirection());
-                setValueAt(( directionstr ), row, BLOCK_DIR);
-                setValueAt(( blockname ), row, CURRENT_BLOCK);
-                updateblocksforrow(row);
-            }
+        };
+        TimerUtil.schedule(eStopTask, ( CS_TIMEOUT ) );
+    }
+    
+    private TimerTask powerTask;
+    
+    private void clearPowerTask() {
+        if (powerTask != null ) {
+            powerTask.cancel();
+            powerTask = null;
         }
     }
     
-    void updateblocksforrow(int row){
-        List<Block> routelist = new ArrayList<>();
-        if (sigListeners.get(row) != null) {
-            sigListeners.get(row).removePropertyChangeListener(_cconSignalMastListener);
-        }
-        sigListeners.set(row,null);
-        
-        Block b = blockarr.get(row);
-        Block nB;
-        SignalMast sm = null;
-        LayoutBlockManager lbm = InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
-        
-        int dir = b.getDirection();
-        int blockstep = 0;
-        
-        routelist.add(b);
-        pFromDir[0] = dir;
-        
-        if ( dir > 0 ) {
-            nB = getnextblock(blockstep,(routelist.get(blockstep)),pFromDir[blockstep]);
-            routelist.add(nB);
-            while (sm == null && nB != null) {
-                sm = lbm.getFacingSignalMast(b, nB);
-                if (sm == null) {
-                    blockstep++;                                
-                    b = nB;
-                    nB = getnextblock(blockstep,(routelist.get(blockstep)),pFromDir[blockstep]);
-                    routelist.add(nB);
-                }
+    private void setPowerTask() {
+        powerTask = new TimerTask() {
+            @Override
+            public void run() {
+                powerTask = null;
+                addToLog(1,("Track Power - No Response received from command station."));
+                log.info("Track Power - No Response received from command station.");
             }
-            if ( sm == null) {
-                sm = lbm.getSignalMastAtEndBumper(routelist.get(blockstep),null);
-            }
-            if ( sm == null) {
-                setValueAt(( "" ), row, NEXT_SIGNAL);
-                setValueAt(( "" ), row, NEXT_ASPECT);
-            } else {
-                setValueAt(( sm.getDisplayName() ), row, NEXT_SIGNAL);
-                setValueAt(( sm.getAspect() ), row, NEXT_ASPECT);
-                // add signal changelistener
-                sm.addPropertyChangeListener(_cconSignalMastListener = (PropertyChangeEvent e) -> {
-                    updateblocksforrow(row);
-                });
-                sigListeners.set(row,sm);
-            }
-        } else {
-            // no direction
-            setValueAt(( "" ), row, NEXT_SIGNAL);
-            setValueAt(( "" ), row, NEXT_ASPECT);
-            setValueAt("", row, NEXT_BLOCK);
-        }
-        if ( routelist.size()==1 ) {
-            setValueAt("", row, NEXT_BLOCK);
-        } else {
-            if ( routelist.get(1)==null) {
-                setValueAt("", row, NEXT_BLOCK);
-            } else {
-                setValueAt(routelist.get(1).getUserName(), row, NEXT_BLOCK);
-            }
-        }
+        };
+        TimerUtil.schedule(powerTask, ( CS_TIMEOUT ) );
     }    
-    
-    private Block getnextblock(int step, Block b, int fromdirection){
-        List<Path> thispaths =b.getPaths();
-        for (final Path testpath : thispaths) {
-            if (testpath.checkPathSet()) {
-                Block blockTest = testpath.getBlock();
-                int dirftTest = testpath.getFromBlockDirection();
-                int dirtoTest = testpath.getToBlockDirection();
-                if ((((fromdirection & Path.NORTH) != 0) && ((dirtoTest & Path.NORTH) != 0)) ||
-                    (((fromdirection & Path.SOUTH) != 0) && ((dirtoTest & Path.SOUTH) != 0)) ||
-                    (((fromdirection & Path.EAST) != 0) && ((dirtoTest & Path.EAST) != 0)) ||
-                    (((fromdirection & Path.WEST) != 0) && ((dirtoTest & Path.WEST) != 0)) ||
-                    (((fromdirection & Path.CW) != 0) && ((dirtoTest & Path.CW) != 0)) ||
-                    (((fromdirection & Path.CCW) != 0) && ((dirtoTest & Path.CCW) != 0)) ||
-                    (((fromdirection & Path.LEFT) != 0) && ((dirtoTest & Path.LEFT) != 0)) ||
-                    (((fromdirection & Path.RIGHT) != 0) && ((dirtoTest & Path.RIGHT) != 0)) ||
-                    (((fromdirection & Path.UP) != 0) && ((dirtoTest & Path.UP) != 0)) ||
-                    (((fromdirection & Path.DOWN) != 0) && ((dirtoTest & Path.DOWN) != 0)))
-                { // most reliable
-                    pFromDir[(step+1)] = dirtoTest;
-                    _context = ("method 1 exiting with direction " + Path.decodeDirection(dirtoTest));
-                    addToLog(1,_context);
-                    return blockTest;
-                }
-                if (((fromdirection & dirftTest)) == 0) { // less reliable
-                    pFromDir[(step+1)] = dirtoTest;
-                    _context = ("method 2 exiting with direction " + Path.decodeDirection(dirtoTest));
-                    addToLog(1,_context);
-                    return blockTest;
-                }
-                if ((fromdirection != dirftTest)){ // least reliable but copes with 180 degrees 
-                    pFromDir[(step+1)] = dirtoTest;
-                    _context = ("method 3 exiting with direction " + Path.decodeDirection(dirtoTest));
-                    addToLog(1,_context);
-                    return blockTest;
-                }
-            }
-        }
-      return null;
-    }
     
     /**
      * Add to Slot Monitor Console Log
      * @param cbuserror int
      * @param cbustext String console message
      */
-    public static void addToLog(int cbuserror, String cbustext){
-        final int senderror=cbuserror;
-        final String sendtext= cbustext;
-        CbusSlotMonitorPane.updateLogFromModel( senderror, sendtext );
-    }
-    
-    static class Notify implements Runnable {
-        public int _row;
-        javax.swing.table.AbstractTableModel _model;
-        public Notify(int row, javax.swing.table.AbstractTableModel model) {
-            _row = row;
-            _model = model;
-        }
-
-        @Override
-        public void run() {
-              _model.fireTableDataChanged();
-        }
+    public void addToLog(int cbuserror, String cbustext){
+        ThreadingUtil.runOnGUI( ()->{ 
+            tablefeedback.append( "\n"+cbustext);
+        });
     }
 
     /**
@@ -1114,10 +892,13 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
         // eventTable.removeAllElements();
         // eventTable = null;
         
-        if (tc != null) {
-            tc.removeCanListener(this);
-        }
-    }
+        // stop timers if running
+        clearEStopTask();
+        clearPowerTask();
+        
+        tablefeedback.dispose();
+        tc.removeCanListener(this);
 
+    }
     private final static Logger log = LoggerFactory.getLogger(CbusSlotMonitorDataModel.class);
 }

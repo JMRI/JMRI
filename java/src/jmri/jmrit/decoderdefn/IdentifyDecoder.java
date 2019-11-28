@@ -19,7 +19,10 @@ import org.slf4j.LoggerFactory;
  * ID</li>
  * <li>Harman: (mfgID = 98) CV112 is high byte, CV113 is low byte of ID</li>
  * <li>Hornby: (mfgID == 48) CV159 is usually ID. If (CV159 == 143), CV159 is
- * low byte of ID and CV158 is high byte of ID</li>
+ * low byte of ID and CV158 is high byte of ID. C159 is not present in some
+ * models, in which case no "productID" can be determined. (This code uses
+ * {@link #setOptionalCv(boolean flag) setOptionalCv()} and
+ * {@link #isOptionalCv() isOptionalCv()} as documented below.)</li>
  * <li>TCS: (mfgID == 153) CV249 is ID</li>
  * <li>Zimo: (mfgID == 145) CV250 is ID</li>
  * <li>SoundTraxx: (mfgID == 141, modelID == 70 or 71) CV253 is high byte, CV256
@@ -27,11 +30,33 @@ import org.slf4j.LoggerFactory;
  * <li>ESU: (mfgID == 151, modelID == 255) use RailCom&reg; Product ID CVs;
  * write {@literal 0=>CV31}, write {@literal 255=>CV32}, then CVs 261 (lowest)
  * to 264 (highest) are a four byte ID</li>
- * <li>DIY: (mfgID == 13) CV47 is the highest byte, CV48 is high byte, CV49 is 
- * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for 
- * the Czech Republic</li>
+ * <li>DIY: (mfgID == 13) CV47 is the highest byte, CV48 is high byte, CV49 is
+ * low byte, CV50 is the lowest byte; (CV47 == 1) is reserved for the Czech
+ * Republic</li>
  * </ul>
- *
+ * <dl>
+ * <dt>Optional CVs:</dt>
+ * <dd>
+ * Some decoders have CVs that may or may not be present. In this case:
+ * <ul>
+ * <li>Call {@link #setOptionalCv(boolean flag) setOptionalCv(true)} prior to
+ * the {@link #readCV(String cv) readCV(cv)} call.</li>
+ * <li>At the next step, check the returned value of
+ * {@link #isOptionalCv() isOptionalCv()}. If it is still {@code true}, the CV
+ * read failed (despite retries) and the contents of the {@code value} field are
+ * undefined. You can either:<br>
+ * <ul>
+ * <li>{@code return true} to indicate the Identify process has completed
+ * successfully without using the failed CV.</li>
+ * <li>Set up an alternate CV read/write procedure and {@code return false} to
+ * continue. Don't forget to call
+ * {@link #setOptionalCv(boolean flag) setOptionalCv(false)} if the next CV read
+ * is not intended to be optional.</li>
+ * </ul>
+ * </ul>
+ * </dd>
+ * </dl>
+ * <p>
  * TODO:
  * <br>The RailCom&reg; Product ID is a 32 bit unsigned value. {@code productID}
  * is currently {@code int} with -1 signifying a null value. Potential for value
@@ -43,7 +68,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */
-abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
+public abstract class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 
     public IdentifyDecoder(jmri.Programmer programmer) {
         super(programmer);
@@ -86,7 +111,8 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("249");
             return false;
         } else if (mfgID == 48) {  // Hornby
-            statusUpdate("Read decoder ID CV 159");
+            statusUpdate("Read optional decoder ID CV 159");
+            setOptionalCv(true);
             readCV("159");
             return false;
         } else if (mfgID == 145) {  // Zimo
@@ -123,6 +149,9 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             productID = value;
             return true;
         } else if (mfgID == 48) {  // Hornby
+            if (isOptionalCv()) {
+                return true;
+            }
             if (value == 143) {
                 productIDlow = value;
                 statusUpdate("Read Product ID High Byte");
@@ -168,12 +197,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         } else if (mfgID == 48) {  // Hornby
             productIDhigh = value;
             productID = (productIDhigh << 8) | productIDlow;
-            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
             return true;
         } else if (mfgID == 141 && (modelID == 70 || modelID == 71)) {  // SoundTraxx
             productIDlow = value;
             productID = (productIDhigh << 8) | productIDlow;
-            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
             return true;
         } else if (mfgID == 98) {  // Harman
             productIDlow = value;
@@ -227,8 +254,8 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             readCV("263");
             return false;
         } else if (mfgID == 13) {  // DIY
-            productIDlowest = value;            
-            productID = (((((productIDhighest << 8) | productIDhigh) << 8) | productIDlow) << 8) | productIDlowest ;
+            productIDlowest = value;
+            productID = (((((productIDhighest << 8) | productIDhigh) << 8) | productIDlow) << 8) | productIDlowest;
             return true;
         }
         log.error("unexpected step 7 reached with value: " + value);
@@ -255,7 +282,6 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     public boolean test9(int value) {
         if (mfgID == 151) {  // ESU
             productID = productID + (value * 256 * 256 * 256);
-            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
             return true;
         }
         log.error("unexpected step 9 reached with value: " + value);
@@ -267,6 +293,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         message(s);
         if (s.equals("Done")) {
             done(mfgID, modelID, productID);
+            log.info("Decoder returns mfgID:" + mfgID + ";modelID:" + modelID + ";productID:" + productID);
         } else if (log.isDebugEnabled()) {
             log.debug("received status: " + s);
         }
@@ -279,14 +306,14 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
      * @param modelID   identified model identity
      * @param productID identified product identity
      */
-    abstract protected void done(int mfgID, int modelID, int productID);
+    protected abstract void done(int mfgID, int modelID, int productID);
 
     /**
      * Provide a user-readable message about progress.
      *
      * @param m the message to provide
      */
-    abstract protected void message(String m);
+    protected abstract void message(String m);
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(IdentifyDecoder.class);

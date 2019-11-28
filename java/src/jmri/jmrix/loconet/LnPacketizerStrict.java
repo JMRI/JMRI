@@ -142,7 +142,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                     }
                     // check parity
                     if (!msg.checkParity()) {
-                        log.warn("Ignore Loconet packet with bad checksum: [{}]", msg.toString());  // NOI18N
+                        log.warn("Ignore LocoNet packet with bad checksum: [{}]", msg.toString());  // NOI18N
                         throw new LocoNetMessageException();
                     }
                     // message is complete, dispatch it !!
@@ -169,7 +169,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                 }
                             } else if (msg.getOpCode() == LnConstants.OPC_SL_RD_DATA) {
                                 waitingOnLack = false;
-                            } else if ( msg.getOpCode() == 0xe6 ) { // Extended slot status
+                            } else if ( msg.getOpCode() == LnConstants.OPC_ALM_READ ) { // Extended slot status
                                 waitingOnLack = false;
                             }
                             // check for CS busy
@@ -275,7 +275,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     try {
                                         Thread.sleep(waitTime);
                                     } catch (InterruptedException ee) {
-                                        log.warn("waitBusy sleep Interupted", ee); // NOI18N
+                                        log.warn("waitBusy sleep Interrupted", ee); // NOI18N
                                     }
                                 }
                                 ostream.write(msg);
@@ -291,7 +291,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                     try {
                                         Thread.sleep(1);
                                     } catch (InterruptedException ee) {
-                                        log.error("waitForMsg sleep Interupted", ee); // NOI18N
+                                        log.error("waitForMsg sleep Interrupted", ee); // NOI18N
                                     }
                                     waitCount++;
                                 }
@@ -313,7 +313,7 @@ public class LnPacketizerStrict extends LnPacketizer {
                                         try {
                                             Thread.sleep(1);
                                         } catch (InterruptedException ee) {
-                                            log.error("waitingOnLack sleep Interupted", ee); // NOI18N
+                                            log.error("waitingOnLack sleep Interrupted", ee); // NOI18N
                                         }
                                         waitCount++;
                                     }
@@ -369,7 +369,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         if (xmtHandler == null) {
             xmtHandler = new XmtHandlerStrict();
         }
-        Thread xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
+        xmtThread = new Thread(xmtHandler, "LocoNet transmit handler"); // NOI18N
         log.debug("Xmt thread starts at priority {}", xmtpriority); // NOI18N
         xmtThread.setDaemon(true);
         xmtThread.setPriority(Thread.MAX_PRIORITY - 1);
@@ -379,7 +379,7 @@ public class LnPacketizerStrict extends LnPacketizer {
         if (rcvHandler == null) {
             rcvHandler = new RcvHandlerStrict(this);
         }
-        Thread rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
+        rcvThread = new Thread(rcvHandler, "LocoNet receive handler"); // NOI18N
         rcvThread.setDaemon(true);
         rcvThread.setPriority(Thread.MAX_PRIORITY);
         rcvThread.start();

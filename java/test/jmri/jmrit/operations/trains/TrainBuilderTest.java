@@ -35,7 +35,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import jmri.util.JUnitOperationsUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -5279,7 +5278,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 506, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 459, in.lines().count());
 
         //TODO search and confirm limit message in build report
     }
@@ -5315,7 +5314,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 251, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 250, in.lines().count());
 
         //TODO search and confirm limit message in build report
     }
@@ -5365,7 +5364,7 @@ public class TrainBuilderTest extends OperationsTestCase {
         BufferedReader in = JUnitOperationsUtil.getBufferedReader(buildReport);
 
         // any changes to the build report could cause this to fail
-        Assert.assertEquals("confirm number of lines in build report", 376, in.lines().count());
+        Assert.assertEquals("confirm number of lines in build report", 375, in.lines().count());
 
         //TODO search and confirm limit message in build report
     }
@@ -9125,14 +9124,14 @@ public class TrainBuilderTest extends OperationsTestCase {
 
         // Set the track length too short missing one set of couplers
         bostonEngineYard
-                .setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + Engine.COUPLER);
+                .setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + Engine.COUPLERS);
         train1.reset();
         Assert.assertFalse(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 20.1", false, train1.isBuilt());
 
         // restore track length
         bostonEngineYard
-                .setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + 2 * Engine.COUPLER);
+                .setLength(Integer.parseInt(e1.getLength()) + Integer.parseInt(e2.getLength()) + 2 * Engine.COUPLERS);
         train1.reset();
         Assert.assertTrue(new TrainBuilder().build(train1));
         Assert.assertEquals("Train 1 After Build 20.2", true, train1.isBuilt());
@@ -13839,12 +13838,5 @@ public class TrainBuilderTest extends OperationsTestCase {
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
         // increase test coverage
         Setup.setGenerateCsvManifestEnabled(true);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

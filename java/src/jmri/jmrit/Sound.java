@@ -19,18 +19,16 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide simple way to load and play sounds in JMRI.
- * <P>
+ * <p>
  * This is placed in the jmri.jmrit package by process of elimination. It
  * doesn't belong in the base jmri package, as it's not a basic interface. Nor
  * is it a specific implementation of a basic interface, which would put it in
  * jmri.jmrix. It seems most like a "tool using JMRI", or perhaps a tool for use
  * with JMRI, so it was placed in jmri.jmrit.
- * <P>
+ *
  * @see jmri.jmrit.sound
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2006
@@ -45,7 +43,6 @@ public class Sound {
     private boolean streamingStop = false;
     private AtomicReference<Clip> clipRef = new AtomicReference<>();
     private boolean autoClose = true;
-    private final static Logger log = LoggerFactory.getLogger(Sound.class);
 
     /**
      * Create a Sound object using the media file at path
@@ -97,7 +94,7 @@ public class Sound {
     private Clip openClip() {
         Clip newClip = null;
         try {
-            newClip = AudioSystem.getClip();
+            newClip = AudioSystem.getClip(null);
             newClip.addLineListener(event -> {
                 if (LineEvent.Type.STOP.equals(event.getType())) {
                     if (autoClose) {
@@ -308,7 +305,7 @@ public class Sound {
                             + buffer[index + 5] * 256
                             + buffer[index + 6] * 256 * 256
                             + buffer[index + 7] * 256 * 256 * 256;
-                    System.out.println("index now " + index);
+                    log.debug("index now {}", index);
                 }
             }
             log.error("Didn't find fmt chunk");
@@ -383,7 +380,7 @@ public class Sound {
                                     format.getFrameRate(), true);  // big endian
                     // update stream and format details
                     stream = AudioSystem.getAudioInputStream(newFormat, stream);
-                    System.out.println("Converted Audio format: " + newFormat);
+                    log.info("Converted Audio format: {}", newFormat);
                     format = newFormat;
                     log.debug("new converted Audio format: " + format);
                 }
@@ -460,4 +457,6 @@ public class Sound {
         }
 
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Sound.class);
 }

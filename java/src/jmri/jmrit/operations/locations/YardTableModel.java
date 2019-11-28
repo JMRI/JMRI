@@ -1,11 +1,14 @@
 package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
+
 import javax.swing.JTable;
 import javax.swing.SwingUtilities;
-import jmri.jmrit.operations.setup.Control;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.setup.Control;
 
 /**
  * Table Model for edit of yards used by operations
@@ -41,18 +44,15 @@ public class YardTableModel extends TrackTableModel {
             tef.dispose();
         }
         // use invokeLater so new window appears on top
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                tef = new YardEditFrame();
-                Track yard = tracksList.get(row);
-                tef.initComponents(_location, yard);
-                tef.setTitle(Bundle.getMessage("EditYard"));
-            }
+        SwingUtilities.invokeLater(() -> {
+            tef = new YardEditFrame();
+            Track yard = tracksList.get(row);
+            tef.initComponents(_location, yard);
+            tef.setTitle(Bundle.getMessage("EditYard"));
         });
     }
 
-    // this table listens for changes to a location and it's yards
+    // this table listens for changes to a location and its yards
     @Override
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.SHOW_PROPERTY) {

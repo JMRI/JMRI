@@ -1,21 +1,21 @@
 package jmri.jmrix.loconet.sdf;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
 import org.junit.Assert;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdf.Play class.
  *
  * @author	Bob Jacobsen Copyright 2007
-  */
-public class PlayTest extends TestCase {
+ */
+public class PlayTest {
 
+    @Test
     public void testCtor() {
         new Play((byte) 0, (byte) 0);
     }
 
+    @Test
     public void testLoopFlags() {
         Play p = new Play((byte) 0xFF, (byte) 0xFF);
 
@@ -41,6 +41,7 @@ public class PlayTest extends TestCase {
         Assert.assertEquals("no_loop", p.brkVal());
     }
 
+    @Test
     public void testWavFlagsByInt() {
         Play p = new Play((byte) 0xFF, (byte) 0xFF);
 
@@ -60,6 +61,7 @@ public class PlayTest extends TestCase {
         Assert.assertEquals("Brk 3", 3, p.getWaveBrkFlags());
     }
 
+    @Test
     public void testWavFlagsByString() {
         Play p = new Play((byte) 0xFF, (byte) 0xFF);
 
@@ -75,23 +77,6 @@ public class PlayTest extends TestCase {
         Assert.assertEquals("Brk 2", 2, p.getWaveBrkFlags());
         Assert.assertEquals("Brk 0", "loop_GLOBAL", p.wavebrkFlagsVal());
 
-    }
-
-    // from here down is testing infrastructure
-    public PlayTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {PlayTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PlayTest.class);
-        return suite;
     }
 
 }

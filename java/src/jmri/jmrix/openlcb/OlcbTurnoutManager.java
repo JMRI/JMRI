@@ -22,21 +22,20 @@ import org.openlcb.OlcbInterface;
 public class OlcbTurnoutManager extends AbstractTurnoutManager {
 
     public OlcbTurnoutManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
-    CanSystemConnectionMemo memo;
-
-    String prefix = "M";
     // Whether we accumulate partially loaded turnouts in pendingTurnouts.
     private boolean isLoading = false;
     // Turnouts that are being loaded from XML.
     private final ArrayList<OlcbTurnout> pendingTurnouts = new ArrayList<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     @Override
@@ -108,9 +107,9 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      */
     public void finishLoad() {
         synchronized (pendingTurnouts) {
-            for (OlcbTurnout t : pendingTurnouts) {
+            pendingTurnouts.forEach((t) -> {
                 t.finishLoad();
-            }
+            });
             pendingTurnouts.clear();
             isLoading = false;
         }
@@ -125,7 +124,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         // don't check for integer; should check for validity here
         try {
-            validateSystemNameFormat(curAddress);
+            validateAddressFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
@@ -136,14 +135,14 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         // always return this (the current) name without change
         try {
-            validateSystemNameFormat(curAddress);
+            validateAddressFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
         return curAddress;
     }
 
-    void validateSystemNameFormat(String address) throws IllegalArgumentException {
+    void validateAddressFormat(String address) throws IllegalArgumentException {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {
@@ -161,6 +160,13 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
     }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        return Bundle.getMessage("AddTurnoutEntryToolTip");
+    }
+
 }
-
-

@@ -1,14 +1,16 @@
 package jmri.jmrix.maple;
 
+import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement light manager for Maple serial systems
+ * Implement LightManager for Maple serial systems.
  * <p>
- * System names are "KiLnnn", where nnn is the bit number without padding.
+ * System names are "KLnnn", where K is the user configurable system prefix,
+ * nnn is the bit number without padding.
  * <p>
  * Based in part on SerialTurnoutManager.java
  *
@@ -17,24 +19,16 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialLightManager extends AbstractLightManager {
 
-    MapleSystemConnectionMemo _memo = null;
-    protected String prefix = "K";
-
-    public SerialLightManager() {
-
-    }
-
     public SerialLightManager(MapleSystemConnectionMemo memo) {
-        _memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public MapleSystemConnectionMemo getMemo() {
+        return (MapleSystemConnectionMemo) memo;
     }
 
     /**
@@ -62,8 +56,8 @@ public class SerialLightManager extends AbstractLightManager {
             return null;
         }
         if (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()) == NameValidity.VALID) {
-            lgt = new SerialLight(sysName, userName, _memo);
-            if (!SerialAddress.validSystemNameConfig(sysName, 'L', _memo)) {
+            lgt = new SerialLight(sysName, userName, getMemo());
+            if (!SerialAddress.validSystemNameConfig(sysName, 'L', getMemo())) {
                 log.warn("Light system Name '{}' does not refer to configured hardware.", sysName);
                 javax.swing.JOptionPane.showMessageDialog(null, "WARNING - The Light just added, " + sysName
                         + ", refers to an unconfigured output bit.", "Configuration Warning",
@@ -89,8 +83,16 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return SerialAddress.validateSystemNameFormat(name, this, locale);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public NameValidity validSystemNameFormat(String systemName) {
-        return (SerialAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
+        return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 
     /**
@@ -98,15 +100,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public boolean validSystemNameConfig(String systemName) {
-        return (SerialAddress.validSystemNameConfig(systemName, 'L', _memo));
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String normalizeSystemName(String systemName) {
-        return (SerialAddress.normalizeSystemName(systemName, getSystemPrefix()));
+        return (SerialAddress.validSystemNameConfig(systemName, 'L', getMemo()));
     }
 
     /**
@@ -114,17 +108,7 @@ public class SerialLightManager extends AbstractLightManager {
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
-    }
-
-    /**
-     * Allow access to SerialLightManager
-     * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
-     */
-    @Deprecated
-    static public SerialLightManager instance() {
-         return null;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialLightManager.class);

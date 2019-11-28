@@ -4,7 +4,7 @@ import java.util.ResourceBundle;
 import jmri.InstanceManager;
 
 /**
- * Does configuration for Nmra Net communications implementations.
+ * Does configuration for CAN communications implementations.
  *
  * @author Bob Jacobsen Copyright (C) 2010
  */

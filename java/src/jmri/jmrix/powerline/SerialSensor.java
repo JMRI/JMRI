@@ -4,7 +4,7 @@ import jmri.implementation.AbstractSensor;
 
 /**
  * Extend jmri.AbstractSensor for serial systems
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author kcameron Copyright (C) 2011
@@ -23,7 +23,7 @@ public class SerialSensor extends AbstractSensor {
 
     /**
      * Request an update on status.
-     * <P>
+     * <p>
      * Since status is continually being updated, this isn't active now.
      * Eventually, we may want to have this move the related AIU to the top of
      * the polling queue.

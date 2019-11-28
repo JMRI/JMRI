@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -22,6 +23,12 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import jmri.ReporterManager;
+import jmri.swing.NamedBeanComboBox;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.jmrit.operations.OperationsFrame;
@@ -44,8 +51,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for user edit of tracks
@@ -61,9 +66,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
     public Location _location = null;
     public Track _track = null;
-    String _trackName = null; // track name for tools menu
     String _type = "";
-    JMenu _toolMenu = null;
+    JMenu _toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
 
     List<JCheckBox> checkBoxes = new ArrayList<>();
 
@@ -139,7 +143,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JPanel panelOpt4 = new JPanel();
 
     // Reader selection dropdown.
-    JComboBox<Reporter> readerSelector = new JComboBox<>();
+    NamedBeanComboBox<Reporter> readerSelector;
 
     public static final String DISPOSE = "dispose"; // NOI18N
     public static final int MAX_NAME_LENGTH = Control.max_len_string_track_name;
@@ -278,11 +282,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         // reader row
         JPanel readerPanel = new JPanel();
-        readerPanel.setLayout(new GridBagLayout());
-        readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
-        addItem(readerPanel, readerSelector, 0, 0);
-
-        readerPanel.setVisible(Setup.isRfidEnabled());
+        if (Setup.isRfidEnabled()) {
+            readerPanel.setLayout(new GridBagLayout());
+            readerPanel.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("idReader")));
+            ReporterManager reporterManager = InstanceManager.getDefault(ReporterManager.class);
+            readerSelector = new NamedBeanComboBox<>(reporterManager);
+            readerSelector.setAllowNull(true);
+            addItem(readerPanel, readerSelector, 0, 0);
+        } else {
+            readerPanel.setVisible(false);
+        }
 
         // row 12
         JPanel panelButtons = new JPanel();
@@ -345,14 +354,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         addCheckBoxAction(autoDropCheckBox);
         addCheckBoxAction(autoPickupCheckBox);
 
-        if (Setup.isRfidEnabled()) {
-            // setup the Reader dropdown.
-            readerSelector.addItem(null); // add an empty entry.
-            for (jmri.NamedBean r : jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getNamedBeanSet()) {
-                readerSelector.addItem((Reporter) r);
-            }
-        }
-
         // load fields and enable buttons
         if (_track != null) {
             _track.addPropertyChangeListener(this);
@@ -360,7 +361,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             commentTextArea.setText(_track.getComment());
             trackLengthTextField.setText(Integer.toString(_track.getLength()));
             enableButtons(true);
-            _trackName = _track.getName();
             if (Setup.isRfidEnabled()) {
                 readerSelector.setSelectedItem(_track.getReporter());
             }
@@ -370,7 +370,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         // build menu
         JMenuBar menuBar = new JMenuBar();
-        _toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         _toolMenu.add(new TrackLoadEditAction(this));
         _toolMenu.add(new TrackRoadEditAction(this));
         _toolMenu.add(new TrackEditCommentsAction(this));
@@ -600,7 +599,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         track.setComment(commentTextArea.getText());
 
         if (Setup.isRfidEnabled()) {
-            _track.setReporter((Reporter) readerSelector.getSelectedItem());
+            _track.setReporter(readerSelector.getSelectedItem());
         }
 
         // save current window size so it doesn't change during updates
@@ -777,6 +776,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     }
 
     protected void enableButtons(boolean enabled) {
+        _toolMenu.setEnabled(enabled);
         northCheckBox.setEnabled(enabled);
         southCheckBox.setEnabled(enabled);
         eastCheckBox.setEnabled(enabled);
@@ -803,9 +803,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         orderFIFO.setEnabled(enabled);
         orderLIFO.setEnabled(enabled);
         enableCheckboxes(enabled);
-        // enable readerSelect.
-        readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
-
+        if(readerSelector!=null) {
+           // enable readerSelect.
+           readerSelector.setEnabled(enabled && Setup.isRfidEnabled());
+        }
     }
 
     @Override

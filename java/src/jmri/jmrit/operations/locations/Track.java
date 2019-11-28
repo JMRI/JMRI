@@ -546,7 +546,7 @@ public class Track {
 
     /**
      * The amount of consumed track space to be ignored when sending new rolling
-     * stock to the track.
+     * stock to the track.  See Planned Pickups in help.
      *
      * @param percentage a number between 0 and 100
      */
@@ -747,7 +747,7 @@ public class Track {
         String old = _commentBoth;
         _commentBoth = comment;
         if (!old.equals(comment)) {
-            setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
+           setDirtyAndFirePropertyChange("trackCommentBoth", old, comment); // NOI18N
         }
     }
 
@@ -1502,7 +1502,7 @@ public class Track {
                 return NO_FINAL_DESTINATION;
             }
             // check for car in kernel
-            if (car.getKernel() != null && car.getKernel().isLead(car)) {
+            if (car.isLead()) {
                 length = car.getKernel().getTotalLength();
             }
             if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {
@@ -1514,7 +1514,7 @@ public class Track {
         // check for loco in consist
         if (Engine.class.isInstance(rs)) {
             Engine eng = (Engine) rs;
-            if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
+            if (eng.isLead()) {
                 length = eng.getConsist().getTotalLength();
             }
         }
@@ -1539,9 +1539,22 @@ public class Track {
             }
             log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(), getLocation()
                     .getName(), getName()); // NOI18N
+            // calculate the available space
+            int available = getLength() -
+                    (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 +
+                            getReserved());
+            // could be less
+            int available3 = getLength() + (getLength() * getIgnoreUsedLengthPercentage() / 100) - getUsedLength() - getReserved();
+            if (available3 < available) {
+                available = available3;
+            }
+            // could be less based on track length
+            int available2 = getLength() - getReservedLengthDrops();
+            if (available2 < available) {
+                available = available2;
+            }
             return MessageFormat.format(Bundle.getMessage("lengthIssue"), new Object[]{LENGTH, length,
-                    Setup.getLengthUnit().toLowerCase(),
-                    getLength() - (getUsedLength() * (100 - getIgnoreUsedLengthPercentage()) / 100 + getReserved())});
+                    Setup.getLengthUnit().toLowerCase(), available});
         }
         return OKAY;
     }
@@ -2066,7 +2079,7 @@ public class Track {
             return OKAY;
         }
         // is car part of a kernel?
-        if (car.getKernel() != null && !car.getKernel().isLead(car)) {
+        if (car.getKernel() != null && !car.isLead()) {
             log.debug("Car ({}) is part of kernel ({}) not lead", car.toString(), car.getKernelName());
             return OKAY;
         }
@@ -2378,13 +2391,13 @@ public class Track {
 
     /**
      * Sets the destination option for this track. The three options are:
-     * <P>
+     * <p>
      * ALL_DESTINATIONS which means this track services all destinations, the
      * default.
-     * <P>
+     * <p>
      * INCLUDE_DESTINATIONS which means this track services only certain
      * destinations.
-     * <P>
+     * <p>
      * EXCLUDE_DESTINATIONS which means this track does not service certain
      * destinations.
      *
@@ -2454,6 +2467,7 @@ public class Track {
      * @param e Consist XML element
      * @param location The Location loading this track.
      */
+    @SuppressWarnings("deprecation") // until there's a replacement for convertFromXmlComment()
     public Track(Element e, Location location) {
         _location = location;
         Attribute a;
@@ -3004,7 +3018,7 @@ public class Track {
      *
      * @param reader jmri.Reporter object.
      */
-    protected void setReporter(Reporter r) {
+    public void setReporter(Reporter r) {
         Reporter old = _reader;
         _reader = r;
         if (old != r) {

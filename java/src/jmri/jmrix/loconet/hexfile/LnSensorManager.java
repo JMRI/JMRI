@@ -4,28 +4,30 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.loconet.LnSensor;
-import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetListener;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @SuppressFBWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS", justification = "This is ineffect the same as its super class")
 /**
- * Manage the LocoNet-specific Sensor implementation.
- * System names are "LSnnn", where nnn is the sensor number without padding.
+ * Manage the LocoNet-specific Sensor implementation via a LocoNet
+ * hexfile emulator.
+ * <p>
+ * System names are "LSnnn", where L is the user-configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Kevin Dickerson Copyright (C) 2001
  */
-public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager implements LocoNetListener {
+public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager {
 
-    public LnSensorManager(LnTrafficController tc, String prefix) {
-        super(tc, prefix);
+    public LnSensorManager(LocoNetSystemConnectionMemo memo) {
+        super(memo);
     }
 
     // LocoNet-specific methods
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
-        Sensor s = new LnSensor(systemName, userName, tc, prefix);
+        Sensor s = new LnSensor(systemName, userName, tc, getSystemPrefix());
         if (defaultSensorState != Sensor.UNKNOWN) {
             try {
                 s.setKnownState(defaultSensorState);

@@ -1,26 +1,29 @@
 package jmri.jmrit.automat;
 
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Tests for classes in the jmri.jmrit.automat package
  *
  * @author	Bob Jacobsen Copyright 2008
-  */
-public class AutomatTest extends TestCase {
+ */
+public class AutomatTest {
 
     boolean initDone;
     boolean handleDone;
 
+    @Test
     public void testCreate() {
         new AbstractAutomaton() {
         };
     }
 
+    @Test
     public void testRun() throws InterruptedException {
         initDone = false;
         handleDone = false;
@@ -49,6 +52,7 @@ public class AutomatTest extends TestCase {
         Assert.assertTrue("handleDone after run", handleDone);
     }
 
+    @Test
     public void testRestart() throws InterruptedException {
         initDone = false;
         handleDone = false;
@@ -92,30 +96,13 @@ public class AutomatTest extends TestCase {
         Assert.assertTrue("handleDone after 2nd run", handleDone);
     }
 
-    // from here down is testing infrastructure
-    public AutomatTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", AutomatTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        return new TestSuite(AutomatTest.class);
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

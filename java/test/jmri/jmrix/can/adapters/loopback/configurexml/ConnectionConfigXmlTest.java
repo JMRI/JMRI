@@ -15,13 +15,16 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSim
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
         cc = new ConnectionConfig();
+        cc.setManufacturer("MERG");
     }
 
     @After
+    @Override
     public void tearDown() {
         JUnitUtil.tearDown();
         xmlAdapter = null;

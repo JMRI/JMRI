@@ -12,7 +12,7 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new file panes for QSi V8 files -->
 <!-- function output choices when moving -->
-<enumVal xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <enumChoice choice="None" value="0"/>
   <enumChoice choice="Horn" value="1" include="1100,1101,1102,1106,1107,1108,1110,1111,1112,1116,1118,1119,1121,1126,2100,2101,2102,2105,5100,5101"/>
   <enumChoice choice="Whistle" value="1" include="3100,3101,3106,3107,4100,4101,4102"/>

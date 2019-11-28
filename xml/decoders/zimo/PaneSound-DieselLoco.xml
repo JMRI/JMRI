@@ -6,6 +6,7 @@
      Version 1.2  23Jan 2015, Nigel Cliffe   Numerous extensions from v34 firmware
 -->
 <!-- version 1.3 - Ronald Kuhn - add german translation -->
+<!-- version 1.4 - Ronald Kuhn - add options for v37+ and v38+ -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>Sound - Diesel Loco</name>
   <name xml:lang="it">Suoni - Diesel</name>
@@ -31,6 +32,7 @@
       <!--label>Maximum speed before upshifting</label-->
       <!--label xml:lang="it">Velocità Max. prima del passaggio alla marcia superiore</label-->
       <!--label xml:lang="cs">Maximální otáčky spalovacího motoru před řazení mechanické převodovky nahoru</label-->    </display>
+    <display item="Motor Start Sound"></display>
   </column>
   <column>
     <label>
@@ -98,6 +100,11 @@
         <!--label xml:lang="cs">Změna rychlosti pro automatický výběh</label-->
         </display>
     
+    <display item="Script Running 1"></display>
+    <display item="Script Running 2"></display>
+    <display item="Script Running 3"></display>
+    <display item="Script Running 4"></display>
+
   </column>
   <column>
     <label>
@@ -125,6 +132,7 @@
       <!--label xml:lang="it">Turbocompressore in funzione della accellerazione</label-->
       <!--label xml:lang="cs">Závislost otáček turbodmychadla na zrychlení</label-->
     </display>
+    <display item="Turbocharger acceleration"></display>
     <display item="Minimum load on the Turbocharger">
       <!--label>Minimum load on the Turbocharger</label-->
       <!--label xml:lang="it">Carico Min. Turbocompressore</label-->

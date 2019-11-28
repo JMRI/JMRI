@@ -4,11 +4,11 @@
     "type": "object",
     "description": "Data portion of message from JMRI to client for type \"configProfile\"",
     "properties": {
-        "name": {
+        "userName": {
             "type": "string",
             "description": "Name of configuration profile"
         },
-        "id": {
+        "name": {
             "type": "string",
             "description": "Configuration profile identity"
         },
@@ -22,9 +22,13 @@
         },
         "isAutoStart": {
             "type": "boolean",
-            "description": "True if this configuration profile will be automatically selected next time JMRI is started; false otherwise"
+            "description": "True if this configuration profile will start with no delay next time JMRI is started; false otherwise"
+        },
+        "isNextProfile": {
+            "type": "boolean",
+            "description": "True if this configuration profile will be the one started the next time JMRI is started; false otherwise"
         }
     },
     "additionalProperties": false,
-    "required": ["name", "id", "uniqueId", "isActiveProfile", "isAutoStart"]
+    "required": ["name", "userName", "uniqueId", "isActiveProfile", "isAutoStart", "isNextProfile"]
 }

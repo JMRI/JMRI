@@ -4,7 +4,7 @@ package jmri.jmrix.loconet.locobuffer;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  */
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
-    @Nullable
+    @CheckForNull
     private static final String name = null; // No local resources
 
     //
@@ -35,7 +35,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
      * Provides a translated string for a given 
      * key from the package resource bundle or 
      * parent.
-     *<p>
+     * <p>
      * Note that this is intentionally package-local
      * access.
      * 
@@ -49,10 +49,10 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
      * Merges user data with a translated string for a given 
      * key from the package resource bundle or 
      * parent.
-     *<p>
+     * <p>
      * Uses the transformation conventions of 
      * the Java MessageFormat utility.
-     *<p>
+     * <p>
      * Note that this is intentionally package-local
      * access.
      *
@@ -84,7 +84,7 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
     }
    
     private final static Bundle b = new Bundle();
-    @Override @Nullable protected String bundleName() {return name; }
+    @Override @CheckForNull protected String bundleName() {return name; }
     protected static jmri.Bundle getBundle() { return b; }
 
     @Override 

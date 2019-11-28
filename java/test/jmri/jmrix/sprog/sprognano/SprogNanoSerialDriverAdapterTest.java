@@ -1,5 +1,6 @@
 package jmri.jmrix.sprog.sprognano;
 
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -7,9 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * <P>
- * Tests for SprogNanoSerialDriverAdapter
- * </P>
+ * Tests for SprogNanoSerialDriverAdapter.
+ *
  * @author Paul Bender Copyright (C) 2016
  */
 public class SprogNanoSerialDriverAdapterTest {
@@ -18,6 +18,9 @@ public class SprogNanoSerialDriverAdapterTest {
    public void ConstructorTest(){
        SprogNanoSerialDriverAdapter a = new SprogNanoSerialDriverAdapter();
        Assert.assertNotNull(a);
+
+       // clean up
+       a.getSystemConnectionMemo().getSprogTrafficController().dispose();
    }
 
     // The minimal setup for log4J
@@ -30,6 +33,5 @@ public class SprogNanoSerialDriverAdapterTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-
 
 }

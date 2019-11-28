@@ -6,10 +6,8 @@ import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
@@ -156,20 +154,6 @@ public class OperationsSetupFrameTest extends OperationsTestCase {
         Assert.assertEquals("local color", LocoIcon.YELLOW, ((JComboBox<?>)(new JLabelOperator(jfo2,Bundle.getMessage("IconLocal")).getLabelFor())).getSelectedItem());
         // done
         JUnitUtil.dispose(frameRead);
-    }
-
-    // The minimal setup for log4J
-    @Before
-    @Override
-    public void setUp(){
-        super.setUp();
-        new Setup();
-    }
-
-    @After
-    @Override
-    public void tearDown(){
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(OperationsSetupFrameTest.class);

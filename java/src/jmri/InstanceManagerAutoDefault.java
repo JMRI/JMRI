@@ -12,7 +12,7 @@ package jmri;
  * create their objects) should never ask the InstanceManager for reference to other
  * automatically-created types. Doing so
  * may lead to an infinite loop in initialization.
- *<p>
+ * <p>
  * If the object needs to have obtain references, see
  * {@link InstanceManagerAutoInitialize} and the discussion there for 
  * a possible solution.

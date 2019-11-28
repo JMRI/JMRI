@@ -24,6 +24,8 @@ import org.junit.Test;
  */
 public class JsonMemorySocketServiceTest {
 
+    private Locale locale = Locale.ENGLISH;
+
     @Test
     public void testMemoryChange() {
         try {
@@ -32,21 +34,27 @@ public class JsonMemorySocketServiceTest {
             JsonMemorySocketService service = new JsonMemorySocketService(connection);
             MemoryManager manager = InstanceManager.getDefault(MemoryManager.class);
             Memory memory1 = manager.provideMemory("IM1");
-            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, locale, 42);
             // TODO: test that service is listener in MemoryManager
             // default null value of memory1 has text representation "null" in JSON
-            Assert.assertEquals("null", connection.getMessage().path(JSON.DATA).path(JSON.VALUE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("message is not null", message);
+            Assert.assertEquals("null", message.path(JSON.DATA).path(JSON.VALUE).asText());
             memory1.setValue("throw");
             JUnitUtil.waitFor(() -> {
                 return memory1.getValue().equals("throw");
             }, "Memory to throw");
-            Assert.assertEquals("throw", connection.getMessage().path(JSON.DATA).path(JSON.VALUE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("message is not null", message);
+            Assert.assertEquals("throw", message.path(JSON.DATA).path(JSON.VALUE).asText());
             memory1.setValue("close");
             JUnitUtil.waitFor(() -> {
                 return memory1.getValue().equals("close");
             }, "Memory to close");
             Assert.assertEquals("close", memory1.getValue());
-            Assert.assertEquals("close", connection.getMessage().path(JSON.DATA).path(JSON.VALUE).asText());
+            message = connection.getMessage();
+            Assert.assertNotNull("message is not null", message);
+            Assert.assertEquals("close", message.path(JSON.DATA).path(JSON.VALUE).asText());
             service.onClose();
             // TODO: test that service is no longer a listener in MemoryManager
         } catch (IOException | JmriException | JsonException ex) {
@@ -64,22 +72,22 @@ public class JsonMemorySocketServiceTest {
             Memory memory1 = manager.provideMemory("IM1");
             // Memory "close"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1").put(JSON.VALUE, "close");
-            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, locale, 42);
             Assert.assertEquals("close", memory1.getValue());
             // Memory "throw"
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1").put(JSON.VALUE, "throw");
-            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, locale, 42);
             Assert.assertEquals("throw", memory1.getValue());
             // Memory UNKNOWN - remains ON
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1").putNull(JSON.VALUE);
-            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
+            service.onMessage(JsonMemory.MEMORY, message, JSON.POST, locale, 42);
             Assert.assertEquals(null, memory1.getValue());
             memory1.setValue("throw");
             // Memory no value
             message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IM1");
             JsonException exception = null;
             try {
-                service.onMessage(JsonMemory.MEMORY, message, JSON.POST, Locale.ENGLISH);
+                service.onMessage(JsonMemory.MEMORY, message, JSON.POST, locale, 42);
             } catch (JsonException ex) {
                 exception = ex;
             }

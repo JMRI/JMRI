@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
  * AbstractNetworkController. GT - May 2011 - Fixed problems arising from recent
  * refactoring
  */
-public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmrix.lenz.XNetPortController {
+public class XnTcpAdapter extends XNetNetworkPortController {
 
     static final int DEFAULT_UDP_PORT = 61234;
     static final int DEFAULT_TCP_PORT = 61235;
@@ -349,7 +349,7 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
                 try {
                     tcpOut.write(b);
                     log.debug("XnTcpAdapter: sent {}", Integer.toHexString(b & 0xff));
-                    // If this is the start of a new packet, save it's length
+                    // If this is the start of a new packet, save its length
                     if (count < 0) {
                         count = b & 0x0f;
                     } // If the whole packet was queued, send it and count it

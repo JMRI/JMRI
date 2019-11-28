@@ -5,6 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    ArchitectureTest.class,
+    AnalogIOTest.class,
     BeanSettingTest.class,
     BundleTest.class,
     NamedBeanHandleManagerTest.class,
@@ -24,6 +26,7 @@ import org.junit.runners.Suite;
     SectionTest.class,
     SignalGroupTest.class,
     SignalMastLogicTest.class,
+    StringIOTest.class,
     TransitTest.class,
     TransitSectionTest.class,
     TransitSectionActionTest.class,
@@ -62,6 +65,7 @@ import org.junit.runners.Suite;
     NoFeedbackTurnoutOperationTest.class,
     RawTurnoutOperationTest.class,
     ScaleTest.class,
+    ScaleManagerTest.class,
     SectionManagerTest.class,
     SensorTurnoutOperationTest.class,
     TransitManagerTest.class,

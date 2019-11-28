@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2019 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -12,7 +12,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<variables xmlns:xi="http://www.w3.org/2001/XInclude"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
     <variable CV="2" default="3" item="Vstart" exclude="LokPilot Fx V4.0">
         <decVal min="1"/>
@@ -188,14 +190,14 @@
         <label xml:lang="ca">Estat de funcions en Analògic 0 - F15</label>
         <tooltip xml:lang="de">Zustand der Funktionen F15 im Analogmodus.</tooltip>
     </variable>
-    <variable CV="15" item="ESU V4 Advanced Decoder Lock Option 2" default="0" tooltip="Set this to match value below and decoder will unlock">
+    <variable CV="15" item="ESU V4 Decoder Lock CV15" default="0" tooltip="Set this to match value below and decoder will unlock">
         <decVal/>
         <label>Decoder Lock ID number</label>
         <label xml:lang="de">Decoder Lock Wert</label>
         <label xml:lang="ca">Bloqueig decoder per ID</label>
         <tooltip xml:lang="de">Setzen Sie diesen Wert auf den unten stehenden Wert und der Decoder wird entsperrt</tooltip>
     </variable>
-    <variable CV="16" item="ESU V4 Advanced Decoder Lock Option 3" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
+    <variable CV="16" item="ESU V4 Decoder Lock CV16" default="0" tooltip="Set this to decoder type: 1=motor, 2=sound, 3=function, etc.">
         <decVal/>
         <label>Preset Lock ID number</label>
         <label xml:lang="de">Decoder-Typ Lock Wert</label>
@@ -204,43 +206,43 @@
     </variable>
     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4cv21.22.xml"/>
-    <variable CV="27" mask="XXXXXXXV" item="ESU V4 Advanced Brake Sections Option 1">
+    <variable CV="27" mask="XXXXXXXV" item="ESU V4 ABC Brake Right Rail Higher">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>ABC brake on Asymmetrical DCC - higher voltage on right rail</label>
         <label xml:lang="de">ABC Bremsen, Spannung an rechter Schiene größer</label>
         <label xml:lang="ca">Frenada ABC en DCC assimètric - Voltatge alt rail dret</label>
     </variable>
-    <variable CV="27" mask="XXXXXXVX" item="ESU V4 Advanced Brake Sections Option 2">
+    <variable CV="27" mask="XXXXXXVX" item="ESU V4 ABC Brake Left Rail Higher">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>ABC brake on Asymmetrical DCC - higher voltage on left rail</label>
         <label xml:lang="de">ABC Bremsen, Spannung an linker Schiene größer</label>
         <label xml:lang="ca">Frenada ABC en DCC assimètric - Voltatge alt rail esquerre</label>
     </variable>
-    <variable CV="27" mask="XXXXXVXX" item="ESU V4 Advanced Brake Sections Option 11">
+    <variable CV="27" mask="XXXXXVXX" item="ESU V4 HLU">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Brake on Zimo HLU commands</label>
         <label xml:lang="de">ZIMO HLU Bremsen aktiv</label>
         <label xml:lang="ca">Parada autompàtica ZIMO HLU</label>
     </variable>
-    <variable CV="27" mask="XXXXVXXX" item="ESU V4 Advanced Brake Sections Option 13" default="1">
+    <variable CV="27" mask="XXXXVXXX" item="ESU V4 DC Brake Reverse" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Brake on DC, polarity against direction</label>
         <label xml:lang="de">Brake on DC, wenn Polarität entgegengesetzt der Fahrtrichtung</label>
         <label xml:lang="ca">Para en CC, quan polaritat oposada</label>
     </variable>
-    <variable CV="27" mask="XXXVXXXX" item="ESU V4 Advanced Brake Sections Option 12" default="1">
+    <variable CV="27" mask="XXXVXXXX" item="ESU V4 DC Brake Forward" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Brake on DC, polarity same direction</label>
         <label xml:lang="de">Brake on DC, wenn Polarität gleich der Fahrtrichtung</label>
         <label xml:lang="ca">Para en CC, mateix sentit de polaritat</label>
     </variable>
-    <variable CV="27" mask="VXXXXXXX" default="0" item="ESU V4 Advanced Constant Brake Option 4">
+    <variable CV="27" mask="VXXXXXXX" default="0" item="ESU V4 Constant Brake">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Constant Brake Distance on speed step 0</label>
         <label xml:lang="de">Lok bremst mit Konstantem Bremsweg wenn FS=0</label>
         <label xml:lang="ca">La màquina frena en distància consant en pas 0</label>
     </variable>
-    <variable CV="28" mask="XXXXXXXV" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 3" default="1">
+    <variable CV="28" mask="XXXXXXXV" exclude="LokPilot Fx V4.0" item="ESU V4 RailCom Channel 1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>RailCom® Channel 1 Address Broadcast</label>
         <label xml:lang="it">RailCom® canale 1 (Broadcast)</label>
@@ -248,7 +250,7 @@
         <label xml:lang="de">RailCom® Kanal 1 (Broadcast)</label>
         <label xml:lang="ca">GCanal 1 de Railcom (Broadcast)</label>
     </variable>
-    <variable CV="28" mask="XXXXXXVX" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 4" default="1">
+    <variable CV="28" mask="XXXXXXVX" exclude="LokPilot Fx V4.0" item="ESU V4 RailCom Channel 2" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>RailCom® Channel 2 Data Transmission</label>
         <label xml:lang="it">RailCom® canale 2 (Dati)</label>
@@ -256,7 +258,7 @@
         <label xml:lang="de">RailCom® Kanal 2 (Daten)</label>
         <label xml:lang="ca">Canal 2 de Railcom (dades)</label>
     </variable>
-    <variable CV="28" mask="VXXXXXXX" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 2" default="1">
+    <variable CV="28" mask="VXXXXXXX" exclude="LokPilot Fx V4.0" item="ESU V4 RailCom Auto" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>RailCom® Plus Auto Loco Recognition</label>
         <label xml:lang="de">RailCom® Plus automatische Lokanmeldung aktiv</label>
@@ -265,7 +267,7 @@
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
-    <variable CV="29" mask="XXXXVXXX" default="1" exclude="LokPilot Fx V4.0" item="ESU V4 Advanced RailCom Option 1">
+    <variable CV="29" mask="XXXXVXXX" default="1" exclude="LokPilot Fx V4.0" item="ESU V4 RailCom Enable">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>RailCom® Enable</label>
         <label xml:lang="de">RailCom® aktiv</label>
@@ -300,25 +302,25 @@
         <tooltip xml:lang="de">Auswahl Speicherseite für CV257-512</tooltip>
         <label xml:lang="ca">Adreces indexades CV257-512</label>
     </variable>
-    <variable CV="47" mask="XXXXXXXV" default="1" item="ESU V4 Advanced Protocols Option 1">
+    <variable CV="47" mask="XXXXXXXV" default="1" item="ESU V4 Advanced Protocols DCC">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>DCC Protocol</label>
         <label xml:lang="de">DCC Protokoll</label>
         <label xml:lang="ca">Protocol DCC</label>
     </variable>
-    <variable CV="47" mask="XXXXXXVX" default="0" include="LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot XL V4.0,LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokSound XL V4.0" item="ESU V4 Advanced Protocols Option 4">
+    <variable CV="47" mask="XXXXXXVX" default="0" include="LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot XL V4.0,LokSound V4.0 M4,LokSound V4.0 M4 OEM,LokSound XL V4.0" item="ESU V4 Advanced Protocols M4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>M4 Protocol</label>
         <label xml:lang="de">M4 Protokoll</label>
         <label xml:lang="ca">Protocol M4</label>
     </variable>
-    <variable CV="47" mask="XXXXXVXX" default="1" exclude="ESU LokSound Select,LokPilot V4.0 DCC,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Protocols Option 2">
+    <variable CV="47" mask="XXXXXVXX" default="1" exclude="ESU LokSound Select,LokPilot V4.0 DCC,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Protocols Motorola®">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Marklin Motorola® Protocol</label>
         <label xml:lang="de">Motorola® Protokoll</label>
         <label xml:lang="ca">Protocol Motorola</label>
     </variable>
-    <variable CV="47" mask="XXXXVXXX" default="1" exclude="ESU LokSound Select,LokPilot V4.0 DCC,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Protocols Option 3">
+    <variable CV="47" mask="XXXXVXXX" default="1" exclude="ESU LokSound Select,LokPilot V4.0 DCC,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Protocols Selectrix®">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Selectrix® Protocol</label>
         <label xml:lang="de">Selectrix® Protokoll</label>
@@ -343,13 +345,13 @@
         <label xml:lang="de">Motor PWM Frequenz</label>
         <label xml:lang="ca">Freqüència PWM Motor</label>
     </variable>
-    <variable CV="49" mask="XXXXXVXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Advanced Compatibility Option 2">
+    <variable CV="49" mask="XXXXXVXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Compatibility Marklin Delta">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Marklin® Delta Mode</label>
         <label xml:lang="de">Märklin® Delta Modus</label>
         <label xml:lang="ca">Mode Marlin Delta</label>
     </variable>
-    <variable CV="49" mask="VXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Advanced Protocols Option 11">
+    <variable CV="49" mask="VXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Advanced Protocols Additional Addresses">
         <enumVal>
             <enumChoice choice="No additional addresses" value="0">
                 <choice>No additional addresses</choice>
@@ -376,19 +378,19 @@
         <label xml:lang="de">Märklin® Folge Adressen</label>
         <label xml:lang="ca">Adreces tradicionals Märklin</label>
     </variable>
-    <variable CV="49" mask="XXXVXXXX" default="1" item="ESU V4 Adavanced Speed Step Option 1">
+    <variable CV="49" mask="XXXVXXXX" default="1" item="ESU V4 Auto Speed Step">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Automatic Speed Step Detection</label>
         <label xml:lang="de">Automatische Fahrstufenerkennung</label>
         <label xml:lang="ca">Sistema de detecció automàtica de Passos de Velocitat</label>
     </variable>
-    <variable CV="49" mask="XXVXXXXX" default="0" exclude="LokPilot Micro V4.0,LokPilot Micro V4.0 DCC" item="ESU V4 Advanced Compatibility Option 1">
+    <variable CV="49" mask="XXVXXXXX" default="0" exclude="LokPilot Micro V4.0,LokPilot Micro V4.0 DCC" item="ESU V4 Compatibility LGB">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>LGB® Function Button Mode</label>
         <label xml:lang="de">LGB® Funktionstasten Modus</label>
         <label xml:lang="ca">Mode de funcionament LGB</label>
     </variable>
-    <variable CV="49" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Compatibility Option 3">
+    <variable CV="49" mask="XVXXXXXX" default="0" item="ESU V4 Compatibility ZIMO MF">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>ZIMO® Manual Function Mode</label>
         <label xml:lang="de">Zimo® Manual Funktion</label>
@@ -479,45 +481,45 @@
         <label xml:lang="de">Zeitdauer für Blinkeffekte</label>
         <label xml:lang="ca">Taxa per efectes intermitents</label>
     </variable>
-    <variable CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Advanced Power Pack Slider 1" exclude="LokPilot Fx V4.0">
+    <variable CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Power Fail Bypass" exclude="LokPilot Fx V4.0">
         <decVal/>
         <label>Power Pack Maintain Time</label>
         <label xml:lang="de">PowerPack Überbrückungszeit</label>
         <label xml:lang="ca">Temps de mantinguda del PowerPack</label>
     </variable>
-    <variable CV="122" mask="XXXXXXXV" default="1" item="ESU V4 Advanced Memory Settings Option 1)">
+    <variable CV="122" mask="XXXXXXXV" default="1" item="ESU V4 Memory Settings Functions">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Remember Current Function States</label>
         <label xml:lang="fr">Sauvegarde fonction</label>
         <label xml:lang="de">Speicherung der Funktionstastenstellung</label>
         <label xml:lang="ca">Desa l'estat de les funcions</label>
     </variable>
-    <variable CV="122" mask="XXXXXXVX" default="1" item="ESU V4 Advanced Memory Settings Option 2)">
+    <variable CV="122" mask="XXXXXXVX" default="1" item="ESU V4 Memory Settings Speed">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Remember Current Speed</label>
         <label xml:lang="fr">Sauvegarde vitesse actuelle</label>
         <label xml:lang="de">Speicherung der Geschwindigkeit</label>
         <label xml:lang="ca">Recorda velocitats Actuals</label>
     </variable>
-    <variable CV="123" default="100" item="ESU V4 Advanced Brake Sections Slider 2">
+    <variable CV="123" default="100" item="ESU V4 ABC Reduced Speed">
         <decVal/>
         <label>ABC mode reduced speed</label>
         <label xml:lang="de">ABC Modus „Langsamfahrt”</label>
         <label xml:lang="ca">Velociatat limitada en mode ABC</label>
     </variable>
-    <variable CV="124" mask="XXXXXXXV" default="0" item="ESU V4 Adavanced Preserve Direction Option 1">
+    <variable CV="124" mask="XXXXXXXV" default="0" item="ESU V4 Preserve Direction">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Preserve Driving Direction when Changing from Analog to Digital</label>
         <label xml:lang="de">Fahrtrichtung beim Wechsel von Analog zu Digital beibehalten</label>
         <label xml:lang="ca">Preservar sentit de marxa en cambiar de Analògic a digital</label>
     </variable>
-    <variable CV="124" mask="XXXXXXVX" default="0" item="ESU V4 Advanced Decoder Lock Option 1">
+    <variable CV="124" mask="XXXXXXVX" default="0" item="ESU V4 Decoder Lock Enable">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>Decoder Lock Enable</label>
         <label xml:lang="de">Decoder Lock</label>
         <label xml:lang="ca">Activa bloqueig del decóder</label>
     </variable>
-    <variable CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot V4.0 DCC,LokSound Select L" item="ESU V4 Advanced Compatibility Option 4">
+    <variable CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot V4.0 DCC,LokSound Select L" item="ESU V4 Compatibility SUSI">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Serial User Standard Interface</label>
         <label xml:lang="de">Serielles Protokoll für C-Sinus</label>
@@ -540,7 +542,7 @@
         <label>Enable Output Driver on AUX3 and AUX4</label>
         <label xml:lang="ca">Activa Sortides en AUX3 i AUX4</label>
     </variable>
-    <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Stop Behaviour Option 1">
+    <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 E-Stop on Seed Step 0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stop immediately on speed step 0</label>
         <label xml:lang="de">Sofortiger Stop bei FS 0</label>
@@ -585,7 +587,7 @@
         <decVal/>
         <label>Grade Crossing Hold Time</label>
     </variable>
-    <variable CV="134" mask="XXVVVVVV" default="12" item="ESU V4 Advanced Brake Sections Slider 1">
+    <variable CV="134" mask="XXVVVVVV" default="12" item="ESU V4 ABC Detection Threshold">
         <decVal min="4" max="32"/>
         <label>ABC voltage detection threshold</label>
         <label xml:lang="de">ABC-Modus „Empfindlichkeit”</label>
@@ -618,17 +620,17 @@
         <tooltip xml:lang="de">die Einheit ist Grad Celsius</tooltip>
         <label xml:lang="ca">Temperatra de preescalfat de segon fumigen</label>
     </variable>
-    <variable CV="179" default="40" item="ESU V4 Dynamic Brake Slider 1">
+    <variable CV="179" default="40" item="ESU V4 Brake Function 1 Deceleration">
         <decVal/>
         <label>Deceleration with Dynamic Brake</label>
         <label xml:lang="it">Decellerazione with Dynamic Brake (0-255)</label>
         <label xml:lang="fr">Décélération with Dynamic Brake (0-255)</label>
-        <label xml:lang="de">Bremszeit with Dynamic Brake</label>
+        <label xml:lang="de">Dynamische Bremse Bremszeit</label>
         <label xml:lang="ca">Desacceleració with Dynamic Brake (0-255)</label>
         <tooltip>Value multiplied by 0.25 = Time from Full Speed to Stop.</tooltip>
         <tooltip xml:lang="de">Wert multipliziert mit 0.25 = Zeit von Maximalgeschwindigkeit bis Stop</tooltip>
     </variable>
-    <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 Advanced Stop Behaviour Option 1" include="LokSound Micro V4.0,LokSound XL V4.0">
+    <variable CV="245" mask="XVXXXXXX" default="0" item="ESU V4 E-Stop on Seed Step 0" include="LokSound Micro V4.0,LokSound XL V4.0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Stop immediately on speed step 0</label>
         <label xml:lang="de">Sofortiger Stop bei FS=0</label>
@@ -656,25 +658,25 @@
         <label xml:lang="ca">Temps d'empenyer enn desenganxat automàtic</label>
     </variable>
     <!-- A nicht beschrieben -->
-    <variable CV="252" include="ESU LokPilot V4.0" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Advanced Starting Delay Slider 1">
+    <variable CV="252" include="ESU LokPilot V4.0" default="0" tooltip="Unit is 0.06535 seconds" item="ESU V4 Starting Delay Time">
         <decVal/>
         <label>&lt;html&gt;Prime Mover Startup Delay&lt;br&gt;if Virtual Drive Sound Enabled&lt;/html&gt;</label>
     </variable>
     <!-- E nicht beschrieben -->
-    <variable CV="253" default="0" tooltip="Unit is 0.25 seconds" item="ESU V4 Advanced Constant Brake Option 1" exclude="LokPilot Fx V4.0">
+    <variable CV="253" default="0" tooltip="Unit is 0.25 seconds" item="ESU V4 Constant Brake Time" exclude="LokPilot Fx V4.0">
         <decVal/>
         <label>Constant Brake Time</label>
         <label xml:lang="de">Konstanter Bremsmodus</label>
         <tooltip xml:lang="de">die Einheit sind 0.25 sec</tooltip>
         <label xml:lang="ca">TEmps de frenada consant</label>
     </variable>
-    <variable CV="254" default="0" item="ESU V4 Advanced Constant Brake Option 2" exclude="LokPilot Fx V4.0">
+    <variable CV="254" default="0" item="ESU V4 Constant Brake Forward" exclude="LokPilot Fx V4.0">
         <decVal/>
         <label>Constant Brake Distance Forward</label>
         <label xml:lang="de">Konstanter Bremsweg Vorwärts</label>
         <label xml:lang="ca">Distància de frenada constant enrere</label>
     </variable>
-    <variable CV="255" default="0" item="ESU V4 Advanced Constant Brake Option 3" exclude="LokPilot Fx V4.0">
+    <variable CV="255" default="0" item="ESU V4 Constant Brake Reverse" exclude="LokPilot Fx V4.0">
         <decVal/>
         <label>Constant Brake Distance Backward</label>
         <label xml:lang="de">Konstanter Bremsweg Rückwärts</label>
@@ -698,10 +700,13 @@
         <decVal/>
         <label>Firmware Major Version</label>
     </variable>
-    <!-- Decoder & Project Information -->
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/> -->
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoCVs.xml"/> -->
-    <!-- Function Outputs -->
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/esu/v4projectInfoCVs.xml"/>
+    <variables exclude="ESU LokPilot V4.0">
+        <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
+    </variables>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutCVs.xml"/>
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testCVs.xml"/> -->
+    <variables include="ESU LokSound V4.0">
+        <xi:include href="http://jmri.org/xml/decoders/esu/susiMapCVs.xml"/>
+    </variables>
 </variables>

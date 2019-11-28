@@ -23,10 +23,9 @@ public class LnTrafficControllerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
         memo = new LocoNetSystemConnectionMemo();
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
         memo.setLnTrafficController(lnis);
-        lnis.setSystemConnectionMemo(memo);
     }
 
     @After

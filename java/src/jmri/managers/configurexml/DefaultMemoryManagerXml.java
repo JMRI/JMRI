@@ -5,7 +5,7 @@ import org.jdom2.Element;
 
 /**
  * Persistency implementation for the default MemoryManager persistence.
- * <P>
+ * <p>
  * The state of memory objects is not persisted, just their existence.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
@@ -42,4 +42,5 @@ public class DefaultMemoryManagerXml extends AbstractMemoryManagerConfigXML {
         loadMemories(sharedMemories);
         return true;
     }
+
 }

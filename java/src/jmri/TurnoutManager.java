@@ -3,40 +3,40 @@ package jmri;
 import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * Locate a Turnout object representing some specific turnout on the layout.
- * <P>
+ * <p>
  * Turnout objects are obtained from a TurnoutManager, which in turn is
  * generally located from the InstanceManager. A typical call sequence might be:
- * <PRE>
+ * <pre>
  * Turnout turnout = InstanceManager.turnoutManagerInstance().provideTurnout("23");
- * </PRE>
- * <P>
+ * </pre>
+ * <p>
  * Each turnout has a two names. The "user" name is entirely free form, and can
  * be used for any purpose. The "system" name is provided by the system-specific
  * implementations, and provides a unique mapping to the layout control system
  * (for example LocoNet or NCE) and address within that system.
- * <P>
+ * <p>
  * Much of the book-keeping is implemented in the AbstractTurnoutManager class,
  * which can form the basis for a system-specific implementation.
- * <P>
+ * <p>
  * A sample use of the TurnoutManager interface can be seen in the
  * jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame class, which provides a
  * simple GUI for controlling a single turnout.
  *
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @see jmri.Turnout
  * @see jmri.InstanceManager
@@ -47,9 +47,11 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     /**
      * Get the Turnout with the user name, then system name if needed; if that fails, create a
      * new Turnout. 
-     * If the name is a valid system name, it will be used for the
-     * new Turnout. Otherwise, the makeSystemName method will attempt to turn it
+     * If the name is a valid system name, it will be used for the new Turnout.
+     * Otherwise, the {@link Manager#makeSystemName} method will attempt to turn it
      * into a valid system name.
+     * <p>This provides the same function as {@link ProvidingManager#provide}
+     * which has a more generic form.
      *
      * @param name User name, system name, or address which can be promoted to
      *             system name
@@ -103,17 +105,17 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
      * two calls with the same arguments will get the same instance; there is
      * only one Turnout object representing a given physical turnout and
      * therefore only one with a specific system or user name.
-     * <P>
+     * <p>
      * This will always return a valid object reference; a new object will be
      * created if necessary. In that case:
-     * <UL>
-     * <LI>If a null reference is given for user name, no user name will be
+     * <ul>
+     * <li>If a null reference is given for user name, no user name will be
      * associated with the Turnout object created; a valid system name must be
      * provided
-     * <LI>If both names are provided, the system name defines the hardware
+     * <li>If both names are provided, the system name defines the hardware
      * access of the desired turnout, and the user address is associated with
      * it. The system name must be valid.
-     * </UL>
+     * </ul>
      * Note that it is possible to make an inconsistent request if both
      * addresses are provided, but the given values are associated with
      * different objects. This is a problem, and we don't have a good solution
@@ -128,7 +130,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
      *                                  be parsed
      */
     @Nonnull
-    public Turnout newTurnout(@Nonnull String systemName, @Nullable String userName) throws IllegalArgumentException;
+    public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) throws IllegalArgumentException;
 
     /**
      * Get text to be used for the Turnout.CLOSED state in user communication.

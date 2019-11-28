@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
 public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
-     * Enhanced constructor for placing the pane in various GUIs
+     * Enhanced constructor for placing the pane in various GUIs.
+     *
      * @param s Human readable panel name
      * @param wi window to place the new panel
      * @param paneClass name of panel class, should be subclass of JmriPanel
@@ -52,4 +53,5 @@ public class NceNamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
     }
 
     private final static Logger log = LoggerFactory.getLogger(NceNamedPaneAction.class);
+
 }

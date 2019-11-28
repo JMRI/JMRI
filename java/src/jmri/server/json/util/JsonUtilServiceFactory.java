@@ -17,21 +17,28 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
     @Override
     public String[] getTypes() {
         return new String[]{JSON.GOODBYE,
-            JSON.HELLO,
-            JSON.METADATA,
-            JSON.NETWORK_SERVICES,
-            JSON.NODE,
-            JSON.PANELS,
-            JSON.RAILROAD,
-            JSON.SYSTEM_CONNECTIONS,
-            JSON.CONFIG_PROFILES};
+                JSON.HELLO,
+                JSON.METADATA,
+                JSON.NETWORK_SERVICE,
+                JSON.NETWORK_SERVICES,
+                JSON.NODE,
+                JSON.PANEL,
+                JSON.PANELS,
+                JSON.RAILROAD,
+                JSON.SYSTEM_CONNECTION,
+                JSON.SYSTEM_CONNECTIONS,
+                JSON.CONFIG_PROFILE,
+                JSON.CONFIG_PROFILES};
     }
 
     @Override
     public String[] getSentTypes() {
         // retain ERROR on behalf of JsonException for schema handling
+        // retain LIST on behalf of JSON servers for schema handling
         // retain PONG on behalf of JSON servers for schema handling
         return new String[]{JsonException.ERROR,
+            JSON.CONFIG_PROFILE,
+            JSON.LIST,
             JSON.NETWORK_SERVICE,
             JSON.PANEL,
             JSON.PONG,

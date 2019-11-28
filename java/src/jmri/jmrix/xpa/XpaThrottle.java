@@ -2,6 +2,7 @@ package jmri.jmrix.xpa;
 
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +27,7 @@ public class XpaThrottle extends AbstractThrottle {
     public XpaThrottle(LocoAddress address, XpaTrafficController t) {
         super(null);
         this.address = address.getNumber();
-        this.speedIncrement = 1;
+        this.speedStepMode = SpeedStepMode.INCREMENTAL;
         this.isForward = true;
         this.speedSetting = 0;
         this.f0 = false;
@@ -50,7 +51,7 @@ public class XpaThrottle extends AbstractThrottle {
 
     /**
      * Set the speed and direction.
-     * <P>
+     * <p>
      * This intentionally skips the emergency stop value of 1.
      *
      * @param speed Number from 0 to 1; less than zero is emergency stop

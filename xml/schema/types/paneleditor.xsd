@@ -59,14 +59,23 @@
         <xs:element name="indicatorturnouticon" type="EditorIndicatorTurnoutIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="PortalIcon" type="EditorPortalIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
         <xs:element name="LightIcon" type="EditorLightIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
+        <xs:element name="BlockContentsIcon"  type="EditorBlockContentsIconType" minOccurs="0" maxOccurs="unbounded"></xs:element>
 
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"></xs:attribute>
       <xs:attribute name="name" type="xs:string"></xs:attribute>
-      <xs:attribute name="x" type="xs:integer" use="required"></xs:attribute>
-      <xs:attribute name="y" type="xs:integer" use="required"></xs:attribute>
-      <xs:attribute name="height" type="xs:integer" use="required"></xs:attribute>
-      <xs:attribute name="width" type="xs:integer" use="required"></xs:attribute>
+      <xs:attribute name="x" type="xs:integer">
+        <xs:annotation><xs:documentation>Optional as of JMRI 4.15.6</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="y" type="xs:integer">
+        <xs:annotation><xs:documentation>Optional as of JMRI 4.15.6</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="height" type="xs:integer">
+        <xs:annotation><xs:documentation>Optional as of JMRI 4.15.6</xs:documentation></xs:annotation>
+      </xs:attribute>
+      <xs:attribute name="width" type="xs:integer">
+        <xs:annotation><xs:documentation>Optional as of JMRI 4.15.6</xs:documentation></xs:annotation>
+      </xs:attribute>
       <xs:attribute name="editable" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="positionable" type="yesNoType" default="yes"></xs:attribute>
       <xs:attribute name="controlling" type="yesNoType" default="yes"></xs:attribute>

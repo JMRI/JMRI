@@ -1,76 +1,61 @@
 package jmri.jmrix.can.cbus.swing.eventtable;
 
-import java.awt.FlowLayout;
 import java.awt.Frame;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.ResourceBundle;
 import java.util.regex.PatternSyntaxException;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultCellEditor;
+import javax.swing.DropMode;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComponent;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
-import javax.swing.JSplitPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.JToolBar;
 import javax.swing.RowFilter;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.TransferHandler;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultFormatter;
-import javax.swing.text.Element;
-import javax.swing.text.Highlighter;
+import jmri.jmrix.can.cbus.CbusPreferences;
+import jmri.jmrix.can.cbus.eventtable.CbusTableEvent;
+import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.util.FileUtil;
 import jmri.util.swing.XTableColumnModel;
+import jmri.util.swing.StayOpenCheckBoxItem;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -90,10 +75,11 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements TableModelListener {
 
-    protected CbusEventTableDataModel eventModel=null;
-    protected JTable eventTable=null;
-    protected JScrollPane eventScroll;
-    protected JSplitPane split;
+    public CbusEventTableDataModel eventModel=null;
+    public JTable eventTable=null;
+    private CbusPreferences preferences;
+    
+    public JScrollPane eventScroll;
     protected JPanel pane1;
     protected JPanel toppanelcontainer;
     protected JPanel neweventcontainer = new JPanel();
@@ -102,30 +88,31 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
     private JButton newevbutton;
     public String currentRowCount;
     protected JPanel filterpanel = new JPanel();
-    final private JToolBar toolBarColumns = new JToolBar(Bundle.getMessage("ColumnShowHide"));
-    protected JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
-    protected final static JTextField filterText = new JTextField("",8);
-    private javax.swing.filechooser.FileNameExtensionFilter fcuxmlfilter = new javax.swing.filechooser.FileNameExtensionFilter(
-        "FCU xml", "xml");
     
+    private final JTextField filterText = new JTextField("",8);
+    private JButton clearfilterButton;
     private String textForSearch = "";
-    private double _splitratio = 0.95;
-    static private int MAX_LINES = 500; // tablefeedback screen log size
-    private static TextAreaFIFO tablefeedback = new TextAreaFIFO(MAX_LINES);
-    private JScrollPane scrolltablefeedback = new JScrollPane (tablefeedback);    
-    private DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss:SSS dd/MM/yy");
+
+    private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
     public static final Color VERY_LIGHT_RED = new Color(255,176,173);
     public static final Color VERY_LIGHT_GREEN = new Color(165,255,164);
-    public static final Color GOLD = new Color(255,204,51);
-    
-    protected Highlighter tableFeedbackHighlighter;
-    protected static Highlighter h = tablefeedback.getHighlighter();
+
+    private final JMenu evColMenu = new JMenu(Bundle.getMessage("evColMenuName"));
+    private final JMenu evStatMenu = new JMenu(Bundle.getMessage("evStatMenuName"));
+    private final JMenu evJmMenu = new JMenu(Bundle.getMessage("evJmMenuName"));
+    private List<JCheckBoxMenuItem> colMenuList = new ArrayList<>();
 
     @Override
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
-        eventModel = new CbusEventTableDataModel(memo, 10,
-                CbusEventTableDataModel.MAX_COLUMN); // controller, row, column
+        try {
+            eventModel = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel.class);
+        } catch (NullPointerException e) {
+            log.warn("no event table from instance manager");
+        }
+        
+        preferences = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.CbusPreferences.class);
+        
         init();
     }
 
@@ -133,10 +120,14 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         super();
     }
 
-
     public void init() {
+        JMenuItem stlrUpdateItem = new JMenuItem(Bundle.getMessage("UpdateCols"));
+        evJmMenu.add(stlrUpdateItem);
+        stlrUpdateItem.addActionListener((ActionEvent e) -> {
+            eventModel.ta.updatejmricols();
+        });        
         
-        JTable eventTable = new JTable(eventModel) {
+        JTable _eventTable = new JTable(eventModel) {
             // Override JTable Header to implement table header tool tips.
             @Override
             protected JTableHeader createDefaultTableHeader() {
@@ -144,7 +135,6 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                     @Override
                     public String getToolTipText(MouseEvent e) {
                         try {
-                           // log.debug("131 gettttext");
                             java.awt.Point p = e.getPoint();
                             int index = columnModel.getColumnIndexAtX(p.x);
                             int realIndex = columnModel.getColumn(index).getModelIndex();
@@ -160,72 +150,51 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
 
         // Use XTableColumnModel so we can control which columns are visible
         final  XTableColumnModel tcm = new XTableColumnModel();
-        eventTable.setColumnModel(tcm);
-        eventTable.createDefaultColumnsFromModel();
+        _eventTable.setColumnModel(tcm);
+        _eventTable.createDefaultColumnsFromModel();
         
+        _eventTable.setAutoCreateRowSorter(true);
         
-        eventTable.setAutoCreateRowSorter(true);
+        final TableRowSorter<CbusEventTableDataModel> sorter = new TableRowSorter<>(eventModel);
+        _eventTable.setRowSorter(sorter);
         
-        final TableRowSorter<CbusEventTableDataModel> sorter = new TableRowSorter<CbusEventTableDataModel>(eventModel);
-        eventTable.setRowSorter(sorter);
+        _eventTable.setRowSelectionAllowed(true);
+        _eventTable.setColumnSelectionAllowed(false);
         
-
+        _eventTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        _eventTable.setRowHeight(26);
         
-        eventTable.setRowSelectionAllowed(true);
-        eventTable.setColumnSelectionAllowed(false);
-        eventTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        tcm.getColumn(CbusEventTableDataModel.NAME_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusEventTableDataModel.NODENAME_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusEventTableDataModel.COMMENT_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusEventTableDataModel.NODE_COLUMN).setCellRenderer(getRenderer());        
+        tcm.getColumn(CbusEventTableDataModel.EVENT_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusEventTableDataModel.STATE_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusEventTableDataModel.STLR_ON_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusEventTableDataModel.STLR_OFF_COLUMN).setCellRenderer(getRenderer());
         
-        TableColumnModel eventTableModel = eventTable.getColumnModel();
-        
-        TableColumn evNaColumn = eventTableModel.getColumn(CbusEventTableDataModel.NAME_COLUMN);
-        evNaColumn.setCellRenderer(getRenderer());
-        TableColumn ndNaColumn = eventTableModel.getColumn(CbusEventTableDataModel.NODENAME_COLUMN);
-        ndNaColumn.setCellRenderer(getRenderer());        
-        TableColumn cmntColumn = eventTableModel.getColumn(CbusEventTableDataModel.COMMENT_COLUMN);                
-        cmntColumn.setCellRenderer(getRenderer());         
-        TableColumn ndColumn = eventTableModel.getColumn(CbusEventTableDataModel.NODE_COLUMN);
-        ndColumn.setCellRenderer(getRenderer());        
-        TableColumn evColumn = eventTableModel.getColumn(CbusEventTableDataModel.EVENT_COLUMN);                
-        evColumn.setCellRenderer(getRenderer());
-        
-        TableColumn typeColumn = eventTableModel.getColumn(CbusEventTableDataModel.TYPE_COLUMN);                
-        typeColumn.setCellRenderer(new TypeRenderer());
-        
-        TableColumn fbreqColumn = eventTableModel.getColumn(CbusEventTableDataModel.FEEDBACKREQUIRED_COLUMN);                
-        fbreqColumn.setCellRenderer(new OsRenderer());        
-        TableColumn osColumn = eventTableModel.getColumn(CbusEventTableDataModel.FEEDBACKOUTSTANDING_COLUMN);                
-        osColumn.setCellRenderer(new OsRenderer());
-        TableColumn fbEvColumn = eventTableModel.getColumn(CbusEventTableDataModel.FEEDBACKEVENT_COLUMN);
-        fbEvColumn.setCellRenderer(new OsRenderer());        
-        TableColumn fbNdColumn = eventTableModel.getColumn(CbusEventTableDataModel.FEEDBACKNODE_COLUMN);                
-        fbNdColumn.setCellRenderer(new OsRenderer());
-        TableColumn fbToColumn = eventTableModel.getColumn(CbusEventTableDataModel.FEEDBACKTIMEOUT_COLUMN);                
-        fbToColumn.setCellRenderer(new OsRenderer());
-        TableColumn laFbColumn = eventTableModel.getColumn(CbusEventTableDataModel.LASTFEEDBACK_COLUMN);                
-        laFbColumn.setCellRenderer(new LafbRenderer());
-        
-        TableColumn delBColumn = eventTableModel.getColumn(CbusEventTableDataModel.DELETE_BUTTON_COLUMN);
+        TableColumn delBColumn = tcm.getColumn(CbusEventTableDataModel.DELETE_BUTTON_COLUMN);
         delBColumn.setCellEditor(new ButtonEditor(new JButton()));
         delBColumn.setCellRenderer(new ButtonRenderer());
         
-        TableColumn onBColumn = eventTableModel.getColumn(CbusEventTableDataModel.ON_BUTTON_COLUMN);
+        TableColumn onBColumn = tcm.getColumn(CbusEventTableDataModel.ON_BUTTON_COLUMN);
         onBColumn.setCellEditor(new ButtonEditor(new JButton()));
         onBColumn.setCellRenderer(new ButtonRenderer());
         
-        TableColumn offBColumn = eventTableModel.getColumn(CbusEventTableDataModel.OFF_BUTTON_COLUMN);
+        TableColumn offBColumn = tcm.getColumn(CbusEventTableDataModel.OFF_BUTTON_COLUMN);
         offBColumn.setCellEditor(new ButtonEditor(new JButton()));
         offBColumn.setCellRenderer(new ButtonRenderer());    
         
-        TableColumn togBColumn = eventTableModel.getColumn(CbusEventTableDataModel.TOGGLE_BUTTON_COLUMN);
+        TableColumn togBColumn = tcm.getColumn(CbusEventTableDataModel.TOGGLE_BUTTON_COLUMN);
         togBColumn.setCellEditor(new ButtonEditor(new JButton()));
         togBColumn.setCellRenderer(new ButtonRenderer());        
         
-        TableColumn rqStatColumn = eventTableModel.getColumn(CbusEventTableDataModel.STATUS_REQUEST_BUTTON_COLUMN);
+        TableColumn rqStatColumn = tcm.getColumn(CbusEventTableDataModel.STATUS_REQUEST_BUTTON_COLUMN);
         rqStatColumn.setCellEditor(new ButtonEditor(new JButton()));
         rqStatColumn.setCellRenderer(new ButtonRenderer());   
 
         // format the last updated date time
-        TableColumn timeColumn = eventTableModel.getColumn(CbusEventTableDataModel.LATEST_TIMESTAMP_COLUMN);
+        TableColumn timeColumn = tcm.getColumn(CbusEventTableDataModel.LATEST_TIMESTAMP_COLUMN);
         timeColumn.setCellRenderer(new DefaultTableCellRenderer() {
             @Override
             protected void setValue(Object value) {
@@ -235,60 +204,85 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                     super.setValue(value);
                 }
             }
-        });        
+        });
         
         // configure items for GUI
-        eventModel.configureTable(eventTable);
+        eventModel.configureTable(_eventTable);
 
         for (int i = 0; i < tcm.getColumnCount(); i++) {
             int colnumber=i;
-            String colName = eventTable.getColumnName(colnumber);
-            JToggleButton selectcol = new JToggleButton(new javax.swing.AbstractAction((colName)) {
-                public void actionPerformed(ActionEvent e) {
-                    TableColumn column  = tcm.getColumnByModelIndex(colnumber);
-                    boolean     visible = tcm.isColumnVisible(column);
-                    tcm.setColumnVisible(column, !visible);
-                    
-                }
-            });
-            selectcol.setToolTipText(CbusEventTableDataModel.columnToolTips[i]);
-            toolBarColumns.add(selectcol);
+            String colName = _eventTable.getColumnName(colnumber);
+            StayOpenCheckBoxItem showcol = new StayOpenCheckBoxItem(colName);
+            colMenuList.add(showcol);
+            showcol.setToolTipText(CbusEventTableDataModel.columnToolTips[i]);
             
-            if ( i > 6 ) {
+            if ( i < 7 ) {
                 //tcm.setColumnVisible(tcm.getColumnByModelIndex(colnumber), false);
-                selectcol.setSelected(true);
+                showcol.setSelected(true);
+            }            
+            switch (colnumber) {
+                case CbusEventTableDataModel.NAME_COLUMN:
+                case CbusEventTableDataModel.NODE_COLUMN:
+                case CbusEventTableDataModel.EVENT_COLUMN:
+                case CbusEventTableDataModel.NODENAME_COLUMN:
+                case CbusEventTableDataModel.COMMENT_COLUMN:
+                case CbusEventTableDataModel.STATE_COLUMN:
+                case CbusEventTableDataModel.TOGGLE_BUTTON_COLUMN:
+                case CbusEventTableDataModel.ON_BUTTON_COLUMN:
+                case CbusEventTableDataModel.OFF_BUTTON_COLUMN:
+                case CbusEventTableDataModel.CANID_COLUMN:
+                case CbusEventTableDataModel.DELETE_BUTTON_COLUMN:
+                    evColMenu.add(showcol); // event columns
+                    break;
+                case CbusEventTableDataModel.STATUS_REQUEST_BUTTON_COLUMN:
+                case CbusEventTableDataModel.LATEST_TIMESTAMP_COLUMN:
+                case CbusEventTableDataModel.SESSION_TOTAL_COLUMN:
+                case CbusEventTableDataModel.SESSION_ON_COLUMN:
+                case CbusEventTableDataModel.SESSION_OFF_COLUMN:
+                case CbusEventTableDataModel.SESSION_IN_COLUMN:
+                case CbusEventTableDataModel.SESSION_OUT_COLUMN:
+                case CbusEventTableDataModel.ALL_TOTAL_COLUMN:
+                case CbusEventTableDataModel.ALL_ON_COLUMN:
+                case CbusEventTableDataModel.ALL_OFF_COLUMN:
+                case CbusEventTableDataModel.ALL_IN_COLUMN:
+                case CbusEventTableDataModel.ALL_OUT_COLUMN:
+                    evStatMenu.add(showcol); // count columns
+                    break;
+                case CbusEventTableDataModel.STLR_ON_COLUMN:
+                case CbusEventTableDataModel.STLR_OFF_COLUMN:
+                    evJmMenu.add(showcol);
+                    break;
+                default:
+                    break;
             }
+            
+            showcol.addActionListener((ActionEvent e) -> {
+                TableColumn column  = tcm.getColumnByModelIndex(colnumber);
+                boolean visible1 = tcm.isColumnVisible(column);
+                tcm.setColumnVisible(column, !visible1);
+            });
         }
         
         for (int ia = 7; ia < (CbusEventTableDataModel.MAX_COLUMN); ia++) {
             TableColumn column  = tcm.getColumnByModelIndex(ia);
             tcm.setColumnVisible(column, false);
-            // log.warn("ia is {}   {} ",ia, column);
-
-        }        
+        }
+        
+        colMenuList = Collections.unmodifiableList(colMenuList);
         
         eventModel.addTableModelListener(this);
-    // or tcm ?
-        
-        
-        
-        
         
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
        
         // main pane
-        JPanel pane1 = new JPanel();
-        pane1.setLayout(new BorderLayout());
+        JPanel _pane1 = new JPanel();
+        _pane1.setLayout(new BorderLayout());
         
-        JPanel toppanelcontainer = new JPanel();
-        toppanelcontainer.setLayout(new BoxLayout(toppanelcontainer, BoxLayout.X_AXIS));
+        JPanel _toppanelcontainer = new JPanel();
+        _toppanelcontainer.setLayout(new BoxLayout(_toppanelcontainer, BoxLayout.X_AXIS));
         // scroller for main table
-        eventScroll = new JScrollPane(eventTable);
+        eventScroll = new JScrollPane(_eventTable);
         eventScroll.setPreferredSize(new Dimension(450, 200));
-        
-        tablefeedback.setEditable ( false ); // set textArea non-editable
-       
-        h.removeAllHighlights();
 
         // add new event
         neweventcontainer.setBorder(BorderFactory.createTitledBorder(
@@ -303,62 +297,42 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
         DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
         formatter.setCommitsOnValidEdit(true);
-        newnodenumberSpinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                checkNewevent();
-            }
+        newnodenumberSpinner.addChangeListener((ChangeEvent e) -> {
+            checkNewevent();
         });
         newnode.add(newnodenumberSpinner);
         newnode.setToolTipText(Bundle.getMessage("NewNodeTip"));
         newnodenumberSpinner.setToolTipText(Bundle.getMessage("NewNodeTip"));
         
         newev.add(new JLabel(Bundle.getMessage("CbusEvent")));
-        newevnumberSpinner = new JSpinner(new SpinnerNumberModel(1, 1, 65535, 1));
+        newevnumberSpinner = new JSpinner(new SpinnerNumberModel(1, 0, 65535, 1));
         JComponent compe = newevnumberSpinner.getEditor();
         JFormattedTextField fielde = (JFormattedTextField) compe.getComponent(0);
         DefaultFormatter formattere = (DefaultFormatter) fielde.getFormatter();
         formattere.setCommitsOnValidEdit(true);
-        newevnumberSpinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                checkNewevent();
-            }
+        newevnumberSpinner.addChangeListener((ChangeEvent e) -> {
+            checkNewevent();
         });
         
-        
         newev.add(newevnumberSpinner);
-        
         newevbutton = new JButton((Bundle.getMessage("NewEvent")));
-        
         ActionListener newEventaction = ae -> {
             int ev = (Integer) newevnumberSpinner.getValue();
             int nd = (Integer) newnodenumberSpinner.getValue();
-            // log.warn("new event button clicked ev {} nd {} ");
-            int response=eventModel.newEventFromButton(ev,nd);
-            if (response==-1){
-                JOptionPane.showMessageDialog(null, 
-                (Bundle.getMessage("NoMakeEvent")), Bundle.getMessage("WarningTitle"),
-                JOptionPane.ERROR_MESSAGE);
-            }
+            eventModel.addEvent(nd,ev,0,CbusTableEvent.EvState.UNKNOWN,"","",0,0,0,0);
         };
         
         newevbutton.addActionListener(newEventaction);
         
-        // JLabel newevfb = new JLabel("");
-        
-        neweventcontainer.add(newev);        
         neweventcontainer.add(newnode);
+        neweventcontainer.add(newev); 
         neweventcontainer.add(newevbutton);        
-       //  neweventcontainer.add(newevfb); 
         
         filterpanel.setBorder(BorderFactory.createTitledBorder(
             BorderFactory.createEtchedBorder(), Bundle.getMessage("FilterSurround")));
         
-        // JLabel label = new JLabel("Filter");
-        //filterpanel.add(label, BorderLayout.WEST);
-        
-        JButton clearfilterButton = new JButton(Bundle.getMessage("ClearFilter"));
+        clearfilterButton = new JButton(Bundle.getMessage("ClearFilter"));
+        clearfilterButton.setEnabled(false);
         ActionListener clearfilter = ae -> {
             filterText.setText("");
         };
@@ -368,15 +342,11 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
         clearfilterButton.addActionListener(clearfilter);
         
         filterpanel.add(filterText);
-        filterpanel.add(clearfilterButton);        
+        filterpanel.add(clearfilterButton);
         
-        
-        toolBarColumns.setLayout(new GridLayout(5,5));
-        
-        toppanelcontainer.add(toolBarColumns);
-        toppanelcontainer.add(filterpanel);
-        toppanelcontainer.add(neweventcontainer);
-        pane1.add(toppanelcontainer, BorderLayout.PAGE_START);
+        _toppanelcontainer.add(filterpanel);
+        _toppanelcontainer.add(neweventcontainer);
+        _pane1.add(_toppanelcontainer, BorderLayout.PAGE_START);
    
         filterText.getDocument().addDocumentListener(new DocumentListener() {
             @Override
@@ -398,47 +368,42 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                 textForSearch = filterText.getText(); // better searches if not trimmed
                 if (textForSearch.length() == 0) {
                     sorter.setRowFilter(null);
-                    h.removeAllHighlights();
+                    clearfilterButton.setEnabled(false);
                 } else {
+                    clearfilterButton.setEnabled(true);
                     try {
                         sorter.setRowFilter(
                         RowFilter.regexFilter("(?i)" + textForSearch)); // case insensitive
                     } catch (PatternSyntaxException pse) {
                         // log.error(" bad regex ");
                     }
-                    updateLoghighlighter();
                 }
             }
         });
-        
-        split = new JSplitPane(JSplitPane.VERTICAL_SPLIT,
-            eventScroll, scrolltablefeedback);
-        split.setResizeWeight(_splitratio);
-        split.setContinuousLayout(true);
 
-        pane1.add(split, BorderLayout.CENTER);
+        _pane1.add(eventScroll, BorderLayout.CENTER);
         
-        add(pane1);
-        pane1.setVisible(true);
+        add(_pane1);
+        _pane1.setVisible(true);
+        
+        _eventTable.setDragEnabled(true);
+        _eventTable.setDropMode(DropMode.ON);
+        _eventTable.setTransferHandler(new CbusEventTableRowDnDHandler());
+        
+        checkNewevent();
+        
     }
     
-    public void checkNewevent() {
+    private void checkNewevent() {
         int newno = (Integer) newnodenumberSpinner.getValue();
         int newev = (Integer) newevnumberSpinner.getValue();
-        
-        CbusEventTableDataModel.Event testIfOnEv = eventModel.new Event();
-        
-        if (testIfOnEv.eventIsOnTable( newno, newev )) {
-            newevbutton.setEnabled(false);
-        } else {
-            newevbutton.setEnabled(true);
-        }
+        newevbutton.setEnabled( ( ( eventModel.seeIfEventOnTable(newno,newev) ) < 0 ) );
     }
     
     @Override
     public void tableChanged(TableModelEvent e) {
         checkNewevent();
-    }    
+    }
   
     /**
      * {@inheritDoc}
@@ -453,171 +418,90 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
      * <p>
      * File - Print, Print Preview, Save, SaveAs csv
      * Display - show / hide Create new event pane, show/hide bottom feedback pane
-     * </p>
      */
     @Override
     public List<JMenu> getMenus() {
-        List<JMenu> menuList = new ArrayList<JMenu>();
+        List<JMenu> menuList = new ArrayList<>();
         Frame mFrame = new Frame();
 
-        ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         JMenu printMenu = new JMenu(("Print"));
         JMenu displayMenu = new JMenu(Bundle.getMessage("Display"));
         
-
-        JMenuItem saveItem = new JMenuItem(rb.getString("MenuItemSave")+" csv");
-
-        saveItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eventModel.saveTable();
-            }
-        });
-        saveItem.setEnabled(eventModel.isTableDirty()); // disable menuItem if table was saved and has not changed since
-
-        JMenuItem saveAsItem = new JMenuItem(rb.getString("MenuItemSaveAs")+ " csv");
-        saveAsItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                eventModel.saveAsTable();
-            }
-        });
-
         
+        JCheckBoxMenuItem saveRestoreEventTableItem = new JCheckBoxMenuItem("Save Events between sessions");
+        saveRestoreEventTableItem.setSelected( preferences.getSaveRestoreEventTable() );
         
-        JMenuItem mnItemOpenFile = new JMenuItem(Bundle.getMessage("ImportMenuMergFcu147")); //  FCU 
-        mnItemOpenFile.setToolTipText("Tested FCU v 1.4.7.42 - v 1.4.7.45"); // NOT I18N
-        mnItemOpenFile.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String myFile = fileChooser();
-                if (myFile!=null) {
-                    eventModel.readTheFCU14742File(myFile);
-                }
-            }
+        saveRestoreEventTableItem.addActionListener((ActionEvent e) -> {
+            preferences.setSaveRestoreEventTable(saveRestoreEventTableItem.isSelected());
+        });
+        
+        JMenuItem saveAsItem = new JMenuItem(Bundle.getMessage("MenuItemSaveAs","csv"));
+        saveAsItem.addActionListener((ActionEvent e) -> {
+            eventModel.ta.saveAsTable();
         });
 
         // add print menu items
-        JMenuItem printItem = new JMenuItem(rb.getString("PrintTable"));
-        printItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                HardcopyWriter writer = null;
-                try {
-                    writer = new HardcopyWriter(mFrame, getTitle(), 10, .8, .5, .5, .5, false);
-                } catch (HardcopyWriter.PrintCanceledException ex) {
-                    // log.debug("Print cancelled");
-                    return;
-                }
-                writer.increaseLineSpacing(20);
-                eventModel.printTable(writer); // close() is taken care of in printTable()
+        JMenuItem printItem = new JMenuItem(Bundle.getMessage("PrintTable"));
+        printItem.addActionListener((ActionEvent e) -> {
+            HardcopyWriter writer;
+            try {
+                writer = new HardcopyWriter(mFrame, getTitle(), 10, .8, .5, .5, .5, false);
+            } catch (HardcopyWriter.PrintCanceledException ex) {
+                // log.debug("Print cancelled");
+                return;
             }
+            writer.increaseLineSpacing(20);
+            eventModel.ta.printTable(writer); // close() is taken care of in printTable()
         });
         
-        
-        JMenuItem previewItem = new JMenuItem(rb.getString("PreviewTable"));
+        JMenuItem previewItem = new JMenuItem(Bundle.getMessage("PreviewTable"));
 
-        previewItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                HardcopyWriter writer = null;
-                try {
-                    writer = new HardcopyWriter(mFrame, getTitle(), 10, .8, .5, .5, .5, true);
-                } catch (HardcopyWriter.PrintCanceledException ex) {
-                    log.debug("Preview cancelled");
-                    return;
-                }
-                writer.increaseLineSpacing(20);
-                eventModel.printTable(writer); // close() is taken care of in printTable()
+        previewItem.addActionListener((ActionEvent e) -> {
+            HardcopyWriter writer;
+            try {
+                writer = new HardcopyWriter(mFrame, getTitle(), 10, .8, .5, .5, .5, true);
+            } catch (HardcopyWriter.PrintCanceledException ex) {
+                log.debug("Preview cancelled");
+                return;
             }
+            writer.increaseLineSpacing(20);
+            eventModel.ta.printTable(writer); // close() is taken care of in printTable()
         });
         
         JCheckBoxMenuItem shownewevent = new JCheckBoxMenuItem((Bundle.getMessage("NewEvent")));
         // shownewevent.setMnemonic(KeyEvent.VK_C);
         shownewevent.setSelected(true);
-        shownewevent.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean newEvShow = shownewevent.isSelected();
-                // log.debug(" show new event checkbox show {} ", newEvShow);
-                neweventcontainer.setVisible(newEvShow);
-            }
+        shownewevent.addActionListener((ActionEvent e) -> {
+            boolean newEvShow = shownewevent.isSelected();
+            // log.debug(" show new event checkbox show {} ", newEvShow);
+            neweventcontainer.setVisible(newEvShow);
         });
-        
-        JCheckBoxMenuItem showinfopanel = new JCheckBoxMenuItem(Bundle.getMessage("ShowInfoPanel"));
-        // shownewevent.setMnemonic(KeyEvent.VK_C);
-        showinfopanel.setSelected(true);
-        showinfopanel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                boolean infoShow = showinfopanel.isSelected();
-                // log.debug(" showinfopanel checkbox show {} ", newEvShow);
-                
-                scrolltablefeedback.setVisible(infoShow);
-                validate();
-                repaint();
-                split.setDividerLocation(_splitratio);
-            }
-        });
-        
         
         JCheckBoxMenuItem showfilterpanel = new JCheckBoxMenuItem(Bundle.getMessage("FilterSurround"));
         // shownewevent.setMnemonic(KeyEvent.VK_C);
         showfilterpanel.setSelected(true);
-        showfilterpanel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                filterpanel.setVisible(showfilterpanel.isSelected());
-            }
-        });
-        
-
-        JCheckBoxMenuItem showcolumnpanel = new JCheckBoxMenuItem(Bundle.getMessage("ColumnShowHide"));
-        // shownewevent.setMnemonic(KeyEvent.VK_C);
-        showcolumnpanel.setSelected(true);
-        showcolumnpanel.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                toolBarColumns.setVisible(showcolumnpanel.isSelected());
-            }
+        showfilterpanel.addActionListener((ActionEvent e) -> {
+            filterpanel.setVisible(showfilterpanel.isSelected());
         });
 
-        fileMenu.add(saveItem);        
+        fileMenu.add(saveRestoreEventTableItem);
+        fileMenu.add( new JSeparator() );
         fileMenu.add(saveAsItem);
-        fileMenu.add(new JSeparator()); // SEPARATOR
-        fileMenu.add(mnItemOpenFile); // FCU Import
         
-        displayMenu.add(showcolumnpanel);   
         displayMenu.add(showfilterpanel);        
-        displayMenu.add(shownewevent);
-        displayMenu.add(showinfopanel);        
+        displayMenu.add(shownewevent);      
         
         printMenu.add(printItem);        
         printMenu.add(previewItem);        
         
         menuList.add(fileMenu);
         menuList.add(printMenu);
+        menuList.add(evColMenu);
+        menuList.add(evStatMenu);
+        menuList.add(evJmMenu);
         menuList.add(displayMenu);
         return menuList;
-    }
-
-    /**
-     * Get file to read from
-     */    
-    public String fileChooser(){
-        // Get file to read from
-        fc.setFileFilter(fcuxmlfilter);
-        int retVal = fc.showOpenDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) {
-            return ""; // Canceled
-        }
-        if (fc.getSelectedFile() == null) {
-            return ""; // Canceled
-        }
-        File f = fc.getSelectedFile();
-        String fileName = f.getAbsolutePath();
-        return fileName;
     }
 
     /**
@@ -631,9 +515,16 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
             public Component getTableCellRendererComponent(
                 JTable table, Object arg1, boolean isSelected, boolean hasFocus, 
                 int row, int col) {
-                String string="";
+                String string;
                 if(arg1 != null){
                     string = arg1.toString();
+                    try {
+                        if ((Integer.parseInt(string)==0) && ( col != CbusEventTableDataModel.EVENT_COLUMN )){
+                            string="";
+                        }
+                    } catch (NumberFormatException ex) {
+                    }
+
                     f.setText(string);
                     // log.debug(" string :{}:",string );
                     if(Pattern.compile(Pattern.quote(textForSearch), Pattern.CASE_INSENSITIVE).matcher(string).find()){
@@ -668,230 +559,87 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                     f.setBorder( table.getBorder() );
                 }
                 
+                if ( arg1 instanceof CbusTableEvent.EvState ) {
+                    if ( Objects.equals(arg1 , CbusTableEvent.EvState.ON )) {
+                        f.setBackground( VERY_LIGHT_GREEN );
+                        f.setText(Bundle.getMessage("CbusEventOn"));
+                    }
+                    else if ( Objects.equals(arg1 , CbusTableEvent.EvState.OFF )) {
+                        f.setBackground( VERY_LIGHT_RED );
+                        f.setText(Bundle.getMessage("CbusEventOff"));
+                    }
+                    else if ( Objects.equals(arg1 , CbusTableEvent.EvState.UNKNOWN )) {
+                        f.setText("");
+                    }
+                }
                 return f;
             }
         };
     }
     
     /**
-     * Sets background for off / on column for easier read
-     */
-    protected static class TypeRenderer extends DefaultTableCellRenderer {
-        public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, 
-            boolean hasFocus, int row, int column) {
-            Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-            if (Objects.equals(value.toString(),Bundle.getMessage("CbusEventOn"))) {
-                cellComponent.setBackground( VERY_LIGHT_GREEN );
-            }
-            else if (Objects.equals(value.toString(),Bundle.getMessage("CbusEventOff"))) {
-                cellComponent.setBackground( VERY_LIGHT_RED );
-            }
-            else {
-                if (isSelected) {
-                    cellComponent.setBackground( table.getSelectionBackground() );
-                } else {
-                    cellComponent.setBackground( table.getBackground() );
-                }
-            }
-            return cellComponent;
-        }
-    }
-
-    
-    
-    /**
-     * Sets background to spot the lesser used number columns
-     */    
-    protected static class OsRenderer extends DefaultTableCellRenderer {
-        public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, 
-            boolean hasFocus, int row, int column) {
-            Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-
-            int val = (int) value;
-            
-            if (val>0) {
-                cellComponent.setBackground( GOLD );
-                cellComponent.setForeground( table.getForeground() );                
-            }
-            else {
-                if (isSelected) {
-                    cellComponent.setBackground( table.getSelectionBackground() );
-                    cellComponent.setForeground( table.getSelectionBackground() );                    
-                } else {
-                    cellComponent.setBackground( table.getBackground() );
-                    cellComponent.setForeground( table.getBackground() );
-                }
-            }
-            return cellComponent;
-        }
-    }    
-    
-    
-    /**
-     * Sets background to last feedback column
-     */    
-    protected static class LafbRenderer extends DefaultTableCellRenderer {
-        public Component getTableCellRendererComponent(
-            JTable table, Object value, boolean isSelected, 
-            boolean hasFocus, int row, int column) {
-            Component cellComponent = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-            
-            if (Objects.equals(value.toString(),Bundle.getMessage("LfbFinding"))) {
-                cellComponent.setBackground( GOLD );
-                cellComponent.setForeground( table.getForeground() );                
-            }
-            else if (Objects.equals(value.toString(),Bundle.getMessage("LfbGood"))) {
-                cellComponent.setBackground( VERY_LIGHT_GREEN );
-                cellComponent.setForeground( table.getForeground() );                
-            }
-            else if (Objects.equals(value.toString(),Bundle.getMessage("LfbBad"))) {
-                cellComponent.setBackground( VERY_LIGHT_RED );
-                cellComponent.setForeground( table.getForeground() );                
-            }
-            
-            else {
-                if (isSelected) {
-                    cellComponent.setBackground( table.getSelectionBackground() );
-                    cellComponent.setForeground( table.getSelectionBackground() );                    
-                } else {
-                    cellComponent.setBackground( table.getBackground() );
-                    cellComponent.setForeground( table.getBackground() );
-                }
-            }
-            return cellComponent;
-        }
-    }    
-    
-    
-    /**
-     * Highlights text in table log based on the filter text
-     */    
-    private static void updateLoghighlighter(){
-        String feedbacktext = tablefeedback.getText().toLowerCase();
-        String textForSearch = filterText.getText().toLowerCase();        
-        h.removeAllHighlights();
-
-        Pattern pattern = Pattern.compile( Pattern.quote(textForSearch) );
-        Matcher matcher = pattern.matcher(feedbacktext);                    
-
-        while(matcher.find()) {
-            try {
-                h.addHighlight( matcher.start(), matcher.end(),
-                    new javax.swing.text.DefaultHighlighter.DefaultHighlightPainter(Color.CYAN)
-                );
-            } catch (BadLocationException e) {
-                log.warn("badlocation exception ",e);
-            }
-        }
-    }
-    
-    
-    /**
      * {@inheritDoc}
      */
     @Override
     public String getTitle() {
-        if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("EventTableTitle"));
-        }
-        return Bundle.getMessage("EventTableTitle");
+        return prependConnToString(Bundle.getMessage("EventTableTitle"));
     }
     
-    
-    public void update() {
-        eventModel.fireTableDataChanged();
-        // TODO disable menuItem if table was saved and has not changed since
-        // replacing menuItem by a new getMenus(). Note saveItem.setEnabled(eventModel.isTableDirty());
-    }
-
-    private boolean mShown = false;
-
-    protected static void updateLogFromModel(int cbuserror, String cbustext){
-        
-       // log.warn("in event table error = {} text = {} length = {} ",cbuserror,cbustext,cbustext.length());
-        // tablefeedback.append("\n");
-        
-        if (cbuserror==3) {
-            tablefeedback.append ("\n * * * * * * * * * * * * * * * * * * * * * * " + cbustext);
-        } else {
-            tablefeedback.append( "\n"+cbustext);
-        }
-        
-       // textForSearch = filterText.getText(); // better searches if not trimmed
-        if (filterText.getText().length() != 0) {
-            updateLoghighlighter();
-        }
-    }
-
-    
-    // on startup
-    @Override
-    public void addNotify() {
-        super.addNotify();        
-        if (mShown) {
-            return;
-        }
-
-        mShown = true;
-    }
-
     @Override
     public void dispose() {
-        String className = this.getClass().getSimpleName();
-        log.debug("dispose called {} ",className);
-        
-        eventModel.dispose();
-        eventModel = null;
+        if(eventModel != null) {
+           eventModel.removeTableModelListener(this);
+        }
         eventTable = null;
         eventScroll = null;
         super.dispose();
     }
 
-    
-
-    
     /**
-     * Keeps the message log windows to a reasonable length
-     * https://community.oracle.com/thread/1373400
+     * Drag and drop handler for events being dragged from the table
      */
-    protected static class TextAreaFIFO extends JTextArea implements DocumentListener {
-        private int maxLines;
+    public static class CbusEventTableRowDnDHandler extends TransferHandler {
     
-        public TextAreaFIFO(int lines) {
-            maxLines = lines;
-            getDocument().addDocumentListener( this );
+        @Override
+        public int getSourceActions(JComponent c) {
+            return COPY;
         }
     
-        public void insertUpdate(DocumentEvent e) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                public void run() {
-                    removeLines();
-                }
-            });
-        }
-        public void removeUpdate(DocumentEvent e) {}
-        public void changedUpdate(DocumentEvent e) {}
-        public void removeLines()
-        {
-            Element root = getDocument().getDefaultRootElement();
-            while (root.getElementCount() > maxLines) {
-                Element firstLine = root.getElement(0);
-                try {
-                    getDocument().remove(0, firstLine.getEndOffset());
-                } catch(BadLocationException ble) {
-                    System.out.println(ble);
-                }
+        @Override
+        public Transferable createTransferable(JComponent c) {
+            
+            if (!(c instanceof JTable )){
+                return null;
             }
-        setCaretPosition( getDocument().getLength() );
+            
+            JTable table = (JTable) c;
+            int row = table.getSelectedRow();
+            if (row < 0) {
+                return null;
+            }
+            row = table.convertRowIndexToModel(row);
+            
+            int nn = (Integer) table.getModel().getValueAt(row, CbusEventTableDataModel.NODE_COLUMN); // node number
+            int en = (Integer) table.getModel().getValueAt(row, CbusEventTableDataModel.EVENT_COLUMN); // event number
+            
+            StringBuilder jmriAddress = new StringBuilder(13);
+            jmriAddress.append("+");
+            if ( nn > 0 ) {
+                jmriAddress.append("N");
+                jmriAddress.append(nn);
+                jmriAddress.append("E");
+            }
+            jmriAddress.append(en);
+            
+            return new StringSelection( jmriAddress.toString() );
+            
         }
+
     }
-    
-    
+
     /**
      * Nested class to create one of these using old-style defaults.
+     * Used as a startup action
      */
     static public class Default extends jmri.jmrix.can.swing.CanNamedPaneAction {
 

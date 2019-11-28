@@ -32,7 +32,7 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
     }
 
     /**
-     * Default implementation for storing the contents of a LsDecSignalHead
+     * Default implementation for storing the contents of a LsDecSignalHead.
      *
      * @param o Object to store, of type LsDecSignalHead
      * @return Element containing the complete info
@@ -103,7 +103,16 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
 
         loadCommon(h, shared);
 
-        InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        SignalHead existingBean =
+                InstanceManager.getDefault(jmri.SignalHeadManager.class)
+                        .getBeanBySystemName(sys);
+
+        if ((existingBean != null) && (existingBean != h)) {
+            log.error("systemName is already registered: {}", sys);
+        } else {
+            InstanceManager.getDefault(jmri.SignalHeadManager.class).register(h);
+        }
+
         return true;
     }
 
@@ -111,7 +120,12 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         Element e = (Element) o;
         String name = e.getAttribute("systemName").getValue();
         Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(name);
-        return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+        if (t != null) {
+            return jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(name, t);
+        } else {
+            log.warn("Failed to find turnout {}. Check connection and configuration", name);
+            return null;
+        }
     }
 
     int loadTurnoutStatus(Object o) {
@@ -130,4 +144,5 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
     }
 
     private final static Logger log = LoggerFactory.getLogger(LsDecSignalHeadXml.class);
+
 }

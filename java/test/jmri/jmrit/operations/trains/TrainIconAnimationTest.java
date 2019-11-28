@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -17,17 +18,15 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017
  */
-public class TrainIconAnimationTest {
+public class TrainIconAnimationTest extends OperationsTestCase {
 
     private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
@@ -371,22 +370,10 @@ public class TrainIconAnimationTest {
         Assert.assertEquals("Train 2 icon X", 125, ti2.getX());
         Assert.assertEquals("Train 2 icon Y", 35, ti2.getY());
 
-        editor.getTargetFrame().dispose();
+        JUnitUtil.dispose(editor.getTargetFrame());
+        JUnitUtil.dispose(editor);
     }
 
-    // The minimal setup for log4J
-    @Before
-    public void setUp() {
-        JUnitUtil.setUp();
-        JUnitUtil.resetProfileManager();
-        jmri.util.JUnitOperationsUtil.resetOperationsManager();
-    }
-
-    @After
-    public void tearDown() {
-        JUnitUtil.tearDown();
-    }
-
-//    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class);
+    //    private final static Logger log = LoggerFactory.getLogger(TrainIconAnimationTest.class);
 
 }

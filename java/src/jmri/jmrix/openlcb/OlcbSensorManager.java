@@ -18,22 +18,24 @@ import org.slf4j.LoggerFactory;
 /**
  * Manage the OpenLCB-specific Sensor implementation.
  *
- * System names are "MSnnn", where nnn is the sensor number without padding.
+ * System names are "MSnnn", where M is the user configurable system prefix,
+ * nnn is the sensor number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2008, 2010
-  */
+ */
 public class OlcbSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
-
-    String prefix = "M";
 
     // Whether we accumulate partially loaded objects in pendingSensors.
     private boolean isLoading = false;
     // Turnouts that are being loaded from XML.
     private final ArrayList<OlcbSensor> pendingSensors = new ArrayList<>();
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public CanSystemConnectionMemo getMemo() {
+        return (CanSystemConnectionMemo) memo;
     }
 
     @Override
@@ -69,25 +71,22 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     // to free resources when no longer used
     @Override
     public void dispose() {
-        memo.getTrafficController().removeCanListener(this);
+        getMemo().getTrafficController().removeCanListener(this);
         super.dispose();
     }
 
     // Implemented ready for new system connection memo
     public OlcbSensorManager(CanSystemConnectionMemo memo) {
-        this.memo = memo;
-        prefix = memo.getSystemPrefix();
+        super(memo);
         memo.getTrafficController().addCanListener(this);
     }
-
-    CanSystemConnectionMemo memo;
 
     @Override
     public Sensor createNewSensor(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
-            validateSystemNameFormat(addr);
+            validateAddressFormat(addr);
         } catch (IllegalArgumentException e) {
             log.error(e.toString());
             throw e;
@@ -127,9 +126,9 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     public void finishLoad() {
         log.debug("Sensor manager : finish load");
         synchronized (pendingSensors) {
-            for (OlcbSensor s : pendingSensors) {
+            pendingSensors.forEach((s) -> {
                 s.finishLoad();
-            }
+            });
             pendingSensors.clear();
             isLoading = false;
         }
@@ -143,7 +142,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     @Override
     public String createSystemName(String curAddress, String prefix) throws JmriException {
         try {
-            validateSystemNameFormat(curAddress);
+            validateAddressFormat(curAddress);
         } catch (IllegalArgumentException e) {
             throw new JmriException(e.toString());
         }
@@ -157,7 +156,7 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         return curAddress;
     }
 
-    void validateSystemNameFormat(String address) throws IllegalArgumentException {
+    void validateAddressFormat(String address) throws IllegalArgumentException {
         OlcbAddress a = new OlcbAddress(address);
         OlcbAddress[] v = a.split();
         if (v == null) {
@@ -171,6 +170,14 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
             default:
                 throw new IllegalArgumentException("Wrong number of events in address: " + address);
         }
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getEntryToolTip() {
+        return Bundle.getMessage("AddSensorEntryToolTip");
     }
 
     // listen for sensors, creating them as needed

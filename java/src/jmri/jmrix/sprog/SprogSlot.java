@@ -2,7 +2,7 @@ package jmri.jmrix.sprog;
 
 import java.util.Arrays;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
+import jmri.SpeedStepMode;
 import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 public class SprogSlot {
 
     private boolean speedPacket = false;
-    private int speedMode = DccThrottle.SpeedStepMode128;
+    private SpeedStepMode speedMode = SpeedStepMode.NMRA_DCC_128;
 
     public SprogSlot(int num) {
         payload = new byte[SprogConstants.MAX_PACKET_LENGTH];
@@ -109,7 +109,7 @@ public class SprogSlot {
         return speedPacket;
     }
 
-    public void setSpeed(int mode, int address, boolean isLongAddress, int speed, boolean forward) {
+    public void setSpeed(SpeedStepMode mode, int address, boolean isLongAddress, int speed, boolean forward) {
         addr = address;
         isLong = isLongAddress;
         spd = speed;
@@ -117,7 +117,7 @@ public class SprogSlot {
         this.speedMode = mode;
         this.f0to4Packet = false;
         this.forward = forward;
-        if ((mode & DccThrottle.SpeedStepMode28) != 0) {
+        if (mode == SpeedStepMode.NMRA_DCC_28) {
             this.payload = jmri.NmraPacket.speedStep28Packet(true, addr,
                     isLong, spd, forward);
         } else {

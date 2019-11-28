@@ -12,11 +12,11 @@ import org.junit.Test;
  * JUnit tests for the SerialAddress utility class.
  *
  * @author	Dave Duchamp Copyright 2004
-  */
+ */
 public class SerialAddressTest {
 
     @Test
-    public void testValidateSystemNameFormat() {
+    public void testValidSystemNameFormat() {
         Assert.assertTrue("valid format - KL2", NameValidity.VALID == SerialAddress.validSystemNameFormat("KL2", 'L', "K"));
 
         Assert.assertTrue("invalid format - KL", NameValidity.VALID != SerialAddress.validSystemNameFormat("KL", 'L', "K"));
@@ -234,7 +234,9 @@ public class SerialAddressTest {
     @After
     public void tearDown() {
         memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

@@ -4,10 +4,10 @@ import java.util.Arrays;
 import jmri.SignalHead;
 import jmri.Turnout;
 
+import javax.annotation.Nonnull;
+
 /**
  * Abstract class providing the basic logic of the SignalHead interface.
- * <p>
- * SignalHead system names are always upper case.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
@@ -28,14 +28,28 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
                 appearance, getValidStates(), getValidStateNames());
         if (ret != null) {
             return ret;
-        } else {
-            return ("");
         }
+        return ("");
     }
 
     @Override
     public String getAppearanceName() {
         return getAppearanceName(getAppearance());
+    }
+
+    @Override
+    public String getAppearanceKey(int appearance) {
+        String ret = jmri.util.StringUtil.getNameFromState(
+                appearance, getValidStates(), getValidStateKeys());
+        if (ret != null) {
+            return ret;
+        }
+        return ("");
+    }
+
+    @Override
+    public String getAppearanceKey() {
+        return getAppearanceKey(getAppearance());
     }
 
     protected int mAppearance = DARK;
@@ -57,16 +71,16 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     /**
      * Determine whether this signal shows an aspect or appearance
      * that allows travel past it only at restricted speed.
-     * This might be a flashing red appearance, or a 
+     * This might be a flashing red appearance, or a
      * Restricting aspect.
      */
     @Override
     public boolean isShowingRestricting() { return getAppearance() == FLASHRED || getAppearance() == LUNAR || getAppearance() == FLASHLUNAR; }
-    
+
     /**
      * Determine whether this signal shows an aspect or appearance
      * that forbid travel past it.
-     * This might be a red appearance, or a 
+     * This might be a red appearance, or a
      * Stop aspect. Stop-and-Proceed or Restricting would return false here.
      */
     @Override
@@ -137,7 +151,12 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
     }
 
     public static String[] getDefaultValidStateNames() {
-        return Arrays.copyOf(validStateNames, validStateNames.length);
+        String[] stateNames = new String[validStateKeys.length];
+        int i = 0;
+        for (String stateKey : validStateKeys) {
+            stateNames[i++] = Bundle.getMessage(stateKey);
+        }
+        return stateNames;
     }
 
     /**
@@ -167,25 +186,40 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         FLASHGREEN,
         FLASHLUNAR
     };
-    private static final String[] validStateNames = new String[]{
-        Bundle.getMessage("SignalHeadStateDark"),
-        Bundle.getMessage("SignalHeadStateRed"),
-        Bundle.getMessage("SignalHeadStateYellow"),
-        Bundle.getMessage("SignalHeadStateGreen"),
-        Bundle.getMessage("SignalHeadStateLunar"),
-        Bundle.getMessage("SignalHeadStateFlashingRed"),
-        Bundle.getMessage("SignalHeadStateFlashingYellow"),
-        Bundle.getMessage("SignalHeadStateFlashingGreen"),
-        Bundle.getMessage("SignalHeadStateFlashingLunar"),};
+    private static final String[] validStateKeys = new String[]{
+        "SignalHeadStateDark",
+        "SignalHeadStateRed",
+        "SignalHeadStateYellow",
+        "SignalHeadStateGreen",
+        "SignalHeadStateLunar",
+        "SignalHeadStateFlashingRed",
+        "SignalHeadStateFlashingYellow",
+        "SignalHeadStateFlashingGreen",
+        "SignalHeadStateFlashingLunar"
+    };
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int[] getValidStates() {
         return Arrays.copyOf(validStates, validStates.length); // includes int for Lunar
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String[] getValidStateKeys() {
+        return Arrays.copyOf(validStateKeys, validStateKeys.length); // includes int for Lunar
+    }
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String[] getValidStateNames() {
-        return Arrays.copyOf(validStateNames, validStateNames.length); // includes Lunar
+        return getDefaultValidStateNames();
     }
 
     /**
@@ -203,15 +237,14 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
                 java.beans.PropertyChangeEvent e = new java.beans.PropertyChangeEvent(this, "DoNotDelete", null, null);
                 throw new java.beans.PropertyVetoException(Bundle.getMessage("InUseTurnoutSignalHeadVeto", getDisplayName()), e); //IN18N
             }
-        } else if ("DoDelete".equals(evt.getPropertyName())) {
-            log.warn("not clear DoDelete operated? {}", getSystemName()); //NOI18N
         }
     }
 
     @Override
-    public String getBeanType() {
+    public @Nonnull String getBeanType() {
         return Bundle.getMessage("BeanNameSignalHead");
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalHead.class);
+//     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractSignalHead.class);
+
 }

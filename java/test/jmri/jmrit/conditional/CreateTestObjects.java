@@ -7,8 +7,6 @@ import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.Sensor;
-import jmri.Turnout;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 
@@ -32,7 +30,7 @@ public class CreateTestObjects {
         ConditionalVariable var1 = new ConditionalVariable();
         var1.setOpern(Conditional.Operator.NONE);
         var1.setNegation(true);
-        var1.setType(1);
+        var1.setType(Conditional.Type.SENSOR_ACTIVE);
         var1.setName("Sensor 1");  // NOI18N
         var1.setDataString("");
         var1.setNum1(0);
@@ -44,7 +42,7 @@ public class CreateTestObjects {
         ConditionalVariable var2 = new ConditionalVariable();
         var2.setOpern(Conditional.Operator.AND);
         var2.setNegation(true);
-        var2.setType(2);
+        var2.setType(Conditional.Type.SENSOR_INACTIVE);
         var2.setName("Sensor 1");  // NOI18N
         var2.setDataString("");
         var2.setNum1(0);
@@ -60,7 +58,7 @@ public class CreateTestObjects {
 //       <conditionalAction option="1" type="9" systemName="Reset" data="4" delay="0" string="" />
         ConditionalAction act1 = new DefaultConditionalAction();
         act1.setOption(1);
-        act1.setType(9);
+        act1.setType(Conditional.Action.SET_SENSOR);
         act1.setDeviceName("Sensor 1");  // NOI18N
         act1.setActionData(4);
         act1.setActionString("");
@@ -69,7 +67,7 @@ public class CreateTestObjects {
 //       <conditionalAction option="1" type="2" systemName="T-LT264" data="2" delay="0" string="" />
         ConditionalAction act2 = new DefaultConditionalAction();
         act2.setOption(1);
-        act2.setType(2);
+        act2.setType(Conditional.Action.SET_TURNOUT);
         act2.setDeviceName("Turnout 1");  // NOI18N
         act2.setActionData(2);
         act2.setActionString("");

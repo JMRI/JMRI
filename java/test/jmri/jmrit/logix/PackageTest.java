@@ -15,20 +15,19 @@ import org.junit.runners.Suite;
         LogixActionTest.class,
         BundleTest.class,
         jmri.jmrit.logix.configurexml.PackageTest.class,
-        NXFrameTest.class, //formerly NXWarrantTest        
+        NXFrameTest.class, //formerly NXWarrantTest    
         LearnWarrantTest.class,
+        LinkedWarrantTest.class,
         PortalManagerTest.class,
         ThrottleSettingTest.class,
         WarrantManagerTest.class,
         WarrantPreferencesPanelTest.class,
         WarrantPreferencesTest.class,
-        TrackerTableActionTest.class,
         WarrantFrameTest.class,
         WarrantTableActionTest.class,
         WarrantTableFrameTest.class,
         WarrantTableModelTest.class,
         LearnThrottleFrameTest.class,
-        TrackerTest.class,
         BlockOrderTest.class,
         ControlPanelTest.class,
         OpSessionLogTest.class,
@@ -40,6 +39,8 @@ import org.junit.runners.Suite;
         SpeedProfilePanelTest.class,
         RouteFinderTest.class,
         MergePromptTest.class,
+        TrackerTableActionTest.class,
+        TrackerTest.class,
 })
 
 /**

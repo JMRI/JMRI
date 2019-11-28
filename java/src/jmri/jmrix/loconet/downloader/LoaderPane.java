@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author B. Milhaupt Copyright (C) 2013, 2014, 2017
  */
 public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
-        implements ActionListener, jmri.jmrix.loconet.swing.LnPanelInterface {
+        implements jmri.jmrix.loconet.swing.LnPanelInterface {
 
     /**
      * LnPanelInterface implementation makes "memo" object available as convenience
@@ -512,7 +512,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     /**
      * Add filter(s) for possible types to the input file chooser.
-     * @param chooser - a JFileChooser to which the filter is to be added
+     * @param chooser  a JFileChooser to which the filter is to be added
      */
     @Override
     protected void addChooserFilters(JFileChooser chooser) {

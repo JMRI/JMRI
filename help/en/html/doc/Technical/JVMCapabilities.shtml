@@ -19,13 +19,14 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Java Version-Specific Features</h1>
       <p>This page
       contains information about the compatibility and features of
@@ -54,6 +55,10 @@
       at a minimum we'll have to have JMRI running under
       both Java 8 and 
       Java 11/18.9 by January 2019.
+      For more information on this, see also this
+      <a href="http://www.javamagazine.mozaicreader.com/NovemberDecember2018/default/52/0/#&amp;pageSet=52&amp;page=0&amp;contentItem=0">
+        Java Magazine article from November 2018
+        </a>.
       
       <h2>Capabilities</h2>
       <p>This section lists new Java

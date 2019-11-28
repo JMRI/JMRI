@@ -1,31 +1,36 @@
 package jmri.jmrix.powerline;
 
+import java.util.Locale;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implement turnout manager for powerline systems
- * <P>
- * System names are "PTnnn", where nnn is the turnout number without padding.
+ * Implement turnout manager for Powerline systems.
+ * <p>
+ * System names are "PTnnn", where P is the user configurable system prefix,
+ * nnn is the turnout number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008 Converted to
  * multiple connection
  * @author Ken Cameron Copyright (C) 2011
-  */
+ */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     SerialTrafficController tc = null;
 
     public SerialTurnoutManager(SerialTrafficController tc) {
-        super();
+        super(tc.getAdapterMemo());
         this.tc = tc;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return tc.getAdapterMemo().getSystemPrefix();
+    public SerialSystemConnectionMemo getMemo() {
+        return (SerialSystemConnectionMemo) memo;
     }
 
     @Override
@@ -100,22 +105,27 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     /**
-     * Public method to validate system name format
-     *
-     * @return 'true' if system name has a valid format, else returns 'false'
+     * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return (tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, 'T'));
+    public String validateSystemNameFormat(String name, Locale locale) {
+        return tc.getAdapterMemo().getSerialAddress().validateSystemNameFormat(name, typeLetter(), locale);
     }
 
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
+     */
+    @Override
+    public NameValidity validSystemNameFormat(String systemName) {
+        return tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, typeLetter());
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);

@@ -99,9 +99,9 @@
         <p>
             A rudimentary version control system is provided by schema file naming, i.e.
         <ul>
-            <li>layout-config.xsd - the original, not to be changed any more.
-            <li>layout-config-2-9-6.xsd - manually created when the first non-backward-compatible XML content 
-                change was made after the release of JMRI 2.9.3, this accumulates changes
+            <li>layout.xsd - the original, not to be changed any more.
+            <li>layout-2-9-6.xsd - manually created when the first non-backward-compatible XML content 
+                change was made after the release of JMRI 2.9.5, this accumulates changes
                 until some later non-backward-compatible change is made.
         </ul>
 
@@ -109,11 +109,11 @@
         the following steps are needed:
         <ul>
             <li>Copy the existing schema to one with the next version name (e.g.
-                while building the 2.7.4 release, 
-                copy layout-config-2-7-4.xsd to layout-config-2-7-5.xsd)
-                and commit to SVN.
+                while building the 3.1.2 release, 
+                copy layout-2-9-6.xsd to layout-config-3-1-2.xsd)
+                and commit to Git.
             <li>Update the comment on the previous file.
-            <li>Update the references in the 
+            <li>Update the schemaVersion value in the 
                 {@link jmri.configurexml.ConfigXmlManager} code.
         </ul>
         For more information, see the 

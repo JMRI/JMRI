@@ -39,7 +39,11 @@ public class SimpleReporterServer extends AbstractReporterServer {
     public void sendReport(String reporterName, Object r) throws IOException {
         addReporterToList(reporterName);
         if (r != null) {
-            this.sendMessage("REPORTER " + reporterName + " " + r.toString() + "\n");
+            if (r instanceof jmri.Reportable ) {
+               this.sendMessage("REPORTER " + reporterName + " " + ((jmri.Reportable)r).toReportString() + "\n");
+            } else {
+               this.sendMessage("REPORTER " + reporterName + " " + r.toString() + "\n");
+            }
         } else {
             this.sendMessage("REPORTER " + reporterName + "\n");
         }
@@ -56,7 +60,7 @@ public class SimpleReporterServer extends AbstractReporterServer {
         index = statusString.indexOf(" ") + 1;
         index2 = statusString.indexOf(" ", index + 1);
         int newlinepos = statusString.indexOf("\n");
-        String reporterName = statusString.substring(index, index2>0?index2:newlinepos).toUpperCase();
+        String reporterName = statusString.substring(index, index2>0?index2:newlinepos);
         initReporter(reporterName);
         // the string should be "REPORTER xxxxxx REPORTSTRING\n\r"
         // where xxxxxx is the reporter identifier and REPORTSTRING is

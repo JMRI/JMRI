@@ -12,20 +12,19 @@ import org.slf4j.LoggerFactory;
 /**
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under 
  * the terms of version 2 of the GNU General Public License as published 
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
- * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
- * @author Klaus Killinger Copyright (C) 2018
+ * @author Klaus Killinger Copyright (C) 2018, 2019
  */
 // Usage:
 // SteamSound() : constructor
@@ -80,13 +79,21 @@ class SteamSound extends EngineSound {
     // Engine Sounds
     ArrayList<RPMSound> rpm_sounds;
     int top_speed;
-    int driver_diameter;
-    int num_cylinders;
+    private int driver_diameter;
+    private int num_cylinders;
     RPMSound current_rpm_sound;
-    float exponent;
+    private float exponent;
 
     public SteamSound(String name) {
         super(name);
+    }
+
+    // Responds to throttle loco direction key (see EngineSound.java and EngineSoundEvent.java)
+    @Override
+    public void changeLocoDirection(int d) {
+        // If loco direction was changed we need to set topspeed of the loco to new value 
+        // (this is necessary, when topspeed-forward and topspeed-reverse differs)
+        log.debug("loco direction: {}", d);
     }
 
     @Override
@@ -135,35 +142,47 @@ class SteamSound extends EngineSound {
     public void changeThrottle(float t) {
         // Don't do anything, if engine is not started or auto-start is active.
         if (engine_started) {
-            RPMSound rps;
-            rps = getRPMSound(calcRPM(t)); // Get the rpm sound.
-            if (rps != null) {
-                // Yes, I'm checking to see if rps and current_rpm_sound are the *same object*
-                if (rps != current_rpm_sound) {
-                    // Stop the current sound
-                    if ((current_rpm_sound != null) && (current_rpm_sound.sound != null)) {
-                        current_rpm_sound.sound.fadeOut();
-                        if (current_rpm_sound.use_chuff) {
-                            current_rpm_sound.stopChuff();
+            if (t < 0.0f) {
+                // DO something to shut down
+                log.info("Emergency Stop");
+                //t = 0.0f;
+                current_rpm_sound.sound.fadeOut();
+                if (current_rpm_sound.use_chuff) {
+                    current_rpm_sound.stopChuff();
+                }
+                current_rpm_sound = getRPMSound(0);
+                current_rpm_sound.sound.loop();
+            } else {
+                RPMSound rps;
+                rps = getRPMSound(calcRPM(t)); // Get the rpm sound.
+                if (rps != null) {
+                    // Yes, I'm checking to see if rps and current_rpm_sound are the *same object*
+                    if (rps != current_rpm_sound) {
+                        // Stop the current sound
+                        if ((current_rpm_sound != null) && (current_rpm_sound.sound != null)) {
+                            current_rpm_sound.sound.fadeOut();
+                            if (current_rpm_sound.use_chuff) {
+                                current_rpm_sound.stopChuff();
+                            }
+                        }
+                        // Start the new sound.
+                        current_rpm_sound = rps;
+                        if (rps.use_chuff) {
+                            rps.setRPM(calcRPM(t));
+                            rps.startChuff();
+                        }
+                        rps.sound.fadeIn();
+                    } else {
+                        // *same object* - but possibly different rpm (speed) which affects the chuff interval
+                        if (rps.use_chuff) {
+                            rps.setRPM(calcRPM(t)); // Chuff interval need to be recalculated
                         }
                     }
-                    // Start the new sound.
-                    current_rpm_sound = rps;
-                    if (rps.use_chuff) {
-                        rps.setRPM(calcRPM(t));
-                        rps.startChuff();
-                    }
-                    rps.sound.fadeIn();
                 } else {
-                    // *same object* - but possibly different rpm (speed) which affects the chuff interval
-                    if (rps.use_chuff) {
-                        rps.setRPM(calcRPM(t)); // Chuff interval need to be recalculated
-                    }
+                    log.warn("No adequate sound file found for RPM = {}", calcRPM(t));
                 }
-            } else {
-                log.warn("No adequate sound file found for RPM = {}", calcRPM(t));
+                log.debug("RPS: {}, RPM: {}, current_RPM: {}", rps, calcRPM(t), current_rpm_sound);
             }
-            log.debug("RPS: {}, RPM: {}, current_RPM: {}", rps, calcRPM(t), current_rpm_sound);
         }
     }
 
@@ -205,17 +224,17 @@ class SteamSound extends EngineSound {
     public void setXml(Element e, VSDFile vf) {
         Element el;
         //int num_rpms;
-        String fn;
+        String fn, n;
         SoundBite sb;
 
         super.setXml(e, vf);
 
         log.debug("Steam EngineSound: {}, name: {}", e.getAttribute("name").getValue(), name);
-        String n = e.getChild("top-speed").getValue();
-        if (n != null) {
-            top_speed = Integer.parseInt(n);
-            log.debug("Top speed: {} MPH", top_speed);
-        }
+
+        // Required values
+        top_speed = Integer.parseInt(e.getChildText("top-speed"));
+        log.debug("top speed forward: {} MPH", top_speed);
+
         n = e.getChildText("driver-diameter");
         if (n != null) {
             driver_diameter = Integer.parseInt(n);

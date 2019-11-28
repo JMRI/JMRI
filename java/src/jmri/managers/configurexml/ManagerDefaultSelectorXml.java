@@ -6,10 +6,12 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.ProfileManager;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistence of ManagerDefaultSelector
- * <P>
+ * <p>
  * This class is named as being the persistent form of the
  * ManagerDefaultSelector class, but there's no object of that form created or
  * used.
@@ -80,5 +82,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
     @Override
     public void load(Element element, Object o) {
     }
+
+    //private final static Logger log = LoggerFactory.getLogger(ManagerDefaultSelectorXml.class);
 
 }

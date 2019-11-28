@@ -313,7 +313,6 @@
       <xs:attribute name="westboundsensor" type="xs:string"></xs:attribute>
     </xs:complexType>
 
-
     <xs:complexType name="ShapeColorType">
       <xs:annotation>
         <xs:documentation>
@@ -1407,6 +1406,7 @@
       <xs:attribute name="blockcontents" type="xs:string"></xs:attribute>
       <xs:attribute name="selectable" type="xs:string"></xs:attribute>
       <xs:attribute name="rosterentry" type="xs:string"></xs:attribute>
+      <xs:attribute name="defaulticon" type="xs:string"></xs:attribute>
      </xs:complexType>
 
 
@@ -1963,4 +1963,38 @@
       <xs:attribute name="scale" type="xs:float" use="required"></xs:attribute>
     </xs:complexType>
 
+    <xs:complexType name="EditorLayoutShapeType">
+      <xs:annotation>
+        <xs:documentation>
+          Define the XML structure for storing a Layout Shape
+        </xs:documentation>
+        <xs:appinfo>
+          jmri.jmrit.display.configurexml.LayoutShapeXml
+        </xs:appinfo>
+      </xs:annotation>
+
+      <xs:sequence>
+        <xs:element name="points" minOccurs="0" maxOccurs="1">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="point" minOccurs="1" maxOccurs="10">
+                <xs:complexType>
+                  <xs:attribute name="type" type="xs:string" use="required"></xs:attribute>
+                  <xs:attribute name="x" type="xs:float" use="required"></xs:attribute>
+                  <xs:attribute name="y" type="xs:float" use="required"></xs:attribute>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+
+      <xs:attribute name="ident" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="type" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="level" type="xs:string" use="required"></xs:attribute>
+      <xs:attribute name="linewidth" type="xs:int"></xs:attribute>
+      <xs:attribute name="lineColor" type="screenColorType" use="required"></xs:attribute>
+      <xs:attribute name="fillColor" type="screenColorType" use="required"></xs:attribute>
+      <xs:attribute name="class" type="classType" use="required"></xs:attribute>
+    </xs:complexType>
 </xs:schema>

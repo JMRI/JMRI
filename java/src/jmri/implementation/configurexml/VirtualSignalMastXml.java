@@ -2,6 +2,7 @@ package jmri.implementation.configurexml;
 
 import java.util.List;
 import jmri.InstanceManager;
+import jmri.SignalMast;
 import jmri.implementation.VirtualSignalMast;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -59,7 +60,18 @@ public class VirtualSignalMastXml
     public boolean load(Element shared, Element perNode) {
         VirtualSignalMast m;
         String sys = getSystemName(shared);
-        m = new jmri.implementation.VirtualSignalMast(sys);
+        SignalMast previous = InstanceManager.getDefault(jmri.SignalMastManager.class)
+                .getBySystemName(sys);
+        if (previous != null) {
+            if (previous instanceof VirtualSignalMast) {
+                m = (VirtualSignalMast) previous;
+            } else {
+                log.error("Cannot load signal mast because system name {} is already in use.", sys);
+                return false;
+            }
+        } else {
+            m = new VirtualSignalMast(sys);
+        }
 
         if (getUserName(shared) != null) {
             m.setUserName(getUserName(shared));

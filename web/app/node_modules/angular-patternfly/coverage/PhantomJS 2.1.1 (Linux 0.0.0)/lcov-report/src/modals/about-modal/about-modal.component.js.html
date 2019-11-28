@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/modals/about-modal/about-modal.component.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/modals/about-modal/about-modal.component.js</span></h1>
+    <h2>
+        Statements: <span class="metric">94.44% <small>(34 / 36)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">83.33% <small>(5 / 6)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">95% <small>(19 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">94.44% <small>(34 / 36)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">src/modals/about-modal/</a> &#187; about-modal.component.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15</span>
+<span class="cline-any cline-yes">19</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('patternfly.modals')
+  .directive("pfAboutModalTransclude", function ($parse) {
+    'use strict';
+    return {
+      link: function (scope, element, attrs) {
+        element.append($parse(attrs.pfAboutModalTransclude)(scope));
+      }
+    };
+  })
+  .component('pfModalContent', {
+    templateUrl: 'about-modal-template.html',
+    bindings: {
+      resolve: '&lt;',
+      close: '&amp;',
+      dismiss: '&amp;'
+    },
+    controller: function () {
+      'use strict';
+      var $ctrl = this;
+&nbsp;
+      $ctrl.$onInit = function () {
+        $ctrl.additionalInfo = $ctrl.resolve.additionalInfo;
+        $ctrl.copyright = $ctrl.resolve.copyright;
+        $ctrl.imgAlt = $ctrl.resolve.imgAlt;
+        $ctrl.imgSrc = $ctrl.resolve.imgSrc;
+        $ctrl.isOpen = $ctrl.resolve.isOpen;
+        $ctrl.productInfo = $ctrl.resolve.productInfo;
+        $ctrl.title = $ctrl.resolve.title;
+        $ctrl.template = $ctrl.resolve.content;
+      };
+    }
+  })
+  .component('pfAboutModal', {
+    bindings: {
+      additionalInfo: '=?',
+      copyright: '=?',
+      close: "&amp;onClose",
+      imgAlt: '=?',
+      imgSrc: '=?',
+      isOpen: '&lt;?',
+      productInfo: '=',
+      title: '=?'
+    },
+    templateUrl: 'modals/about-modal/about-modal.html',
+    transclude: true,
+    controller: function ($uibModal, $transclude) { //$uibModal, $transclude, $window
+      'use strict';
+      var ctrl = this;
+&nbsp;
+      // The ui-bootstrap modal only supports either template or templateUrl as a way to specify the content.
+      // When the content is retrieved, it is compiled and linked against the provided scope by the $uibModal service.
+      // Unfortunately, there is no way to provide transclusion there.
+      //
+      // The solution below embeds a placeholder directive (i.e., pfAboutModalTransclude) to append the transcluded DOM.
+      // The transcluded DOM is from a different location than the modal, so it needs to be handed over to the
+      // placeholder directive. Thus, we're passing the actual DOM, not the parsed HTML.
+      ctrl.openModal = function () {
+        $uibModal.open({
+          component: 'pfModalContent',
+          resolve: {
+            content: function () {
+              var transcludedContent;
+              $transclude(function (clone) {
+                transcludedContent = clone;
+              });
+              return transcludedContent;
+            },
+            additionalInfo: function () {
+              return ctrl.additionalInfo;
+            },
+            copyright: function () {
+              return ctrl.copyright;
+            },
+            close: function () {
+              return ctrl.close;
+            },
+            imgAlt: function () {
+              return ctrl.imgAlt;
+            },
+            imgSrc: function () {
+              return ctrl.imgSrc;
+            },
+            isOpen: function () {
+              return ctrl.isOpen;
+            },
+            productInfo: function () {
+              return ctrl.productInfo;
+            },
+            title: function () {
+              return ctrl.title;
+            }
+          }
+        })
+          .result.then(
+            function () {
+              ctrl.close(); // closed
+            },
+<span class="fstat-no" title="function not covered" >            function () {</span>
+<span class="cstat-no" title="statement not covered" >              ctrl.close(); </span>// dismissed
+            }
+          );
+      };
+      ctrl.$onInit = function () {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (ctrl.isOpen === undefined) {
+<span class="cstat-no" title="statement not covered" >          ctrl.isOpen = false;</span>
+        }
+      };
+&nbsp;
+      ctrl.$onChanges = function (changesObj) {
+        if (changesObj.isOpen &amp;&amp; changesObj.isOpen.currentValue === true) {
+          ctrl.openModal();
+        }
+      };
+    }
+  });
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Sep 05 2019 13:34:22 GMT-0400 (EDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

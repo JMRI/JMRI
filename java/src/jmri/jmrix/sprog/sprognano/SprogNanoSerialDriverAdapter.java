@@ -30,7 +30,7 @@ public class SprogNanoSerialDriverAdapter
     /**
      * @deprecated JMRI Since 4.4 instance() shouldn't be used, convert to JMRI multi-system support structure
      */
-    @Deprecated
+    @Deprecated  // will be removed when superclass method is removed due to @Override
     static public SprogNanoSerialDriverAdapter instance() {
         return null;
     }

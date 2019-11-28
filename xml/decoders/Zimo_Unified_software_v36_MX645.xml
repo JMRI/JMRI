@@ -33,10 +33,11 @@
   <!-- v1.5,  updated to hide V34 as v34 updates are included in v32 files   Mark Waters, 03 Jan 2016 -->
   <!-- v1.6,  version 36 Firmware based on hidden v34, no other changes, as no updated documents from ZIMO updated to allow FW version up to 40, Alain Carasso, 29 Jul 2017 -->
   <!-- v1.6.1,  Added 2 files into Zimo folder: a new SwissMapping_v36 and CVSwissMapping_v36 to allow Swiss Mapping groups 11 to 17, added default CV7 value to 36, Alain Carasso, 27 Aug 2017 -->
+  <!-- v1.6.2,  disable highVersion="40" , Roanld Kuhn, 25 Apr 2019 -->
 
   <decoder>
     <family name="Zimo Unified software (version 36+)" mfg="Zimo">
-      <model  model="MX645 version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+      <model  model="MX645 version 36+" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -49,7 +50,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model  model="MX645R version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+      <model  model="MX645R version 36+" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -62,7 +63,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model  model="MX645F version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+      <model  model="MX645F version 36+" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -75,7 +76,7 @@
         <output name="10" label="FO 8 (+5v)"/>
         <size length="30" width="15" height="4" units="mm"/>
       </model>
-      <model  model="MX645P22 version 36+" lowVersionID="36" highVersionID="40" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
+      <model  model="MX645P22 version 36+" lowVersionID="36" highVersionID="36" maxInputVolts="35V" maxMotorCurrent="1.2A, peak=2.5A" maxTotalCurrent="1.2A" formFactor="HO" numOuts="10" numFns="14" productID="221">
         <output name="1" label="Front Light"/>
         <output name="2" label="Rear Light"/>
         <output name="3" label="FO 1"/>
@@ -161,6 +162,7 @@
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneInputMapping.xml"/>
   <!-- Begin sound-only panes -->
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundLevels.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSoundSamples.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-ElectricLoco.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/zimo/PaneSound-DieselLoco.xml"/>

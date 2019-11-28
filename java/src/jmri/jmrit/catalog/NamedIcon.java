@@ -17,7 +17,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 import javax.annotation.CheckForNull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
@@ -40,9 +40,9 @@ import org.slf4j.LoggerFactory;
  * provide rotation {@literal &} scaling services.
  * <p>
  * We store both a "URL" for finding the file this was made from (so we can load
- * this later), plus a shorter "name" for display.
+ * this later), plus a shorter (localized) "name" for display in GUI.
  * <p>
- * These can be persisted by storing their name and rotation
+ * These can be persisted by storing their name and rotation.
  *
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen Copyright 2002, 2008
@@ -102,22 +102,22 @@ public class NamedIcon extends ImageIcon {
             ImageReaderSpi spiProv = gifReader.getOriginatingProvider();
             if (spiProv != null && spiProv.canDecodeInput(iis)) {
 
-                gifState.mStreamMd = gifReader.getStreamMetadata();
                 int numFrames = gifReader.getNumImages(true);
-
-                gifState.mFrames = new IIOImage[numFrames];
-                gifState.mWidth = 0;
-                gifState.mHeight = 0;
-                for (int i = 0; i < numFrames; i++) {
-                    gifState.mFrames[i] = gifReader.readAll(i, null);
-                    RenderedImage image = gifState.mFrames[i].getRenderedImage();
-                    gifState.mHeight = Math.max(gifState.mHeight, image.getHeight());
-                    gifState.mWidth = Math.max(gifState.mWidth, image.getWidth());
-                }
 
                 // No need to keep the GIF info if it's not animated, the old code works
                 // in that case.
                 if (numFrames > 1) {
+                    gifState.mStreamMd = gifReader.getStreamMetadata();
+                    gifState.mFrames = new IIOImage[numFrames];
+                    gifState.mWidth = 0;
+                    gifState.mHeight = 0;
+                    for (int i = 0; i < numFrames; i++) {
+                        gifState.mFrames[i] = gifReader.readAll(i, null);
+                        RenderedImage image = gifState.mFrames[i].getRenderedImage();
+                        gifState.mHeight = Math.max(gifState.mHeight, image.getHeight());
+                        gifState.mWidth = Math.max(gifState.mWidth, image.getWidth());
+                    }
+
                     mGifInfo = gifState;
                 }
             }
@@ -209,7 +209,7 @@ public class NamedIcon extends ImageIcon {
      *
      * @param name the new name, can be null
      */
-    public void setName(@Nullable String name) {
+    public void setName(@CheckForNull String name) {
         mName = name;
     }
 
@@ -229,7 +229,7 @@ public class NamedIcon extends ImageIcon {
      *
      * @param url the URL associated with this icon
      */
-    public void setURL(@Nullable String url) {
+    public void setURL(@CheckForNull String url) {
         mURL = url;
     }
 
@@ -291,18 +291,20 @@ public class NamedIcon extends ImageIcon {
      }*/
 
     /**
-     * Valid values are <UL>
-     * <LI>0 - no rotation
-     * <LI>1 - 90 degrees counter-clockwise
-     * <LI>2 - 180 degrees counter-clockwise
-     * <LI>3 - 270 degrees counter-clockwise
-     * </UL>
+     * Valid values are
+     * <ul>
+     * <li>0 - no rotation
+     * <li>1 - 90 degrees counter-clockwise
+     * <li>2 - 180 degrees counter-clockwise
+     * <li>3 - 270 degrees counter-clockwise
+     * </ul>
      */
     int mRotation;
 
     /**
      * The following was based on a text-rotating applet from David Risner,
      * available at http://www.risner.org/java/rotate_text.html
+     * Page unavailable as at April 2019
      *
      * @param pImage     Image to transform
      * @param pComponent Component containing the image, needed to obtain a
@@ -474,7 +476,7 @@ public class NamedIcon extends ImageIcon {
      * @param h  Height
      * @param t  Affine Transform
      * @param comp
-     * @return
+     * @return Transformed image
      */
     private BufferedImage transformFrame(Image frame, int w, int h, AffineTransform t, Component comp) {
 
@@ -556,11 +558,11 @@ public class NamedIcon extends ImageIcon {
             return;
         }
         double rad = Math.toRadians(_degrees);
-        double w = _scale * getIconWidth();
-        double h = _scale * getIconHeight();
+        double w = getIconWidth();
+        double h = getIconHeight();
 
-        int width = (int) Math.ceil(Math.abs(h * Math.sin(rad)) + Math.abs(w * Math.cos(rad)));
-        int heigth = (int) Math.ceil(Math.abs(h * Math.cos(rad)) + Math.abs(w * Math.sin(rad)));
+        int width = (int) Math.ceil(Math.abs(h * _scale * Math.sin(rad)) + Math.abs(w * _scale * Math.cos(rad)));
+        int heigth = (int) Math.ceil(Math.abs(h * _scale * Math.cos(rad)) + Math.abs(w * _scale * Math.sin(rad)));
         AffineTransform t;
         if (false) {
             // TODO: Test to see if the "else" case is necessary

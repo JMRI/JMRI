@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
    ConsistToolActionTest.class,
    ConsistDataModelTest.class,
    ConsistToolFrameTest.class,
+   ConsistToolPrefsPanelTest.class,
    BundleTest.class
 })
 

@@ -56,13 +56,23 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      */
     public DCCppTrafficController getDCCppTrafficController() {
+        if (xt == null) {
+            setDCCppTrafficController(new DCCppPacketizer(new DCCppCommandStation(this))); // default to DCCppPacketizer TrafficController
+            log.debug("Auto create of DCCppTrafficController for initial configuration");
+        }
         return xt;
     }
+
     private DCCppTrafficController xt;
 
+    /**
+     * Set the traffic controller instance associated with this connection memo.
+     *
+     * @param xt the {@link jmri.jmrix.dccpp.DCCppTrafficController} object to use.
+     */
     public void setDCCppTrafficController(@Nonnull DCCppTrafficController xt) {
         this.xt = xt;
         // in addition to setting the traffic controller in this object,
@@ -101,7 +111,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private ThrottleManager throttleManager;
 
     /*
-     * Provides access to the Power Manager for this particular connection.
+     * Provides access to the PowerManager for this particular connection.
      */
     @Nonnull
     public PowerManager getPowerManager() {
@@ -120,8 +130,8 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private PowerManager powerManager;
 
     /*
-     * Provides access to the Sensor Manager for this particular connection.
-     * NOTE: Sensor manager defaults to NULL
+     * Provides access to the SensorManager for this particular connection.
+     * NOTE: SensorManager defaults to NULL
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -135,8 +145,8 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private SensorManager sensorManager = null;
 
     /*
-     * Provides access to the Turnout Manager for this particular connection.
-     * NOTE: Turnout manager defaults to NULL
+     * Provides access to the TurnoutManager for this particular connection.
+     * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;
@@ -150,7 +160,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private TurnoutManager turnoutManager = null;
 
     /*
-     * Provides access to the Light Manager for this particular connection.
+     * Provides access to the LightManager for this particular connection.
      * NOTE: Light manager defaults to NULL
      */
     public LightManager getLightManager() {

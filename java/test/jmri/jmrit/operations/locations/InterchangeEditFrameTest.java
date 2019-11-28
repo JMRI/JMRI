@@ -8,8 +8,8 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,9 +26,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testAddInterchange() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -51,9 +49,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testSetDirectionUsingCheckbox() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -81,9 +77,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testSetAcceptedCarTypes() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -112,9 +106,7 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
 
     @Test
     public void testAddCloseAndRestore() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return; // can't use Assume in TestCase subclasses
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         InterchangeEditFrame f = new InterchangeEditFrame();
         f.setTitle("Test Interchange Add Frame");
         f.setLocation(0, 0);	// entire panel must be visible for tests to work properly
@@ -172,12 +164,5 @@ public class InterchangeEditFrameTest extends OperationsTestCase {
         
         JUnitOperationsUtil.loadTrain(l);
        
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

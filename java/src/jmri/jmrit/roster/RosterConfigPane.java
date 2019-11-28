@@ -3,7 +3,6 @@ package jmri.jmrit.roster;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 import jmri.InstanceManager;
+import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
@@ -33,7 +33,6 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
     JLabel filename;
     JTextField owner = new JTextField(20);
     JFileChooser fc;
-    private final ResourceBundle apb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     public RosterConfigPane() {
         fc = new JFileChooser(FileUtil.getUserFilesPath());
@@ -140,17 +139,17 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public String getPreferencesItemText() {
-        return this.apb.getString("MenuRoster"); // NOI18N
+        return Bundle.getMessage("MenuItemRoster"); // NOI18N
     }
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return this.apb.getString("TabbedLayoutRoster"); // NOI18N
+        return Bundle.getMessage("TabbedLayoutRoster"); // NOI18N
     }
 
     @Override
     public String getLabelKey() {
-        return this.apb.getString("LabelTabbedLayoutRoster"); // NOI18N
+        return Bundle.getMessage("LabelTabbedLayoutRoster"); // NOI18N
     }
 
     @Override
@@ -170,10 +169,11 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
+        Profile project = ProfileManager.getDefault().getActiveProfile();
         RosterConfigManager manager = InstanceManager.getDefault(RosterConfigManager.class);
-        manager.setDefaultOwner(this.getDefaultOwner());
-        manager.setDirectory(this.getSelectedItem());
-        manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
+        manager.setDefaultOwner(project, this.getDefaultOwner());
+        manager.setDirectory(project, this.getSelectedItem());
+        manager.savePreferences(project);
     }
 
     @Override

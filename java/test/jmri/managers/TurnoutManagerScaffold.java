@@ -1,26 +1,30 @@
 package jmri.managers;
 
+import java.beans.PropertyChangeListener;
+import java.beans.VetoableChangeListener;
+
 import jmri.JmriException;
-import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Dummy implementation of TurnoutManager for testing purposes.
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
  * @author	Bob Jacobsen Copyright (C) 2008
-  */
+ */
 public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
@@ -50,7 +54,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
     public int getObjectCount() { return -1;}    
-
 
     @Override
     public java.util.List<String> getSystemNameList() {
@@ -113,11 +116,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public String normalizeSystemName(String inputName) throws NamedBean.BadSystemNameException {
-        return inputName;
-    }
-
-    @Override
     public void dispose() {
     }
 
@@ -134,11 +132,47 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners() {
+        return new PropertyChangeListener[0];
+    }
+
+    @Override
+    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
+        return new PropertyChangeListener[0];
+    }
+
+    @Override
+    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
+    }
+
+    @Override
     public synchronized void addVetoableChangeListener(java.beans.VetoableChangeListener l) {
     }
 
     @Override
     public synchronized void removeVetoableChangeListener(java.beans.VetoableChangeListener l) {
+    }
+
+    @Override
+    public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
+    }
+
+    @Override
+    public VetoableChangeListener[] getVetoableChangeListeners() {
+        return new VetoableChangeListener[0];
+    }
+
+    @Override
+    public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
+        return new VetoableChangeListener[0];
+    }
+
+    @Override
+    public void removeVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
     }
 
     @Override
@@ -218,17 +252,24 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return "Turnout";
+    public String getBeanTypeHandled(boolean plural) {
+        return plural ? "Turnouts" : "Turnout";
     }
 
     @Override
     public String getEntryToolTip() { return "No Help"; }
 
     /** {@inheritDoc} */
-    public void addDataListener(ManagerDataListener e) {}
+    @Override
+    public void addDataListener(ManagerDataListener<Turnout> e) {}
 
     /** {@inheritDoc} */
-    public void removeDataListener(ManagerDataListener e) {}
+    @Override
+    public void removeDataListener(ManagerDataListener<Turnout> e) {}
+
+    @Override
+    public SystemConnectionMemo getMemo() {
+        return new InternalSystemConnectionMemo("J", "Juliet");
+    }
 
 }

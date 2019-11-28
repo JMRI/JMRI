@@ -8,10 +8,8 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -85,7 +83,7 @@ public class BuildTrainActionTest extends OperationsTestCase {
         automationItem.setMessage("Show this message when successful");
         automationItem.setMessageFail("Show this message when fail");
         
-        // should dialog to appear
+        // should cause dialog to appear
         Thread doAction = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -99,7 +97,6 @@ public class BuildTrainActionTest extends OperationsTestCase {
             return doAction.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
         
-        // dialog window show appear
         String title = automationItem.getId() + "  " + action.getActionString();
         JemmyUtil.pressDialogButton(title, Bundle.getMessage("ButtonOK"));
         
@@ -125,18 +122,6 @@ public class BuildTrainActionTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(title, Bundle.getMessage("Halt"));
         
         Assert.assertFalse(automationItem.isActionSuccessful());
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(BuildTrainActionTest.class);

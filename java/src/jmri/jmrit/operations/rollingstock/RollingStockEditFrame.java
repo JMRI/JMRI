@@ -1,12 +1,12 @@
 package jmri.jmrit.operations.rollingstock;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.ResourceBundle;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,8 +16,15 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.IdTag;
+import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -32,9 +39,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import jmri.swing.NamedBeanComboBox;
 /**
  * Frame for edit of rolling stock. The common elements are: road, road number,
  * type, blocking, length, location and track, groups (Kernel or Consist)
@@ -66,19 +71,23 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     public JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
     public JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
-    public JButton addButton = new JButton(Bundle.getMessage("ButtonAdd")); // have button state item to add
+    public JButton addButton = new JButton(Bundle.getMessage("ButtonAdd")); // TODO have button state item to add
 
     // check boxes
     public JCheckBox autoTrackCheckBox = new JCheckBox(Bundle.getMessage("Auto"));
 
     // text field
     public JTextField roadNumberTextField = new JTextField(Control.max_len_string_road_number);
-
     public JTextField builtTextField = new JTextField(Control.max_len_string_built_name + 3);
+    public JTextField blockingTextField = new JTextField(4);
     public JTextField weightTextField = new JTextField(Control.max_len_string_weight_name);
     public JTextField weightTonsTextField = new JTextField(Control.max_len_string_weight_name);
     public JTextField commentTextField = new JTextField(35);
-    public JTextField valueTextField = new JTextField(8);
+    
+    // text area
+    public JTextArea valueTextArea = new JTextArea(3, 35);
+    JScrollPane valueScroller = new JScrollPane(valueTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
     // combo boxes
     public JComboBox<String> roadComboBox = InstanceManager.getDefault(CarRoads.class).getComboBox();
@@ -90,7 +99,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     public JComboBox<Location> locationBox = locationManager.getComboBox();
     public JComboBox<Track> trackLocationBox = new JComboBox<>();
 
-    public JComboBox<IdTag> rfidComboBox = new JComboBox<>();
+    public NamedBeanComboBox<IdTag> rfidComboBox;
 
     // panels
     public JPanel pTypeOptions = new JPanel(); // options dependent on car or engine
@@ -108,6 +117,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
     public RollingStockEditFrame(String title) {
         super(title);
+        //instanceManager = InstanceManger.getInstance();
     }
 
     abstract protected RollingStockAttribute getTypeManager();
@@ -119,6 +129,8 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
     abstract protected ResourceBundle getRb();
 
     abstract protected void save(boolean isSave);
+    
+    abstract protected void delete();
 
     @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Checks for null")
     @Override
@@ -174,11 +186,14 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         // type options dependent on car or engine rolling stock
         addItemWidth(pType, pTypeOptions, 3, 0, 1);
         pPanel.add(pType);
-
+        
         // row 4
-        // only cars use the blocking option
+        pBlocking.setLayout(new GridBagLayout());
+        pBlocking.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutBlockingOrder")));
+        addItem(pBlocking, blockingTextField, 0, 0);
+        blockingTextField.setText("0");
         pPanel.add(pBlocking);
-        pBlocking.setVisible(false);
+        pBlocking.setVisible(false); // default is blocking order not shown
 
         // row 5
         JPanel pLength = new JPanel();
@@ -259,20 +274,23 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             JPanel pValue = new JPanel();
             pValue.setLayout(new GridBagLayout());
             pValue.setBorder(BorderFactory.createTitledBorder(Setup.getValueLabel()));
-            addItem(pValue, valueTextField, 1, 0);
+            addItem(pValue, valueScroller, 1, 0);
             pOptional.add(pValue);
+            
+            // adjust text area width based on window size
+            adjustTextAreaColumnWidth(valueScroller, valueTextArea);
         }
 
         // row 14
-        if (Setup.isRfidEnabled() && jmri.InstanceManager.getNullableDefault(jmri.IdTagManager.class) != null) {
+        IdTagManager tagManager = InstanceManager.getNullableDefault(IdTagManager.class);
+        if (Setup.isRfidEnabled() && tagManager != null) {
             JPanel pRfid = new JPanel();
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
+            rfidComboBox = new NamedBeanComboBox<IdTag>(tagManager);
+            rfidComboBox.setAllowNull(true);
+            rfidComboBox.setToolTipText(Bundle.getMessage("TipIdTag"));
             addItem(pRfid, rfidComboBox, 1, 0);
-            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanSet()
-                    .forEach((tag) -> rfidComboBox.addItem(tag));
-            rfidComboBox.insertItemAt((jmri.IdTag) null, 0); // must have a blank entry, for no ID tag, and make it the default.
-            rfidComboBox.setSelectedIndex(0);
             pOptional.add(pRfid);
         }
 
@@ -345,6 +363,7 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             }
         }
         typeComboBox.setSelectedItem(rs.getTypeName());
+        blockingTextField.setText(Integer.toString(rs.getBlocking()));
 
         if (!getLengthManager().containsName(rs.getLength())) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("lengthNameNotExist"),
@@ -374,9 +393,10 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         ownerComboBox.setSelectedItem(rs.getOwner());
 
         commentTextField.setText(rs.getComment());
-        valueTextField.setText(rs.getValue());
-        rfidComboBox.setSelectedItem(rs.getIdTag());
-        
+        valueTextArea.setText(rs.getValue());
+        if(rfidComboBox != null) {
+           rfidComboBox.setSelectedItem(rs.getIdTag());
+        }
         // enable delete and save buttons
         deleteButton.setEnabled(true);
         saveButton.setEnabled(true);
@@ -429,6 +449,18 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
 
             save(!IS_SAVE);
             // save car file
+            OperationsXml.save();
+        }
+        if (ae.getSource() == deleteButton) {
+            log.debug("car delete button activated");
+            // disable delete and save buttons
+            deleteButton.setEnabled(false);
+            saveButton.setEnabled(false);
+            if (_rs != null) {
+                _rs.removePropertyChangeListener(this);
+            }
+            delete();
+            _rs = null;
             OperationsXml.save();
         }
         if (ae.getSource() == clearRoadNumberButton) {
@@ -488,7 +520,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
                         !_rs.getNumber().equals(roadNumberTextField.getText()))) {
             String road = (String) roadComboBox.getSelectedItem();
             String number = roadNumberTextField.getText();
-            manager.changeId((T) _rs, road, number);
             _rs.setRoadName(road);
             _rs.setNumber(number);
         }
@@ -505,6 +536,19 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         if (typeComboBox.getSelectedItem() != null) {
             _rs.setTypeName((String) typeComboBox.getSelectedItem());
         }
+        
+        int blocking = 0;
+        try {
+            blocking = Integer.parseInt(blockingTextField.getText());
+            // only allow numbers between 0 and 100
+            if (blocking < 0 || blocking > 100) {
+                blocking = 0;
+            }
+        } catch (Exception e) {
+            log.warn("Blocking must be a number between 0 and 100");
+        }
+        blockingTextField.setText(Integer.toString(blocking));
+        
         if (lengthComboBox.getSelectedItem() != null) {
             _rs.setLength((String) lengthComboBox.getSelectedItem());
         }
@@ -519,11 +563,10 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
             _rs.setOwner((String) ownerComboBox.getSelectedItem());
         }
         _rs.setComment(commentTextField.getText());
-        _rs.setValue(valueTextField.getText());
-        // save the IdTag for this rolling stock
-        IdTag idTag = (IdTag) rfidComboBox.getSelectedItem();
-        if (idTag != null) {
-            _rs.setRfid(idTag.toString());
+        _rs.setValue(valueTextArea.getText());
+        if(rfidComboBox!=null) {
+            // save the IdTag for this rolling stock
+            _rs.setIdTag(rfidComboBox.getSelectedItem());
         }
         autoTrackCheckBox.setEnabled(true);
 

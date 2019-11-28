@@ -53,7 +53,7 @@ public class SensorPullUpEditActionTest {
     public void testServiceCalls() {
         SensorPullUpEditAction t = new SensorPullUpEditAction();
 
-        Assert.assertEquals("package.jmri.jmrit.beantable.SensorTable", t.helpTarget());
+        Assert.assertEquals("package.jmri.jmrit.beantable.SensorAddEdit", t.helpTarget());
         Assert.assertEquals("Sensor", t.getBeanType());
         
         t.initPanels();

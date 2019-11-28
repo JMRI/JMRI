@@ -1,5 +1,6 @@
 package jmri.jmrit.catalog;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -51,6 +52,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
      *                directory so user can continue looking
      * @return chosen directory or null to cancel operation
      */
+    @SuppressFBWarnings(value = "UW_UNCOND_WAIT", justification="false postive, guarded by logic")
     private File getDirectory(String msg, boolean recurse) {
         if (_directoryChooser == null) {
             _directoryChooser = new JFileChooser(FileSystemView.getFileSystemView());
@@ -64,13 +66,12 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
         _directoryChooser.rescanCurrentDirectory();
         _directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 
-        File dir = _directoryChooser.getCurrentDirectory();
         while (true) {
             int retVal = _directoryChooser.showOpenDialog(null);
             if (retVal != JFileChooser.APPROVE_OPTION) {
                 return null;  // give up if no file selected
             }
-            dir = _directoryChooser.getSelectedFile();
+            File dir = _directoryChooser.getSelectedFile();
             if (dir != null) {
                 if (!recurse) {
                     return dir;
@@ -191,7 +192,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
                 Bundle.getMessage("MessageTitle"), JOptionPane.INFORMATION_MESSAGE);
     }
 
-    class Seacher extends Thread implements Runnable {
+    class Seacher extends Thread {
 
         File dir;
         boolean quit = false;
@@ -225,7 +226,7 @@ public class DirectorySearcher implements InstanceManagerAutoDefault {
          * @param dir    directory
          * @param filter file filter for images
          */
-        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "WA_NOT_IN_LOOP", justification="Waiting for single possible event")
+        @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = {"WA_NOT_IN_LOOP", "UW_UNCOND_WAIT"}, justification="Waiting for single possible event")
         private void getImageDirectory(File dir, String[] filter) {
             if (jmri.util.ThreadingUtil.isGUIThread() || jmri.util.ThreadingUtil.isLayoutThread()) log.error("getImageDirectory called on wrong thread");
             

@@ -1,9 +1,7 @@
 package jmri.jmrit.operations.locations.schedules;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -81,18 +79,5 @@ public class ScheduleTest extends OperationsTestCase {
         lts.deleteItem(ltsi3);
         Assert.assertEquals("Location Schedule ScheduleItem Check Seq 8", 2, ltsi1.getSequenceId());
         Assert.assertEquals("Location Schedule ScheduleItem Check Seq 9", 1, ltsi4.getSequenceId());
-    }
-
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

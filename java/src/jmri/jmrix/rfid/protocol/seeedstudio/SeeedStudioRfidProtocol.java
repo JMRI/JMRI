@@ -10,15 +10,15 @@ import org.slf4j.LoggerFactory;
  * implementations that use the SeeedStudio protocol.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  *
  * @author Matthew Harris Copyright (C) 2014
  */
@@ -39,9 +39,9 @@ public class SeeedStudioRfidProtocol extends RfidProtocol {
      * concentrators where a character range is used to determine the specific
      * reader port.
      *
-     * @param concentratorFirst - character representing first concentrator port
-     * @param concentratorLast  - character representing last concentrator port
-     * @param portPosition      - position of port character in reply string
+     * @param concentratorFirst  character representing first concentrator port
+     * @param concentratorLast   character representing last concentrator port
+     * @param portPosition       position of port character in reply string
      */
     public SeeedStudioRfidProtocol(char concentratorFirst, char concentratorLast, int portPosition) {
         super(concentratorFirst, concentratorLast, portPosition);
