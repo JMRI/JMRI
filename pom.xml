@@ -601,12 +601,20 @@
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <configuration>
+                            <append>true</append>
+                            <destFile>${project.build.directory}/jacoco.exec</destFile>
+                        </configuration>                          
                     </execution>
                     <execution>
                         <id>before-integration-test-execution</id>
                         <goals>
                             <goal>prepare-agent-integration</goal>
                         </goals>
+                        <configuration>
+                             <append>true</append>
+                             <destFile>${project.build.directory}/jacoco.exec</destFile>
+                        </configuration>
                     </execution>
                     <execution>
                         <id>default-check</id>
