@@ -1,18 +1,17 @@
 package jmri.jmrit.operations.trains.tools;
 
+import jmri.jmrit.operations.OperationsTestCase;
 import org.junit.Assert;
 import org.junit.Test;
-
-import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ExportTrainRosterActionTest extends OperationsTestCase {
+public class ExportTimetableActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
-        ExportTimetableAction t = new ExportTimetableAction();
+        ExportTrainRosterAction t = new ExportTrainRosterAction();
         Assert.assertNotNull("exists",t);
     }
 
