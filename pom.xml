@@ -33,8 +33,8 @@
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
-        <surefire.version>2.20</surefire.version>
-        <failsafe.version>2.20</failsafe.version>
+        <surefire.version>2.22.2</surefire.version>
+        <failsafe.version>2.22.2</failsafe.version>
         <jqassistant.version>1.6.0</jqassistant.version>
     </properties>
     <scm>
@@ -601,10 +601,7 @@
                         <goals>
                             <goal>prepare-agent</goal>
                             <goal>prepare-agent-integration</goal>
-                        </goals>
-                        <configuration>
-                                 <append>true</append>
-                        </configuration>                          
+                        </goals>               
                     </execution>
                     <execution>
                         <id>default-check</id>
