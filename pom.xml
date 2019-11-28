@@ -602,8 +602,7 @@
                             <goal>prepare-agent</goal>
                         </goals>
                         <configuration>
-                            <append>true</append>
-                            <destFile>${project.build.directory}/jacoco.exec</destFile>
+                                 <append>true</append>
                         </configuration>                          
                     </execution>
                     <execution>
