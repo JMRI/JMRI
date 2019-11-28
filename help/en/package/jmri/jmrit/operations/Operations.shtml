@@ -71,13 +71,13 @@
     <li><a href="#Display">Display and Help</a></li>
 
     <li><a href="#MultipleLayouts">Multiple Layout Support</a></li>
-    
+
     <li><a href="#OperationFiles">Operation Files</a></li>
-    
+
     <li><a href="#demo">Operations Demo Files</a></li>
 
     <li><a href="#QuickStartHelp">Quick Start Help</a></li>
-    
+
     <li><a href="#TroubleShooting">Trouble Shooting</a></li>
 
     <li><a href="#Settings">Settings</a>
@@ -89,41 +89,44 @@
 
       <li><a href="#Restore">Restore</a></li>
 
-      <li><a href="#ResetDatabase">Reset Database</a></li>
-
-      <li><a href="#SettingsOptions">Options</a>
-
+      <li><a href="#SettingsTools">Settings Tools</a>
        <ul>
-        <li><a href="#BuildOptions">Build Options</a></li>
 
-        <li><a href="#CarRouting">Car Routing</a></li>
+        <li><a href="#SettingsOptions">Options</a>
 
-        <li><a href="#LoggingOptions">Logging Options</a></li>
+         <ul>
+          <li><a href="#BuildOptions">Build Options</a></li>
 
-        <li><a href="#ManifestOptions">Custom Manifests and Switch lists</a></li>
+          <li><a href="#CarRouting">Car Routing</a></li>
 
-        <li><a href="#Options">Options</a></li>
+          <li><a href="#LoggingOptions">Logging Options</a></li>
+
+          <li><a href="#ManifestOptions">Custom Manifests and Switch lists</a></li>
+
+          <li><a href="#Options">Options</a></li>
+         </ul></li>
+
+        <li><a href="#PrintOptions">Manifest Print Options</a>
+
+         <ul>
+
+          <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
+
+          <li><a href="#AddLogo">Add Logo</a></li>
+
+          <li><a href="#MisplacedCarsComment">Misplaced Cars Comment</a></li>
+
+          <li><a href="#HazardousComment">Hazardous Comment</a></li>
+
+          <li><a href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a></li>
+
+         </ul></li>
+
+        <li><a href="#BuildReportDetails">Build Report Options</a></li>
+        <li><a href="#demo">Load Demo Files</a></li>
+        <li><a href="#ResetDatabase">Reset Database</a></li>
        </ul></li>
-     </ul></li>
-
-    <li><a href="#PrintOptions">Manifest Print Options</a>
-    
-     <ul>
-     
-     <li><a href="#ManifestComments">Manifests and Switch List Options</a></li>
-     
-     <li><a href="#AddLogo">Add Logo</a></li>
-     
-     <li><a href="#MisplacedCarsComment">Misplaced Cars Comment</a></li>
-     
-     <li><a href="#HazardousComment">Hazardous Comment</a></li>
-     
-     <li><a href="#ManifestPrintOptionsTools">Manifest Print Options Tools</a></li>
-    
-   </ul></li>
-
-    <li><a href="#BuildReportDetails">Build Report Options</a></li>
-
+     </ul>
     <li><a href="#Locations">Locations</a>
 
      <ul>
@@ -149,7 +152,7 @@
         <li><a href="#EditCarType">Edit Car Type</a></li>
 
         <li><a href="#ShowCars">Show Cars</a></li>
-        
+
         <li><a href="#PrintLocation">Print or Preview</a></li>
        </ul></li>
 
@@ -162,14 +165,13 @@
       <li><a href="#Sidings">Spurs</a>
 
        <ul>
-        <li><a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain Trains
-          or Routes</a></li>
+        <li><a href="#RestrictingTrackToCertainTrains">Restricting Track to Certain Trains or Routes</a></li>
 
         <li><a href="#Schedules">Schedules</a></li>
 
         <li><a href="#SchedulesAndLoads">Purposely Moving Cars Using Schedules and Loads</a></li>
-        
-        <li><a href="#ControllingCarsToSpur">Controlling Cars to the Spur / Industry</a></li> 
+
+        <li><a href="#ControllingCarsToSpur">Controlling Cars to the Spur / Industry</a></li>
 
         <li><a href="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</a></li>
 
@@ -182,8 +184,9 @@
         <li><a href="#TrackDestinations">Track Destinations</a></li>
 
         <li><a href="#CreateClassificationYard">How to Create a Classification Yard</a></li>
-        
-        <li><a href="#ExchangeBetweenFreightAndLocal">How to Exchange Cars Between Through Freight and Local Switcher</a></li>   
+
+        <li><a href="#ExchangeBetweenFreightAndLocal">How to Exchange Cars Between Through Freight and Local
+          Switcher</a></li>
        </ul></li>
 
       <li><a href="#Staging">Staging Tracks</a>
@@ -214,7 +217,7 @@
         <li><a href="#TrackDestinations">Track Destinations</a></li>
 
         <li><a href="#ChangeTrackType">Change Track Type</a></li>
-        
+
         <li><a href="#ShowTrainsServicingThisTrack">Show Trains Servicing this track</a></li>
        </ul></li>
 
@@ -222,7 +225,7 @@
 
        <ul>
         <li><a href="#CopyLocation">Copy Location</a></li>
-        
+
         <li><a href="#CopyTrack">Copy Track</a></li>
 
         <li><a href="#LocationSchedules">Schedules</a></li>
@@ -232,7 +235,7 @@
         <li><a href="#ModifyLocationsByCarLoad">Modify Locations and Tracks by Car Load</a></li>
 
         <li><a href="#ShowCarsLocations">Show Cars</a></li>
-        
+
         <li><a href="#PrintLocation">Print or Preview</a></li>
        </ul></li>
      </ul></li>
@@ -244,15 +247,13 @@
 
       <li><a href="#CarsEdit">Adding Cars to your Roster</a></li>
 
-      <li><a href="#CabooseFredHazardous">Passenger, Caboose, Car with FRED, Utility, and
-        Hazardous Options</a></li>
+      <li><a href="#CabooseFredHazardous">Passenger, Caboose, Car with FRED, Utility, and Hazardous Options</a></li>
 
       <li><a href="#CarLoad">Car Loads</a></li>
 
       <li><a href="#Kernel">Kernel (Group of Cars)</a></li>
 
-      <li><a href="#EditCarAttributes">Edit Car Attribute Names (Road, Type, Length, Color,
-        Kernel, Owner)</a>
+      <li><a href="#EditCarAttributes">Edit Car Attribute Names (Road, Type, Length, Color, Kernel, Owner)</a>
 
        <ul>
         <li><a href="#DeleteUnusedAttributes"> Delete Unused Attribute Names</a></li>
@@ -333,10 +334,9 @@
         <li><a href="#TrainManifestOptions">Train Manifest Options</a></li>
 
         <li><a href="#TrainScripts">Scripts</a></li>
-        
+
         <li><a href="#TrainConductor">Train Conductor</a></li>
        </ul>
-       
       <li><a href="#TrainsTools">Trains Tools</a>
 
        <ul>
@@ -353,7 +353,7 @@
         <li><a href="#Automation">Automation</a></li>
 
         <li><a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a></li>
-        
+
         <li><a href="#ExportTimetable">Export Timetable</a></li>
        </ul></li>
 
@@ -986,20 +986,9 @@
     help distinguish the correct Backup Set.</p>
 
    <p>You must quit and restart JMRI to complete the restoration of the operation files.</p>
-
-   <a name="ResetDatabase" id="ResetDatabase"></a>
-   <h3>Reset Database</h3>
-
-   <p>To reset the operation database and remove all operation files, use the "Reset Database"
-    option on the "Tools" menu of the Operations <a href="#Settings">Settings</a> window. An automatic backup copy of the
-    current operation files will be made before deleting the main files. The results will be that
-    the settings, cars, locomotives, locations, and trains files will be purged. Note that after
-    this is done and JMRI restarts, the "Operations" menu item on the main menu will no longer be
-    visible, as there are no operations files to load. If you want to once again use the operations
-    feature, you can either load the demo files or restore a previous backup. To do this, open the
-    Operations Settings page by selecting the "Settings" option in the Tools-&gt;Operations menu of
-    the main page. From there you can do either a restore or a load of the demo files in the usual
-    way.</p>
+   
+   <a name="SettingsTools" id="SettingsTools"></a>
+   <h3>Settings Tools</h3>
 
    <a name="SettingsOptions" id="SettingsOptions"></a>
    <h2>Options</h2>
@@ -1870,7 +1859,7 @@
 
 
    <a name="BuildReportDetails" id="BuildReportDetails"></a>
-   <h3>Build Report Options</h3>
+   <h2>Build Report Options</h2>
    From the "Operations-&gt;Settings-&gt;Tools" or "Operations-&gt;Trains-&gt;Tools" menu select
    "Build Report Options" to open the build report options window.
 
@@ -1917,6 +1906,20 @@
     quickly find that the "Detailed" and "Very Detailed" modes can create many extra lines of text
     in the build report, and unless you have a routing issue, it is best to keep the "Router Detail
     Level" set to "Normal".</p>
+    
+   <a name="ResetDatabase" id="ResetDatabase"></a>
+   <h2>Reset Database</h2>
+
+   <p>To reset the operation database and remove all operation files, use the "Reset Database"
+    option on the "Tools" menu of the Operations <a href="#Settings">Settings</a> window. An automatic backup copy of the
+    current operation files will be made before deleting the main files. The results will be that
+    the settings, cars, locomotives, locations, and trains files will be purged. Note that after
+    this is done and JMRI restarts, the "Operations" menu item on the main menu will no longer be
+    visible, as there are no operations files to load. If you want to once again use the operations
+    feature, you can either load the demo files or restore a previous backup. To do this, open the
+    Operations Settings page by selecting the "Settings" option in the Tools-&gt;Operations menu of
+    the main page. From there you can do either a restore or a load of the demo files in the usual
+    way.</p>
 
    <a name="Locations" id="Locations"></a>
    <h2>Locations</h2>
@@ -4627,20 +4630,18 @@
 
    <h4>Modifying a built train</h4>
 
-   <p>You can also modify the train's manifest by pressing the "Modify" button. The modify
-    button once pressed will ask you if you want to add cars to the train. If you answer yes a
-    "Cars" window will appear for the location being serviced. Press the "Set" button for the car
-    you want to add, and in the "Set Car" window under the section "Optional -- Normally Set by
-    Program" enter a destination, destination track, and train for that car. Note that by default, a
-    car's destination and track is disabled, but you can enable it under the "Tools" menu in the set
-    car window. Pressing "Save" should cause the program to ask you if you want to add the car to
-    the train.</p>
+   <p>You can also modify the train's manifest by pressing the "Modify" button in the Conductor window. The modify
+    button once pressed will ask you if you want to add cars to the train. If you answer yes a "Cars" window will appear
+    for the location being serviced. Press the "Set" button for the car you want to add, and in the "Set Car" window
+    under the section "Optional -- Normally Set by Program" enter a destination, destination track, and train for that
+    car. Note that by default, a car's destination and track is disabled, but you can enable it under the "Tools" menu
+    in the set car window. Pressing "Save" should cause the program to ask you if you want to add the car to the train.</p>
 
    <p>To remove a car from the train, press the "Set" button, and the "Set Car" window should
     appear. Pressing the set car "Save" button will ask you if you really want to remove the car
     from the train.</p>
 
-   <h4>Yardmaster</h4>
+   <h3>Yardmaster</h3>
 
    <p>
     The Yardmaster window provides the real time version of a <a href="#SwitchList">switch list</a>. To
@@ -4995,11 +4996,14 @@
    The export Timetable tool produces comma separated value (CSV) file for the Timetable application. You can also use
    the "Import from OperationsPro..." found in the Timetable application to create and import in one step. The
    OperationsPro export creates a "Segment" called "Locations" based on an alphabetical list of location names, or if
-   you create a route named "Timetable", a segment of locations based on the route's location order. 
+   you create a route named "Timetable", produces a segment of locations based on the route's location order. 
    
    <p>During the export, the program will calculate the maximum work times at each train's location based on the move
    counts in the train's route for trains that aren't built, and the actual work time for built trains.  The work time
    is referred to as "Duration" in the Timetable application stop sequence.</p>
+   
+   <p>Only trains that are selected in the build column are exported.  Each export will create a new schedule based
+   on the date of the export.</p>
    
    <a name="SwitcherService" id="SwitcherService"></a>
    <h3>Switcher Service (Local)</h3>
