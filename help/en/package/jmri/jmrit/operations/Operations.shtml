@@ -270,6 +270,10 @@
       <li><a href="#CarsTools">Cars Tools</a>
 
        <ul>
+       <li><a href="#ModifyLocationsByCarType">Modify Locations and Tracks by Car Type</a></li>
+       
+       <li><a href="#ModifyTrainsByCarType">Modify Trains by Car Type</a></li>
+       
         <li><a href="#SetCars">Set Cars</a></li>
        </ul></li>
      </ul></li>
