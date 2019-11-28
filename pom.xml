@@ -604,9 +604,8 @@
                     </execution>
                     <execution>
                         <id>before-integration-test-execution</id>
-                        <phase>pre-integration-test</phase>
                         <goals>
-                            <goal>prepare-agent</goal>
+                            <goal>prepare-agent-integration</goal>
                         </goals>
                     </execution>
                     <execution>
@@ -852,6 +851,7 @@
                         <reports>
                             <!-- select non-aggregate reports -->
                             <report>report</report>
+                            <report>report-integration</report>
                         </reports>
                     </reportSet>
                 </reportSets>
