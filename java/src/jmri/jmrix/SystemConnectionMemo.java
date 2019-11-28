@@ -240,25 +240,14 @@ public abstract class SystemConnectionMemo extends Bean {
     protected abstract ResourceBundle getActionModelResourceBundle();
 
     protected final void addToActionList() {
-        StartupActionModelUtil util = StartupActionModelUtil.getDefault();
-        ResourceBundle rb = getActionModelResourceBundle();
-        if (rb == null) {
-            // don't bother trying if there is no ActionModelResourceBundle
-            return;
-        }
-        log.debug("Adding actions from bundle {}", rb.getBaseBundleName());
-        Enumeration<String> e = rb.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
-            try {
-                util.addAction(key, rb.getString(key));
-            } catch (ClassNotFoundException ex) {
-                log.error("Did not find class \"{}\"", key);
-            }
-        }
+        changeActionList(true);
     }
 
     protected final void removeFromActionList() {
+        changeActionList(false);
+    }
+
+    private void changeActionList(boolean add) {
         StartupActionModelUtil util = StartupActionModelUtil.getDefault();
         ResourceBundle rb = getActionModelResourceBundle();
         if (rb == null) {
@@ -266,15 +255,17 @@ public abstract class SystemConnectionMemo extends Bean {
             return;
         }
         log.debug("Removing actions from bundle {}", rb.getBaseBundleName());
-        Enumeration<String> e = rb.getKeys();
-        while (e.hasMoreElements()) {
-            String key = e.nextElement();
+        rb.keySet().forEach(key -> {
             try {
-                util.removeAction(key);
+                if (add) {
+                    util.addAction(key, rb.getString(key));
+                } else {
+                    util.removeAction(key);
+                }
             } catch (ClassNotFoundException ex) {
                 log.error("Did not find class \"{}\"", key);
             }
-        }
+        });
     }
 
     public boolean isDirty() {
