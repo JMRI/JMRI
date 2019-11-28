@@ -353,6 +353,8 @@
         <li><a href="#Automation">Automation</a></li>
 
         <li><a href="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</a></li>
+        
+        <li><a href="#ExportTimetable">Export Timetable</a></li>
        </ul></li>
 
       <li><a href="#SwitcherService">Switcher Service (Local)</a></li>
@@ -4988,6 +4990,17 @@
      href="#ManifestOptions">Options</a> "Generate CSV Switch Lists" for more information.
    </p>
 
+   <a name="ExportTimetable" id="ExportTimetable"></a>
+   <h4>Export Timetable</h4>
+   The export Timetable tool produces comma separated value (CSV) file for the Timetable application. You can also use
+   the "Import from OperationsPro..." found in the Timetable application to create and import in one step. The
+   OperationsPro export creates a "Segment" called "Locations" based on an alphabetical list of location names, or if
+   you create a route named "Timetable", a segment of locations based on the route's location order. 
+   
+   <p>During the export, the program will calculate the maximum work times at each train's location based on the move
+   counts in the train's route for trains that aren't built, and the actual work time for built trains.  The work time
+   is referred to as "Duration" in the Timetable application stop sequence.</p>
+   
    <a name="SwitcherService" id="SwitcherService"></a>
    <h3>Switcher Service (Local)</h3>
    Many operators assign a locomotive to a location to do the local switching. Using the location's
