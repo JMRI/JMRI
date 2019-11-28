@@ -37,7 +37,7 @@ public class SystemConsoleAction extends jmri.util.swing.JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(!GraphicsEnvironment.isHeadLess()) {
+        if(!GraphicsEnvironment.isHeadless()) {
            // Show system console
            SystemConsole.getConsole().setVisible(true);
         }
