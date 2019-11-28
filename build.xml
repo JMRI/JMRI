@@ -1392,6 +1392,8 @@
     </target>
 
     <target name="logheadlesstest" depends="tests, runtime-library-selection" description="run headlesstest test suite with jacoco output">
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
 
@@ -1487,6 +1489,8 @@
     </target>
 
     <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1522,6 +1526,8 @@
 
     <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
         <!-- identical to ci-test target except test output is different -->
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" showoutput="yes" fork="yes" maxmemory="2048m" dir="." errorProperty="test.failed" failureProperty="test.failed">
 
@@ -1590,6 +1596,8 @@
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run AllTest test suite with jacoco output">
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
 
