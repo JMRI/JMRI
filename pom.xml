@@ -25,6 +25,7 @@
         <openlcb.version>0.7.26</openlcb.version>
         <netbeans.version>RELEASE110</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
+        <jacoco.reportFile>${basedir}/jacoco.exec</jacoco.reportFile>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
@@ -400,7 +401,7 @@
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                    <argLine>@{argLine} ${surefire.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
                     <!-- forkCount causes tests to run in forked JVMs.  The following the number with C says to fork the number multiplied by the number of cores available. -->
@@ -419,6 +420,9 @@
                             <goal>integration-test</goal>
                             <goal>verify</goal>
                         </goals>
+                        <configuration>
+                            <argline>${failsafe.argLine}</argline>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
@@ -600,9 +604,24 @@
                         <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
-                            <goal>prepare-agent-integration</goal>
-                        </goals>               
+                        </goals>
+                        <configuration>
+                            <append>true</append>
+                            <destFile>${jacoco.reportFile}</destFile>
+                            <propertyName>surefire.argLine</propertyName>
+                         </configuration>
                     </execution>
+                    <execution>
+                        <id>prepare-agent-integration</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>      
+                        <configuration>
+                            <append>true</append>
+                            <destFile>${jacoco.reportFile}</destFile>
+                            <propertyName>failsafe.argLine</propertyName>
+                         </configuration>
+                    </execution>                            
                     <execution>
                         <id>default-check</id>
                         <goals>
