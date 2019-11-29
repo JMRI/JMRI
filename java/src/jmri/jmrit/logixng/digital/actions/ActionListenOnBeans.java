@@ -48,7 +48,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
     public void addReference(NamedBeanReference reference) {
         int a = 0;
         // Temporary make variables used.
-        if (a==1 && namedBeanReferences != null) throw new RuntimeException();
+        if (_listenersAreRegistered && a!=1 && namedBeanReferences != null) throw new RuntimeException();
     }
 /*    
     public void setMemoryName(String memoryName) {
@@ -256,7 +256,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
     }
     
     
-    public class NamedBeanReference {
+    public static class NamedBeanReference {
         
         private String _name;
         private NamedBeanType _type;
