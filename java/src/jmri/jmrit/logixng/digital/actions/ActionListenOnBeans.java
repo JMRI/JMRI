@@ -47,6 +47,8 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
     
     public void addReference(NamedBeanReference reference) {
         int a = 0;
+        // Temporary make variables used.
+        if (a==1 && namedBeanReferences != null) throw new RuntimeException();
     }
 /*    
     public void setMemoryName(String memoryName) {
@@ -245,6 +247,12 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
             _clazz = clazz;
             _manager = manager;
         }
+        
+        public String getName() { return _name; }
+        
+        public Class<? extends NamedBean> getClazz() { return _clazz; }
+        
+        public Manager<? extends NamedBean> getManager() { return _manager; }
     }
     
     
@@ -278,6 +286,6 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(ActionListenOnBeans.class);
+//    private final static Logger log = LoggerFactory.getLogger(ActionListenOnBeans.class);
     
 }

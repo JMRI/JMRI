@@ -39,7 +39,7 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
     @Override
     public boolean containsValue(Object value) {
         for (List<V> l : _internalMap.values()) {
-            if (l.contains((V)value)) {
+            if (l.contains(value)) {
                 return true;
             }
         }
@@ -54,7 +54,7 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
     /**
      * Get all items in the map that has the key 'key'
      * @param key
-     * @return 
+     * @return an unmodifiable list of all the items
      */
     public List<V> getAll(K key) {
         return Collections.unmodifiableList(_internalMap.get(key));
