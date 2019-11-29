@@ -219,14 +219,15 @@
 	  <table border="1" cellspacing="0">
 	    <tr><th>LogixNG type</th><th>System name</th><th>Auto system name</th></tr>
 		<tr><td>LogixNG</td><td>IQ0001</td><td>IQ:AUTO:0001</td></tr>
+		<tr><td><strong>A</strong>nalog <strong>A</strong>ction</td><td>IQAA0001</td><td>IQAA:AUTO:0001</td></tr>
+		<tr><td><strong>A</strong>nalog <strong>E</strong>xpression</td><td>IQAE0001</td><td>IQAE:AUTO:0001</td></tr>
 		<tr><td><strong>C</strong>onditionalNG</td><td>IQC0001</td><td>IQC:AUTO:0001</td></tr>
 		<tr><td><strong>D</strong>igital <strong>A</strong>ction</td><td>IQDA0001</td><td>IQDA:AUTO:0001</td></tr>
 		<tr><td><strong>D</strong>igital <strong>B</strong>oolean action</td><td>IQDB0001</td><td>IQDB:AUTO:0001</td></tr>
 		<tr><td><strong>D</strong>igital <strong>E</strong>xpression</td><td>IQDE0001</td><td>IQDE:AUTO:0001</td></tr>
-		<tr><td><strong>A</strong>nalog <strong>A</strong>ction</td><td>IQAA0001</td><td>IQAA:AUTO:0001</td></tr>
-		<tr><td><strong>A</strong>nalog <strong>E</strong>xpression</td><td>IQAE0001</td><td>IQAE:AUTO:0001</td></tr>
 		<tr><td><strong>S</strong>tring <strong>A</strong>ction</td><td>IQSA0001</td><td>IQSA:AUTO:0001</td></tr>
 		<tr><td><strong>S</strong>tring <strong>E</strong>xpression</td><td>IQSE0001</td><td>IQSE:AUTO:0001</td></tr>
+		<tr><td><strong>T</strong>able</td><td>IQT0001</td><td>IQT:AUTO:0001</td></tr>
 	  </table>
 
 	  <p>"Auto system name" refers to system names that are generated automaticly.</p>
@@ -234,7 +235,99 @@
 	  <p>All system names consists of the system prefix, the type letter, possible a
 	  sub type, possible :AUTO: and a number. The number may begin with zeros and the
 	  system name IQ1 is different from the system name IQ0001.</p>
+
+	  <p>The LogixNG data types Map and Table are used to make generic LogixNGs. For
+	  a table, its columns and rows can also be accessed as NamedBeans.</p>
+
+      <h3>LogixNG table structure</h3>
+
+	  <p>A Table is a data type that holds a two dimensional array, like a spreadsheet.</p>
+
+	  <p>Example:</p>
+
+	  <table border="1" cellspacing="0" cellpadding="2">
+	  <tr><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr>
+	  <tr><th>&nbsp;1&nbsp;</th><td>IQT22</td><td>Yard table</td><td></td><td></td></tr>
+	  <tr><th>&nbsp;2&nbsp;</th><td></td><td>West yard</td><td>East yard</td><td>North yard</td></tr>
+	  <tr><th>&nbsp;3&nbsp;</th><td></td><td colspan="3">Left entrance of the yard</td></tr>
+	  <tr><th>&nbsp;4&nbsp;</th><td>Leftmost turnout</td><td>IT101</td><td>IT201</td><td>IT301</td></tr>
+	  <tr><th>&nbsp;5&nbsp;</th><td>Left turnout</td><td>IT103</td><td>IT203</td><td>IT303</td></tr>
+	  <tr><th>&nbsp;6&nbsp;</th><td></td><td colspan="3">Right entrance of the yard</td></tr>
+	  <tr><th>&nbsp;7&nbsp;</th><td>Rightmost turnout</td><td>IT112</td><td>IT212</td><td>IT312</td></tr>
+	  <tr><th>&nbsp;8&nbsp;</th><td>Right turnout</td><td>IT114</td><td>IT214</td><td>IT314</td></tr>
+	  </table>
+
+      <p>LogixNG can use references to access layout items like turnouts in an indirect
+	  way. It's done by entering the system name or user name in curly brackets. If
+	  a ActionTurnout has the turnout IT1, it will access that turnout directly. But if
+	  the ActionTurnout has the turnout {IM2}, it will read that memory and if that
+	  memory has a string as a value, it will use that string value to find the turnout.
+	  So if the memory IM2 has the value IT5, and the ActionTurnout has the turnout
+	  [IM2], the ActionTurnout will read the memory IM2 and find out that it points to
+	  the turnout IT5 and therefore do it's action on turnout IT5. The benefit of this
+	  is that the Memory can be changed during execution and therefore the same
+	  ActionTurnout can be used to access different turnouts at different times.</p>
+
+	  <p>It's possible to use indirect access recursive. If a ActionTurnout has the
+	  turnout {IM5}, and that Memory has the value {IM14}, and that the Memory IM14
+	  has the value IT3, the ActionTurnout will access IT3. The ActionTurnout has an
+	  indirect turnout IM5 so it will read that Memory. And since that memory has the
+	  value {IM14} which also is an indirect access, it will read the memory IM14 and
+	  find out that it has the value IT3, and therefore use IT3. This is also true for
+	  tables. If the cell IQT1[5,3] has the value '{IM3}', and the memory IM3 has the
+	  value 'IT5', the cell IQT1[5,3] will point to IT5.</p>
 	  
+	  <p>A table can be used to create a lookup table. It's accessed by either its
+	  system name or its user name, followed by a left square bracket, the name of the
+	  column, a comma, the name of the row, and a right square bracket.</p>
+
+	  <p>Instead of the names of the row and column, it's also possible to use the row
+	  number or the column number. Note that row 1 has the system name and user name of
+	  the table, row 2 has the names of the columns, and column 1 has the names of the
+	  rows. Note that for columns, 1 is row A, 2 is row B, 22 is V, 23 is W, 26 is Z,
+	  27 is AA and 28 is AB.</p>
+
+	  <p>Example from the table above. These examples assume that IM3 has the value
+	  'West yard', IM4 has the value 'Rightmost turnout' and IM5 has the value 'IQT22'.</p>
+
+	  <table border="1" cellspacing="0" cellpadding="2">
+	  <tr><td>Cell</td><td>Value</td><td>Note</td></tr>
+	  <tr><td>IQT22[1,1]</td><td>IQT22</td><td>Cell A1 has the system name of the table</td></tr>
+	  <tr><td>IQT22[2,1]</td><td>Yard table</td><td>Cell B1 has the user name of the table</td></tr>
+	  <tr><td>IQT22[2,2]</td><td>West yard</td><td>Cell B2 has the name of column B</td></tr>
+	  <tr><td>IQT22[1,4]</td><td>Leftmost turnout</td><td>Cell A4 has the name of row 4</td></tr>
+	  <tr><td>Yard table[1,4]</td><td>Leftmost turnout</td><td>The user name of the table can be used to access the table</td></tr>
+	  <tr><td>IQT22[3,5]</td><td>IT203</td><td>Cell C5 has the value 'IT203'</td></tr>
+	  <tr><td>IQT22[North yard,Left turnout]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
+	  <tr><td>Yard table[North yard,Left turnout]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
+	  <tr><td>IQT22[{IM3},Leftmost turnout]</td><td>IT101</td><td>IM3 is in curly brackets and have the value 'West yard' so this points to cell B4</td></tr>
+	  <tr><td>IQT22[East yard,{IM4}]</td><td>IT212</td><td>IM4 is in curly brackets and have the value 'Rightmost turnout' so this points to cell C7</td></tr>
+	  <tr><td>IQT22[{IM3},{IM4}]</td><td>IT112</td><td>Column {IM3} and row {IM4} points to cell B7</td></tr>
+	  <tr><td>{IM5}[{IM3},{IM4}]</td><td>IT112</td><td>Even the table name can be accessed indirectly</td></tr>
+	  </table>
+
+	  <p>Note that a Memory can point to a table. For example, if the memory IM7 has
+	  the value '{Yard table[{IM3},Leftmost turnout]}', LogixNG will look at IM7, and
+	  find that it's value is in curly brackets. It will then resolve the value inside
+	  these curly brackets, which is 'Yard table[{IM3},Leftmost turnout]'. It will then
+	  resolve the value of IM3 which has the value 'West yard'. It will then get the
+	  table cell 'Yard table[West yard,Leftmost turnout]' which is cell B4 with the
+	  value 'IT101'.</p>
+
+	  <p>Tables are loaded by a start up action. They are created in a spreadsheet, like
+	  Microsoft Excel or Libre Office and then exported to a CSV file, separated by TAB
+	  characters. The table is read only and is not stored in the panel filee, so it
+	  must be reloaded each time JMRI starts.</p>
+
+	  <h3>Important</h3>
+
+	  <p>In order for indirect access to work, some limitations are put on the names
+	  used in LogixNG. System names and user names must not contain comma, square brackets
+	  and curly brackets. For example, if a turnout has the name 'Green yard, left turnout',
+	  it cannot be used with its user name in LogixNG unless the name is changed and the
+	  comma is removed.</p>
+
+
 	  
 	  
 	  <a name="logixng" id="logixng"></a>
@@ -1047,6 +1140,102 @@
 
 
 
+	  <a name="indirect_accessing" id="indirect_accessing"></a>
+
+      <h2>Indirect adressing of NamedBeans</h2>
+
+      <p>In some cases, it may be useful to use indirect addressing of NamedBeans.</p>
+
+      <p>This can be done in two ways:</p>
+      <ul>
+	      <li>Using a Memory that has the name of the NamedBean</li>
+          <li>Using a NamedBeanMap to lookup the name of the NamedBean</li>
+      </ul>
+
+      <p>Using a Memory that has the name of the NamedBean</p>
+
+      <p>Lets say we have an ActionTurnout that should throw a particulat turnout.
+      But we wnat to be able to select which turnout to throw at a later time.
+      We can solve that by storing the system name or user name in a Memory.
+      We then tell the ActionTurnout to read the Memory and lookup the turnout
+      on the fly.</p>
+
+      <p>Since LogixNG fully supports string manipulation and calculations of both
+      integers and floating point values, where are plenty of possibilities here.</p>
+
+      <h3>Warning</h3>
+
+      <p>There is one major drawback with this. Since LogixNG doesn't know in
+      advance which NamedBeans will be accessed indirectly, it's not possible
+      for LogixNG to automaticly register listeners to the named beans that
+      should trigger on change. For example, an ExpressionTurnout registers
+      a listener on the turnout, if the name of the turnout is given, but if
+      the ExpressionTurnout is using indirect addressing of the turnout, it's
+      not able to do that.</p>
+
+      <p>The solution is to use the ActionListenOnBeans and tell this action
+      which beans to listen on. Any time any property of any of the named
+      beans this action listen to, the ConditionalNG will be executed.</p>
+
+      <p>Example:</p>
+      <p>A ConditionalNG is using turnouts IT1, IT2, IT3, IT4 and IT5 in it's
+      expressions and wants each of them to trigger on change. Turnouts
+      IT1 and IT3 and IT4 are directly accessed in expressions and IT2, IT3
+      and IT5 is indirect accessed.</p>
+
+      <p>Each turnout that is directly addressed in an expression will the
+      ConditionalNG listen to automaticly, so IT1, IT3 and IT4 will be listen
+      to. But in order to listen on turnouts IT2 and IT5, the
+      ActionListenOnBeans needs to be used.</p>
+
+      <p>The ActionListenOnBeans can be placed anythere in the ConditionalNG
+      tree, as long as it and its parents are enabled. If you disable this
+      action, or any of its parent actions, the ActionListenOnBeans will not
+      listen on its named beans.</p>
+
+	  <h3>Special actions</h3>
+
+	  <p>There are a couple of actions that is particular useful for this.</p>
+
+	  <p><strong>ActionFor</strong></p>
+
+	  <p>ActionFor is a for-loop. It has four children.</p>
+	  <ul>
+	      <li><strong>Init</strong> - this action is first executed once. It's
+          used to initialize the loop, for example setting a Memory to a particular
+          value.</li>
+
+          <li><strong>Condition</strong> - this expression decides if the loop
+          should run one lap more. The loop will continue to run until this
+          condition will be <strong>false</strong>.</li>
+
+          <li><strong>Next</strong> - this action is executed at the end of the
+          loop. It can for example be used to increment a counter in a Memory.</li>
+
+          <li><strong>Action</strong> - this action is executed in each loop. It
+          does the main work.</li>
+      </ul>
+
+	  <p>Then ActionFor is executed, the Init action is run once. After that, the
+	  Condition expression is evaluated. If the condition returns <strong>true</strong>,
+	  the Action action is executed and at last the Next action is executed. Then
+	  the process is repeated, except that the Init action is only executed once.</p>
+
+	  <p><strong>ActionForEach</strong></p>
+
+	  <p>ActionForEach is a for-loop.</p>
+
+	  <p>This action has a list of items. Either a constant list, or it can use a
+	  NamedBeanMap.</p>
+
+	  <p>The ActionForEach action loops thru the list. It takes the first item in
+	  the list, assigns it to a Memory, and then executes its child action. Then it
+	  takes the second item in the list, assigns it to the Memory, and executes the
+	  child action.</p>
+
+
+
+
       <a name="digital_actions" id="digital_actions"></a>
       <h2>List of digital actions</h2>
 
@@ -1091,11 +1280,11 @@
           <p><strong>Throttle</strong></p>
 
           <p>The Throttle action controls a throttle. It has child expressions
-		  for loco address, loco speed and loco direction. For now, an analog
-		  memory expression or an analog constant expression can be used to
-		  control the loco address and the loco speed, but once JMRI has
-		  support for AnalogIO devices, an AnalogIO may be used to control
-		  loco address and/or loco speed.</p>
+          for loco address, loco speed and loco direction. For now, an analog
+          memory expression or an analog constant expression can be used to
+          control the loco address and the loco speed, but once JMRI has
+          support for AnalogIO devices, an AnalogIO may be used to control
+          loco address and/or loco speed.</p>
         </li>
 
         <li>
@@ -1108,14 +1297,14 @@
           <p><strong>DoAnalogAction</strong></p>
 
           <p>The DoAnalogAction reads an analog child expression and executes
-		  an analog child action.</p>
+          an analog child action.</p>
         </li>
 
         <li>
           <p><strong>DoStringAction</strong></p>
 
           <p>The DoStringAction reads an string child expression and executes
-		  an string child action.</p>
+          an string child action.</p>
         </li>
 
         <li>
@@ -1130,19 +1319,19 @@
           <p><strong>IfThenElse</strong></p>
 
           <p>The IfThenElse reads a digital child expression and if the
-		  answer is <strong>true</strong> it executes the <strong>then</strong>
-		  child action, else it executes the <strong>else</strong> child action.
+          answer is <strong>true</strong> it executes the <strong>then</strong>
+          child action, else it executes the <strong>else</strong> child action.
         </li>
 
         <li>
           <p><strong>Logix</strong></p>
 
           <p>The Logix action reads a digital child expression and then executes
-		  boolean actions. Each boolean action takes the result from the
-		  expression and takes action accordingly. The recommended child boolean
-		  actions for this action is the OnChange action. The Logix action, together
-		  with the OnChange child boolean actions, acts like the JMRI Logix, with
-		  explains the name of this action.</p>
+          boolean actions. Each boolean action takes the result from the
+          expression and takes action accordingly. The recommended child boolean
+          actions for this action is the OnChange action. The Logix action, together
+          with the OnChange child boolean actions, acts like the JMRI Logix, with
+          explains the name of this action.</p>
         </li>
 
         <li>
@@ -1155,10 +1344,10 @@
           <p><strong>ShutdownComputer</strong></p>
 
           <p>The ShutdownComputer action either shutdown or restarts the computer.
-		  This action is mainly included to demonstrate the possibilities of LogixNG,
-		  but it may be useful in some cases, for example when a Raspberry Pi computer
-		  runs the layout and there is no keyboard and mouse connected to the Raspberry
-		  Pi computer. It's then possible to use a sensor to shutdown the computer.</p>
+          This action is mainly included to demonstrate the possibilities of LogixNG,
+          but it may be useful in some cases, for example when a Raspberry Pi computer
+          runs the layout and there is no keyboard and mouse connected to the Raspberry
+          Pi computer. It's then possible to use a sensor to shutdown the computer.</p>
         </li>
 
       </ul>
@@ -1191,7 +1380,7 @@
           <p><strong>OnChange</strong></p>
 
           <p>Executes a child action if the parameter is changed and to the
-		  desired value.</p>
+          desired value.</p>
         </li>
 
       </ul>
