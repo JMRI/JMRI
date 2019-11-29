@@ -34,7 +34,6 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
 
     static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");  // NOI18N
     
-    private Antecedent _template;
     String _antecedent = "";
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     
@@ -59,18 +58,6 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
         setExpressionSystemNames(expressionSystemNames);
     }
 
-    private Antecedent(Antecedent template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new Antecedent(this);
-    }
-    
     private void init() {
         _expressionEntries
                 .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)

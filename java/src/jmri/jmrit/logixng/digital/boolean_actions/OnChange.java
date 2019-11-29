@@ -33,7 +33,6 @@ public class OnChange extends AbstractDigitalBooleanAction
         CHANGE,
     }
 
-    private OnChange _template;
     private String _actionSocketSystemName;
     private final FemaleDigitalActionSocket _actionSocket;
     ChangeType _whichChange = ChangeType.CHANGE;
@@ -43,19 +42,6 @@ public class OnChange extends AbstractDigitalBooleanAction
         _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
         _whichChange = whichChange;
-    }
-    
-    private OnChange(OnChange template) {
-        super(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, _template._actionSocket.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new OnChange(this);
     }
     
     /** {@inheritDoc} */

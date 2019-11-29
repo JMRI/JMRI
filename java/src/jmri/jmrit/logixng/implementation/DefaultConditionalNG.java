@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 public class DefaultConditionalNG extends AbstractBase
         implements ConditionalNG, FemaleSocketListener {
     
-    private DefaultConditionalNG _template;
     private Base _parent = null;
     private String _socketSystemName = null;
     private final FemaleDigitalActionSocket _femaleActionSocket;
@@ -42,18 +41,6 @@ public class DefaultConditionalNG extends AbstractBase
     public DefaultConditionalNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
         _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, "");
-    }
-    
-    public DefaultConditionalNG(DefaultConditionalNG template) {
-        super(InstanceManager.getDefault(ConditionalNG_Manager.class).getAutoSystemName(), null);
-        _template = template;
-        _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, _template._femaleActionSocket.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new DefaultConditionalNG(this);
     }
     
     @Override

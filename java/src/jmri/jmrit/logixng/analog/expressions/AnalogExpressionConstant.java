@@ -18,7 +18,6 @@ import org.slf4j.LoggerFactory;
  */
 public class AnalogExpressionConstant extends AbstractAnalogExpression {
 
-    private AnalogExpressionConstant _template;
     private double _value;
     private boolean _listenersAreRegistered = false;
     
@@ -26,18 +25,6 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
             throws BadUserNameException, BadSystemNameException {
         
         super(sys, user);
-    }
-
-    private AnalogExpressionConstant(AnalogExpressionConstant template) {
-        super(InstanceManager.getDefault(AnalogExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _value = _template._value;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new AnalogExpressionConstant(this);
     }
     
     /** {@inheritDoc} */

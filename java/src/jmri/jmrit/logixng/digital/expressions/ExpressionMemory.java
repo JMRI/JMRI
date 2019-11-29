@@ -28,7 +28,6 @@ import org.slf4j.LoggerFactory;
 public class ExpressionMemory extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private ExpressionMemory _template;
     private NamedBeanHandle<Memory> _memoryHandle;
     private MemoryOperation _memoryOperation = MemoryOperation.EQUAL;
     private CompareTo _compareTo = CompareTo.VALUE;
@@ -40,18 +39,6 @@ public class ExpressionMemory extends AbstractDigitalExpression
     public ExpressionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-    }
-    
-    private ExpressionMemory(ExpressionMemory template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ExpressionMemory(this);
     }
     
     public void setMemory(String memoryName) {

@@ -25,7 +25,6 @@ public class DoStringAction
         extends AbstractDigitalAction
         implements FemaleSocketListener {
 
-    private DoStringAction _template;
     private String _stringExpressionSocketSystemName;
     private String _stringActionSocketSystemName;
     private final FemaleStringExpressionSocket _stringExpressionSocket;
@@ -37,21 +36,6 @@ public class DoStringAction
                 .createFemaleSocket(this, this, "E1");
         _stringActionSocket = InstanceManager.getDefault(StringActionManager.class)
                 .createFemaleSocket(this, this, "A1");
-    }
-    
-    private DoStringAction(DoStringAction template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _stringExpressionSocket = InstanceManager.getDefault(StringExpressionManager.class)
-                .createFemaleSocket(this, this, _template._stringExpressionSocket.getName());
-        _stringActionSocket = InstanceManager.getDefault(StringActionManager.class)
-                .createFemaleSocket(this, this, _template._stringActionSocket.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new DoStringAction(this);
     }
     
     /** {@inheritDoc} */

@@ -95,13 +95,6 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         Assert.assertEquals("Username matches", "My memory", expression2.getUserName());
         Assert.assertEquals("String matches", "Get constant value 98.76", expression2.getLongDescription(Locale.ENGLISH));
         
-        // Test template
-        expression2 = (AnalogExpressionConstant)_base.getNewObjectBasedOnTemplate();
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username is null", expression2.getUserName());
-//        Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertEquals("String matches", "Get constant value 10.2", expression2.getLongDescription(Locale.ENGLISH));
-        
         boolean thrown = false;
         try {
             // Illegal system name

@@ -90,13 +90,6 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Copy memory IM1 to memory IM12", action2.getLongDescription());
         
-        // Test template
-        action2 = (ActionMemory)_base.getNewObjectBasedOnTemplate();
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username is null", action2.getUserName());
-//        Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertEquals("String matches", "Set memory '' to \"\"", action2.getLongDescription());
-        
         boolean thrown = false;
         try {
             // Illegal system name

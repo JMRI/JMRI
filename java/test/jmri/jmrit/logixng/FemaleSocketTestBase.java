@@ -502,11 +502,6 @@ public abstract class FemaleSocketTestBase {
         }
 
         @Override
-        public Base getNewObjectBasedOnTemplate() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
         public ConditionalNG getConditionalNG() {
             throw new UnsupportedOperationException("Not supported.");
         }

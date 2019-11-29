@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -23,7 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Or extends AbstractDigitalExpression implements FemaleSocketListener {
 
-    private Or _template;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     
     public Or(String sys, String user)
@@ -38,18 +36,6 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
         setExpressionSystemNames(expressionSystemNames);
     }
 
-    private Or(Or template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new Or(this);
-    }
-    
     private void init() {
         _expressionEntries
                 .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)

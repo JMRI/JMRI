@@ -1,10 +1,7 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.Locale;
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 
 /**
@@ -14,24 +11,10 @@ import jmri.jmrit.logixng.FemaleSocket;
  */
 public class Timer extends AbstractDigitalExpression {
 
-    private Timer _template;
-    
     public Timer(String sys, String user) {
         super(sys, user);
     }
 
-    private Timer(Timer template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new Timer(this);
-    }
-    
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {

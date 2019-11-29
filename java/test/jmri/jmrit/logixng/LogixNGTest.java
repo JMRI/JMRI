@@ -28,15 +28,6 @@ import org.junit.Test;
 public class LogixNGTest {
     
     @Test
-    public void testGetNewObjectBasedOnTemplate() {
-        // The method getNewObjectBasedOnTemplate() returns null for now. Fix later.
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        Base object = logixNG.getNewObjectBasedOnTemplate();
-        Assert.assertNotNull("getNewObjectBasedOnTemplate() returns not null", object);
-        Assert.assertTrue("getNewObjectBasedOnTemplate() returns LogixNG", object instanceof LogixNG);
-    }
-    
-    @Test
     public void testSetParent() {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         boolean hasThrown = false;

@@ -37,12 +37,6 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
 
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return _expression.getNewObjectBasedOnTemplate();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public final ConditionalNG getConditionalNG() {
         return _expression.getConditionalNG();
     }

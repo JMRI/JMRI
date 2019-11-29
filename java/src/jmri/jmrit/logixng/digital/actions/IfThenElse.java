@@ -52,7 +52,6 @@ public class IfThenElse extends AbstractDigitalAction
         CONTINOUS_ACTION,
     }
 
-    private IfThenElse _template;
     private boolean _enableExecution;
     private Type _type;
     private boolean _lastExpressionResult = false;
@@ -72,23 +71,6 @@ public class IfThenElse extends AbstractDigitalAction
                 .createFemaleSocket(this, this, "A1");
         _elseActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A2");
-    }
-    
-    private IfThenElse(IfThenElse template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _ifExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, _template._ifExpressionSocket.getName());
-        _thenActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, _template._thenActionSocket.getName());
-        _elseActionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, _template._elseActionSocket.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new IfThenElse(this);
     }
     
     /** {@inheritDoc} */

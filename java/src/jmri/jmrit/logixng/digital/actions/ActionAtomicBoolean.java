@@ -15,7 +15,6 @@ import jmri.jmrit.logixng.FemaleSocket;
  */
 public class ActionAtomicBoolean extends AbstractDigitalAction {
 
-//    private ActionAtomicBoolean _template;
     private AtomicBoolean _atomicBoolean;
     private boolean _newValue;
     
@@ -37,17 +36,6 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
         super(sys, user);
         _atomicBoolean = atomicBoolean;
         _newValue = newValue;
-    }
-    
-    private ActionAtomicBoolean(ActionAtomicBoolean template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-//        _template = template;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ActionAtomicBoolean(this);
     }
     
     public void setAtomicBoolean(AtomicBoolean atomicBoolean) {

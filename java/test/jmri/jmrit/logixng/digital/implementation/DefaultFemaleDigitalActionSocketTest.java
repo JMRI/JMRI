@@ -96,7 +96,6 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes = new ArrayList<>();
         classes.add(jmri.jmrit.logixng.digital.actions.DoAnalogAction.class);
         classes.add(jmri.jmrit.logixng.digital.actions.Many.class);
-        classes.add(jmri.jmrit.logixng.digital.actions.HoldAnything.class);
         classes.add(jmri.jmrit.logixng.digital.actions.DoStringAction.class);
         classes.add(jmri.jmrit.logixng.digital.actions.IfThenElse.class);
         map.put(Category.COMMON, classes);
@@ -110,12 +109,6 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, femaleSocket.getConnectableClasses()));
-    }
-    
-    @Test
-    public void testGetNewObjectBasedOnTemplate() {
-        thrown.expect(UnsupportedOperationException.class);
-        femaleSocket.getNewObjectBasedOnTemplate();
     }
     
     // The minimal setup for log4J

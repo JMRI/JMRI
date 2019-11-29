@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 public class ExpressionSensor extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private ExpressionSensor _template;
     private NamedBeanHandle<Sensor> _sensorHandle;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private SensorState _sensorState = SensorState.ACTIVE;
@@ -36,18 +35,6 @@ public class ExpressionSensor extends AbstractDigitalExpression
     public ExpressionSensor(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-    }
-    
-    private ExpressionSensor(ExpressionSensor template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ExpressionSensor(this);
     }
     
     public void setSensor(String sensorName) {

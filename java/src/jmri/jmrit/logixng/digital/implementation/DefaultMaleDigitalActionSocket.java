@@ -37,12 +37,6 @@ public class DefaultMaleDigitalActionSocket extends AbstractMaleSocket implement
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return _action.getNewObjectBasedOnTemplate();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public final ConditionalNG getConditionalNG() {
         return _action.getConditionalNG();
     }

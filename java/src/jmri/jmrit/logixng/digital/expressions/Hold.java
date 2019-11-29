@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.Locale;
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -25,7 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Hold extends AbstractDigitalExpression implements FemaleSocketListener {
 
-    private Hold _template;
     private String _holdExpressionSocketSystemName;
     private String _triggerExpressionSocketSystemName;
     private final FemaleDigitalExpressionSocket _holdExpressionSocket;
@@ -41,21 +39,6 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
                 .createFemaleSocket(this, this, "E1");
         _triggerExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E2");
-    }
-    
-    private Hold(Hold template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _holdExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, _template._holdExpressionSocket.getName());
-        _triggerExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, _template._triggerExpressionSocket.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new Hold(this);
     }
     
     /** {@inheritDoc} */

@@ -22,24 +22,12 @@ import jmri.util.ThreadingUtil;
  */
 public class ActionLight extends AbstractDigitalAction implements VetoableChangeListener {
 
-//    private ActionLight _template;
     private NamedBeanHandle<Light> _lightHandle;
     private LightState _lightState = LightState.ON;
     
     public ActionLight(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-    }
-    
-    private ActionLight(ActionLight template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-//        _template = template;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ActionLight(this);
     }
     
     public void setLightName(String lightName) {

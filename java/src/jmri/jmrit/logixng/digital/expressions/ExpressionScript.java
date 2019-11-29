@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 public class ExpressionScript extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private ExpressionScript _template;
     private String _scriptText;
     private AbstractScriptDigitalExpression _scriptClass;
     private boolean _listenersAreRegistered = false;
@@ -34,18 +33,6 @@ public class ExpressionScript extends AbstractDigitalExpression
     public ExpressionScript(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-    }
-    
-    private ExpressionScript(ExpressionScript template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ExpressionScript(this);
     }
     
     private void loadScript() {

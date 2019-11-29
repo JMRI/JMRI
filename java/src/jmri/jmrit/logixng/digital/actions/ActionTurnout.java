@@ -22,24 +22,12 @@ import jmri.util.ThreadingUtil;
  */
 public class ActionTurnout extends AbstractDigitalAction implements VetoableChangeListener {
 
-//    private ActionTurnout _template;
     private NamedBeanHandle<Turnout> _turnoutHandle;
     private TurnoutState _turnoutState = TurnoutState.THROWN;
     
     public ActionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-    }
-    
-    private ActionTurnout(ActionTurnout template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-//        _template = template;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ActionTurnout(this);
     }
     
     public void setTurnoutName(String turnoutName) {

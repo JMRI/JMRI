@@ -38,8 +38,6 @@ public class ActionThrottle extends AbstractDigitalAction
     public static final int LOCO_SPEED_SOCKET = 1;
     public static final int LOCO_DIRECTION_SOCKET = 2;
     
-    private ActionThrottle _template;
-    
     // The throttle if we have anyone or if a request is sent, null otherwise
     private DccThrottle _throttle;
     private ThrottleListener _throttleListener;
@@ -62,23 +60,6 @@ public class ActionThrottle extends AbstractDigitalAction
                 .createFemaleSocket(this, this, "E2");
         _locoDirectionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E3");
-    }
-    
-    private ActionThrottle(ActionThrottle template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _locoAddressSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, _template._locoAddressSocket.getName());
-        _locoSpeedSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, _template._locoAddressSocket.getName());
-        _locoDirectionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, _template._locoAddressSocket.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ActionThrottle(this);
     }
     
     /** {@inheritDoc} */

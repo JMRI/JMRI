@@ -10,7 +10,6 @@ import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.FemaleStringActionSocket;
 import jmri.jmrit.logixng.MaleStringActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 
@@ -23,13 +22,6 @@ public final class DefaultFemaleStringActionSocket
 
     public DefaultFemaleStringActionSocket(Base parent, FemaleSocketListener listener, String name) {
         super(parent, listener, name);
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        // Female sockets have special handling
-        throw new UnsupportedOperationException();
     }
     
     @Override

@@ -157,18 +157,6 @@ public interface Base {
     public String getLongDescription(Locale locale);
     
     /**
-     * Returns a new object which is using this object as a template.
-     * <P>
-     * If this object never should be used as a template, it's valid for it to
-     * return null. If this method returns null, the caller must handle this
-     * object as if it never existed.
-     * 
-     * @return the new object or null if this object is not valid as a template
-     */
-    @CheckForNull
-    public Base getNewObjectBasedOnTemplate();
-    
-    /**
      * Get the ConditionalNG of this item.
      * @return the ConditionalNG that owns this item
      */

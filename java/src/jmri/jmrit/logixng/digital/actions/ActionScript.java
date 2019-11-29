@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 public class ActionScript extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private ActionScript _template;
     private String _scriptText;
     private AbstractScriptDigitalAction _scriptClass;
     private boolean _listenersAreRegistered = false;
@@ -34,18 +33,6 @@ public class ActionScript extends AbstractDigitalAction
     public ActionScript(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-    }
-    
-    private ActionScript(ActionScript template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ActionScript(this);
     }
     
     private void loadScript() {

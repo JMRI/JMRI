@@ -1,11 +1,8 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.Locale;
-import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
@@ -33,7 +30,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSocketListener {
 
-    private ResetOnTrue _template;
     private String _primaryExpressionSocketSystemName;
     private String _secondaryExpressionSocketSystemName;
     private final FemaleDigitalExpressionSocket _primaryExpressionSocket;
@@ -65,21 +61,6 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
         } catch (SocketAlreadyConnectedException ex) {
             log.error("socket is already connected", ex);
         }
-    }
-    
-    private ResetOnTrue(ResetOnTrue template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _primaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, _template._primaryExpressionSocket.getName());
-        _secondaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, _template._secondaryExpressionSocket.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ResetOnTrue(this);
     }
     
     /** {@inheritDoc} */

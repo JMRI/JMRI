@@ -25,13 +25,6 @@ public class DefaultFemaleStringExpressionSocket extends AbstractFemaleSocket
     
     /** {@inheritDoc} */
     @Override
-    public Base getNewObjectBasedOnTemplate() {
-        // Female sockets have special handling
-        throw new UnsupportedOperationException();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleStringExpressionSocket;
     }

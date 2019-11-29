@@ -117,15 +117,6 @@ public class DefaultFemaleGenericExpressionSocket
         return socket;
     }
     
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        // Female sockets have special handling
-        throw new UnsupportedOperationException(
-                InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-    }
-    
     /** {@inheritDoc} */
     @Override
     public boolean isCompatible(MaleSocket socket) {

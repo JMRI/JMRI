@@ -102,13 +102,6 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
         Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
         
-        // Test template
-        expression2 = (AnalogExpressionMemory)_base.getNewObjectBasedOnTemplate();
-        Assert.assertNotNull("object exists", expression2);
-        Assert.assertNull("Username is null", expression2.getUserName());
-//        Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
-        
         boolean thrown = false;
         try {
             // Illegal system name

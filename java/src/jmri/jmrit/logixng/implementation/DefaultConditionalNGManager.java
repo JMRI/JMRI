@@ -12,7 +12,6 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketFactory;
 import jmri.jmrit.logixng.MaleDigitalActionSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.digital.actions.HoldAnything;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.jmrit.logixng.digital.actions.Many;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -136,13 +135,6 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
             femaleSocket.setLock(Base.Lock.HARD_LOCK);
 
             femaleSocket = actionManySocket.getChild(0);
-            MaleDigitalActionSocket actionHoldAnythingSocket =
-                    InstanceManager.getDefault(DigitalActionManager.class)
-                            .registerAction(new HoldAnything(digitalActionManager.getAutoSystemName(), null));
-            femaleSocket.connect(actionHoldAnythingSocket);
-            femaleSocket.setLock(Base.Lock.HARD_LOCK);
-
-            femaleSocket = actionManySocket.getChild(1);
             MaleDigitalActionSocket actionIfThenSocket =
                     InstanceManager.getDefault(DigitalActionManager.class)
                             .registerAction(new IfThenElse(digitalActionManager.getAutoSystemName(), null, IfThenElse.Type.TRIGGER_ACTION));

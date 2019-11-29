@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 public class ActionTimer extends AbstractDigitalAction
         implements FemaleSocketListener {
 
-    private ActionTimer _template;
     private String _actionSocketSystemName;
     private final FemaleDigitalActionSocket _actionSocket;
     private final Timer _timer = new Timer(true);
@@ -34,19 +33,6 @@ public class ActionTimer extends AbstractDigitalAction
         super(sys, user);
         _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
                 .createFemaleSocket(this, this, "A");
-    }
-    
-    private ActionTimer(ActionTimer template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _actionSocket = InstanceManager.getDefault(DigitalActionManager.class)
-                .createFemaleSocket(this, this, _template._actionSocket.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ActionTimer(this);
     }
     
     /** {@inheritDoc} */

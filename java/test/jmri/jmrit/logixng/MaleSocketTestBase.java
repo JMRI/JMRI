@@ -27,12 +27,6 @@ public abstract class MaleSocketTestBase {
     }
     
     @Test
-    public void testTemplate() throws JmriException {
-        Assert.assertNotNull("get object based on template is not null",
-                maleSocketA.getNewObjectBasedOnTemplate());
-    }
-    
-    @Test
     public void testLock() throws JmriException {
         maleSocketA.setLock(Base.Lock.NONE);
         Assert.assertTrue("lock is correct",

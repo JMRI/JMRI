@@ -25,13 +25,6 @@ public final class DefaultFemaleDigitalActionSocket
         super(parent, listener, name);
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        // Female sockets have special handling
-        throw new UnsupportedOperationException();
-    }
-    
     @Override
     public boolean isCompatible(MaleSocket socket) {
         return socket instanceof MaleDigitalActionSocket;

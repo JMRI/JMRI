@@ -29,7 +29,6 @@ import org.slf4j.LoggerFactory;
 public class DefaultLogixNG extends AbstractNamedBean
         implements LogixNG {
     
-//    private DefaultLogixNG _template;
     private boolean _enabled = false;
 //    private boolean _userEnabled = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
@@ -52,17 +51,6 @@ public class DefaultLogixNG extends AbstractNamedBean
     
     public DefaultLogixNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
-    }
-    
-    private DefaultLogixNG(DefaultLogixNG template) {
-        super(InstanceManager.getDefault(LogixNG_Manager.class).getAutoSystemName(), null);
-//        _template = template;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new DefaultLogixNG(this);
     }
     
     /** {@inheritDoc} */

@@ -4,11 +4,8 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.DigitalExpressionManager;
@@ -25,7 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 public class And extends AbstractDigitalExpression implements FemaleSocketListener {
 
-    private And _template;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     
     public And(String sys, String user)
@@ -40,18 +36,6 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
         setExpressionSystemNames(expressionSystemNames);
     }
 
-    private And(And template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new And(this);
-    }
-    
     private void init() {
         _expressionEntries
                 .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)

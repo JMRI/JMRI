@@ -22,24 +22,12 @@ import jmri.util.ThreadingUtil;
  */
 public class ActionSensor extends AbstractDigitalAction implements VetoableChangeListener {
 
-//    private ActionSensor _template;
     private NamedBeanHandle<Sensor> _sensorHandle;
     private SensorState _sensorState = SensorState.ACTIVE;
     
     public ActionSensor(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-    }
-    
-    private ActionSensor(ActionSensor template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-//        _template = template;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ActionSensor(this);
     }
     
     public void setSensorName(String sensorName) {

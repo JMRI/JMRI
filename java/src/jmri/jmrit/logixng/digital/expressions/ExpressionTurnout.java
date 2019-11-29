@@ -27,7 +27,6 @@ import org.slf4j.LoggerFactory;
 public class ExpressionTurnout extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private ExpressionTurnout _template;
     private NamedBeanHandle<Turnout> _turnoutHandle;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
     private TurnoutState _turnoutState = TurnoutState.THROWN;
@@ -36,18 +35,6 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     public ExpressionTurnout(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-    }
-    
-    private ExpressionTurnout(ExpressionTurnout template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ExpressionTurnout(this);
     }
     
     public void setTurnout(String turnoutName) {

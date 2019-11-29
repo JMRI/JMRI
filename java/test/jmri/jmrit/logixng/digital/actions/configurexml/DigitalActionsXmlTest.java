@@ -51,11 +51,6 @@ public class DigitalActionsXmlTest {
         b.load((Element) null, (Object) null);
         JUnitAppender.assertMessage("Invalid method called");
         
-        b = new HoldAnythingXml();
-        Assert.assertNotNull("exists", b);
-        b.load((Element) null, (Object) null);
-        JUnitAppender.assertMessage("Invalid method called");
-        
         b = new IfThenElseXml();
         Assert.assertNotNull("exists", b);
         b.load((Element) null, (Object) null);

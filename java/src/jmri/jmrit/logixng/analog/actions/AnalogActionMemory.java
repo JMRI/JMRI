@@ -25,23 +25,10 @@ import org.slf4j.LoggerFactory;
 public class AnalogActionMemory extends AbstractAnalogAction
         implements VetoableChangeListener {
 
-    private AnalogActionMemory _template;
     private NamedBeanHandle<Memory> _memoryHandle;
     
     public AnalogActionMemory(String sys, String user) {
         super(sys, user);
-    }
-    
-    private AnalogActionMemory(AnalogActionMemory template) {
-        super(InstanceManager.getDefault(AnalogActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _memoryHandle = _template._memoryHandle;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new AnalogActionMemory(this);
     }
     
     public void setMemory(String memoryName) {

@@ -1,7 +1,6 @@
 package jmri.jmrit.logixng.digital.implementation;
 
 import java.util.Locale;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.digital.expressions.AbstractDigitalExpression;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -26,12 +25,6 @@ public class DigitalExpressionPluginAdapter extends AbstractDigitalExpression {
         _pluginExpression = pluginExpression;
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return _pluginExpression.getNewObjectBasedOnTemplate();
-    }
-    
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {

@@ -47,7 +47,6 @@ import jmri.jmrit.logixng.digital.actions.ActionSensor;
 import jmri.jmrit.logixng.digital.actions.ActionTurnout;
 import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
 import jmri.jmrit.logixng.digital.actions.DoStringAction;
-import jmri.jmrit.logixng.digital.actions.HoldAnything;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.jmrit.logixng.digital.actions.Many;
 import jmri.jmrit.logixng.digital.actions.ShutdownComputer;
@@ -457,11 +456,11 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     socketIfThen.getChild(2).connect(socketSecondMany2);
                     
                     index = 0;
-                    
+/*                    
                     HoldAnything actionHoldAnything = new HoldAnything(getSystemNamePrefix()+"DA:AUTO:00011", "My hold anything");
                     MaleSocket socketHoldAnything = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionHoldAnything);
                     socketSecondMany.getChild(index++).connect(socketHoldAnything);
-                    
+*/                    
                     IfThenElse actionIfThen2 = new IfThenElse(getSystemNamePrefix()+"DA:AUTO:00012", "My if then", IfThenElse.Type.TRIGGER_ACTION);
                     MaleSocket socketIfThen2 = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThen2);
                     socketSecondMany.getChild(index++).connect(socketIfThen2);

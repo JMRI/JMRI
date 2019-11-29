@@ -112,13 +112,6 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("Username matches", "My light", action2.getUserName());
         Assert.assertEquals("String matches", "Set light IL1 to On", action2.getLongDescription());
         
-        // Test template
-        action2 = (ActionLight)_base.getNewObjectBasedOnTemplate();
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username is null", action2.getUserName());
-//        Assert.assertTrue("Username matches", "My light".equals(expression2.getUserName()));
-        Assert.assertEquals("String matches", "Set light '' to On", action2.getLongDescription());
-        
         boolean thrown = false;
         try {
             // Illegal system name

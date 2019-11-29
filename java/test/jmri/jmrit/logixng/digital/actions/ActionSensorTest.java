@@ -112,13 +112,6 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("Username matches", "My sensor", action2.getUserName());
         Assert.assertEquals("String matches", "Set sensor IS1 to Active", action2.getLongDescription());
         
-        // Test template
-        action2 = (ActionSensor)_base.getNewObjectBasedOnTemplate();
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username is null", action2.getUserName());
-//        Assert.assertTrue("Username matches", "My sensor".equals(expression2.getUserName()));
-        Assert.assertEquals("String matches", "Set sensor '' to Active", action2.getLongDescription());
-        
         boolean thrown = false;
         try {
             // Illegal system name

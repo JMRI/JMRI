@@ -2,11 +2,8 @@ package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.List;
 import java.util.Locale;
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.DigitalExpressionManager;
 
 /**
  * Always evaluates to False.
@@ -15,8 +12,6 @@ import jmri.jmrit.logixng.DigitalExpressionManager;
  */
 public class False extends AbstractDigitalExpression {
 
-    private False _template;
-    
     public False(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
@@ -27,18 +22,6 @@ public class False extends AbstractDigitalExpression {
         super(sys, user);
     }
 
-    private False(False template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new False(this);
-    }
-    
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {

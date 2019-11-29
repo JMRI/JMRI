@@ -25,7 +25,6 @@ public class DoAnalogAction
         extends AbstractDigitalAction
         implements FemaleSocketListener {
 
-    private DoAnalogAction _template;
     private String _analogExpressionSocketSystemName;
     private String _analogActionSocketSystemName;
     private final FemaleAnalogExpressionSocket _analogExpressionSocket;
@@ -37,21 +36,6 @@ public class DoAnalogAction
                 .createFemaleSocket(this, this, "E1");
         _analogActionSocket = InstanceManager.getDefault(AnalogActionManager.class)
                 .createFemaleAnalogActionSocket(this, this, "A1");
-    }
-    
-    private DoAnalogAction(DoAnalogAction template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _analogExpressionSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, _template._analogExpressionSocket.getName());
-        _analogActionSocket = InstanceManager.getDefault(AnalogActionManager.class)
-                .createFemaleAnalogActionSocket(this, this, _template._analogActionSocket.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new DoAnalogAction(this);
     }
     
     /** {@inheritDoc} */

@@ -26,17 +26,6 @@ import org.junit.Test;
 public class ConditionalNGTest {
     
     @Test
-    public void testGetNewObjectBasedOnTemplate() {
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        ConditionalNG conditionalNG_1 = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N
-//        DefaultConditionalNG conditionalNG_1 = new DefaultConditionalNG(logixNG.getSystemName()+":1", null);
-        logixNG.addConditionalNG(conditionalNG_1);
-        ConditionalNG conditionalNG_2 = (ConditionalNG) conditionalNG_1.getNewObjectBasedOnTemplate();
-//        DefaultConditionalNG conditionalNG_2 = new DefaultConditionalNG(logixNG.getSystemName()+":2", null, conditionalNG_1);
-        Assert.assertNotNull("conditionalNG_2 is not null", conditionalNG_2);
-    }
-    
-    @Test
     public void testGetBeanType() {
 //        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class).createConditionalNG("A conditionalNG");  // NOI18N

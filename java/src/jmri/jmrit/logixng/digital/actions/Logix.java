@@ -24,7 +24,6 @@ import jmri.jmrit.logixng.DigitalBooleanActionManager;
 public class Logix extends AbstractDigitalAction
         implements FemaleSocketListener, DigitalActionWithEnableExecution {
 
-    private Logix _template;
     private boolean _enableExecution;
     private boolean _lastExpressionResult = false;
     private String _expressionSocketSystemName;
@@ -38,21 +37,6 @@ public class Logix extends AbstractDigitalAction
                 .createFemaleSocket(this, this, "E");
         _actionSocket = InstanceManager.getDefault(DigitalBooleanActionManager.class)
                 .createFemaleSocket(this, this, "A");
-    }
-    
-    private Logix(Logix template) {
-        super(InstanceManager.getDefault(DigitalBooleanActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _expressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, _template._expressionSocket.getName());
-        _actionSocket = InstanceManager.getDefault(DigitalBooleanActionManager.class)
-                .createFemaleSocket(this, this, _template._actionSocket.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new Logix(this);
     }
     
     /** {@inheritDoc} */

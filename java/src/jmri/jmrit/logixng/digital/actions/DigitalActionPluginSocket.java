@@ -3,10 +3,7 @@ package jmri.jmrit.logixng.digital.actions;
 import java.util.Locale;
 import java.util.Objects;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.DigitalActionPlugin;
 
@@ -15,7 +12,6 @@ import jmri.jmrit.logixng.DigitalActionPlugin;
  */
 public class DigitalActionPluginSocket extends AbstractDigitalAction {
 
-    private DigitalActionPluginSocket _template;
     private final DigitalActionPlugin _actionPlugin;
     
     public DigitalActionPluginSocket(
@@ -23,20 +19,6 @@ public class DigitalActionPluginSocket extends AbstractDigitalAction {
         super(sys, user);
         Objects.requireNonNull(actionPlugin, "parameter actionPlugin must not be null");
         _actionPlugin = actionPlugin;
-    }
-    
-    private DigitalActionPluginSocket(@Nonnull DigitalActionPluginSocket template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        Objects.requireNonNull(template, "parameter template must not be null");
-        _actionPlugin = null;
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new DigitalActionPluginSocket(this);
     }
     
     @Override

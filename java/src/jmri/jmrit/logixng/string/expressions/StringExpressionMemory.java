@@ -11,10 +11,8 @@ import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
-import jmri.jmrit.logixng.StringExpressionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +24,6 @@ import org.slf4j.LoggerFactory;
 public class StringExpressionMemory extends AbstractStringExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private StringExpressionMemory _template;
     private NamedBeanHandle<Memory> _memoryHandle;
     private boolean _listenersAreRegistered = false;
     
@@ -36,18 +33,6 @@ public class StringExpressionMemory extends AbstractStringExpression
         super(sys, user);
     }
 
-    private StringExpressionMemory(StringExpressionMemory template) {
-        super(InstanceManager.getDefault(StringExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _memoryHandle = _template._memoryHandle;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new StringExpressionMemory(this);
-    }
-    
     @Override
     public void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException {
         if ("CanDelete".equals(evt.getPropertyName())) { // No I18N

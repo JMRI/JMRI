@@ -101,11 +101,6 @@ public class DefaultMaleStringActionSocketTest extends MaleSocketTestBase {
         }
 
         @Override
-        public Base getNewObjectBasedOnTemplate() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
         public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
             throw new UnsupportedOperationException("Not supported.");
         }

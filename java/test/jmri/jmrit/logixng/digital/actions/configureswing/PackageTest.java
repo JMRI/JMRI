@@ -11,7 +11,6 @@ import org.junit.runners.Suite;
     DoAnalogActionSwingTest.class,
     DoStringActionSwingTest.class,
     IfThenElseSwingTest.class,
-    HoldAnythingSwingTest.class,
     ManySwingTest.class,
     ShutdownComputerSwingTest.class,
 })

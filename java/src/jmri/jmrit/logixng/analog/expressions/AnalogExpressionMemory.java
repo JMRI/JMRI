@@ -26,7 +26,6 @@ import org.slf4j.LoggerFactory;
 public class AnalogExpressionMemory extends AbstractAnalogExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private AnalogExpressionMemory _template;
     private NamedBeanHandle<Memory> _memoryHandle;
     private boolean _listenersAreRegistered = false;
     
@@ -34,18 +33,6 @@ public class AnalogExpressionMemory extends AbstractAnalogExpression
             throws BadUserNameException, BadSystemNameException {
         
         super(sys, user);
-    }
-
-    private AnalogExpressionMemory(AnalogExpressionMemory template) {
-        super(InstanceManager.getDefault(AnalogExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _memoryHandle = _template._memoryHandle;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new AnalogExpressionMemory(this);
     }
     
     /** {@inheritDoc} */

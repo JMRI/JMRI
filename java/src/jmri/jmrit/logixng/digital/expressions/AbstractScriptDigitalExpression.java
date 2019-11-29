@@ -26,7 +26,6 @@ import jmri.jmrit.logixng.FemaleSocket;
 public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private AbstractScriptDigitalExpression _template;
     private boolean _listenersAreRegistered = false;
     private final DigitalExpression _parentDigitalExpression;
 
@@ -38,21 +37,6 @@ public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExp
         super("IQDE0", null);
 //        super(sys, user);
         _parentDigitalExpression = de;
-    }
-    
-    private AbstractScriptDigitalExpression(AbstractScriptDigitalExpression template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-//        _parentDigitalExpression = null;
-        throw new UnsupportedOperationException("Not supported");
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        throw new UnsupportedOperationException("Method not implemented by script");
-//        return new AbstractScriptDigitalExpression(this);
     }
     
     @Override

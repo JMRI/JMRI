@@ -48,13 +48,6 @@ public abstract class AbstractScriptDigitalAction extends AbstractDigitalAction
         throw new UnsupportedOperationException("Not supported");
     }
     
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        throw new UnsupportedOperationException("Method not implemented by script");
-//        return new AbstractScriptDigitalExpression(this);
-    }
-    
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }

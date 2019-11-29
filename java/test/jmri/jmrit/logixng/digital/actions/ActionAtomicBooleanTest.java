@@ -86,13 +86,6 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("Username matches", "My atomicBoolean", action2.getUserName());
         Assert.assertEquals("String matches", "Set the atomic boolean to false", action2.getLongDescription());
         
-        // Test template
-        action2 = (ActionAtomicBoolean)_base.getNewObjectBasedOnTemplate();
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username is null", action2.getUserName());
-//        Assert.assertTrue("Username matches", "My atomicBoolean".equals(expression2.getUserName()));
-        Assert.assertEquals("String matches", "Set the atomic boolean to false", action2.getLongDescription());
-        
         boolean thrown = false;
         try {
             // Illegal system name

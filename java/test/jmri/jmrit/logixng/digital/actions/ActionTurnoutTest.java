@@ -112,13 +112,6 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
         Assert.assertEquals("String matches", "Set turnout IT1 to Thrown", action2.getLongDescription());
         
-        // Test template
-        action2 = (ActionTurnout)_base.getNewObjectBasedOnTemplate();
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username is null", action2.getUserName());
-//        Assert.assertTrue("Username matches", "My turnout".equals(expression2.getUserName()));
-        Assert.assertEquals("String matches", "Set turnout '' to Thrown", action2.getLongDescription());
-        
         boolean thrown = false;
         try {
             // Illegal system name

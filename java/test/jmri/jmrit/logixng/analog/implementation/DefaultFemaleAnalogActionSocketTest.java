@@ -110,12 +110,6 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
                 isConnectionClassesEquals(map, femaleSocket.getConnectableClasses()));
     }
     
-    @Test
-    public void testGetNewObjectBasedOnTemplate() {
-        thrown.expect(UnsupportedOperationException.class);
-        femaleSocket.getNewObjectBasedOnTemplate();
-    }
-    
     // The minimal setup for log4J
     @Before
     public void setUp() {

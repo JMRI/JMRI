@@ -400,11 +400,6 @@ public abstract class AbstractBaseTestBase {
         }
 
         @Override
-        public Base getNewObjectBasedOnTemplate() {
-            throw new UnsupportedOperationException("Not supported.");
-        }
-
-        @Override
         public Base getParent() {
             throw new UnsupportedOperationException("Not supported.");
         }

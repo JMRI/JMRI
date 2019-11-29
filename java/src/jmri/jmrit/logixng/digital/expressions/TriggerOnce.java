@@ -2,7 +2,6 @@ package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.Locale;
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -26,7 +25,6 @@ import org.slf4j.LoggerFactory;
  */
 public class TriggerOnce extends AbstractDigitalExpression implements FemaleSocketListener {
 
-    private TriggerOnce _template;
     private String _childExpressionSystemName;
     private final FemaleDigitalExpressionSocket _childExpression;
     private boolean _childLastState = false;
@@ -51,19 +49,6 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
         } catch (SocketAlreadyConnectedException ex) {
             log.error("socket is already connected", ex);
         }
-    }
-    
-    private TriggerOnce(TriggerOnce template) {
-        super(InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName(), null);
-        _template = template;
-        _childExpression = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, _template._childExpression.getName());
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new TriggerOnce(this);
     }
     
     /** {@inheritDoc} */

@@ -93,12 +93,6 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
         Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
         
-        // Test template
-        action2 = (StringActionMemory)_base.getNewObjectBasedOnTemplate();
-        Assert.assertNotNull("object exists", action2);
-        Assert.assertNull("Username is null", action2.getUserName());
-        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
-        
         boolean thrown = false;
         try {
             // Illegal system name

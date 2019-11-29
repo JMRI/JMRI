@@ -19,24 +19,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ShutdownComputer extends AbstractDigitalAction {
 
-    private ShutdownComputer _template;
     private int _seconds;
     
     public ShutdownComputer(String sys, String user, int seconds)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-    }
-    
-    private ShutdownComputer(ShutdownComputer template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ShutdownComputer(this);
     }
     
     public void setSeconds(int seconds) {

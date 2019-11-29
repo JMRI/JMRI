@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ActionMemory extends AbstractDigitalAction implements VetoableChangeListener {
 
-//    private ActionTurnout _template;
     private NamedBeanHandle<Memory> _memoryHandle;
     private NamedBeanHandle<Memory> _copyToMemoryHandle;
     private MemoryOperation _memoryOperation = MemoryOperation.SET_TO_STRING;
@@ -33,17 +32,6 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     public ActionMemory(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-    }
-    
-    private ActionMemory(ActionMemory template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-//        _template = template;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ActionMemory(this);
     }
     
     public void setMemoryName(String memoryName) {

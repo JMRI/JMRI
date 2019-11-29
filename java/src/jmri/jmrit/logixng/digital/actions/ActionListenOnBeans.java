@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ActionListenOnBeans extends AbstractDigitalAction implements VetoableChangeListener {
 
-//    private ActionListenOnBeans _template;
     private final Map<String, NamedBeanReference> namedBeanReferences = new DuplicateKeyMap<>();
     private boolean _listenersAreRegistered = false;
     
@@ -44,17 +43,6 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
 //        jmri.NamedBeanMap a;
-    }
-    
-    private ActionListenOnBeans(ActionListenOnBeans template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-//        _template = template;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public Base getNewObjectBasedOnTemplate() {
-        return new ActionListenOnBeans(this);
     }
     
     public void addReference(NamedBeanReference reference) {
