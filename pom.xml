@@ -621,7 +621,16 @@
                             <destFile>${jacoco.reportFile}</destFile>
                             <propertyName>failsafe.argLine</propertyName>
                          </configuration>
-                    </execution>                            
+                    </execution>  
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>      
+                        <configuration>
+                            <dataFile>${jacoco.reportFile}</dataFile>
+                         </configuration>
+                    </execution>      
                     <execution>
                         <id>default-check</id>
                         <goals>
