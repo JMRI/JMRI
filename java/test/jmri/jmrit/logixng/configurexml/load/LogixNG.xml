@@ -4,7 +4,7 @@
   <jmriversion>
     <major>4</major>
     <minor>17</minor>
-    <test>5</test>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -470,9 +470,6 @@
         </socket>
       </actions>
     </many>
-    <hold-anything class="jmri.jmrit.logixng.digital.actions.configurexml.HoldAnythingXml">
-      <systemName>IQDA:AUTO:0002</systemName>
-    </hold-anything>
     <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
       <systemName>IQDA:AUTO:0003</systemName>
       <ifSocket>
@@ -501,9 +498,6 @@
         </socket>
       </actions>
     </many>
-    <hold-anything class="jmri.jmrit.logixng.digital.actions.configurexml.HoldAnythingXml">
-      <systemName>IQDA:AUTO:0005</systemName>
-    </hold-anything>
     <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
       <systemName>IQDA:AUTO:0006</systemName>
       <ifSocket>
@@ -532,9 +526,6 @@
         </socket>
       </actions>
     </many>
-    <hold-anything class="jmri.jmrit.logixng.digital.actions.configurexml.HoldAnythingXml">
-      <systemName>IQDA:AUTO:0008</systemName>
-    </hold-anything>
     <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
       <systemName>IQDA:AUTO:0009</systemName>
       <ifSocket>
@@ -634,10 +625,6 @@
         </socket>
       </actions>
     </many>
-    <hold-anything class="jmri.jmrit.logixng.digital.actions.configurexml.HoldAnythingXml">
-      <systemName>IQDA:AUTO:00011</systemName>
-      <userName>My hold anything</userName>
-    </hold-anything>
     <if-then-else class="jmri.jmrit.logixng.digital.actions.configurexml.IfThenElseXml" type="TRIGGER_ACTION">
       <systemName>IQDA:AUTO:00012</systemName>
       <userName>My if then</userName>
@@ -813,10 +800,22 @@
   </logixngStringActions>
   <filehistory>
     <operation>
+      <type>Load OK</type>
+      <date>Fri Nov 29 21:10:36 CET 2019</date>
+      <filename>/F:/Projekt/Java/GitHub/JMRI/java/test/jmri/jmrit/logixng/configurexml/load/LogixNG.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Store</type>
+          <date>Sat Oct 19 23:35:39 CEST 2019</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
       <type>Store</type>
-      <date>Sat Oct 19 23:35:39 CEST 2019</date>
+      <date>Fri Nov 29 21:10:36 CET 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.5ish+daniel+20191019T2135Z on Sat Oct 19 23:35:39 CEST 2019-->
+  <!--Written by JMRI version 4.17.7ish+daniel+20191129T2009Z on Fri Nov 29 21:10:36 CET 2019-->
 </layout-config>

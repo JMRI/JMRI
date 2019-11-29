@@ -11,6 +11,8 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.FemaleSocketTestBase;
+import jmri.jmrit.logixng.digital.actions.ActionListenOnBeans;
+import jmri.jmrit.logixng.digital.actions.ActionScript;
 import jmri.jmrit.logixng.digital.actions.ActionTurnout;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -91,6 +93,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         classes.add(jmri.jmrit.logixng.digital.actions.ActionLight.class);
         classes.add(jmri.jmrit.logixng.digital.actions.ActionTurnout.class);
         classes.add(jmri.jmrit.logixng.digital.actions.ActionSensor.class);
+        classes.add(jmri.jmrit.logixng.digital.actions.ActionScript.class);
         map.put(Category.ITEM, classes);
         
         classes = new ArrayList<>();
@@ -101,6 +104,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
+        classes.add(jmri.jmrit.logixng.digital.actions.ActionListenOnBeans.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();

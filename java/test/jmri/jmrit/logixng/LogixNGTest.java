@@ -379,12 +379,6 @@ public class LogixNGTest {
                 .append("......! ").append(newLine)
                 .append(".........Many").append(newLine)
                 .append("............! A1").append(newLine)
-                .append("...............Hold anything").append(newLine)
-//                .append("..................? A1").append(newLine)
-//                .append(".....................Socket not connected").append(newLine)
-                .append("..................! A1").append(newLine)
-                .append(".....................Socket not connected").append(newLine)
-                .append("............! A2").append(newLine)
                 .append("...............If E then A1 else A2").append(newLine)
                 .append("..................? E").append(newLine)
                 .append(".....................Socket not connected").append(newLine)
@@ -392,7 +386,7 @@ public class LogixNGTest {
                 .append(".....................Socket not connected").append(newLine)
                 .append("..................! A2").append(newLine)
                 .append(".....................Socket not connected").append(newLine)
-                .append("............! A3").append(newLine)
+                .append("............! A2").append(newLine)
                 .append("...............Socket not connected").append(newLine);
         
         StringWriter writer = new StringWriter();
@@ -451,7 +445,7 @@ public class LogixNGTest {
         MaleSocket many = conditionalNG.getChild(0).getConnectedSocket();
 //        System.err.format("aa: %s%n", many.getLongDescription());
         Assert.assertTrue("description is correct", "Many".equals(many.getLongDescription()));
-        MaleSocket ifThen = many.getChild(1).getConnectedSocket();
+        MaleSocket ifThen = many.getChild(0).getConnectedSocket();
 //        System.err.format("aa: %s%n", ifThen.getLongDescription());
         Assert.assertTrue("description is correct", "If E then A1 else A2".equals(ifThen.getLongDescription()));
         systemName = InstanceManager.getDefault(DigitalExpressionManager.class).getAutoSystemName();

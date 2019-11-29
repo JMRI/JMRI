@@ -289,7 +289,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     logixNG.addConditionalNG(conditionalNG);
 
                     MaleSocket socketMany = conditionalNG.getChild(0).getConnectedSocket();
-                    MaleSocket socketIfThen = socketMany.getChild(1).getConnectedSocket();
+                    MaleSocket socketIfThen = socketMany.getChild(0).getConnectedSocket();
                     
                     Or expressionOr = new Or(getSystemNamePrefix()+"DE:AUTO:00001", null);
                     MaleSocket socketOr = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionOr);

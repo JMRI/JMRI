@@ -138,15 +138,8 @@ public class DefaultLogixNGManagerTest {
                 "jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalActionSocket",
                 maleSocket2.getClass().getName());
         Assert.assertEquals("action is of correct class",
-                "Hold anything",
-                maleSocket2.getLongDescription());
-        MaleSocket maleSocket3 = maleSocket.getChild(1).getConnectedSocket();
-        Assert.assertEquals("action is of correct class",
-                "jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalActionSocket",
-                maleSocket3.getClass().getName());
-        Assert.assertEquals("action is of correct class",
                 "If E then A1 else A2",
-                maleSocket3.getLongDescription());
+                maleSocket2.getLongDescription());
     }
     
     // The minimal setup for log4J
