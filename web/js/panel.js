@@ -113,6 +113,14 @@ function $logProperties(obj, force = false) {
 	}
 }
 
+function isUndefined(x) {
+    return (typeof x === "undefined");
+}
+
+function isDefined(x) {
+    return (typeof x !== "undefined");
+}
+
 //
 //  Decoration classes
 //
@@ -1236,6 +1244,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         $preloadWidgetImages($widget); //start loading all images
                                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                         $widget["systemName"] = $widget.name;
+                                        $widget['id'] = $widget.ident;
                                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                                         $drawIcon($widget); //actually place and position the widget on the panel
                                         jmri.getSensor($widget["systemName"]);
@@ -1271,6 +1280,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                         }
                         $preloadWidgetImages($widget); //start loading all images
                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
+                        $widget['id'] = $widget.ident;
                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                         $drawIcon($widget); //actually place and position the widget on the panel
                         break;
@@ -1412,6 +1422,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                         	case "vertical_up"   : $widget.degrees = 270;
                         	case "vertical_down" : $widget.degrees = 90;
                         }
+                        $widget['id'] = $widget.ident;
                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                         //put the text element on the page
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" + $widget.text + "</div>");
@@ -1445,6 +1456,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 jmri.getLayoutBlock($widget.systemName);
                                 break;
                             case "layoutturnout" :
+                                $widget['id'] = $widget.ident;
                                 $widget['name'] = $widget.turnoutname; //normalize name
                                 $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                 $widget.jsonType = "turnout"; // JSON object type
@@ -1495,6 +1507,11 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     jmri.getSensor($widget["occupancysensorD"]); //listen for occupancy changes
                                 break;
                             case "layoutSlip" :
+                                $widget['id'] = $widget.ident;
+                                $widget['name'] = $widget.ident;
+                                $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
+                                $widget.jsonType = "turnout"; // JSON object type
+
                                 //save the slip state to turnout state information
                                 $widget['turnout'] = $(this).find('turnout:first').text();
                                 $widget['turnoutB'] = $(this).find('turnoutB:first').text();
@@ -1515,10 +1532,6 @@ function processPanelXML($returnedData, $success, $xhr) {
 
                                 // default to this state
                                 $widget['state'] = UNKNOWN;
-
-                                $widget['name'] = $widget.ident;
-                                $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-                                $widget.jsonType = "turnout"; // JSON object type
 
                                 $widget['x'] = $widget.xcen; //normalize x,y
                                 $widget['y'] = $widget.ycen;
@@ -1695,6 +1708,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget['occupancystateBD'] = $gBlks[$widget.blocknamebd].state;
                                 }
                                 //store widget in persistent array
+                                $widget['id'] = $widget.ident;
                                 $gWidgets[$widget.id] = $widget;
                                 //also store the xing's 4 end points for other connections
                                 $storeLevelXingPoints($widget);
@@ -1810,7 +1824,7 @@ function $handleClick(e) {
 
     // special case for layoutSlips
     if (this.className.startsWith('layoutSlip ')) {
-        if (this.id.startsWith("widget-") && (this.id.endsWith("r") || this.id.endsWith("l"))) {
+        if (this.id.startsWith("SL") && (this.id.endsWith("r") || this.id.endsWith("l"))) {
             var slipID = this.id.slice(0, -1);
             $widget = $gWidgets[slipID];
 
@@ -2488,32 +2502,28 @@ function $drawSlip($widget) {
     var $sideWidth = $gPanel.sidetrackwidth;
 
     var $widthA = $sideWidth;
-    if (typeof $gWidgets[$widget.connectaname] !== "undefined") {
-        //jmri.log("$widget.connectaname: " + $widget.connectaname);
+    if (isDefined($gWidgets[$widget.connectaname])) {
         if ($gWidgets[$widget.connectaname].mainline == "yes") {
             $widthA = $mainWidth;
         }
     }
 
     var $widthB = $sideWidth;
-    if (typeof $gWidgets[$widget.connectbname] !== "undefined") {
-        //jmri.log("$widget.connectbname: " + $widget.connectbname);
+    if (isDefined($gWidgets[$widget.connectbname])) {
         if ($gWidgets[$widget.connectbname].mainline == "yes") {
             $widthB = $mainWidth;
         }
     }
 
     var $widthC = $sideWidth;
-    if (typeof $gWidgets[$widget.connectcname] !== "undefined") {
-        //jmri.log("$widget.connectcname: " + $widget.connectcname);
+    if (isDefined($gWidgets[$widget.connectcname])) {
         if ($gWidgets[$widget.connectcname].mainline == "yes") {
             $widthC = $mainWidth;
         }
     }
 
     var $widthD = $sideWidth;
-    if (typeof $gWidgets[$widget.connectdname] !== "undefined") {
-        //jmri.log("$widget.connectdname: " + $widget.connectdname);
+    if (isDefined($gWidgets[$widget.connectdname])) {
         if ($gWidgets[$widget.connectdname].mainline == "yes") {
             $widthD = $mainWidth;
         }
@@ -2527,36 +2537,31 @@ function $drawSlip($widget) {
 
     var $eraseColor = $gPanel.backgroundcolor;
 
-    //jmri.log("\n    $drawSlip(...)")
-
     //set trackcolor[ABCD] based on blockcolor[ABCD]
-    var $colorA = $gPanel.defaulttrackcolor;
-    var $blk = $gBlks[$widget.blockname];
-    if (typeof $blk !== "undefined") {
-        //jmri.log("blockA " + $widget.blockname + " == " + $blk.blockcolor);
-        $colorA = $blk.blockcolor;
-    }
+    var $colorA, $colorB, $colorC, $colorD;
+    var $blk, ts;
+    var occupancystate = isUndefined($widget.occupancystate) ? UNKNOWN : $widget.occupancystate;
 
-    var $colorB = $colorA;
-    var $blk = $gBlks[$widget.blockbname];
-    if (typeof $blk !== "undefined") {
-        //jmri.log("blockB " + $widget.blockbname + " == " + $blk.blockcolor);
-        $colorB = $blk.blockcolor;
-    }
+    //NOTE: if unoccupied grab block color from adjacent track segments
+    $colorA = $gPanel.defaulttrackcolor;
+    $blk = $gBlks[$gWidgets[$widget.connectaname].blockname];
+    $blk = ((occupancystate == ACTIVE) || isUndefined($blk)) ? $gBlks[$widget.blockname] : $blk;
+    $colorA = isDefined($blk) ? $blk.blockcolor : $colorA;
 
-    var $colorC = $colorA;
-    var $blk = $gBlks[$widget.blockcname];
-    if (typeof $blk !== "undefined") {
-        //jmri.log("blockC " + $widget.blockcname + " == " + $blk.blockcolor);
-        $colorC = $blk.blockcolor;
-    }
+    $colorB = $colorA;
+    $blk = $gBlks[$gWidgets[$widget.connectbname].blockname];
+    $blk = ((occupancystate == ACTIVE) || isUndefined($blk)) ? $gBlks[$widget.blockname] : $blk;
+    $colorB = isDefined($blk) ? $blk.blockcolor : $colorB;
 
-    var $colorD = $colorA;
-    var $blk = $gBlks[$widget.blockdname];
-    if (typeof $blk !== "undefined") {
-        //jmri.log("blockD " + $widget.blockdname + " == " + $blk.blockcolor);
-        $colorD = $blk.blockcolor;
-    }
+    $colorC = $colorA;
+    $blk = $gBlks[$gWidgets[$widget.connectcname].blockname];
+    $blk = ((occupancystate == ACTIVE) || isUndefined($blk)) ? $gBlks[$widget.blockname] : $blk;
+    $colorC = isDefined($blk) ? $blk.blockcolor : $colorC;
+
+    $colorD = $colorA;
+    $blk = $gBlks[$gWidgets[$widget.connectdname].blockname];
+    $blk = ((occupancystate == ACTIVE) || isUndefined($blk)) ? $gBlks[$widget.blockname] : $blk;
+    $colorD = isDefined($blk) ? $blk.blockcolor : $colorD;
 
     //slip A==-==D
     //      \\ //
@@ -2569,8 +2574,6 @@ function $drawSlip($widget) {
     // var STATE_BC = 0x08;
 
     // ERASE EVERYTHING FIRST
-    ///jmri.log("$widget.state: " + $widget.state);
-
     var acen3rd = $point_third(a, cen);
     var bcen3rd = $point_third(b, cen);
     var ccen3rd = $point_third(c, cen);
@@ -3705,9 +3708,11 @@ var $getWidgetFamily = function($widget, $element) {
 
 //redraw all "drawn" elements for given block (called after color change)
 function $redrawBlock(blockName) {
-//     jmri.log("redrawing all track for block " + blockName);
+    //jmri.log("redrawing all tracks for block " + blockName);
     //loop thru widgets, if block matches, redraw widget by proper method
     jQuery.each($gWidgets, function($id, $widget) {
+        ///jmri.log("  $id: " + $id);
+        //$logProperties($widget);
         if (($widget.blockname == blockName)
         || ($widget.blocknameac == blockName)
         || ($widget.blocknamebd == blockName)
@@ -3715,18 +3720,26 @@ function $redrawBlock(blockName) {
         || ($widget.blockcname == blockName)
         || ($widget.blockdname == blockName)) {
             switch ($widget.widgetType) {
-            case 'layoutturnout' :
-                $drawTurnout($widget);
-                break;
-            case 'layoutSlip' :
+                case 'layoutturnout' :
+                    $drawTurnout($widget);
+                    break;
+                case 'layoutSlip' :
+                    $drawSlip($widget);
+                    break;
+                case 'tracksegment' :
+                    $drawTrackSegment($widget);
+                    break;
+                case 'levelxing' :
+                    $drawLevelXing($widget);
+                    break;
+            }
+        }
+        if ($widget.widgetType == "layoutSlip") {
+            if ((isDefined($widget.connectaname) && ($gWidgets[$widget.connectaname].blockname == blockName))
+            || isDefined($widget.connectbname) && ($gWidgets[$widget.connectbname].blockname == blockName)
+            || isDefined($widget.connectcname) && ($gWidgets[$widget.connectcname].blockname == blockName)
+            || isDefined($widget.connectdname) && ($gWidgets[$widget.connectdname].blockname == blockName)){
                 $drawSlip($widget);
-                break;
-            case 'tracksegment' :
-                $drawTrackSegment($widget);
-                break;
-            case 'levelxing' :
-                $drawLevelXing($widget);
-                break;
             }
         }
     });
@@ -3786,10 +3799,10 @@ function updateWidgets(name, state, data) {
     }
 }
 
-function updateOccupancy(occupancyName, state, data) {
+function updateOccupancy(sensorName, state, data) {
     //handle occupancy sensors by systemname
-    if (occupancyNames[occupancyName]) {
-        updateOccupancySub(occupancyName, state);
+    if (occupancyNames[sensorName]) {
+        updateOccupancySub(sensorName, state);
     }
     //handle occupancy sensors by username
     if (occupancyNames[data.userName]) {
@@ -3797,23 +3810,41 @@ function updateOccupancy(occupancyName, state, data) {
     }
 }
 
-function updateOccupancySub(occupancyName, state) {
-    if (occupancyNames[occupancyName]) {
-        //jmri.log("setting occupancies for sensor " + occupancyName + " to " + state);
-        $.each(occupancyNames[occupancyName], function(index, widgetId) {
+function updateOccupancySub(sensorName, state) {
+    if (occupancyNames[sensorName]) {
+        //jmri.log("setting occupancies for sensor " + sensorName + " to " + state);
+        $.each(occupancyNames[sensorName], function(index, widgetId) {
             $widget = $gWidgets[widgetId];
             if ($widget.blockname) {
                 $gBlks[$widget.blockname].state = state; //set occupancy for the block (if one) to the newstate
             }
+            if ($widget.blocknameac) {
+                $gBlks[$widget.blocknameac].state = state; //set occupancy for the block (if one) to the newstate
+            }
+            if ($widget.blocknamebd) {
+                $gBlks[$widget.blocknamebd].state = state; //set occupancy for the block (if one) to the newstate
+            }
+            if ($widget.blockbname) {
+                $gBlks[$widget.blockbname].state = state; //set occupancy for the block (if one) to the newstate
+            }
+            if ($widget.blockdname) {
+                $gBlks[$widget.blockdname].state = state; //set occupancy for the block (if one) to the newstate
+            }
+            if ($widget.blockdname) {
+                $gBlks[$widget.blockdname].state = state; //set occupancy for the block (if one) to the newstate
+            }
             $gWidgets[widgetId].occupancystate = state; //set occupancy for the widget to the newstate
             switch ($widget.widgetType) {
-            case 'indicatortrackicon' :
-            case 'indicatorturnouticon' :
-                $reDrawIcon($widget);
-                break;
-            case 'layoutturnout' :
-                $drawTurnout($widget);
-                break;
+                case 'indicatortrackicon' :
+                case 'indicatorturnouticon' :
+                    $reDrawIcon($widget);
+                    break;
+                case 'layoutturnout' :
+                    $drawTurnout($widget);
+                    break;
+                case 'layoutSlip' :
+                    $drawSlip($widget);
+                    break;
             }
         });
     }
@@ -3822,7 +3853,7 @@ function updateOccupancySub(occupancyName, state) {
 function setBlockColor(blockName, newColor) {
     //jmri.log("setBlockColor(" + blockName + ", " + newColor + ");");
     var $blk = $gBlks[blockName];
-    if (typeof $blk !== "undefined") {
+    if (isDefined($blk)) {
         $gBlks[blockName].blockcolor = newColor;
     } else {
         jmri.log("ERROR: block " + blockName + " not found for color " + newColor);
@@ -3963,6 +3994,7 @@ $(document).ready(function() {
         $widget['safeName'] = $widget['name'];
         $widget['systemName'] = $widget['name'];
         $widget['state'] = "1.0";
+        $widget['id'] = $widget.ident;
         $gWidgets[$widget.id] = $widget;
         if (!($widget.systemName in whereUsed)) {  //set where-used for this new memory
             whereUsed[$widget.systemName] = new Array();

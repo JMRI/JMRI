@@ -16,8 +16,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
-import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JComboBox;
@@ -381,8 +381,16 @@ public class LayoutSlip extends LayoutTurnout {
                         || (getLayoutBlockD().getOccupancy() == LayoutBlock.OCCUPIED));
                 break;
             }
+            case UNKNOWN: {
+                result = ((getLayoutBlock().getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (getLayoutBlockB().getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (getLayoutBlockC().getOccupancy() == LayoutBlock.OCCUPIED)
+                        || (getLayoutBlockD().getOccupancy() == LayoutBlock.OCCUPIED));
+                break;
+            }
             default: {
-                log.error("Unknown slip state: {}", getSlipState());
+                log.error("invalid slip state: {}", getSlipState());
+                break;
             }
         }
         return result;
@@ -1165,13 +1173,16 @@ public class LayoutSlip extends LayoutTurnout {
         Color colorD = color;
 
         if (isBlock) {
-            LayoutBlock lb = getLayoutBlock();
+            LayoutBlock lb = (isOccupied() || (connectA == null)) ? getLayoutBlock() : ((TrackSegment) connectA).getLayoutBlock();
             colorA = (lb == null) ? color : lb.getBlockColor();
-            lb = getLayoutBlockB();
+
+            lb = (isOccupied() || (connectB == null)) ? getLayoutBlockB() : ((TrackSegment) connectB).getLayoutBlock();
             colorB = (lb == null) ? color : lb.getBlockColor();
-            lb = getLayoutBlockC();
+
+            lb = (isOccupied() || (connectC == null)) ? getLayoutBlockC() : ((TrackSegment) connectC).getLayoutBlock();
             colorC = (lb == null) ? color : lb.getBlockColor();
-            lb = getLayoutBlockD();
+
+            lb = (isOccupied() || (connectD == null)) ? getLayoutBlockD() : ((TrackSegment) connectD).getLayoutBlock();
             colorD = (lb == null) ? color : lb.getBlockColor();
         }
 
@@ -1197,15 +1208,17 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.setColor(colorA);
                 g2.draw(new Line2D.Double(pA, oneForthPointAC));
             }
-            if (drawMain == mainlineC) {
-                g2.setColor(colorC);
-                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
-            }
             // draw B<= =>D
             if (drawMain == mainlineB) {
                 g2.setColor(colorB);
                 g2.draw(new Line2D.Double(pB, oneForthPointBD));
             }
+            // draw =>C
+            if (drawMain == mainlineC) {
+                g2.setColor(colorC);
+                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+            }
+            // draw =>D
             if (drawMain == mainlineD) {
                 g2.setColor(colorD);
                 g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
