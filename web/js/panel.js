@@ -2537,31 +2537,25 @@ function $drawSlip($widget) {
 
     var $eraseColor = $gPanel.backgroundcolor;
 
-    //set trackcolor[ABCD] based on blockcolor[ABCD]
-    var $colorA, $colorB, $colorC, $colorD;
-    var $blk, ts;
-    var occupancystate = isUndefined($widget.occupancystate) ? UNKNOWN : $widget.occupancystate;
-
-    //NOTE: if unoccupied grab block color from adjacent track segments
-    $colorA = $gPanel.defaulttrackcolor;
+    var $blk = $gBlks[$widget.blockname];
+    var $colorA = isDefined($blk) ? $blk.blockcolor : $gPanel.defaulttrackcolor;
     $blk = $gBlks[$gWidgets[$widget.connectaname].blockname];
-    $blk = ((occupancystate == ACTIVE) || isUndefined($blk)) ? $gBlks[$widget.blockname] : $blk;
-    $colorA = isDefined($blk) ? $blk.blockcolor : $colorA;
+    var $adjColorA = isDefined($blk) ? $blk.blockcolor : $colorA;
 
-    $colorB = $colorA;
+    $blk = $gBlks[$widget.blockbname];
+    var $colorB = isDefined($blk) ? $blk.blockcolor : $colorA;
     $blk = $gBlks[$gWidgets[$widget.connectbname].blockname];
-    $blk = ((occupancystate == ACTIVE) || isUndefined($blk)) ? $gBlks[$widget.blockname] : $blk;
-    $colorB = isDefined($blk) ? $blk.blockcolor : $colorB;
+    var $adjColorB = isDefined($blk) ? $blk.blockcolor : $colorB;
 
-    $colorC = $colorA;
+    $blk = $gBlks[$widget.blockcname];
+    var $colorC = isDefined($blk) ? $blk.blockcolor : $colorA;
     $blk = $gBlks[$gWidgets[$widget.connectcname].blockname];
-    $blk = ((occupancystate == ACTIVE) || isUndefined($blk)) ? $gBlks[$widget.blockname] : $blk;
-    $colorC = isDefined($blk) ? $blk.blockcolor : $colorC;
+    var $adjColorC = isDefined($blk) ? $blk.blockcolor : $colorC;
 
-    $colorD = $colorA;
+    $blk = $gBlks[$widget.blockdname];
+    var $colorD = isDefined($blk) ? $blk.blockcolor : $colorA;
     $blk = $gBlks[$gWidgets[$widget.connectdname].blockname];
-    $blk = ((occupancystate == ACTIVE) || isUndefined($blk)) ? $gBlks[$widget.blockname] : $blk;
-    $colorD = isDefined($blk) ? $blk.blockcolor : $colorD;
+    var $adjColorD = isDefined($blk) ? $blk.blockcolor : $colorD;
 
     //slip A==-==D
     //      \\ //
@@ -2596,33 +2590,56 @@ function $drawSlip($widget) {
         }
     }
 
-    // THEN DRAW
-    $drawLineP(a, acen3rd, $colorA, $widthA); //draw A to one third cen
-    $drawLineP(c, ccen3rd, $colorC, $widthC); //draw C to one third cen
-    if ($widget.state == STATE_AC) {
-        $drawLineP(acen3rd, cen, $colorA, $widthA); //draw A to midpoint AC
-        $drawLineP(ccen3rd, cen, $colorC, $widthC); //draw C to midpoint AC
-    }
-
-    $drawLineP(b, bcen3rd, $colorB, $widthB); //draw B to one third cen
-    $drawLineP(d, dcen3rd, $colorD, $widthD); //draw D to one third cen
-    if ($widget.state == STATE_BD) {
-        $drawLineP(bcen3rd, cen, $colorB, $widthB); //draw B to midpoint BD
-        $drawLineP(dcen3rd, cen, $colorD, $widthD); //draw D to midpoint BD
-    }
-    $drawLineP(a, acen3rd, $colorA, $widthA); //draw A to one third cen
-    $drawLineP(d, dcen3rd, $colorD, $widthD); //draw D to one third cen
+    // THEN DRAW ROUTE
+    var forceUnselected = false;
     if ($widget.state == STATE_AD) {
-        $drawLineP(acen3rd, ad3rd, $colorA, $widthA); //draw A to midpoint AD
-        $drawLineP(dcen3rd, ad3rd, $colorD, $widthD); //draw D to midpoint AD
+        // draw A<===>D
+        $drawLineP(a, acen3rd, $colorA, $widthA);
+        $drawLineP(acen3rd, ad3rd, $colorA, $widthA);
+        $drawLineP(d, dcen3rd, $colorD, $widthD);
+        $drawLineP(dcen3rd, ad3rd, $colorD, $widthD);
+    } else if ($widget.state == STATE_AC) {
+        // draw A<===>C
+        $drawLineP(a, acen3rd, $colorA, $widthA);
+        $drawLineP(acen3rd, cen, $colorA, $widthA);
+        $drawLineP(c, ccen3rd, $colorC, $widthC);
+        $drawLineP(ccen3rd, cen, $colorC, $widthC);
+    } else if ($widget.state == STATE_BD) {
+        // draw B<===>D
+        $drawLineP(b, bcen3rd, $colorB, $widthB);
+        $drawLineP(bcen3rd, cen, $colorB, $widthB);
+        $drawLineP(d, dcen3rd, $colorD, $widthD);
+        $drawLineP(dcen3rd, cen, $colorD, $widthD);
+    } else if ($widget.state == STATE_BC) {
+        if ($widget.slipType == DOUBLE_SLIP) {
+            // draw B<===>C
+            $drawLineP(b, bcen3rd, $colorB, $widthB);
+            $drawLineP(bcen3rd, bc3rd, $colorB, $widthB);
+            $drawLineP(c, ccen3rd, $colorC, $widthC);
+            $drawLineP(ccen3rd, bc3rd, $colorC, $widthC);
+        }   // DOUBLE_SLIP
+    } else {
+        forceUnselected = true; // if not valid state force drawing unselected
     }
 
-    $drawLineP(b, bcen3rd, $colorB, $widthB); //draw B to one third cen
-    $drawLineP(c, ccen3rd, $colorC, $widthC); //draw C to one third cen
-    if ($widget.slipType == DOUBLE_SLIP) {
-        if ($widget.state == STATE_BC) {
-            $drawLineP(bcen3rd, bc3rd, $colorB, $widthB); //draw B to midpoint BC
-            $drawLineP(ccen3rd, bc3rd, $colorC, $widthC); //draw C to midpoint BC
+    if (forceUnselected || ($gPanel.turnoutdrawunselectedleg == 'yes')) {
+        if ($widget.state == STATE_AC) {
+            $drawLineP(b, bcen3rd, $adjColorB, $widthB);
+            $drawLineP(d, dcen3rd, $adjColorD, $widthD);
+        } else if ($widget.state == STATE_BD) {
+            $drawLineP(a, acen3rd, $adjColorA, $widthA);
+            $drawLineP(c, ccen3rd, $adjColorC, $widthC);
+        } else if ($widget.state == STATE_AD) {
+            $drawLineP(b, bcen3rd, $adjColorB, $widthB);
+            $drawLineP(c, ccen3rd, $adjColorC, $widthC);
+        } else if ($widget.state == STATE_BC) {
+            $drawLineP(a, acen3rd, $adjColorA, $widthA);
+            $drawLineP(d, dcen3rd, $adjColorD, $widthD);
+        } else {
+            $drawLineP(a, acen3rd, $adjColorA, $widthA);
+            $drawLineP(b, bcen3rd, $adjColorB, $widthB);
+            $drawLineP(c, ccen3rd, $adjColorC, $widthC);
+            $drawLineP(d, dcen3rd, $adjColorD, $widthD);
         }
     }
 

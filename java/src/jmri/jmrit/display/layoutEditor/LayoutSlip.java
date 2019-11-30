@@ -1164,26 +1164,49 @@ public class LayoutSlip extends LayoutTurnout {
 
         boolean drawUnselectedLeg = layoutEditor.isTurnoutDrawUnselectedLeg();
 
+        int slipState = getSlipState();
+
         Color color = g2.getColor();
 
         // if this isn't a block line all these will be the same color
-        Color colorA = color;
-        Color colorB = color;
-        Color colorC = color;
-        Color colorD = color;
+        Color colorA = color, colorB = color, colorC = color, colorD = color;
+        Color adjColorA = color, adjColorB = color, adjColorC = color, adjColorD = color;
 
         if (isBlock) {
-            LayoutBlock lb = (isOccupied() || (connectA == null)) ? getLayoutBlock() : ((TrackSegment) connectA).getLayoutBlock();
-            colorA = (lb == null) ? color : lb.getBlockColor();
+            LayoutBlock layoutBlock = getLayoutBlock();
+            colorA = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
+            layoutBlock = (connectA != null) ? ((TrackSegment) connectA).getLayoutBlock() : layoutBlock;;
+            adjColorA = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
 
-            lb = (isOccupied() || (connectB == null)) ? getLayoutBlockB() : ((TrackSegment) connectB).getLayoutBlock();
-            colorB = (lb == null) ? color : lb.getBlockColor();
+            layoutBlock = getLayoutBlockB();
+            colorB = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
+            layoutBlock = (connectB != null) ? ((TrackSegment) connectB).getLayoutBlock() : layoutBlock;;
+            adjColorB = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
 
-            lb = (isOccupied() || (connectC == null)) ? getLayoutBlockC() : ((TrackSegment) connectC).getLayoutBlock();
-            colorC = (lb == null) ? color : lb.getBlockColor();
+            layoutBlock = getLayoutBlockC();
+            colorC = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
+            layoutBlock = (connectC != null) ? ((TrackSegment) connectC).getLayoutBlock() : layoutBlock;;
+            adjColorC = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
 
-            lb = (isOccupied() || (connectD == null)) ? getLayoutBlockD() : ((TrackSegment) connectD).getLayoutBlock();
-            colorD = (lb == null) ? color : lb.getBlockColor();
+            layoutBlock = getLayoutBlockD();
+            colorD = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
+            layoutBlock = (connectD != null) ? ((TrackSegment) connectD).getLayoutBlock() : layoutBlock;;
+            adjColorD = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
+
+            if (slipState == STATE_AC) {
+                adjColorA = colorA;
+                adjColorC = colorC;
+            }
+        } else if (slipState == STATE_BD) {
+            adjColorB = colorB;
+            adjColorD = colorD;
+        } else if (slipState == STATE_AD) {
+            adjColorA = colorA;
+            adjColorD = colorD;
+        } else if (slipState == STATE_BC) {
+            adjColorB = colorB;
+            adjColorC = colorC;
+        } else {
         }
 
         Point2D oneForthPointAC = MathUtil.oneFourthPoint(pA, pC);
@@ -1203,30 +1226,28 @@ public class LayoutSlip extends LayoutTurnout {
 
         if (isTurnoutInconsistent()) {
             // If either turnout is inconsistent, draw an alternate slip image
-            // draw A<= =>C
+            // draw A<=
             if (drawMain == mainlineA) {
-                g2.setColor(colorA);
+                g2.setColor(adjColorA);
                 g2.draw(new Line2D.Double(pA, oneForthPointAC));
             }
-            // draw B<= =>D
+            // draw B<=
             if (drawMain == mainlineB) {
-                g2.setColor(colorB);
+                g2.setColor(adjColorB);
                 g2.draw(new Line2D.Double(pB, oneForthPointBD));
             }
             // draw =>C
             if (drawMain == mainlineC) {
-                g2.setColor(colorC);
+                g2.setColor(adjColorC);
                 g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
             }
             // draw =>D
             if (drawMain == mainlineD) {
-                g2.setColor(colorD);
+                g2.setColor(adjColorD);
                 g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
             }
             return;
         }
-
-        int slipState = getSlipState();
 
         if (slipState == STATE_AD) {
             // draw A<===>D
@@ -1244,47 +1265,27 @@ public class LayoutSlip extends LayoutTurnout {
             // draw A<===>C
             if (drawMain == mainlineA) {
                 g2.setColor(colorA);
-                g2.draw(new Line2D.Double(pA, midPointAC));
+                g2.draw(new Line2D.Double(pA, oneThirdPointAC));
+                g2.draw(new Line2D.Double(oneThirdPointAC, midPointAC));
             }
             if (drawMain == mainlineC) {
                 g2.setColor(colorC);
-                g2.draw(new Line2D.Double(midPointAC, pC));
+                g2.draw(new Line2D.Double(midPointAC, twoThirdsPointAC));
+                g2.draw(new Line2D.Double(twoThirdsPointAC, pC));
             }
-        } else if (!isBlock || drawUnselectedLeg) {
-            // draw A<= =>C
-            if (drawMain == mainlineA) {
-                g2.setColor(colorA);
-                g2.draw(new Line2D.Double(pA, oneForthPointAC));
-            }
-            if (drawMain == mainlineC) {
-                g2.setColor(colorC);
-                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
-            }
-        }
-
-        if (slipState == STATE_BD) {
+        } else if (slipState == STATE_BD) {
             // draw B<===>D
             if (drawMain == mainlineB) {
                 g2.setColor(colorB);
-                g2.draw(new Line2D.Double(pB, midPointBD));
+                g2.draw(new Line2D.Double(pB, oneThirdPointBD));
+                g2.draw(new Line2D.Double(oneThirdPointBD, midPointBD));
             }
             if (drawMain == mainlineD) {
                 g2.setColor(colorD);
-                g2.draw(new Line2D.Double(midPointBD, pD));
+                g2.draw(new Line2D.Double(midPointBD, twoThirdsPointBD));
+                g2.draw(new Line2D.Double(twoThirdsPointBD, pD));
             }
-        } else if (!isBlock || drawUnselectedLeg) {
-            // draw B<= =>D
-            if (drawMain == mainlineB) {
-                g2.setColor(colorB);
-                g2.draw(new Line2D.Double(pB, oneForthPointBD));
-            }
-            if (drawMain == mainlineD) {
-                g2.setColor(colorD);
-                g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
-            }
-        }
-
-        if (slipState == STATE_BC) {
+        } else if (slipState == STATE_BC) {
             if (getTurnoutType() == DOUBLE_SLIP) {
                 // draw B<===>C
                 if (drawMain == mainlineB) {
@@ -1298,15 +1299,38 @@ public class LayoutSlip extends LayoutTurnout {
                     g2.draw(new Line2D.Double(twoThirdsPointAC, pC));
                 }
             }   // DOUBLE_SLIP
-        } else if (!isBlock || drawUnselectedLeg) {
-            // draw B<= =>C
-            if (drawMain == mainlineB) {
-                g2.setColor(colorB);
+        }
+
+        if (!isBlock || drawUnselectedLeg) {
+            if (slipState == STATE_AC) {
+                g2.setColor(adjColorB);
                 g2.draw(new Line2D.Double(pB, oneForthPointBD));
-            }
-            if (drawMain == mainlineC) {
-                g2.setColor(colorC);
+                g2.setColor(adjColorD);
+                g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
+            } else if (slipState == STATE_BD) {
+                g2.setColor(adjColorA);
+                g2.draw(new Line2D.Double(pA, oneForthPointAC));
+                g2.setColor(adjColorC);
                 g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+            } else if (slipState == STATE_AD) {
+                g2.setColor(adjColorB);
+                g2.draw(new Line2D.Double(pB, oneForthPointBD));
+                g2.setColor(adjColorC);
+                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+            } else if (slipState == STATE_BC) {
+                g2.setColor(adjColorA);
+                g2.draw(new Line2D.Double(pA, oneForthPointAC));
+                g2.setColor(adjColorD);
+                g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
+            } else {
+                g2.setColor(adjColorA);
+                g2.draw(new Line2D.Double(pA, oneForthPointAC));
+                g2.setColor(adjColorB);
+                g2.draw(new Line2D.Double(pB, oneForthPointBD));
+                g2.setColor(adjColorC);
+                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+                g2.setColor(adjColorD);
+                g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
             }
         }
     }   // draw1
@@ -1315,7 +1339,8 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    protected void draw2(Graphics2D g2, boolean drawMain, float railDisplacement) {
+    protected void draw2(Graphics2D g2, boolean drawMain, float railDisplacement
+    ) {
         Point2D pA = getCoordsA();
         Point2D pB = getCoordsB();
         Point2D pC = getCoordsC();
@@ -1516,7 +1541,8 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, int specificType) {
+    protected void highlightUnconnected(Graphics2D g2, int specificType
+    ) {
         if (((specificType == NONE) || (specificType == SLIP_A))
                 && (getConnectA() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
@@ -1539,7 +1565,8 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     @Override
-    protected void drawTurnoutControls(Graphics2D g2) {
+    protected void drawTurnoutControls(Graphics2D g2
+    ) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
             // TODO: query user base if this is "acceptable" (can obstruct state)
             if (false) {
@@ -1595,7 +1622,7 @@ public class LayoutSlip extends LayoutTurnout {
                 g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
             }
         }
-    }   // drawTurnoutControls
+    } // drawTurnoutControls
 
     static class TurnoutState {
 
