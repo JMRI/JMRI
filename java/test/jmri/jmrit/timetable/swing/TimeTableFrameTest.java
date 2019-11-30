@@ -507,7 +507,8 @@ public class TimeTableFrameTest {
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
             Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
         }
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
     }
 
 //     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TimeTableFrameTest.class);

@@ -21,9 +21,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Conditional Tree Editor</h1>
 
       <p>The tree based Conditional Editor uses a single window to display and edit all

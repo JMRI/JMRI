@@ -1,0 +1,66 @@
+<!-- Sidebar -->
+<!-- Updated by Blorec Herv&#233; le 2016-09-12-->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	  <hr class="hide">
+
+	  <div id="side"> <!-- Block of text on left side of page -->
+	    <div style="text-align: center">JMRI c'est...</div>
+	    <dl>
+
+
+		<dt><h3><a href="../index.shtml">Signalisation</a></h3></dt>
+		<dd>Ajout de signaux &agrave; votre r&#233;seau avec JMRI.
+		    <ul>
+		    <li><a href="../SignalingSetup.shtml">Signalisation D&#233;marrage Rapide</a></li>
+		    <li><a href="../AspectSignaling.shtml">Aspect Signalisation</a></li>
+		    <li><a href="../SignalHeads.shtml">Feux de Signalisation</a></li>
+		    <li><a href="../SignalMasts.shtml">M&#226;ts de Signalisation</a></li>
+		    <li><a href="../SignalGroups.shtml">Groupes de Signaux</a></li>
+		    <li><a href="../SignalMastLogic.shtml">Logique M&#226;ts de Signalisation</a></li>
+		    <li class="here"><a href="../interlock/index.shtml">Enclenchements &amp; Entr&#233;e Sortie</a></li>
+		    </ul>
+	    </dd>
+
+		<dt><h3><a href="../../index.shtml">Outils</a></h3></dt>
+		<dd>JMRI fournit des outils puissants pour travailler avec vos r&#233;seaux.
+		    <ul>
+				<li><a href="../../Turnouts.shtml">Aiguillages</a></li>
+				<li><a href="../../Lights.shtml">Lumi&#232;res</a></li>
+				<li><a href="../../Sensors.shtml">Capteurs</a></li>
+				<li><a href="../../throttle/ThrottleMain.shtml">R&#233;gulateurs</a></li>
+				<li><a href="../../consisttool/ConsistTool.shtml">Couplage</a></li>
+				<li><a href="../../signaling/index.shtml">Signalisation</a></li>
+				<li><a href="../../Blocks.shtml">Cantons</a></li>
+				<li><a href="../../Reporters.shtml">Rapports</a></li>
+				<li><a href="../../Memories.shtml">Variables M&#233;moire</a></li>
+				<li><a href="../../Routes.shtml">Itin&#233;raires</a></li>
+				<li><a href="../../LRoutes.shtml">LItin&#233;raires</a></li>
+		        <li><a href="../../Sections.shtml">Sections</a></li>
+				<li><a href="../../Logix.shtml">Logix</a></li>
+				<li><a href="../../fastclock/index.shtml">Horloges Rapides</a></li>
+				<li><a href="../../speedometer/index.shtml">Compteur</a></li>
+				<li><a href="../../Audio.shtml">Audio</a></li>
+				<li><a href="../../IdTags.shtml">Etiquettes IDs</a></li>
+		
+		    <li><a href="../../index.shtml#systemSpecificTools">Syst&#232;me-sp&#233;cifique...</a></li>
+		    </ul>
+		</dd>
+
+			<dt><h3><a href="../../automation/index.shtml">Automatisation du R&#233;seau</a></h3></dt>
+	   	<dd>JMRI peut &#234;tre utilis&#233; pour automatiser des parties 
+			de votre r&#233;seau, depuis le simple contr&#244;le d'un croisement 
+			&#224; la circulation de trains en toile de fond.
+		<ul>
+	        <li><a href="../../signaling/index.shtml">Signalisation</a></li>
+			<li><a href="../../signaling/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></li>
+			<li><a href="../../Routes.shtml">Itin&#233;raires</a></li>
+	        <li><a href="../../fastclock/index.shtml">Horloges Rapides</a></li>
+	        <li><a href="../../scripting/index.shtml">Script</a></li>
+	    </ul>
+		</dd>
+
+	  </dl>
+
+</div> <!-- closes #side -->
+
+<!-- /Sidebar -->

@@ -25,7 +25,9 @@ public class VSDecoderFrameTest extends jmri.util.JmriJFrameTestBase {
     @After
     @Override
     public void tearDown() {
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+
+        // this created an audio manager, clean that up
+        jmri.InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
         super.tearDown();
     }
 

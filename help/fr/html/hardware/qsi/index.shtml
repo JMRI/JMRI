@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- UpDated  by Blorec Herv&#233;  2013-09-18--> 
+<!-- Updated by Blorec Herv&#233;  2013-09-18-->
 <title>JMRI: Programmateur Quantum</title>
 
 <!-- Style -->
@@ -12,14 +12,16 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
     <div id="mainContent">
+        <!-- Page Body -->
 
-<h1> 
+<h1>
 JMRI: Programmateur Quantum
 </h1>
 
@@ -45,14 +47,13 @@ tel que le
 ou
 <a href="http://www.soundtraxx.com/access/ptb100.php"> PTB-100 </a>.
 
-
 <h2>Installation de Pilote</h2>
 
 Pour acc&#233;der au programmateur Quantum , vous devez installer un pilote sur votre
 ordinateur. Cette section d&#233;crit comment le faire pour plusieurs 
 types d'ordinateurs populaires.
 
-<aid="driverWin">
+<a id="driverWin"></a>
 <h3> Windows </h3>
 
 Pour que JMRI puisse parler au Programmateur Quantum, un pilote doit &#234;tre install&#233;
@@ -64,63 +65,62 @@ Max Ettinger a fourni
 des <a href="http://jmri.org/install/qsidriver/"> instructions d&#233;taill&#233;es</a>
 pour savoir comment installer ces derniers.
 
-<a id="driverMac">
- <h3> Mac OS X </h3>
+<a id="driverMac"></a>
+<h3> Mac OS X </h3>
 
 <ol>
-<li>T&#233;l&#233;chargez le <a href="http://downloads.sourceforge.net/jmri/corby-osx-V1_04_1-release.dmg">fichier d'installation </a>
-pour le pilote Mac OS X.
-Ceci est une image disque (. Dmg) qui doit s'ouvrir
-comme une nouvelle fen&#234;tre du Finder. Sinon, double-cliquez dessus.
-<li>
-Double-cliquez sur l'installeur et suivez les instructions.
-<li>
-Red&#233;marrez votre ordinateur.
+    <li>T&#233;l&#233;chargez le <a href="http://downloads.sourceforge.net/jmri/corby-osx-V1_04_1-release.dmg">fichier d'installation </a>
+    pour le pilote Mac OS X.
+    Ceci est une image disque (. Dmg) qui doit s'ouvrir
+    comme une nouvelle fen&#234;tre du Finder. Sinon, double-cliquez dessus.
+    <li>Double-cliquez sur l'installeur et suivez les instructions.
+    <li>Red&#233;marrez votre ordinateur.
 </ol>
 Vous devriez maintenant &#234;tre en mesure de d&#233;marrer une application JMRI
 et acc&#233;der au programmateur Quantum. Il appara&#238;tra comme
 "Programmateur Quantum" dans les fen&#234;tres de pr&#233;f&#233;rences.
 
-<a id="driverLinux">
+<a id="driverLinux"></a>
 <h3>Linux</h3>
 
 <em>Ceci est encore &#224; travailler. </Em>
 
 <ol>
-<li>T&#233;l&#233;chargez le 
- <a href="http://downloads.sourceforge.net/jmri/cornwall-redhat9-V0_84.tar">fichier d'installation </a>
-pour le pilote Linux.
-Ceci est un fichier. Archive tar.
-<li>
-D&#233;compressez l'archive &#224; l'endroit commode, et changer de r&#233;pertoire .
-<li>
-Essayez de lancer l'installateur soit via
-<code> <pre>
-./load_qsi_prog
-</pre> </code>
-ou
-<code> <pre>
-sudo./load_qsi_prog
-</pre> </code>
+    <li>T&#233;l&#233;chargez le
+    <a href="http://downloads.sourceforge.net/jmri/cornwall-redhat9-V0_84.tar">fichier d'installation </a>
+    pour le pilote Linux.
+    Ceci est un fichier. Archive tar.</li>
+    <li>
+    D&#233;compressez l'archive &#224; l'endroit commode, et changer de r&#233;pertoire.</li>
+    <li>
+    Essayez de lancer l'installateur soit via
+    <code>
+    ./load_qsi_prog
+    </code>
+    ou
+    <code>
+    sudo./load_qsi_prog
+    </code>
+    </li>
 </ol>
 
-<h2>Configurez le support programmateur Quantum </h2>
+<h2>Configurez le support programmateur Quantum</h2>
 
 Vous configurez JMRI pour utiliser un programmateur Quantum similaire &#224; la mani&#232;re dont tous les autres types de connexions sont configur&#233;s
 
 <ol>
-<li>
-D&#233;marrez le programme
-<li>
-S&#233;lectionnez «Pr&#233;f&#233;rences ...» &#233;l&#233;ment du menu "&#233;dition" sur la fen&#234;tre principale.
-<li>
-S&#233;lectionnez "Programmateur Quantum" comme type de connexion.
-<li>
-S&#233;lectionnez "QSIProgrammateur" comme le port &#224; utiliser.
-<li>
-Le reste des options sont fixes et ne peuvent pas &#234;tre modifi&#233;es.
-<li>
-Cliquez sur le bouton "Sauvegarder". Lorsque vous &#234;tes invit&#233;, quitter le programme.
+    <li>
+    D&#233;marrez le programme
+    <li>
+    S&#233;lectionnez «Pr&#233;f&#233;rences ...» &#233;l&#233;ment du menu "&#233;dition" sur la fen&#234;tre principale.
+    <li>
+    S&#233;lectionnez "Programmateur Quantum" comme type de connexion.
+    <li>
+    S&#233;lectionnez "QSIProgrammateur" comme le port &#224; utiliser.
+    <li>
+    Le reste des options sont fixes et ne peuvent pas &#234;tre modifi&#233;es.
+    <li>
+    Cliquez sur le bouton "Sauvegarder". Lorsque vous &#234;tes invit&#233;, quitter le programme.
 </ol>
 
 Le programme est maintenant configur&#233;. Le red&#233;marrer, et il devrait &#234;tre pr&#234;t &#224; &#234;tre utiliser..

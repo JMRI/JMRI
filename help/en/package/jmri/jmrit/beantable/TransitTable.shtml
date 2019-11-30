@@ -16,9 +16,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Transits and the Transit Table</h1>
 
       <h2>What is a Transit?</h2>

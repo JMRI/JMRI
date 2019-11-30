@@ -1,9 +1,14 @@
 {
     "$schema": "http://json-schema.org/draft-04/schema#",
-    "title": "jmri-json-configProfiles-client-message",
+    "title": "jmri-json-panel-client-message",
     "type": "object",
-    "description": "Schema data object in message from client to JMRI for type \"configProfiles\"",
+    "description": "Schema data object in message from client to JMRI for type \"panel\"",
     "properties": {
+        "name": {
+            "type": "string",
+            "description": "Name of panel for reference"
+        }    
     },
-    "additionalProperties": false
+    "additionalProperties": false,
+    "required": ["name"]
 }
