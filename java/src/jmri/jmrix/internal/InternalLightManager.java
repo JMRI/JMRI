@@ -3,6 +3,7 @@ package jmri.jmrix.internal;
 import jmri.Light;
 import jmri.NamedBean;
 import jmri.implementation.AbstractVariableLight;
+import jmri.util.PreferNumericComparator;
 
 /**
  * Implement a LightManager for "Internal" (virtual) lights.
@@ -39,7 +40,7 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
 
             @Override
             public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
-                return suffix1.compareTo(suffix2);
+                return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
         };
     }

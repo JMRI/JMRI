@@ -3,6 +3,7 @@ package jmri.jmrix.internal;
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
+import jmri.util.PreferNumericComparator;
 import jmri.implementation.AbstractTurnout;
 
 /**
@@ -43,7 +44,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
 
             @Override
             public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
-                return suffix1.compareTo(suffix2);
+                return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
         };
     }

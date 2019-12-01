@@ -3,6 +3,8 @@ package jmri.jmrix.internal;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
+import jmri.util.PreferNumericComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,7 +41,7 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
 
             @Override
             public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
-                return suffix1.compareTo(suffix2);
+                return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
         };
         try {
