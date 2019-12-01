@@ -3,15 +3,19 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>16</minor>
-    <test>0</test>
+    <minor>17</minor>
+    <test>7</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
     <defaultInitialState>unknown</defaultInitialState>
     <sensor inverted="false">
-      <systemName>ISCLOCKRUNNING</systemName>
-      <userName>Clock</userName>
+      <systemName>IS003</systemName>
+      <userName>leading zeros</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+      <userName>no leading zero</userName>
     </sensor>
     <sensor inverted="false">
       <systemName>ISBONDALE JCTN GOODS</systemName>
@@ -21,16 +25,12 @@
       <userName>upper case</userName>
     </sensor>
     <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+      <userName>Clock</userName>
+    </sensor>
+    <sensor inverted="false">
       <systemName>IScasetest</systemName>
       <userName>lower case</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS003</systemName>
-      <userName>leading zeros</userName>
-    </sensor>
-    <sensor inverted="false">
-      <systemName>IS3</systemName>
-      <userName>no leading zero</userName>
     </sensor>
   </sensors>
   <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
@@ -41,14 +41,6 @@
     </operations>
     <defaultclosedspeed>Normal</defaultclosedspeed>
     <defaultthrownspeed>Restricted</defaultthrownspeed>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>ITCASETEST</systemName>
-      <userName>upper case</userName>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>ITcasetest</systemName>
-      <userName>lower case</userName>
-    </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT001</systemName>
       <userName>S - BTC Headshunt Stop</userName>
@@ -75,8 +67,16 @@
       <comment>SignalHead:IH005:Red:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+      <comment>SignalHead:IH5:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT006</systemName>
       <userName>S - Bonton Yard Siding 5 Stop</userName>
+      <comment>SignalHead:IH006:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT6</systemName>
       <comment>SignalHead:IH006:Red:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
@@ -85,8 +85,16 @@
       <comment>SignalHead:IH007:Red:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT7</systemName>
+      <comment>SignalHead:IH007:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT008</systemName>
       <userName>S - Bonton Yard Siding 3 Stop</userName>
+      <comment>SignalHead:IH008:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT8</systemName>
       <comment>SignalHead:IH008:Red:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
@@ -95,13 +103,25 @@
       <comment>SignalHead:IH009:Red:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT9</systemName>
+      <comment>SignalHead:IH009:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT010</systemName>
       <userName>S - Bonton Yard Siding 1 Stop</userName>
       <comment>SignalHead:IH010:Red:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT10</systemName>
+      <comment>SignalHead:IH010:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT011</systemName>
       <userName>S - Bonton Down Loop Spur Stop</userName>
+      <comment>SignalHead:IH011:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT11</systemName>
       <comment>SignalHead:IH011:Red:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
@@ -205,47 +225,19 @@
       <comment>SignalHead:IH049:Red:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT5</systemName>
-      <comment>SignalHead:IH5:Red:Red</comment>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT6</systemName>
-      <comment>SignalHead:IH006:Red:Red</comment>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT7</systemName>
-      <comment>SignalHead:IH007:Red:Red</comment>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT8</systemName>
-      <comment>SignalHead:IH008:Red:Red</comment>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT9</systemName>
-      <comment>SignalHead:IH009:Red:Red</comment>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT10</systemName>
-      <comment>SignalHead:IH010:Red:Red</comment>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT11</systemName>
-      <comment>SignalHead:IH011:Red:Red</comment>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT050</systemName>
       <userName>S - York TT Stop</userName>
       <comment>SignalHead:IH050:Red:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
-      <systemName>IT053</systemName>
-      <userName>S - York 3 Spur Stop</userName>
-      <comment>SignalHead:IHO53:Red:Red</comment>
-    </turnout>
-    <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT052</systemName>
       <userName>S - York 2 Spur Stop</userName>
       <comment>SignalHead:IHO52:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT053</systemName>
+      <userName>S - York 3 Spur Stop</userName>
+      <comment>SignalHead:IHO53:Red:Red</comment>
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Off">
       <systemName>IT054</systemName>
@@ -272,29 +264,17 @@
       <userName>S - Bonton Platform 1 Spur Stop</userName>
       <comment>SignalHead:IH059:Red:Red</comment>
     </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>ITCASETEST</systemName>
+      <userName>upper case</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>ITcasetest</systemName>
+      <userName>lower case</userName>
+    </turnout>
   </turnouts>
-  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
-  <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <warrants class="jmri.jmrit.logix.configurexml.WarrantManagerXml" />
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
   </signalmastlogics>
-  <filehistory>
-    <operation>
-      <type>Load OK</type>
-      <date>Sat Nov 30 17:37:12 PST 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrix/internal/configurexml/load/SampleSensorsAndTurnouts.xml</filename>
-    </operation>
-    <operation>
-      <type>Load OK</type>
-      <date>Sat Nov 30 17:37:12 PST 2019</date>
-      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/jmrix/internal/configurexml/load/SampleSensorsAndTurnouts.xml</filename>
-    </operation>
-    <operation>
-      <type>Store</type>
-      <date>Sat Nov 30 17:37:12 PST 2019</date>
-      <filename />
-    </operation>
-  </filehistory>
-  <!--Written by JMRI version 4.16ish+jake+20191201T0122Z+R6f9acede4f on Sat Nov 30 17:37:12 PST 2019-->
+  <!--Written by JMRI version 4.17.7ish+jake+20191201T1652Z+Rb42e1ccae7 on Sun Dec 01 09:07:36 PST 2019-->
 </layout-config>
