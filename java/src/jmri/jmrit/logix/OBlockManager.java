@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ProvidingManager;
+import jmri.SignalSystem;
 import jmri.managers.AbstractManager;
 
 /**
@@ -122,6 +123,14 @@ public class OBlockManager extends AbstractManager<OBlock>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameOBlocks" : "BeanNameOBlock");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<OBlock> getNamedBeanClass() {
+        return OBlock.class;
     }
 
 }

@@ -205,6 +205,10 @@ public final class JSON {
      * {@value #IS_AUTO_START}
      */
     public static final String IS_AUTO_START = "isAutoStart"; // NOI18N
+    /**
+     * {@value #IS_NEXT_PROFILE}
+     */
+    public static final String IS_NEXT_PROFILE = "isNextProfile"; // NOI18N
 
     /* JSON data types */
     /**

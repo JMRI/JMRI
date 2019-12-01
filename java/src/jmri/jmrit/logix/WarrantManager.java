@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.ShutDownTask;
+import jmri.SignalSystem;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
@@ -339,6 +340,14 @@ public class WarrantManager extends AbstractManager<Warrant>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameWarrants" : "BeanNameWarrant");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Warrant> getNamedBeanClass() {
+        return Warrant.class;
     }
     
     protected void setSpeedProfiles(String id, RosterSpeedProfile merge, RosterSpeedProfile session) {
