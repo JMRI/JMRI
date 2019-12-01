@@ -20,6 +20,9 @@ public class NamedBeanPreferNumericComparatorTest {
         Turnout it10 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT10");
         Turnout it2 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT2");
         Turnout it01 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT01");
+        Turnout itUpper = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("ITFOO");
+        Turnout itLower = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("ITfoo");
+        Turnout itMixed = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("ITFoo");
 
         Assert.assertEquals("IT1 == IT1", 0, t.compare(it1, it1));
 
@@ -32,6 +35,16 @@ public class NamedBeanPreferNumericComparatorTest {
         Assert.assertNotEquals("IT1 != IT01", 0, t.compare(it1, it01));
         Assert.assertEquals("IT01 < IT1", -1, t.compare(it01, it1));
         Assert.assertEquals("IT1 > IT01", +1, t.compare(it1, it01));
+        
+        Assert.assertNotEquals("ITFOO != ITFoo", t.compare(itUpper, itMixed));
+        Assert.assertNotEquals("ITFOO != ITfoo", t.compare(itUpper, itLower));
+        Assert.assertNotEquals("ITfoo != ITFoo", t.compare(itLower, itMixed));
+        Assert.assertEquals("ITFOO < ITFoo", -1, t.compare(itUpper, itMixed));
+        Assert.assertEquals("ITFOO < ITfoo", -1, t.compare(itUpper, itLower));
+        Assert.assertEquals("ITFoo < ITfoo", -1, t.compare(itMixed, itLower));
+        Assert.assertEquals("ITfoo > ITFoo", +1, t.compare(itLower, itMixed));
+        Assert.assertEquals("ITfoo > ITFOO", +1, t.compare(itLower, itUpper));
+        Assert.assertEquals("ITFoo > ITFOO", +1, t.compare(itMixed, itUpper));
     }
 
     @Test
