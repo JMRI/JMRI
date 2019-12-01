@@ -35,7 +35,7 @@ public class NamedBeanPreferNumericComparatorTest {
         Assert.assertNotEquals("IT1 != IT01", 0, t.compare(it1, it01));
         Assert.assertEquals("IT01 < IT1", -1, t.compare(it01, it1));
         Assert.assertEquals("IT1 > IT01", +1, t.compare(it1, it01));
-        
+
         Assert.assertNotEquals("ITFOO != ITFoo", t.compare(itUpper, itMixed));
         Assert.assertNotEquals("ITFOO != ITfoo", t.compare(itUpper, itLower));
         Assert.assertNotEquals("ITfoo != ITFoo", t.compare(itLower, itMixed));
@@ -83,9 +83,14 @@ public class NamedBeanPreferNumericComparatorTest {
 
     boolean hit = false;
 
+    /**
+     * With the {@link NamedBeanPreferNumericComparator},
+     * {@link NamedBean#compareSystemNameSuffix(String, String, NamedBean)}
+     * should not be called.
+     */
     @Test
     public void testSystemSpecificCase() {
-        NamedBeanComparator<Turnout> t = new NamedBeanComparator<>();
+        NamedBeanPreferNumericComparator<Turnout> t = new NamedBeanPreferNumericComparator<>();
 
         // this just checks that the local sort is called
         Turnout it1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT1");
@@ -112,7 +117,7 @@ public class NamedBeanPreferNumericComparatorTest {
 
         hit = false;
         Assert.assertEquals("IT2 < IT1", +1, t.compare(it2, it1));
-        Assert.assertTrue(hit);
+        Assert.assertFalse(hit);
     }
 
     // The minimal setup for log4J
