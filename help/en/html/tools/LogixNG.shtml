@@ -287,23 +287,27 @@
 	  rows. Note that for columns, 1 is row A, 2 is row B, 22 is V, 23 is W, 26 is Z,
 	  27 is AA and 28 is AB.</p>
 
+	  <p>Note that spreadsheet software, like Excel and LibreOffice Calc, has cell
+	  &lt;column letter&gt&lt;row number&gt; while references in JMRI has table[row,column].
+	  Example: Cell B3 is table[3,2], since B3 is row 3 and column 2.</p>
+
 	  <p>Example from the table above. These examples assume that IM3 has the value
 	  'West yard', IM4 has the value 'Rightmost turnout' and IM5 has the value 'IQT22'.</p>
 
 	  <table border="1" cellspacing="0" cellpadding="2">
 	  <tr><td>Cell</td><td>Value</td><td>Note</td></tr>
 	  <tr><td>IQT22[1,1]</td><td>IQT22</td><td>Cell A1 has the system name of the table</td></tr>
-	  <tr><td>IQT22[2,1]</td><td>Yard table</td><td>Cell B1 has the user name of the table</td></tr>
+	  <tr><td>IQT22[1,2]</td><td>Yard table</td><td>Cell B1 has the user name of the table</td></tr>
 	  <tr><td>IQT22[2,2]</td><td>West yard</td><td>Cell B2 has the name of column B</td></tr>
-	  <tr><td>IQT22[1,4]</td><td>Leftmost turnout</td><td>Cell A4 has the name of row 4</td></tr>
-	  <tr><td>Yard table[1,4]</td><td>Leftmost turnout</td><td>The user name of the table can be used to access the table</td></tr>
-	  <tr><td>IQT22[3,5]</td><td>IT203</td><td>Cell C5 has the value 'IT203'</td></tr>
-	  <tr><td>IQT22[North yard,Left turnout]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
-	  <tr><td>Yard table[North yard,Left turnout]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
-	  <tr><td>IQT22[{IM3},Leftmost turnout]</td><td>IT101</td><td>IM3 is in curly brackets and have the value 'West yard' so this points to cell B4</td></tr>
-	  <tr><td>IQT22[East yard,{IM4}]</td><td>IT212</td><td>IM4 is in curly brackets and have the value 'Rightmost turnout' so this points to cell C7</td></tr>
-	  <tr><td>IQT22[{IM3},{IM4}]</td><td>IT112</td><td>Column {IM3} and row {IM4} points to cell B7</td></tr>
-	  <tr><td>{IM5}[{IM3},{IM4}]</td><td>IT112</td><td>Even the table name can be accessed indirectly</td></tr>
+	  <tr><td>IQT22[4,1]</td><td>Leftmost turnout</td><td>Cell A4 has the name of row 4</td></tr>
+	  <tr><td>Yard table[4,1]</td><td>Leftmost turnout</td><td>The user name of the table can be used to access the table</td></tr>
+	  <tr><td>IQT22[5,3]</td><td>IT203</td><td>Cell C5 has the value 'IT203'</td></tr>
+	  <tr><td>IQT22[Left turnout,North yard]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
+	  <tr><td>Yard table[Left turnout,North yard]</td><td>IT303</td><td>Column 'North yard' and row 'Left turnout' has the cell D5 with the value 'IT303'</td></tr>
+	  <tr><td>IQT22[Leftmost turnout,{IM3}]</td><td>IT101</td><td>IM3 is in curly brackets and have the value 'West yard' so this points to cell B4</td></tr>
+	  <tr><td>IQT22[{IM4},East yard]</td><td>IT212</td><td>IM4 is in curly brackets and have the value 'Rightmost turnout' so this points to cell C7</td></tr>
+	  <tr><td>IQT22[{IM4},{IM3}]</td><td>IT112</td><td>Column {IM3} and row {IM4} points to cell B7</td></tr>
+	  <tr><td>{IM5}[{IM4},{IM3}]</td><td>IT112</td><td>Even the table name can be accessed indirectly</td></tr>
 	  </table>
 
 	  <p>Note that a Memory can point to a table. For example, if the memory IM7 has
@@ -325,17 +329,27 @@
 	  a comment and therefore they are not included.</p>
 
 	  <p>Tables are loaded by a start up action. They are created in a spreadsheet, like
-	  Microsoft Excel or Libre Office and then exported to a CSV file, separated by TAB
-	  characters. The table is read only and is not stored in the panel filee, so it
+	  Microsoft Excel or LibreOffice Calc and then exported to a CSV file, separated by
+	  TAB characters. The table is read only and is not stored in the panel filee, so it
 	  must be reloaded each time JMRI starts.</p>
 
-	  <h3>Important</h3>
+	  <h3>Note</h3>
+
+      <p>If a name has the characters comma, left or righ square bracket or left or right
+	  curly brackets, these characters must be escaped by preceding them with a backslash.
+	  Examples: \, \[ \] \{ \} \\</p>
+
+	  <p>If a reference contains a backslash, it will take some more time to evaluate it
+	  than if it doesn't contain any backslash. So if it's possible to not use these special
+	  characters in references or names of beans, it's recommended.</p>
+
+<!--	  <h3>Important</h3>
 
 	  <p>In order for indirect access to work, some limitations are put on the names
 	  used in LogixNG. System names and user names must not contain comma, square brackets
 	  and curly brackets. For example, if a turnout has the name 'Green yard, left turnout',
 	  it cannot be used with its user name in LogixNG unless the name is changed and the
-	  comma is removed.</p>
+	  comma is removed.</p> -->
 
 
 	  
