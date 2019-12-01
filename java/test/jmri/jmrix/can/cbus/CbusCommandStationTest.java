@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import jmri.InstanceManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 import jmri.jmrix.can.TrafficControllerScaffold;
@@ -46,13 +47,7 @@ public class CbusCommandStationTest {
         memo.setTrafficController(tc);
         CbusCommandStation ta = new CbusCommandStation(memo);
         Assert.assertNotNull("exists",ta);
-        try {
-            CbusSimulator sim = jmri.InstanceManager.getDefault(jmri.jmrix.can.cbus.simulator.CbusSimulator.class);
-            Assert.assertTrue(true);
-            Assert.assertNotNull("exists",sim);
-        } catch (NullPointerException e) {
-            Assert.assertTrue(false);
-        }
+        Assert.assertNotNull(InstanceManager.getDefault(CbusSimulator.class));
         
         tc = null;
         ta = null;
@@ -207,7 +202,9 @@ public class CbusCommandStationTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
         memo = null;
         t = null;
         lnis = null;

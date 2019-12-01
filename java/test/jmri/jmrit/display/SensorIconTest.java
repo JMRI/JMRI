@@ -14,6 +14,7 @@ import org.junit.Test;
 public class SensorIconTest extends PositionableIconTest {
 
     @Test
+    @Override
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("SensorIcon Constructor", p);

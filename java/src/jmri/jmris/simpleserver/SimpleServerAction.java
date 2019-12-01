@@ -15,7 +15,7 @@ public class SimpleServerAction extends AbstractAction {
     }
 
     public SimpleServerAction() {
-        this("Start Simple Jmri Server");
+        this("Start JMRI Simple Server");
     }
 
     @Override

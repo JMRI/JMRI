@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Mark Underwood, Copyright (C) 2015
  * @author Egbert Broerse, Copyright (C) 2017
  */
-public class SimulatorAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter, Runnable {
+public class SimulatorAdapter extends SerialPortController implements Runnable {
 
     // private control members
     private boolean opened = false;
@@ -171,7 +171,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
-        return null;
+        return new String[]{};
     }
 
     /**
@@ -179,7 +179,7 @@ public class SimulatorAdapter extends SerialPortController implements jmri.jmrix
      */
     @Override
     public int[] validBaudNumbers() {
-        return null;
+        return new int[]{};
     }
 
     @Override

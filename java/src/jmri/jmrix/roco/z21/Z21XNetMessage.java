@@ -1,6 +1,6 @@
 package jmri.jmrix.roco.z21;
 
-import java.io.Serializable;
+import jmri.SpeedStepMode;
 import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetMessage;
 
@@ -14,9 +14,7 @@ import jmri.jmrix.lenz.XNetMessage;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @author	Paul Bender Copyright (C) 2003-2010
  */
-public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Serializable {
-
-//    static private int _nRetries = 5;
+public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage {
 
     /**
      * Constructor, just pass on to the supperclass.
@@ -140,7 +138,7 @@ public class Z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
      *              and 1).  A negative value indicates emergency stop.
      * @param isForward true for forward, false for reverse.
      */
-    public static XNetMessage getZ21LanXSetLocoDriveMsg(int address, int speedMode, float speed, boolean isForward) {
+    public static XNetMessage getZ21LanXSetLocoDriveMsg(int address, SpeedStepMode speedMode, float speed, boolean isForward) {
         XNetMessage msg = XNetMessage.getSpeedAndDirectionMsg(address,
                         speedMode,speed,isForward);
         msg.setBroadcastReply();

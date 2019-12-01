@@ -119,7 +119,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
     public void setExistingEntry(RosterEntry mFromEntry) {
         this.mFromEntry = mFromEntry;
         mFromFilename = mFromEntry.getFileName();
-        mFullFromFilename = LocoFile.getFileLocation() + mFromFilename;
+        mFullFromFilename = Roster.getDefault().getRosterFilesLocation() + mFromFilename;
         log.debug(" from resolves to \"" + mFromFilename + "\", \"" + mFullFromFilename + "\"");
     }
 

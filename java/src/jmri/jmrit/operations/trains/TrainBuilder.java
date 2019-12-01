@@ -1,18 +1,8 @@
 package jmri.jmrit.operations.trains;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.Hashtable;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
 import javax.swing.JOptionPane;
 
@@ -26,11 +16,7 @@ import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.router.Router;
@@ -484,7 +470,7 @@ public class TrainBuilder extends TrainCommon {
         if (_train.isAllowLocalMovesEnabled()) {
             addLine(_buildReport, FIVE, Bundle.getMessage("AllowLocalMoves"));
         }
-        if (_train.isAllowThroughCarsEnabled()) {
+        if (_train.isAllowThroughCarsEnabled() && _departLocation != _terminateLocation) {
             addLine(_buildReport, FIVE, Bundle.getMessage("AllowThroughCars"));
         }
         if (_train.isServiceAllCarsWithFinalDestinationsEnabled()) {
@@ -1847,7 +1833,7 @@ public class TrainBuilder extends TrainCommon {
                     if (_train.services(car)) {
                         addLine(_buildReport, SEVEN,
                                 MessageFormat.format(Bundle.getMessage("buildTrainCanServiceWait"),
-                                        new Object[]{_train.getName(), car.toString()}));
+                                        new Object[]{_train.getName(), car.toString(), car.getWait() - 1}));
                         car.setWait(car.getWait() - 1); // decrement wait count
                         // a car's load changes when the wait count reaches 0
                         String oldLoad = car.getLoadName();

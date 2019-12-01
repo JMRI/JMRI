@@ -210,12 +210,13 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
         }
 
         //@Override
+        @Override
         public int[] validBaudNumbers() {
-            return null;
+            return new int[] {};
         }
 
         protected SerialPortControllerScaffold() throws Exception {
@@ -265,7 +266,9 @@ public class SpecificTrafficControllerTest extends jmri.jmrix.powerline.SerialTr
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(SpecificTrafficControllerTest.class);

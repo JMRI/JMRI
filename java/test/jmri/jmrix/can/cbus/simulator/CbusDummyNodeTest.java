@@ -64,7 +64,6 @@ public class CbusDummyNodeTest {
         Assert.assertEquals("start getProcessOut", true,t.getProcessOut() );
         Assert.assertEquals("start getSendIn", true,t.getSendIn() );
         Assert.assertEquals("start getSendOut", false,t.getSendOut() );
-        Assert.assertEquals("start getNodeType", 0,t.getNodeType() );
         Assert.assertTrue("start getsendsWRACKonNVSET",t.getsendsWRACKonNVSET()==true);
         Assert.assertEquals(" getNodeType SLIM", "SLIM",t.getNodeTypeName() );
         
@@ -670,7 +669,9 @@ public class CbusDummyNodeTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusDummyNodeTest.class);

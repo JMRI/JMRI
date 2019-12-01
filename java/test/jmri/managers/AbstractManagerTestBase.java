@@ -6,9 +6,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
-import jmri.util.JUnitAppender;
 
-import org.junit.Assume;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -119,5 +117,28 @@ public abstract class AbstractManagerTestBase<T extends Manager<E>, E extends Na
         Assert.assertFalse(s.isEmpty());
     }
 
+    @Test
+    public void testAutoSystemNames() {
+        AbstractManager m = (AbstractManager)l;
+        String sysPrefix = m.getSystemNamePrefix();
+        Assert.assertEquals(sysPrefix+":AUTO:0001", m.getAutoSystemName());
+        Assert.assertEquals(sysPrefix+":AUTO:0002", m.getAutoSystemName());
+        Assert.assertEquals(sysPrefix+":AUTO:0003", m.getAutoSystemName());
+        m.updateAutoNumber(sysPrefix+":AUTO:0011");
+        Assert.assertEquals(sysPrefix+":AUTO:0012", m.getAutoSystemName());
+        Assert.assertEquals(sysPrefix+":AUTO:0013", m.getAutoSystemName());
+        m.updateAutoNumber(sysPrefix+":AUTO:0005");
+        Assert.assertEquals(sysPrefix+":AUTO:0014", m.getAutoSystemName());
+        m.updateAutoNumber(sysPrefix+":AUTO:0098");
+        Assert.assertEquals(sysPrefix+":AUTO:0099", m.getAutoSystemName());
+        m.updateAutoNumber(sysPrefix+":AUTO:0097");
+        Assert.assertEquals(sysPrefix+":AUTO:0100", m.getAutoSystemName());
+        Assert.assertEquals(sysPrefix+":AUTO:0101", m.getAutoSystemName());
+        m.updateAutoNumber(sysPrefix+":AUT:0203");
+        Assert.assertEquals(sysPrefix+":AUTO:0102", m.getAutoSystemName());
+        m.updateAutoNumber("12"+":AUT:0203");   // Bad system name prefix
+        Assert.assertEquals(sysPrefix+":AUTO:0103", m.getAutoSystemName());
+    }
+    
     //private final static Logger log = LoggerFactory.getLogger(AbstractManagerTestBase.class);
 }

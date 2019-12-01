@@ -36,10 +36,10 @@ public class TrafficLockingEntry {
     public String _mUniqueID3;
     public String _mUniqueID4;
     public String _mUniqueID5;
-    
+
     private static final int USER_RULE_NUMBER_INDEX = 0;
     private static final int RULE_ENABLED_INDEX = 1;
-//  Unused indexes 2,3 (was terminating O.S. section info)    
+//  Unused indexes 2,3 (was terminating O.S. section info)
     private static final int USER_TEXT1_INDEX = 4;
     private static final int SWITCH_ALIGNMENT1_INDEX = 5;
     private static final int USER_TEXT2_INDEX = 6;
@@ -61,7 +61,7 @@ public class TrafficLockingEntry {
     private static final int OCCUPANCY_EXTERNAL_SENSOR9_INDEX  = 22;
     private static final int OPTIONAL_EXTERNAL_SENSOR1_INDEX = 23;
     private static final int OPTIONAL_EXTERNAL_SENSOR2_INDEX = 24;
-//  Computer maintained:    
+//  Computer maintained:
 //  Unused index 25 (was terminating O.S. section info)
     private static final int UNIQUE_ID1_INDEX = 26;
     private static final int UNIQUE_ID2_INDEX = 27;
@@ -69,7 +69,7 @@ public class TrafficLockingEntry {
     private static final int UNIQUE_ID4_INDEX = 29;
     private static final int UNIQUE_ID5_INDEX = 30;
     private static final int ARRAY_SIZE = 31;
-    
+
     public TrafficLockingEntry(String csvString) {
         ArrayList<String> arrayListOfStrings = ProjectsCommonSubs.getFixedArrayListSizeFromCSV(csvString, ARRAY_SIZE);
         _mUserRuleNumber = arrayListOfStrings.get(USER_RULE_NUMBER_INDEX);
@@ -118,7 +118,7 @@ public class TrafficLockingEntry {
                                 String occupancyExternalSensor9,
                                 String optionalExternalSensor1,
                                 String optionalExternalSensor2) {
-// Any uninitialized are null, and thats OK for "constructCSVStringFromArrayList":        
+// Any uninitialized are null, and thats OK for "constructCSVStringFromArrayList":
         _mRuleEnabled = ruleEnabled;
         _mSwitchAlignment1 = switchAlignment1;
         _mSwitchAlignment2 = switchAlignment2;
@@ -136,6 +136,37 @@ public class TrafficLockingEntry {
         _mOccupancyExternalSensor9 = occupancyExternalSensor9;
         _mOptionalExternalSensor1 = optionalExternalSensor1;
         _mOptionalExternalSensor2 = optionalExternalSensor2;
+    }
+
+    public TrafficLockingEntry(TrafficLockingEntry sourceTrafficLockingEntry) { // "Deep" Copy constructor (copying immutable strings makes it so):
+        _mUserRuleNumber = sourceTrafficLockingEntry._mUserRuleNumber;
+        _mRuleEnabled= sourceTrafficLockingEntry._mRuleEnabled;
+        _mUserText1= sourceTrafficLockingEntry._mUserText1;
+        _mSwitchAlignment1= sourceTrafficLockingEntry._mSwitchAlignment1;
+        _mUserText2= sourceTrafficLockingEntry._mUserText2;
+        _mSwitchAlignment2= sourceTrafficLockingEntry._mSwitchAlignment2;
+        _mUserText3= sourceTrafficLockingEntry._mUserText3;
+        _mSwitchAlignment3= sourceTrafficLockingEntry._mSwitchAlignment3;
+        _mUserText4= sourceTrafficLockingEntry._mUserText4;
+        _mSwitchAlignment4= sourceTrafficLockingEntry._mSwitchAlignment4;
+        _mUserText5= sourceTrafficLockingEntry._mUserText5;
+        _mSwitchAlignment5= sourceTrafficLockingEntry._mSwitchAlignment5;
+        _mOccupancyExternalSensor1= sourceTrafficLockingEntry._mOccupancyExternalSensor1;
+        _mOccupancyExternalSensor2= sourceTrafficLockingEntry._mOccupancyExternalSensor2;
+        _mOccupancyExternalSensor3= sourceTrafficLockingEntry._mOccupancyExternalSensor3;
+        _mOccupancyExternalSensor4= sourceTrafficLockingEntry._mOccupancyExternalSensor4;
+        _mOccupancyExternalSensor5= sourceTrafficLockingEntry._mOccupancyExternalSensor5;
+        _mOccupancyExternalSensor6= sourceTrafficLockingEntry._mOccupancyExternalSensor6;
+        _mOccupancyExternalSensor7= sourceTrafficLockingEntry._mOccupancyExternalSensor7;
+        _mOccupancyExternalSensor8= sourceTrafficLockingEntry._mOccupancyExternalSensor8;
+        _mOccupancyExternalSensor9= sourceTrafficLockingEntry._mOccupancyExternalSensor9;
+        _mOptionalExternalSensor1= sourceTrafficLockingEntry._mOptionalExternalSensor1;
+        _mOptionalExternalSensor2= sourceTrafficLockingEntry._mOptionalExternalSensor2;
+        _mUniqueID1= sourceTrafficLockingEntry._mUniqueID1;
+        _mUniqueID2= sourceTrafficLockingEntry._mUniqueID2;
+        _mUniqueID3= sourceTrafficLockingEntry._mUniqueID3;
+        _mUniqueID4= sourceTrafficLockingEntry._mUniqueID4;
+        _mUniqueID5= sourceTrafficLockingEntry._mUniqueID5;
     }
 
     public String toCSVString() {

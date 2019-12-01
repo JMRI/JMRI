@@ -3,42 +3,40 @@ package jmri;
 import java.util.List;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 
 /**
  * Manage tasks to be completed when the program shuts down normally.
- * Specifically, allows other object to register and deregister
- * {@link ShutDownTask} objects, which are invoked in an orderly way when the
- * program is is commanded to terminate.
  * <p>
- * Operations:
- * <ol>
- * <li>Execute each {@link ShutDownTask} in order reverse order of creation,
- * allowing it to abort the shutdown if needed.
- * <li>If not aborted, terminate the program.
- * </ol>
+ * Implementations of this interface allow other objects to register and
+ * deregister {@link ShutDownTask} objects, which are invoked in an orderly way
+ * when the program is is commanded to terminate. There is no requirement a
+ * ShutDownTask not interact with the user interface, and an assumption that,
+ * barring a headless application, that ShutDownTasks may interact with the user
+ * interface.
  * <p>
  * There can only be one instance of this operating, and it is generally
  * obtained via the instance manager.
  * <p>
- * Items are executed in reverse order to attempt to unwind the creation
- * process. Tasks should not count on this, however, as shutdown can be aborted
- * before a particular task is reached.
+ * ShutDownTasks should leave the system in a state that can continue, in case a
+ * later task aborts the shutdown.
  * <p>
- * Tasks should leave the system in a state that can continue, in case a later
- * task aborts the shutdown.
+ * Although ShutDownTasks can use {@link ShutDownTask#isParallel()} to notify
+ * the ShutDownManager that the ShutDownTask will spawn its own thread to
+ * perform its task, there is no requirement that the ShutDownManager wait for
+ * these tasks to complete (although it is possible to put a computer or command
+ * station into a poor state by not waiting for these tasks to complete).
  * <p>
- * An instance of this is normally obtained from the instance manager, but using
- * routines should not assume that one is always present; they should check for
- * a null manager and skip operations if needed.
+ * An instance of this is normally obtained from the instance manager, using may
+ * assume that one is always present.
  *
  * @author Bob Jacobsen Copyright (C) 2008
  */
 public interface ShutDownManager {
 
     /**
-     * Register a task object for later execution. If called with an already
-     * registered task, the task is not registered twice.
+     * Register a task object for later execution. An attempt to register an
+     * already registered task will be silently ignored.
      *
      * @param task the task to execute
      * @throws NullPointerException if the task is null
@@ -51,43 +49,49 @@ public interface ShutDownManager {
      *
      * @param task the task not to execute
      */
-    public void deregister(@Nullable ShutDownTask task);
+    public void deregister(@CheckForNull ShutDownTask task);
 
     /**
      * Provide access to the current registered shutdown tasks.
+     * <p>
+     * Note that implementations are free to provide a copy of the list of
+     * registered tasks and do not need to provide modifiable live access to the
+     * internal list of registered tasks.
+     * 
+     * @return the list of shutdown tasks or an empty list if no shutdown tasks
+     *         are registered
      */
+    @Nonnull
     public List<ShutDownTask> tasks();
-    
+
     /**
      * Run the shutdown tasks, and then terminate the program with status 100 if
-     * not aborted. Does not return under normal circumstances. Does return
-     * false if the shutdown was aborted by the user, in which case the program
-     * should continue to operate.
+     * not aborted. Does not return under normal circumstances. Returns false if
+     * the shutdown was aborted by the user, in which case the program should
+     * continue to operate.
      * <p>
      * By exiting the program with status 100, the batch file (MS Windows) or
-     * shell script (Linux/Mac OS X/UNIX) can catch the exit status and restart
-     * the java program.
+     * shell script (Linux/macOS/UNIX) can catch the exit status and restart the
+     * java program.
      * <p>
-     * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
+     * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
      *
-     * @return boolean which should be false
+     * @return false if any shutdown task aborts restarting the application
      */
     public boolean restart();
 
     /**
-     * First asks the shutdown tasks if shutdown is allowed. If not return false.
+     * Run the shutdown tasks, and then terminate the program with status 0 if
+     * not aborted. Does not return under normal circumstances. Returns false if
+     * the shutdown was aborted by the user, in which case the program should
+     * continue to operate.
      * <p>
-     * Then run the shutdown tasks, and then terminate the program with status 0
-     * if not aborted. Does not return under normal circumstances. Does return
-     * false if the shutdown was aborted by the user, in which case the program
-     * should continue to operate.
-     * <p>
-     * <b>NOTE</b> If the OS X {@literal application->quit} menu item is used,
+     * <b>NOTE</b> If the macOS {@literal application->quit} menu item is used,
      * this must return false to abort the shutdown.
      *
-     * @return false if any shutdown task aborts the shutdown or if anything goes
-     * wrong.
+     * @return false if any shutdown task aborts the shutdown or if anything
+     *         goes wrong.
      */
     public boolean shutdown();
 

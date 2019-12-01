@@ -28,8 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Bob Jacobsen Copyright (C) 2003
  */
-public class SerialSensorAdapter extends AbstractSerialPortController
-        implements jmri.jmrix.SerialPortAdapter {
+public class SerialSensorAdapter extends AbstractSerialPortController {
 
     SerialPort activeSerialPort = null;
 
@@ -193,9 +192,15 @@ public class SerialSensorAdapter extends AbstractSerialPortController
         return new int[]{9600};
     }
 
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
+
     /**
-     * Set the baud rate. This currently does nothing, as there's only one
-     * possible value
+     * {@inheritDoc}
+     * This currently does nothing, as there's only one
+     * possible value.
      */
     @Override
     public void configureBaudRate(String rate) {

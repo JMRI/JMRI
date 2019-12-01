@@ -79,7 +79,7 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
 
     @Override
     void setReadOnlyValue(VariableValue var, String val) {
-        ((SplitVariableValue) var).setValue(Integer.parseInt(val));
+        ((SplitVariableValue) var).setLongValue(Integer.parseInt(val));
     }
 
     @Override
@@ -490,11 +490,13 @@ public class SplitTextVariableValueTest extends AbstractVariableValueTestBase {
 
     // from here down is testing infrastructure
     @Before
+    @Override
     public void setUp() {
         super.setUp();
     }
 
     @After
+    @Override
     public void tearDown() {
         super.tearDown();
     }

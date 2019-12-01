@@ -27,9 +27,11 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.sensor.JsonSensor;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -55,6 +57,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
     }
 
     @Test
+    @Override
     public void testDoGet() throws JmriException, IOException, JsonException {
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         Block block1 = manager.provideBlock("IB1");
@@ -204,7 +207,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
             service.doPut(JsonBlock.BLOCK, "", message, locale, 0); // use an empty name to trigger exception
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
-            assertEquals(404, ex.getCode()); // should be 400 or 500, but until BlockManager throws on creating Block with empty system name suffix, is 404
+            assertEquals(400, ex.getCode());
         }
     }
 
@@ -278,6 +281,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
      *
      * @throws jmri.server.json.JsonException if something goes wrong
      */
+    @Ignore("Until upstream sources are fixed; see #7633")
     @Test
     public void testDoSchema() throws JsonException {
         JsonBlockHttpService instance = new JsonBlockHttpService(mapper);
@@ -291,6 +295,10 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         validate(block);
         validate(blocks);
         assertEquals("Server schema for block and blocks is the same", block, blocks);
+
+        // Suppress a warning message (see networknt/json-schema-validator#79)
+        JUnitAppender.checkForMessageStartingWith(
+                "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
     }
 
 }

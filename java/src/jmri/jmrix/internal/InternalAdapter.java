@@ -11,8 +11,7 @@ import java.util.Arrays;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  */
-public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
-        implements jmri.jmrix.PortAdapter {
+public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController {
 
     // private control members
     private boolean opened = false;
@@ -50,7 +49,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     @Override
     public String[] validBaudRates() {
         log.debug("validBaudRates should not have been invoked");
-        return null;
+        return new String[]{};
     }
 
     /**
@@ -58,7 +57,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
      */
     @Override
     public int[] validBaudNumbers() {
-        return null;
+        return new int[]{};
     }
 
     @Override

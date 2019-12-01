@@ -18,6 +18,7 @@ public class RfidMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         m = new RfidMessage(20){

@@ -50,17 +50,30 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
         ObjectNode root = getNamedBean(reporter, name, type, locale, id); // throws JsonException if reporter == null
         ObjectNode data = root.with(JSON.DATA);
         data.put(JSON.STATE, reporter.getState());
-        if (reporter.getCurrentReport() != null) {
-            String report = reporter.getCurrentReport().toString();
+        Object cr = reporter.getCurrentReport();
+        if (cr != null) {
+            String report;
+            if (cr instanceof jmri.Reportable) {
+                report = ((jmri.Reportable) cr).toReportString();
+            } else {
+                report = cr.toString();
+            }
             data.put(REPORT, report);
             //value matches text displayed on panel
-            data.put(JSON.VALUE, (report.isEmpty() ? Bundle.getMessage(locale, "Blank") : report));
+            data.put(JSON.VALUE, (report.isEmpty() ? Bundle.getMessage(locale, "Blank") : report));            
         } else {
             data.putNull(REPORT);
             data.put(JSON.VALUE, Bundle.getMessage(locale, "NoReport"));
         }
-        if (reporter.getLastReport() != null) {
-            data.put(LAST_REPORT, reporter.getLastReport().toString());
+        Object lr = reporter.getCurrentReport();
+        if (lr != null) {
+            String report;
+            if (lr instanceof jmri.Reportable) {
+                report = ((jmri.Reportable) lr).toReportString();
+            } else {
+                report = lr.toString();
+            }
+            data.put(LAST_REPORT, report);
         } else {
             data.putNull(LAST_REPORT);
         }
@@ -83,7 +96,7 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
                         "jmri/server/json/reporter/reporter-client.json",
                         id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
     

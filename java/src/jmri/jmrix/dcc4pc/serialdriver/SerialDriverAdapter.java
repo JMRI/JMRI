@@ -26,7 +26,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Kevin Dickerson Copyright (C) 2012
  */
-public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends Dcc4PcPortController {
 
     public SerialDriverAdapter() {
         super(new Dcc4PcSystemConnectionMemo());
@@ -182,6 +182,11 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     @Override
     public int[] validBaudNumbers() {
         return new int[]{115200};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     InputStream serialStream = null;

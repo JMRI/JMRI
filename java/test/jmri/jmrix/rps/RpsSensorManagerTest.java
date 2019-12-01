@@ -2,6 +2,9 @@ package jmri.jmrix.rps;
 
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
+
+import java.beans.PropertyVetoException;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -26,6 +29,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     }
 
     @Test
+    @Override
     public void testProvideName() {
         // create
         Sensor t = l.provide(getSystemName(getNumToTest1()));
@@ -53,6 +57,7 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
     }
 
     @Test
+    @Override
     public void testMoveUserName() {
         Sensor t1 = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
         Sensor t2 = l.provideSensor("RS(0,0,0);(1,0,0);(1,1,0);(0,1,2)");
@@ -63,6 +68,23 @@ public class RpsSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBas
         Assert.assertTrue(t2 == l.getByUserName("UserName"));
 
         Assert.assertTrue(null == t1.getUserName());
+    }
+
+    @Override
+    @Test
+    public void testRegisterDuplicateSystemName() throws PropertyVetoException, NoSuchFieldException,
+            NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+        testRegisterDuplicateSystemName(l,
+                "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)",
+                "RS(0,0,0);(1,0,0);(1,1,0);(0,1,2)");
+    }
+
+    @Override
+    @Test
+    public void testMakeSystemName() {
+        String s = l.makeSystemName("(0,0,0);(1,0,0);(1,1,0);(0,1,0)");
+        Assert.assertNotNull(s);
+        Assert.assertFalse(s.isEmpty());
     }
 
     @Test

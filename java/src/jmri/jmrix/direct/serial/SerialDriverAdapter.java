@@ -27,7 +27,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2002, 2004
  */
-public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends PortController {
 
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
@@ -184,6 +184,11 @@ public class SerialDriverAdapter extends PortController implements jmri.jmrix.Se
     @Override
     public int[] validBaudNumbers() {
         return new int[]{19200};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     // private control members

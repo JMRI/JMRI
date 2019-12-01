@@ -1,17 +1,13 @@
 package jmri.jmrix.can.cbus.swing.simulator;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.DefaultListCellRenderer;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
@@ -41,7 +37,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     private JPanel _csPanes;
     private JPanel _ndPanes;
     private JPanel _evPanes;
-    private Boolean _disposeSimOnWindowClose;
+    private Boolean _disposeSimOnWindowClose = Boolean.valueOf(false);
     private JScrollPane mainScroll;
 
     @Override
@@ -60,10 +56,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
 
     @Override
     public String getTitle() {
-        if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("MenuItemNetworkSim"));
-        }
-        return Bundle.getMessage("MenuItemNetworkSim");
+        return prependConnToString(Bundle.getMessage("MenuItemNetworkSim"));
     }
 
     public SimulatorPane() {
@@ -185,27 +178,6 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane";
-    }
-    
-    static public class ComboboxToolTipRenderer extends DefaultListCellRenderer {
-        List<String> tooltips;
-    
-        @Override
-        public Component getListCellRendererComponent(JList list, Object value,
-                            int index, boolean isSelected, boolean cellHasFocus) {
-    
-            JComponent comp = (JComponent) super.getListCellRendererComponent(list,
-                    value, index, isSelected, cellHasFocus);
-    
-            if (-1 < index && null != value && null != tooltips) {
-                list.setToolTipText(tooltips.get(index));
-            }
-            return comp;
-        }
-    
-        public void setTooltips(List<String> tooltips) {
-            this.tooltips = tooltips;
-        }
     }
 
     @Override

@@ -24,8 +24,9 @@ public abstract class AbstractMultiMeterTestBase {
     @After
     @javax.annotation.OverridingMethodsMustInvokeSuper
     public void tearDown(){
-       mm.dispose();
-       jmri.util.JUnitUtil.tearDown();
+        mm.dispose();
+        jmri.util.JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
+        jmri.util.JUnitUtil.tearDown();
     }
 
     protected MultiMeter mm = null;	// holds objects under test
@@ -68,7 +69,7 @@ public abstract class AbstractMultiMeterTestBase {
     @Test
     public void testAddListener() {
         Listen ln = new Listen();
-        mm.addDataUpdateListener(ln);
+        mm.addPropertyChangeListener(ln);
         mm.setCurrent(0.5f);
         jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } );
         Assert.assertTrue("listener invoked by setCurrent", ln.eventSeen());
@@ -77,8 +78,8 @@ public abstract class AbstractMultiMeterTestBase {
     @Test
     public void testRemoveListener() {
         Listen ln = new Listen();
-        mm.addDataUpdateListener(ln);
-        mm.removeDataUpdateListener(ln);
+        mm.addPropertyChangeListener(ln);
+        mm.removePropertyChangeListener(ln);
         mm.setCurrent(0.5f);
         // this should just timeout;
         Assert.assertFalse(jmri.util.JUnitUtil.waitFor(()->{ return ln.eventSeen(); } ));

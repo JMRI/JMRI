@@ -1,12 +1,12 @@
 package jmri.managers;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +29,10 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractAudioManager extends AbstractManager<Audio>
         implements AudioManager {
+
+    public AbstractAudioManager(SystemConnectionMemo memo) {
+        super(memo);
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -64,12 +68,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     /** {@inheritDoc} */
     @Override
     public Audio getBySystemName(@Nonnull String key) {
-        //return _tsys.get(key);
-        Audio rv =  _tsys.get(key);
-        if (rv == null) {
-            rv = _tsys.get(key.toUpperCase());
-        }
-        return (rv);
+        return _tsys.get(key);
     }
 
     /** {@inheritDoc} */
@@ -156,8 +155,8 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     /** {@inheritDoc} */
     @Override
     @Nonnull 
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameAudio");  // NOI18N
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameAudios" : "BeanNameAudio");  // NOI18N
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class);

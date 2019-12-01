@@ -112,8 +112,9 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
 
     @After
     public void tearDown() {
-	lnis = null;
-	l = null;
+	    lnis = null;
+	    l = null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
@@ -124,7 +125,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new XNetTurnoutManager(lnis, "X");
+        l = new XNetTurnoutManager(lnis.getSystemConnectionMemo());
         jmri.InstanceManager.setTurnoutManager(l);
     }
 

@@ -18,46 +18,43 @@ public class CbusNodeNVTableDataModelTest {
     @Test
     public void testCTor() {
         
-        CbusNodeNVTableDataModel nodeModel = new CbusNodeNVTableDataModel(
+        t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
         
-        Assert.assertNotNull("exists",nodeModel);
-        
-        nodeModel = null;
+        Assert.assertNotNull("exists",t);
         
     }
     
     @Test
     public void testNodeNoNv() {
         
-        CbusNodeNVTableDataModel t = new CbusNodeNVTableDataModel(
+        t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
+        
+        Assert.assertEquals( "Column Count after construction", 7,t.getColumnCount() );
         
         CbusNode myNode = new CbusNode(memo,12345);
         
         t.setNode(myNode);
         
         Assert.assertTrue( t.getRowCount()== 0 );
-        Assert.assertTrue( t.getColumnCount()== 7 );
+        Assert.assertEquals( "Column Count", 7,t.getColumnCount() );
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
-            Assert.assertTrue("column has a width", CbusNodeNVTableDataModel.getPreferredWidth(i) > 0 );
         }
         
         Assert.assertTrue("column has NO name", t.getColumnName(999).equals("unknown 999") );
-        Assert.assertTrue("column has NO width", CbusNodeNVTableDataModel.getPreferredWidth(999) > 0 );
         
         myNode.dispose();
         myNode = null;
-        t = null;
         
     }
     
     @Test
     public void testNodeWithNv() {
         
-        CbusNodeNVTableDataModel t = new CbusNodeNVTableDataModel(
+        t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
         
         CbusNode myNode = new CbusNode(memo,12345);        
@@ -103,9 +100,7 @@ public class CbusNodeNVTableDataModelTest {
         Assert.assertEquals("NV_SELECT_BIT_COLUMN","",t.getValueAt( 
             0,CbusNodeNVTableDataModel.NV_SELECT_BIT_COLUMN) );
             
-        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );  
-        
-        Assert.assertTrue("isTableLoaded nac", t.isTableLoaded() == false );
+        Assert.assertTrue("getValueAt nac", (String)t.getValueAt(0,999) == null );
         
         Assert.assertTrue("isTableDirty nac", t.isTableDirty() == false );
         Assert.assertTrue("getCountDirty nac", t.getCountDirty() == 0 );
@@ -175,19 +170,15 @@ public class CbusNodeNVTableDataModelTest {
         // t.setValueAt(122,1,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         // t.setValueAt(255,2,CbusNodeNVTableDataModel.NV_SELECT_COLUMN);
         
-        t.passChangedNvsToNode(null);
-        
-        Assert.assertEquals("Message sent is teaching NV1 ", "[5f8] 96 30 39 01 FF",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         
         myNode.dispose();
         myNode = null;
-        t = null;
     
     }
     
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
+    private CbusNodeNVTableDataModel t;
     
 
     // The minimal setup for log4J
@@ -203,11 +194,13 @@ public class CbusNodeNVTableDataModelTest {
 
     @After
     public void tearDown() {
-        
+        t = null;
         memo = null;
         tcis = null;
         
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeNVTableDataModelTest.class);

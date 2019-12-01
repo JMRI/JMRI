@@ -11,7 +11,9 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 /**
  *
@@ -73,14 +75,13 @@ public class CbusNodeTableDataModelTest {
         CbusNodeTableDataModel t = new CbusNodeTableDataModel(
             memo, 3,CbusNodeTableDataModel.MAX_COLUMN);
         t.startup(); // so preferences available in table model
-        
-        // default is add to table
-        Assert.assertTrue("default add cs pref",cbcfgm.getCbusPreferences().getAddCommandStations()== true );
-        Assert.assertTrue("default add node pref",cbcfgm.getCbusPreferences().getAddNodes()== true );
+
         Assert.assertTrue("default getCsByNum0 null",t.getCsByNum(0)== null );
         
-        Assert.assertTrue("default search cs pref",cbcfgm.getCbusPreferences().getStartupSearchForCs()== true );
-        Assert.assertTrue("default search node pref",cbcfgm.getCbusPreferences().getStartupSearchForNodes()== true );
+        Assert.assertTrue("default search cs pref",cbcfgm.getCbusPreferences().getStartupSearchForCs()== false );
+        Assert.assertTrue("default search node pref",cbcfgm.getCbusPreferences().getStartupSearchForNodes()== false );
+        
+        cbcfgm.getCbusPreferences().setAddCommandStations(true);
         
         CanMessage m = new CanMessage( tcis.getCanid() );
         m.setNumDataElements(8);
@@ -97,7 +98,6 @@ public class CbusNodeTableDataModelTest {
         // ignores CanMessage
         Assert.assertTrue("ignores CanMessage",t.getCsByNum(0)== null );
         Assert.assertTrue("ignores CanMessage row",t.getRowCount()== 0 );
-        
         
         CanReply r = new CanReply();
         r.setHeader(tcis.getCanid());
@@ -136,6 +136,10 @@ public class CbusNodeTableDataModelTest {
         
         Assert.assertTrue("no node 7 CanReply",t.getNodeByNodeNum(7) == null );
         
+        
+        cbcfgm.getCbusPreferences().setAddNodes(true);
+        t.startASearchForNodes(null,1000);
+        
         r = new CanReply();
         r.setHeader(tcis.getCanid());
         r.setNumDataElements(6);
@@ -149,9 +153,6 @@ public class CbusNodeTableDataModelTest {
         
         Assert.assertTrue("provides node 7 CanReply",t.getNodeByNodeNum(7) != null );
         Assert.assertTrue("getListOfNodeNumberNames 2 length list",t.getListOfNodeNumberNames().size() == 2 );
-        
-        Assert.assertEquals("Message sent to node exit learn mode", "[5f8] 54 00 07",
-            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
         
         t.dispose();
         t = null;
@@ -379,13 +380,16 @@ public class CbusNodeTableDataModelTest {
         t = null;
     
     }
-
+    
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws java.io.IOException {
         JUnitUtil.setUp();
-        
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
         memo = new CanSystemConnectionMemo();
         tcis = new TrafficControllerScaffold();
         memo.setTrafficController(tcis);
@@ -396,7 +400,9 @@ public class CbusNodeTableDataModelTest {
         
         memo = null;
         tcis = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeTableDataModelTest.class);

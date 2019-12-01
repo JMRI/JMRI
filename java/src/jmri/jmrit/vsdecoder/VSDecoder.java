@@ -9,6 +9,7 @@ import java.util.Iterator;
 import jmri.Audio;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.Throttle;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.Route;
@@ -28,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * generates sounds in responds to them.
  * <p>
  * Each VSDecoder implements exactly one Sound Profile (describes a particular
- * type of locomtive, say, an EMD GP7).
+ * type of locomotive, say, an EMD GP7).
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -133,12 +134,12 @@ public class VSDecoder implements PropertyChangeListener {
 
         if (log.isDebugEnabled()) {
             log.debug("VSDecoder Init Complete.  Audio Objects Created:");
-            for (String s : jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.SOURCE)) {
+            jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.SOURCE).forEach((s) -> {
                 log.debug("\tSource: {}", s);
-            }
-            for (String s : jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.BUFFER)) {
+            });
+            jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.BUFFER).forEach((s) -> {
                 log.debug("\tBuffer: {}", s);
-            }
+            });
         }
     }
 
@@ -299,21 +300,21 @@ public class VSDecoder implements PropertyChangeListener {
         log.debug("VSDecoderPane throttle property change: {}", eventName);
 
         if (eventName.equals("throttleAssigned")) {
-            Float s = (Float) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), "SpeedSetting"); 
+            Float s = (Float) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), Throttle.SPEEDSETTING);
             if (s != null) {
                 ((EngineSound) this.getSound("ENGINE")).setFirstSpeed(true); // Auto-start needs this
                 // Mimic a throttlePropertyChange to propagate the current (init) speed setting of the throttle.
                 log.debug("Existing DCC Throttle found. Speed: {}", s);
-                this.throttlePropertyChange(new PropertyChangeEvent(this, "SpeedSetting", null, s));
+                this.throttlePropertyChange(new PropertyChangeEvent(this, Throttle.SPEEDSETTING, null, s));
             }
 
             // Check for an existing throttle and get loco direction if it exists.
-            Boolean b = (Boolean) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), "IsForward");
+            Boolean b = (Boolean) jmri.InstanceManager.throttleManagerInstance().getThrottleInfo(config.getDccAddress(), Throttle.ISFORWARD);
             if (b != null) {
                 dirfn = b ? 1 : -1;
                 log.debug("Existing DCC Throttle found. IsForward is {}", b);
                 log.debug("Initial dirfn: {} for {}", dirfn, config.getDccAddress());
-                this.throttlePropertyChange(new PropertyChangeEvent(this, "IsForward", null, b));
+                this.throttlePropertyChange(new PropertyChangeEvent(this, Throttle.ISFORWARD, null, b));
             } else {
                 log.warn("No existing DCC throttle found.");
             }
@@ -342,11 +343,11 @@ public class VSDecoder implements PropertyChangeListener {
             t.propertyChange(event);
         }
 
-        if (eventName.equals("SpeedSetting")) {
+        if (eventName.equals(Throttle.SPEEDSETTING)) {
             currentspeed = (float) this.getSound("ENGINE").speedCurve((float) event.getNewValue());
         }
 
-        if (eventName.equals("IsForward")) {
+        if (eventName.equals(Throttle.ISFORWARD)) {
             dirfn = (Boolean) event.getNewValue() ? 1 : -1;
         }
     }
@@ -817,10 +818,10 @@ public class VSDecoder implements PropertyChangeListener {
         n = e.getChildText("create-xy-series");
         if ((n != null) && (n.equals("yes"))) {
             create_xy_series = true;
-            log.debug("Profile {}: xy-position-coordinates will be created in JMRI System console", getProfileName());
+            log.debug("Profile {}: xy-position-coordinates will be created in JMRI System Console", getProfileName());
         } else {
             create_xy_series = false;
-            log.debug("Profile {}: xy-position-coordinates will NOT be created in JMRI System console", getProfileName());
+            log.debug("Profile {}: xy-position-coordinates will NOT be created in JMRI System Console", getProfileName());
         }
 
         // Check for an optional sound start-position.

@@ -90,11 +90,11 @@ public interface SignalAppearanceMap {
     public final static int DARK = 3;
 
     /**
-     * Returns a list of potential aspects that we could set the SignalMast to
+     * Get a list of potential aspects that we could set the SignalMast to,
      * given the state of the advanced signal mast.
      *
      * @param advancedAspect the aspect
-     * @return a list of potential aspects or null if none defined
+     * @return a string array of potential aspects or null if none defined
      */
     public String[] getValidAspectsForAdvancedAspect(String advancedAspect);
 

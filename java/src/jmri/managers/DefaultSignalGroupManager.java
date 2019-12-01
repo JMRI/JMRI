@@ -6,15 +6,14 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
+import jmri.InstanceManager;
 
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
 import jmri.implementation.DefaultSignalGroup;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +26,10 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright (C) 2009, 2018
  */
 public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
-        implements SignalGroupManager, java.beans.PropertyChangeListener {
+        implements SignalGroupManager {
 
-    public DefaultSignalGroupManager() {
-        super();
+    public DefaultSignalGroupManager(InternalSystemConnectionMemo memo) {
+        super(memo);
 
         // load when created, which will generally
         // be the first time referenced
@@ -40,11 +39,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @Override
     public int getXMLOrder() {
         return Manager.SIGNALGROUPS;
-    }
-
-    @Override
-    public String getSystemPrefix() {
-        return "I";
     }
 
     @Override
@@ -74,23 +68,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
 
     /**
      * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * The IG prefix is added if necessary.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid system connection prefix, hence doesn't throw NamedBean.BadSystemNameException
-        if (inputName.length() < 3 || !inputName.startsWith("IG")) {
-            inputName = "IG" + inputName;
-        }
-        return inputName.toUpperCase().trim();
-    }
-
-    /**
-     * {@inheritDoc}
      *
      * Keep autostring in line with {@link #newSignalGroup(String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
@@ -111,19 +88,10 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         r = new DefaultSignalGroup(systemName, userName);
         // save in the maps
         register(r);
-        /* The following keeps track of the last created auto system name.
-         Currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them. */
-        if (systemName.startsWith("IG:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoGroupRef) {
-                    lastAutoGroupRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
-            }
-        }
+
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return r;
     }
 
@@ -148,17 +116,8 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @Nonnull
     @Override
     public SignalGroup newSignaGroupWithUserName(String userName) {
-        int nextAutoGroupRef = lastAutoGroupRef + 1;
-        StringBuilder b = new StringBuilder("IG:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoGroupRef);
-        b.append(nextNumber);
-        log.debug("SignalGroupManager - new autogroup with sName: {}", b);
-        return provideSignalGroup(b.toString(), userName);
+        return provideSignalGroup(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoGroupRef = 0;
 
     List<String> getListOfNames() {
         List<String> retval = new ArrayList<String>();
@@ -188,13 +147,14 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         return retval;
     }
 
-    static DefaultSignalGroupManager _instance = null;
-
+    /**
+     * 
+     * @return the default instance of DefaultSignalGroupManager
+     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     */
+    @Deprecated
     static public DefaultSignalGroupManager instance() {
-        if (_instance == null) {
-            _instance = new DefaultSignalGroupManager();
-        }
-        return (_instance);
+        return InstanceManager.getDefault(DefaultSignalGroupManager.class);
     }
 
     @Override
@@ -203,8 +163,8 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameSignalGroup");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameSignalGroups" : "BeanNameSignalGroup");
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class);

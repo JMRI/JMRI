@@ -1,11 +1,9 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="fr">
 <head>
 <!--Updated by Herv&#233; Blorec 2017-02-05-->
 <title>JMRI Hardware Support - OpenLCB - Naming</title>
-
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -17,8 +15,9 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
 
 <h1>Documentation Mat&#233;riel: OpenLCB - D&#233;signation </h1>
 

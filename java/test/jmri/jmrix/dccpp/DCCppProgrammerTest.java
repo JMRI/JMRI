@@ -36,6 +36,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     }
  
     @Test(expected=java.lang.IllegalArgumentException.class)
+    @Override
     public void testSetGetMode() {
         programmer.setMode(ProgrammingMode.REGISTERMODE);
         Assert.assertEquals("Check mode matches set", ProgrammingMode.REGISTERMODE,
@@ -309,6 +310,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanWrite(int,string) function works correctly
     // TODO: Fix test to verify exception thrown for Register and paged modes.
     @Test
+    @Override
     public void testGetCanWrite() {
         //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertTrue("DCC++ Base Station can write CV3 in Register Mode", p.getCanWrite("3"));
@@ -341,6 +343,7 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     // Test to make sure the getCanRead(int,string) function works correctly
     // TODO: Fix test to verify exception thrown for Register and paged modes.
     @Test
+    @Override
     public void testGetCanRead() {
         //p.setMode(ProgrammingMode.REGISTERMODE);
         //Assert.assertTrue("DCC++ Base Station Can Read CV3 in register mode", p.getCanRead("3"));
@@ -393,10 +396,11 @@ public class DCCppProgrammerTest extends jmri.jmrix.AbstractProgrammerTest {
     @Override
     @After
     public void tearDown() {
-	t = null;
-	l = null;
-	p = null;
-	JUnitUtil.tearDown();
+    	t = null;
+    	l = null;
+    	p = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+    	JUnitUtil.tearDown();
     }
 
 }

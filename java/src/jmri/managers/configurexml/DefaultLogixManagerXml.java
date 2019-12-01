@@ -1,11 +1,14 @@
 package jmri.managers.configurexml;
 
 import java.util.List;
+import java.util.SortedSet;
+
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.managers.DefaultLogixManager;
+import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,42 +24,35 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
     }
 
     /**
-     * Default implementation for storing the contents of a LogixManager
+     * Default implementation for storing the contents of a LogixManager.
      *
      * @param o Object to store, of type LogixManager
      * @return Element containing the complete info
      */
     @Override
-    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public Element store(Object o) {
         Element logixs = new Element("logixs");
         setStoreElementClass(logixs);
-        LogixManager tm = (LogixManager) o;
-        if (tm != null) {
-            java.util.Iterator<String> iter
-                    = tm.getSystemNameList().iterator();
-
-            // don't return an element if there are not Logix to include
-            if (!iter.hasNext()) {
+        LogixManager lxm = (LogixManager) o;
+        if (lxm != null) {
+            SortedSet<Logix> logixList = lxm.getNamedBeanSet();
+            // don't return an element if there are no Logix to include
+            if (logixList.isEmpty()) {
                 return null;
             }
-
             // store the Logix
-            while (iter.hasNext()) {
-                String sname = iter.next();
-                if (sname == null) {
-                    log.error("System name null during store");  // NOI18N
-                }
-                log.debug("logix system name is " + sname);  // NOI18N
-                Logix x = tm.getBySystemName(sname);
+            for (Logix x : logixList) {
+                String xName = x.getSystemName();
+                log.debug("Logix system name is {}", xName);  // NOI18N
                 boolean enabled = x.getEnabled();
+
                 Element elem = new Element("logix");  // NOI18N
-                elem.addContent(new Element("systemName").addContent(sname));  // NOI18N
+                elem.addContent(new Element("systemName").addContent(xName));  // NOI18N
 
                 // As a work-around for backward compatibility, store systemName and username as attribute.
-                // Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
+                // TODO Remove this in e.g. JMRI 4.11.1 and then update all the loadref comparison files
                 String uName = x.getUserName();
-                if (uName != null && !uName.isEmpty()) {
+                if ((uName != null) && !uName.isEmpty()) {
                     elem.setAttribute("userName", uName);  // NOI18N
                 }
 
@@ -129,34 +125,29 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
      */
     public void loadLogixs(Element logixs) {
         List<Element> logixList = logixs.getChildren("logix");  // NOI18N
-        if (log.isDebugEnabled()) {
-            log.debug("Found " + logixList.size() + " logixs");  // NOI18N
-        }
-        LogixManager tm = InstanceManager.getDefault(jmri.LogixManager.class);
+        log.debug("Found {} Logixs", logixList.size());  // NOI18N
+        LogixManager lxm = InstanceManager.getDefault(jmri.LogixManager.class);
 
-        for (int i = 0; i < logixList.size(); i++) {
-
-            String sysName = getSystemName(logixList.get(i));
+        for (Element elem : logixList) {
+            String sysName = getSystemName(elem);
             if (sysName == null) {
-                log.warn("unexpected null in systemName " + logixList.get(i));  // NOI18N
+                log.warn("unexpected null in systemName {}", elem);  // NOI18N
                 break;
             }
 
-            String userName = getUserName(logixList.get(i));
+            String userName = getUserName(elem);
+            log.debug("create logix: ({})({})", sysName,  // NOI18N
+                    (userName == null ? "<null>" : userName));  // NOI18N
 
             String yesno = "";
-            if (logixList.get(i).getAttribute("enabled") != null) {  // NOI18N
-                yesno = logixList.get(i).getAttribute("enabled").getValue();  // NOI18N
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("create logix: (" + sysName + ")("  // NOI18N
-                        + (userName == null ? "<null>" : userName) + ")");  // NOI18N
+            if (elem.getAttribute("enabled") != null) {  // NOI18N
+                yesno = elem.getAttribute("enabled").getValue();  // NOI18N
             }
 
-            Logix x = tm.createNewLogix(sysName, userName);
+            Logix x = lxm.createNewLogix(sysName, userName);
             if (x != null) {
                 // load common part
-                loadCommon(x, logixList.get(i));
+                loadCommon(x, elem);
 
                 // set enabled/disabled if attribute was present
                 if ((yesno != null) && (!yesno.equals(""))) {
@@ -167,22 +158,19 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                     }
                 }
                 // load conditionals, if there are any
-                List<Element> logixConditionalList = logixList.get(i).getChildren("logixConditional");  // NOI18N
-                if (logixConditionalList.size() > 0) {
-                    // add conditionals
-                    for (int n = 0; n < logixConditionalList.size(); n++) {
-                        if (logixConditionalList.get(n).getAttribute("systemName") == null) {  // NOI18N
-                            log.warn("unexpected null in systemName " + logixConditionalList.get(n)  // NOI18N
-                                    + " " + logixConditionalList.get(n).getAttributes());
-                            break;
-                        }
-                        String cSysName = logixConditionalList.get(n)
-                                .getAttribute("systemName").getValue();  // NOI18N
-                        int cOrder = Integer.parseInt(logixConditionalList.get(n)
-                                .getAttribute("order").getValue());  // NOI18N
-                        // add conditional to logix
-                        x.addConditional(cSysName, cOrder);
+                List<Element> logixConditionalList = elem.getChildren("logixConditional");  // NOI18N
+                // add conditionals
+                for (Element lxcond : logixConditionalList) {
+                    String cSysName = getAttributeString(lxcond, "systemName");
+                    if (cSysName == null) {
+                        log.warn("unexpected null in systemName {} {}", // NOI18N
+                                lxcond, lxcond.getAttributes());
+                        break;
                     }
+                    int cOrder = Integer.parseInt(lxcond
+                            .getAttribute("order").getValue()); // NOI18N
+                    // add the conditional to logix
+                    x.addConditional(cSysName, cOrder);
                 }
             }
         }
@@ -204,11 +192,10 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
             if (cmOD != null) {
                 cmOD.deregister(InstanceManager.getDefault(jmri.LogixManager.class));
             }
-
         }
 
         // register new one with InstanceManager
-        DefaultLogixManager pManager = DefaultLogixManager.instance();
+        DefaultLogixManager pManager = InstanceManager.getDefault(DefaultLogixManager.class);
         InstanceManager.store(pManager, LogixManager.class);
         // register new one for configuration
         ConfigureManager cmOD = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
@@ -223,4 +210,5 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManagerXml.class);
+
 }

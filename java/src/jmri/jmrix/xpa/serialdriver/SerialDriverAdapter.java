@@ -28,7 +28,7 @@ import purejavacomm.UnsupportedCommOperationException;
  *
  * @author	Paul Bender Copyright (C) 2004
  */
-public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends XpaPortController {
 
     public SerialDriverAdapter() {
 
@@ -55,7 +55,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (UnsupportedCommOperationException e) {
@@ -170,6 +170,11 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     @Override
     public int[] validBaudNumbers() {
         return new int[]{9600};
+    }
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
     }
 
     private boolean opened = false;

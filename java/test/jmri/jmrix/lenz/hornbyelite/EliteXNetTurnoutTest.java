@@ -59,6 +59,7 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
     }
 
     @Test
+    @Override
     public void checkIncoming() {
         t.setFeedbackMode(Turnout.MONITORING);
         jmri.util.JUnitUtil.waitFor(() -> {
@@ -103,6 +104,7 @@ public class EliteXNetTurnoutTest extends jmri.jmrix.lenz.XNetTurnoutTest{
     @Override
     @After
     public void tearDown() {
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

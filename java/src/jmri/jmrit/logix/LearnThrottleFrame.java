@@ -25,6 +25,7 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.SpeedStepMode;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.powerpanel.PowerPane;
 import jmri.jmrit.throttle.FunctionButton;
@@ -273,8 +274,8 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
     }
     /* from ControlPanel */
 
-    protected void setSpeedStepMode(int speedStep) {
-        _warrantFrame.setThrottleCommand("SpeedStep", Integer.toString(speedStep));
+    protected void setSpeedStepMode(SpeedStepMode speedStep) {
+        _warrantFrame.setThrottleCommand("SpeedStep", speedStep.name);
     }
     /* from FunctionPanel */
 

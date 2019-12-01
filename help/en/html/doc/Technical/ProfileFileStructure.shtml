@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
-    <head>
-
+  <head>
         <title>
             JMRI: Profile Directory Tutorial
         </title>
@@ -9,16 +8,14 @@
         <meta name="keywords" content="SOME KEYWORDS">
 
         <!--#include virtual="/Style.shtml" -->
-    </head>
-    <body>
+  </head>
+  <body>
         <!--#include virtual="/Header.shtml" -->
-
         <div id="mBody">
             <!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
             <div id="mainContent">
 
-
-                <h1>JMRI: Profile Directory Tutorial</h1>
+      <h1>JMRI: Profile Directory Tutorial</h1>
 
                 <p>
                     This page is a tutorial on how JMRI stores and accesses
@@ -106,25 +103,25 @@
                         <p>You are free to change the User Files Location as you like (Preferences->File Locations).</p>
                     </dd>
 
-                    <dt>Roster Location (portable name = "roster:")</dt>
+                    <dt>Roster Location</dt>
                     <dd>This location contains:
                         <ul>
+                            <li>
+                                A "roster.xml" file, which is a (recreatable) index of the XML files in the "roster" folder.
+                                You should create/recreate "roster.xml" (Actions->Recreate Roster Index) if it is missing or you are experiencing roster problems.
+                            </li>
                             <li>
                                 Your "roster" folder. This contains:
                                 <ul>
                                     <li>An XML file for each loco entry in your roster, with stored CV values, etc.</li>
                                     <li>".bak" files, which are backup versions of entries in your roster.</li>
                                     <li>A "consist" folder, which stores information on consists you have created using the Consist tools in JMRI.</li>
+                                    <li>
+                                        Copies of media files you have added to roster entries, throttles etc.
+                                        <br>(Older JMRI versions stored roster images in a "resources" folder in the User Files Location.
+                                        If you have been using JMRI for a long time, you may have roster images in both locations.)
+                                    </li>
                                 </ul>
-                            </li>
-                            <li>
-                                A "roster.xml" file, which is a (recreatable) index of the XML files in the "roster" folder.
-                                You should create/recreate "roster.xml" (Actions->Recreate Roster Index) if it is missing or you are experiencing roster problems.
-                            </li>
-                            <li>
-                                Copies of media files you have added to roster entries, throttles etc.
-                                <br>(Older JMRI versions stored roster images in a "resources" folder in the User Files Location.
-                                If you have been using JMRI for a long time, you may have roster images in both locations.)
                             </li>
                         </ul>
                         <p>By default the Roster Location is the same as (and follows) the User Files location unless you explicitly set a different location.</p>

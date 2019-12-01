@@ -61,7 +61,7 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
         
         t.initComponents(memo,nodeWithEventToEdit.getNodeEventByArrayID(0)); // memo, event to edit
         
-        Assert.assertEquals("title","Edit Event EN:7 on Node 256 ",t.getTitle());
+        Assert.assertEquals("title","Edit Event EN:7 on Node 256",t.getTitle());
         Assert.assertFalse("node / event select spinners not dirty",t.spinnersDirty() );
         Assert.assertTrue("event 7 ",t.getEventVal()==7);
         Assert.assertTrue("node 0 ",t.getNodeVal()==0);
@@ -112,8 +112,8 @@ public class CbusNodeEditEventFrameTest extends jmri.util.JmriJFrameTestBase {
         
         memo = null;
         tcis = null;
-        super.tearDown();
-       
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        super.tearDown();    
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditEventFrameTest.class);

@@ -23,30 +23,38 @@ import org.netbeans.jemmy.operators.*;
  */
 public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
 
+    private CanSystemConnectionMemo memo; 
+    private TrafficControllerScaffold tcis;
+ 
     @Override
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        panel = new SimulatorPane();
         title = Bundle.getMessage("MenuItemNetworkSim");
         helpTarget = "package.jmri.jmrix.can.cbus.swing.simulator.SimulatorPane";
+        memo = new CanSystemConnectionMemo();
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
+        
+        panel = new SimulatorPane();
     }
     
     @Override
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        tcis = null;
+        memo = null;
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        super.tearDown();
+    }
     
     @Test
     public void testInitComp() {
         
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        memo.setTrafficController(tcis);
-        
-        SimulatorPane panel = new SimulatorPane();
-        panel.initComponents(memo);
+        ((SimulatorPane)panel).initComponents(memo);
         
         Assert.assertNotNull("exists", panel);
         Assert.assertEquals("name with memo","CAN " + Bundle.getMessage("MenuItemNetworkSim"), panel.getTitle());
@@ -76,10 +84,7 @@ public class SimulatorPaneTest extends jmri.util.swing.JmriPanelTest {
 
         // Ask to close window
         jfo.requestClose();
-
-        tcis = null;
-        memo = null;
-        
+ 
     }
     
     private boolean getResetCsButtonEnabled( JFrameOperator jfo ){

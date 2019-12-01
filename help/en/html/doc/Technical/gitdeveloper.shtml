@@ -15,13 +15,14 @@
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: Developing with JMRI</h1>
 
       <h2>Background</h2>
@@ -154,6 +155,10 @@
     repository and included in a release, this will be how other JMRI users find out 
     about them.  You can also cut&amp;paste what you write here into 
     your pull request (see below) to help explain your change to the people reviewing it.
+    If your work requires that the users be warned about something, i.e. to do a
+    migration, please also add that to the 
+    <a href="../../../releasenotes/current-draft-warnings.shtml">help/en/releasenotes/current-draft-warnings.shtml</a> 
+    file which works similarly.
     
 <h3>Commit Changes to Your Local Repository</h3>
       You should

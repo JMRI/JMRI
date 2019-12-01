@@ -96,7 +96,6 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
             _details.getParent().revalidate();
             _details.getParent().repaint();
         }
-
     }
 
     @Override

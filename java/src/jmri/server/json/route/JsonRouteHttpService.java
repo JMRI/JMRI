@@ -111,7 +111,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
                         "jmri/server/json/route/route-client.json",
                         id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnknownType", type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 
@@ -121,7 +121,7 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
     }
 
     @Override
-    protected ProvidingManager<Route> getManager() throws UnsupportedOperationException {
+    protected ProvidingManager<Route> getManager() {
         return InstanceManager.getDefault(RouteManager.class);
     }
 }

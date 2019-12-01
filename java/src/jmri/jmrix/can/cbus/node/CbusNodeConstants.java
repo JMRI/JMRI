@@ -50,9 +50,14 @@ public class CbusNodeConstants {
             if ( node.getParameter(3) == 29 ) { // CANPAN
                 node.setsendsWRACKonNVSET(false);
             }
-            if ( node.getParameter(3) == 10 ) { // CANCMD
-                if ( node.getParameter(7) == 4 ) // v4 Firmware
-                node.resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
+            if ( node.getParameter(3) == 10 // CANCMD
+                || node.getParameter(3) ==  55 // or CANCSB 
+                || node.getParameter(3) == 12 // or CANBC
+            ) { 
+                if ( node.getParameter(7) == 4 ) { // v4 Firmware
+                    node.resetNodeEvents(); // sets num events to 0 as does not respond to RQEVN
+                    node.setStatResponseFlagsAccurate(false);
+                }
             }
         }
     }
@@ -675,6 +680,75 @@ public class CbusNodeConstants {
         result.put(65534, "Reserved for Command Station");
         result.put(65535, "Reserved, used by all CABS");
         return Collections.unmodifiableMap(result);
+    }
+    
+    private static final Map<String, BackupType> nameIndex =
+            new HashMap<String, BackupType>(BackupType.values().length);
+    static {
+        for (BackupType t : BackupType.values()) {
+            nameIndex.put(t.name(), t);
+        }
+    }
+    
+    private static final Map<BackupType, String> displayPhraseIndex =
+            new HashMap<BackupType, String>(BackupType.values().length);
+    static {
+        displayPhraseIndex.put(BackupType.INCOMPLETE, Bundle.getMessage("BackupIncomplete"));
+        displayPhraseIndex.put(BackupType.COMPLETE, Bundle.getMessage("BackupComplete"));
+        displayPhraseIndex.put(BackupType.COMPLETEDWITHERROR, Bundle.getMessage("BackupCompleteError"));
+        displayPhraseIndex.put(BackupType.NOTONNETWORK, Bundle.getMessage("BackupNotOnNetwork"));
+        displayPhraseIndex.put(BackupType.OUTSTANDING, Bundle.getMessage("BackupOutstanding"));
+        displayPhraseIndex.put(BackupType.SLIM, Bundle.getMessage("NodeInSlim"));
+    }
+    
+    /*
+     * Get the display phrase for an enum value
+     * <p>
+     * eg. displayPhrase(BackupType.INCOMPLETE) will return "Backup InComplete"
+     *
+     * @param type The enum to translate
+     * @return The phrase
+     *
+     */
+    public static String displayPhrase(BackupType type) {
+        return displayPhraseIndex.get(type);
+    }
+    
+    /*
+     * Get the enum type for a String value
+     * <p>
+     * eg. lookupByName("Complete") will return BackupType.COMPLETE
+     *
+     * @param name The String to lookup
+     * @return The BackupType enum, else null
+     *
+     */
+    public static BackupType lookupByName(String name) {
+        return nameIndex.get(name);
+    }
+    
+    /*
+     * enum to represent Node Backup Conditions in a CBUS Node XML File
+     *
+     */
+    public enum BackupType{
+        INCOMPLETE(0),
+        COMPLETE(1),
+        COMPLETEDWITHERROR(2),
+        NOTONNETWORK(3),
+        OUTSTANDING(4),
+        SLIM(5);
+        
+        private final int v;
+
+        private BackupType(final int v) {
+            this.v = v;
+        }
+    
+        public int getValue() {
+            return v;
+        }
+    
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeConstants.class);

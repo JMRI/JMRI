@@ -4,17 +4,15 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.SignalHead;
 import jmri.SignalHeadManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 import org.junit.rules.ExpectedException;
 import org.netbeans.jemmy.EventTool;
 
 /**
- * Tests for the CtcRunAction Class
+ * Tests for the CtcRunAction Class.
+ *
  * @author Dave Sand Copyright (C) 2019
  */
 public class CtcRunActionTest {
@@ -42,13 +40,13 @@ public class CtcRunActionTest {
             sm.getSensor("IS2:CB").setKnownState(Sensor.ACTIVE);
             sm.getSensor("IS2:CB").setKnownState(Sensor.INACTIVE);
         } catch (JmriException ex) {
-            log.error("sensor exeptions: ", ex);
+            log.error("sensor exceptions: ", ex);
         }
         new EventTool().waitNoEvent(1000);
         jmri.SignalHead sh = hm.getSignalHead("Left-U");
         Assert.assertFalse(sh.getHeld());  // NOI18N
 
-        // Clear Right turnout left on sideing using Call On.
+        // Clear Right turnout left on siding using Call On.
         try {
             sm.getSensor("B-Side").setKnownState(Sensor.ACTIVE);
             sm.getSensor("IS5:LEVER").setKnownState(Sensor.INACTIVE);
@@ -64,12 +62,11 @@ public class CtcRunActionTest {
             sm.getSensor("IS6:CB").setKnownState(Sensor.ACTIVE);
             sm.getSensor("IS6:CB").setKnownState(Sensor.INACTIVE);
         } catch (JmriException ex) {
-            log.error("sensor exeptions: ", ex);
+            log.error("sensor exceptions: ", ex);
         }
         new EventTool().waitNoEvent(1000);
         sh = hm.getSignalHead("Right-L");
         Assert.assertFalse(sh.getHeld());  // NOI18N
-
 
 //         log.warn("Test SHM = {}", hm);
 //         log.warn("DEBUG = {}", sm.getSensor("IS:DEBUGCTC").getKnownState());
@@ -93,12 +90,12 @@ public class CtcRunActionTest {
 
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
 
         try {
             JUnitUtil.resetProfileManager(new jmri.profile.NullProfile(folder.newFolder(jmri.profile.Profile.PROFILE)));
-        } catch(java.io.IOException ioe){
+        } catch (java.io.IOException ioe) {
             Assert.fail("failed to setup profile for test");
         }
 
@@ -108,17 +105,11 @@ public class CtcRunActionTest {
 
     @After
     public void tearDown() {
-        // use reflection to reset the static file location.
-        try {
-            Class<?> c = jmri.jmrit.ctc.CTCFiles.class;
-            java.lang.reflect.Field f = c.getDeclaredField("fileLocation");
-            f.setAccessible(true);
-            f.set(new String(), null);
-        } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
-            Assert.fail("Failed to reset CTC static fileLocation " + x);
-        }
 
-        jmri.util.JUnitUtil.tearDown();
+        // stop any BlockBossLogic threads created
+        JUnitUtil.clearBlockBossLogic();
+
+        JUnitUtil.tearDown();
     }
 
     private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CtcRunActionTest.class);

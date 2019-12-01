@@ -92,7 +92,7 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
            public void sendInitString(){
            }
         };
-        l = new RfidReporterManager("R"){
+        l = new RfidReporterManager(new RfidSystemConnectionMemo()){
             @Override
             protected Reporter createNewReporter(String systemName, String userName){
                return null;
@@ -109,7 +109,9 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     @After
     public void tearDown() {
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

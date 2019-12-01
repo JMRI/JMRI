@@ -40,8 +40,6 @@ import org.slf4j.LoggerFactory;
  * direction of travel is the direction of decreasing Section numbers. Whether a
  * Transit is in the "reversed" direction is kept in the ActiveTrain using the
  * Transit.
- * <p>
- * Transit system names are always upper case.
  *
  * @author Dave Duchamp Copyright (C) 2008-2011
  */
@@ -66,11 +64,11 @@ public class Transit extends AbstractNamedBean {
     private final ArrayList<Integer> destBlocksSeqList = new ArrayList<>();
 
     public Transit(String systemName, String userName) {
-        super(systemName.toUpperCase(), userName);
+        super(systemName, userName);
     }
 
     public Transit(String systemName) {
-        super(systemName.toUpperCase());
+        super(systemName);
     }
 
     /**

@@ -19,7 +19,7 @@ public class LnTcpServerFrameTest extends jmri.util.JmriJFrameTestBase {
     @Test
     public void testGetInstance() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LnTcpServerFrame action = LnTcpServerFrame.getInstance();
+        LnTcpServerFrame action = LnTcpServerFrame.getDefault();
         Assert.assertNotNull("exists", action);
         action.dispose();
     }
@@ -35,7 +35,7 @@ public class LnTcpServerFrameTest extends jmri.util.JmriJFrameTestBase {
         memo.setLnTrafficController(lnis);
         memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, true, false, true);
         if(!GraphicsEnvironment.isHeadless()){
-          frame = LnTcpServerFrame.getInstance();
+          frame = LnTcpServerFrame.getDefault();
         }
     }
 
@@ -44,6 +44,7 @@ public class LnTcpServerFrameTest extends jmri.util.JmriJFrameTestBase {
     public void tearDown() {
         lnis = null;
         memo.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
 

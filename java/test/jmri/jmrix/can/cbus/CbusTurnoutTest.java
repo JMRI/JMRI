@@ -99,7 +99,6 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
             new CbusTurnout("MT",null,tcis);
             Assert.fail("Should have thrown an exception");
         } catch (NullPointerException e) {
-            Assert.assertTrue(true);
         }
     }
     
@@ -522,8 +521,80 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         r = null;
     }
 
+    @Test
+    public void testQueryTurnoutFromCbus() throws jmri.JmriException {
+        
+        CbusTurnout t = new CbusTurnout("MT","+N54321E12345",tcis);
+        
+        CanReply r = new CanReply(tcis.getCanid());
+        r.setNumDataElements(5);
+        r.setElement(0, CbusConstants.CBUS_ACOF);
+        r.setElement(1, 0xd4);
+        r.setElement(2, 0x31);
+        r.setElement(3, 0x30);
+        r.setElement(4, 0x39);
+        
+        t.reply(r); // turnout will be closed off
+        Assert.assertTrue(t.getCommandedState() == Turnout.CLOSED);
+        
+        r.setElement(0, CbusConstants.CBUS_AREQ);
+        t.reply(r); // turnout will be receive event status request
+        
+        Assert.assertEquals("AROF Request response sent","[5f8] 94 D4 31 30 39",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        
+        r.setElement(0, CbusConstants.CBUS_ACON);
+        t.reply(r); // turnout will be thrown on
+        
+        r.setElement(0, CbusConstants.CBUS_AREQ);
+        t.reply(r); // turnout will be receive event status request
+        
+        Assert.assertEquals("ARON Request response sent","[5f8] 93 D4 31 30 39",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        
+        CbusTurnout tSplit = new CbusTurnout("MT","+5;-7",tcis);
+        
+        r.setElement(0, CbusConstants.CBUS_ASON);
+        r.setElement(1, 0x00);
+        r.setElement(2, 0x00);
+        r.setElement(3, 0x00);
+        r.setElement(4, 0x05);
+        
+        tSplit.reply(r); // turnout will be thrown on
+        
+        Assert.assertTrue(tSplit.getCommandedState() == Turnout.THROWN);
+        
+        r.setElement(0, CbusConstants.CBUS_AREQ);
+        tSplit.reply(r); // turnout will be receive event status LONG request
+        
+        Assert.assertEquals("ARSON Request response sent","[5f8] 9D 00 00 00 05",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        
+        // turnout will be receive event status request for 2nd half of split, the incorrect side
+        int size = tcis.outbound.size();
+        r.setElement(4, 0x07);
+        tSplit.reply(r);
+        Assert.assertTrue("No response sent", size == tcis.outbound.size());
+        
+        r.setElement(0, CbusConstants.CBUS_ASOF); // turnout will be thrown off
+        tSplit.reply(r);
+        Assert.assertTrue(tSplit.getCommandedState() == Turnout.CLOSED);
+        
+        r.setElement(0, CbusConstants.CBUS_ASRQ);
+        r.setElement(4, 0x05);
+        tSplit.reply(r); // turnout will be receive event status SHORT request
+        
+        Assert.assertEquals("ARSOF Request response sent","[5f8] 9E 00 00 00 05",
+            tcis.outbound.elementAt(tcis.outbound.size() - 1).toString());
+        
+        tSplit.dispose();
+        t.dispose();
+        r = null;
+    }
+
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         // load dummy TrafficController
@@ -536,7 +607,9 @@ public class CbusTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase
         t.dispose();
         t = null;
         tcis=null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
     // private final static Logger log = LoggerFactory.getLogger(CbusTurnoutTest.class);
 }

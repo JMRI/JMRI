@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -21,7 +23,7 @@ public class DefaultRouteManagerTest extends AbstractProvidingManagerTestBase<jm
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        l = new DefaultRouteManager();
+        l = new DefaultRouteManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
     }
 
     @After

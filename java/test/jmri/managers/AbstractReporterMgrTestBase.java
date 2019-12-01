@@ -80,7 +80,7 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
         try {
             l.provideReporter("");
         } catch (IllegalArgumentException ex) {
-          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for reporter: "+l.getSystemPrefix()+l.typeLetter()+" needed "+l.getSystemPrefix()+l.typeLetter());
+          jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"" + l.getSystemNamePrefix() + "\".");
           throw ex;
         }
     }
@@ -183,6 +183,12 @@ public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManag
         Reporter t2 = l.getByUserName("after");
         Assert.assertEquals("same object", t1, t2);
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
+    }
+
+    @Ignore("Reporter managers doesn't support auto system names")
+    @Test
+    @Override
+    public void testAutoSystemNames() {
     }
 
     /**

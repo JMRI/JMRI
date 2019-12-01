@@ -42,9 +42,9 @@ public class BlockContentsIconTest extends PositionableLabelTest {
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect roster entry: "));
 
-        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012.xml"));
+        jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
-	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(re);
+        jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(re);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         jf.pack();
@@ -69,13 +69,14 @@ public class BlockContentsIconTest extends PositionableLabelTest {
 
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
-	    jmri.InstanceManager.memoryManagerInstance().provideMemory("IM1").setValue(tag);
+        jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(tag);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
 
         jf.pack();
         jf.setVisible(true);
         new org.netbeans.jemmy.QueueTool().waitEmpty(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
+        Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()));
 
         jf.setVisible(false);
         JUnitUtil.dispose(jf);
@@ -85,7 +86,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     @Override
     @ToDo("The test in the parent class fails if there is no icon set")
     public void testGetAndSetScale(){
-	// the test in the parent clase fails if there is no icon for the
+	// the test in the parent class fails if there is no icon for the
 	// blockcontents.
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NamedIcon icon = new NamedIcon("resources/icons/redTransparentBox.gif", "box"); // 13x13
@@ -107,20 +108,23 @@ public class BlockContentsIconTest extends PositionableLabelTest {
     }
 
     @Before
+    @Override
     public void setUp() {
         super.setUp();
         JUnitUtil.initConfigureManager();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new EditorScaffold();
-            jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("B1");
+            jmri.Block block = jmri.InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
             BlockContentsIcon bci = new BlockContentsIcon("foo", editor);
-            bci.setBlock(new jmri.NamedBeanHandle<>("B1", block));
-            bci.setMemory("B1");
+            bci.setBlock(new jmri.NamedBeanHandle<>("IB1", block));
+            // set the memory value for testClone in PositionableTestBase
+            bci.setMemory("IB1");
             p = to = bci;
         }
     }
 
     @After
+    @Override
     public void tearDown() {
         to = null;
         super.tearDown();

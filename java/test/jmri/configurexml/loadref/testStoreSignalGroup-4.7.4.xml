@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>17</minor>
+    <test>4</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory value="11:27 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <virtualsignalmast class="jmri.implementation.configurexml.VirtualSignalMastXml">
+      <systemName>IF$vsm:AAR-1946:CPL($0001)</systemName>
+      <userName>virtmast1</userName>
+      <unlit allowed="no" />
+    </virtualsignalmast>
+  </signalmasts>
+  <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml">
+    <signalgroup signalMast="virtmast1">
+      <systemName>IF12</systemName>
+      <userName>mygroup</userName>
+      <aspect valid="Clear" />
+      <aspect valid="Approach" />
+    </signalgroup>
+  </signalgroups>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon Mar 13 08:40:48 CET 2017" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Sep 08 23:26:49 CEST 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Sep 08 23:27:20 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/configurexml/load/testStoreSignalGroup-4.7.4.xml</filename>
+      <filehistory />
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Sep 08 23:27:29 CEST 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190908T2126Z+R59b5cbdf37 on Sun Sep 08 23:27:29 CEST 2019-->
+</layout-config>

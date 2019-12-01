@@ -3,9 +3,8 @@ package jmri.jmrit.withrottle;
 import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import jmri.LocoAddress;
-import jmri.DccThrottle;
-import jmri.InstanceManager;
+
+import jmri.*;
 import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,15 +71,15 @@ public class MultiThrottleController extends ThrottleController {
                 listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("SpeedSteps")) {
+        if (eventName.matches(Throttle.SPEEDSTEPS)) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append("s");
-            message.append(event.getNewValue().toString());
+            message.append(encodeSpeedStepMode((SpeedStepMode)event.getNewValue()));
             for (ControllerInterface listener : controllerListeners) {
                 listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("IsForward")) {
+        if (eventName.matches(Throttle.ISFORWARD)) {
             StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
             message.append("R");
             message.append((Boolean) event.getNewValue() ? "1" : "0");
@@ -88,7 +87,7 @@ public class MultiThrottleController extends ThrottleController {
                listener.sendPacketToDevice(message.toString());
             }
         }
-        if (eventName.matches("SpeedSetting")) {
+        if (eventName.matches(Throttle.SPEEDSETTING)) {
             float currentSpeed = ((Float) event.getNewValue()).floatValue();
             log.debug("Speed Setting: {} head of queue {}",currentSpeed, lastSentSpeed.peek());
             if(lastSentSpeed.isEmpty()) { 
@@ -193,7 +192,7 @@ public class MultiThrottleController extends ThrottleController {
     protected void sendSpeedStepMode(DccThrottle t) {
         StringBuilder message = new StringBuilder(buildPacketWithChar('A'));
         message.append("s");
-        message.append(throttle.getSpeedStepMode());
+        message.append(encodeSpeedStepMode(throttle.getSpeedStepMode()));
         for (ControllerInterface listener : controllerListeners) {
             listener.sendPacketToDevice(message.toString());
         }
@@ -305,6 +304,27 @@ public class MultiThrottleController extends ThrottleController {
         }
         
         
+    }
+
+    // Encode a SpeedStepMode to a string.
+    private static String encodeSpeedStepMode(SpeedStepMode mode) {
+        switch(mode) {
+            // NOTE: old speed step modes use the original numeric values
+            // from when speed step modes were in DccThrottle. New speed step
+            // modes use the mode name.
+            case NMRA_DCC_128:
+                return "1";
+            case NMRA_DCC_28:
+                 return "2";
+            case NMRA_DCC_27:
+                return "4";
+            case NMRA_DCC_14:
+                return "8";
+            case MOTOROLA_28:
+                return "16";
+            default:
+                return mode.name;
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(MultiThrottleController.class);

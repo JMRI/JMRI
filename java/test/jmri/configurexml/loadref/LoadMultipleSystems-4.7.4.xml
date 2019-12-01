@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>17</minor>
+    <test>4</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS0</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS1</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS2</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS4</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT0</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT1</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT2</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT3</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT4</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT5</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT6</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT7</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT8</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT9</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Default">
+      <systemName>IT10</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT41</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT42</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT43</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT44</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT51</systemName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT52</systemName>
+    </turnout>
+  </turnouts>
+  <lights class="jmri.jmrix.internal.configurexml.InternalLightManagerXml">
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>IL0</systemName>
+      <userName>light0</userName>
+    </light>
+  </lights>
+  <reporters class="jmri.jmrix.internal.configurexml.InternalReporterManagerXml">
+    <reporter>
+      <systemName>IR0</systemName>
+      <userName>Report0</userName>
+    </reporter>
+  </reporters>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory>
+      <systemName>IM0</systemName>
+    </memory>
+    <memory value="0">
+      <systemName>IM1</systemName>
+    </memory>
+    <memory value="0">
+      <systemName>IM2</systemName>
+    </memory>
+    <memory>
+      <systemName>IM3</systemName>
+      <userName>plain</userName>
+    </memory>
+    <memory value="12:03 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalheads class="jmri.managers.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH0</systemName>
+      <userName>Virtual 0</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml">
+      <systemName>IH1</systemName>
+      <userName>Double</userName>
+      <turnoutname defines="green">51</turnoutname>
+      <turnoutname defines="red">52</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.LsDecSignalHeadXml">
+      <systemName>IH2</systemName>
+      <userName>LDT</userName>
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+      <turnout systemName="IT0" state="CLOSED" />
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.MergSD2SignalHeadXml" aspects="2">
+      <systemName>IH3</systemName>
+      <userName>Merg</userName>
+      <turnoutname defines="input1">IT0</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.MergSD2SignalHeadXml" aspects="3">
+      <systemName>IH4</systemName>
+      <userName>Merg3</userName>
+      <turnoutname defines="input1">IT0</turnoutname>
+      <turnoutname defines="input2">IT0</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.MergSD2SignalHeadXml" aspects="4">
+      <systemName>IH5</systemName>
+      <userName>Merg4</userName>
+      <turnoutname defines="input1">IT0</turnoutname>
+      <turnoutname defines="input2">IT0</turnoutname>
+      <turnoutname defines="input3">IT0</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.QuadOutputSignalHeadXml">
+      <systemName>IH6</systemName>
+      <userName>Quad</userName>
+      <turnoutname defines="green">41</turnoutname>
+      <turnoutname defines="yellow">42</turnoutname>
+      <turnoutname defines="red">43</turnoutname>
+      <turnoutname defines="lunar">44</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.SingleTurnoutSignalHeadXml">
+      <systemName>IH7</systemName>
+      <userName>Single</userName>
+      <appearance defines="thrown">lunar</appearance>
+      <appearance defines="closed">yellow</appearance>
+      <turnoutname defines="aspect">1</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.SingleTurnoutSignalHeadXml">
+      <systemName>IH8</systemName>
+      <userName>Single1</userName>
+      <appearance defines="thrown">yellow</appearance>
+      <appearance defines="closed">green</appearance>
+      <turnoutname defines="aspect">1</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.TripleTurnoutSignalHeadXml">
+      <systemName>IH9</systemName>
+      <userName>Triple</userName>
+      <turnoutname defines="green">1</turnoutname>
+      <turnoutname defines="yellow">2</turnoutname>
+      <turnoutname defines="red">3</turnoutname>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH10</systemName>
+      <userName>Virtual 10</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH20</systemName>
+      <userName>upper</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH21</systemName>
+      <userName>middle</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml">
+      <systemName>IH22</systemName>
+      <userName>lower</userName>
+    </signalhead>
+    <signalhead class="jmri.implementation.configurexml.SE8cSignalHeadXml">
+      <systemName>IH:SE8C:"1";"2"</systemName>
+      <userName>SE8c</userName>
+      <turnoutname defines="low">1</turnoutname>
+      <turnoutname defines="high">2</turnoutname>
+    </signalhead>
+  </signalheads>
+  <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml">
+    <signalmast class="jmri.implementation.configurexml.SignalHeadSignalMastXml">
+      <systemName>IF$shsm:AAR-1946:CPL:IH20:IH21:IH22</systemName>
+      <userName>CPL mast</userName>
+      <unlit allowed="yes" />
+    </signalmast>
+  </signalmasts>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Mon May 08 08:41:48 CEST 2017" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Sun Sep 08 22:17:44 CEST 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Sun Sep 08 22:18:11 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/configurexml/load/LoadMultipleSystems-4.7.4.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Mar 18 22:03:16 PDT 2018</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadMultipleSystems-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Sun Mar 18 22:03:16 PDT 2018</date>
+          <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/LoadMultipleSystems-4.7.4.xml</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Sun Mar 18 22:03:16 PDT 2018</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Sun Sep 08 22:18:22 CEST 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190908T2017Z+R59b5cbdf37 on Sun Sep 08 22:18:22 CEST 2019-->
+</layout-config>

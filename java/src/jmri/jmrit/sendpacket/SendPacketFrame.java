@@ -232,6 +232,8 @@ public class SendPacketFrame extends jmri.util.JmriJFrame {
      *
      * @return the packet, with contents filled-in
      */
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "PZLA_PREFER_ZERO_LENGTH_ARRAYS",
+        justification = "API defined by CommmandStation interface")
     byte[] createPacket(String s) {
         // gather bytes in result
         byte b[] = StringUtil.bytesFromHexString(s);

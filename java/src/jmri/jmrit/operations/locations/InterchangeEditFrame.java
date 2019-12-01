@@ -14,7 +14,7 @@ import jmri.jmrit.operations.locations.tools.TrackDestinationEditAction;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2012
  */
-public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
+public class InterchangeEditFrame extends TrackEditFrame {
 
     public InterchangeEditFrame() {
         super();

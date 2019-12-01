@@ -46,6 +46,7 @@ abstract public class JmriJFrameTestBase {
            JUnitUtil.dispose(frame);
         }
         frame = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

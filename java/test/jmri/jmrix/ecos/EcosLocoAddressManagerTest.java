@@ -18,7 +18,7 @@ public class EcosLocoAddressManagerTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         EcosTrafficController tc = new EcosInterfaceScaffold();
-        EcosSystemConnectionMemo memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc){
+        EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc){
            @Override
            public EcosPreferences getPreferenceManager(){ 
               return new EcosPreferences(this){
@@ -36,7 +36,7 @@ public class EcosLocoAddressManagerTest {
     @Test
     public void testCTorHeadLess() {
         EcosTrafficController tc = new EcosInterfaceScaffold();
-        EcosSystemConnectionMemo memo = new jmri.jmrix.ecos.EcosSystemConnectionMemo(tc){
+        EcosSystemConnectionMemo memo = new EcosSystemConnectionMemo(tc){
            @Override
            public EcosPreferences getPreferenceManager(){ 
               return new EcosPreferences(this){
@@ -74,18 +74,21 @@ public class EcosLocoAddressManagerTest {
         };
         EcosLocoAddressManager t = new EcosLocoAddressManager(memo);
         Assert.assertNotNull("exists",t);
+        t.terminateThreads();
+        memo.dispose();
     }
 
-    // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

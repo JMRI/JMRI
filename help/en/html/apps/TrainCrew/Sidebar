@@ -5,7 +5,7 @@
 <div id="side"> <!-- Block of text on left side of page -->
 <div style="text-align: center">JMRI&reg; is...</div>
 
-<dl class="toc">
+<dl>
     <dt><h3>TrainCrew Links</h3></dt>
     <dd>
     <ul>
@@ -14,7 +14,7 @@
     </ul>
     </dd>
 
-<dt><h3>Other Apps</h3></dt>
+<dt><h3>The Apps</h3></dt>
 <dd>
 	<ul>
         <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
@@ -23,7 +23,7 @@
         <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
         <li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
         <li><a href="../ManifestCreator/index.shtml">Manifest Creator</a></li>
-        <!-- <li><a href="../TrainCrew/index.shtml">TrainCrew</a></li> -->
+        <li class="here"><a href="../TrainCrew/index.shtml">TrainCrew</a></li>
 	</ul>
 </dd>
 

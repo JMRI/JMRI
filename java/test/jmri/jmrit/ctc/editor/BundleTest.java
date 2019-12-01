@@ -11,32 +11,22 @@ public class BundleTest {
 
     @Test
     public void testGoodKeyMessage() {
-        Assert.assertEquals("Open CTC Editor", Bundle.getMessage("CtcEditorAction"));  // NOI18N
+        Assert.assertEquals("CTC Editor", Bundle.getMessage("CtcEditorAction"));  // NOI18N
     }
 
-    @Test
+    @Test(expected = java.util.MissingResourceException.class)
     public void testBadKeyMessage() {
-        try {
             Bundle.getMessage("FFFFFTTTTTTT");  // NOI18N
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");
     }
 
     @Test
     public void testGoodKeyMessageArg() {
-        Assert.assertEquals("Open CTC Editor", Bundle.getMessage("CtcEditorAction", new Object[]{}));  // NOI18N
+        Assert.assertEquals("CTC Editor", Bundle.getMessage("CtcEditorAction", new Object[]{}));  // NOI18N
     }
 
-    @Test
+    @Test(expected = java.util.MissingResourceException.class)
     public void testBadKeyMessageArg() {
-        try {
             Bundle.getMessage("FFFFFTTTTTTT", new Object[]{});  // NOI18N
-        } catch (java.util.MissingResourceException e) {
-            return;
-        } // OK
-        Assert.fail("No exception thrown");  // NOI18N
     }
 
     @Test public void testLocaleMessage() {

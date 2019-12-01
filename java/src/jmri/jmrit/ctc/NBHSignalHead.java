@@ -30,17 +30,15 @@ public class NBHSignalHead extends NBHAbstractSignalCommon {
     public static final float DEFAULT_FLOAT_RV = (float)0.0;   // For any function that returns float.
     public static final String DEFAULT_STRING_RV = "UNKNOWN";  // NOI18N  For any function that returns String.
 
-    private static final NamedBeanHandleManager NAMED_BEAN_HANDLE_MANAGER = InstanceManager.getDefault(NamedBeanHandleManager.class);
-
 //  The "thing" we're protecting:
     private final NamedBeanHandle<SignalHead> _mNamedBeanHandleSignalHead;
 
     protected NBHSignalHead(String signal) {
         if (!ProjectsCommonSubs.isNullOrEmptyString(signal)) {
             // Cannot use a constant Instance manager reference due to the dynamic nature of tests.
-            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal.trim());
+            SignalHead signalHead = InstanceManager.getDefault(jmri.SignalHeadManager.class).getSignalHead(signal);
             if (signalHead != null) {
-                _mNamedBeanHandleSignalHead = NAMED_BEAN_HANDLE_MANAGER.getNamedBeanHandle(signal, signalHead);
+                _mNamedBeanHandleSignalHead = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(signal, signalHead);
                 return;
             }
         }
@@ -85,12 +83,35 @@ public class NBHSignalHead extends NBHAbstractSignalCommon {
         _mNamedBeanHandleSignalHead.getBean().setHeld(newHeld);
     }
 
+    /**
+     * Get an array of appearance indexes valid for the mast type.
+     *
+     * @return array of appearance state values available on this mast type
+     */
     @Override
     public int[] getValidStates() {
         if (_mNamedBeanHandleSignalHead == null) return new int[0];
         return _mNamedBeanHandleSignalHead.getBean().getValidStates();
     }
 
+    /**
+     * Get an array of non-localized appearance keys valid for the mast type.
+     * For GUI application consider using (capitalized) {@link #getValidStateNames()}
+     *
+     * @return array of translated appearance names available on this mast type
+     */
+    @Override
+    public String[] getValidStateKeys() {
+        if (_mNamedBeanHandleSignalHead == null) return new String[0];
+        return _mNamedBeanHandleSignalHead.getBean().getValidStateKeys();
+    }
+
+    /**
+     * Get an array of localized appearance descriptions valid for the mast type.
+     * For persistance and comparison consider using {@link #getValidStateKeys()}
+     *
+     * @return array of translated appearance names
+     */
     @Override
     public String[] getValidStateNames() {
         if (_mNamedBeanHandleSignalHead == null) return new String[0];

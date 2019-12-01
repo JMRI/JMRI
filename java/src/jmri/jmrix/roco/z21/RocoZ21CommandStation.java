@@ -31,7 +31,7 @@ package jmri.jmrix.roco.z21;
  * @author	Bob Jacobsen Copyright (C) 2001 
  * @author      Paul Bender Copyright (C) 2016
  */
-public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation implements jmri.CommandStation {
+public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation {
 
     private int broadcast_flags = 0; // holds the value of the broadcast flags.
     private int serial_number = 0; // holds the serial number of the Z21.
@@ -351,8 +351,16 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
     }
 
    /**
+    * <p>
     * Set flag bit 0x08000000 which tells the command station to send 
     * Occupancy information from LocoNet to the client
+    * </p>
+    * <p>
+    * If this flag is set to true, the Z21 will format Transponding messages
+    * as described in section 9.5 of the Z21 Lan Protocol.  This message format
+    * is currentlyunsupported by JMRI.
+    * </p>
+    *
     * @param flag true if flag is to be set.
     */
     public void setLocoNetOccupancyMessagesFlag(boolean flag){
@@ -363,10 +371,5 @@ public class RocoZ21CommandStation extends jmri.jmrix.roco.RocoCommandStation im
            broadcast_flags = broadcast_flags & (~(0x08000000));
         }
     }
-
-    /*
-     * We need to register for logging
-     */
-    // private final static Logger log = LoggerFactory.getLogger(RocoZ21CommandStation.class);
 
 }

@@ -87,17 +87,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
      * Get the default instance of a Warrant table window.
      *
      * @return the default instance; creating it if necessary
-     * @deprecated since 4.7.4; use {@link #getDefault() } instead
-     */
-    @Deprecated
-    public static WarrantTableFrame getInstance() {
-        return getDefault();
-    }
-
-    /**
-     * Get the default instance of a Warrant table window.
-     *
-     * @return the default instance; creating it if necessary
      */
     public static WarrantTableFrame getDefault() {
         WarrantTableFrame instance = InstanceManager.getOptionalDefault(WarrantTableFrame.class).orElseGet(() -> {
@@ -111,17 +100,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         });
         instance.setVisible(true);
         return instance;
-    }
-
-    /**
-     * Reset the WarrantTableFrame default instance (for unit testing only).
-     * @return a new WarrantTableFrame instance
-     * @deprecated since 4.7.4 without direct replacement
-     */
-    @Deprecated
-    protected static WarrantTableFrame reset() {
-        InstanceManager.reset(WarrantTableFrame.class);
-        return getDefault();
     }
 
     protected WarrantTableModel getModel() {
@@ -239,7 +217,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.add(new jmri.configurexml.SaveMenu());
-        menuBar.add(fileMenu);
         JMenu warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
         warrantMenu.add(new AbstractAction(Bundle.getMessage("ConcatWarrants")) {
             @Override
@@ -328,8 +305,8 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         Warrant startW = manager.getWarrant(_startWarrant.getText().trim());
         Warrant endW = manager.getWarrant(_endWarrant.getText().trim());
          */
-        Warrant startW = _model.getWarrant(_startWarrant.getText().trim());
-        Warrant endW = _model.getWarrant(_endWarrant.getText().trim());
+        Warrant startW = _model.getWarrant(_startWarrant.getText());
+        Warrant endW = _model.getWarrant(_endWarrant.getText());
         if (startW == null || endW == null) {
             showWarning("BadWarrantNames");
             return;
@@ -426,11 +403,6 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value,
                 boolean isSelected, int r, int column) {
-            // If table has been sorted, table row no longer is the same as array index
-            int row = r;
-            if (table.getRowSorter() != null) {
-                row = table.convertRowIndexToModel(row);
-            }
             Component component = getComponent();
             if (component instanceof JComboBox<?>) {
                 @SuppressWarnings("unchecked")
@@ -439,6 +411,11 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
                 comboBox.insertItemAt((String)value, 0);
                 comboBox.setSelectedIndex(0);
                 if (log.isDebugEnabled()) {
+                    // If table has been sorted, table row no longer is the same as array index
+                    int row = r;
+                    if (table.getRowSorter() != null) {
+                        row = table.convertRowIndexToModel(row);
+                    }
                     WarrantTableModel model = (WarrantTableModel)table.getModel();
                     Warrant warrant = model.getWarrantAt(row);
                     log.debug("getTableCellEditorComponent warrant= {}, selection= {}", 
@@ -466,6 +443,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
         if (msg == null) {
             msg = _model.checkAddressInUse(w);
+        }
+        if (msg == null) {
+            msg = w.checkforTrackers();
         }
 
         if (msg == null) {

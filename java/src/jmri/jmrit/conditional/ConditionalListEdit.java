@@ -8,11 +8,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 import java.util.TreeSet;
+
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -35,10 +34,14 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.Audio;
 import jmri.Conditional;
-import jmri.Conditional.State;
 import jmri.Conditional.Operator;
+import jmri.Conditional.State;
 import jmri.ConditionalAction;
 import jmri.ConditionalVariable;
 import jmri.InstanceManager;
@@ -50,7 +53,6 @@ import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
-import jmri.implementation.DefaultConditional;
 import jmri.implementation.DefaultConditionalAction;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrit.logix.OBlock;
@@ -58,11 +60,9 @@ import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.*;
+import jmri.util.swing.JComboBoxUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * The traditional list based conditional editor based on the original editor
@@ -1277,7 +1277,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         // Check if the User Name has been changed
-        String uName = _conditionalUserName.getText().trim(); // N11N
+        String uName = _conditionalUserName.getText();
         if (!uName.equals(_curConditional.getUserName())) {
             // user name has changed - check if already in use
             if (!checkConditionalUserName(uName, _curLogix)) {
@@ -1507,7 +1507,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
     }
 
     /**
-     * Fetch valid appearances for a given Signal Head.
+     * Fetch valid localized appearances for a given Signal Head.
      * <p>
      * Warn if head is not found.
      *
@@ -1846,16 +1846,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
         _variableItemBox.setSelectedItem(itemType);
         switch (itemType) {
             case SENSOR:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
             case TURNOUT:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
             case LIGHT:
+            case CONDITIONAL:
+            case WARRANT:
                 _variableStateBox.setSelectedItem(testType);
                 _variableNameField.setText(_curVariable.getName());
                 break;
@@ -1892,16 +1886,6 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 _variableCompareOpBox.setSelectedIndex(num1);
                 _variableData1Field.setText(_curVariable.getDataString());
-                break;
-
-            case CONDITIONAL:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
-                break;
-
-            case WARRANT:
-                _variableStateBox.setSelectedItem(testType);
-                _variableNameField.setText(_curVariable.getName());
                 break;
 
             case CLOCK:
@@ -2139,7 +2123,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
     /**
      * Update the name combo box selection based on the current contents of the
-     * name field. Called by {@link #variableItemChanged(Conditional.ItemType)}.
+     * name field.
      *
      * @since 4.7.3
      * @param itemType The type of name box to be created.
@@ -2153,7 +2137,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
             return;
         }
         _comboNameBox.addActionListener(new NameBoxListener(_variableNameField));
-        _comboNameBox.setSelectedBeanByName(_curVariable.getName());
+        _comboNameBox.setSelectedItemByName(_curVariable.getName());
         _variableComboNamePanel.remove(1);
         _variableComboNamePanel.add(_comboNameBox, null, 1);
         _variableNamePanel.setVisible(false);
@@ -2394,37 +2378,23 @@ public class ConditionalListEdit extends ConditionalEditBase {
         Conditional.Type testType = Conditional.Type.NONE;
         switch (itemType) {
             case SENSOR:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case TURNOUT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case LIGHT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case SIGNALHEAD:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
             case SIGNALMAST:
+            case CONDITIONAL:
+            case WARRANT:
+            case ENTRYEXIT:
                 testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case MEMORY:
                 testType = _variableCompareTypeBox.getItemAt(_variableCompareTypeBox.getSelectedIndex());
-                break;
-            case CONDITIONAL:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
-                break;
-            case WARRANT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             case CLOCK:
                 testType = Conditional.Type.FAST_CLOCK_RANGE;
                 break;
             case OBLOCK:
                 testType = Conditional.Type.BLOCK_STATUS_EQUALS;
-                break;
-            case ENTRYEXIT:
-                testType = _variableStateBox.getItemAt(_variableStateBox.getSelectedIndex());
                 break;
             default:
                 JOptionPane.showMessageDialog(_editConditionalFrame,
@@ -2915,14 +2885,6 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 break;
 
-            case SIGNALHEAD:
-                _actionTypeBox.setSelectedItem(actionType);
-                break;
-
-            case SIGNALMAST:
-                _actionTypeBox.setSelectedItem(actionType);
-                break;
-
             case CLOCK:
                 _actionTypeBox.setSelectedItem(actionType);
                 if (actionType == Conditional.Action.SET_FAST_CLOCK_TIME) {
@@ -2937,9 +2899,6 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 _shortActionString.setText(_curAction.getActionString());
                 break;
 
-            case LOGIX:
-                _actionTypeBox.setSelectedItem(actionType);
-                break;
 
             case WARRANT:
                 _actionTypeBox.setSelectedItem(actionType);
@@ -3022,9 +2981,11 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 break;
 
-            case OTHER:
+            case SIGNALHEAD:
+            case SIGNALMAST:
+            case LOGIX:
+            case OTHER: // ACTION_TRIGGER_ROUTE
                 _actionTypeBox.setSelectedItem(actionType);
-                // ACTION_TRIGGER_ROUTE
                 break;
 
             default:
@@ -3414,7 +3375,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
         if (_comboNameBox == null) {
             return;
         }
-        _comboNameBox.setSelectedBeanByName(_curAction.getDeviceName());
+        _comboNameBox.setSelectedItemByName(_curAction.getDeviceName());
         _comboNameBox.addActionListener(new NameBoxListener(_actionNameField));
         _actionComboNamePanel.remove(1);
         _actionComboNamePanel.add(_comboNameBox, null, 1);
@@ -3618,7 +3579,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
      * false immediately after finding an error, even if there might be more
      * errors.
      *
-     * @return true if all data checks out OK, otherwise false.
+     * @return true if all data checks out OK, otherwise false
      */
     boolean validateAction() {
         Conditional.ItemType itemType = _actionItemBox.getItemAt(_actionItemBox.getSelectedIndex());
@@ -4102,8 +4063,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
          * @return true if a change in State or Appearance was heard
          */
         boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
-            return (e.getPropertyName().indexOf("State") >= 0 || e // NOI18N
-                    .getPropertyName().indexOf("Appearance") >= 0);  // NOI18N
+            return (e.getPropertyName().contains("State") ||     // NOI18N
+                    e.getPropertyName().contains("Appearance")); // NOI18N
         }
 
         @Override
@@ -4129,11 +4090,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
             if (!_inReorderMode) {
                 return ((c == UNAME_COLUMN) || (c == BUTTON_COLUMN));
             } else if (c == BUTTON_COLUMN) {
-                if (r >= _nextInOrder) {
-                    return (true);
-                }
+                return (r >= _nextInOrder);
             }
-            return (false);
+            return false;
         }
 
         @Override
@@ -4157,11 +4116,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
         public int getPreferredWidth(int col) {
             switch (col) {
                 case SNAME_COLUMN:
+                case BUTTON_COLUMN:
                     return new JTextField(6).getPreferredSize().width;
                 case UNAME_COLUMN:
                     return new JTextField(17).getPreferredSize().width;
-                case BUTTON_COLUMN:
-                    return new JTextField(6).getPreferredSize().width;
                 case STATE_COLUMN:
                     return new JTextField(12).getPreferredSize().width;
                 default:
@@ -4170,9 +4128,8 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
 
         @Override
-        public Object getValueAt(int r, int col) {
-            int rx = r;
-            if ((rx > _numConditionals) || (_curLogix == null)) {
+        public Object getValueAt(int row, int col) {
+            if ((row > _numConditionals) || (_curLogix == null)) {
                 return null;
             }
             switch (col) {
@@ -4181,17 +4138,17 @@ public class ConditionalListEdit extends ConditionalEditBase {
                         return Bundle.getMessage("ButtonEdit");  // NOI18N
                     } else if (_nextInOrder == 0) {
                         return Bundle.getMessage("ButtonFirst");  // NOI18N
-                    } else if (_nextInOrder <= r) {
+                    } else if (_nextInOrder <= row) {
                         return Bundle.getMessage("ButtonNext");  // NOI18N
                     } else {
-                        return Integer.toString(rx + 1);
+                        return Integer.toString(row + 1);
                     }
                 case SNAME_COLUMN:
-                    return _curLogix.getConditionalByNumberOrder(rx);
+                    return _curLogix.getConditionalByNumberOrder(row);
                 case UNAME_COLUMN: {
-                    //log.debug("ConditionalTableModel: {}", _curLogix.getConditionalByNumberOrder(rx));  // NOI18N
+                    //log.debug("ConditionalTableModel: {}", _curLogix.getConditionalByNumberOrder(row));  // NOI18N
                     Conditional c = _conditionalManager.getBySystemName(
-                            _curLogix.getConditionalByNumberOrder(rx));
+                            _curLogix.getConditionalByNumberOrder(row));
                     if (c != null) {
                         return c.getUserName();
                     }
@@ -4199,7 +4156,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 }
                 case STATE_COLUMN:
                     Conditional c = _conditionalManager.getBySystemName(
-                            _curLogix.getConditionalByNumberOrder(rx));
+                            _curLogix.getConditionalByNumberOrder(row));
                     if (c != null) {
                         int curState = c.getState();
                         if (curState == Conditional.TRUE) {
@@ -4217,8 +4174,7 @@ public class ConditionalListEdit extends ConditionalEditBase {
 
         @Override
         public void setValueAt(Object value, int row, int col) {
-            int rx = row;
-            if ((rx > _numConditionals) || (_curLogix == null)) {
+            if ((row > _numConditionals) || (_curLogix == null)) {
                 return;
             }
             if (col == BUTTON_COLUMN) {
@@ -4233,28 +4189,28 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     // Use separate Runnable so window is created on top
                     class WindowMaker implements Runnable {
 
-                        int row;
+                        private int _row;
 
                         WindowMaker(int r) {
-                            row = r;
+                            _row = r;
                         }
 
                         @Override
                         public void run() {
-                            editConditionalPressed(row);
+                            editConditionalPressed(_row);
                         }
                     }
-                    WindowMaker t = new WindowMaker(rx);
+                    WindowMaker t = new WindowMaker(row);
                     javax.swing.SwingUtilities.invokeLater(t);
                 }
             } else if (col == UNAME_COLUMN) {
                 String uName = (String) value;
-                Conditional cn = _conditionalManager.getByUserName(_curLogix, uName.trim()); // N11N
+                Conditional cn = _conditionalManager.getByUserName(_curLogix, uName);
                 if (cn == null) {
-                    String sName = _curLogix.getConditionalByNumberOrder(rx);
+                    String sName = _curLogix.getConditionalByNumberOrder(row);
                     Conditional cdl = _conditionalManager.getBySystemName(sName);
-                    cdl.setUserName(uName.trim()); // N11N
-                    fireTableRowsUpdated(rx, rx);
+                    cdl.setUserName(uName);
+                    fireTableRowsUpdated(row, row);
 
                     // Update any conditional references
                     ArrayList<String> refList = InstanceManager.getDefault(jmri.ConditionalManager.class).getWhereUsed(sName);
@@ -4277,10 +4233,9 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     }
                 } else {
                     // Duplicate user name
-                    String svName = _curLogix.getConditionalByNumberOrder(rx);
+                    String svName = _curLogix.getConditionalByNumberOrder(row);
                     if (cn != _conditionalManager.getBySystemName(svName)) {
-                        messageDuplicateConditionalUserName(cn
-                                .getSystemName());
+                        messageDuplicateConditionalUserName(cn.getSystemName());
                     }
                 }
             }
@@ -4324,7 +4279,6 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 case TRIGGERS_COLUMN:
                     return Boolean.class;
                 case EDIT_COLUMN:
-                    return JButton.class;
                 case DELETE_COLUMN:
                     return JButton.class;
                 default:
@@ -4348,15 +4302,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
         public boolean isCellEditable(int r, int c) {
             switch (c) {
                 case ROWNUM_COLUMN:
+                case DESCRIPTION_COLUMN:
+                case STATE_COLUMN:
                     return (false);
                 case AND_COLUMN:
                     return (_logicType == Conditional.AntecedentOperator.MIXED);
                 case NOT_COLUMN:
-                    return (true);
-                case DESCRIPTION_COLUMN:
-                    return (false);
-                case STATE_COLUMN:
-                    return (false);
                 case TRIGGERS_COLUMN:
                     return (true);
                 case EDIT_COLUMN:
@@ -4368,12 +4319,12 @@ public class ConditionalListEdit extends ConditionalEditBase {
                     if (_inVarReorder && r < _nextInOrder) {
                         return false;
                     }
-                    return (true);
+                    return true;
                 default:
                     // fall through
                     break;
             }
-            return (false);
+            return false;
         }
 
         @Override
@@ -4410,16 +4361,16 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
 
         @Override
-        public Object getValueAt(int r, int c) {
-            if (r >= _variableList.size()) {
+        public Object getValueAt(int row, int col) {
+            if (row >= _variableList.size()) {
                 return null;
             }
-            ConditionalVariable variable = _variableList.get(r);
-            switch (c) {
+            ConditionalVariable variable = _variableList.get(row);
+            switch (col) {
                 case ROWNUM_COLUMN:
-                    return ("R" + (r + 1)); //NOI18N
+                    return ("R" + (row + 1)); //NOI18N
                 case AND_COLUMN:
-                    if (r == 0) { //removed: || _logicType == Conditional.MIXED
+                    if (row == 0) { //removed: || _logicType == Conditional.MIXED
                         return "";
                     }
                     return variable.getOpernString(); // also display Operand selection when set to Mixed
@@ -4452,10 +4403,10 @@ public class ConditionalListEdit extends ConditionalEditBase {
                         return Bundle.getMessage("ButtonDelete");  // NOI18N
                     } else if (_nextInOrder == 0) {
                         return Bundle.getMessage("ButtonFirst");  // NOI18N
-                    } else if (_nextInOrder <= r) {
+                    } else if (_nextInOrder <= row) {
                         return Bundle.getMessage("ButtonNext");  // NOI18N
                     }
-                    return Integer.toString(r + 1);
+                    return Integer.toString(row + 1);
                 default:
                     break;
             }
@@ -4463,17 +4414,17 @@ public class ConditionalListEdit extends ConditionalEditBase {
         }
 
         @Override
-        public void setValueAt(Object value, int r, int c) {
-            if (r >= _variableList.size()) {
+        public void setValueAt(Object value, int row, int col) {
+            if (row >= _variableList.size()) {
                 return;
             }
-            ConditionalVariable variable = _variableList.get(r);
-            switch (c) {
+            ConditionalVariable variable = _variableList.get(row);
+            switch (col) {
                 case AND_COLUMN:
-                    variableOperatorChanged(r, (String) value);
+                    variableOperatorChanged(row, (String) value);
                     break;
                 case NOT_COLUMN:
-                    variableNegationChanged(r, (String) value);
+                    variableNegationChanged(row, (String) value);
                     break;
                 case STATE_COLUMN:
                     String state = ((String) value);
@@ -4510,14 +4461,14 @@ public class ConditionalListEdit extends ConditionalEditBase {
                             makeEditVariableWindow(row);
                         }
                     }
-                    WindowMaker t = new WindowMaker(r);
+                    WindowMaker t = new WindowMaker(row);
                     javax.swing.SwingUtilities.invokeLater(t);
                     break;
                 case DELETE_COLUMN:
                     if (_inVarReorder) {
-                        swapVariables(r);
+                        swapVariables(row);
                     } else {
-                        deleteVariablePressed(r);
+                        deleteVariablePressed(row);
                     }
                     break;
                 default:
@@ -4614,15 +4565,15 @@ public class ConditionalListEdit extends ConditionalEditBase {
                 // Use separate Runnable so window is created on top
                 class WindowMaker implements Runnable {
 
-                    int row;
+                    private int _row;
 
                     WindowMaker(int r) {
-                        row = r;
+                        _row = r;
                     }
 
                     @Override
                     public void run() {
-                        makeEditActionWindow(row);
+                        makeEditActionWindow(_row);
                     }
                 }
                 WindowMaker t = new WindowMaker(row);

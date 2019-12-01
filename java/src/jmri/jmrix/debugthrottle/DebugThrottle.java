@@ -42,7 +42,7 @@ public class DebugThrottle extends AbstractThrottle {
         this.isForward = true;
 
         this.address = address;
-        setSpeedStepMode(jmri.DccThrottle.SpeedStepMode128);
+        setSpeedStepMode(jmri.SpeedStepMode.NMRA_DCC_128);
     }
 
     DccLocoAddress address;
@@ -105,7 +105,7 @@ public class DebugThrottle extends AbstractThrottle {
         }
         this.speedSetting = speed;
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -117,7 +117,7 @@ public class DebugThrottle extends AbstractThrottle {
         this.isForward = forward;
         sendFunctionGroup1();  // send the command
         if (old != this.isForward) {
-            notifyPropertyChangeListener("IsForward", old, this.isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, this.isForward);
         }
     }
 

@@ -1,20 +1,16 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -26,15 +22,14 @@ import jmri.jmrit.operations.rollingstock.cars.tools.CarLoadEditFrame;
 import jmri.jmrit.operations.rollingstock.cars.tools.EnableDestinationAction;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrit.operations.trains.tools.TrainByCarTypeFrame;
 
 /**
  * Frame for user to place car on the layout
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2013, 2014
  */
-public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans.PropertyChangeListener {
+public class CarSetFrame extends RollingStockSetFrame<Car> {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
@@ -266,6 +261,7 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
         return false;
     }
 
+    TrainByCarTypeFrame tctf = null;
     protected boolean askKernelChange = true;
 
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD", justification = "GUI ease of use")
@@ -416,6 +412,11 @@ public class CarSetFrame extends RollingStockSetFrame<Car> implements java.beans
                 JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("carTrainNotService"),
                         new Object[]{car.toString(), train.getName()}), Bundle.getMessage("rsNotMove"),
                         JOptionPane.ERROR_MESSAGE);
+                // show the train's route and car location
+                if (tctf != null) {
+                    tctf.dispose();
+                }
+                tctf = new TrainByCarTypeFrame(car);
                 // prevent rs from being picked up and delivered
                 setRouteLocationAndDestination(car, train, null, null);
                 return false;

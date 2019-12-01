@@ -23,7 +23,7 @@ import jmri.jmrix.loconet.LnTrafficController;
  * @see jmri.Programmer
  * @author Paul Bender Copyright (C) 2018
  */
-public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgrammer implements XNetListener, AddressedProgrammer, LocoNetListener {
+public class Z21XNetOpsModeProgrammer extends jmri.jmrix.lenz.XNetOpsModeProgrammer implements LocoNetListener {
 
     private int _cv;
     private LnTrafficController lnTC;

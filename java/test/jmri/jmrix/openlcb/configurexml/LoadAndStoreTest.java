@@ -57,12 +57,13 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         memo = new OlcbSystemConnectionMemo(); // this self-registers as 'M'
         memo.setProtocol(jmri.jmrix.can.ConfigurationManager.OPENLCB);
         memo.setInterface(new OlcbInterface(nodeID, connection) {
+            @Override
             public Connection getOutputConnection() {
                 return connection;
             }
         });
         
-        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);},"Initialization Complete message");
+        jmri.util.JUnitUtil.waitFor(()->{return (messages.size()>0);}, "Initialization Complete message");
     }
 
     @After
@@ -74,4 +75,5 @@ public class LoadAndStoreTest extends LoadAndStoreTestBase {
         connection = null;
         nodeID = null;
     }
+
 }

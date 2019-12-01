@@ -8,6 +8,9 @@ import jmri.Manager;
 import jmri.Reporter;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.SortedSet;
+import jmri.InstanceManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Implementation of a IdTagManager that can serve as a proxy for multiple
@@ -31,22 +34,34 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public void init() {
-        if(!isInitialised()){
-           getDefaultManager();
+        if (!isInitialised()) {
+            getDefaultManager();
         }
     }
 
     @Override
     public boolean isInitialised() {
-        return (jmri.InstanceManager.getDefault(IdTagManager.class) != null);
+        return defaultManager!= null &&
+                getManagerList().stream().noneMatch(o->((IdTagManager)o).isInitialised());
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Manager<IdTag> getDefaultManager() {
+        if(defaultManager!=getInternalManager()){
+           defaultManager = getInternalManager();
+        }
+        return defaultManager;
     }
 
     @Override
     protected AbstractManager<IdTag> makeInternalManager() {
         // since this really is an internal tracking mechanisim,
         // build the new manager and add it here.
-        DefaultIdTagManager tagMan = new DefaultIdTagManager();
-        jmri.InstanceManager.setIdTagManager(tagMan);
+        DefaultIdTagManager tagMan = new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        InstanceManager.setIdTagManager(tagMan);
         return tagMan;
     }
 
@@ -57,17 +72,31 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      */
     @Override
     public IdTag getIdTag(String name) {
+        init();
         return super.getNamedBean(name);
+    }
+
+    /** {@inheritDoc} */
+    @Override
+    @Nonnull
+    public SortedSet<IdTag> getNamedBeanSet() {
+        init();
+        return super.getNamedBeanSet();
     }
 
     @Override
     protected IdTag makeBean(int i, String systemName, String userName) {
+        init();
         return ((IdTagManager) getMgr(i)).newIdTag(systemName, userName);
     }
 
     @Override
-    /** {@inheritDoc} */
-    public IdTag provide(@Nonnull String name) throws IllegalArgumentException { return provideIdTag(name); }
+    /**
+     * {@inheritDoc}
+     */
+    public IdTag provide(@Nonnull String name) throws IllegalArgumentException {
+        return provideIdTag(name);
+    }
 
     /**
      * Locate via user name, then system name if needed. If that fails, create a
@@ -79,6 +108,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      */
     @Override
     public IdTag provideIdTag(String name) throws IllegalArgumentException {
+        init();
         return super.provideNamedBean(name);
     }
 
@@ -90,6 +120,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      */
     @Override
     public IdTag getBySystemName(String systemName) {
+        init();
         return super.getBeanBySystemName(systemName);
     }
 
@@ -101,6 +132,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      */
     @Override
     public IdTag getByUserName(String userName) {
+        init();
         return super.getBeanByUserName(userName);
     }
 
@@ -134,28 +166,14 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      */
     @Override
     public IdTag newIdTag(String systemName, String userName) {
+        init();
         return newNamedBean(systemName, userName);
     }
 
     @Override
     public IdTag getByTagID(String tagID) {
+        init();
         return getBySystemName(makeSystemName(tagID));
-    }
-
-    /**
-     * Validate system name format. Locate a system specfic IdTagManager based on
-     * a system name.
-     *
-     * @return if a manager is found, return its determination of validity of
-     * system name format. Return INVALID if no manager exists.
-     */
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        int i = matchTentative(systemName);
-        if (i >= 0) {
-            return ((IdTagManager) getMgr(i)).validSystemNameFormat(systemName);
-        }
-        return NameValidity.INVALID;
     }
 
     /**
@@ -167,8 +185,8 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameIdTag");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameIdTags" : "BeanNameIdTag");
     }
 
     private boolean stateSaved = false;
@@ -176,16 +194,18 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     @Override
     public void setStateStored(boolean state) {
         stateSaved = state;
-        for( Manager<IdTag> mgr: getManagerList()){
-            ((IdTagManager)mgr).setStateStored(state);
+        for (Manager<IdTag> mgr : getManagerList()) {
+            ((IdTagManager) mgr).setStateStored(state);
         }
     }
 
     @Override
     public boolean isStateStored() {
-        for( Manager<IdTag> mgr: getManagerList()){
-            if(!((IdTagManager)mgr).isStateStored()){
-               return false;
+        stateSaved = true;
+        for (Manager<IdTag> mgr: getManagerList()) {
+            if(!((IdTagManager) mgr).isStateStored()) {
+                stateSaved = false;
+                break;
             }
         }
         return stateSaved;
@@ -196,16 +216,18 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     @Override
     public void setFastClockUsed(boolean fastClock) {
         useFastClock = fastClock;
-        for( Manager<IdTag> mgr: getManagerList()){
-            ((IdTagManager)mgr).setFastClockUsed(fastClock);
+        for (Manager<IdTag> mgr : getManagerList()) {
+            ((IdTagManager) mgr).setFastClockUsed(fastClock);
         }
     }
 
     @Override
     public boolean isFastClockUsed() {
-        for( Manager<IdTag> mgr: getManagerList()){
-            if(!((IdTagManager)mgr).isFastClockUsed()){
-               return false;
+        useFastClock = true;
+        for (Manager<IdTag> mgr: getManagerList()) {
+            if (!((IdTagManager) mgr).isFastClockUsed()) {
+               useFastClock = false;
+               break;
             }
         }
         return useFastClock;
@@ -213,8 +235,8 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
 
     @Override
     public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
-        List<IdTag> out = new ArrayList<>();
-        return out;
+        init();
+        return new ArrayList<>();
     }
 
 }

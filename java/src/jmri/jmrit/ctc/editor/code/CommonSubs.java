@@ -48,7 +48,8 @@ public class CommonSubs {
 
     public static boolean allowClose(Component parentComponent, boolean dataChanged) {
         if (dataChanged) {
-            return JOptionPane.showConfirmDialog(parentComponent, Bundle.getMessage("CommonSubsDataModified"), Bundle.getMessage("Warning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;  // NOI18N
+            return JOptionPane.showConfirmDialog(parentComponent, Bundle.getMessage("CommonSubsDataModified"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;  // NOI18N
         }
         return true;    // NO change, ok to exit
     }
@@ -143,15 +144,33 @@ public class CommonSubs {
         setSelectedIndexOfJComboBoxViaUniqueID(jComboBox, ctcSerialData, uniqueID);
     }
 
+//  A blank entry will ALWAYS appear as the first selection.
     public static void populateJComboBoxWithColumnDescriptions(JComboBox<String> jComboBox, CTCSerialData ctcSerialData) {
         ArrayList<String> userDescriptions = new ArrayList<>();
-        userDescriptions.add("");   // None is specified.
+        userDescriptions.add("");   // None can be specified.
         ArrayList<Integer> arrayListOfSelectableOSSectionUniqueIDs = getArrayListOfSelectableOSSectionUniqueIDs(ctcSerialData.getCodeButtonHandlerDataArrayList());
         for (Integer uniqueID : arrayListOfSelectableOSSectionUniqueIDs) {
             userDescriptions.add(ctcSerialData.getMyShortStringNoCommaViaUniqueID(uniqueID));
         }
 //      Collections.sort(userDescriptions);
         jComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(userDescriptions)));
+    }
+
+//  NO blank entry as the first selection, returns true if any in list, else false.
+//  Also populates "uniqueIDS" with corresponding values.
+    public static boolean populateJComboBoxWithColumnDescriptionsExceptOurs(JComboBox<String> jComboBox, CTCSerialData ctcSerialData, int ourUniqueID, ArrayList<Integer> uniqueIDS) {
+        ArrayList<String> userDescriptions = new ArrayList<>();
+        uniqueIDS.clear();
+        ArrayList<Integer> arrayListOfSelectableOSSectionUniqueIDs = getArrayListOfSelectableOSSectionUniqueIDs(ctcSerialData.getCodeButtonHandlerDataArrayList());
+        for (Integer uniqueID : arrayListOfSelectableOSSectionUniqueIDs) {
+            if (ourUniqueID != uniqueID) {
+                userDescriptions.add(ctcSerialData.getMyShortStringNoCommaViaUniqueID(uniqueID));
+                uniqueIDS.add(uniqueID);
+            }
+        }
+//      Collections.sort(userDescriptions);
+        jComboBox.setModel(new DefaultComboBoxModel<>(new Vector<>(userDescriptions)));
+        return !userDescriptions.isEmpty();
     }
 
     /**
@@ -286,7 +305,8 @@ public class CommonSubs {
         } else {
             stringBuffer.append(Bundle.getMessage("CommonSubsPleaseFix2")); // NOI18N
         }
-        JOptionPane.showMessageDialog(parentComponent, stringBuffer.toString(), Bundle.getMessage("Error"), JOptionPane.ERROR_MESSAGE);   // NOI18N
+        JOptionPane.showMessageDialog(parentComponent, stringBuffer.toString(),
+                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);   // NOI18N
         return true;
     }
 

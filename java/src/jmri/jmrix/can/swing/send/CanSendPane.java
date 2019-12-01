@@ -70,7 +70,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
 
         entry.add(jLabel1);
         entry.add(packetTextField);
-        packetTextField.setToolTipText(Bundle.getMessage("EnterHexToolTip"));
+        packetTextField.setToolTipText(Bundle.getMessage("EnterFrameToolTip"));
         topPane.add(entry);
         topPane.add(sendButton);
         
@@ -101,7 +101,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
             numbercheckboxpane.add(mUseField[i]);
             pane2.add(numbercheckboxpane);
             pane2.add(mPacketField[i]);
-            mPacketField[i].setToolTipText(Bundle.getMessage("EnterHexToolTip"));
+            mPacketField[i].setToolTipText(Bundle.getMessage("EnterFrameToolTip"));
             pane2.add(numberSpinner[i]);
         }
         
@@ -163,10 +163,7 @@ public class CanSendPane extends jmri.jmrix.can.swing.CanPanel {
 
     @Override
     public String getTitle() {
-        if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("MenuItemSendFrame"));
-        }
-        return Bundle.getMessage("MenuItemSendFrame");
+        return prependConnToString(Bundle.getMessage("MenuItemSendFrame"));
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {

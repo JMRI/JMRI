@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  */
-public class LnHexFilePort extends LnPortController implements Runnable, jmri.jmrix.SerialPortAdapter {
+public class LnHexFilePort extends LnPortController implements Runnable {
 
     volatile BufferedReader sFile = null;
 
@@ -245,7 +245,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     @Override
     public String[] validBaudRates() {
         log.error("validBaudRates should not have been invoked", new Exception());
-        return null;
+        return new String[]{};
     }
 
     /**
@@ -253,7 +253,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
      */
     @Override
     public int[] validBaudNumbers() {
-        return null;
+        return new int[]{};
     }
 
     /**

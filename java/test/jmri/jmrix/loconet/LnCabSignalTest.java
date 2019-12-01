@@ -65,7 +65,6 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initSignalMastLogicManager();
         InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
-        JUnitUtil.initShutDownManager();
 
 	    // prepare an interface
         memo = new LocoNetSystemConnectionMemo("L", "LocoNet");

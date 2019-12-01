@@ -49,8 +49,8 @@ public class CbusNodeSetupPaneTest {
         t = null;
     }
     
-    CanSystemConnectionMemo memo;
-    TrafficControllerScaffold tcis;
+    private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
 
     @Before
     public void setUp() {
@@ -67,7 +67,9 @@ public class CbusNodeSetupPaneTest {
         memo = null;
         tcis = null;
         
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeSetupPaneTest.class);

@@ -30,6 +30,7 @@ public class IndexedTreeSetTest {
     @Test
     public void testQuickComparator() {
         IndexedNavigableSet<String> s = new IndexedTreeSet<String>(new java.util.Comparator<String>(){
+            @Override
             public int compare(String e1, String e2) { return - e1.toString().compareTo(e2.toString()); } // note minus sign
         });
         s.add("Z");

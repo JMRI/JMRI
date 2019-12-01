@@ -12,7 +12,7 @@ import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
  *
  * @author Dan Boudreau Copyright (C) 2008
  */
-public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
+public class YardEditFrame extends TrackEditFrame {
 
     public YardEditFrame() {
         super();

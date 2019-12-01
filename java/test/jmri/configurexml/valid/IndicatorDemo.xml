@@ -327,7 +327,7 @@
       <path pathName="westYard" blockName="OB1" fromPortal="WestYard-West" toPortal="westMain" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT4" set="4" />
       </path>
-      <portal systemName="IP1" portalName="westMain">
+      <portal portalName="westMain">
         <fromBlock blockName="OB1">
           <path pathName="westMain" blockName="OB1" />
           <path pathName="westYard" blockName="OB1" />
@@ -337,7 +337,7 @@
           <path pathName="main" blockName="OB2" />
         </toBlock>
       </portal>
-      <portal systemName="IP2" portalName="westSiding">
+      <portal portalName="westSiding">
         <fromBlock blockName="OB1">
           <path pathName="westSiding" blockName="OB1" />
         </fromBlock>
@@ -346,7 +346,7 @@
           <path pathName="yard" blockName="OB4" />
         </toBlock>
       </portal>
-      <portal systemName="IP3" portalName="WestYard-West">
+      <portal portalName="WestYard-West">
         <fromBlock blockName="OB1">
           <path pathName="westYard" blockName="OB1" />
         </fromBlock>
@@ -354,7 +354,7 @@
           <path pathName="yard" blockName="OB1Y" />
         </toBlock>
       </portal>
-      <portal systemName="IP4" portalName="West-FarWest">
+      <portal portalName="West-FarWest">
         <fromBlock blockName="OB22">
           <path pathName="Main" blockName="OB22" />
         </fromBlock>
@@ -368,7 +368,7 @@
       <userName>WestYard</userName>
       <comment>Dark</comment>
       <path pathName="yard" blockName="OB1Y" fromPortal="WestYard-FarWest" toPortal="WestYard-West" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP3" portalName="WestYard-West">
+      <portal portalName="WestYard-West">
         <fromBlock blockName="OB1">
           <path pathName="westYard" blockName="OB1" />
         </fromBlock>
@@ -376,7 +376,7 @@
           <path pathName="yard" blockName="OB1Y" />
         </toBlock>
       </portal>
-      <portal systemName="IP5" portalName="WestYard-FarWest">
+      <portal portalName="WestYard-FarWest">
         <fromBlock blockName="OB22">
           <path pathName="siding" blockName="OB22" />
         </fromBlock>
@@ -390,7 +390,7 @@
       <sensor systemName="IS2" />
       <errorSensor systemName="IS12" />
       <path pathName="main" blockName="OB2" fromPortal="westMain" toPortal="eastMain" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP1" portalName="westMain">
+      <portal portalName="westMain">
         <fromBlock blockName="OB1">
           <path pathName="westMain" blockName="OB1" />
           <path pathName="westYard" blockName="OB1" />
@@ -400,7 +400,7 @@
           <path pathName="main" blockName="OB2" />
         </toBlock>
       </portal>
-      <portal systemName="IP6" portalName="eastMain">
+      <portal portalName="eastMain">
         <fromBlock blockName="OB2">
           <path pathName="main" blockName="OB2" />
         </fromBlock>
@@ -421,7 +421,7 @@
       <path pathName="IntoInfinity" blockName="OB20" fromPortal="FarMiddle-Infinity" toPortal="FarWest-Infinity" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="toCrossover2" set="4" />
       </path>
-      <portal systemName="IP7" portalName="FarWest-Infinity">
+      <portal portalName="FarWest-Infinity">
         <fromBlock blockName="OB22">
           <path pathName="Main" blockName="OB22" />
           <path pathName="siding" blockName="OB22" />
@@ -431,7 +431,7 @@
           <path pathName="IntoInfinity" blockName="OB20" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="Middle-Infinity">
+      <portal portalName="Middle-Infinity">
         <fromBlock blockName="OB20">
           <path pathName="Main" blockName="OB20" />
         </fromBlock>
@@ -439,7 +439,7 @@
           <path pathName="Main" blockName="OB24" />
         </toBlock>
       </portal>
-      <portal systemName="IP9" portalName="FarMiddle-Infinity">
+      <portal portalName="FarMiddle-Infinity">
         <fromBlock blockName="OB20">
           <path pathName="IntoInfinity" blockName="OB20" />
         </fromBlock>
@@ -457,7 +457,7 @@
       <path pathName="T0FarAway" blockName="OB21" fromPortal="FarEast-FarAway" toPortal="East-FarEast" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT7" set="4" />
       </path>
-      <portal systemName="IP10" portalName="East-FarEast">
+      <portal portalName="East-FarEast">
         <fromBlock blockName="OB21">
           <path pathName="Main" blockName="OB21" />
           <path pathName="T0FarAway" blockName="OB21" />
@@ -468,7 +468,7 @@
           <path pathName="Siding2Main" blockName="OB3" />
         </toBlock>
       </portal>
-      <portal systemName="IP11" portalName="FarEast-FarAway">
+      <portal portalName="FarEast-FarAway">
         <fromBlock blockName="OB21">
           <path pathName="T0FarAway" blockName="OB21" />
         </fromBlock>
@@ -476,7 +476,7 @@
           <path pathName="CrossOverToFarEast" blockName="OB30" />
         </toBlock>
       </portal>
-      <portal systemName="IP12" portalName="FarEast-Middle">
+      <portal portalName="FarEast-Middle">
         <fromBlock blockName="OB21">
           <path pathName="Main" blockName="OB21" />
         </fromBlock>
@@ -495,7 +495,7 @@
       <path pathName="siding" blockName="OB22" fromPortal="FarWest-Infinity" toPortal="WestYard-FarWest" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT6" set="4" />
       </path>
-      <portal systemName="IP4" portalName="West-FarWest">
+      <portal portalName="West-FarWest">
         <fromBlock blockName="OB22">
           <path pathName="Main" blockName="OB22" />
         </fromBlock>
@@ -504,7 +504,7 @@
           <path pathName="westMain" blockName="OB1" />
         </toBlock>
       </portal>
-      <portal systemName="IP5" portalName="WestYard-FarWest">
+      <portal portalName="WestYard-FarWest">
         <fromBlock blockName="OB22">
           <path pathName="siding" blockName="OB22" />
         </fromBlock>
@@ -512,7 +512,7 @@
           <path pathName="yard" blockName="OB1Y" />
         </toBlock>
       </portal>
-      <portal systemName="IP7" portalName="FarWest-Infinity">
+      <portal portalName="FarWest-Infinity">
         <fromBlock blockName="OB22">
           <path pathName="Main" blockName="OB22" />
           <path pathName="siding" blockName="OB22" />
@@ -527,7 +527,7 @@
       <userName>EastYard</userName>
       <sensor systemName="EastYard" />
       <path pathName="eastYardLead" blockName="OB23" toPortal="EastYard" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP13" portalName="EastYard">
+      <portal portalName="EastYard">
         <fromBlock blockName="OB23">
           <path pathName="eastYardLead" blockName="OB23" />
         </fromBlock>
@@ -541,7 +541,7 @@
       <userName>Middle</userName>
       <sensor systemName="sMiddle" />
       <path pathName="Main" blockName="OB24" fromPortal="FarEast-Middle" toPortal="Middle-Infinity" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP8" portalName="Middle-Infinity">
+      <portal portalName="Middle-Infinity">
         <fromBlock blockName="OB20">
           <path pathName="Main" blockName="OB20" />
         </fromBlock>
@@ -549,7 +549,7 @@
           <path pathName="Main" blockName="OB24" />
         </toBlock>
       </portal>
-      <portal systemName="IP12" portalName="FarEast-Middle">
+      <portal portalName="FarEast-Middle">
         <fromBlock blockName="OB21">
           <path pathName="Main" blockName="OB21" />
         </fromBlock>
@@ -579,7 +579,7 @@
         <setting turnout="IT5" set="4" />
         <setting turnout="IT1" set="4" />
       </path>
-      <portal systemName="IP6" portalName="eastMain">
+      <portal portalName="eastMain">
         <fromBlock blockName="OB2">
           <path pathName="main" blockName="OB2" />
         </fromBlock>
@@ -590,7 +590,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:CSX-1998:CLS-3-3-2-hi($0001)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP10" portalName="East-FarEast">
+      <portal portalName="East-FarEast">
         <fromBlock blockName="OB21">
           <path pathName="Main" blockName="OB21" />
           <path pathName="T0FarAway" blockName="OB21" />
@@ -601,7 +601,7 @@
           <path pathName="Siding2Main" blockName="OB3" />
         </toBlock>
       </portal>
-      <portal systemName="IP13" portalName="EastYard">
+      <portal portalName="EastYard">
         <fromBlock blockName="OB23">
           <path pathName="eastYardLead" blockName="OB23" />
         </fromBlock>
@@ -610,7 +610,7 @@
           <path pathName="Siding2EastYard" blockName="OB3" />
         </toBlock>
       </portal>
-      <portal systemName="IP14" portalName="eastSiding">
+      <portal portalName="eastSiding">
         <fromBlock blockName="OB4">
           <path pathName="siding" blockName="OB4" />
         </fromBlock>
@@ -629,7 +629,7 @@
       <path pathName="CrossOverToFarEast" blockName="OB30" fromPortal="FarAway-FarMiddle" toPortal="FarEast-FarAway" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT7" set="4" />
       </path>
-      <portal systemName="IP11" portalName="FarEast-FarAway">
+      <portal portalName="FarEast-FarAway">
         <fromBlock blockName="OB21">
           <path pathName="T0FarAway" blockName="OB21" />
         </fromBlock>
@@ -637,7 +637,7 @@
           <path pathName="CrossOverToFarEast" blockName="OB30" />
         </toBlock>
       </portal>
-      <portal systemName="IP15" portalName="WayFarAwaySouth">
+      <portal portalName="WayFarAwaySouth">
         <fromBlock blockName="OB30">
           <path pathName="Main" blockName="OB30" />
         </fromBlock>
@@ -645,7 +645,7 @@
           <path pathName="ToFarAway" blockName="OB31" />
         </toBlock>
       </portal>
-      <portal systemName="IP16" portalName="FarAway-FarMiddle">
+      <portal portalName="FarAway-FarMiddle">
         <fromBlock blockName="OB30">
           <path pathName="Main" blockName="OB30" />
           <path pathName="CrossOverToFarEast" blockName="OB30" />
@@ -664,7 +664,7 @@
       <path pathName="Main" blockName="OB31" toPortal="WayFarAwayWest" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT8" set="2" />
       </path>
-      <portal systemName="IP15" portalName="WayFarAwaySouth">
+      <portal portalName="WayFarAwaySouth">
         <fromBlock blockName="OB30">
           <path pathName="Main" blockName="OB30" />
         </fromBlock>
@@ -672,7 +672,7 @@
           <path pathName="ToFarAway" blockName="OB31" />
         </toBlock>
       </portal>
-      <portal systemName="IP17" portalName="WayFarAwayWest">
+      <portal portalName="WayFarAwayWest">
         <fromBlock blockName="OB31">
           <path pathName="ToFarAway" blockName="OB31" />
           <path pathName="Main" blockName="OB31" />
@@ -682,7 +682,7 @@
     <oblock systemName="OB32" userName="ReallyFarAway" length="0.0" units="false" curve="0" permissive="true" speedNotch="Normal">
       <userName>ReallyFarAway</userName>
       <path pathName="Main" blockName="OB32" toPortal="FarMiddle-ReallyFar" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP18" portalName="FarMiddle-ReallyFar">
+      <portal portalName="FarMiddle-ReallyFar">
         <fromBlock blockName="OB34">
           <path pathName="Main" blockName="OB34" />
         </fromBlock>
@@ -700,7 +700,7 @@
       <path pathName="MiddleCrosstoInfinity" blockName="OB34" fromPortal="FarAway-FarMiddle" toPortal="FarMiddle-Infinity" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT9" set="4" />
       </path>
-      <portal systemName="IP9" portalName="FarMiddle-Infinity">
+      <portal portalName="FarMiddle-Infinity">
         <fromBlock blockName="OB20">
           <path pathName="IntoInfinity" blockName="OB20" />
         </fromBlock>
@@ -708,7 +708,7 @@
           <path pathName="MiddleCrosstoInfinity" blockName="OB34" />
         </toBlock>
       </portal>
-      <portal systemName="IP16" portalName="FarAway-FarMiddle">
+      <portal portalName="FarAway-FarMiddle">
         <fromBlock blockName="OB30">
           <path pathName="Main" blockName="OB30" />
           <path pathName="CrossOverToFarEast" blockName="OB30" />
@@ -718,7 +718,7 @@
           <path pathName="MiddleCrosstoInfinity" blockName="OB34" />
         </toBlock>
       </portal>
-      <portal systemName="IP18" portalName="FarMiddle-ReallyFar">
+      <portal portalName="FarMiddle-ReallyFar">
         <fromBlock blockName="OB34">
           <path pathName="Main" blockName="OB34" />
         </fromBlock>
@@ -737,7 +737,7 @@
       <path pathName="yard" blockName="OB4" fromPortal="sidingYard" toPortal="westSiding" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT3" set="4" />
       </path>
-      <portal systemName="IP2" portalName="westSiding">
+      <portal portalName="westSiding">
         <fromBlock blockName="OB1">
           <path pathName="westSiding" blockName="OB1" />
         </fromBlock>
@@ -746,7 +746,7 @@
           <path pathName="yard" blockName="OB4" />
         </toBlock>
       </portal>
-      <portal systemName="IP14" portalName="eastSiding">
+      <portal portalName="eastSiding">
         <fromBlock blockName="OB4">
           <path pathName="siding" blockName="OB4" />
         </fromBlock>
@@ -755,7 +755,7 @@
           <path pathName="Siding2EastYard" blockName="OB3" />
         </toBlock>
       </portal>
-      <portal systemName="IP19" portalName="sidingYard">
+      <portal portalName="sidingYard">
         <fromBlock blockName="OB4">
           <path pathName="yard" blockName="OB4" />
         </fromBlock>
@@ -774,7 +774,7 @@
       <path pathName="Spur2" blockName="OB4Y" toPortal="sidingYard" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="ITYARD1" set="4" />
       </path>
-      <portal systemName="IP19" portalName="sidingYard">
+      <portal portalName="sidingYard">
         <fromBlock blockName="OB4">
           <path pathName="yard" blockName="OB4" />
         </fromBlock>

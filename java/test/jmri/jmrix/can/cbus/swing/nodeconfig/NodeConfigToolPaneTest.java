@@ -47,6 +47,7 @@ public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     private TrafficControllerScaffold tcis;
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
@@ -59,10 +60,14 @@ public class NodeConfigToolPaneTest extends jmri.util.swing.JmriPanelTest {
     }
 
     @After
+    @Override
     public void tearDown() {
         tcis = null;
         memo = null;
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

@@ -84,7 +84,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     public String getCurrentPortName() {
         if (mPort == null) {
             if (getPortNames() == null) {
-                // This shouldn't happen in normal operation
+                // this shouldn't happen in normal operation
                 // but in the tests this can happen if the receive thread has been interrupted
                 log.error("Port names returned as null");
                 return null;
@@ -105,7 +105,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      *
      * @param serialPort Port to be updated
      * @param flow       flow control mode from (@link purejavacomm.SerialPort}
-     * @param rts        Set RTS active if true
+     * @param rts        set RTS active if true
      * @param dtr        set DTR active if true
      */
     protected void configureLeadsAndFlowControl(SerialPort serialPort, int flow, boolean rts, boolean dtr) {
@@ -123,7 +123,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         } catch (purejavacomm.UnsupportedCommOperationException e) {
             log.warn("Could not set flow control, ignoring");
         }
-        if (flow!=purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts);  // not connected in some serial ports and adapters
+        if (flow!=purejavacomm.SerialPort.FLOWCONTROL_RTSCTS_OUT) serialPort.setRTS(rts); // not connected in some serial ports and adapters
         serialPort.setDTR(dtr);
     }
 
@@ -145,6 +145,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         mBaudRate = rate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void configureBaudRateFromNumber(String indexString) {
         int baudNum;
@@ -197,7 +200,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                 log.debug("old format baud number: {}", indexString);
             }
         }
-        // fetch baud rate description from ValidBaudRates[] array copy and set
+        // fetch baud rate description from validBaudRates[] array copy and set
         for (int i = 0; i < numbers.length; i++) {
             if (numbers[i] == baudNum) {
                 index = i;
@@ -209,21 +212,25 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         log.debug("mBaudRate set to: {}", mBaudRate);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void configureBaudIndex(int index) {
-        if ((validBaudNumbers() != null) && (validBaudNumbers().length > 0)) {
-            for (int i = 0; i < validBaudNumbers().length; i++) {
-                if (validBaudRates()[i].equals(mBaudRate)) {
-                    mBaudRate = validBaudRates()[i];
-                    break;
-                }
-            }
+    public void configureBaudRateFromIndex(int index) {
+        if (validBaudRates().length > index) {
+            mBaudRate = validBaudRates()[index];
+            log.debug("mBaudRate set by index to: {}", mBaudRate);
         } else {
             log.debug("no baud rates in array"); // expected for simulators extending serialPortAdapter, mBaudRate already null
         }
     }
 
     protected String mBaudRate = null;
+
+    @Override
+    public int defaultBaudIndex() {
+        return -1;
+    }
 
     /**
      * {@inheritDoc}
@@ -236,25 +243,32 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         return mBaudRate;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getCurrentBaudNumber() {
+        int[] numbers = validBaudNumbers();
+        String[] rates = validBaudRates();
+        if (numbers == null || rates == null || numbers.length != rates.length) { // entries in arrays should correspond
+            return "";
+        }
+        String baudNumString = "";
+        // first try to find the configured baud rate value
         if (mBaudRate != null) {
-            int[] numbers = validBaudNumbers();
-            String[] rates = validBaudRates();
-            if (numbers == null || rates == null || numbers.length != rates.length) { // arrays should correspond
-                return "";
-            }
-            String baudNumString = "";
-            // find the configured baud rate value
             for (int i = 0; i < numbers.length; i++) {
                 if (rates[i].equals(mBaudRate)) {
                     baudNumString = Integer.toString(numbers[i]);
                     break;
                 }
             }
-            return baudNumString;
+        } else if (defaultBaudIndex() > -1) {
+            // use default
+            baudNumString = Integer.toString(numbers[defaultBaudIndex()]);
+            log.debug("using default port speed {}", baudNumString);
         }
-        return ""; // (none)
+        log.debug("mBaudRate = {}, matched to string {}", mBaudRate, baudNumString);
+        return baudNumString;
     }
 
     @Override
@@ -268,7 +282,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                 }
             }
         }
-        return 0; // (none)
+        return defaultBaudIndex(); // default index or -1 if port speed not supported
     }
 
     /**
@@ -299,7 +313,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
      * Uses the validBaudNumbers() and validBaudRates() methods to do this.
      *
      * @param currentBaudRate a rate from validBaudRates()
-     * @return -1 if no match (configuration system should prevent this)
+     * @return baudrate as integer if available and matching first digits in currentBaudRate,
+     *         0 if baudrate not supported by this adapter,
+     *         -1 if no match (configuration system should prevent this)
      */
     public int currentBaudNumber(String currentBaudRate) {
         String[] rates = validBaudRates();
@@ -307,18 +323,21 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
 
         // return if arrays invalid
         if (numbers == null) {
-            log.error("numbers array null in currentBaudNumber");
+            log.error("numbers array null in currentBaudNumber()");
             return -1;
         }
         if (rates == null) {
-            log.error("rates array null in currentBaudNumber");
+            log.error("rates array null in currentBaudNumber()");
             return -1;
         }
-        if (numbers.length < 1 || (numbers.length != rates.length)) {
-            log.error("arrays wrong length in currentBaudNumber: {}, {}", numbers.length, rates.length);
+        if (numbers.length != rates.length) {
+            log.error("arrays are of different length in currentBaudNumber: {} vs {}", numbers.length, rates.length);
             return -1;
         }
-
+        if (numbers.length < 1) {
+            log.warn("baudrate is not supported by adapter");
+            return 0;
+        }
         // find the baud rate value
         for (int i = 0; i < numbers.length; i++) {
             if (rates[i].equals(currentBaudRate)) {
@@ -374,7 +393,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                             return;
                         default:
                             log.info("SerialEvent of unknown type: " + type + " value: " + e.getNewValue()); // NOI18N
-                            return;
                     }
                 }
             }
@@ -456,6 +474,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
         try {
             closeConnection();
         } catch (RuntimeException e) {
+            log.warn("closeConnection failed");
         }
         reconnect();
     }
@@ -532,6 +551,7 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
                         }
                     }
                 } catch (RuntimeException e) {
+                    log.warn("failed to reconnect to port {}", (mPort == null ? "null" : mPort));
                 }
                 reply = !opened;
                 if (count >= retryAttempts) {

@@ -1,6 +1,7 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -34,12 +35,12 @@ public class PaneProgFrameTest {
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
-                    // dummy implementations
-                    @Override
-                    protected JPanel getModePane() {
-                        return new JPanel();
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return new JPanel();
+            }
+        };
 
         // invoke
         result = null;
@@ -49,7 +50,7 @@ public class PaneProgFrameTest {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
-        JUnitUtil.dispose(f);
+        p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
     // show me the specially-created frame
@@ -60,12 +61,12 @@ public class PaneProgFrameTest {
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
-                    // dummy implementations
-                    @Override
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
 
         // ugly, temporary way to load the decoder info
         jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest();
@@ -79,7 +80,7 @@ public class PaneProgFrameTest {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
-        JUnitUtil.dispose(f);
+        p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
     // static variables for internal classes to report their interpretations
@@ -150,14 +151,13 @@ public class PaneProgFrameTest {
                         )
                 )
         ); // end of adding contents
-
-        return;
     }
 
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
     @After

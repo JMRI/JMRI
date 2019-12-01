@@ -21,6 +21,7 @@ public class ScrollablePanel extends JPanel implements Scrollable {
         }
         
         /** {@inheritDoc} */
+        @Override
         public Dimension getPreferredScrollableViewportSize() {
             //tell the JScrollPane that we want to be our 'preferredSize'
             // but later, we'll say that vertically, it should scroll.
@@ -28,21 +29,25 @@ public class ScrollablePanel extends JPanel implements Scrollable {
         }
 
         /** {@inheritDoc} */
+        @Override
         public int getScrollableUnitIncrement(Rectangle visibleRect, int orientation, int direction) {
             return increment;
         }
 
         /** {@inheritDoc} */
+        @Override
         public int getScrollableBlockIncrement(Rectangle visibleRect, int orientation, int direction) {
             return increment;
         }
 
         /** {@inheritDoc} */
+        @Override
         public boolean getScrollableTracksViewportWidth() {
             return true; //track the width, and re-size as needed.
         }
 
         /** {@inheritDoc} */
+        @Override
         public boolean getScrollableTracksViewportHeight() {
             return false; //we don't want to track the height, because we want to scroll vertically.
         }

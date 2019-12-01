@@ -25,7 +25,7 @@ import purejavacomm.UnsupportedCommOperationException;
  * @author Bob Jacobsen Copyright (C) 2002
  * @author Paul Bender, Copyright (C) 2003,2008-2010
  */
-public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class EliteAdapter extends XNetSerialPortController {
 
     public EliteAdapter() {
         super(new EliteXNetSystemConnectionMemo());
@@ -154,12 +154,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
      */
     protected void setSerialPort() throws UnsupportedCommOperationException {
         // find the baud rate value, configure comm options
-        int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-        for (int i = 0; i < validSpeeds.length; i++) {
-            if (validSpeeds[i].equals(mBaudRate)) {
-                baud = validSpeedValues[i];
-            }
-        }
+        int baud = currentBaudNumber(mBaudRate);
         SerialUtil.setSerialPortParams(activeSerialPort, baud,
                 SerialPort.DATABITS_8,
                 SerialPort.STOPBITS_1,
@@ -203,6 +198,11 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
             Bundle.getMessage("Baud19200"), Bundle.getMessage("Baud38400"),
             Bundle.getMessage("Baud57600"), Bundle.getMessage("Baud115200")};
     protected int[] validSpeedValues = new int[]{9600, 19200, 38400, 57600, 115200};
+
+    @Override
+    public int defaultBaudIndex() {
+        return 0;
+    }
 
     // meanings are assigned to these above, so make sure the order is consistent
     protected String[] validOption1 = new String[]{Bundle.getMessage("FlowOptionNo"), Bundle.getMessage("FlowOptionHw")};

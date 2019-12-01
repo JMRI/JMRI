@@ -448,8 +448,9 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             l.add((byte)4); // version byte
             addStringPart("JMRI", l);
             addStringPart("PanelPro", l);
-            if (ProfileManager.getDefault().hasActiveProfile()) {
-                addStringPart("Profile " + ProfileManager.getDefault().getActiveProfileName(), l); // hardware version
+            String name = ProfileManager.getDefault().getActiveProfileName();
+            if (name != null) {
+                addStringPart("Profile " + name, l); // hardware version
             } else {
                 addStringPart("", l); // hardware version
             }

@@ -60,11 +60,11 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 addrClosed = v[1];
                 break;
             default:
-                log.error("Can't parse CbusSensor system name: " + address);
+                log.error("Can't parse CbusTurnout system name: {}", address);
                 return;
         }
         // connect
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     /**
@@ -74,8 +74,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     public void requestUpdateFromLayout() {
         CanMessage m;
         m = addrThrown.makeMessage(tc.getCanid());
-        int opc = CbusMessage.getOpcode(m);
-        if (CbusOpCodes.isShortEvent(opc)) {
+        if (CbusOpCodes.isShortEvent(CbusMessage.getOpcode(m))) {
             m.setOpCode(CbusConstants.CBUS_ASRQ);
         }
         else {
@@ -103,21 +102,12 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     protected void forwardCommandChangeToLayout(int s) {
         CanMessage m;
         if (s == Turnout.THROWN) {
-            if (getInverted()){
-                m = addrClosed.makeMessage(tc.getCanid());
-            } else {
-                m = addrThrown.makeMessage(tc.getCanid());
-            }
+            m = getAddrThrown();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         } 
         if (s == Turnout.CLOSED) {
-            if (getInverted()){
-                m = addrThrown.makeMessage(tc.getCanid());
-            }
-            else {
-                m = addrClosed.makeMessage(tc.getCanid());
-            }
+            m = getAddrClosed();
             CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
             tc.sendCanMessage(m, this);
         }
@@ -147,6 +137,52 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             m = addrClosed.makeMessage(tc.getCanid());
         }
         return m;
+    }
+    
+    // note we only respond to addrThrown matches, 
+    // ie the left hand side of split of address "+5;+7"
+    // there's a response expected from 5
+    private void sendResponseToQuery(){
+        CanMessage m = null;
+        if (getCommandedState() == Turnout.THROWN) {
+            m=getAddrThrown(); // has already had inverted status considered
+            if (CbusMessage.isShort(m)) {
+                if (CbusMessage.getEventType(m)==CbusConstants.EVENT_ON) {
+                    m.setOpCode(CbusConstants.CBUS_ARSON);
+                }
+                else {
+                    m.setOpCode(CbusConstants.CBUS_ARSOF);
+                }
+            } else {
+                if (CbusMessage.getEventType(m)==CbusConstants.EVENT_ON) {
+                    m.setOpCode(CbusConstants.CBUS_ARON);
+                }
+                else {
+                    m.setOpCode(CbusConstants.CBUS_AROF);
+                }
+            }
+        } else if (getCommandedState() == Turnout.CLOSED){
+            m=getAddrThrown(); // has already had inverted status considered
+            if (CbusMessage.isShort(m)) {
+                if (CbusMessage.getEventType(m)==CbusConstants.EVENT_ON) {
+                    m.setOpCode(CbusConstants.CBUS_ARSOF);
+                }
+                else {
+                    m.setOpCode(CbusConstants.CBUS_ARSON);
+                }
+            } else {
+                if (CbusMessage.getEventType(m)==CbusConstants.EVENT_ON) {
+                    m.setOpCode(CbusConstants.CBUS_AROF);
+                }
+                else {
+                    m.setOpCode(CbusConstants.CBUS_ARON);
+                }
+            }
+        }
+        if (m!=null) {
+            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+            tc.sendCanMessage(m, this);
+        }
     }
     
     /**
@@ -210,6 +246,8 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 newKnownState(INCONSISTENT);
                 jmri.util.ThreadingUtil.runOnLayoutDelayed( () -> { newKnownState(state); },DELAYED_FEEDBACK_INTERVAL );
             }
+        } else if (addrThrown.matchRequest(f)) {
+            sendResponseToQuery();
         }
     }
     

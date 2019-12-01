@@ -26,7 +26,7 @@ import jmri.jmrit.operations.setup.Control;
  *
  * @author Dan Boudreau Copyright (C) 2008, 2011, 2018
  */
-public class EngineEditFrame extends RollingStockEditFrame implements java.beans.PropertyChangeListener {
+public class EngineEditFrame extends RollingStockEditFrame {
 
     protected static final ResourceBundle rb = ResourceBundle
             .getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
@@ -66,7 +66,6 @@ public class EngineEditFrame extends RollingStockEditFrame implements java.beans
 
         // load tool tips
         builtTextField.setToolTipText(Bundle.getMessage("buildDateTip"));
-        rfidComboBox.setToolTipText(Bundle.getMessage("TipRfid"));
         editModelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("Model").toLowerCase()}));
         editGroupButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),

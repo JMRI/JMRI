@@ -12,6 +12,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.awt.GraphicsEnvironment;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -31,6 +33,7 @@ import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerPreferences;
 import org.junit.After;
+import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
@@ -62,6 +65,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     @Override
     public void tearDown() throws Exception {
         JUnitUtil.resetZeroConfServiceManager();
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 
@@ -229,7 +233,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         assertEquals(JSON.NETWORK_SERVICE, result.get(0).path(JSON.TYPE).asText());
         JsonNode data = result.get(0).path(JSON.DATA);
         assertFalse(data.isMissingNode());
-        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
+        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.USERNAME).asText());
         assertEquals(9999, data.path(JSON.PORT).asInt());
         assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
         assertEquals(NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());
@@ -260,6 +264,25 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     }
 
     /**
+     * Test of getSystemConnection method, of class JsonUtilHttpService.
+     *
+     * @throws jmri.server.json.JsonException if connection name not found
+     */
+    @Test
+    public void testGetSystemConnection() throws JsonException {
+        JsonNode result = service.getSystemConnection(locale, "Internal", 42);
+        validate(result);
+        // We should get back type, data and id
+        assertEquals(3, result.size());
+        // Data should exist and have at least 4 elements
+        assertTrue(result.path(JSON.DATA).size() >= 4);
+        assertEquals(JSON.SYSTEM_CONNECTION, result.path(JSON.TYPE).asText());
+        assertEquals("I", result.path(JSON.DATA).path(JSON.PREFIX).asText());
+        assertEquals("Internal", result.path(JSON.DATA).path(JSON.NAME).asText());
+        assertTrue(result.path(JSON.DATA).path(JSON.MFG).isNull());
+    }
+
+    /**
      * Test of getSystemConnections method, of class JsonUtilHttpService.
      *
      * @throws jmri.server.json.JsonException if messages are not schema valid
@@ -273,7 +296,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         JsonNode connection = result.get(0);
         assertEquals(JSON.SYSTEM_CONNECTION, connection.path(JSON.TYPE).asText());
         assertEquals("I", connection.path(JSON.DATA).path(JSON.PREFIX).asText());
-        assertTrue(connection.path(JSON.DATA).path(JSON.NAME).isNull());
+        assertEquals("Internal", connection.path(JSON.DATA).path(JSON.NAME).asText());
         assertTrue(connection.path(JSON.DATA).path(JSON.MFG).isNull());
     }
 
@@ -307,7 +330,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         assertEquals(JSON.NETWORK_SERVICE, result.path(JSON.TYPE).asText());
         JsonNode data = result.path(JSON.DATA);
         assertFalse(data.isMissingNode());
-        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.NAME).asText());
+        assertEquals(InstanceManager.getDefault(WebServerPreferences.class).getRailroadName(), data.path(JSON.USERNAME).asText());
         assertEquals(9999, data.path(JSON.PORT).asInt());
         assertEquals(JSON.ZEROCONF_SERVICE_TYPE, data.path(JSON.TYPE).asText());
         assertEquals(NodeIdentity.networkIdentity(), data.path(JSON.NODE).asText());
@@ -342,7 +365,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetPanel() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
-        ObjectNode result = service.getPanel(locale, editor, JSON.XML, 42);
+        ObjectNode result = service.getPanel(editor, JSON.XML, 42);
         validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
@@ -357,7 +380,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetPanels_Locale_String() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
-        JsonNode result = service.getPanels(locale, JSON.XML, 42);
+        JsonNode result = service.getPanels(JSON.XML, 42);
         validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
@@ -372,10 +395,27 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
     public void testGetPanels_Locale() throws JsonException {
         Assume.assumeFalse("Needs GUI", GraphicsEnvironment.isHeadless());
         Editor editor = new SwitchboardEditor("test");
-        JsonNode result = service.getPanels(locale, 42);
+        JsonNode result = service.getPanels(42);
         validate(result);
         JUnitUtil.dispose(editor.getTargetFrame());
         JUnitUtil.dispose(editor);
+    }
+
+    /**
+     * Test of getConfigProfile method, of class JsonUtilHttpService. 
+     * only runs negative test that a profile is not found
+     *
+     */
+    @Test
+    public void testGetConfigProfile() {
+        try {
+            JsonNode result = service.getConfigProfile(locale, "non-existent-profile", 42);
+            validate(result);
+            fail("Expected exception not thrown");
+        } catch (JsonException ex) {
+            assertEquals(HttpServletResponse.SC_NOT_FOUND, ex.getCode());
+        }
+        
     }
 
     /**

@@ -30,7 +30,7 @@ import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class DestinationPoints extends jmri.implementation.AbstractNamedBean implements NamedBean {
+public class DestinationPoints extends jmri.implementation.AbstractNamedBean {
 
     @Override
     public String getBeanType() {
@@ -103,6 +103,14 @@ public class DestinationPoints extends jmri.implementation.AbstractNamedBean imp
 
     public PointDetails getDestPoint() {
         return point;
+    }
+
+    /**
+     * @since 4.17.4
+     * Making the source object available for scripting in Jython.
+     */
+    public Source getSource() {
+        return src ;
     }
 
     boolean getUniDirection() {

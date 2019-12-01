@@ -120,7 +120,6 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
             new CbusSensor("MS",null,tcis);
             Assert.fail("Should have thrown an exception");
         } catch (NullPointerException e) {
-            Assert.assertTrue(true);
         }
     }
 
@@ -463,7 +462,9 @@ public class CbusSensorTest extends jmri.implementation.AbstractSensorTestBase {
     public void tearDown() {
         t.dispose();
         tcis=null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
     // private final static Logger log = LoggerFactory.getLogger(CbusSensorTest.class);
 }

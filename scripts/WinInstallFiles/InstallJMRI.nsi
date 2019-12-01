@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.25.0
+; - Backup and remove lib folder
+; -------------------------------------------------------------------------
 ; - Version 0.1.24.1
 ; - Correct the support for Java 11 Registry Keys
 ; -------------------------------------------------------------------------
@@ -304,7 +307,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.24.1"                   ; Installer version
+!define INST_VER  "0.1.25.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -483,105 +486,19 @@ SectionGroup "JMRI Core Files" SEC_CORE
     ; -- that might not be consistent with this new version
     RMDir /R "$OUTDIR\classes"
 
-	; -- Delete OBE JSON processing files as of JMRI 4.15.5
-    Delete "$OUTDIR\lib\jackson-annotations-2.8.11.jar"
-    Delete "$OUTDIR\lib\jackson-core-2.8.11.jar"
-    Delete "$OUTDIR\lib\jackson-databind-2.8.11.jar"
-    Delete "$OUTDIR\lib\json-schema-validator-0.1.19.jar"
-	
-    ; -- Delete insecure jackson jar files as of JMRI 4.11.3
-    Delete "$OUTDIR\lib\jackson-annotations-2.8.5.jar"
-    Delete "$OUTDIR\lib\jackson-core-2.8.5.jar"
-    Delete "$OUTDIR\lib\jackson-databind-2.8.5.jar"
-
-    ; -- Delete old PJC file for JMRI 4.7.5
-    Delete "$OUTDIR\lib\jna-4.2.2.jar"
-
-    ; -- Delete old jackson jar files as of JMRI 4.7.1
-    Delete "$OUTDIR\lib\jackson-annotations-2.0.6.jar"
-    Delete "$OUTDIR\lib\jackson-core-2.0.6.jar"
-    Delete "$OUTDIR\lib\jackson-databind-2.0.6.jar"
-
-    ; -- Delete old vecmath.jar files as of JMRI 4.5.1
-    Delete "$OUTDIR\lib\vecmath.jar"
+    ; -- Recursively delete lib folder, which historically contained
+    ; -- individually added JAR files, but which we have been encouraging
+    ; -- users not to modify
+    RMDir /R "$OUTDIR\lib"
 
     ; -- Delete old USB library files
     Delete "$OUTDIR\ch.ntb.usb.jar"
-    Delete "$OUTDIR\lib\ch.ntb.usb.jar"
 
     ; -- Delete old .jar & support files in destination directory
     Delete "$OUTDIR\jh.1.1.2.jar"
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
-
-    ; -- Delete old logging libraries
-    Delete "$OUTDIR\lib\slf4j-api-1.7.13.jar"
-    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.13.jar"
-    Delete "$OUTDIR\lib\jul-to-slf4j-1.7.13.jar"
-
-    ; -- Delete jetty and websocket libraries irrespective of version
-    Delete "$OUTDIR\lib\jetty-http-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\jetty-io-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\jetty-security-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\jetty-server-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\jetty-servlet-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\jetty-util-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\websocket-api-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\websocket-client-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\websocket-common-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\websocket-server-9.3.9.v20160517.jar"
-    Delete "$OUTDIR\lib\websocket-servlet-9.3.9.v20160517.jar"
-
-    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 4.3.7
-    Delete "$OUTDIR\lib\jetty-http-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\jetty-io-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\jetty-security-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\jetty-server-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\jetty-servlet-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\jetty-util-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\websocket-api-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\websocket-client-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\websocket-common-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\websocket-server-9.3.6.v20151106.jar"
-    Delete "$OUTDIR\lib\websocket-servlet-9.3.6.v20151106.jar"
-
-    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 4.3.1
-    Delete "$OUTDIR\lib\jetty-http-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\jetty-io-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\jetty-security-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\jetty-server-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\jetty-servlet-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\jetty-util-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\websocket-api-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\websocket-client-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\websocket-common-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\websocket-server-9.2.7.v20150116.jar"
-    Delete "$OUTDIR\lib\websocket-servlet-9.2.7.v20150116.jar"
-
-    ; -- Delete older outmoded jetty .jar and outmoded servlet files, as of
-    ;    JMRI 3.11.3 (added for version 0.1.21.5 of Windows installer)
-    Delete "$OUTDIR\lib\jetty-continuation-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-http-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-io-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-security-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-server-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-servlet-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-util-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\jetty-websocket-8.1.0.v20120127.jar"
-    Delete "$OUTDIR\lib\log4j.jar"
-    Delete "$OUTDIR\lib\jspWin.dll"
-
-    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 3.11.3
-    Delete "$OUTDIR\lib\jetty-continuation-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-http-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-io-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-security-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-server-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-servlet-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-util-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\jetty-websocket-8.1.11.v20130520.jar"
-    Delete "$OUTDIR\lib\servlet-api-3.0.jar"
-
+ 
     ; -- Delete XmlIO-related files, as of JMRI 3.11.3
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"
     Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\AnalogClock.png"
@@ -630,19 +547,6 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\xml\decoders\zimo\CV739-CV744twoSwitchIP.xml"
     Delete "$OUTDIR\xml\decoders\zimo\CV739-CV768.xml"
 
-    ; -- Delete old .jar & support files in lib\ directory
-    Delete "$OUTDIR\lib\activation.jar"
-    Delete "$OUTDIR\lib\crimson.jar"
-    Delete "$OUTDIR\lib\comm.jar"
-    Delete "$OUTDIR\lib\servlet.jar"
-    Delete "$OUTDIR\lib\slf4j-api-1.6.4.jar"
-    Delete "$OUTDIR\lib\slf4j-log4j12-1.6.4.jar"
-    Delete "$OUTDIR\lib\slf4j-api-1.7.2.jar"
-    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.2.jar"
-    Delete "$OUTDIR\lib\slf4j-api-1.7.5.jar"
-    Delete "$OUTDIR\lib\slf4j-log4j12-1.7.5.jar"
-    Delete "$OUTDIR\lib\jython.jar"
-
     ; -- Delete .jar & support files installed using previous layout
     Delete "$OUTDIR\activation.jar"
     Delete "$OUTDIR\ch.ntb.usb.jar"
@@ -678,26 +582,6 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Delete old plug-ins from program folder
     Delete "$OUTDIR\WiThrottle.jar"
-
-    ; -- Delete .dll files from previous x64/x86 layout
-    Delete "$OUTDIR\lib\jinput-raw_64.dll"
-    Delete "$OUTDIR\lib\jinput-dx8_64.dll"
-    Delete "$OUTDIR\lib\rxtxSerial.dll"
-    Delete "$OUTDIR\lib\LibusbJava.dll"
-    Delete "$OUTDIR\lib\gluegen-rt.dll"
-    Delete "$OUTDIR\lib\jinput-dx8.dll"
-    Delete "$OUTDIR\lib\jinput-raw.dll"
-    Delete "$OUTDIR\lib\jinput-wintab.dll"
-    Delete "$OUTDIR\lib\joal_native.dll"
-
-    ; -- Delete old JOAL .dll files
-    Delete "$OUTDIR\lib\x86\joal_native.dll"
-
-    ; -- Delete RXTX/SerialIO files
-    Delete "$OUTDIR\lib\Serialio.jar"
-    Delete "$OUTDIR\lib\RXTXcomm.jar"
-    Delete "$OUTDIR\lib\x86\rxtxSerial.dll"
-    Delete "$OUTDIR\lib\x64\rxtxSerial.dll"
 
     ; -- Delete old log files from program folder
     Delete "$OUTDIR\messages.log"
@@ -1523,6 +1407,7 @@ Function RemoveOldJMRI
   CreateDirectory "$PROFILE\JMRI_backup"
   CopyFiles "$PROFILE\JMRI\*.*" "$PROFILE\JMRI_backup"
   CopyFiles "$INSTDIR\classes" "$PROFILE\JMRI_backup"
+  CopyFiles "$INSTDIR\lib" "$PROFILE\JMRI_backup"
 
   ; -- Check if uninstall required
   StrCmp $REMOVEOLDJMRI.BACKUPONLY "1" Done

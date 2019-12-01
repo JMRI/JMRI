@@ -10,6 +10,11 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+
+import org.apache.commons.text.StringEscapeUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -20,9 +25,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.apache.commons.text.StringEscapeUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -74,7 +76,7 @@ public class HtmlTrainCommon extends TrainCommon {
     }
 
     protected String setoutUtilityCars(List<Car> cars, Car car, boolean isManifest) {
-        boolean isLocal = isLocalMove(car);
+        boolean isLocal = car.isLocalMove();
         if (Setup.isSwitchListFormatSameAsManifest()) {
             isManifest = true;
         }
@@ -98,7 +100,7 @@ public class HtmlTrainCommon extends TrainCommon {
     }
 
     protected String pickUpCar(Car car, int count, String[] format) {
-        if (isLocalMove(car)) {
+        if (car.isLocalMove()) {
             return ""; // print nothing local move, see dropCar
         }
         StringBuilder builder = new StringBuilder();
@@ -258,8 +260,8 @@ public class HtmlTrainCommon extends TrainCommon {
         } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)
                 || (attribute.equals(Setup.TRACK) && isPickup)) {
             if (rs.getTrack() != null) {
-                return String.format(locale, strings.getProperty("FromTrack"), StringEscapeUtils.escapeHtml4(rs
-                        .getTrackName()));
+                return String.format(locale, strings.getProperty("FromTrack"), StringEscapeUtils.escapeHtml4(splitString(rs
+                        .getTrackName())));
             }
             return "";
         } else if (attribute.equals(Setup.LOCATION) && !isPickup && !isLocal) {

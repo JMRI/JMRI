@@ -23,9 +23,9 @@
 --> <!-- Style -->
    <!-- /Style -->
    <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: T&eacute;l&eacute;chargement des Informations de
       D&eacute;bogage</h1>L'&eacute;l&eacute;ment
       "Transf&eacute;rer les informations de d&eacute;bogage" dans

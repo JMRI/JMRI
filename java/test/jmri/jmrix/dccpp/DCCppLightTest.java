@@ -41,14 +41,19 @@ public class DCCppLightTest extends jmri.implementation.AbstractLightTestBase {
         JUnitUtil.setUp();
         // prepare an interface
         xnis = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        DCCppLightManager xlm = new DCCppLightManager(xnis, "DCCpp");
+        DCCppSystemConnectionMemo memo = new DCCppSystemConnectionMemo(xnis);
+        xnis.setSystemConnectionMemo(memo);
+        memo.setSystemPrefix("d2");
+        DCCppLightManager xlm = new DCCppLightManager(xnis.getSystemConnectionMemo());
 
-        t = new DCCppLight(xnis, xlm, "DCCppL21");
+        t = new DCCppLight(xnis, xlm, "d2L21");
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

@@ -113,12 +113,13 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
 
         @Override
         public String[] validBaudRates() {
-            return null;
+            return new String[] {};
         }
 
         //@Override
+        @Override
         public int[] validBaudNumbers() {
-            return null;
+            return new int[] {};
         }
 
         protected SerialPortAdapterScaffold() throws Exception {
@@ -169,6 +170,7 @@ public class SerialTrafficControllerTest extends jmri.jmrix.AbstractMRNodeTraffi
     @After
     public void tearDown() {
         tc = null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

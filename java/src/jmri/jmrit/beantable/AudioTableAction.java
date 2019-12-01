@@ -2,7 +2,6 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JMenu;
@@ -175,7 +174,6 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
     @Override
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
-        ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
         MenuElement[] subElements;
         JMenu fileMenu = null;
         for (int i = 0; i < menuBar.getMenuCount(); i++) {
@@ -193,7 +191,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
             MenuElement[] popsubElements = subElement.getSubElements();
             for (MenuElement popsubElement : popsubElements) {
                 if (popsubElement instanceof JMenuItem) {
-                    if (((JMenuItem) popsubElement).getText().equals(rbapps.getString("PrintTable"))) {
+                    if (((JMenuItem) popsubElement).getText().equals(Bundle.getMessage("PrintTable"))) {
                         JMenuItem printMenu = (JMenuItem) popsubElement;
                         fileMenu.remove(printMenu);
                         break;
@@ -260,7 +258,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
     /**
      * Define abstract AudioTableDataModel
      */
-    abstract public class AudioTableDataModel extends BeanTableDataModel<Audio> implements PropertyChangeListener {
+    abstract public class AudioTableDataModel extends BeanTableDataModel<Audio> {
 
         char subType;
 
@@ -299,6 +297,7 @@ public class AudioTableAction extends AbstractTableAction<Audio> {
          *
          * @param subType Audio sub-type to update
          */
+        @SuppressWarnings("deprecation") // needs careful unwinding for Set operations & generics
         protected synchronized void updateSpecificNameList(char subType) {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {

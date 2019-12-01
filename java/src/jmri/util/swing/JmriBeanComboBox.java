@@ -33,7 +33,10 @@ import org.slf4j.LoggerFactory;
  * <p>
  * This class could definitely benefit from beng made generic on "E extends NamedBean"
  * to reduce complexity.  See particularly the "public NamedBean {@link #getNamedBean}" method.
+ * 
+ * @deprecated since 4.17.1; use {@link jmri.swing.NamedBeanComboBox} instead
  */
+@Deprecated
 public class JmriBeanComboBox extends JComboBox<String> implements java.beans.PropertyChangeListener {
 
     /**
@@ -178,16 +181,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                             break;
 
                         case USERNAMESYSTEMNAME:
-                            if (uname != null && !uname.equals("")) {
-                                displayList[i] = nBean.getFullyFormattedDisplayName();
-                            } else {
-                                displayList[i] = name;
-                            }
-                            break;
-
                         case SYSTEMNAMEUSERNAME:
                             if (uname != null && !uname.equals("")) {
-                                displayList[i] = nBean.getFullyFormattedDisplayName(false);
+                                displayList[i] = nBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
                             } else {
                                 displayList[i] = name;
                             }
@@ -397,16 +393,9 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                     break;
 
                 case USERNAMESYSTEMNAME:
-                    if (uname != null && !uname.equals("")) {
-                        selectedItem = inNamedBean.getFullyFormattedDisplayName();
-                    } else {
-                        selectedItem = inNamedBean.getSystemName();
-                    }
-                    break;
-
                 case SYSTEMNAMEUSERNAME:
                     if (uname != null && !uname.equals("")) {
-                        selectedItem = inNamedBean.getFullyFormattedDisplayName(false);
+                        selectedItem = inNamedBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
                     } else {
                         selectedItem = inNamedBean.getSystemName();
                     }
@@ -530,8 +519,8 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
                     for (NamedBean namedBean : namedBeanSet) {
                         //checking to see if it matches "<sname> (<uname>)" or "<uname> (<sname>)"
                         if ((namedBean.getUserName() != null)) {
-                            String usname = namedBean.getFullyFormattedDisplayName();
-                            String suname = namedBean.getFullyFormattedDisplayName(false);
+                            String usname = namedBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
+                            String suname = namedBean.getDisplayName(NamedBean.DisplayOptions.USERNAME_SYSTEMNAME);
 
                             if (comboBoxText.equals(usname) || comboBoxText.equals(suname)) {
                                 result = namedBean;

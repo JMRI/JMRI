@@ -17,6 +17,8 @@ import jmri.ShutDownManager;
 import jmri.ShutDownTask;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultIdTag;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.configurexml.DefaultIdTagManagerXml;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -38,8 +40,8 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     private boolean useFastClock = false;
     private ShutDownTask shutDownTask = null;
 
-    public DefaultIdTagManager() {
-        super();
+    public DefaultIdTagManager(SystemConnectionMemo memo) {
+        super(memo);
     }
 
     @Override
@@ -66,24 +68,22 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
             // Create shutdown task to save
             log.debug("Register ShutDown task");
             if (this.shutDownTask == null) {
-                InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((sdm) -> {
-                    this.shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
-                        @Override
-                        public boolean execute() {
-                            // Save IdTag details prior to exit, if necessary
-                            log.debug("Start writing IdTag details...");
-                            try {
-                                writeIdTagDetails();
-                            } catch (java.io.IOException ioe) {
-                                log.error("Exception writing IdTags: {}", (Object) ioe);
-                            }
-
-                            // continue shutdown
-                            return true;
+                this.shutDownTask = new jmri.implementation.AbstractShutDownTask("Writing IdTags") { // NOI18N
+                    @Override
+                    public boolean execute() {
+                        // Save IdTag details prior to exit, if necessary
+                        log.debug("Start writing IdTag details...");
+                        try {
+                            writeIdTagDetails();
+                        } catch (java.io.IOException ioe) {
+                            log.error("Exception writing IdTags: {}", (Object) ioe);
                         }
-                    };
-                    sdm.register(this.shutDownTask);
-                });
+
+                        // continue shutdown
+                        return true;
+                    }
+                };
+                InstanceManager.getDefault(ShutDownManager.class).register(this.shutDownTask);
             }
             initialised = true;
         }
@@ -94,6 +94,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
      */
     @Override
     protected void registerSelf() {
+        // override to do nothing
     }
 
     @Override
@@ -102,17 +103,14 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public String getSystemPrefix() {
-        return "I";
-    }
-
-    @Override
-    public IdTag provide(String name) throws IllegalArgumentException {
+    @Nonnull
+    public IdTag provide(@Nonnull String name) throws IllegalArgumentException {
         return provideIdTag(name);
     }
 
     @Override
-    public IdTag provideIdTag(String name) throws IllegalArgumentException {
+    @Nonnull
+    public IdTag provideIdTag(@Nonnull String name) throws IllegalArgumentException {
         if (!initialised && !loading) {
             init();
         }
@@ -130,7 +128,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public IdTag getIdTag(String name) {
+    public IdTag getIdTag(@Nonnull String name) {
         if (!initialised && !loading) {
             init();
         }
@@ -149,7 +147,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public IdTag getBySystemName(String name) {
+    public IdTag getBySystemName(@Nonnull String name) {
         if (!initialised && !loading) {
             init();
         }
@@ -157,7 +155,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public IdTag getByUserName(String key) {
+    public IdTag getByUserName(@Nonnull String key) {
         if (!initialised && !loading) {
             init();
         }
@@ -165,7 +163,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     }
 
     @Override
-    public IdTag getByTagID(String tagID) {
+    public IdTag getByTagID(@Nonnull String tagID) {
         if (!initialised && !loading) {
             init();
         }
@@ -175,14 +173,14 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     protected IdTag createNewIdTag(String systemName, String userName) {
         // Names start with the system prefix followed by D.
         // Add the prefix if not present.
-        if (!systemName.startsWith(getSystemPrefix() + typeLetter() )) // NOI18N
-        {
-            systemName = getSystemPrefix() + typeLetter() + systemName; // NOI18N
+        if (!systemName.startsWith(getSystemPrefix() + typeLetter())) {
+            systemName = getSystemPrefix() + typeLetter() + systemName;
         }
         return new DefaultIdTag(systemName, userName);
     }
 
     @Override
+    @Nonnull
     public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
         if (!initialised && !loading) {
             init();
@@ -210,25 +208,25 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         // doesn't exist, make a new one
         s = createNewIdTag(systemName, userName);
 
-        // save in the maps
-        register(s);
-
         // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }
 
+        // save in the maps
+        register(s);
+
         return s;
     }
 
     @Override
-    public void register(IdTag s) {
+    public void register(@Nonnull IdTag s) {
         super.register(s);
         this.setDirty(true);
     }
 
     @Override
-    public void deregister(IdTag s) {
+    public void deregister(@Nonnull IdTag s) {
         super.deregister(s);
         this.setDirty(true);
     }
@@ -254,35 +252,51 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         log.debug("...done reading IdTag details");
     }
 
-
     @Override
     public void setStateStored(boolean state) {
+        if (!initialised && !loading) {
+            init();
+        }
         if (state != storeState) {
             this.setDirty(true);
         }
+        boolean old = storeState;
         storeState = state;
+        firePropertyChange("StateStored", old, state);
     }
 
     @Override
     public boolean isStateStored() {
+        if (!initialised && !loading) {
+            init();
+        }
         return storeState;
     }
 
     @Override
     public void setFastClockUsed(boolean fastClock) {
+        if (!initialised && !loading) {
+            init();
+        }
         if (fastClock != useFastClock) {
             this.setDirty(true);
         }
-        useFastClock = fastClock;
+        boolean old = useFastClock;
+        useFastClock  = fastClock;
+        firePropertyChange("UseFastClock", old, fastClock);
     }
 
     @Override
     public boolean isFastClockUsed() {
+        if (!initialised && !loading) {
+            init();
+        }
         return useFastClock;
     }
 
     @Override
-    public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
+    @Nonnull
+    public List<IdTag> getTagsForReporter(@Nonnull Reporter reporter, long threshold) {
         List<IdTag> out = new ArrayList<>();
         Date lastWhenLastSeen = new Date(0);
 
@@ -317,15 +331,13 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     @Override
     public void dispose() {
-        InstanceManager.getOptionalDefault(ShutDownManager.class).ifPresent((sdm) -> {
-            sdm.deregister(this.shutDownTask);
-        });
+        InstanceManager.getDefault(ShutDownManager.class).deregister(this.shutDownTask);
         super.dispose();
     }
 
     @Override
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameReporter");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
     }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class);
@@ -336,7 +348,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         @Override
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
             if (type.equals(IdTagManager.class)) {
-                return new DefaultIdTagManager();
+                return new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
             }
             return super.getDefault(type);
         }

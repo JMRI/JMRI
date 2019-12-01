@@ -80,7 +80,7 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         if (log.isDebugEnabled()) {
             log.debug("received sensor value {}", o);
         }
-        Assert.assertTrue(null != (XNetSensor) o);
+        Assert.assertNotNull(o);
 
         // make sure loaded into tables
         if (log.isDebugEnabled()) {
@@ -121,12 +121,13 @@ public class XNetSensorManagerTest extends jmri.managers.AbstractSensorMgrTestBa
         // prepare an interface
         xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new XNetSensorManager(xnis, "X");
+        l = new XNetSensorManager(xnis.getSystemConnectionMemo());
     }
 
     @After
     public void tearDown() {
         l.dispose();
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
