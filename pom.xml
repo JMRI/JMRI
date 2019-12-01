@@ -25,7 +25,7 @@
         <openlcb.version>0.7.26</openlcb.version>
         <netbeans.version>RELEASE110</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
-        <jacoco.reportFile>${target}/jacoco.exec</jacoco.reportFile>
+        <jacoco.reportFile>${basedir}/target/jacoco.exec</jacoco.reportFile>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
