@@ -1,6 +1,7 @@
 package jmri.jmrix.internal;
 
 import jmri.Light;
+import jmri.NamedBean;
 import jmri.implementation.AbstractVariableLight;
 
 /**
@@ -21,18 +22,24 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
     protected Light createNewLight(String systemName, String userName) {
         return new AbstractVariableLight(systemName, userName) {
 
-            //protected void forwardCommandChangeToLayout(int s) {}
             @Override
             protected void sendIntensity(double intensity) {
+                // nothing to do
             }
 
             @Override
             protected void sendOnOffCommand(int newState) {
+                // nothing to do
             }
 
             @Override
             protected int getNumberOfSteps() {
                 return 100;
+            }
+
+            @Override
+            public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
+                return suffix1.compareTo(suffix2);
             }
         };
     }
