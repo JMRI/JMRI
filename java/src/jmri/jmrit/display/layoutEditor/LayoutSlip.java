@@ -1147,11 +1147,6 @@ public class LayoutSlip extends LayoutTurnout {
 
     @Override
     protected void draw1(Graphics2D g2, boolean drawMain, boolean isBlock) {
-        if (isBlock && getLayoutBlock() == null) {
-            // Skip the block layer since there is no block assigned.
-            return;
-        }
-
         Point2D pA = getCoordsA();
         Point2D pB = getCoordsB();
         Point2D pC = getCoordsC();
@@ -1162,7 +1157,8 @@ public class LayoutSlip extends LayoutTurnout {
         boolean mainlineC = isMainlineC();
         boolean mainlineD = isMainlineD();
 
-        boolean drawUnselectedLeg = layoutEditor.isTurnoutDrawUnselectedLeg();
+        boolean drawUnselectedLeg = layoutEditor.isTurnoutDrawUnselectedLeg()
+                || isTurnoutInconsistent();
 
         int slipState = getSlipState();
 
@@ -1170,45 +1166,31 @@ public class LayoutSlip extends LayoutTurnout {
 
         // if this isn't a block line all these will be the same color
         Color colorA = color, colorB = color, colorC = color, colorD = color;
-        Color adjColorA = color, adjColorB = color, adjColorC = color, adjColorD = color;
 
         if (isBlock) {
-            LayoutBlock layoutBlock = getLayoutBlock();
-            colorA = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
-            layoutBlock = (connectA != null) ? ((TrackSegment) connectA).getLayoutBlock() : layoutBlock;;
-            adjColorA = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
-
-            layoutBlock = getLayoutBlockB();
-            colorB = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
-            layoutBlock = (connectB != null) ? ((TrackSegment) connectB).getLayoutBlock() : layoutBlock;;
-            adjColorB = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
-
-            layoutBlock = getLayoutBlockC();
-            colorC = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
-            layoutBlock = (connectC != null) ? ((TrackSegment) connectC).getLayoutBlock() : layoutBlock;;
-            adjColorC = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
-
-            layoutBlock = getLayoutBlockD();
-            colorD = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
-            layoutBlock = (connectD != null) ? ((TrackSegment) connectD).getLayoutBlock() : layoutBlock;;
-            adjColorD = (layoutBlock != null) ? layoutBlock.getBlockColor() : color;
+            LayoutBlock layoutBlockA = getLayoutBlock();
+            colorA = (layoutBlockA != null) ? layoutBlockA.getBlockTrackColor() : color;
+            LayoutBlock layoutBlockB = getLayoutBlockB();
+            colorB = (layoutBlockB != null) ? layoutBlockB.getBlockTrackColor() : color;
+            LayoutBlock layoutBlockC = getLayoutBlockC();
+            colorC = (layoutBlockC != null) ? layoutBlockC.getBlockTrackColor() : color;
+            LayoutBlock layoutBlockD = getLayoutBlockD();
+            colorD = (layoutBlockD != null) ? layoutBlockD.getBlockTrackColor() : color;
 
             if (slipState == STATE_AC) {
-                adjColorA = colorA;
-                adjColorC = colorC;
+                colorA = (layoutBlockA != null) ? layoutBlockA.getBlockColor() : color;
+                colorC = (layoutBlockC != null) ? layoutBlockC.getBlockColor() : color;
+            } else if (slipState == STATE_BD) {
+                colorB = (layoutBlockB != null) ? layoutBlockB.getBlockColor() : color;
+                colorD = (layoutBlockD != null) ? layoutBlockD.getBlockColor() : color;
+            } else if (slipState == STATE_AD) {
+                colorA = (layoutBlockA != null) ? layoutBlockA.getBlockColor() : color;
+                colorD = (layoutBlockD != null) ? layoutBlockD.getBlockColor() : color;
+            } else if (slipState == STATE_BC) {
+                colorB = (layoutBlockB != null) ? layoutBlockB.getBlockColor() : color;
+                colorC = (layoutBlockC != null) ? layoutBlockC.getBlockColor() : color;
             }
-        } else if (slipState == STATE_BD) {
-            adjColorB = colorB;
-            adjColorD = colorD;
-        } else if (slipState == STATE_AD) {
-            adjColorA = colorA;
-            adjColorD = colorD;
-        } else if (slipState == STATE_BC) {
-            adjColorB = colorB;
-            adjColorC = colorC;
-        } else {
         }
-
         Point2D oneForthPointAC = MathUtil.oneFourthPoint(pA, pC);
         Point2D oneThirdPointAC = MathUtil.oneThirdPoint(pA, pC);
         Point2D midPointAC = MathUtil.midPoint(pA, pC);
@@ -1223,31 +1205,6 @@ public class LayoutSlip extends LayoutTurnout {
 
         Point2D midPointAD = MathUtil.midPoint(oneThirdPointAC, twoThirdsPointBD);
         Point2D midPointBC = MathUtil.midPoint(oneThirdPointBD, twoThirdsPointAC);
-
-        if (isTurnoutInconsistent()) {
-            // If either turnout is inconsistent, draw an alternate slip image
-            // draw A<=
-            if (drawMain == mainlineA) {
-                g2.setColor(adjColorA);
-                g2.draw(new Line2D.Double(pA, oneForthPointAC));
-            }
-            // draw B<=
-            if (drawMain == mainlineB) {
-                g2.setColor(adjColorB);
-                g2.draw(new Line2D.Double(pB, oneForthPointBD));
-            }
-            // draw =>C
-            if (drawMain == mainlineC) {
-                g2.setColor(adjColorC);
-                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
-            }
-            // draw =>D
-            if (drawMain == mainlineD) {
-                g2.setColor(adjColorD);
-                g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
-            }
-            return;
-        }
 
         if (slipState == STATE_AD) {
             // draw A<===>D
@@ -1303,34 +1260,58 @@ public class LayoutSlip extends LayoutTurnout {
 
         if (!isBlock || drawUnselectedLeg) {
             if (slipState == STATE_AC) {
-                g2.setColor(adjColorB);
-                g2.draw(new Line2D.Double(pB, oneForthPointBD));
-                g2.setColor(adjColorD);
-                g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
+                if (drawMain == mainlineB) {
+                    g2.setColor(colorB);
+                    g2.draw(new Line2D.Double(pB, oneForthPointBD));
+                }
+                if (drawMain == mainlineD) {
+                    g2.setColor(colorD);
+                    g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
+                }
             } else if (slipState == STATE_BD) {
-                g2.setColor(adjColorA);
-                g2.draw(new Line2D.Double(pA, oneForthPointAC));
-                g2.setColor(adjColorC);
-                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+                if (drawMain == mainlineA) {
+                    g2.setColor(colorA);
+                    g2.draw(new Line2D.Double(pA, oneForthPointAC));
+                }
+                if (drawMain == mainlineC) {
+                    g2.setColor(colorC);
+                    g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+                }
             } else if (slipState == STATE_AD) {
-                g2.setColor(adjColorB);
-                g2.draw(new Line2D.Double(pB, oneForthPointBD));
-                g2.setColor(adjColorC);
-                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+                if (drawMain == mainlineB) {
+                    g2.setColor(colorB);
+                    g2.draw(new Line2D.Double(pB, oneForthPointBD));
+                }
+                if (drawMain == mainlineC) {
+                    g2.setColor(colorC);
+                    g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+                }
             } else if (slipState == STATE_BC) {
-                g2.setColor(adjColorA);
-                g2.draw(new Line2D.Double(pA, oneForthPointAC));
-                g2.setColor(adjColorD);
-                g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
+                if (drawMain == mainlineA) {
+                    g2.setColor(colorA);
+                    g2.draw(new Line2D.Double(pA, oneForthPointAC));
+                }
+                if (drawMain == mainlineD) {
+                    g2.setColor(colorD);
+                    g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
+                }
             } else {
-                g2.setColor(adjColorA);
-                g2.draw(new Line2D.Double(pA, oneForthPointAC));
-                g2.setColor(adjColorB);
-                g2.draw(new Line2D.Double(pB, oneForthPointBD));
-                g2.setColor(adjColorC);
-                g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
-                g2.setColor(adjColorD);
-                g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
+                if (drawMain == mainlineA) {
+                    g2.setColor(colorA);
+                    g2.draw(new Line2D.Double(pA, oneForthPointAC));
+                }
+                if (drawMain == mainlineB) {
+                    g2.setColor(colorB);
+                    g2.draw(new Line2D.Double(pB, oneForthPointBD));
+                }
+                if (drawMain == mainlineC) {
+                    g2.setColor(colorC);
+                    g2.draw(new Line2D.Double(threeFourthsPointAC, pC));
+                }
+                if (drawMain == mainlineD) {
+                    g2.setColor(colorD);
+                    g2.draw(new Line2D.Double(threeFourthsPointBD, pD));
+                }
             }
         }
     }   // draw1
