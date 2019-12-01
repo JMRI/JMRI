@@ -17,7 +17,7 @@
       <systemName>ISBONDALE JCTN GOODS</systemName>
     </sensor>
     <sensor inverted="false">
-      <systemName>ITCASETEST</systemName>
+      <systemName>ISCASETEST</systemName>
       <userName>upper case</userName>
     </sensor>
     <sensor inverted="false">
