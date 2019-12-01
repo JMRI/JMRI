@@ -34,7 +34,7 @@ public class ReferenceUtilTest {
         try {
             r.run();
         } catch (Exception e) {
-            Assert.assertEquals("Exception is correct", e.getClass(), exceptionClass);
+            Assert.assertEquals("Exception is correct", exceptionClass, e.getClass());
             Assert.assertTrue("Exception is correct", e.getClass() == exceptionClass);
             Assert.assertEquals("Exception message is correct", errorMessage, e.getMessage());
             exceptionThrown = true;
@@ -68,11 +68,37 @@ public class ReferenceUtilTest {
         m2.setValue("IM1");
         Assert.assertEquals("Reference is correct", "IM1", ru.getReference("{IM2}"));
         Assert.assertEquals("Reference is correct", "Turnout 1", ru.getReference("{{IM2}}"));
+        
+        m3.setValue("IM2");
+        Assert.assertEquals("Reference is correct", "IM2", ru.getReference("{IM3}"));
+        Assert.assertEquals("Reference is correct", "Turnout 1", ru.getReference("{{{IM3}}}"));
     }
     
     @Test
     public void testTables() {
         // IM1 = "{Yard table[Turnout 2,Sensor1]}
+        
+        Memory m1 = memoryManager.newMemory("IM1", "Memory 1");
+        Memory m2 = memoryManager.newMemory("IM2", "Memory 2");
+        Memory m3 = memoryManager.newMemory("IM3", "Memory 3");
+        Memory m4 = memoryManager.newMemory("IM4", "Memory 4");
+        Memory m5 = memoryManager.newMemory("IM5", "Memory 5");
+        Memory m6 = memoryManager.newMemory("IM6", "Memory 6");
+        Memory m7 = memoryManager.newMemory("IM7", "Memory 7");
+        Memory m8 = memoryManager.newMemory("IM8", "Memory 8");
+        Memory m9 = memoryManager.newMemory("IM9", "Memory 9");
+        Memory m10 = memoryManager.newMemory("IM10", "Memory 10");
+        Memory m11 = memoryManager.newMemory("IM11", "Memory 11");
+        Memory m12 = memoryManager.newMemory("IM12", "Memory 12");
+        
+        
+        ReferenceUtil ru = new ReferenceUtil();
+        
+        // Test references
+        m1.setValue("Turnout 1");
+        Assert.assertEquals("Reference is correct", "Turnout 111", ru.getReference("{Yard table[Turnout 1]}"));
+        Assert.assertEquals("Reference is correct", "Turnout 222", ru.getReference("{Yard table[Turnout 1,Green yard]}"));
+        
     }
     
     @Test

@@ -126,14 +126,14 @@ public class ReferenceUtil {
         }
         
         System.out.format("Reference: '%s', endIndex: %d%n", reference, endIndex.v);
-        if (reference.charAt(endIndex.v) != '}') {
+        if ((reference.charAt(endIndex.v) != '}') && (reference.charAt(endIndex.v) != '[')) {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
         
         
 //        if ((endIndex.v+1 == reference.length()) && (reference.charAt(endIndex.v) == '}')) {
-        if ((endIndex.v+1 == reference.length()) || (reference.charAt(endIndex.v+1) != '[')) {
+        if ((endIndex.v+1 == reference.length()) || (reference.charAt(endIndex.v) != '[')) {
             System.out.format("getReference: leftValue: '%s'%n", leftValue);
             Memory m = memoryManager.getNamedBean(leftValue);
             if (m != null) {
@@ -145,32 +145,45 @@ public class ReferenceUtil {
         
         // If we are here, we have a table reference. Find out column and row.
         if (reference.charAt(endIndex.v) != '[') {
-//            throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
+            throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
+        
+        endIndex.v++;
         
         // If we are here, we have a table reference. Find out column and row.
         row = getReferenceOrValue(reference, endIndex.v, endIndex);
         
-        if ((endIndex.v+1 == reference.length() && (reference.charAt(endIndex.v) != ']'))) {
+        System.out.format("endIndex: %d, %c%n", endIndex.v, reference.charAt(endIndex.v));
+        if ((endIndex.v+2 == reference.length()
+                && (reference.charAt(endIndex.v) == ']')
+                && (reference.charAt(endIndex.v+1) == '}'))) {
+            return "Testing....";
 //            return leftValue[row];
         }
         
-        if (endIndex.v == reference.length() || reference.charAt(endIndex.v) != ',') {
+        System.out.format("endIndex: %d, %c%n", endIndex.v, reference.charAt(endIndex.v));
+        if (endIndex.v+1 == reference.length() || reference.charAt(endIndex.v) != ',') {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
+        
+        endIndex.v++;
         
         column = getReferenceOrValue(reference, endIndex.v, endIndex);
         if (endIndex.v == reference.length() || reference.charAt(endIndex.v) != ']') {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
-        if (endIndex.v != reference.length()) {
-            throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
+        System.out.format("endIndex: %d, %c%n", endIndex.v, reference.charAt(endIndex.v));
+        if ((endIndex.v+2 == reference.length()
+                && (reference.charAt(endIndex.v) == ']')
+                && (reference.charAt(endIndex.v+1) == '}'))) {
+            return "Testing 222....";
+//            return leftValue[row];
         }
         
-//        return leftValue;
-        // leftValue[row,column]
-        throw new UnsupportedOperationException("Table is not yet supported");
+        throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
+        
+//        throw new UnsupportedOperationException("Table is not yet supported");
     }
     
 //    @Nonnull
