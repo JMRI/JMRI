@@ -25,7 +25,7 @@
         <openlcb.version>0.7.26</openlcb.version>
         <netbeans.version>RELEASE110</netbeans.version>
         <jacoco.version>0.8.5</jacoco.version>
-        <jacoco.reportFile>${basedir}/target/jacoco.exec</jacoco.reportFile>
+        <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
@@ -607,7 +607,7 @@
                         </goals>
                         <configuration>
                             <append>true</append>
-                            <destFile>${jacoco.reportFile}</destFile>
+                            <destFile>${jacoco.reportDir}/jacoco-unit.exec</destFile>
                             <propertyName>surefire.argLine</propertyName>
                          </configuration>
                     </execution>
@@ -618,7 +618,7 @@
                         </goals>      
                         <configuration>
                             <append>true</append>
-                            <destFile>${jacoco.reportFile}</destFile>
+                            <destFile>${jacoco.reportDir}/jacoco-it.exec</destFile>
                             <propertyName>failsafe.argLine</propertyName>
                          </configuration>
                     </execution>  
@@ -628,8 +628,8 @@
                             <goal>report</goal>
                         </goals>      
                         <configuration>
-                            <dataFile>${jacoco.reportFile}</dataFile>
-                         </configuration>
+                            <dataFile>${jacoco.reportDir}jacoco-unit.exec</dataFile>
+                        </configuration>
                     </execution>      
                     <execution>
                         <id>default-check</id>
