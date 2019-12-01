@@ -131,7 +131,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
         try {
             validateAddressFormat(name.substring(getSystemNamePrefix().length()));
         } catch (IllegalArgumentException ex) {
-            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCBUS", name, getSystemNamePrefix());
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCBUS", ex.getMessage());
         }
         return name;
     }
