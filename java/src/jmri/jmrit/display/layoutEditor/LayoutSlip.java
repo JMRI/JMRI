@@ -1320,8 +1320,7 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    protected void draw2(Graphics2D g2, boolean drawMain, float railDisplacement
-    ) {
+    protected void draw2(Graphics2D g2, boolean drawMain, float railDisplacement) {
         Point2D pA = getCoordsA();
         Point2D pB = getCoordsB();
         Point2D pC = getCoordsC();
@@ -1522,8 +1521,7 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    protected void highlightUnconnected(Graphics2D g2, int specificType
-    ) {
+    protected void highlightUnconnected(Graphics2D g2, int specificType) {
         if (((specificType == NONE) || (specificType == SLIP_A))
                 && (getConnectA() == null)) {
             g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
@@ -1546,8 +1544,7 @@ public class LayoutSlip extends LayoutTurnout {
     }
 
     @Override
-    protected void drawTurnoutControls(Graphics2D g2
-    ) {
+    protected void drawTurnoutControls(Graphics2D g2) {
         if (!disabled && !(disableWhenOccupied && isOccupied())) {
             // TODO: query user base if this is "acceptable" (can obstruct state)
             if (false) {
