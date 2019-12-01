@@ -1,9 +1,11 @@
 package jmri.jmrix.rps;
 
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Manager.NameValidity;
@@ -38,6 +40,11 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     public void configureManagers() {

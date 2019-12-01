@@ -144,6 +144,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Turnout> getNamedBeanClass() {
+        return Turnout.class;
+    }
+
     /** {@inheritDoc} */
     @Override
     public String getClosedText() {

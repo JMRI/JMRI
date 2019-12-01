@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.AddressedProgrammerManager;
@@ -12,6 +13,7 @@ import jmri.InstanceManager;
 import jmri.IdTagManager;
 import jmri.LightManager;
 import jmri.MultiMeter;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.ReporterManager;
 import jmri.SensorManager;
@@ -23,6 +25,8 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -456,6 +460,11 @@ public class LocoNetSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.loconet.LocoNetActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     // yes, tagManager is static.  Tags can move between system connections.
