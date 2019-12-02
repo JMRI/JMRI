@@ -194,7 +194,7 @@ au r&#233;seau, c'est juste un changement au sein du programme.
 <h3>R&#233;tro Signalisation TWOSENSOR et l'&#233;tat incoh&#233;rent</h3>
 
 La r&#233;trosignalisation TWOSENSOR utilise deux capteurs s&#233;par&#233;s pour indiquer quand l'aiguillage a
-&#233;t&#233; successivement de l'&#233;tat DIRECT &#224; D&#201VI;&#201;. Pendant la transition entre ces deux &#233;tats,
+&#233;t&#233; successivement de l'&#233;tat DIRECT &#224; D&#201;VI&#201;. Pendant la transition entre ces deux &#233;tats,
 il est dans aucun &#233;tat, ainsi l'&#233;tat de l'aiguillage appara&#238;t comme INCOH&#201;RENT. Par exemple:
 <ol>
 <li>L'Aiguillage est actuellement montr&#233; DIRECTE, avec le Capteur d&#233;tectant direct montr&#233; actif
@@ -203,7 +203,7 @@ et le Capteur d&#233;tectant d&#233;vi&#233; montr&#233; inactif
 <li>Le Capteur d&#233;tectant direct va &#224; Inactif car ce point devient off, et l'aiguillage 
 commence &#224; montrer INCOHERENT
 <li>le Capteur d&#233;tectant d&#233;vi&#233; va &#224; Actif car ce point s'installe sur ferm&#233;, et l'aiguillage 
-commence &#224; montrer l'&#233;tat D&#201VI;&#201;.
+commence &#224; montrer l'&#233;tat D&#201;VI&#201;.
 </ol>
 
 La m&#234;me chose arrive si vous commandez &#224; distance le mouvement de l'aiguillage, par exemple avec un bouton-poussoir local.

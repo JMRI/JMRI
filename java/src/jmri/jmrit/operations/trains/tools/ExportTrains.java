@@ -1,22 +1,19 @@
 package jmri.jmrit.operations.trains.tools;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.MessageFormat;
+
 import javax.swing.JOptionPane;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.rollingstock.cars.tools.ExportCars;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Exports the train roster into a comma delimited file (CSV). Only trains that
@@ -39,10 +36,6 @@ public class ExportTrains extends XmlFile {
         del = delimiter;
     }
 
-    /**
-     * Store the all of the operation car objects in the default place,
-     * including making a backup if needed
-     */
     public void writeOperationsTrainsFile() {
         makeBackupFile(defaultOperationsFilename());
         try {
@@ -79,7 +72,7 @@ public class ExportTrains extends XmlFile {
             fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")), // NOI18N
                     true); // NOI18N
         } catch (IOException e) {
-            log.error("Can not open export cars CSV file: " + file.getName());
+            log.error("Can not open export trains CSV file: " + file.getName());
             return;
         }
 
@@ -237,6 +230,6 @@ public class ExportTrains extends XmlFile {
 
     private static String operationsFileName = "ExportOperationsTrainRoster.csv"; // NOI18N
 
-    private final static Logger log = LoggerFactory.getLogger(ExportCars.class);
+    private final static Logger log = LoggerFactory.getLogger(ExportTrains.class);
 
 }

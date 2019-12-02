@@ -1,16 +1,21 @@
 package jmri.jmrix.srcp;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.ClockControl;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.SensorManager;
 import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.srcp.parser.ASTinfo;
 import jmri.jmrix.srcp.parser.SimpleNode;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -230,6 +235,11 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.srcp.SrcpActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override
