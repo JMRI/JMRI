@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 
 import jmri.Light;
 import jmri.LightManager;
+import jmri.SignalHead;
 
 /**
  * Implementation of a LightManager that can serve as a proxy for multiple
@@ -197,6 +198,14 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Light> getNamedBeanClass() {
+        return Light.class;
     }
 
 }

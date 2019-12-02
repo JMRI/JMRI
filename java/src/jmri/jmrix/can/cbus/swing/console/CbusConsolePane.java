@@ -344,6 +344,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         showOpcCheckBox.setText(Bundle.getMessage("showOpcCheckbox"));
         showOpcCheckBox.setVisible(true);
         showOpcCheckBox.setToolTipText(Bundle.getMessage("showOpcCheckboxTip"));
+        showOpcCheckBox.setSelected(true);
         
         showOpcExtraCheckBox.setText(Bundle.getMessage("OpcExtraCheckbox"));
         showOpcExtraCheckBox.setVisible(true);

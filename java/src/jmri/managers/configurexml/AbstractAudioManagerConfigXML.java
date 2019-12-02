@@ -68,8 +68,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             }
             // also, don't store if we don't have any Sources or Buffers
             // (no need to store the automatically created Listener object by itself)
-            if (am.getSystemNameList(Audio.SOURCE).isEmpty()
-                    && am.getSystemNameList(Audio.BUFFER).isEmpty()) {
+            if (am.getNamedBeanSet(Audio.SOURCE).isEmpty()
+                    && am.getNamedBeanSet(Audio.BUFFER).isEmpty()) {
                 return null;
             }
             // finally, don't store if the only Sources and Buffers are for the
@@ -87,13 +87,13 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
             }
 
             log.debug("Found {} VSD objects of {} objects", vsdObjectCount,
-                    am.getSystemNameList(Audio.SOURCE).size() + am.getSystemNameList(Audio.BUFFER).size()
+                    am.getNamedBeanSet(Audio.SOURCE).size() + am.getNamedBeanSet(Audio.BUFFER).size()
             );
 
             // check if the total number of Sources and Buffers is equal to
             // the number of VSD objects - if so, exit.
-            if (am.getSystemNameList(Audio.SOURCE).size()
-                    + am.getSystemNameList(Audio.BUFFER).size() == vsdObjectCount) {
+            if (am.getNamedBeanSet(Audio.SOURCE).size()
+                    + am.getNamedBeanSet(Audio.BUFFER).size() == vsdObjectCount) {
                 log.debug("Only VSD objects - nothing to store");
                 return null;
             }

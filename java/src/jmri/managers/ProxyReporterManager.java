@@ -4,6 +4,7 @@ import javax.annotation.Nonnull;
 
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.SignalHead;
 
 /**
  * Implementation of a ReporterManager that can serves as a proxy for multiple
@@ -150,5 +151,13 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Reporter> getNamedBeanClass() {
+        return Reporter.class;
     }
 }

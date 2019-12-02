@@ -850,7 +850,7 @@ public class LevelXing extends LayoutTrack {
      */
     public boolean isMainlineAC() {
         if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
-                || ((connectB != null) && (((TrackSegment) connectB).isMainline()))) {
+                || ((connectC != null) && (((TrackSegment) connectC).isMainline()))) {
             return true;
         } else {
             return false;

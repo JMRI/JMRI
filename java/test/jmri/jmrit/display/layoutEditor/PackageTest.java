@@ -47,6 +47,14 @@ import org.junit.runners.Suite;
         TrackNodeTest.class,
         TrackSegmentTest.class,
         TransitCreationToolTest.class,
+        LayoutTrackEditorsTest.class,
+        LayoutEditorComponentTest.class,
+        LayoutEditorToolsTest.class,
+        LayoutEditorChecksTest.class,
+        LayoutTrackDrawingOptionsDialogTest.class,
+        LayoutTrackDrawingOptionsTest.class,
+        LayoutTrackExpectedStateTest.class,
+        LoadAndStoreTest.class
 })
 
 public class PackageTest {

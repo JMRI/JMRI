@@ -1,12 +1,15 @@
 package jmri.jmrix.easydcc;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 
 import jmri.ConsistManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.ThrottleManager;
+import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -242,6 +245,11 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.easydcc.EasyDccActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

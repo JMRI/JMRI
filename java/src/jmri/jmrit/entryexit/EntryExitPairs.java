@@ -21,6 +21,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
+import jmri.SignalSystem;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -1429,6 +1430,14 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<DestinationPoints> getNamedBeanClass() {
+        return DestinationPoints.class;
     }
 
     /** {@inheritDoc} */
