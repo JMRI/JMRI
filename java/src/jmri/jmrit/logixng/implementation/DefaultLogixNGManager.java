@@ -765,5 +765,11 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         return new ArrayList<>(_femaleSocketFactories);
     }
 
+    @Override
+    public Class<LogixNG> getNamedBeanClass() {
+        return LogixNG.class;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixNGManager.class);
+
 }

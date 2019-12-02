@@ -212,5 +212,11 @@ public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogEx
         return (_instance);
     }
 
+    @Override
+    public Class<MaleAnalogExpressionSocket> getNamedBeanClass() {
+        return MaleAnalogExpressionSocket.class;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultAnalogExpressionManager.class);
+
 }

@@ -183,6 +183,11 @@ public class DefaultStringActionManager extends AbstractManager<MaleStringAction
         }
         return (_instance);
     }
+
+    @Override
+    public Class<MaleStringActionSocket> getNamedBeanClass() {
+        return MaleStringActionSocket.class;
+    }
     
     private final static Logger log = LoggerFactory.getLogger(DefaultStringActionManager.class);
 

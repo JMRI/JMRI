@@ -206,6 +206,11 @@ public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigital
         return (_instance);
     }
 
+    @Override
+    public Class<MaleDigitalExpressionSocket> getNamedBeanClass() {
+        return MaleDigitalExpressionSocket.class;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultDigitalExpressionManager.class);
 
 }

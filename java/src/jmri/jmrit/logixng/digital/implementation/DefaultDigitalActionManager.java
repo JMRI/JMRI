@@ -189,6 +189,11 @@ public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActi
         }
         return (_instance);
     }
+
+    @Override
+    public Class<MaleDigitalActionSocket> getNamedBeanClass() {
+        return MaleDigitalActionSocket.class;
+    }
     
     private final static Logger log = LoggerFactory.getLogger(DefaultDigitalActionManager.class);
 

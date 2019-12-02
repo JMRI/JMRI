@@ -189,6 +189,11 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
         }
         return (_instance);
     }
+
+    @Override
+    public Class<MaleDigitalActionWithChangeSocket> getNamedBeanClass() {
+        return MaleDigitalActionWithChangeSocket.class;
+    }
     
     private final static Logger log = LoggerFactory.getLogger(DefaultDigitalBooleanActionManager.class);
 

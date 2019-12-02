@@ -214,5 +214,10 @@ public class DefaultStringExpressionManager extends AbstractManager<MaleStringEx
         return (_instance);
     }
 
+    @Override
+    public Class<MaleStringExpressionSocket> getNamedBeanClass() {
+        return MaleStringExpressionSocket.class;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultStringExpressionManager.class);
 }

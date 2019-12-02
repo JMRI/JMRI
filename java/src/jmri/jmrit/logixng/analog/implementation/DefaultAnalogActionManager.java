@@ -184,6 +184,12 @@ public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogAction
         }
         return (_instance);
     }
+
+    @Override
+    public Class<MaleAnalogActionSocket> getNamedBeanClass() {
+        return MaleAnalogActionSocket.class;
+    }
     
     private final static Logger log = LoggerFactory.getLogger(DefaultAnalogActionManager.class);
+    
 }

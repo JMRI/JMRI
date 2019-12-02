@@ -256,5 +256,10 @@ public class DefaultConditionalNGManager extends AbstractManager<ConditionalNG>
         return new ArrayList<>(_femaleSocketFactories);
     }
 
+    @Override
+    public Class<ConditionalNG> getNamedBeanClass() {
+        return ConditionalNG.class;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultConditionalNGManager.class);
 }
