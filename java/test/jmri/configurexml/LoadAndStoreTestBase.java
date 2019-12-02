@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 import java.util.Collection;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.jmrit.logix.WarrantPreferences;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -224,6 +225,7 @@ public class LoadAndStoreTestBase {
         ConfigureManager cm = InstanceManager.getDefault(ConfigureManager.class);
         boolean good = cm.load(inFile);
         Assert.assertTrue("loadFile(\"" + inFile.getPath() + "\")", good);
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
