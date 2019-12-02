@@ -1,13 +1,16 @@
 package jmri.jmrix.dcc4pc;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.ResourceBundle;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.RailComManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.managers.DefaultRailComManager;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -178,6 +181,11 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.dcc4pc.Dcc4PcActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
+import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -189,6 +190,14 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Light> getNamedBeanClass() {
+        return Light.class;
     }
 
     /**

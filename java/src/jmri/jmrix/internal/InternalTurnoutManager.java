@@ -1,7 +1,9 @@
 package jmri.jmrix.internal;
 
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
+import jmri.util.PreferNumericComparator;
 import jmri.implementation.AbstractTurnout;
 
 /**
@@ -32,10 +34,17 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
 
             @Override
             protected void forwardCommandChangeToLayout(int s) {
+                // nothing to do
             }
 
             @Override
             protected void turnoutPushbuttonLockout(boolean b) {
+                // nothing to do
+            }
+
+            @Override
+            public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
+                return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
         };
     }

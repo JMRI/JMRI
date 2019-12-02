@@ -67,6 +67,11 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     } // NOI18N
 
     @Override
+    public Class<NamedBean> getNamedBeanClass() {
+        return NamedBean.class;
+    }
+
+    @Override
     public int getXMLOrder() {
         return 65400;
     }
