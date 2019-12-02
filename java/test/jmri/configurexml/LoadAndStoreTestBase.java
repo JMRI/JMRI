@@ -223,9 +223,9 @@ public class LoadAndStoreTestBase {
     // load file
     public static void loadFile(File inFile) throws Exception {
         ConfigureManager cm = InstanceManager.getDefault(ConfigureManager.class);
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         boolean good = cm.load(inFile);
         Assert.assertTrue("loadFile(\"" + inFile.getPath() + "\")", good);
-        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
