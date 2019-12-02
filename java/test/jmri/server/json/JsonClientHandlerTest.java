@@ -195,6 +195,7 @@ public class JsonClientHandlerTest {
                 connection.getObjectMapper().readTree("{\"type\":\"test\", \"data\":{\"throws\":\"JmriException\"}}");
         instance.onMessage(node);
         JsonNode message = connection.getMessage();
+        JUnitAppender.assertWarnMessage("Unsupported operation attempted");
         Assert.assertNotNull("Response provided", message);
         JsonNode data = message.path(JSON.DATA);
         Assert.assertTrue("Response is an object", message.isObject());
