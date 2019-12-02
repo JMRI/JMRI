@@ -77,6 +77,14 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public char typeLetter();
 
     /**
+     * Get the class of NamedBean supported by this Manager. This should be the
+     * generic class used in the Manager's class declaration.
+     * 
+     * @return the class supported by this Manager.
+     */
+    public abstract Class<E> getNamedBeanClass();
+
+    /**
      * Get the prefix and type for the system name of the NamedBeans handled by
      * this manager.
      *

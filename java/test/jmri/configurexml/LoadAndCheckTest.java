@@ -24,7 +24,7 @@ public class LoadAndCheckTest {
     /**
      * Test a file with current schema.
      *
-     * @throws Exception
+     * @throws Exception rethrows any exception
      */
     @Test
     public void testLoadFileTest() throws Exception {
@@ -92,5 +92,7 @@ public class LoadAndCheckTest {
     }
 
     @After
-    public void tearDown() {        JUnitUtil.tearDown();    }
+    public void tearDown() {
+        JUnitUtil.tearDown();
+    }
 }
