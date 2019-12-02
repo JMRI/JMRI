@@ -35,7 +35,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
 
     protected final HashMap<T, NamedBeanListener> beanListeners = new HashMap<>();
     protected final ManagerListener managerListener = new ManagerListener();
-    private final static Logger log = LoggerFactory.getLogger(JsonNamedBeanSocketService.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonNamedBeanSocketService.class);
 
     public JsonNamedBeanSocketService(JsonConnection connection, H service) {
         super(connection, service);
@@ -89,9 +89,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
 
     @Override
     public void onClose() {
-        beanListeners.values().stream().forEach((listener) -> {
-            listener.bean.removePropertyChangeListener(listener);
-        });
+        beanListeners.values().stream().forEach(listener -> listener.bean.removePropertyChangeListener(listener));
         beanListeners.clear();
         service.getManager().removePropertyChangeListener(managerListener);
     }
@@ -143,18 +141,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             try {
-                try {
-                    // send the new list
-                    connection.sendMessage(service.doGetList(service.getType(),
-                            service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
-                    //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N
-                        removeListenersFromRemovedBeans();
-                    }
-                } catch (JsonException ex) {
-                    log.warn("json error sending {}: {}", service.getType(), ex.getJsonMessage());
-                    connection.sendMessage(ex.getJsonMessage(), 0);
-                }
+                handleChange(evt);
             } catch (IOException ex) {
                 // if we get an error, unregister as listener
                 log.debug("deregistering reportersListener due to IOException");
@@ -162,5 +149,19 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
             }
         }
 
+        private void handleChange(PropertyChangeEvent evt) throws IOException {
+            try {
+                // send the new list
+                connection.sendMessage(service.doGetList(service.getType(),
+                        service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
+                //child added or removed, reset listeners
+                if (evt.getPropertyName().equals("length")) { // NOI18N
+                    removeListenersFromRemovedBeans();
+                }
+            } catch (JsonException ex) {
+                log.warn("json error sending {}: {}", service.getType(), ex.getJsonMessage());
+                connection.sendMessage(ex.getJsonMessage(), 0);
+            }
+        }
     }
 }
