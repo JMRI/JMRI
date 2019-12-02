@@ -77,8 +77,12 @@ public class JsonHttpServiceTestBase<I extends JsonHttpService> {
     public final void testDoSchema(String type) throws JsonException {
         // protect against JUnit tests in Eclipse that test this class directly
         assumeNotNull(service);
-        validate(service.doSchema(type, false, locale, 42));
-        validate(service.doSchema(type, true, locale, 42));
+        JsonNode schema = service.doSchema(type, false, locale, 42);
+        validate(schema);
+        assertEquals("Type is in client schema", "jmri-json-" + type + "-client-message", schema.path(JSON.DATA).path(JSON.SCHEMA).path("title").asText());
+        schema = service.doSchema(type, true, locale, 42);
+        validate(schema);
+        assertEquals("Type is in server schema", "jmri-json-" + type + "-server-message", schema.path(JSON.DATA).path(JSON.SCHEMA).path("title").asText());
         // Suppress a warning message (see networknt/json-schema-validator#79)
         JUnitAppender.checkForMessageStartingWith(
                 "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");

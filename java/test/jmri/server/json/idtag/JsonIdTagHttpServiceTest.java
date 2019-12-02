@@ -206,14 +206,4 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         validate(result);
     }
 
-    /**
-     * Test of doSchema method, of class JsonIdTagHttpService.
-     *
-     * @throws jmri.server.json.JsonException if something goes wrong
-     */
-    @Test
-    public void testDoSchema() throws JsonException {
-        testDoSchema(JsonIdTag.IDTAG);
-    }
-
 }
