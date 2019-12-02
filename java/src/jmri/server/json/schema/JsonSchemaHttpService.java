@@ -57,9 +57,6 @@ public class JsonSchemaHttpService extends JsonHttpService {
                         Set<JsonNode> dedup = new HashSet<>();
                         for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class)
                                 .getServices(name)) {
-                            // separate try/catch blocks to ensure one failure
-                            // does not
-                            // block following from being accepted
                             if (server == null || server) {
                                 this.doSchema(schemas, dedup, service, name, true, locale, id);
                             }
