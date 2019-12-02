@@ -28,7 +28,6 @@ import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -212,7 +211,6 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
      *
      * @throws jmri.server.json.JsonException if something goes wrong
      */
-    @Ignore("Until upstream sources are fixed; see #7633")
     @Test
     public void testDoSchema() throws JsonException {
         JsonIdTagHttpService instance = new JsonIdTagHttpService(mapper);
