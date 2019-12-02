@@ -4,6 +4,8 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.memory.JsonMemory.MEMORIES;
 import static jmri.server.json.memory.JsonMemory.MEMORY;
+import static jmri.server.json.idtag.JsonIdTag.IDTAG;
+import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +23,8 @@ import jmri.ProvidingManager;
 import jmri.Reportable;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.idtag.JsonIdTagHttpService;
+import jmri.server.json.reporter.JsonReporterHttpService;
 
 /**
  *
@@ -29,6 +33,8 @@ import jmri.server.json.JsonNamedBeanHttpService;
 public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
 
     private static final Logger log = LoggerFactory.getLogger(JsonMemoryHttpService.class);
+    private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
+    private JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
 
     public JsonMemoryHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -43,25 +49,27 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
             if (val == null) {
                 data.putNull(VALUE);
             } else {
-                //convert memory to a string, logic copied from jmri.jmrit.display.layoutEditor.MemoryIcon
-                String s = "";
+                //set memory value based on data type
                 if (val instanceof String) {
-                    s = (String) val;
+                    data.put(VALUE, (String) val);
                 } else if (val instanceof javax.swing.ImageIcon) {
                     log.warn("ImageIcon not yet supported");
+                    data.putNull(VALUE);
                 } else if (val instanceof Number) {
-                    s = val.toString();
+                    data.put(VALUE, val.toString());
                 } else if (val instanceof jmri.IdTag){
                     // most IdTags are Reportable objects, so 
                     // this needs to be before Reportable
-                    s = ((jmri.IdTag)val).getDisplayName();
+                    ObjectNode idTagValue = idTagService.doGet((jmri.IdTag)val, name, IDTAG, locale, id);
+                    data.set(VALUE, idTagValue);
                 } else if (val instanceof Reportable) {
-                    s = ((Reportable)val).toReportString();
+                    ObjectNode reporterValue = reporterService.doGet((jmri.Reporter)val, name, REPORTER, locale, id);
+                    data.set(VALUE, reporterValue);
                 } else {
                     log.warn("can't return current value of memory '{}', val='{}' of Class '{}'", 
                             name, val, val.getClass().getName());
+                    data.putNull(VALUE);
                 }
-                data.put(VALUE, s);
             }
         }
         return root;
