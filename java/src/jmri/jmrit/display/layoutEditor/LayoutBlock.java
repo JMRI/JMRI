@@ -644,7 +644,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     public int getState() {
         return getOccupancy();
     }
-    
+
     /**
      * Does nothing, do not use.
      * Dummy for completion of NamedBean interface
@@ -871,6 +871,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     break;
                 }
             }
+        } else if (main.isEmpty() && test.isEmpty()) {
+            result = true;          // OK if both have no neighbors, common for turntable rays
         }
         return result;
     }

@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>17</minor>
+    <test>7</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS003</systemName>
+      <userName>leading zeros</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS3</systemName>
+      <userName>no leading zero</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISBONDALE JCTN GOODS</systemName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCASETEST</systemName>
+      <userName>upper case</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+      <userName>Clock</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IScasetest</systemName>
+      <userName>lower case</userName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+      <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
+      <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT001</systemName>
+      <userName>S - BTC Headshunt Stop</userName>
+      <comment>SignalHead:IH001:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT002</systemName>
+      <userName>S - BTC Loading Stop</userName>
+      <comment>SignalHead:IH002:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT003</systemName>
+      <userName>S - BTC Siding 1 Stop</userName>
+      <comment>SignalHead:IH003:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT004</systemName>
+      <userName>S - BTC Siding 2 Stop</userName>
+      <comment>SignalHead:IH004:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT005</systemName>
+      <userName>S - Bonton Yard Headshunt Stop</userName>
+      <comment>SignalHead:IH005:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT5</systemName>
+      <comment>SignalHead:IH5:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT006</systemName>
+      <userName>S - Bonton Yard Siding 5 Stop</userName>
+      <comment>SignalHead:IH006:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT6</systemName>
+      <comment>SignalHead:IH006:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT007</systemName>
+      <userName>S - Bonton Yard Siding 4 Stop</userName>
+      <comment>SignalHead:IH007:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT7</systemName>
+      <comment>SignalHead:IH007:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT008</systemName>
+      <userName>S - Bonton Yard Siding 3 Stop</userName>
+      <comment>SignalHead:IH008:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT8</systemName>
+      <comment>SignalHead:IH008:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT009</systemName>
+      <userName>S - Bonton Yard Siding 2 Stop</userName>
+      <comment>SignalHead:IH009:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT9</systemName>
+      <comment>SignalHead:IH009:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT010</systemName>
+      <userName>S - Bonton Yard Siding 1 Stop</userName>
+      <comment>SignalHead:IH010:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT10</systemName>
+      <comment>SignalHead:IH010:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT011</systemName>
+      <userName>S - Bonton Down Loop Spur Stop</userName>
+      <comment>SignalHead:IH011:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT11</systemName>
+      <comment>SignalHead:IH011:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT012</systemName>
+      <userName>S - Bonton Goods Bay Spur Stop</userName>
+      <comment>SignalHead:IH012:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT013</systemName>
+      <userName>S - Bonton Bay 1 Spur Stop</userName>
+      <comment>SignalHead:IH013:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT014</systemName>
+      <userName>S - Bonton Bay 2 Spur Stop</userName>
+      <comment>SignalHead:IH014:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT015</systemName>
+      <userName>S - Bonton Bay 3 Spur Stop</userName>
+      <comment>SignalHead:IH015:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT016</systemName>
+      <userName>S - Bonton Bay 4 Spur Stop</userName>
+      <comment>SignalHead:IH016:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT017</systemName>
+      <userName>S - Bondale Brewery Spur Stop</userName>
+      <comment>SignalHead:IH017:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT019</systemName>
+      <userName>S - Bondale Brewery Loco Stop</userName>
+      <comment>SignalHead:IH019:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT020</systemName>
+      <userName>S - Bondale Brewery Headshunt Stop</userName>
+      <comment>SignalHead:IH020:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT021</systemName>
+      <userName>S - Bonton TT Stop</userName>
+      <comment>SignalHead:IH021:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT039</systemName>
+      <userName>S - Leoton Spur 1 Stop</userName>
+      <comment>SignalHead:IH039:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT040</systemName>
+      <userName>S - Leoton Spur 2 Stop</userName>
+      <comment>SignalHead:IH040:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT041</systemName>
+      <userName>S - Leoton Loco Stop</userName>
+      <comment>SignalHead:IH041:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT042</systemName>
+      <userName>S - Bonton Test Stop</userName>
+      <comment>SignalHead:IH042:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT043</systemName>
+      <userName>S - Mrs Anderson's 1 Stop</userName>
+      <comment>SignalHead:IH043:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT044</systemName>
+      <userName>S - Mrs Anderson's 2 Stop</userName>
+      <comment>SignalHead:IH044:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT045</systemName>
+      <userName>S - Bustham Interchange Stop</userName>
+      <comment>SignalHead:IH045:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT046</systemName>
+      <userName>S - Bustham Siding Stop</userName>
+      <comment>SignalHead:IH046:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT047</systemName>
+      <userName>S - Bustham 1 Stop</userName>
+      <comment>SignalHead:IH047:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT048</systemName>
+      <userName>S - Bustham 2 Spur Stop</userName>
+      <comment>SignalHead:IH048:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT049</systemName>
+      <userName>S - Bustham 3 Spur Stop</userName>
+      <comment>SignalHead:IH049:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT050</systemName>
+      <userName>S - York TT Stop</userName>
+      <comment>SignalHead:IH050:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT052</systemName>
+      <userName>S - York 2 Spur Stop</userName>
+      <comment>SignalHead:IHO52:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT053</systemName>
+      <userName>S - York 3 Spur Stop</userName>
+      <comment>SignalHead:IHO53:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT054</systemName>
+      <userName>S - York 4 Spur Stop</userName>
+      <comment>SignalHead:IHO54:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT056</systemName>
+      <userName>S - York 6 Spur Stop</userName>
+      <comment>SignalHead:IHO56:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT057</systemName>
+      <userName>S - York 7 Spur Stop</userName>
+      <comment>SignalHead:IHO57:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT058</systemName>
+      <userName>S - York Service Stop</userName>
+      <comment>SignalHead:IH058:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT059</systemName>
+      <userName>S - Bonton Platform 1 Spur Stop</userName>
+      <comment>SignalHead:IH059:Red:Red</comment>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>ITCASETEST</systemName>
+      <userName>upper case</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>ITcasetest</systemName>
+      <userName>lower case</userName>
+    </turnout>
+  </turnouts>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <filehistory>
+    <operation>
+      <type>Store</type>
+      <date>Sun Dec 01 09:59:25 PST 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.7ish+jake+20191201T1652Z+Rb42e1ccae7 on Sun Dec 01 09:59:25 PST 2019-->
+</layout-config>

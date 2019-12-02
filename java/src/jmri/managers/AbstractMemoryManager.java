@@ -7,6 +7,7 @@ import javax.annotation.CheckForNull;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.SignalHead;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -144,6 +145,14 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     @Nonnull 
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameMemories" : "BeanNameMemory");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Memory> getNamedBeanClass() {
+        return Memory.class;
     }
 
     @Override

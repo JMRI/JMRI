@@ -15,6 +15,7 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
+import jmri.SignalSystem;
 import jmri.Turnout;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -2623,6 +2624,14 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLayoutBlocks" : "BeanNameLayoutBlock");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<LayoutBlock> getNamedBeanClass() {
+        return LayoutBlock.class;
     }
 
     /**

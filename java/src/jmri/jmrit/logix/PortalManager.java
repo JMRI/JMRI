@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 import jmri.InstanceManager;
+import jmri.SignalSystem;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import org.slf4j.Logger;
@@ -151,6 +152,14 @@ public class PortalManager extends AbstractManager<Portal>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNamePortals" : "BeanNamePortal");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Portal> getNamedBeanClass() {
+        return Portal.class;
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
