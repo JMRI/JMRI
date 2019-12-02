@@ -27,7 +27,6 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.sensor.JsonSensor;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -282,21 +281,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
      */
     @Test
     public void testDoSchema() throws JsonException {
-        JsonBlockHttpService instance = new JsonBlockHttpService(mapper);
-        JsonNode block = instance.doSchema(JsonBlock.BLOCK, false, locale, 42);
-        JsonNode blocks = instance.doSchema(JsonBlock.BLOCK, false, locale, 42);
-        validate(block);
-        validate(blocks);
-        assertEquals("Client schema for block and blocks is the same", block, blocks);
-        block = instance.doSchema(JsonBlock.BLOCK, true, locale, 42);
-        blocks = instance.doSchema(JsonBlock.BLOCK, true, locale, 42);
-        validate(block);
-        validate(blocks);
-        assertEquals("Server schema for block and blocks is the same", block, blocks);
-
-        // Suppress a warning message (see networknt/json-schema-validator#79)
-        JUnitAppender.checkForMessageStartingWith(
-                "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
+        testDoSchema(JsonBlock.BLOCK, JsonBlock.BLOCKS);
     }
 
 }
