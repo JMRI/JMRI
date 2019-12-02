@@ -40,7 +40,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     public JsonSchemaServiceCache() {
         Map<String, String> map = new HashMap<>();
         try {
-            for (JsonNode mapping : mapper.readTree(this.getClass().getResource("/jmri/server/json/schema-map.json"))) {
+            for (JsonNode mapping : mapper.readTree(JsonSchemaServiceCache.class.getResource("/jmri/server/json/schema-map.json"))) {
                 map.put(mapping.get("publicURL").asText(),
                         mapping.get("localURL").asText());
             }
