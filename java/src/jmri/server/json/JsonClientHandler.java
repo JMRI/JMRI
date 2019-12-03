@@ -68,8 +68,8 @@ public class JsonClientHandler {
     }
 
     public void onClose() {
-        services.values().stream().forEach(set -> set.stream()
-                .forEach(service -> service.onClose()));
+        services.values().stream()
+                .forEach(set -> set.stream().forEach(JsonSocketService::onClose));
         services.clear();
     }
 

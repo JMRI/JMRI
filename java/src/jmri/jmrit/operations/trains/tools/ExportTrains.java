@@ -73,6 +73,11 @@ public class ExportTrains extends XmlFile {
                     true); // NOI18N
         } catch (IOException e) {
             log.error("Can not open export trains CSV file: " + file.getName());
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("ExportedTrainsToFile"), new Object[]{
+                            0, defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportFailed"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 

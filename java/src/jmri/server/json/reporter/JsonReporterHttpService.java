@@ -65,7 +65,7 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
             data.putNull(REPORT);
             data.put(JSON.VALUE, Bundle.getMessage(locale, "NoReport"));
         }
-        Object lr = reporter.getCurrentReport();
+        Object lr = reporter.getLastReport();
         if (lr != null) {
             String report;
             if (lr instanceof jmri.Reportable) {
