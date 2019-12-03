@@ -125,7 +125,9 @@ function displayCellValue(type, colName, value) {
 		return ret;
 	}
 	if (typeof value === "object") {
-		if (value.name) {
+	    if (value.type == "idTag"){
+	    	return value.data.userName // handle idTag object by displaying userName
+	    } else if (value.name) {
 			return value.name;  // return name of object if it has one
 		} else {
 			return "[obj]"; //placeholder				
