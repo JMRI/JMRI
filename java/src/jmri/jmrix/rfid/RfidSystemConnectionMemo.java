@@ -1,9 +1,12 @@
 package jmri.jmrix.rfid;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrix.rfid.swing.RfidComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -116,6 +119,11 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.rfid.RfidActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

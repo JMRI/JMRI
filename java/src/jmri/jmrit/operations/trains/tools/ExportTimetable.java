@@ -149,6 +149,10 @@ public class ExportTimetable extends XmlFile {
             fileOut.close();
         } catch (IOException e) {
             log.error("Can not open export timetable CSV file: " + file.getName());
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
+                            new Object[]{defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportFailed"), JOptionPane.ERROR_MESSAGE);
             return;
         }
     }

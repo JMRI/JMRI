@@ -7,49 +7,23 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+import javax.swing.*;
 
-import jmri.ReporterManager;
-import jmri.swing.NamedBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.Reporter;
+import jmri.ReporterManager;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.jmrit.operations.locations.tools.ChangeTracksTypeAction;
-import jmri.jmrit.operations.locations.tools.EditCarTypeAction;
-import jmri.jmrit.operations.locations.tools.LocationTrackBlockingOrderAction;
-import jmri.jmrit.operations.locations.tools.LocationsByCarTypeFrame;
-import jmri.jmrit.operations.locations.tools.ModifyLocationsAction;
-import jmri.jmrit.operations.locations.tools.ModifyLocationsCarLoadsAction;
-import jmri.jmrit.operations.locations.tools.PrintLocationsAction;
-import jmri.jmrit.operations.locations.tools.SetPhysicalLocationAction;
-import jmri.jmrit.operations.locations.tools.ShowCarsByLocationAction;
-import jmri.jmrit.operations.locations.tools.ShowTrackMovesAction;
-import jmri.jmrit.operations.locations.tools.ShowTrainsServingLocationAction;
-import jmri.jmrit.operations.locations.tools.TrackCopyAction;
+import jmri.jmrit.operations.locations.tools.*;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.swing.NamedBeanComboBox;
 
 /**
  * Frame for user edit of location

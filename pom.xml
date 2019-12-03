@@ -230,6 +230,7 @@
                             <executable>scripts/tidy-check.sh</executable>
                             <arguments>
                                 <argument>help/en/*/*</argument>
+                                <argument>help/fr/*/*</argument>
                             </arguments>
                         </configuration>
                     </plugin>
