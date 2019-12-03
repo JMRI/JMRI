@@ -874,8 +874,9 @@
                     <reportSet>
                         <reports>
                             <!-- select non-aggregate reports -->
-                            <report>report</report>
-                            <report>report-integration</report>
+                            <!-- <report>report</report>
+                            <report>report-integration</report> -->
+                            <report>report-aggregate</report>
                         </reports>
                     </reportSet>
                 </reportSets>
