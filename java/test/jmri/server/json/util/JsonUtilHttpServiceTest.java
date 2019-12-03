@@ -12,7 +12,6 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.awt.GraphicsEnvironment;
-import java.io.IOException;
 
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
@@ -33,7 +32,6 @@ import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerPreferences;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Rule;
