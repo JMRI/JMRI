@@ -3926,7 +3926,10 @@ $(document).ready(function() {
             layoutBlock: function(name, value, data) {
                 setBlockColor(name, data.blockColor);
             },
-            memory: function(name, value, data) {
+            memory: function(name, value, data) { //memory supports various object types
+            	if (value.type == "idTag") {
+            		value = value.data.userName; //for idTags, use the value in userName instead
+            	}
                 updateWidgets(name, value, data);
             },
             reporter: function(name, value, data) {
