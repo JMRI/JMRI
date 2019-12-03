@@ -49,26 +49,15 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
             if (val == null) {
                 data.putNull(VALUE);
             } else {
-                //set memory value based on data type
-                if (val instanceof String) {
-                    data.put(VALUE, (String) val);
-                } else if (val instanceof javax.swing.ImageIcon) {
-                    log.warn("ImageIcon not yet supported");
-                    data.putNull(VALUE);
-                } else if (val instanceof Number) {
-                    data.put(VALUE, val.toString());
-                } else if (val instanceof jmri.IdTag){
-                    // most IdTags are Reportable objects, so 
-                    // this needs to be before Reportable
+                //set memory value based on type
+                if (val instanceof jmri.IdTag){
                     ObjectNode idTagValue = idTagService.doGet((jmri.IdTag)val, name, IDTAG, locale, id);
                     data.set(VALUE, idTagValue);
                 } else if (val instanceof Reportable) {
                     ObjectNode reporterValue = reporterService.doGet((jmri.Reporter)val, name, REPORTER, locale, id);
                     data.set(VALUE, reporterValue);
                 } else {
-                    log.warn("can't return current value of memory '{}', val='{}' of Class '{}'", 
-                            name, val, val.getClass().getName());
-                    data.putNull(VALUE);
+                    data.put(VALUE, val.toString()); //send string for types not explicitly handled
                 }
             }
         }
