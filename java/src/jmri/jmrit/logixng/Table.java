@@ -1,5 +1,9 @@
 package jmri.jmrit.logixng;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
+
 /**
  * Represent a Table.
  * A table is a two dimensional array where the rows and columns may have names.
@@ -34,20 +38,23 @@ public interface Table {
      * Get the value of a cell.
      * If the table has both rows and columns, the value of the first column
      * will be returned.
-     * @param row the row of the cell
+     * @param row the row of the cell or null if all rows should be returned
      * @return the value of the cell
      */
-    public Object getCell(String row);
+    @CheckReturnValue
+    default public Object get(@CheckForNull String row) { return get(row, null); }
     
     /**
      * Get the value of a cell.
      * @param row the row of the cell. If this value is an integer, it will be
-     * used as an index, where row 0 is the name of the row.
+     * used as an index, where row 0 is the name of the row. If this value is
+     * null, all rows are returned as an anonymous table
      * @param column the column of the cell If this value is an integer, it will be
-     * used as an index, where column 0 is the name of the column.
+     * used as an index, where column 0 is the name of the column. If this value
+     * is null, all collumns are returned as an anonymous table
      * @return the value of the cell
      */
-    public Object getCell(String row, String column);
+    public Object get(@CheckForNull String row, @CheckForNull String column);
     
     /**
      * Set the value of a cell.
@@ -67,5 +74,17 @@ public interface Table {
      * used as an index, where column 0 is the name of the column.
      */
     public void setCell(Object value, String row, String column);
+    
+    /**
+     * Get the number of rows in the table.
+     * @return the number of rows
+     */
+    public int numRows();
+    
+    /**
+     * Get the number of columns in the table.
+     * @return the number of columns
+     */
+    public int numColumns();
 
 }
