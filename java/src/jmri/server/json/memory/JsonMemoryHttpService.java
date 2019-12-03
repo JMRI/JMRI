@@ -13,9 +13,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -32,7 +29,6 @@ import jmri.server.json.reporter.JsonReporterHttpService;
  */
 public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
 
-    private static final Logger log = LoggerFactory.getLogger(JsonMemoryHttpService.class);
     private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
     private JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
 
