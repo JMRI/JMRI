@@ -7,7 +7,8 @@ import java.util.List;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.jmrit.logix.OBlock;
-import jmri.util.NamedBeanComparator;
+import jmri.jmrit.logix.Portal;
+import jmri.util.NamedBeanUserNameComparator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +32,8 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
 
     public static final int BLOCK_NAME_COLUMN = 0;
     public static final int PORTAL_NAME_COLUMN = 1;
-    public static final int NUMCOLS = 2;
+    public static final int OPPOSING_BLOCK_NAME = 2;
+    public static final int NUMCOLS = 3;
 
     OBlockTableModel _oBlockModel;
 
@@ -62,6 +64,8 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
                 return Bundle.getMessage("BlockName");
             case PORTAL_NAME_COLUMN:
                 return Bundle.getMessage("PortalName");
+            case OPPOSING_BLOCK_NAME:
+                return Bundle.getMessage("OppBlockName");
             default:
                 log.warn("Unhandled column name: {}", col);
                 break;
@@ -78,7 +82,7 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
             OBlock block = null;
             OBlock[] array = new OBlock[list.size()];
             array = list.toArray(array);
-            Arrays.sort(array, new NamedBeanComparator<>());
+            Arrays.sort(array, new NamedBeanUserNameComparator<>());
             while (count <= row) {
                 count += array[idx++].getPortals().size();
             }
@@ -90,21 +94,16 @@ public class BlockPortalTableModel extends AbstractTableModel implements Propert
                 }
                 return "";
             }
-            return block.getPortals().get(idx).getName();
-            /*
-             while (count <= row)  {
-             count += ((OBlock)list.get(idx++)).getPortals().size();
-             }
-             block = (OBlock)list.get(--idx);
-             idx = row - (count - block.getPortals().size());
-             if (col==BLOCK_NAME_COLUMN) {
-             if (idx==0) {
-             return block.getDisplayName();
-             }
-             return "";
-             }
-             return block.getPortals().get(idx).getName();
-             */
+            if (col == PORTAL_NAME_COLUMN) {
+                return block.getPortals().get(idx).getName();
+            }
+            if (col == OPPOSING_BLOCK_NAME) {
+                Portal portal = block.getPortals().get(idx);
+                OBlock oppBlock = portal.getOpposingBlock(block);
+                if (oppBlock != null) {
+                    return oppBlock.getDisplayName();
+                }
+            }
         }
         return null;
     }

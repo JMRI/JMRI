@@ -72,7 +72,9 @@ public class TableFramesTest {
         //Assert.assertNotNull("Import complete dialog", pane);
         //new JButtonOperator(new JFrameOperator((JFrame) pane), Bundle.getMessage("ButtonOK")).doClick();
         // check import result
+
         Assert.assertNotNull("Imported OBlock", InstanceManager.getDefault(OBlockManager.class).getOBlock("OB0001"));
+        jmri.util.JUnitAppender.assertWarnMessage("Portal IP0001-0002 needs an OBlock on each side");
     }
 
     // The minimal setup for log4J

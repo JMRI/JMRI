@@ -457,7 +457,14 @@
    <h3>Warrants</h3>
         <a id="Wt" name="Wt"></a>
         <ul>
-            <li></li>
+            <li>Changes made in either the OBlock Tables tool or the CircuitBuilder tool
+            are reflected in the other tool - i.e. each updates the other.</li>
+            <li>When the names of OBlocks, Portals or Paths are made, Warrants are
+            updated to run as they did with the previous names.</li>
+            <li>If an OBlock, Portal or Path is deleted, a Warrant using one of these 
+            elements will be broken. When this occurs, a dialog is displayed listing
+            the disabled Warrants. The user may decide to remove these warrants and 
+            continue or to cancel the deletions.</li>
         </ul>
 
    <h3>Web Access</h3>
