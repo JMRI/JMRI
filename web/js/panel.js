@@ -3344,7 +3344,7 @@ var $reDrawIcon = function($widget) {
 };
 
 // set new value for widget, showing proper icon, return widgets changed
-var $setWidgetState = function($id, $newState) {
+var $setWidgetState = function($id, $newState, data) {
     var $widget = $gWidgets[$id];
 
     // if undefined widget this must be a slip
@@ -3436,9 +3436,15 @@ var $setWidgetState = function($id, $newState) {
         }
         $widget.state = $newState;
 
+        //override the state with idTag's "name" in a very specific circumstance
+        if (($widget.jsonType=="memory" || $widget.jsonType=="block" || $widget.jsonType=="reporter" ) &&
+        		$widget.widgetFamily=="icon" && data.value.type=="idTag") {
+        	$widget.state = data.value.data.name;
+        }
+        
         switch ($widget.widgetFamily) {
             case "icon" :
-                $reDrawIcon($widget)
+               	$reDrawIcon($widget)
                 break;
             case "text" :
                 if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
@@ -3770,7 +3776,7 @@ function updateWidgets(name, state, data) {
     if (whereUsed[name]) {
         if (jmri_logging) jmri.log("updateWidgets(" + name + ", " + state + ", data);");
         $.each(whereUsed[name], function(index, widgetId) {
-            $setWidgetState(widgetId, state);
+            $setWidgetState(widgetId, state, data);
         });
 //    } else {
 //      jmri.log("system name " + name + " not found, can't set state to " + state);
@@ -3779,7 +3785,7 @@ function updateWidgets(name, state, data) {
     if (whereUsed[data.userName]) {
         if (jmri_logging) jmri.log("updateWidgets(" + data.userName + ", " + state + ", data);");
         $.each(whereUsed[data.userName], function(index, widgetId) {
-            $setWidgetState(widgetId, state);
+            $setWidgetState(widgetId, state, data);
         });
 //    } else {
 //      jmri.log("userName " + name + " not found, can't set state to " + state);
