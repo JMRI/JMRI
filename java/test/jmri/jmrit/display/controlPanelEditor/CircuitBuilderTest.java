@@ -145,7 +145,7 @@ public class CircuitBuilderTest {
         getCPEandCB();
 
         OBlock block = InstanceManager.getDefault(OBlockManager.class).getByUserName("WestSiding");
-        Portal portal = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class).getByUserName("Crapolla");
+        Portal portal = InstanceManager.getDefault(jmri.jmrit.logix.PortalManager.class).getPortal("Crapolla");
         cb.editPortalError(block, portal, null);
         
         JFrameOperator nfo = new JFrameOperator(cb.getEditFrame());
