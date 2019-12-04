@@ -473,13 +473,13 @@
           exists it will be used to build the station list.  Otherwise the station list
           will be the Operations' locations sorted by name.  In either case, the
           distance between stations will be one foot.  The distances will need to be
-          changed to the actual values which will get the station names in the correct
-          order.</li>
+          changed to the actual values which will also get the station names in the correct
+          sequence.</li>
           <li>Schedules &mdash; A schedule is created with the current date and time as
           the name.  The schedule starts at midnight and runs for 24 hours.</li>
           <li>Trains &mdash; Each train has a default speed of 4 and will be assigned to
           one of the 4 train types.</li>
-          <li>Stops &mdash; The duration of each stop is based on the move counts.
+          <li>Stops &mdash; The duration of each stop is based on the move counts in Operations.
         </ul>
 
       <a name="csvexport" id="csvexport"></a>
