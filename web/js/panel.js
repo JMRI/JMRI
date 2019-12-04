@@ -3921,14 +3921,21 @@ $(document).ready(function() {
                 updateWidgets(name, state, data);
             },
             block: function(name, value, data) {
+            	if (value.type == "idTag") {
+            		value = value.data.userName; //for idTags, use the value in userName instead
+            	} else if (value.type == "reporter"){
+            		value = value.data.value;    //for reporters, use the value in data instead            		
+            	}
                 updateWidgets(name, value, data);
             },
             layoutBlock: function(name, value, data) {
                 setBlockColor(name, data.blockColor);
             },
-            memory: function(name, value, data) { //memory supports various object types
+            memory: function(name, value, data) {
             	if (value.type == "idTag") {
             		value = value.data.userName; //for idTags, use the value in userName instead
+            	} else if (value.type == "reporter"){
+            		value = value.data.value;    //for reporters, use the value in data instead            		
             	}
                 updateWidgets(name, value, data);
             },
