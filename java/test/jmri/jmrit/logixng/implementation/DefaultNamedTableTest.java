@@ -25,6 +25,8 @@ public class DefaultNamedTableTest {
     public void testCSVFile() throws IOException {
         NamedTable table = DefaultNamedTable.loadTableFromCSV_File(
                 new File("java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv"));
+        table.storeTableAsCSV(
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals__daniel.csv"));
         Assert.assertNotNull("exists", table);
     }
     

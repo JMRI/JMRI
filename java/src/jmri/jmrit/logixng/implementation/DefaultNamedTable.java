@@ -2,11 +2,14 @@ package jmri.jmrit.logixng.implementation;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.CheckForNull;
@@ -28,6 +31,9 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
 
     private int _state = NamedBean.UNKNOWN;
     private final AnonymousTable _internalTable;
+    
+    // The system appropriate newline separator.
+    private static final String _nl = System.getProperty("line.separator"); // NOI18N
     
     /**
      * Create a new named table.
@@ -61,39 +67,50 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     }
     
     private static NamedTable loadFromCSV(
-            @Nonnull File file,
+            @Nonnull List<String> lines,
             @CheckForNull String systemName, @CheckForNull String userName)
-            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
         
         NamedTableManager manager = InstanceManager.getDefault(NamedTableManager.class);
         
-        List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+//        List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
         
+        System.out.format("loadFromCSV()%n");
+        System.out.format("loadFromCSV(): num lines: %d%n", lines.size());
+//        for (String l : lines) {
+//            System.out.format("Line: '%s'%n", l);
+//        }
         if (systemName == null && userName == null) {
             String[] firstRow = lines.get(0).split("\t");
+            systemName = firstRow[0];
+            userName = firstRow.length > 1 ? firstRow[1] : "";
             if (systemName == null) systemName = manager.getAutoSystemName();
-            System.out.format("firstRow: %s, %s%n", firstRow[0], firstRow[1]);
+//            System.out.format("firstRow: %s, %s%n", firstRow[0], firstRow[1]);
+            System.out.format("systemName: %s, userName: %s%n", systemName, userName);
         }
         
         // First row is system name and user name. Second row is column names.
         int numRows = lines.size() - 2;
+        
+        // If the last row is empty string, ignore it.
+        if (lines.get(lines.size()-1).isEmpty()) numRows--;
+        
         int numColumns = 0;
         
         String[][] csvCells = new String[numRows+1][];
-        for (int rowCount = 1; rowCount < lines.size(); rowCount++) {
+        for (int rowCount = 1; rowCount < numRows+2; rowCount++) {
             String[] columns = lines.get(rowCount).split("\t");
             if (numColumns+1 < columns.length) numColumns = columns.length-1;
             csvCells[rowCount-1] = columns;
         }
         
-        for (int rowCount = 1; rowCount < lines.size(); rowCount++) {
-//            String[] cells = lines.get(rowCount).split("\t");
+        for (int rowCount = 1; rowCount < numRows+2; rowCount++) {
             Object[] cells = csvCells[rowCount-1];
             if (cells.length <= numColumns) {
                 String[] newCells = new String[numColumns+1];
                 System.arraycopy(cells, 0, newCells, 0, cells.length);
                 csvCells[rowCount-1] = newCells;
-                for (int i=cells.length; i <= numColumns; i++) newCells[i] = "DANIEL";
+                for (int i=cells.length; i <= numColumns; i++) newCells[i] = "";
             }
         }
         
@@ -103,48 +120,19 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
         return table;
     }
     
+    public static NamedTable loadTableFromCSV_Text(@Nonnull String text)
+            throws BadUserNameException, BadSystemNameException {
+        
+        List<String> lines = Arrays.asList(text.split("\\r?\\n",-1));
+//        List<String> lines = Arrays.asList(text.split(_nl));
+        return loadFromCSV(lines, null, null);
+    }
+    
     public static NamedTable loadTableFromCSV_File(@Nonnull File file)
             throws BadUserNameException, BadSystemNameException, IOException {
         
-        return loadFromCSV(file, null, null);
-/*        
-        String systemName = null;
-        String userName = null;
-        
         List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-        
-        String[] firstRow = lines.get(0).split("\t");
-        System.out.format("firstRow: %s, %s%n", firstRow[0], firstRow[1]);
-        
-        // First row is system name and user name. Second row is column names.
-        int numRows = lines.size() - 2;
-        int numColumns = 0;
-        
-        String[][] csvCells = new String[numRows+1][];
-        for (int rowCount = 1; rowCount < lines.size(); rowCount++) {
-            String[] columns = lines.get(rowCount).split("\t");
-            if (numColumns+1 < columns.length) numColumns = columns.length-1;
-            csvCells[rowCount-1] = columns;
-        }
-        
-        for (int rowCount = 1; rowCount < lines.size(); rowCount++) {
-//            String[] cells = lines.get(rowCount).split("\t");
-            Object[] cells = csvCells[rowCount-1];
-            if (cells.length <= numColumns) {
-                String[] newCells = new String[numColumns+1];
-                System.arraycopy(cells, 0, newCells, 0, cells.length);
-                csvCells[rowCount-1] = newCells;
-                for (int i=cells.length; i <= numColumns; i++) newCells[i] = "DANIEL";
-            }
-        }
-        
-        NamedTableManager manager = InstanceManager.getDefault(NamedTableManager.class);
-        if (systemName == null) systemName = manager.getAutoSystemName();
-        NamedTable table = new DefaultNamedTable(systemName, userName, csvCells);
-        manager.register(table);
-        
-        return table;
-*/
+        return loadFromCSV(lines, null, null);
     }
     
     static public NamedTable loadTableFromCSV_File(
@@ -152,15 +140,17 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
             @Nonnull String systemName, @CheckForNull String userName)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         
-        return loadFromCSV(file, systemName, userName);
+        List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
+        return loadFromCSV(lines, systemName, userName);
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public void storeTableAsCSV(@Nonnull File file) {
-        storeTableAsCSV(file, getSystemName(), getUserName());
+    public void storeTableAsCSV(@Nonnull File file)
+            throws FileNotFoundException {
+        _internalTable.storeTableAsCSV(file, getSystemName(), getUserName());
     }
 
     /**
@@ -169,9 +159,10 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     @Override
     public void storeTableAsCSV(
             @Nonnull File file,
-            @CheckForNull String systemName, @CheckForNull String userName) {
+            @CheckForNull String systemName, @CheckForNull String userName)
+            throws FileNotFoundException {
         
-        throw new UnsupportedOperationException("Not supported yet.");
+        _internalTable.storeTableAsCSV(file, systemName, userName);
     }
     
     @Override
@@ -191,24 +182,52 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
 //        return NamedTable.class;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Object getCell(String row, String column) {
+    public Object getCell(int row, int column) {
         return _internalTable.getCell(row, column);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setCell(Object value, String row, String column) {
+    public void setCell(Object value, int row, int column) {
         _internalTable.setCell(value, row, column);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int numRows() {
         return _internalTable.numRows();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int numColumns() {
         return _internalTable.numColumns();
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getRowNumber(String rowName) {
+        return _internalTable.getRowNumber(rowName);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getColumnNumber(String columnName) {
+        return _internalTable.getColumnNumber(columnName);
     }
 
 }

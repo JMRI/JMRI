@@ -126,6 +126,15 @@ public class DefaultNamedTableManager extends AbstractManager<NamedTable>
      * {@inheritDoc}
      */
     @Override
+    public NamedTable loadTableFromCSV(@Nonnull String text)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
+        return DefaultNamedTable.loadTableFromCSV_Text(text);
+    }
+    
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     public NamedTable loadTableFromCSV(@Nonnull File file)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException {
         return DefaultNamedTable.loadTableFromCSV_File(file);

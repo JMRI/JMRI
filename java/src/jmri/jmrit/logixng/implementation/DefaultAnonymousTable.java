@@ -1,12 +1,17 @@
 package jmri.jmrit.logixng.implementation;
 
 import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.OutputStreamWriter;
+import java.io.FileOutputStream;
+import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrit.logixng.AnonymousTable;
-import jmri.jmrit.logixng.NamedTable;
 
 /**
  * Default implementation for anonymous tables
@@ -96,7 +101,8 @@ public class DefaultAnonymousTable implements AnonymousTable {
      * {@inheritDoc}
      */
     @Override
-    public void storeTableAsCSV(@Nonnull File file) {
+    public void storeTableAsCSV(@Nonnull File file)
+            throws FileNotFoundException {
         storeTableAsCSV(file, null, null);
     }
 
@@ -106,25 +112,36 @@ public class DefaultAnonymousTable implements AnonymousTable {
     @Override
     public void storeTableAsCSV(
             @Nonnull File file,
-            @CheckForNull String systemName, @CheckForNull String userName) {
+            @CheckForNull String systemName, @CheckForNull String userName)
+            throws FileNotFoundException {
         
-        throw new UnsupportedOperationException("Not supported yet.");
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8)))) {
+            writer.format("%s\t%s%n", systemName, userName);
+            for (int row=0; row <= _numRows; row++) {
+                for (int column=0; column <= _numColumns; column++) {
+                    if (column > 0) writer.print("\t");
+//                    System.out.format("%d, %d: %s%n", row, column, _data[row][column].toString());
+                    if (_data[row][column] != null) writer.print(_data[row][column].toString());
+                }
+                writer.println();
+            }
+        }
     }
     
     /**
      * {@inheritDoc}
      */
     @Override
-    public Object getCell(@Nonnull String row, @Nonnull String column) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public Object getCell(int row, int column) {
+        return _data[row][column];
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public void setCell(Object value, String row, String column) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void setCell(Object value, int row, int column) {
+        _data[row][column] = value;
     }
 
     /**
@@ -143,4 +160,44 @@ public class DefaultAnonymousTable implements AnonymousTable {
         return _numColumns;
     }
     
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getRowNumber(String rowName) {
+        Integer rowNumber = rowNames.get(rowName);
+        if (rowNumber == null) {
+            try {
+                int row = Integer.parseInt(rowName);
+                if (row >= 0 && row <= _numRows) return row;
+            } catch (NumberFormatException e) {
+                // Do nothing
+            }
+        } else {
+            return rowNumber;
+        }
+        // If here, the row is not found
+        return -1;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int getColumnNumber(String columnName) {
+        Integer columnNumber = columnNames.get(columnName);
+        if (columnNumber == null) {
+            try {
+                int row = Integer.parseInt(columnName);
+                if (row >= 0 && row <= _numRows) return row;
+            } catch (NumberFormatException e) {
+                // Do nothing
+            }
+        } else {
+            return columnNumber;
+        }
+        // If here, the row is not found
+        return -1;
+    }
+
 }

@@ -19,7 +19,7 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @param numColumns number of columns in the table
      * @return the new table
      */
-    public Table newAnonymousTable(int numRows, int numColumns);
+    public AnonymousTable newAnonymousTable(int numRows, int numColumns);
     
     /**
      * Create a new named table.
@@ -30,12 +30,21 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @param numColumns number of columns in the table
      * @return the new table
      */
-    public Table newTable(String systemName, String userName, int numRows, int numColumns);
+    public NamedTable newTable(String systemName, String userName, int numRows, int numColumns);
     
     /**
-     * Load a table from a CSV finle.
+     * Load a table from a CSV text.
+     * @param text the CSV text
+     * @return the loaded table
+     */
+    public NamedTable loadTableFromCSV(@Nonnull String text)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException;
+    
+    /**
+     * Load a table from a CSV file.
      * @param file the CSV file
      * @return the loaded table
+     * @throws java.io.IOException on I/O error
      */
     public NamedTable loadTableFromCSV(@Nonnull File file)
             throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
