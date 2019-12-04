@@ -53,18 +53,12 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
                 this.connection.sendMessage(this.service.doGet(type, name, data, locale, id), id);
                 this.rrNameListener = (PropertyChangeEvent evt) -> {
                     try {
-                        try {
-                            this.connection.sendMessage(this.service.doPost(JSON.RAILROAD, null, this.service.getObjectMapper().createObjectNode(), this.connection.getLocale(), id), id);
-                        } catch (JsonException ex) {
-                            this.connection.sendMessage(ex.getJsonMessage(), id);
-                        }
+                        this.handleRailroadChange();
                     } catch (IOException ex) {
                         InstanceManager.getDefault(WebServerPreferences.class).removePropertyChangeListener(this.rrNameListener);
                     }
                 };
-                InstanceManager.getOptionalDefault(WebServerPreferences.class).ifPresent((preferences) -> {
-                    preferences.addPropertyChangeListener(this.rrNameListener);
-                });
+                InstanceManager.getOptionalDefault(WebServerPreferences.class).ifPresent(preferences -> preferences.addPropertyChangeListener(this.rrNameListener));
                 break;
             default:
                 this.connection.sendMessage(this.service.doPost(type, name, data, locale, id), id);
@@ -79,9 +73,14 @@ public class JsonUtilSocketService extends JsonSocketService<JsonUtilHttpService
 
     @Override
     public void onClose() {
-        InstanceManager.getOptionalDefault(WebServerPreferences.class).ifPresent((preferences) -> {
-            preferences.removePropertyChangeListener(this.rrNameListener);
-        });
+        InstanceManager.getOptionalDefault(WebServerPreferences.class).ifPresent(preferences -> preferences.removePropertyChangeListener(this.rrNameListener));
     }
 
+    private void handleRailroadChange() throws IOException {
+        try {
+            this.connection.sendMessage(this.service.doPost(JSON.RAILROAD, null, this.service.getObjectMapper().createObjectNode(), this.connection.getLocale(), 0), 0);
+        } catch (JsonException ex) {
+            this.connection.sendMessage(ex.getJsonMessage(), 0);
+        }
+    }
 }
