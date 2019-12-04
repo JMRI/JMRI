@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrit.operations.routes.tools;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -6,15 +6,12 @@ import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ComponentListener;
 import java.text.MessageFormat;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
+
+import javax.swing.*;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
@@ -22,11 +19,12 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainIcon;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for setting train icon coordinates for a location.
