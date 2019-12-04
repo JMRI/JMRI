@@ -1,5 +1,8 @@
 package jmri.jmrit.logixng.implementation;
 
+import java.io.File;
+import java.io.IOException;
+import jmri.jmrit.logixng.NamedTable;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,6 +19,13 @@ public class DefaultNamedTableTest {
     @Test
     public void testCtor() {
         Assert.assertNotNull("exists", new DefaultNamedTable("IQT10", "A table", 10, 15));
+    }
+    
+    @Test
+    public void testCSVFile() throws IOException {
+        NamedTable table = DefaultNamedTable.loadTableFromCSV_File(
+                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv"));
+        Assert.assertNotNull("exists", table);
     }
     
     // The minimal setup for log4J

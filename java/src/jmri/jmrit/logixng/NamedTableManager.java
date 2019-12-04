@@ -1,6 +1,11 @@
 package jmri.jmrit.logixng;
 
+import java.io.File;
+import java.io.IOException;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.Manager;
+import jmri.NamedBean;
 
 /**
  * A manager for a NamedTable
@@ -14,7 +19,7 @@ public interface NamedTableManager extends Manager<NamedTable> {
      * @param numColumns number of columns in the table
      * @return the new table
      */
-    public Table newTable(int numRows, int numColumns);
+    public Table newAnonymousTable(int numRows, int numColumns);
     
     /**
      * Create a new named table.
@@ -29,16 +34,59 @@ public interface NamedTableManager extends Manager<NamedTable> {
     
     /**
      * Load a table from a CSV finle.
-     * @param filename the filename of the CSV file
+     * @param file the CSV file
      * @return the loaded table
      */
-    public NamedTable loadTableFromCSV(String filename);
+    public NamedTable loadTableFromCSV(@Nonnull File file)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
     /**
-     * Store a table from to CSV finle.
-     * @param filename the filename of the CSV file
-     * @param table the table to store
+     * Load a table from a CSV finle.
+     * @param file the CSV file
+     * @param sys the system name of the new table
+     * @param user the user name of the new table or null if no user name
+     * @return the loaded table
      */
-    public void storeTableAsCSV(String filename, Table table);
+    public NamedTable loadTableFromCSV(
+            @Nonnull File file,
+            @Nonnull String sys, @CheckForNull String user)
+            throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, IOException;
     
+    /**
+     * Locate via user name, then system name if needed. Does not create a new
+     * one if nothing found
+     *
+     * @param name User name or system name to match
+     * @return null if no match found
+     */
+    public NamedTable getNamedTable(String name);
+
+    public NamedTable getByUserName(String name);
+
+    public NamedTable getBySystemName(String name);
+    
+    /**
+     * Create a new system name for a LogixNG.
+     * @return a new system name
+     */
+    public String getAutoSystemName();
+    
+    /**
+     * {@inheritDoc}
+     * 
+     * The sub system prefix for the NamedTableManager is
+     * {@link #getSystemNamePrefix() } and "T";
+     */
+    @Override
+    public default String getSubSystemNamePrefix() {
+        return getSystemNamePrefix() + "T";
+    }
+    
+    /**
+     * Delete NamedTable by removing it from the manager.
+     *
+     * @param x the NamedTable to delete
+     */
+    void deleteNamedTable(NamedTable x);
+
 }

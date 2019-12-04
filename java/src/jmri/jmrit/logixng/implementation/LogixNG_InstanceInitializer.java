@@ -7,6 +7,7 @@ import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.LogixNG_Manager;
+import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.openide.util.lookup.ServiceProvider;
 
@@ -51,6 +52,11 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
                     InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         }
 
+        if (type == NamedTableManager.class) {
+            return new DefaultNamedTableManager(
+                    InstanceManager.getDefault(InternalSystemConnectionMemo.class));
+        }
+
         if (type == LogixNGPreferences.class) {
             return new LogixNGPreferences();
         }
@@ -64,6 +70,7 @@ public class LogixNG_InstanceInitializer extends AbstractInstanceInitializer {
         set.addAll(Arrays.asList(
                 ConditionalNG_Manager.class,
                 LogixNG_Manager.class,
+                NamedTableManager.class,
                 LogixNGPreferences.class
         ));
         return set;
