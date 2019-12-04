@@ -37,6 +37,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
         String userName = null;
         int rows = 0;
         int columns = 0;
+        Object[][] data = new Object[rows+1][columns+1];
         NamedTable table = new DefaultNamedTable(systemName,userName, rows, columns);
         InstanceManager.getDefault(NamedTableManager.class).register(table);
         return table;

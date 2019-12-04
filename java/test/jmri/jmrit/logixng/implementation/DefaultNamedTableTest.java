@@ -11,11 +11,11 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class JMRI_NativeNamespaceTest {
+public class DefaultNamedTableTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new JMRI_NativeNamespace());
+        Assert.assertNotNull("exists", new DefaultNamedTable("IQT10", "A table", 10, 15));
     }
     
     // The minimal setup for log4J

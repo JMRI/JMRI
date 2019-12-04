@@ -10,5 +10,5 @@ import jmri.NamedBean;
  *
  * @author Daniel Bergqvist Copyright (C) 2019
  */
-public interface AnonymousTable extends Table, NamedBean {
+public interface AnonymousTable extends Table {
 }

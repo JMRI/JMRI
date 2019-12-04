@@ -11,11 +11,12 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class VirtualNamespaceTest {
+public class DefaultAnonymousTableTest {
 
     @Test
     public void testCtor() {
-        Assert.assertNotNull("exists", new VirtualNamespace());
+        Assert.assertNotNull("exists", new DefaultAnonymousTable(5,7));
+        Assert.assertNotNull("exists", new DefaultAnonymousTable(new Object[10][15]));
     }
     
     // The minimal setup for log4J

@@ -175,23 +175,6 @@ public interface Base {
     public Base getRoot();
     
     /**
-     * Get the LogixNG_InstanceManager.
-     * 
-     * This method will ask the parent about the instance manager, and if no
-     * parent exist, it will return the default instance manager.
-     * 
-     * @return the instance manager that this object should use
-     */
-    default public LogixNG_InstanceManager getInstanceManager() {
-        Base parent = getParent();
-        if (parent != null) {
-            return parent.getInstanceManager();
-        } else {
-            return InstanceManagerContainer.defaultInstanceManager;
-        }
-    }
-    
-    /**
      * Get the parent.
      * <P>
      * The following rules apply
@@ -379,17 +362,6 @@ public interface Base {
     
     public interface RunnableWithBase {
         public void run(Base b);
-    }
-    
-    
-    
-    /**
-     * This class is used to keep the field instanceManager private.
-     */
-    static final class InstanceManagerContainer {
-        
-        private static LogixNG_InstanceManager defaultInstanceManager =
-                new jmri.jmrit.logixng.implementation.DefaultLogixNG_InstanceManager();
     }
     
 }

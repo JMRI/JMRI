@@ -6,12 +6,10 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     jmri.jmrit.logixng.implementation.configurexml.PackageTest.class,
-    JMRI_NativeNamespaceTest.class,
+    DefaultAnonymousTableTest.class,
     DefaultFemaleGenericExpressionSocketTest.class,
     DefaultLogixNGManagerTest.class,
-    DefaultLogixNG_InstanceManagerTest.class,
-    JMRI_NativeNamespaceTest.class,
-    VirtualNamespaceTest.class,
+    DefaultNamedTableTest.class,
 })
 
 /**
