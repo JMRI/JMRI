@@ -89,7 +89,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         panel.add(new JLabel(Bundle.getMessage("PortalTitle", _homeBlock.getDisplayName())));
         portalPanel.add(panel);
 
-        _portalList = new PortalList(_homeBlock);
+        _portalList = new PortalList(_homeBlock, this);
         _portalList.addListSelectionListener(this);
         portalPanel.add(new JScrollPane(_portalList));
 
@@ -143,7 +143,7 @@ public class EditPortalDirection extends EditFrame implements ActionListener, Li
         if (portal != null) {
             List<PortalIcon> piArray = _parent.getPortalIconMap(portal);
             if (piArray.isEmpty()) {
-                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalHasNoIcon", portal.getDisplayName()),
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("portalHasNoIcon", portal.getName()),
                         Bundle.getMessage("incompleteCircuit"), JOptionPane.INFORMATION_MESSAGE);
                 clearListSelection();
             } else {

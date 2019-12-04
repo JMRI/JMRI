@@ -73,7 +73,8 @@ import org.junit.runners.Suite;
     EntryPointTest.class,
     NamedBeanPropertyDescriptorTest.class,
     BooleanPropertyDescriptorTest.class,
-    RunCucumberTest.class,})
+    RunCucumberTest.class,
+    })
 
 /**
  * Invoke complete set of tests for the Jmri package
