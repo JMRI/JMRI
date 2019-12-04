@@ -102,6 +102,7 @@
         </li>
         <li><a href="#graph">Timetable Graph</a></li>
         <li><a href="#csvimport">CSV Import</a></li>
+        <li><a href="#opsimport">Operations Import</a></li>
         <li><a href="#csvexport">CSV Export</a></li>
         <li><a href="#structure">Data Structure</a></li>
         <li><a href="#technical">Technical</a></li>
@@ -195,11 +196,13 @@
         <dd>When enabled, the minutes portion of the train time is included in the graph.</dd>
         <dt><strong>Print train graph using two pages</strong></dt>
         <dd>When enabled, the graph will use two pages instead of one.</dd>
-        <dt><strong>Import SGN file</strong></dt>
+        <dt><strong>Import SGN file...</strong></dt>
         <dd>Import a legacy SGN (SchedGen) file.</dd>
-        <dt><strong>Import CSV file</strong></dt>
+        <dt><strong>Import CSV file...</strong></dt>
         <dd>Import a CSV file that contains data to create or extend timetable data.</dd>
-        <dt><strong>Export CSV file</strong></dt>
+        <dt><strong>Import from OperationsPro...</strong></dt>
+        <dd>Import the locations and trains from the current Operations configuration.</dd>
+        <dt><strong>Export CSV file...</strong></dt>
         <dd>Export a CSV file that can be imported into a spreadsheet to produce a timetable.</dd>
       </dl>
       </div>
@@ -453,6 +456,31 @@
         import a dialog is displayed with the option to save the changes to the
         timetable data file.
         </p>
+
+      <a name="opsimport" id="opsimport"></a>
+      <h2>Operations Import</h2>
+        <p>OperationsPro has the ability to export a CSV file that can be imported into
+        the Timetable tool.  The <strong>Import from OperationsPro...</strong> menu item
+        combines the export and import steps.</p>
+
+        <p>Due to the differences in data between the two systems, the resulting data
+        will need to be reviewed and changed as necessary.</p>
+
+        <ul>
+          <li>Train types &mdash; Four train types are created with different colors.</li>
+          <li>Segment &mdash; A single segment is created with the name <strong>Locations</strong>.</li>
+          <li>Stations &mdash; If an Operations route with the name <strong>Timetable</strong>
+          exists it will be used to build the station list.  Otherwise the station list
+          will be the Operations' locations sorted by name.  In either case, the
+          distance between stations will be one foot.  The distances will need to be
+          changed to the actual values which will get the station names in the correct
+          order.</li>
+          <li>Schedules &mdash; A schedule is created with the current date and time as
+          the name.  The schedule starts at midnight and runs for 24 hours.</li>
+          <li>Trains &mdash; Each train has a default speed of 4 and will be assigned to
+          one of the 4 train types.</li>
+          <li>Stops &mdash; The duration of each stop is based on the move counts.
+        </ul>
 
       <a name="csvexport" id="csvexport"></a>
       <h2>CSV Export</h2>
