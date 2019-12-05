@@ -701,6 +701,18 @@ public class Portal {
                 _name, getFromBlockName(), getToBlockName());
     }
 
+    @Override
+    @Nonnull
+    public String toString() {
+        StringBuilder sb = new StringBuilder("Portal \"");
+        sb.append(_name);
+        sb.append("\" from block \"");
+        sb.append(getFromBlockName());
+        sb.append("\" to block \"");
+        sb.append(getToBlockName());
+        sb.append("\"");
+        return sb.toString();
+    }
 
     private final static Logger log = LoggerFactory.getLogger(Portal.class);
 
