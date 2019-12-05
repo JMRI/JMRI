@@ -81,7 +81,6 @@ public class WebServerAcceptanceSteps implements En {
            WebElement webTable = webDriver.findElement(By.xpath("//div[@id='wrap']//div[@class='container']//table"));
 
            // find the table body.
-
            WebElement tableBody = webTable.findElement(By.tagName("tbody"));
            List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
            // we make an assumption that the first column is the systemName and
@@ -95,6 +94,40 @@ public class WebServerAcceptanceSteps implements En {
                }
            }
            assertThat(rows.size()).isNotEqualTo(i).withFailMessage("item not found");
+        });
+
+        Then("^table (.*) has row (.*) column (.*) with text (.*) after click (.*)$", 
+                (String table, String row, String column, String text, String after) -> {
+            webDriver.get("http://localhost:12080/");
+            waitLoad();
+            // navigate to the table.
+            (webDriver.findElement(By.linkText("Tables"))).click();
+            (webDriver.findElement(By.linkText(table))).click();
+            waitLoad();
+            // wait for the table to load.
+            WebDriverWait wait = new WebDriverWait(webDriver, 10 );
+
+            String tablePath = "//table[@id='jmri-data']";
+            String cellPath = tablePath + "//tr[@data-name='" + row + "']//td[@class='" + column +"']";
+            
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(tablePath)));
+            
+            //look for the requested cell using tr and td attributes, getting any matches
+            List<WebElement> cells = webDriver.findElements(By.xpath(cellPath));
+
+            //must be only one cell that matches
+            assertThat((Integer)cells.size()).isEqualTo(1); 
+            //cell text must match expected value
+            assertThat(cells.get(0).getText()).isEqualTo(text); 
+            //click on the target cell
+            cells.get(0).click();
+            //give page a chance to catch up
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellPath)));            
+            //refresh the reference since the update replaced the cell
+            cells = webDriver.findElements(By.xpath(cellPath));
+            //check that new value is correct
+            assertThat(cells.get(0).getText()).isEqualTo(after);
+
         });
 
     }
