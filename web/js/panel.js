@@ -3276,7 +3276,8 @@ var $setWidgetPosition = function(e) {
     var $id = e.attr('id');
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
-    if (typeof $widget !== "undefined" && $widget.widgetType != "beanswitch") {  //don't bother if widget not found or BeanSwitch
+    //don't bother if widget not found or BeanSwitch
+    if (typeof $widget !== "undefined" && typeof e[0] !== "undefined" && $widget.widgetType != "beanswitch") {  
 
         var $height = 0;
         var $width  = 0;
@@ -3807,8 +3808,9 @@ var $drawAllIconWidgets = function() {
     });
 };
 
-function updateWidgets(name, state, data) {
-    //update all widgets based on the element that changed, using systemname
+function updateWidgets(name, state, data) {   
+	if (name )
+	//update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
         if (jmri_logging) jmri.log("updateWidgets(" + name + ", " + state + ", data);");
         $.each(whereUsed[name], function(index, widgetId) {
@@ -3977,6 +3979,7 @@ $(document).ready(function() {
         // hide the Show XML menu when listing panels
         $("#navbar-panel-xml").addClass("hidden").removeClass("show");
     } else {
+    	getRateFactor();
         jmri = $.JMRI({
             didReconnect: function() {
                 // if a reconnect is triggered, reload the page - it is the
@@ -4036,21 +4039,6 @@ $(document).ready(function() {
         // include name of panel in page title. Will be updated to userName later
         setTitle(panelName);
 
-        // Add a widget to retrieve fastclock rate
-        $widget = new Array();
-        $widget.jsonType = "memory";
-        $widget['name'] = "IMRATEFACTOR";  // already defined in JMRI
-        $widget['id'] = $widget['name'];
-        $widget['safeName'] = $widget['name'];
-        $widget['systemName'] = $widget['name'];
-        $widget['state'] = "1.0";
-        $widget['id'] = $widget.ident;
-        $gWidgets[$widget.id] = $widget;
-        if (!($widget.systemName in whereUsed)) {  //set where-used for this new memory
-            whereUsed[$widget.systemName] = new Array();
-        }
-        whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
-
         // request actual xml of panel, and process it on return
         // uses setTimeout simply to not block other JavaScript since
         // requestPanelXML has a long timeout
@@ -4059,6 +4047,22 @@ $(document).ready(function() {
         }, 500);
     }
 });
+
+// Add a widget to store fastclock rate
+function getRateFactor() {
+	$widget = new Array();
+	$widget.jsonType = "memory";
+	$widget['name'] = "IMRATEFACTOR";  // already defined in JMRI
+	$widget['id'] = $widget['name'];
+	$widget['safeName'] = $widget['name'];
+	$widget['systemName'] = $widget['name'];
+	$widget['state'] = "1.0";
+	$gWidgets[$widget.id] = $widget;
+	if (!($widget.systemName in whereUsed)) {  //set where-used for this new memory
+		whereUsed[$widget.systemName] = new Array();
+	}
+	whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
+}
 
 // convert turnout state to string
 function turnoutStateToString(state) {
