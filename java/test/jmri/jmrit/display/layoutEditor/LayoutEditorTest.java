@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
+import java.io.File;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.display.AbstractEditorTestBase;
@@ -10,12 +11,15 @@ import jmri.util.*;
 import jmri.util.junit.rules.*;
 import org.junit.*;
 import org.junit.rules.*;
+import org.netbeans.jemmy.EventTool;
+import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
  * Test simple functioning of LayoutEditor.
  *
  * @author Paul Bender Copyright (C) 2016
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
@@ -23,7 +27,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
     @Rule
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
+    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
 
     @Before
     @Override
@@ -60,6 +64,51 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         LayoutEditor e = new LayoutEditor(); // create layout editor
         Assert.assertNotNull("exists", e);
         JUnitUtil.dispose(e);
+    }
+
+    @Test
+    public void testSavePanel() {
+
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
+
+        //delete this file so we won't get the "<xxx> exists... do you want to replace?" dialog
+        new File("temp/Layout Editor Test Layout.xml").delete();
+
+        // test the file -> delete panel menu item
+        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("StorePanelTitle"),
+                Bundle.getMessage("ButtonSave"));  // NOI18N
+        jmo.pushMenu(Bundle.getMessage("MenuFile") + "/"
+                + Bundle.getMessage("MenuItemStore"), "/");
+        JUnitUtil.waitFor(() -> {
+            return !(misc1.isAlive());
+        }, "misc1 finished");
+
+        //clean up after ourselves...
+        new File("temp/Layout Editor Test Layout.xml").delete();
+    }
+
+    @Test
+    public void testDeletePanel() {
+
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
+
+        // test the file -> delete panel menu item
+        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("DeleteVerifyTitle"),
+                Bundle.getMessage("ButtonYesDelete"));  // NOI18N
+        jmo.pushMenu(Bundle.getMessage("MenuFile") + "/"
+                + Bundle.getMessage("DeletePanel"), "/");
+        JUnitUtil.waitFor(() -> {
+            return !(misc1.isAlive());
+        }, "misc1 finished");
+
     }
 
     @Test
@@ -791,7 +840,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(true);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertTrue("le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)", e.getHighlightSelectedBlock());
     }
 
@@ -802,7 +851,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(false);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new org.netbeans.jemmy.QueueTool().waitEmpty(100);
+        new QueueTool().waitEmpty(100);
         Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", e.getHighlightSelectedBlock());
     }
 
@@ -857,37 +906,92 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    public void testToolBarPositionOptions() {
+    public void testToolBarPositionLeft() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
 
-        // try each possible option for toolbar location
-        //Top
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+        //switch to Left
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
-                + Bundle.getMessage("ToolBarSideTop"), "/");
-
-        //Left
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
-                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideLeft"), "/");
 
-        //Right
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
-                + Bundle.getMessage("ToolBar") + "/"
-                + Bundle.getMessage("ToolBarSideRight"), "/");
+        new EventTool().waitNoEvent(500);
 
-        //Bottom
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+        //back to Top
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
+                + Bundle.getMessage("ToolBarSideTop"), "/");
+    }
+
+    @Test
+    public void testToolBarPositionBottom() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
+
+        //switch to Bottom
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideBottom"), "/");
 
-        //float
-        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
+        new EventTool().waitNoEvent(500);
+
+        //back to Top
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
+                + Bundle.getMessage("ToolBarSideTop"), "/");
+    }
+
+    @Test
+    public void testToolBarPositionRight() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
+
+        //switch to Right
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
+                + Bundle.getMessage("ToolBarSideRight"), "/");
+
+        new EventTool().waitNoEvent(500);
+
+        //back to Top
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
+                + Bundle.getMessage("ToolBarSideTop"), "/");
+    }
+
+    @Test
+    public void testToolBarPositionFloat() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        e.setVisible(true);
+        EditorFrameOperator jfo = new EditorFrameOperator(e);
+        JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
+
+        //switch to Float
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideFloat"), "/");
+
+        // bring this window back to the front...
+        jfo.activate();
+
+        //back to Top
+        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+                + Bundle.getMessage("ToolBar") + "/"
+                + Bundle.getMessage("ToolBarSide") + "/"
+                + Bundle.getMessage("ToolBarSideTop"), "/");
     }
 
     @Test
@@ -900,5 +1004,4 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
-
 }
