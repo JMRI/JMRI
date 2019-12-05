@@ -97,6 +97,8 @@ public class WebServerAcceptanceSteps implements En {
            assertThat(rows.size()).isNotEqualTo(i).withFailMessage("item not found");
         });
 
+        //find the specified cell in the table, click on it and verify new value is as expected
+        //uses item names and column names
         Then("^table (.*) has row (.*) column (.*) with text (.*) after click (.*)$", 
                 (String table, String row, String column, String text, String after) -> {
             webDriver.get("http://localhost:12080/");
