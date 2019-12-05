@@ -1,18 +1,19 @@
-package jmri.jmrit.operations.trains.tools;
+package jmri.jmrit.operations.routes.tools;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.routes.tools.ExportRoutesAction;
 
 /**
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class ExportTimetableActionTest extends OperationsTestCase {
+public class ExportRoutesActionTest extends OperationsTestCase {
     @Test
     public void testCTor() {
-        ExportTimetableAction t = new ExportTimetableAction();
+        ExportRoutesAction t = new ExportRoutesAction();
         Assert.assertNotNull("exists",t);
     }
 

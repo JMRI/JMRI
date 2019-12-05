@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrit.operations.routes.tools;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -14,6 +14,9 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteEditFrame;
+import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 
 /**
