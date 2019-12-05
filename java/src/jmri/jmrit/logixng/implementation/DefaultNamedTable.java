@@ -75,8 +75,8 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
         
 //        List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
         
-        System.out.format("loadFromCSV()%n");
-        System.out.format("loadFromCSV(): num lines: %d%n", lines.size());
+//        System.out.format("loadFromCSV()%n");
+//        System.out.format("loadFromCSV(): num lines: %d%n", lines.size());
 //        for (String l : lines) {
 //            System.out.format("Line: '%s'%n", l);
 //        }
@@ -86,7 +86,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
             userName = firstRow.length > 1 ? firstRow[1] : "";
             if (systemName == null) systemName = manager.getAutoSystemName();
 //            System.out.format("firstRow: %s, %s%n", firstRow[0], firstRow[1]);
-            System.out.format("systemName: %s, userName: %s%n", systemName, userName);
+//            System.out.format("systemName: %s, userName: %s%n", systemName, userName);
         }
         
         // First row is system name and user name. Second row is column names.

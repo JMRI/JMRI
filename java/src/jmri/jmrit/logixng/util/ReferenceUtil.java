@@ -35,7 +35,6 @@ public class ReferenceUtil {
             else escaped = false;
             
             if (! escaped) sb.append(value.charAt(i));
-            System.out.format("sb: %s%n", sb.toString());
         }
         
         return sb.toString();
@@ -52,8 +51,7 @@ public class ReferenceUtil {
      * @param endIndex index of the end of the value. This is an output parameter.
      * @return the value
      */
-    private String getValue(String reference, int startIndex, IntRef endIndex, String pad) {
-        System.out.format(pad+"getValue(%s,%d)%n", reference, startIndex);
+    private String getValue(String reference, int startIndex, IntRef endIndex) {
         boolean escapeFound = false;
         boolean escaped = false;
         int end = startIndex;
@@ -73,10 +71,10 @@ public class ReferenceUtil {
             end++;
         }
         endIndex.v = end;
-        System.out.format(pad+"getValue(%s,%d): %s, %d%n", reference, startIndex, reference.substring(startIndex, end), end);
+        
+        System.out.format("getValue(%s,%d): %s, %d%n", reference, startIndex, reference.substring(startIndex, end), endIndex.v);
         
         if (startIndex == end) throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
-        System.out.format(pad+"getValue(%s,%d): %s%n", reference, startIndex, reference.substring(startIndex, end));
         if (escapeFound) return unescapeString(reference, startIndex, end);
         else return reference.substring(startIndex, end);
     }
@@ -92,16 +90,13 @@ public class ReferenceUtil {
      * @param endIndex index of the end of the value. This is an output parameter.
      * @return the value
      */
-    private String getReferenceOrValue(String reference, int startIndex, IntRef endIndex, String pad) {
-        System.out.format(pad+"getReferenceOrValue(%s,%d)%n", reference, startIndex);
+    private String getReferenceOrValue(String reference, int startIndex, IntRef endIndex) {
         
         // Do we have a new reference?
         if (reference.charAt(startIndex) == '{') {
-            System.out.format(pad+"getReferenceOrValue(%s,%d): %s%n", reference, startIndex, getReference(reference, startIndex, endIndex, pad+"   "));
-            return getReference(reference, startIndex, endIndex, pad+"   ");
+            return getReference(reference, startIndex, endIndex);
         } else {
-            System.out.format(pad+"getReferenceOrValue(%s,%d): %s%n", reference, startIndex, getValue(reference, startIndex, endIndex, pad+"   "));
-            return getValue(reference, startIndex, endIndex, pad+"   ");
+            return getValue(reference, startIndex, endIndex);
         }
     }
     
@@ -113,9 +108,8 @@ public class ReferenceUtil {
      * @param endIndex index of the end of the reference. This is an output parameter.
      * @return the value of the reference
      */
-    private String getReference(String reference, int startIndex, IntRef endIndex, String pad) {
-        System.out.format(pad+"AAA getReference(%s,%d)%n", reference, startIndex);
-        
+    private String getReference(String reference, int startIndex, IntRef endIndex) {
+        int si = startIndex;
         // A reference must start with the char {
         if (reference.charAt(startIndex) != '{') {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
@@ -127,26 +121,24 @@ public class ReferenceUtil {
         
         startIndex++;
         
-        leftValue = getReferenceOrValue(reference, startIndex, endIndex, pad+"   ");
+        leftValue = getReferenceOrValue(reference, startIndex, endIndex);
         
         if (endIndex.v == reference.length()) {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
-        System.out.format(pad+"BBB Reference: '%s', endIndex: %d%n", reference, endIndex.v);
         if ((reference.charAt(endIndex.v) != '}') && (reference.charAt(endIndex.v) != '[')) {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
         
+        endIndex.v++;
         
-//        if ((endIndex.v+1 == reference.length()) && (reference.charAt(endIndex.v) == '}')) {
-        if ((endIndex.v+1 == reference.length()) || (reference.charAt(endIndex.v) != '[')) {
-////        if ((reference.charAt(endIndex.v) != '[') && (reference.charAt(endIndex.v) == '}')) {
-            System.out.format(pad+"CCC getReference: leftValue: '%s'%n", leftValue);
+//        if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) != '[')) {
+        if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) == '}')) {
+            System.out.format("getReference(%s,%d): %s, %d, length: %d%n", reference, si, reference.substring(si, endIndex.v), endIndex.v, reference.length());
             Memory m = memoryManager.getNamedBean(leftValue);
             if (m != null) {
-                if (m.getValue() != null) System.out.format(pad+"DDD getReference(%s,%d): %s%n", reference, startIndex, m.getValue().toString());
                 if (m.getValue() != null) return m.getValue().toString();
                 else throw new IllegalArgumentException("Memory '"+leftValue+"' has no value");
             }
@@ -154,16 +146,13 @@ public class ReferenceUtil {
         }
         
         // If we are here, we have a table reference. Find out column and row.
-        if (reference.charAt(endIndex.v) != '[') {
+        if (reference.charAt(endIndex.v-1) != '[') {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
-        endIndex.v++;
-        
         // If we are here, we have a table reference. Find out column and row.
-        row = getReferenceOrValue(reference, endIndex.v, endIndex, pad+"   ");
+        row = getReferenceOrValue(reference, endIndex.v, endIndex);
         
-        System.out.format(pad+"endIndex: %d, %c%n", endIndex.v, reference.charAt(endIndex.v));
         if ((endIndex.v+2 == reference.length()
                 && (reference.charAt(endIndex.v) == ']')
                 && (reference.charAt(endIndex.v+1) == '}'))) {
@@ -171,34 +160,29 @@ public class ReferenceUtil {
             NamedTable table = _tableManager.getNamedBean(leftValue);
             if (table != null) {
                 Object cell = table.getCell(row);
-                System.out.format(pad+"EEE getReference(%s,%d): %s%n", reference, startIndex, cell != null ? cell.toString() : null);
                 return cell != null ? cell.toString() : null;
             } else {
                 throw new IllegalArgumentException("Table "+leftValue+" is not found");
             }
         }
         
-        System.out.format(pad+"endIndex: %d, %c%n", endIndex.v, reference.charAt(endIndex.v));
         if (endIndex.v+1 == reference.length() || reference.charAt(endIndex.v) != ',') {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
         endIndex.v++;
         
-        column = getReferenceOrValue(reference, endIndex.v, endIndex, pad+"   ");
+        column = getReferenceOrValue(reference, endIndex.v, endIndex);
         if (endIndex.v == reference.length() || reference.charAt(endIndex.v) != ']') {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
-        System.out.format(pad+"endIndex: %d, %c%n", endIndex.v, reference.charAt(endIndex.v));
-//        if ((endIndex.v+2 == reference.length()
         if (((reference.charAt(endIndex.v) == ']')
                 && (reference.charAt(endIndex.v+1) == '}'))) {
             
             NamedTable table = _tableManager.getNamedBean(leftValue);
             if (table != null) {
                 Object cell = table.getCell(row,column);
-                System.out.format(pad+"FFF getReference(%s,%d): %s%n", reference, startIndex, cell != null ? cell.toString() : null);
                 endIndex.v++;
                 return cell != null ? cell.toString() : null;
             } else {
@@ -215,20 +199,18 @@ public class ReferenceUtil {
     
 //    @Nonnull
     public String getReference(String reference) {
-        System.out.println();
-        System.out.format("zzzz getReference(%s)%n", reference);
+//        System.out.println();
         if (!isReference(reference)) {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
         IntRef endIndex = new IntRef();
-        String ref = getReference(reference, 0, endIndex, "   ");
+        String ref = getReference(reference, 0, endIndex);
         
         if (endIndex.v != reference.length()) {
-//            throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
+            throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
-        System.out.format("qqqqqqq getReference(%s): %s%n", reference, ref);
         return ref;
     }
     
