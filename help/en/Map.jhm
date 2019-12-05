@@ -974,6 +974,8 @@
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_examples" url="html/hardware/loconet/StandaloneLocoNet.shtml#examples"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_SettingsTools" url="package/jmri/jmrit/operations/Operations.shtml#SettingsTools"/>
+
 <mapID target="html.hardware.dccpp.Turnouts_types" url="html/hardware/dccpp/Turnouts.shtml#types"/>
 
 <mapID target="package.jmri.jmrix.loconet.locoio.LocoIOFrame" url="package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml"/>
@@ -2099,6 +2101,8 @@
 <mapID target="package.jmri.jmrit.logix.NXWarrant_prefs" url="package/jmri/jmrit/logix/NXWarrant.shtml#prefs"/>
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtLevelXing" url="package/jmri/jmrit/display/SetSignalsAtLevelXing.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_ExportTimetable" url="package/jmri/jmrit/operations/Operations.shtml#ExportTimetable"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_setCars" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_setCars.shtml"/>
 
@@ -3801,6 +3805,8 @@
 <mapID target="manual.DecoderPro.Main_VSD_compatibility" url="manual/DecoderPro/Main_VSD.shtml#compatibility"/>
 
 <mapID target="package.jmri.jmrit.logix.WarrantTable" url="package/jmri/jmrit/logix/WarrantTable.shtml"/>
+
+<mapID target="html.tools.TimeTable_opsimport" url="html/tools/TimeTable.shtml#opsimport"/>
 
 <mapID target="manual.DecoderPro.Main_GrapeVine" url="manual/DecoderPro/Main_GrapeVine.shtml"/>
 

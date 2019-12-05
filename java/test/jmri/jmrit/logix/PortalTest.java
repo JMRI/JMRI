@@ -23,9 +23,9 @@ public class PortalTest {
 
     @Test
     public void testCtor() {
-        Portal p = _portalMgr.createNewPortal("IP1", null);
+        Portal p = _portalMgr.createNewPortal(null);
         Assert.assertNull("No User Name", p);       // Portals must have a user name
-        p = _portalMgr.createNewPortal(null, "portal_1");
+        p = _portalMgr.createNewPortal("portal_1");
         Assert.assertNotNull("Has User Name", p);
     }
     
@@ -122,8 +122,7 @@ public class PortalTest {
         Assert.assertNull("portal set new name", p.setName("portal_1")); // set old name
         Assert.assertNull("portal set new name", p.setName("portal_2"));
         Assert.assertEquals("portal get new name", "portal_2", p.getName());
-        Assert.assertEquals("portal set existing name",
-                "Another portal in OBlock \"portal_3\" is named \"portal_3\".", p.setName("portal_3"));
+        Assert.assertNotNull("portal setName returned Error message", p.setName("portal_3"));
     }
 
     @Test
@@ -151,7 +150,6 @@ public class PortalTest {
     @Test
     public void testDisposePortal() {
         Portal p = _portalMgr.providePortal("portal p");
-        Assert.assertEquals("portal bean type", "Portal", p.getBeanType());
         p.setToBlock(_blkMgr.provideOBlock("OB1"), false);
         p.setFromBlock(_blkMgr.provideOBlock("OB2"), true);
         Assert.assertEquals("portal description",

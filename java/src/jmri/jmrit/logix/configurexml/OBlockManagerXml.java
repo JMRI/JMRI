@@ -218,15 +218,6 @@ public class OBlockManagerXml // extends XmlFile
         return block;
     }
 
-    private Portal getPortal(String name) {
-        Portal portal = _portalMgr.providePortal(name);
-        if (portal == null) {
-            portal = _portalMgr.createNewPortal(null, name);
-            log.debug("create Portal: ({}, {})", portal.getSystemName(), name);
-        }
-        return portal;
-    }
-
     private OPath getPath(OBlock block, String name) {
         String key = block.getSystemName() + name;
         OPath path = _pathMap.get(key);
@@ -363,10 +354,16 @@ public class OBlockManagerXml // extends XmlFile
         String fromBlockName = null;
         String toBlockName = null;
         // Portals must have user names.
-        Portal portal = _portalMgr.getByUserName(userName);
+        Portal portal = _portalMgr.getPortal(userName);
         if (portal != null) {
-            fromBlockName = portal.getFromBlock().getSystemName();
-            toBlockName = portal.getToBlock().getSystemName();
+            OBlock block = portal.getFromBlock();
+            if (block != null) {
+                fromBlockName = block.getSystemName();
+            }
+            block = portal.getToBlock();
+            if (block != null) {
+                toBlockName = block.getSystemName();
+            }
         } else {
             portal = _portalMgr.providePortal(userName);
         }
@@ -396,11 +393,8 @@ public class OBlockManagerXml // extends XmlFile
                         String blockName = e.getAttribute("blockName").getValue();
                         log.debug("Load portal= \"{}\" fromBlock= {}, pathName= {}, blockName= {}",
                                 userName, fromBlock.getSystemName(), pathName, blockName);
-                        /*(if (fromBlock.getSystemName().equals(blockName))*/ {
-                            // path is in the fromBlock
-                            OPath path = getPath(fromBlock, pathName);
-                            portal.addPath(path);
-                        }
+                        OPath path = getPath(fromBlock, pathName);
+                        portal.addPath(path);
                     }
                 }
             }
@@ -491,7 +485,7 @@ public class OBlockManagerXml // extends XmlFile
 
         Attribute attr = elem.getAttribute("fromPortal");
         if (attr != null) {
-            Portal portal = getPortal(attr.getValue());
+            Portal portal = _portalMgr.providePortal(attr.getValue());
             if (portal != null) {
                 path.setFromPortal(portal);
                 portal.addPath(path);
@@ -499,7 +493,7 @@ public class OBlockManagerXml // extends XmlFile
         }
         attr = elem.getAttribute("toPortal");
         if (attr != null) {
-            Portal portal = getPortal(attr.getValue());
+            Portal portal = _portalMgr.providePortal(attr.getValue());
             if (portal != null) {
                 path.setToPortal(portal);
                 portal.addPath(path);

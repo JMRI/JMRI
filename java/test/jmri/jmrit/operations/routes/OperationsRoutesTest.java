@@ -2,16 +2,19 @@ package jmri.jmrit.operations.routes;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.JDOMException;
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.jdom2.JDOMException;
-import org.junit.Assert;
-import org.junit.Test;
 
 /**
  * Tests for the Operations Route class. Last manually cross-checked on 20090131.

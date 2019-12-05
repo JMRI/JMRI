@@ -43,7 +43,8 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
 
@@ -120,7 +121,8 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
 
@@ -176,7 +178,8 @@ public class LinkedWarrantTest {
         String[] route2 = {"OB1", "OB3", "OB5", "OB6", "OB7", "OB9", "OB11"};
         block = _OBlockMgr.getOBlock("OB11");
 
-        Assert.assertEquals("Train after second leg", block.getSensor().getDisplayName(), NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
+        Assert.assertEquals("Train after second leg", block.getSensor().getDisplayName(),
+                NXFrameTest.runtimes(route2, _OBlockMgr).getDisplayName());
 
         // passed test - cleanup.  Do it here so failure leaves traces.
         JFrameOperator jfo = new JFrameOperator(tableFrame);
@@ -195,7 +198,8 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/ShortBlocksTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("LinkedWarrantsTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
 
@@ -282,7 +286,8 @@ public class LinkedWarrantTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("NXWarrantTest");
         panel.setVisible(false);  // hide panel to prevent repaint.
 
