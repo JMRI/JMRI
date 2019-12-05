@@ -54,6 +54,7 @@ import org.junit.runners.Suite;
         GetArgumentListTest.class,
         GetClassPathTest.class,
         GetJavaPropertyTest.class,
+        JUnitUtilTest.class,
         HelpUtilTest.class,
         JTextPaneAppenderTest.class,
         JmriInsetsTest.class,
