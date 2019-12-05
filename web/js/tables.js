@@ -43,7 +43,7 @@ function rebuildTable(data) {
 		var tbody = '';	
 		data.forEach(function (item) {
 			jmri.socket.send(item.type, { name: item.data.name }); //request updates from server
-			tbody += '<tr data-name="' + item.data.name + '">';
+			tbody += "<tr data-name='" + item.data.name + "'>";
 			tbody += buildRow(item.data) + '</tr>';
 		});
 		$("table#jmri-data tbody").html(tbody);
