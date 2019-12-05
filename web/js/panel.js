@@ -1244,7 +1244,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         $preloadWidgetImages($widget); //start loading all images
                                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                         $widget["systemName"] = $widget.name;
-                                        $widget['id'] = $widget.ident;
+//                                        $widget['id'] = $widget.ident;
                                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                                         $drawIcon($widget); //actually place and position the widget on the panel
                                         jmri.getSensor($widget["systemName"]);
@@ -1280,7 +1280,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                         }
                         $preloadWidgetImages($widget); //start loading all images
                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-                        $widget['id'] = $widget.ident;
+//                        $widget['id'] = $widget.ident;
                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                         $drawIcon($widget); //actually place and position the widget on the panel
                         break;
@@ -1422,7 +1422,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                         	case "vertical_up"   : $widget.degrees = 270;
                         	case "vertical_down" : $widget.degrees = 90;
                         }
-                        $widget['id'] = $widget.ident;
+//                        $widget['id'] = $widget.ident;
                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                         //put the text element on the page
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" + $widget.text + "</div>");
@@ -1458,7 +1458,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 jmri.getLayoutBlock($widget.systemName);
                                 break;
                             case "layoutturnout" :
-                                $widget['id'] = $widget.ident;
+//                                $widget['id'] = $widget.ident;
                                 $widget['name'] = $widget.turnoutname; //normalize name
                                 $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                 $widget.jsonType = "turnout"; // JSON object type
@@ -1710,7 +1710,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget['occupancystateBD'] = $gBlks[$widget.blocknamebd].state;
                                 }
                                 //store widget in persistent array
-                                $widget['id'] = $widget.ident;
+//                                $widget['id'] = $widget.ident;
                                 $gWidgets[$widget.id] = $widget;
                                 //also store the xing's 4 end points for other connections
                                 $storeLevelXingPoints($widget);
@@ -3441,7 +3441,9 @@ var $setWidgetState = function($id, $newState, data) {
             // set $id to slip id
             $id = slipID;
         } else {
-            jmri.log("$setWidgetState unknown $id: '" + $id + "'.");
+            if (jmri_logging) {
+            	jmri.log("$setWidgetState unknown $id: '" + $id + "'.");
+            }
             return;
         }
     } else if ($widget.widgetType == 'layoutSlip') {
@@ -3986,10 +3988,12 @@ $(document).ready(function() {
                 updateWidgets(name, state, data);
             },
             block: function(name, value, data) {
-            	if (value.type == "idTag") {
-            		value = value.data.userName; //for idTags, use the value in userName instead
-            	} else if (value.type == "reporter"){
-            		value = value.data.value;    //for reporters, use the value in data instead            		
+            	if (value !== null) {
+            		if (value.type == "idTag") {
+            			value = value.data.userName; //for idTags, use the value in userName instead
+            		} else if (value.type == "reporter"){
+            			value = value.data.value;    //for reporters, use the value in data instead            		
+            		}
             	}
                 updateWidgets(name, value, data);
             },
@@ -3997,10 +4001,12 @@ $(document).ready(function() {
                 setBlockColor(name, data.blockColor);
             },
             memory: function(name, value, data) {
-            	if (value.type == "idTag") {
-            		value = value.data.userName; //for idTags, use the value in userName instead
-            	} else if (value.type == "reporter"){
-            		value = value.data.value;    //for reporters, use the value in data instead            		
+            	if (value !== null) {
+            		if (value.type == "idTag") {
+            			value = value.data.userName; //for idTags, use the value in userName instead
+            		} else if (value.type == "reporter"){
+            			value = value.data.value;    //for reporters, use the value in data instead            		
+            		}
             	}
                 updateWidgets(name, value, data);
             },
