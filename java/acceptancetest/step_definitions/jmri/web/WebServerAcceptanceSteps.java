@@ -81,6 +81,7 @@ public class WebServerAcceptanceSteps implements En {
            WebElement webTable = webDriver.findElement(By.xpath("//div[@id='wrap']//div[@class='container']//table"));
 
            // find the table body.
+
            WebElement tableBody = webTable.findElement(By.tagName("tbody"));
            List<WebElement> rows = tableBody.findElements(By.tagName("tr"));
            // we make an assumption that the first column is the systemName and
@@ -109,6 +110,7 @@ public class WebServerAcceptanceSteps implements En {
 
             String tablePath = "//table[@id='jmri-data']";
             String cellPath = tablePath + "//tr[@data-name='" + row + "']//td[@class='" + column +"']";
+            String cellAfterPath = cellPath + "[text()='" + after +"']";
             
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(tablePath)));
             
@@ -121,11 +123,11 @@ public class WebServerAcceptanceSteps implements En {
             assertThat(cells.get(0).getText()).isEqualTo(text); 
             //click on the target cell
             cells.get(0).click();
-            //give page a chance to catch up
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellPath)));            
-            //refresh the reference since the update replaced the cell
+            //wait for cell to be updated with the "after" value
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellAfterPath)));            
+            //refresh the reference since the json update replaced the cell
             cells = webDriver.findElements(By.xpath(cellPath));
-            //check that new value is correct
+            //check that "after" value is correct
             assertThat(cells.get(0).getText()).isEqualTo(after);
 
         });
