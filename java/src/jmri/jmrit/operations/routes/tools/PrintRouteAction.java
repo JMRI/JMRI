@@ -1,15 +1,20 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrit.operations.routes.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
+
 import javax.swing.AbstractAction;
-import jmri.jmrit.operations.setup.Control;
-import jmri.util.davidflanagan.HardcopyWriter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Action to print a summary of a route.
