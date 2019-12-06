@@ -79,9 +79,6 @@ public class ReferenceUtilTest {
         Memory m15 = _memoryManager.newMemory("IM15", "Memory 15");
         Memory m333 = _memoryManager.newMemory("IM333", "Memory 333");
         
-        
-        ReferenceUtil ru = new ReferenceUtil();
-        
         // Test references
         m1.setValue("Turnout 1");
         Assert.assertEquals("Reference is correct",
@@ -119,8 +116,6 @@ public class ReferenceUtilTest {
     @Test
     @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testExceptions() {
-        
-        ReferenceUtil ru = new ReferenceUtil();
         
         // Test exceptions
         expectException(() -> {
@@ -160,8 +155,6 @@ public class ReferenceUtilTest {
         m96.setValue("Turnout 96");
         Memory m97 = _memoryManager.newMemory("IM97", "Memory ");
         m97.setValue("Turnout 97");
-        
-        ReferenceUtil ru = new ReferenceUtil();
         
         // Test special characters. Special characters must be escaped.
         Assert.assertEquals("Reference is correct",
