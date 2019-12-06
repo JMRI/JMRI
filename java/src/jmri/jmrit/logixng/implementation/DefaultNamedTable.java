@@ -72,21 +72,16 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
         
         NamedTableManager manager = InstanceManager.getDefault(NamedTableManager.class);
         
-//        List<String> lines = Files.readAllLines(file.toPath(), StandardCharsets.UTF_8);
-        
-//        System.out.format("loadFromCSV()%n");
-//        System.out.format("loadFromCSV(): num lines: %d%n", lines.size());
-//        for (String l : lines) {
-//            System.out.format("Line: '%s'%n", l);
-//        }
         if (systemName == null && userName == null) {
             String[] firstRow = lines.get(0).split("\t");
             systemName = firstRow[0];
-            userName = firstRow.length > 1 ? firstRow[1] : "";
+            userName = firstRow.length > 1 ? firstRow[1] : null;
             if (systemName.isEmpty()) systemName = manager.getAutoSystemName();
 //            System.out.format("firstRow: %s, %s%n", firstRow[0], firstRow[1]);
 //            System.out.format("systemName: %s, userName: %s%n", systemName, userName);
         }
+        
+        if (userName != null && userName.isEmpty()) userName = null;
         
         // First row is system name and user name. Second row is column names.
         int numRows = lines.size() - 2;
@@ -103,6 +98,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
             csvCells[rowCount-1] = columns;
         }
         
+        // Ensure all rows have same number of columns
         for (int rowCount = 1; rowCount < numRows+2; rowCount++) {
             Object[] cells = csvCells[rowCount-1];
             if (cells.length <= numColumns) {
@@ -110,6 +106,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
                 System.arraycopy(cells, 0, newCells, 0, cells.length);
                 csvCells[rowCount-1] = newCells;
                 for (int i=cells.length; i <= numColumns; i++) newCells[i] = "";
+                csvCells[rowCount-1] = newCells;
             }
         }
         
