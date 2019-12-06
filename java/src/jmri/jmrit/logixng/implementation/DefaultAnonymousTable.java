@@ -75,11 +75,6 @@ public class DefaultAnonymousTable implements AnonymousTable {
     }
     
     private void setupTable() {
-//    private final int _numRows;
-//    private final int _numColumns;
-//    private final Object[][] _data;
-//    private final Map<String,Integer> rowNames = new HashMap<>();
-//    private final Map<String,Integer> columnNames = new HashMap<>();
         for (int i=1; i <= _numRows; i++) {
             Object cell = _data[i][0];
             if (cell != null) {

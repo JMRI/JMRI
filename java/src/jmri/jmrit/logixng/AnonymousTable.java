@@ -1,7 +1,5 @@
 package jmri.jmrit.logixng;
 
-import jmri.NamedBean;
-
 /**
  * Represent an anonymous table.
  * An anonymous table has no name. It can be assigned to a Memory or to a cell

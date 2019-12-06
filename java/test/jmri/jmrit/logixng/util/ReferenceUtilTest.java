@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.util;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -21,6 +22,7 @@ public class ReferenceUtilTest {
 
     private MemoryManager _memoryManager;
     private NamedTableManager _tableManager;
+    private NamedTable yardTable;
     
     // The system appropriate newline separator.
     private static final String _nl = System.getProperty("line.separator"); // NOI18N
@@ -91,13 +93,17 @@ public class ReferenceUtilTest {
     
     @Test
     public void testTables() {
-        // IM1 = "{Yard table[Turnout 2,Sensor1]}
         
         Memory m1 = _memoryManager.newMemory("IM1", "Memory 1");
         Memory m15 = _memoryManager.newMemory("IM15", "Memory 15");
         Memory m333 = _memoryManager.newMemory("IM333", "Memory 333");
         
-        // Test references
+        yardTable.setCell(null, "Other turnout");
+        Assert.assertNull("Reference is correct",
+                ReferenceUtil.getReference("{Yard table[Other turnout]}"));
+        Assert.assertNull("Reference is correct",
+                ReferenceUtil.getReference("{Yard table[Other turnout,North yard]}"));
+        
         m1.setValue("Turnout 1");
         Assert.assertEquals("Reference is correct",
                 "Turnout 111",
@@ -168,6 +174,11 @@ public class ReferenceUtilTest {
         
         // Test exceptions
         expectException(() -> {
+            ReferenceUtil.getValue("", 0, endRef);
+        }, IllegalArgumentException.class, "Reference '' is not a valid reference");
+        
+        // Test exceptions
+        expectException(() -> {
             ReferenceUtil.getReference("abc", 0, endRef);
         }, IllegalArgumentException.class, "Reference 'abc' is not a valid reference");
         
@@ -175,6 +186,11 @@ public class ReferenceUtilTest {
         expectException(() -> {
             ReferenceUtil.getReference("{aaa", 0, endRef);
         }, IllegalArgumentException.class, "Reference '{aaa' is not a valid reference");
+        
+        // Test exceptions
+        expectException(() -> {
+            ReferenceUtil.getReference("{abc[1]1", 0, endRef);
+        }, IllegalArgumentException.class, "Reference '{abc[1]1' is not a valid reference");
         
         // Test exceptions
         expectException(() -> {
@@ -253,13 +269,19 @@ public class ReferenceUtilTest {
     }
     
     private void setupTables() {
+        // Note that editors, like NetBeans, may insert spaces instead of tabs
+        // when pressing the <Tab> key, which may be a problem when editing the
+        // CSV table data below, since the separator between columns must be a
+        // tab character.
+        
         String yardTableData =
                 "	Yard table\n" +
                 "	North yard	East yard	South yard	West yard" + _nl +
                 "Leftmost turnout	IT101	IT201	IT301	IT401" + _nl +
                 "Left turnout	Turnout 111	IT203	IT303	IT403" + _nl +
                 "Right turnout	IT104	Memory 333	IT304	IT404" + _nl +
-                "Rightmost turnout	Turnout 222	IM15	IT302	IT402" + _nl;
+                "Rightmost turnout	Turnout 222	IM15	IT302	IT402" + _nl +
+                "Other turnout	IT1	IT2	IT3	IT4" + _nl;
         
         String turnoutTableData =
                 "	Turnout table\n" +
@@ -276,7 +298,7 @@ public class ReferenceUtilTest {
                 "Sensors	Turnout 111	IT203	IT303	IT403" + _nl +
                 "Lights	IT104	IT204	IT304	IT404" + _nl;
         
-        _tableManager.loadTableFromCSV(yardTableData);
+        yardTable = _tableManager.loadTableFromCSV(yardTableData);
         _tableManager.loadTableFromCSV(turnoutTableData);
         _tableManager.loadTableFromCSV(otherYardTableData);
     }
