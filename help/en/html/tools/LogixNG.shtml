@@ -288,7 +288,7 @@
 	  27 is AA and 28 is AB.</p>
 
 	  <p>Note that spreadsheet software, like Excel and LibreOffice Calc, has cell
-	  &lt;column letter&gt&lt;row number&gt; while references in JMRI has table[row,column].
+	  &lt;column letter&gt;&lt;row number&gt; while references in JMRI has table[row,column].
 	  Example: Cell B3 is table[3,2], since B3 is row 3 and column 2.</p>
 
 	  <p>Example from the table above. These examples assume that IM3 has the value
