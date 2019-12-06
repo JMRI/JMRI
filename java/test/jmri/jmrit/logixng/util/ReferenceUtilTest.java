@@ -3,13 +3,11 @@ package jmri.jmrit.logixng.util;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -23,10 +21,7 @@ public class ReferenceUtilTest {
     private NamedTableManager _tableManager;
     
     // The system appropriate newline separator.
-//    private static final String _nl = System.getProperty("line.separator"); // NOI18N
-//    private static final String _nl = "\r";
-//    private static final String _nl = "\n";
-    private static final String _nl = "\r\n";
+    private static final String _nl = System.getProperty("line.separator"); // NOI18N
     
     @Test
     public void testCtor() {
@@ -52,16 +47,6 @@ public class ReferenceUtilTest {
         Memory m1 = _memoryManager.newMemory("IM1", "Memory 1");
         Memory m2 = _memoryManager.newMemory("IM2", "Memory 2");
         Memory m3 = _memoryManager.newMemory("IM3", "Memory 3");
-        Memory m4 = _memoryManager.newMemory("IM4", "Memory 4");
-        Memory m5 = _memoryManager.newMemory("IM5", "Memory 5");
-        Memory m6 = _memoryManager.newMemory("IM6", "Memory 6");
-        Memory m7 = _memoryManager.newMemory("IM7", "Memory 7");
-        Memory m8 = _memoryManager.newMemory("IM8", "Memory 8");
-        Memory m9 = _memoryManager.newMemory("IM9", "Memory 9");
-        Memory m10 = _memoryManager.newMemory("IM10", "Memory 10");
-        Memory m11 = _memoryManager.newMemory("IM11", "Memory 11");
-        Memory m12 = _memoryManager.newMemory("IM12", "Memory 12");
-        
         
         ReferenceUtil ru = new ReferenceUtil();
         
@@ -83,17 +68,6 @@ public class ReferenceUtilTest {
         // IM1 = "{Yard table[Turnout 2,Sensor1]}
         
         Memory m1 = _memoryManager.newMemory("IM1", "Memory 1");
-        Memory m2 = _memoryManager.newMemory("IM2", "Memory 2");
-        Memory m3 = _memoryManager.newMemory("IM3", "Memory 3");
-        Memory m4 = _memoryManager.newMemory("IM4", "Memory 4");
-        Memory m5 = _memoryManager.newMemory("IM5", "Memory 5");
-        Memory m6 = _memoryManager.newMemory("IM6", "Memory 6");
-        Memory m7 = _memoryManager.newMemory("IM7", "Memory 7");
-        Memory m8 = _memoryManager.newMemory("IM8", "Memory 8");
-        Memory m9 = _memoryManager.newMemory("IM9", "Memory 9");
-        Memory m10 = _memoryManager.newMemory("IM10", "Memory 10");
-        Memory m11 = _memoryManager.newMemory("IM11", "Memory 11");
-        Memory m12 = _memoryManager.newMemory("IM12", "Memory 12");
         Memory m15 = _memoryManager.newMemory("IM15", "Memory 15");
         Memory m333 = _memoryManager.newMemory("IM333", "Memory 333");
         
