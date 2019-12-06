@@ -1244,7 +1244,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         $preloadWidgetImages($widget); //start loading all images
                                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                         $widget["systemName"] = $widget.name;
-                                        $widget['id'] = $widget.ident;
                                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                                         $drawIcon($widget); //actually place and position the widget on the panel
                                         jmri.getSensor($widget["systemName"]);
@@ -1280,7 +1279,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                         }
                         $preloadWidgetImages($widget); //start loading all images
                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-                        $widget['id'] = $widget.ident;
                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                         $drawIcon($widget); //actually place and position the widget on the panel
                         break;
@@ -1422,7 +1420,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                         	case "vertical_up"   : $widget.degrees = 270;
                         	case "vertical_down" : $widget.degrees = 90;
                         }
-                        $widget['id'] = $widget.ident;
                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                         //put the text element on the page
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" + $widget.text + "</div>");
@@ -3276,7 +3273,8 @@ var $setWidgetPosition = function(e) {
     var $id = e.attr('id');
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
-    if (typeof $widget !== "undefined" && $widget.widgetType != "beanswitch") {  //don't bother if widget not found or BeanSwitch
+    //don't bother if widget not found or not BeanSwitch
+    if (isDefined($widget) && isDefined(e[0]) && ($widget.widgetType != "beanswitch")) {
 
         var $height = 0;
         var $width  = 0;
@@ -3372,7 +3370,7 @@ var $setWidgetState = function($id, $newState) {
     var $widget = $gWidgets[$id];
 
     // if undefined widget this must be a slip
-    if (typeof $widget === "undefined") {
+    if (isUndefined($widget)) {
         // does it have "l" or "r" suffix?
         if ($id.endsWith("l") || $id.endsWith("r")) {   // (yes!)
             //jmri_logging = true;
@@ -3436,7 +3434,6 @@ var $setWidgetState = function($id, $newState) {
                        " to " + slipStateToString($newState));
                }
             }
-            //jmri_logging = false;
 
             // set $id to slip id
             $id = slipID;
@@ -4014,20 +4011,7 @@ $(document).ready(function() {
         // include name of panel in page title. Will be updated to userName later
         setTitle(panelName);
 
-        // Add a widget to retrieve fastclock rate
-        $widget = new Array();
-        $widget.jsonType = "memory";
-        $widget['name'] = "IMRATEFACTOR";  // already defined in JMRI
-        $widget['id'] = $widget['name'];
-        $widget['safeName'] = $widget['name'];
-        $widget['systemName'] = $widget['name'];
-        $widget['state'] = "1.0";
-        $widget['id'] = $widget.ident;
-        $gWidgets[$widget.id] = $widget;
-        if (!($widget.systemName in whereUsed)) {  //set where-used for this new memory
-            whereUsed[$widget.systemName] = new Array();
-        }
-        whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
+       	getRateFactor();
 
         // request actual xml of panel, and process it on return
         // uses setTimeout simply to not block other JavaScript since
@@ -4037,6 +4021,22 @@ $(document).ready(function() {
         }, 500);
     }
 });
+
+// Add a widget to store fastclock rate
+function getRateFactor() {
+	$widget = new Array();
+	$widget.jsonType = "memory";
+	$widget['name'] = "IMRATEFACTOR";  // already defined in JMRI
+	$widget['id'] = $widget['name'];
+	$widget['safeName'] = $widget['name'];
+	$widget['systemName'] = $widget['name'];
+	$widget['state'] = "1.0";
+	$gWidgets[$widget.id] = $widget;
+	if (!($widget.systemName in whereUsed)) {  //set where-used for this new memory
+		whereUsed[$widget.systemName] = new Array();
+	}
+	whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
+}
 
 // convert turnout state to string
 function turnoutStateToString(state) {
@@ -4108,7 +4108,7 @@ function getSlipStateForTurnoutStatesClosest(slipWidget, stateA, stateB, useClos
         result = STATE_AC;
     } else if ((stateA == slipWidget.turnoutA_AD) && (stateB == slipWidget.turnoutB_AD)) {
         result = STATE_AD;
-    } else if (($widget.slipType == DOUBLE_SLIP)
+    } else if ((slipWidget.slipType == DOUBLE_SLIP)
         && (stateA == slipWidget.turnoutA_BC) && (stateB == slipWidget.turnoutB_BC)) {
         result = STATE_BC;
     } else if ((stateA == slipWidget.turnoutA_BD) && (stateB == slipWidget.turnoutB_BD)) {
@@ -4118,7 +4118,7 @@ function getSlipStateForTurnoutStatesClosest(slipWidget, stateA, stateB, useClos
             result = STATE_AC;
         } else if ((stateA == slipWidget.turnoutA_AD) || (stateB == slipWidget.turnoutB_AD)) {
             result = STATE_AD;
-        } else if (($widget.slipType == DOUBLE_SLIP)
+        } else if ((slipWidget.slipType == DOUBLE_SLIP)
             && (stateA == slipWidget.turnoutA_BC) || (stateB == slipWidget.turnoutB_BC)) {
             result = STATE_BC;
         } else if ((stateA == slipWidget.turnoutA_BD) || (stateB == slipWidget.turnoutB_BD)) {
