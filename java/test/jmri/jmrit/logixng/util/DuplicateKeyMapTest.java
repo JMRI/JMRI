@@ -139,6 +139,8 @@ public class DuplicateKeyMapTest {
         Assert.assertTrue("size is correct", 5 == t.size());
         t.removeValue("Green", "Sensor");
         Assert.assertTrue("size is correct", 4 == t.size());
+        t.removeValue("Unknown key", "Sensor");
+        Assert.assertTrue("size is correct", 4 == t.size());
     }
     
     @Test
