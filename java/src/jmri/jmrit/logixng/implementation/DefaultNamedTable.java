@@ -76,11 +76,11 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
             String[] firstRow = lines.get(0).split("\t");
             systemName = firstRow[0];
             userName = firstRow.length > 1 ? firstRow[1] : null;
-            if (systemName.isEmpty()) systemName = manager.getAutoSystemName();
 //            System.out.format("firstRow: %s, %s%n", firstRow[0], firstRow[1]);
 //            System.out.format("systemName: %s, userName: %s%n", systemName, userName);
         }
         
+        if (systemName == null || systemName.isEmpty()) systemName = manager.getAutoSystemName();
         if (userName != null && userName.isEmpty()) userName = null;
         
         // First row is system name and user name. Second row is column names.

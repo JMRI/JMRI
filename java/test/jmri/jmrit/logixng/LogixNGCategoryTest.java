@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng;
 
-import jmri.jmrit.logixng.Category;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
