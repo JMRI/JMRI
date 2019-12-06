@@ -39,7 +39,7 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
     @Override
     public boolean containsValue(Object value) {
         for (List<V> l : _internalMap.values()) {
-            if (l.contains(value)) {
+            if (l.contains((V)value)) {
                 return true;
             }
         }
@@ -48,7 +48,7 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
 
     @Override
     public V get(Object key) {
-        throw new UnsupportedOperationException("Not supported.");
+        throw new UnsupportedOperationException("Not supported");
     }
 
     /**
@@ -57,7 +57,9 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
      * @return an unmodifiable list of all the items
      */
     public List<V> getAll(K key) {
-        return Collections.unmodifiableList(_internalMap.get(key));
+        List<V> list = _internalMap.get(key);
+        if (list == null) list = new ArrayList<>();
+        return Collections.unmodifiableList(list);
     }
 
     /**
@@ -78,8 +80,13 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
     }
 
     @Override
+    public void putAll(Map m) {
+        throw new UnsupportedOperationException("Not supported");
+    }
+
+    @Override
     public V remove(Object key) {
-        throw new UnsupportedOperationException("Not supported.");
+        throw new UnsupportedOperationException("Not supported");
     }
 
     /**
@@ -92,11 +99,6 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
         if (l != null) {
             l.remove(value);
         }
-    }
-
-    @Override
-    public void putAll(Map m) {
-        throw new UnsupportedOperationException("Not supported.");
     }
 
     @Override
@@ -125,7 +127,7 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
 
     @Override
     public Set<Map.Entry<K,V>> entrySet() {
-        throw new UnsupportedOperationException("Not supported.");
+        throw new UnsupportedOperationException("Not supported");
     }
 
 }
