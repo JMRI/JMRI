@@ -9,6 +9,8 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test ReferenceUtil
@@ -34,11 +36,27 @@ public class ReferenceUtilTest {
         try {
             r.run();
         } catch (Exception e) {
+            if (e.getClass() != exceptionClass) {
+                log.error("Expected exception {}, found exception {}",
+                        e.getClass().getName(), exceptionClass.getName());
+            }
             Assert.assertTrue("Exception is correct", e.getClass() == exceptionClass);
             Assert.assertEquals("Exception message is correct", errorMessage, e.getMessage());
             exceptionThrown = true;
         }
         Assert.assertTrue("Exception is thrown", exceptionThrown);
+    }
+    
+    @Test
+    public void testIsReference() {
+        Assert.assertFalse("Is reference", ReferenceUtil.isReference("{}"));
+        Assert.assertTrue("Is reference", ReferenceUtil.isReference("{A}"));
+        Assert.assertTrue("Is reference", ReferenceUtil.isReference("{Abc 123}"));
+        Assert.assertFalse("Is reference", ReferenceUtil.isReference("{"));
+        Assert.assertFalse("Is reference", ReferenceUtil.isReference("}"));
+        Assert.assertFalse("Is reference", ReferenceUtil.isReference("{Abc"));
+        Assert.assertFalse("Is reference", ReferenceUtil.isReference("Abc}"));
+        Assert.assertFalse("Is reference", ReferenceUtil.isReference("Abc"));
     }
     
     @Test
@@ -119,6 +137,11 @@ public class ReferenceUtilTest {
         
         // Test exceptions
         expectException(() -> {
+            ReferenceUtil.getReference("abc");
+        }, IllegalArgumentException.class, "Reference 'abc' is not a valid reference");
+        
+        // Test exceptions
+        expectException(() -> {
             ReferenceUtil.getReference("{}");
         }, IllegalArgumentException.class, "Reference '{}' is not a valid reference");
         
@@ -135,6 +158,33 @@ public class ReferenceUtilTest {
         Assert.assertEquals("Reference is correct",
                 "Turnout 1",
                 ReferenceUtil.getReference("{IM999}"));
+    }
+    
+    @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
+    public void testExceptions2() {
+        
+        ReferenceUtil.IntRef endRef = new ReferenceUtil.IntRef();
+        
+        // Test exceptions
+        expectException(() -> {
+            ReferenceUtil.getReference("abc", 0, endRef);
+        }, IllegalArgumentException.class, "Reference 'abc' is not a valid reference");
+        
+        // Test exceptions
+        expectException(() -> {
+            ReferenceUtil.getReference("{aaa", 0, endRef);
+        }, IllegalArgumentException.class, "Reference '{aaa' is not a valid reference");
+        
+        // Test exceptions
+        expectException(() -> {
+            ReferenceUtil.getReference("{Some other table[1]}", 0, endRef);
+        }, IllegalArgumentException.class, "Table 'Some other table' is not found");
+        
+        // Test exceptions
+        expectException(() -> {
+            ReferenceUtil.getReference("{Some other table[1,2]}", 0, endRef);
+        }, IllegalArgumentException.class, "Table 'Some other table' is not found");
     }
     
     @Test
@@ -248,4 +298,5 @@ public class ReferenceUtilTest {
         JUnitUtil.tearDown();
     }
     
+    private final static Logger log = LoggerFactory.getLogger(ReferenceUtilTest.class);
 }

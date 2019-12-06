@@ -15,6 +15,9 @@ import org.slf4j.LoggerFactory;
  */
 public class ReferenceUtil {
 
+    // The methods in this class are protected instead of private to let the
+    // test class ReferenceUtilTest access the methods.
+    
     /**
      * Checks if the parameter is a reference or not.
      * @param value the string to check
@@ -22,10 +25,12 @@ public class ReferenceUtil {
      */
     static public boolean isReference(String value) {
         // A reference starts with { and ends with }
-        return value.startsWith("{") && value.endsWith("}");
+        return value.startsWith("{")
+                && value.endsWith("}")
+                && value.length() > 2;
     }
     
-    static private String unescapeString(String value, int startIndex, int endIndex) {
+    static protected String unescapeString(String value, int startIndex, int endIndex) {
         boolean escaped = false;
         
         StringBuilder sb = new StringBuilder();
@@ -50,7 +55,7 @@ public class ReferenceUtil {
      * @param endIndex index of the end of the value. This is an output parameter.
      * @return the value
      */
-    static private String getValue(String reference, int startIndex, IntRef endIndex) {
+    static protected String getValue(String reference, int startIndex, IntRef endIndex) {
         boolean escapeFound = false;
         boolean escaped = false;
         int end = startIndex;
@@ -87,7 +92,7 @@ public class ReferenceUtil {
      * @param endIndex index of the end of the value. This is an output parameter.
      * @return the value
      */
-    static private String getReferenceOrValue(String reference, int startIndex, IntRef endIndex) {
+    static protected String getReferenceOrValue(String reference, int startIndex, IntRef endIndex) {
         
         // Do we have a new reference?
         if (reference.charAt(startIndex) == '{') {
@@ -105,7 +110,7 @@ public class ReferenceUtil {
      * @param endIndex index of the end of the reference. This is an output parameter.
      * @return the value of the reference
      */
-    static private String getReference(String reference, int startIndex, IntRef endIndex) {
+    static protected String getReference(String reference, int startIndex, IntRef endIndex) {
         
         // A reference must start with the char {
         if (reference.charAt(startIndex) != '{') {
@@ -169,7 +174,7 @@ public class ReferenceUtil {
                 Object cell = table.getCell(row);
                 return cell != null ? cell.toString() : null;
             } else {
-                throw new IllegalArgumentException("Table "+leftValue+" is not found");
+                throw new IllegalArgumentException("Table '"+leftValue+"' is not found");
             }
         }
         
@@ -187,7 +192,7 @@ public class ReferenceUtil {
         
         column = getReferenceOrValue(reference, endIndex.v, endIndex);
         if (endIndex.v == reference.length() || reference.charAt(endIndex.v) != ']') {
-            throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
+            throw new IllegalArgumentException("7Reference '"+reference+"' is not a valid reference");
         }
         
         if (((reference.charAt(endIndex.v) == ']')
@@ -204,7 +209,7 @@ public class ReferenceUtil {
                 endIndex.v++;
                 return cell != null ? cell.toString() : null;
             } else {
-                throw new IllegalArgumentException("Table "+leftValue+" is not found");
+                throw new IllegalArgumentException("Table '"+leftValue+"' is not found");
             }
 //            return "Testing 222....";
 //            return leftValue[row];
@@ -237,7 +242,7 @@ public class ReferenceUtil {
      * Reference to an integer.
      * This class is cheaper to use than AtomicInteger.
      */
-    private static class IntRef {
+    protected static class IntRef {
         public int v;
     }
     
