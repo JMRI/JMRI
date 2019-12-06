@@ -28,9 +28,6 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
     private int _state = NamedBean.UNKNOWN;
     private final AnonymousTable _internalTable;
     
-    // The system appropriate newline separator.
-    private static final String _nl = System.getProperty("line.separator"); // NOI18N
-    
     /**
      * Create a new named table.
      * @param sys the system name
@@ -126,7 +123,6 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
             throws BadUserNameException, BadSystemNameException {
         
         List<String> lines = Arrays.asList(text.split("\\r?\\n",-1));
-//        List<String> lines = Arrays.asList(text.split(_nl));
         return loadFromCSV(lines, null, null);
     }
     

@@ -15,8 +15,11 @@ import org.slf4j.LoggerFactory;
  */
 public class ReferenceUtil {
 
-    private final MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
-    private NamedTableManager _tableManager = InstanceManager.getDefault(NamedTableManager.class);
+    private final MemoryManager memoryManager =
+            InstanceManager.getDefault(MemoryManager.class);
+    
+    private final NamedTableManager _tableManager =
+            InstanceManager.getDefault(NamedTableManager.class);
     
     /**
      * Checks if the parameter is a reference or not.
@@ -109,7 +112,7 @@ public class ReferenceUtil {
      * @return the value of the reference
      */
     private String getReference(String reference, int startIndex, IntRef endIndex) {
-        int si = startIndex;
+        
         // A reference must start with the char {
         if (reference.charAt(startIndex) != '{') {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
@@ -237,5 +240,5 @@ public class ReferenceUtil {
         public int v;
     }
     
-    private final static Logger log = LoggerFactory.getLogger(ReferenceUtil.class);
+//    private final static Logger log = LoggerFactory.getLogger(ReferenceUtil.class);
 }
