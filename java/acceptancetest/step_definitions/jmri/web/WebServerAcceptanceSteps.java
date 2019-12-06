@@ -128,9 +128,9 @@ public class WebServerAcceptanceSteps implements En {
             //wait for cell to be updated with the "after" value
             wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellAfterPath)));            
             //refresh the reference since the json update replaced the cell
-            cells = webDriver.findElements(By.xpath(cellPath));
+            WebElement cell = webDriver.findElement(By.xpath(cellPath));
             //check that "after" value is correct
-            assertThat(cells.get(0).getText()).isEqualTo(after);
+            assertThat(cell.getText()).isEqualTo(after);
 
         });
 

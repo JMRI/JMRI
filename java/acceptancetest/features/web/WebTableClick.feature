@@ -19,5 +19,5 @@ Scenario Outline: Web Table requests with click testing
    | chrome | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Turnouts | IT4 | inverted | false | false |
    | chrome | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Sensors | ISCLOCKRUNNING | state | active | inactive | 
    | chrome | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Memories | IMRATEFACTOR | value | 1.0 | 1.0 | 
-   | chrome | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Signal Heads | IH8 | appearanceName | Yellow | Yellow | 
+   | chrome | java/test/jmri/jmrit/display/configurexml/load/OneOfEach.xml | Signal Heads | IH8 | lit | true | true | 
    
