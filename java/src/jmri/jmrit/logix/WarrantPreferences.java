@@ -542,7 +542,7 @@ public class WarrantPreferences extends AbstractPreferencesManager {
         }
     }
 
-    protected void setShutdown(Shutdown set) {
+    public void setShutdown(Shutdown set) {
         _shutdown = set;
     }
     public Shutdown getShutdown() {

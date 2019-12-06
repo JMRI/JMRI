@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrit.operations.routes.tools;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,6 +25,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.routes.*;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainIcon;

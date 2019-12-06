@@ -1,3 +1,6 @@
+# select image with Java 1.8 221
+image: Visual Studio 2019
+
 version: '{build}'
 clone_depth: 50
 skip_commits:

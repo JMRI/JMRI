@@ -5,6 +5,7 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -134,6 +135,14 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Sensor> getNamedBeanClass() {
+        return Sensor.class;
     }
 
     /**

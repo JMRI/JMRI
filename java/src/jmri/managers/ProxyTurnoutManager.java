@@ -302,6 +302,14 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Turnout> getNamedBeanClass() {
+        return Turnout.class;
+    }
+
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(ProxyTurnoutManager.class);
 

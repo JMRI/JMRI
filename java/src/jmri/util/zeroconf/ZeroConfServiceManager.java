@@ -304,8 +304,8 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
             log.warn("ZeroConfService stop threads interrupted.", ex);
         }
         CountDownLatch nsLatch = new CountDownLatch(getDNSes().size());
-        new HashMap<>(getDNSes()).values().parallelStream().forEach((dns) -> {
-            Thread t = new Thread(() -> {
+        new HashMap<>(getDNSes()).values().parallelStream().forEach(dns -> {
+            new Thread(() -> {
                 dns.unregisterAllServices();
                 if (close) {
                     try {
@@ -315,9 +315,7 @@ public class ZeroConfServiceManager implements InstanceManagerAutoDefault, Dispo
                     }
                 }
                 nsLatch.countDown();
-            });
-            t.setName("dns.close in ZerConfServiceManager#stopAll");
-            t.start();
+            }, "dns.close in ZeroConfServiceManager#stopAll").start();
         });
         try {
             zcLatch.await();

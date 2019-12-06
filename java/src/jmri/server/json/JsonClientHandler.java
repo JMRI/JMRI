@@ -68,8 +68,8 @@ public class JsonClientHandler {
     }
 
     public void onClose() {
-        services.values().stream().forEach(set -> set.stream()
-                .forEach(service -> service.onClose()));
+        services.values().stream()
+                .forEach(set -> set.stream().forEach(JsonSocketService::onClose));
         services.clear();
     }
 
@@ -172,6 +172,7 @@ public class JsonClientHandler {
                             Bundle.getMessage(this.connection.getLocale(), JsonException.ERROR_UNKNOWN_TYPE, type), id);
                 }
             } else {
+                log.warn("Data property of JSON message missing");
                 this.sendErrorMessage(HttpServletResponse.SC_BAD_REQUEST,
                         Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"), id);
             }
@@ -180,6 +181,7 @@ public class JsonClientHandler {
                 this.connection.close();
             }
         } catch (JmriException je) {
+            log.warn("Unsupported operation attempted {}", root);
             this.sendErrorMessage(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(
                     this.connection.getLocale(), "ErrorUnsupportedOperation", je.getLocalizedMessage()), id);
         } catch (JsonException je) {
