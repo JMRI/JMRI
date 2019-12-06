@@ -81,7 +81,7 @@ public class ReferenceUtil {
      * The value ends either with end of string, or with any of the characters
      * comma, left square bracket, right square bracket or right curly bracket.
      * These characters may be escaped and should then be ignored.
-     * @param value the reference
+     * @param reference the reference
      * @param startIndex where in the string the value starts, since the
      * reference string may contain several references.
      * @param endIndex index of the end of the value. This is an output parameter.
