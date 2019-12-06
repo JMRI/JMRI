@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.implementation;
 import java.io.File;
 import java.io.IOException;
 import jmri.jmrit.logixng.NamedTable;
+import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -25,8 +26,11 @@ public class DefaultNamedTableTest {
     public void testCSVFile() throws IOException {
         NamedTable table = DefaultNamedTable.loadTableFromCSV_File(
                 new File("java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals.csv"));
-        table.storeTableAsCSV(
-                new File("java/test/jmri/jmrit/logixng/panel_and_data_files/turnout_and_signals__daniel.csv"));
+        
+        FileUtil.createDirectory(FileUtil.getUserFilesPath() + "temp");
+        File file = new File(FileUtil.getUserFilesPath() + "temp/" + "turnout_and_signals.csv");
+        System.out.format("Temporary file: %s%n", file.getAbsoluteFile());
+        table.storeTableAsCSV(file);
         Assert.assertNotNull("exists", table);
     }
     
