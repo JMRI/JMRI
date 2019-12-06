@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.17.6ish+jake+20191119T1638Z+R0ced0eeee9 on Tue Nov 19 08:39:24 PST 2019-->
-  <decoderIndex version="982">
+  <!--Written by JMRI version 4.17.7ish+jake+20191205T1447Z+R4cc1a80a99 on Thu Dec 05 06:49:13 PST 2019-->
+  <decoderIndex version="984">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -33706,10 +33706,10 @@
         </model>
       </family>
       <family name="Umelec ATLPlus Engine Module" mfg="Umelec Ing Buero" file="Umelec_ATL2051.xml">
-        <model model="ATL2051" lowVersionID="57" highVersionID="59" comment="For DC and AC Motors with Infrared Light Barrier" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires" numOuts="2" numFns="4" productID="ModelA">
+        <model model="ATL2051" lowVersionID="57" highVersionID="59" comment="For DC and AC Motors with Infrared Light Barrier" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires" numOuts="2" numFns="4" productID="ATL2051">
           <size length="25" width="13.5" height="5.5" units="mm" />
         </model>
-        <model model="ATL2054" lowVersionID="17" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires/NEM652" numOuts="2" numFns="4" productID="ModelB">
+        <model model="ATL2054" lowVersionID="17" highVersionID="19" comment="For DC Motors, includes EMP control" maxInputVolts="21V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" formFactor="H0/0" connector="Wires/NEM652" numOuts="2" numFns="4" productID="ATL2054">
           <size length="25" width="12.5" height="5" units="mm" />
         </model>
       </family>
