@@ -3373,7 +3373,6 @@ var $setWidgetState = function($id, $newState) {
     if (isUndefined($widget)) {
         // does it have "l" or "r" suffix?
         if ($id.endsWith("l") || $id.endsWith("r")) {   // (yes!)
-            //jmri_logging = true;
             if (jmri_logging) {
                 jmri.log("\n#### INFO: clicked slip " + $id + " to state " + $newState);
             }
