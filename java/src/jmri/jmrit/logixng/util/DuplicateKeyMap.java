@@ -53,7 +53,7 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
 
     /**
      * Get all items in the map that has the key 'key'
-     * @param key
+     * @param key the key whose associated values is to be returned
      * @return an unmodifiable list of all the items
      */
     public List<V> getAll(K key) {
