@@ -103,6 +103,7 @@ public enum TokenType {
     
     public boolean isLeaf() {
         return ((this == TokenType.IDENTIFIER)
+                || (this == TokenType.INTEGER_NUMBER)
                 || (this == TokenType.FLOATING_NUMBER)
                 || (this == TokenType.STRING));
     }

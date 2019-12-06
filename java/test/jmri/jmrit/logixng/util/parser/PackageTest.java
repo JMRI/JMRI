@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
     jmri.jmrit.logixng.util.parser.expressionnode.PackageTest.class,
     jmri.jmrit.logixng.util.parser.functions.PackageTest.class,
     RecursiveDescentParserTest.class,
+    TokenTypeTest.class,
     TokenizerTest.class,
 })
 
