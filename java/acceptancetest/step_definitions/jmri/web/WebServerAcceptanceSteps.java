@@ -96,42 +96,40 @@ public class WebServerAcceptanceSteps implements En {
            assertThat(rows.size()).isNotEqualTo(i).withFailMessage("item not found");
         });
 
-        //find the specified cell in the table, click on it and verify new value is as expected
-        //uses item names and column names
+        //Find the specified cell in the table, check value, then click on it and 
+        //  verify new value is as expected. Some columns are not supposed to change. 
         Then("^table (.*) has row (.*) column (.*) with text (.*) after click (.*)$", 
                 (String table, String row, String column, String text, String after) -> {
-            webDriver.get("http://localhost:12080/");
-            waitLoad();
-            // navigate to the table.
-            (webDriver.findElement(By.linkText("Tables"))).click();
-            (webDriver.findElement(By.linkText(table))).click();
-            waitLoad();
-            // wait for the table to load.
-            WebDriverWait wait = new WebDriverWait(webDriver, 10 );
 
-            String tablePath = "//table[@id='jmri-data']";
-            String cellPath = tablePath + "//tr[@data-name='" + row + "']//td[@class='" + column +"']";
-//            String cellAfterPath = cellPath + "[text()='" + after +"']";
-            
-            //wait until the requested table is visible
-            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(tablePath)));
-            //look for the requested cell using tr and td attributes, getting any matches
-            List<WebElement> cells = webDriver.findElements(By.xpath(cellPath));
-            //must be only one cell that matches
-            assertThat((Integer)cells.size()).isEqualTo(1); 
-            //cell text must match expected value
-            assertThat(cells.get(0).getText()).isEqualTo(text); 
-            //click on the target cell
-//            cells.get(0).click();
-            //wait for cell to be updated with the "after" value
-//            wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellAfterPath)));            
-            //refresh the reference since the json update replaced the cell
-//            WebElement cell = webDriver.findElement(By.xpath(cellPath));
-            //check that "after" value is correct
-//TODO: determine why we're getting intermittent stale reference here on CI server 
-//            assertThat(cell.getText()).isEqualTo(after);
-        });
+                    //navigate to home page and wait for it to load
+                    webDriver.get("http://localhost:12080/");
+                    waitLoad();
+                    // navigate to the page for the requested table.
+                    (webDriver.findElement(By.linkText("Tables"))).click();
+                    (webDriver.findElement(By.linkText(table))).click();
+                    // wait for the page to load. note that table is loaded via ajax, so it may still be loading
+                    waitLoad();
+                    WebDriverWait wait = new WebDriverWait(webDriver, 10 );
 
+                    //set xpath paths to items of interest
+                    String tablePath = "//table[@id='jmri-data']";
+                    String cellPath = tablePath + "//tr[@data-name='" + row + "']//td[@class='" + column +"']";
+                    String cellAfterPath = cellPath + "[text()='" + after +"']";
+
+                    //wait until the requested cell is visible (twice, since row is immed. repainted from json update)
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellPath)));
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellPath)));
+                    //must be only one cell that matches
+                    assertThat((Integer)webDriver.findElements(By.xpath(cellPath)).size()).isEqualTo(1); 
+                    //cell text must match expected value
+                    assertThat(webDriver.findElement(By.xpath(cellPath)).getText()).isEqualTo(text); 
+                    //click on the target cell
+                    webDriver.findElement(By.xpath(cellPath)).click();
+                    //wait for cell to be updated with the "after" value
+                    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(cellAfterPath)));            
+                    //check that "after" value is correct
+                    assertThat(webDriver.findElement(By.xpath(cellAfterPath)).getText()).isEqualTo(after); 
+                });
     }
 
     private void waitLoad(){

@@ -70,8 +70,8 @@ function buildRow(data) {
 	tableType = $("html").data("table-type");
 	//note: syntax below required since some JMRI json objects have a "length" attribute equal 0
 	$.each(Object.keys(data), function (index, value) {
-		r += '<td class=' + value + " data-" + value + "='" + data[value] + "'>" 
-			+ displayCellValue(tableType, value, data[value]) + '</td>'; 
+		r += "<td class='" + value + "' data-" + value + "='" + data[value] + "'>" 
+			+ displayCellValue(tableType, value, data[value]) + "</td>"; 
 	});
 	return r;
 }

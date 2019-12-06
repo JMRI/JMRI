@@ -1,5 +1,6 @@
 @webtest @webtable
 Feature: JMRI Web Table Click
+
 Scenario Outline: Web Table requests with click testing
    Given I am using <browser>
    When panel <panel> is loaded
