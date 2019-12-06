@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.digital.boolean_actions.configureswing;
+package jmri.jmrit.logixng.util.parser;
 
 import java.util.Locale;
 import jmri.util.JUnitUtil;
@@ -8,9 +8,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test ExpressionTimer
+ * Test Bundle
  * 
- * @author Daniel Bergqvist 2018
+ * @author Daniel Bergqvist 2019
  */
 public class BundleTest {
 
