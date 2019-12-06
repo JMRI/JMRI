@@ -15,23 +15,17 @@ import org.slf4j.LoggerFactory;
  */
 public class ReferenceUtil {
 
-    private final MemoryManager memoryManager =
-            InstanceManager.getDefault(MemoryManager.class);
-    
-    private final NamedTableManager _tableManager =
-            InstanceManager.getDefault(NamedTableManager.class);
-    
     /**
      * Checks if the parameter is a reference or not.
      * @param value the string to check
      * @return true if value has a reference. falsw otherwise
      */
-    public boolean isReference(String value) {
+    static public boolean isReference(String value) {
         // A reference starts with { and ends with }
         return value.startsWith("{") && value.endsWith("}");
     }
     
-    private String unescapeString(String value, int startIndex, int endIndex) {
+    static private String unescapeString(String value, int startIndex, int endIndex) {
         boolean escaped = false;
         
         StringBuilder sb = new StringBuilder();
@@ -56,7 +50,7 @@ public class ReferenceUtil {
      * @param endIndex index of the end of the value. This is an output parameter.
      * @return the value
      */
-    private String getValue(String reference, int startIndex, IntRef endIndex) {
+    static private String getValue(String reference, int startIndex, IntRef endIndex) {
         boolean escapeFound = false;
         boolean escaped = false;
         int end = startIndex;
@@ -93,7 +87,7 @@ public class ReferenceUtil {
      * @param endIndex index of the end of the value. This is an output parameter.
      * @return the value
      */
-    private String getReferenceOrValue(String reference, int startIndex, IntRef endIndex) {
+    static private String getReferenceOrValue(String reference, int startIndex, IntRef endIndex) {
         
         // Do we have a new reference?
         if (reference.charAt(startIndex) == '{') {
@@ -111,7 +105,7 @@ public class ReferenceUtil {
      * @param endIndex index of the end of the reference. This is an output parameter.
      * @return the value of the reference
      */
-    private String getReference(String reference, int startIndex, IntRef endIndex) {
+    static private String getReference(String reference, int startIndex, IntRef endIndex) {
         
         // A reference must start with the char {
         if (reference.charAt(startIndex) != '{') {
@@ -139,6 +133,7 @@ public class ReferenceUtil {
         
 //        if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) != '[')) {
         if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) == '}')) {
+            MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
             Memory m = memoryManager.getNamedBean(leftValue);
             if (m != null) {
                 if (m.getValue() != null) return m.getValue().toString();
@@ -166,7 +161,10 @@ public class ReferenceUtil {
             
             endIndex.v++;
             
-            NamedTable table = _tableManager.getNamedBean(leftValue);
+            NamedTableManager tableManager =
+                    InstanceManager.getDefault(NamedTableManager.class);
+            
+            NamedTable table = tableManager.getNamedBean(leftValue);
             if (table != null) {
                 Object cell = table.getCell(row);
                 return cell != null ? cell.toString() : null;
@@ -197,7 +195,10 @@ public class ReferenceUtil {
             
             endIndex.v++;
             
-            NamedTable table = _tableManager.getNamedBean(leftValue);
+            NamedTableManager tableManager =
+                    InstanceManager.getDefault(NamedTableManager.class);
+            
+            NamedTable table = tableManager.getNamedBean(leftValue);
             if (table != null) {
                 Object cell = table.getCell(row,column);
                 endIndex.v++;
@@ -216,7 +217,7 @@ public class ReferenceUtil {
     
     @CheckReturnValue
     @Nonnull
-    public String getReference(String reference) {
+    static public String getReference(String reference) {
         if (!isReference(reference)) {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }

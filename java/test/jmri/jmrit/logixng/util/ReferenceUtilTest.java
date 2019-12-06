@@ -48,19 +48,27 @@ public class ReferenceUtilTest {
         Memory m2 = _memoryManager.newMemory("IM2", "Memory 2");
         Memory m3 = _memoryManager.newMemory("IM3", "Memory 3");
         
-        ReferenceUtil ru = new ReferenceUtil();
-        
         // Test references
         m1.setValue("Turnout 1");
-        Assert.assertEquals("Reference is correct", "Turnout 1", ru.getReference("{IM1}"));
+        Assert.assertEquals("Reference is correct",
+                "Turnout 1",
+                ReferenceUtil.getReference("{IM1}"));
         
         m2.setValue("IM1");
-        Assert.assertEquals("Reference is correct", "IM1", ru.getReference("{IM2}"));
-        Assert.assertEquals("Reference is correct", "Turnout 1", ru.getReference("{{IM2}}"));
+        Assert.assertEquals("Reference is correct",
+                "IM1",
+                ReferenceUtil.getReference("{IM2}"));
+        Assert.assertEquals("Reference is correct",
+                "Turnout 1",
+                ReferenceUtil.getReference("{{IM2}}"));
         
         m3.setValue("IM2");
-        Assert.assertEquals("Reference is correct", "IM2", ru.getReference("{IM3}"));
-        Assert.assertEquals("Reference is correct", "Turnout 1", ru.getReference("{{{IM3}}}"));
+        Assert.assertEquals("Reference is correct",
+                "IM2",
+                ReferenceUtil.getReference("{IM3}"));
+        Assert.assertEquals("Reference is correct",
+                "Turnout 1",
+                ReferenceUtil.getReference("{{{IM3}}}"));
     }
     
     @Test
@@ -78,13 +86,13 @@ public class ReferenceUtilTest {
         m1.setValue("Turnout 1");
         Assert.assertEquals("Reference is correct",
                 "Turnout 111",
-                ru.getReference("{Yard table[Left turnout]}"));
+                ReferenceUtil.getReference("{Yard table[Left turnout]}"));
         Assert.assertEquals("Reference is correct",
                 "IT302",
-                ru.getReference("{Yard table[Rightmost turnout,South yard]}"));
+                ReferenceUtil.getReference("{Yard table[Rightmost turnout,South yard]}"));
         Assert.assertEquals("Reference is correct",
                 "Turnout 222",
-                ru.getReference("{Yard table[Rightmost turnout,North yard]}"));
+                ReferenceUtil.getReference("{Yard table[Rightmost turnout,North yard]}"));
         
         // The line below reads 'Yard table[Rightmost turnout,East yard]' which
         // has the value IM15. And then reads the memory IM15 which has the value
@@ -92,7 +100,7 @@ public class ReferenceUtilTest {
         m15.setValue("Chicago north east");
         Assert.assertEquals("Reference is correct",
                 "Chicago north east",
-                ru.getReference("{{Yard table[Rightmost turnout,East yard]}}"));
+                ReferenceUtil.getReference("{{Yard table[Rightmost turnout,East yard]}}"));
         
         // The line below reads the reference '{Turnout table[Yellow turnout]}'
         // which has the value 'Right turnout'. It then reads the reference
@@ -104,7 +112,8 @@ public class ReferenceUtilTest {
         m333.setValue("Blue turnout");
         Assert.assertEquals("Reference is correct",
                 "Blue turnout",
-                ru.getReference("{{Yard table[{Turnout table[Yellow turnout]},{Other yard table[Turnouts,Green yard]}]}}"));
+                ReferenceUtil.getReference(
+                        "{{Yard table[{Turnout table[Yellow turnout]},{Other yard table[Turnouts,Green yard]}]}}"));
     }
     
     @Test
@@ -115,20 +124,22 @@ public class ReferenceUtilTest {
         
         // Test exceptions
         expectException(() -> {
-            ru.getReference("{}");
+            ReferenceUtil.getReference("{}");
         }, IllegalArgumentException.class, "Reference '{}' is not a valid reference");
         
         expectException(() -> {
-            ru.getReference("{IM999}");
+            ReferenceUtil.getReference("{IM999}");
         }, IllegalArgumentException.class, "Memory 'IM999' is not found");
         
         Memory m999 = _memoryManager.newMemory("IM999", "Memory 999");
         expectException(() -> {
-            ru.getReference("{IM999}");
+            ReferenceUtil.getReference("{IM999}");
         }, IllegalArgumentException.class, "Memory 'IM999' has no value");
         
         m999.setValue("Turnout 1");
-        Assert.assertEquals("Reference is correct", "Turnout 1", ru.getReference("{IM999}"));
+        Assert.assertEquals("Reference is correct",
+                "Turnout 1",
+                ReferenceUtil.getReference("{IM999}"));
     }
     
     @Test
@@ -153,36 +164,48 @@ public class ReferenceUtilTest {
         ReferenceUtil ru = new ReferenceUtil();
         
         // Test special characters. Special characters must be escaped.
-        Assert.assertEquals("Reference is correct", "Turnout 91", ru.getReference("{Memory \\, abc}"));
+        Assert.assertEquals("Reference is correct",
+                "Turnout 91",
+                ReferenceUtil.getReference("{Memory \\, abc}"));
         expectException(() -> {
-            ru.getReference("{Memory , abc}");
+            ReferenceUtil.getReference("{Memory , abc}");
         }, IllegalArgumentException.class, "Reference '{Memory , abc}' is not a valid reference");
         
-        Assert.assertEquals("Reference is correct", "Turnout 92", ru.getReference("{Memory \\[ abc}"));
+        Assert.assertEquals("Reference is correct",
+                "Turnout 92",
+                ReferenceUtil.getReference("{Memory \\[ abc}"));
         expectException(() -> {
-            ru.getReference("{Memory [ abc}");
+            ReferenceUtil.getReference("{Memory [ abc}");
         }, IllegalArgumentException.class, "Reference '{Memory [ abc}' is not a valid reference");
         
-        Assert.assertEquals("Reference is correct", "Turnout 93", ru.getReference("{Memory \\] abc}"));
+        Assert.assertEquals("Reference is correct",
+                "Turnout 93",
+                ReferenceUtil.getReference("{Memory \\] abc}"));
         expectException(() -> {
-            ru.getReference("{Memory ] abc}");
+            ReferenceUtil.getReference("{Memory ] abc}");
         }, IllegalArgumentException.class, "Reference '{Memory ] abc}' is not a valid reference");
         
-        Assert.assertEquals("Reference is correct", "Turnout 94", ru.getReference("{Memory \\{ abc}"));
+        Assert.assertEquals("Reference is correct",
+                "Turnout 94",
+                ReferenceUtil.getReference("{Memory \\{ abc}"));
         expectException(() -> {
-            ru.getReference("{Memory { abc}");
+            ReferenceUtil.getReference("{Memory { abc}");
         }, IllegalArgumentException.class, "Reference '{Memory { abc}' is not a valid reference");
         
         // This will try to find the "Memory ", which exists.
-        Assert.assertEquals("Reference is correct", "Turnout 95", ru.getReference("{Memory \\} abc}"));
+        Assert.assertEquals("Reference is correct",
+                "Turnout 95",
+                ReferenceUtil.getReference("{Memory \\} abc}"));
         expectException(() -> {
-            ru.getReference("{Memory } abc}");
+            ReferenceUtil.getReference("{Memory } abc}");
         }, IllegalArgumentException.class, "Reference '{Memory } abc}' is not a valid reference");
         
-        Assert.assertEquals("Reference is correct", "Turnout 96", ru.getReference("{Memory \\\\ abc}"));
+        Assert.assertEquals("Reference is correct",
+                "Turnout 96",
+                ReferenceUtil.getReference("{Memory \\\\ abc}"));
         // Note that 'Memory \ abc' has an escaped space, so the backspace disappears.
         expectException(() -> {
-            ru.getReference("{Memory \\ abc}");
+            ReferenceUtil.getReference("{Memory \\ abc}");
         }, IllegalArgumentException.class, "Memory 'Memory  abc' is not found");
     }
     

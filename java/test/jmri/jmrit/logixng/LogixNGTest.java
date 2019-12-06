@@ -308,13 +308,13 @@ public class LogixNGTest {
     @Test
     public void testActivateLogixNG() {
         LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        MyConditionalNG conditionalNG_1 = new MyConditionalNG(logixNG.getSystemName()+":1", null);
+        MyConditionalNG conditionalNG_1 = new MyConditionalNG("IQC1", null);
         logixNG.addConditionalNG(conditionalNG_1);
         conditionalNG_1.setEnabled(false);
-        MyConditionalNG conditionalNG_2 = new MyConditionalNG(logixNG.getSystemName()+":2", null);
+        MyConditionalNG conditionalNG_2 = new MyConditionalNG("IQC2", null);
         logixNG.addConditionalNG(conditionalNG_2);
         conditionalNG_1.setEnabled(true);
-        MyConditionalNG conditionalNG_3 = new MyConditionalNG(logixNG.getSystemName()+":3", null);
+        MyConditionalNG conditionalNG_3 = new MyConditionalNG("IQC3", null);
         logixNG.addConditionalNG(conditionalNG_3);
         conditionalNG_1.setEnabled(false);
         
@@ -501,7 +501,7 @@ public class LogixNGTest {
     
     @Test
     public void testBundle() {
-        Assert.assertTrue("bean type is correct", "LogixNG".equals(new DefaultLogixNG("IQA55", null).getBeanType()));
+        Assert.assertTrue("bean type is correct", "LogixNG".equals(new DefaultLogixNG("IQ55", null).getBeanType()));
         Assert.assertTrue("bean type is correct", "Digital action".equals(new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION).getBeanType()));
         Assert.assertTrue("bean type is correct", "Digital expression".equals(new And("IQDE321", null).getBeanType()));
     }
