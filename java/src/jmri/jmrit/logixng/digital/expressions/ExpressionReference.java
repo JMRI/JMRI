@@ -218,24 +218,18 @@ public class ExpressionReference extends AbstractDigitalExpression
     
     
     public enum PointsTo {
-        NOTHING(Bundle.getMessage("PointsTo_Nothing")),
-        VECTOR(Bundle.getMessage("PointsTo_Vector")),
-        AUDIO(Bundle.getMessage("PointsTo_Audio")),
-        LIGHT(Bundle.getMessage("PointsTo_Light")),
-        MEMORY(Bundle.getMessage("PointsTo_Memory")),
-        SENSOR(Bundle.getMessage("PointsTo_Sensor")),
-        SIGNAL_HEAD(Bundle.getMessage("PointsTo_SignalHead")),
-        SIGNAL_MAST(Bundle.getMessage("PointsTo_SignalMast")),
-        LOGIX(Bundle.getMessage("PointsTo_Logix")),
-        LOGIX_NG(Bundle.getMessage("PointsTo_LogixNG")),
-        SCRIPT(Bundle.getMessage("PointsTo_Script")),
-        TURNOUT(Bundle.getMessage("PointsTo_Turnout")),
-        LOGIX1(Bundle.getMessage("PointsTo_")),
-        LOGIX2(Bundle.getMessage("PointsTo_")),
-        LOGIX3(Bundle.getMessage("PointsTo_")),
-        LOGIX4(Bundle.getMessage("PointsTo_")),
-        LOGIX5(Bundle.getMessage("PointsTo_")),
-        NOT_MATCH_REGEX(Bundle.getMessage("PointsTo_"));
+        NOTHING(Bundle.getMessage("ReferencePointsTo_Nothing")),
+        VECTOR(Bundle.getMessage("ReferencePointsTo_Vector")),
+        AUDIO(Bundle.getMessage("ReferencePointsTo_Audio")),
+        LIGHT(Bundle.getMessage("ReferencePointsTo_Light")),
+        MEMORY(Bundle.getMessage("ReferencePointsTo_Memory")),
+        SENSOR(Bundle.getMessage("ReferencePointsTo_Sensor")),
+        SIGNAL_HEAD(Bundle.getMessage("ReferencePointsTo_SignalHead")),
+        SIGNAL_MAST(Bundle.getMessage("ReferencePointsTo_SignalMast")),
+        LOGIX(Bundle.getMessage("ReferencePointsTo_Logix")),
+        LOGIX_NG(Bundle.getMessage("ReferencePointsTo_LogixNG")),
+        SCRIPT(Bundle.getMessage("ReferencePointsTo_Script")),
+        TURNOUT(Bundle.getMessage("ReferencePointsTo_Turnout"));
         
         private final String _text;
         

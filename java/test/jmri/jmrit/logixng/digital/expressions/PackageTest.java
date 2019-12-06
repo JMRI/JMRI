@@ -17,6 +17,7 @@ import org.junit.runners.Suite;
     TriggerOnceTest.class,
     TrueTest.class,
     ExpressionLightTest.class,
+    ExpressionReferenceTest.class,
     ExpressionSensorTest.class,
     ExpressionTurnoutTest.class,
 })

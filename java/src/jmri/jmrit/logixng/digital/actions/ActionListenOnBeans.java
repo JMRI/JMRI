@@ -193,12 +193,12 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
 
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ListenOnBeans_Short");
+        return Bundle.getMessage(locale, "ActionListenOnBeans_Short");
     }
 
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "ListenOnBeans_Long");
+        return Bundle.getMessage(locale, "ActionListenOnBeans_Long");
     }
     
     /** {@inheritDoc} */

@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
     jmri.jmrit.logixng.digital.actions.configureswing.PackageTest.class,
     jmri.jmrit.logixng.digital.actions.configurexml.PackageTest.class,
     ActionAtomicBooleanTest.class,
+    ActionListenOnBeansTest.class,
     DigitalActionPluginSocketTest.class,
     DoAnalogActionTest.class,
     DoStringActionTest.class,
