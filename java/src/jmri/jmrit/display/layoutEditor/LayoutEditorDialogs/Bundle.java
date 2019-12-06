@@ -22,7 +22,7 @@ import javax.annotation.*;
 public class Bundle extends jmri.jmrit.display.layoutEditor.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrit.display.layoutEditor.LayoutEditorBundle"; // NOI18N
+    private static final String name = null;
 
     //
     // below here is boilerplate to be copied exactly
@@ -95,6 +95,6 @@ public class Bundle extends jmri.jmrit.display.layoutEditor.Bundle {
 
     @Override
     protected String retry(Locale locale, String key) {
-        return super.getBundle().handleGetMessage(locale,key);
+        return super.getBundle().handleGetMessage(locale, key);
     }
 }
