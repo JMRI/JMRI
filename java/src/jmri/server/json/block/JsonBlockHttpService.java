@@ -13,6 +13,7 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.ProvidingManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -41,7 +42,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         ObjectNode data = root.with(JSON.DATA);
         switch (block.getState()) {
             case Block.UNDETECTED:
-            case Block.UNKNOWN:
+            case NamedBean.UNKNOWN:
                 data.put(JSON.STATE, JSON.UNKNOWN);
                 break;
             default:

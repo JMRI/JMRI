@@ -27,11 +27,9 @@ import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.server.json.sensor.JsonSensor;
-import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -216,7 +214,7 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
     public void testDoDelete() throws JsonException {
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         ObjectNode message = mapper.createObjectNode();
-        // delete non-existant bean
+        // delete non-existent bean
         try {
             assumeNotNull(service); // protect against JUnit tests in Eclipse that test this class directly
             service.doDelete(service.getType(), "non-existant", message, locale, 42);
@@ -281,24 +279,9 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
      *
      * @throws jmri.server.json.JsonException if something goes wrong
      */
-    @Ignore("Until upstream sources are fixed; see #7633")
     @Test
     public void testDoSchema() throws JsonException {
-        JsonBlockHttpService instance = new JsonBlockHttpService(mapper);
-        JsonNode block = instance.doSchema(JsonBlock.BLOCK, false, locale, 42);
-        JsonNode blocks = instance.doSchema(JsonBlock.BLOCK, false, locale, 42);
-        validate(block);
-        validate(blocks);
-        assertEquals("Client schema for block and blocks is the same", block, blocks);
-        block = instance.doSchema(JsonBlock.BLOCK, true, locale, 42);
-        blocks = instance.doSchema(JsonBlock.BLOCK, true, locale, 42);
-        validate(block);
-        validate(blocks);
-        assertEquals("Server schema for block and blocks is the same", block, blocks);
-
-        // Suppress a warning message (see networknt/json-schema-validator#79)
-        JUnitAppender.checkForMessageStartingWith(
-                "Unknown keyword exclusiveMinimum - you should define your own Meta Schema.");
+        testDoSchema(JsonBlock.BLOCK, JsonBlock.BLOCKS);
     }
 
 }

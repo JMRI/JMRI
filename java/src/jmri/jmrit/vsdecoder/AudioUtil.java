@@ -182,7 +182,7 @@ public class AudioUtil {
             } catch (AudioException | IllegalArgumentException e) {
                 log.warn("Error on provideAudio", e);
                 if (log.isDebugEnabled()) {
-                    jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
+                    jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.BUFFER).stream().forEach((s) -> {
                         log.debug("\tBuffer: {}", s);
                     });
                 }

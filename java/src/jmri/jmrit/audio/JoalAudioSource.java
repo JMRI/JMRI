@@ -106,10 +106,21 @@ public class JoalAudioSource extends AbstractAudioSource {
      * @return True if initialised
      */
     private boolean init() {
-        // Generate the AudioSource
-        if (!isAudioAlive()) {
+        // Check that the JoalAudioFactory exists
+        if (al == null) {
+            log.warn("Al Factory not yet initialised");
             return false;
         }
+
+        // Now, check that the audio command thread exists
+        if (!isAudioAlive()) {
+            log.debug("Command thread not yet alive...");
+            return false;
+        } else {
+            log.debug("Command thread is alive - continue.");
+        }
+
+        // Generate the AudioSource
         al.alGenSources(1, _source, 0);
         if (JoalAudioFactory.checkALError()) {
             log.warn("Error creating JoalSource ({})", this.getSystemName());
@@ -124,6 +135,7 @@ public class JoalAudioSource extends AbstractAudioSource {
      *
      * (called from DefaultAudioFactory command queue)
      *
+     * @param audioBuffer AudioBuffer to queue
      * @return True if successfully queued.
      */
     @Override
@@ -164,6 +176,7 @@ public class JoalAudioSource extends AbstractAudioSource {
      *
      * (called from DefaultAudioFactory command queue)
      *
+     * @param audioBuffers AudioBuffers to queue
      * @return True if successfully queued.
      */
     @Override

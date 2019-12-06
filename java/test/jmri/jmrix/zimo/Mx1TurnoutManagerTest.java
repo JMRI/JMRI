@@ -33,6 +33,7 @@ public class Mx1TurnoutManagerTest {
            public void sendMx1Message(Mx1Message m,Mx1Listener reply) {
            }
         };
+        tc.setAdapterMemo(new Mx1SystemConnectionMemo());
     }
 
     @After

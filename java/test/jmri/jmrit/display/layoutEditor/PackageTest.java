@@ -51,6 +51,7 @@ import org.junit.runners.Suite;
         LayoutTrackDrawingOptionsDialogTest.class,
         LayoutTrackDrawingOptionsTest.class,
         LayoutTrackExpectedStateTest.class,
+        LoadAndStoreTest.class
 
 })
 public class PackageTest {
