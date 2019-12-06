@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng.util;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -44,6 +46,7 @@ public class DuplicateKeyMapTest {
         Assert.assertTrue("size is correct", 6 == t.size());
         Assert.assertFalse("map is not empty", t.isEmpty());
         
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         DuplicateKeyMap<String,String> t2 = new DuplicateKeyMap<>();
         Assert.assertTrue("size is correct", 0 == t2.size());
         Assert.assertTrue("map is empty", t2.isEmpty());
@@ -102,6 +105,16 @@ public class DuplicateKeyMapTest {
     }
     
     @Test
+    public void testPut() {
+        Assert.assertTrue("size is correct", 6 == t.size());
+        // Add values that already exists in the map
+        t.put("Red", "Sensor");
+        t.put("Red", "Light");
+        t.put("Green", "Sensor");
+        Assert.assertTrue("size is correct", 6 == t.size());
+    }
+    
+    @Test
     public void testPutAll() {
         // Test exceptions
         expectException(() -> {
@@ -114,6 +127,56 @@ public class DuplicateKeyMapTest {
         // Test exceptions
         expectException(() -> {
             t.remove(null);
+        }, UnsupportedOperationException.class, "Not supported");
+    }
+    
+    @Test
+    public void testRemoveValue() {
+        Assert.assertTrue("size is correct", 6 == t.size());
+        t.removeValue("Red", "Sensor");
+        Assert.assertTrue("size is correct", 5 == t.size());
+        t.removeValue("Red", "Sensor");
+        Assert.assertTrue("size is correct", 5 == t.size());
+        t.removeValue("Green", "Sensor");
+        Assert.assertTrue("size is correct", 4 == t.size());
+    }
+    
+    @Test
+    public void testClear() {
+        Assert.assertTrue("size is correct", 6 == t.size());
+        Assert.assertFalse("map is not empty", t.isEmpty());
+        t.clear();
+        Assert.assertTrue("size is correct", 0 == t.size());
+        Assert.assertTrue("map is empty", t.isEmpty());
+    }
+    
+    @Test
+    public void testGetKeySet() {
+        Set<String> set = t.keySet();
+        Assert.assertTrue("size is correct", 3 == set.size());
+        Assert.assertFalse("set is not empty", set.isEmpty());
+        Assert.assertTrue("set contains value", set.contains("Red"));
+        Assert.assertTrue("set contains value", set.contains("Green"));
+        Assert.assertTrue("set contains value", set.contains("Black"));
+    }
+    
+    @Test
+    public void testValues() {
+        Collection<String> collection = t.values();
+        Assert.assertTrue("size is correct", 6 == collection.size());
+        Assert.assertFalse("collection is not empty", collection.isEmpty());
+        Assert.assertTrue("collection contains value", collection.contains("Turnout"));
+        Assert.assertTrue("collection contains value", collection.contains("Sensor"));
+        Assert.assertTrue("collection contains value", collection.contains("Light"));
+        Assert.assertTrue("collection contains value", collection.contains("Signal head"));
+        Assert.assertTrue("collection contains value", collection.contains("Logix"));
+    }
+    
+    @Test
+    public void testEntrySet() {
+        // Test exceptions
+        expectException(() -> {
+            t.entrySet();
         }, UnsupportedOperationException.class, "Not supported");
     }
     

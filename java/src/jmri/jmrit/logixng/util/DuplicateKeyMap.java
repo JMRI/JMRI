@@ -114,7 +114,7 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
 
     @Override
     public Set<K> keySet() {
-        return _internalMap.keySet();
+        return Collections.unmodifiableSet(_internalMap.keySet());
     }
 
     @Override
@@ -123,7 +123,7 @@ public class DuplicateKeyMap<K, V> implements Map<K, V> {
         for (List<V> l : _internalMap.values()) {
             list.addAll(l);
         }
-        return list;
+        return Collections.unmodifiableList(list);
     }
 
     @Override
