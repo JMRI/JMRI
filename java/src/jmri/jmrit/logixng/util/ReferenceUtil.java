@@ -173,12 +173,12 @@ public class ReferenceUtil {
         }
         
         if (endIndex.v == reference.length() || reference.charAt(endIndex.v-1) != ',') {
-            System.out.format("getReference(%s,%d): %s, %d, length: %d%n",
-                    reference,
-                    startIndex,
-                    reference.substring(startIndex, endIndex.v),
-                    endIndex.v,
-                    reference.length());
+//            System.out.format("getReference(%s,%d): %s, %d, length: %d%n",
+//                    reference,
+//                    startIndex,
+//                    reference.substring(startIndex, endIndex.v),
+//                    endIndex.v,
+//                    reference.length());
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         

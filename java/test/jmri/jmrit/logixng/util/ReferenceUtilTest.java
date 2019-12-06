@@ -137,8 +137,6 @@ public class ReferenceUtilTest {
     @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testExceptions() {
         
-        Memory m1 = _memoryManager.newMemory("IM1", "Memory 1");
-        
         ReferenceUtil ru = new ReferenceUtil();
         
         // Test exceptions
@@ -160,6 +158,7 @@ public class ReferenceUtilTest {
     }
     
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testSpecialCharacters() {
         
         Memory m91 = _memoryManager.newMemory("IM91", "Memory , abc");
@@ -202,7 +201,6 @@ public class ReferenceUtilTest {
         
         // This will try to find the "Memory ", which exists.
         Assert.assertEquals("Reference is correct", "Turnout 95", ru.getReference("{Memory \\} abc}"));
-//        ru.getReference("{Memory } abc}");
         expectException(() -> {
             ru.getReference("{Memory } abc}");
         }, IllegalArgumentException.class, "Reference '{Memory } abc}' is not a valid reference");
@@ -212,29 +210,6 @@ public class ReferenceUtilTest {
         expectException(() -> {
             ru.getReference("{Memory \\ abc}");
         }, IllegalArgumentException.class, "Memory 'Memory  abc' is not found");
-        
-        
-        
-        
-        
-        // {Signal 1}
-        // {Signal 1,2}     // Bad!
-        // {Signal 1\,2}    // Fine!
-        // Signal 1,2       // Bad
-        // {{Memory 1}}     // Memory 1 => Memory 2 => Value
-        
-        
-        // Yard table[1,2]
-        // Yard table[Signal 1,Signal2]
-        // Yard table[{Memory1},{Memory2}]
-        // {Memory3}[{Memory1},{Memory2}]
-        // {{Memory4}}[{Memory1},{Memory2}]
-        // {{Memory4}}[{{{Memory1}}},{{{Memory2}}}]
-        // {{{Memory4}}[{{{Memory1}}},{{{Memory2}}}]}
-        // {Memory7}[{{{Memory4}}[{{{Memory1}}},{{{Memory2}}}]},{{{Memory4}}[{{{Memory1}}},{{{Memory2}}}]}]
-        // {{Memory7}[{{{Memory4}}[{{{Memory1}}},{{{Memory2}}}]},{{{Memory4}}[{{{Memory1}}},{{{Memory2}}}]}]}
-        
-        
     }
     
     private void setupTables() {
