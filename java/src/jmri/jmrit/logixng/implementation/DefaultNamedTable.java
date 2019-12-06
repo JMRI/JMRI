@@ -16,6 +16,7 @@ import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Manager;
 import jmri.NamedBean;
 import jmri.NamedBean.BadUserNameException;
 import jmri.NamedBean.BadSystemNameException;
@@ -63,6 +64,12 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
             @Nonnull Object[][] data)
             throws BadUserNameException, BadSystemNameException {
         super(systemName,userName);
+        
+        // Do this test here to ensure all the tests are using correct system names
+        Manager.NameValidity isNameValid = InstanceManager.getDefault(NamedTableManager.class).validSystemNameFormat(mSystemName);
+        if (isNameValid != Manager.NameValidity.VALID) {
+            throw new IllegalArgumentException("system name is not valid");
+        }
         _internalTable = new DefaultAnonymousTable(data);
     }
     
@@ -84,7 +91,7 @@ public class DefaultNamedTable extends AbstractNamedBean implements NamedTable {
             String[] firstRow = lines.get(0).split("\t");
             systemName = firstRow[0];
             userName = firstRow.length > 1 ? firstRow[1] : "";
-            if (systemName == null) systemName = manager.getAutoSystemName();
+            if (systemName.isEmpty()) systemName = manager.getAutoSystemName();
 //            System.out.format("firstRow: %s, %s%n", firstRow[0], firstRow[1]);
 //            System.out.format("systemName: %s, userName: %s%n", systemName, userName);
         }

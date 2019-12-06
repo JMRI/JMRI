@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Manager;
 // import jmri.implementation.JmriSimplePropertyListener;
 import jmri.implementation.AbstractNamedBean;
 import jmri.jmrit.logixng.Base;
@@ -51,6 +52,12 @@ public class DefaultLogixNG extends AbstractNamedBean
     
     public DefaultLogixNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
+        
+        // Do this test here to ensure all the tests are using correct system names
+        Manager.NameValidity isNameValid = InstanceManager.getDefault(LogixNG_Manager.class).validSystemNameFormat(mSystemName);
+        if (isNameValid != Manager.NameValidity.VALID) {
+            throw new IllegalArgumentException("system name is not valid");
+        }
     }
     
     /** {@inheritDoc} */

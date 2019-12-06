@@ -1,5 +1,7 @@
 package jmri.jmrit.logixng.util;
 
+import javax.annotation.CheckReturnValue;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
@@ -72,8 +74,6 @@ public class ReferenceUtil {
         }
         endIndex.v = end;
         
-        System.out.format("getValue(%s,%d): %s, %d%n", reference, startIndex, reference.substring(startIndex, end), endIndex.v);
-        
         if (startIndex == end) throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         if (escapeFound) return unescapeString(reference, startIndex, end);
         else return reference.substring(startIndex, end);
@@ -136,7 +136,6 @@ public class ReferenceUtil {
         
 //        if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) != '[')) {
         if ((endIndex.v == reference.length()) || (reference.charAt(endIndex.v-1) == '}')) {
-            System.out.format("getReference(%s,%d): %s, %d, length: %d%n", reference, si, reference.substring(si, endIndex.v), endIndex.v, reference.length());
             Memory m = memoryManager.getNamedBean(leftValue);
             if (m != null) {
                 if (m.getValue() != null) return m.getValue().toString();
@@ -150,12 +149,19 @@ public class ReferenceUtil {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
+        
         // If we are here, we have a table reference. Find out column and row.
         row = getReferenceOrValue(reference, endIndex.v, endIndex);
         
-        if ((endIndex.v+2 == reference.length()
-                && (reference.charAt(endIndex.v) == ']')
-                && (reference.charAt(endIndex.v+1) == '}'))) {
+        endIndex.v++;
+        
+//        if ((endIndex.v+1 == reference.length()
+//                && (reference.charAt(endIndex.v-1) == ']')
+//                && (reference.charAt(endIndex.v) == '}'))) {
+        if ((reference.charAt(endIndex.v-1) == ']')
+                && (reference.charAt(endIndex.v) == '}')) {
+            
+            endIndex.v++;
             
             NamedTable table = _tableManager.getNamedBean(leftValue);
             if (table != null) {
@@ -166,11 +172,17 @@ public class ReferenceUtil {
             }
         }
         
-        if (endIndex.v+1 == reference.length() || reference.charAt(endIndex.v) != ',') {
+        if (endIndex.v == reference.length() || reference.charAt(endIndex.v-1) != ',') {
+            System.out.format("getReference(%s,%d): %s, %d, length: %d%n",
+                    reference,
+                    startIndex,
+                    reference.substring(startIndex, endIndex.v),
+                    endIndex.v,
+                    reference.length());
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }
         
-        endIndex.v++;
+//        endIndex.v++;
         
         column = getReferenceOrValue(reference, endIndex.v, endIndex);
         if (endIndex.v == reference.length() || reference.charAt(endIndex.v) != ']') {
@@ -179,6 +191,8 @@ public class ReferenceUtil {
         
         if (((reference.charAt(endIndex.v) == ']')
                 && (reference.charAt(endIndex.v+1) == '}'))) {
+            
+            endIndex.v++;
             
             NamedTable table = _tableManager.getNamedBean(leftValue);
             if (table != null) {
@@ -197,9 +211,9 @@ public class ReferenceUtil {
 //        throw new UnsupportedOperationException("Table is not yet supported");
     }
     
-//    @Nonnull
+    @CheckReturnValue
+    @Nonnull
     public String getReference(String reference) {
-//        System.out.println();
         if (!isReference(reference)) {
             throw new IllegalArgumentException("Reference '"+reference+"' is not a valid reference");
         }

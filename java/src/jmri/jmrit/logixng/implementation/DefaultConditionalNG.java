@@ -6,6 +6,7 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Manager;
 import jmri.util.ThreadingUtil;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -40,6 +41,12 @@ public class DefaultConditionalNG extends AbstractBase
     
     public DefaultConditionalNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
+        
+        // Do this test here to ensure all the tests are using correct system names
+        Manager.NameValidity isNameValid = InstanceManager.getDefault(ConditionalNG_Manager.class).validSystemNameFormat(mSystemName);
+        if (isNameValid != Manager.NameValidity.VALID) {
+            throw new IllegalArgumentException("system name is not valid");
+        }
         _femaleActionSocket = InstanceManager.getDefault(DigitalActionManager.class).createFemaleSocket(this, this, "");
     }
     

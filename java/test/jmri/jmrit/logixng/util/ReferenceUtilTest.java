@@ -95,6 +95,7 @@ public class ReferenceUtilTest {
         Memory m11 = _memoryManager.newMemory("IM11", "Memory 11");
         Memory m12 = _memoryManager.newMemory("IM12", "Memory 12");
         Memory m15 = _memoryManager.newMemory("IM15", "Memory 15");
+        Memory m333 = _memoryManager.newMemory("IM333", "Memory 333");
         
         
         ReferenceUtil ru = new ReferenceUtil();
@@ -119,10 +120,21 @@ public class ReferenceUtilTest {
                 "Chicago north east",
                 ru.getReference("{{Yard table[Rightmost turnout,East yard]}}"));
         
+        // The line below reads the reference '{Turnout table[Yellow turnout]}'
+        // which has the value 'Right turnout'. It then reads the reference
+        // '{Other yard table[Turnouts,Green yard]}' which has the value
+        // 'East yard'. It then reads the reference
+        // '{Yard table[Right turnout,East yard]}' that has the value
+        // 'Memory 333'. It then reads the reference '{Memory 333}' which has
+        // the value 'Blue turnout'.
+        m333.setValue("Blue turnout");
+        Assert.assertEquals("Reference is correct",
+                "Blue turnout",
+                ru.getReference("{{Yard table[{Turnout table[Yellow turnout]},{Other yard table[Turnouts,Green yard]}]}}"));
     }
     
-    @Ignore
     @Test
+    @SuppressWarnings("ResultOfMethodCallIgnored")  // This method test thrown exceptions
     public void testExceptions() {
         
         Memory m1 = _memoryManager.newMemory("IM1", "Memory 1");
@@ -231,11 +243,27 @@ public class ReferenceUtilTest {
                 "	North yard	East yard	South yard	West yard" + _nl +
                 "Leftmost turnout	IT101	IT201	IT301	IT401" + _nl +
                 "Left turnout	Turnout 111	IT203	IT303	IT403" + _nl +
-                "Right turnout	IT104	IT204	IT304	IT404" + _nl +
+                "Right turnout	IT104	Memory 333	IT304	IT404" + _nl +
                 "Rightmost turnout	Turnout 222	IM15	IT302	IT402" + _nl;
         
+        String turnoutTableData =
+                "	Turnout table\n" +
+                "	Column" + _nl +
+                "Green turnout	IT101" + _nl +
+                "Red turnout	Turnout" + _nl +
+                "Yellow turnout	Right turnout" + _nl +
+                "Blue turnout	Turnout 222" + _nl;
+        
+        String otherYardTableData =
+                "	Other yard table\n" +
+                "	Yellow yard	Green yard	Blue yard	Red yard" + _nl +
+                "Turnouts	West yard	East yard	IT301	IT401" + _nl +
+                "Sensors	Turnout 111	IT203	IT303	IT403" + _nl +
+                "Lights	IT104	IT204	IT304	IT404" + _nl;
+        
         _tableManager.loadTableFromCSV(yardTableData);
-//        NamedTable yardTable = tableManager.newTable(yardTableData);
+        _tableManager.loadTableFromCSV(turnoutTableData);
+        _tableManager.loadTableFromCSV(otherYardTableData);
     }
     
     // The minimal setup for log4J
