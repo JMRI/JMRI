@@ -31,6 +31,47 @@
     <div id="mainContent">
       <h1>JMRI: LogixNG Documentation</h1>
 
+	  <p>JMRI has for a long time had the tool Logix which can be
+	  used to setup rules, for example that a signal should go to
+	  green if some turnouts are in a predefined state. Logix does
+	  its job well, but is difficult to extend with new functionality.</p>
+
+	  <p>LogixNG, short for Logix Next Generation, is a complete
+	  rethink of the concept. It's modular, which means
+	  it's easy to extend LogixNG with new functionality and it's
+	  easy to test each part of LogixNG.<p>
+
+	  <p>LogixNG have building blocks that are similar to Logix.
+	  A <i>LogixNG</i> is the same as a <i>Logix</i>. A
+	  <i>ConditionalNG</i> is the same as a <i>Conditional</i>.
+	  An <i>expression</i> in LogixNG is similar to a
+	  <i>conditional variable</i> in Logix and an <i>action</i> in
+	  LogixNG is similar to a <i>conditional action</i> in Logix.</p>
+
+	  <p>LogixNG also has references and tables. A reference is an
+	  indirect pointer to an item on the layout. For example, if
+	  the memory IM1 has the value "IT1", the reference {IM1} points
+	  to the turnout IT1. This means that if an action has the
+	  command "set turnout {IM1} to thrown", it means that LogixNG
+	  reads the memory IM1, which in this example has the value IT1,
+	  and then sets the turnout IT1 to thrown.</p>
+
+	  <p>References can be used to change which turnout to use, which
+	  is very useful to setup generic rules. If a particular rule is
+	  common for many places on the layout, references can be use to
+	  use that single rule for all these cases.</p>
+
+	  <p>LogixNG also adds tables to JMRI. A table is similar to
+	  Memory but has one or two dimensions. Each row and each column
+	  in the table may be given a name, which means that a single
+	  cell in the table can be referred to with the row name and the
+	  column name. Tables are in particular intended to be used
+	  together with references, to make it easy to setup complex
+	  configurations. A table can be created in a spreadsheet software
+	  like Microsoft Excel or LibreOffice Calc and then exported as an
+	  CSV file and imported to JMRI.</p>
+
+<!--
 	  <p>LogixNG, short for Logix Next Generation, provide a
 	  powerful capability for JMRI to monitor one or more
 	  conditions on a layout, and take action when these
@@ -44,7 +85,7 @@
 
       <p>LogixNG is similar to Logix&trade;, but is a new design
 	  to make the code easier to manage and extend.</p>
-	  
+-->	  
 
 
 	  <a name="contents" id="contents"></a>

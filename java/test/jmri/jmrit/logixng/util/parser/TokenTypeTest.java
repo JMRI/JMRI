@@ -162,6 +162,12 @@ public class TokenTypeTest {
     
     @Test
     public void testCanFollow() {
+        // If previous token is null, canFollow() returns true for every
+        // token type.
+        for (TokenType tt : TokenType.values()) {
+            Assert.assertTrue("canFollow", tt.canFollow(null));
+        }
+        
         TokenType[] ttArray1 = {};
         Assert.assertTrue("canFollow", checkCanFollow(TokenType.ERROR, ttArray1));
         TokenType[] ttArray2 = {};
