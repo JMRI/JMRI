@@ -41,6 +41,14 @@ public class TableTest {
         expectException(() -> {
             t.getCell("Second row", "Bad column");
         }, IllegalArgumentException.class, "Column 'Bad column' is not found");
+        
+        expectException(() -> {
+            t.setCell("Hello", "Bad row", "Seventh column");
+        }, IllegalArgumentException.class, "Row 'Bad row' is not found");
+        
+        expectException(() -> {
+            t.setCell("Hello", "Second row", "Bad column");
+        }, IllegalArgumentException.class, "Column 'Bad column' is not found");
     }
     
     @Test
