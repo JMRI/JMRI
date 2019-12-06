@@ -171,9 +171,9 @@ public class PluginManager {
             loadClassesInJarFile();
         }
         
-        public void setEnabled(boolean enabled) {
-            
-        }
+//        public void setEnabled(boolean enabled) {
+//            
+//        }
     }
     
 //    private final LogixNGPreferences _preferences;
