@@ -50,6 +50,11 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.26.0
+; - Remove JMRIDemo link
+; - Rename Tools and Demos Folder to Tools
+; - use https link for Java download and JMRI Website
+; -------------------------------------------------------------------------
 ; - Version 0.1.25.0
 ; - Backup and remove lib folder
 ; -------------------------------------------------------------------------
@@ -307,7 +312,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.25.0"                    ; Installer version
+!define INST_VER  "0.1.26.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -341,7 +346,7 @@ SetCompressor /SOLID /FINAL lzma
 ; -------------------------------------------------------------------------
 ; - Defines for downloading
 ; -------------------------------------------------------------------------
-!define JRE_URL     "http://java.com/winoffline_installer/"
+!define JRE_URL     "https://java.com/winoffline_installer/"
 !define INTERNET_CONNECTION_CONFIGURED 64  ; 0x40
 !define INTERNET_CONNECTION_LAN 2          ; 0x02
 !define INTERNET_CONNECTION_MODEM 1        ; 0x01
@@ -621,8 +626,11 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.pif" ; -- for Win98
     Delete "$SMPROGRAMS\$0\Tools and Demos\DecoderPro3.lnk"
     Delete "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk"
+    Delete "$SMPROGRAMS\$0\Tools\InstallTest.lnk"
+    Delete "$SMPROGRAMS\$0\Tools\Preferences.lnk"
     Delete "$SMPROGRAMS\$0\Uninstall.lnk"
     RMDir "$SMPROGRAMS\$0\Tools and Demos\"
+    RMDir "$SMPROGRAMS\$0\Tools\"
     RMDir "$SMPROGRAMS\$0\"
 
     ; -- Remove any predictably-named JMRI shortcuts from the Desktop
@@ -774,8 +782,8 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
                    "apps.SoundPro.SoundPro" \
                    "$INSTDIR\SoundPro80x80.ico" 0 "" "" \
                    "Start SoundPro"
-    CreateDirectory "$SMPROGRAMS\$SMFOLDER\Tools and Demos"
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\InstallTest.lnk" \
+    CreateDirectory "$SMPROGRAMS\$SMFOLDER\Tools"
+    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools\InstallTest.lnk" \
                    "$INSTDIR\InstallTest.bat" \
                    "" \
                    "$INSTDIR\InstallTest80x80.ico" 0 "" "" \
@@ -784,28 +792,18 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
     IfFileExists "$PROFILE\JMRI\*.*" +2
       CreateDirectory "$PROFILE\JMRI"
       ; -- Now create a shortcut to it
-      CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\Preferences.lnk" \
+      CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools\Preferences.lnk" \
                    "%HOMEDRIVE%%HOMEPATH%\JMRI" \
                    "" \
                    "" "" "" "" \
                    "Open JMRI Preferences Folder"
-    SetFileAttributes "$SMPROGRAMS\$SMFOLDER\Tools and Demos\Preferences.lnk" READONLY
+    SetFileAttributes "$SMPROGRAMS\$SMFOLDER\Tools\Preferences.lnk" READONLY
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\Uninstall.lnk" \
                    "$INSTDIR\Uninstall.exe" \
                    "/$MultiUser.InstallMode"
     !insertmacro MUI_STARTMENU_WRITE_END
   SectionEnd ; SEC_SCSMSC
 
-  Section /o "Additional Tools and Demos" SEC_OCSMSC
-    SectionIn 2
-    !insertmacro MUI_STARTMENU_WRITE_BEGIN JMRIStartMenu
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\JmriDemo.lnk" \
-                   "$INSTDIR\LaunchJMRI.exe" \
-                   "apps.JmriDemo.JMRIdemo" \
-                   "$INSTDIR\decpro5.ico" 0 "" "" \
-                   "Start JMRI Demo"
-    !insertmacro MUI_STARTMENU_WRITE_END
-  SectionEnd ; SEC_OCSMSC
 SectionGroupEnd ; SEC_SMSC
 
 SectionGroup "Desktop Shortcuts" SEC_DTSC
@@ -859,7 +857,7 @@ Section "-PostProcessing" SEC_POST
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" \
                  "Publisher" "JMRI Community"
   WriteRegStr SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" \
-                 "URLInfoAbout" "http://jmri.org/"
+                 "URLInfoAbout" "https://jmri.org/"
   WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" \
                  "NoModify" 1
   WriteRegDWORD SHCTX "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI" \
