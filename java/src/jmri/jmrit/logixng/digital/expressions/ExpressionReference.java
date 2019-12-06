@@ -2,18 +2,21 @@ package jmri.jmrit.logixng.digital.expressions;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
-import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Turnout;
+import jmri.AudioManager;
+import jmri.LightManager;
+import jmri.MemoryManager;
+import jmri.NamedBean;
+import jmri.SensorManager;
+import jmri.SignalHeadManager;
+import jmri.SignalMastManager;
 import jmri.TurnoutManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
+import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.util.ReferenceUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -98,43 +101,52 @@ public class ExpressionReference extends AbstractDigitalExpression
     @Override
     public boolean evaluate() {
         boolean result;
-        Object ref = ReferenceUtil.getReference(_reference);
+        String ref = ReferenceUtil.getReference(_reference);
+        NamedBean t;
 
         switch (_pointsTo) {
             case NOTHING:
                 result = "".equals(ref);
                 break;
             
-            case VECTOR:
-                result = (ref instanceof String) && !"".equals(ref);
+            case TABLE:
+                t = InstanceManager.getDefault(NamedTableManager.class).getNamedBean(ref);
+                result = (t != null);
                 break;
             
             case AUDIO:
-                result = ref instanceof jmri.Audio;
+                t = InstanceManager.getDefault(AudioManager.class).getNamedBean(ref);
+                result = (t != null);
                 break;
             
             case LIGHT:
-                result = ref instanceof jmri.Light;
+                t = InstanceManager.getDefault(LightManager.class).getNamedBean(ref);
+                result = (t != null);
                 break;
             
             case MEMORY:
-                result = ref instanceof jmri.Memory;
+                t = InstanceManager.getDefault(MemoryManager.class).getNamedBean(ref);
+                result = (t != null);
                 break;
             
             case SENSOR:
-                result = ref instanceof jmri.Sensor;
+                t = InstanceManager.getDefault(SensorManager.class).getNamedBean(ref);
+                result = (t != null);
                 break;
             
             case SIGNAL_HEAD:
-                result = ref instanceof jmri.SignalHead;
+                t = InstanceManager.getDefault(SignalHeadManager.class).getNamedBean(ref);
+                result = (t != null);
                 break;
             
             case SIGNAL_MAST:
-                result = ref instanceof jmri.SignalMast;
+                t = InstanceManager.getDefault(SignalMastManager.class).getNamedBean(ref);
+                result = (t != null);
                 break;
             
             case TURNOUT:
-                result = ref instanceof jmri.Turnout;
+                t = InstanceManager.getDefault(TurnoutManager.class).getNamedBean(ref);
+                result = (t != null);
                 break;
             
             default:
@@ -142,9 +154,9 @@ public class ExpressionReference extends AbstractDigitalExpression
         }
         
         if (_is_IsNot == Is_IsNot_Enum.IS) {
-            return !result;
-        } else {
             return result;
+        } else {
+            return !result;
         }
     }
 
@@ -219,16 +231,13 @@ public class ExpressionReference extends AbstractDigitalExpression
     
     public enum PointsTo {
         NOTHING(Bundle.getMessage("ReferencePointsTo_Nothing")),
-        VECTOR(Bundle.getMessage("ReferencePointsTo_Vector")),
+        TABLE(Bundle.getMessage("ReferencePointsTo_Table")),
         AUDIO(Bundle.getMessage("ReferencePointsTo_Audio")),
         LIGHT(Bundle.getMessage("ReferencePointsTo_Light")),
         MEMORY(Bundle.getMessage("ReferencePointsTo_Memory")),
         SENSOR(Bundle.getMessage("ReferencePointsTo_Sensor")),
         SIGNAL_HEAD(Bundle.getMessage("ReferencePointsTo_SignalHead")),
         SIGNAL_MAST(Bundle.getMessage("ReferencePointsTo_SignalMast")),
-        LOGIX(Bundle.getMessage("ReferencePointsTo_Logix")),
-        LOGIX_NG(Bundle.getMessage("ReferencePointsTo_LogixNG")),
-        SCRIPT(Bundle.getMessage("ReferencePointsTo_Script")),
         TURNOUT(Bundle.getMessage("ReferencePointsTo_Turnout"));
         
         private final String _text;

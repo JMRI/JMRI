@@ -5,9 +5,20 @@ import java.beans.PropertyVetoException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.AudioManager;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.Memory;
+import jmri.MemoryManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.SignalHead;
+import jmri.SignalHeadManager;
+import jmri.SignalMast;
+import jmri.SignalMastManager;
+import jmri.SensorManager;
+import jmri.TurnoutManager;
+import jmri.implementation.VirtualSignalHead;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -19,6 +30,7 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.NamedTableManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -45,75 +57,179 @@ public class ExpressionReferenceTest {
         Assert.assertEquals("Reference", expressionReference.getShortDescription());
         Assert.assertEquals("Reference \"Not selected\" is Nothing", expressionReference.getLongDescription());
     }
-/*    
+    
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
-        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
-        light.setCommandedState(Light.OFF);
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-        LogixNG logixNG =
-                InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
-        conditionalNG.setRunOnGUIDelayed(false);
-        logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
         
-        IfThenElse actionIfThen =
-                new IfThenElse(InstanceManager.getDefault(
-                        DigitalActionManager.class).getAutoSystemName(), null,
-                        IfThenElse.Type.TRIGGER_ACTION);
+        Memory m = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        ExpressionReference expression = new ExpressionReference("IQDE321", null);
         
-        MaleSocket socketIfThen =
-                InstanceManager.getDefault(DigitalActionManager.class)
-                        .registerAction(actionIfThen);
+        expression.setReference("{IM1}");
         
-        conditionalNG.getChild(0).connect(socketIfThen);
+        // Test IS
+        expression.set_Is_IsNot(Is_IsNot_Enum.IS);
         
-        ExpressionReference expressionReference =
-                new ExpressionReference(InstanceManager.getDefault(
-                        DigitalExpressionManager.class).getAutoSystemName(), null);
+        m.setValue("Turnout 1");
+        expression.setPointsTo(ExpressionReference.PointsTo.NOTHING);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        m.setValue("");
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is Nothing", expression.getLongDescription());
         
-        expressionReference.setLight(light);
-        expressionReference.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionReference.setLightState(ExpressionReference.LightState.ON);
-        MaleSocket socketLight = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionReference);
-        socketIfThen.getChild(0).connect(socketLight);
+        m.setValue("Table 1");
+        expression.setPointsTo(ExpressionReference.PointsTo.TABLE);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        InstanceManager.getDefault(NamedTableManager.class).newTable("IQT1", "Table 1", 2, 3);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is Table", expression.getLongDescription());
         
-        ActionAtomicBoolean actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
-        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
-        socketIfThen.getChild(1).connect(socketAtomicBoolean);
+        m.setValue("Audio 1");
+        expression.setPointsTo(ExpressionReference.PointsTo.AUDIO);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        InstanceManager.getDefault(AudioManager.class).newAudio("IAB1", "Audio 1");
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is Audio", expression.getLongDescription());
         
-        // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Throw the switch. This should not execute the conditional.
-        light.setCommandedState(Light.ON);
-        // The conditionalNG is not yet enabled so it shouldn't be executed.
-        // So the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Close the switch. This should not execute the conditional.
-        light.setCommandedState(Light.OFF);
-        // Enable the conditionalNG and all its children.
-        conditionalNG.setEnabled(true);
-        // The action is not yet executed so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Throw the switch. This should execute the conditional.
-        light.setCommandedState(Light.ON);
-        // The action should now be executed so the atomic boolean should be true
-        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        m.setValue("Light 1");
+        expression.setPointsTo(ExpressionReference.PointsTo.LIGHT);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        InstanceManager.getDefault(LightManager.class).newLight("IL1", "Light 1");
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is Light", expression.getLongDescription());
+        
+        m.setValue("Memory 1");
+        expression.setPointsTo(ExpressionReference.PointsTo.MEMORY);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        InstanceManager.getDefault(MemoryManager.class).newMemory("IM5", "Memory 1");
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is Memory", expression.getLongDescription());
+        
+        m.setValue("Sensor 1");
+        expression.setPointsTo(ExpressionReference.PointsTo.SENSOR);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        InstanceManager.getDefault(SensorManager.class).newSensor("IS1", "Sensor 1");
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is Sensor", expression.getLongDescription());
+        
+        m.setValue("Signal Head 1");
+        expression.setPointsTo(ExpressionReference.PointsTo.SIGNAL_HEAD);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        SignalHead signalHeadIH1 = new VirtualSignalHead("IH1", "Signal Head 1");
+        InstanceManager.getDefault(SignalHeadManager.class).register(signalHeadIH1);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is SignalHead", expression.getLongDescription());
+        
+        m.setValue("IF$shsm:AAR-1946:CPL(IH1)");
+        expression.setPointsTo(ExpressionReference.PointsTo.SIGNAL_MAST);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is SignalMast", expression.getLongDescription());
+        
+        m.setValue("Turnout 1");
+        expression.setPointsTo(ExpressionReference.PointsTo.TURNOUT);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        InstanceManager.getDefault(TurnoutManager.class).newTurnout("IT1", "Turnout 1");
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is Turnout", expression.getLongDescription());
+        
+        
+        // Test IS_NOT
+        expression.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        
+        m.setValue("Turnout 2");
+        expression.setPointsTo(ExpressionReference.PointsTo.NOTHING);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        m.setValue("");
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is not Nothing", expression.getLongDescription());
+        
+        m.setValue("Table 2");
+        expression.setPointsTo(ExpressionReference.PointsTo.TABLE);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        InstanceManager.getDefault(NamedTableManager.class).newTable("IQT2", "Table 2", 2, 3);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is not Table", expression.getLongDescription());
+        
+        m.setValue("Audio 2");
+        expression.setPointsTo(ExpressionReference.PointsTo.AUDIO);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        InstanceManager.getDefault(AudioManager.class).newAudio("IAB2", "Audio 2");
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is not Audio", expression.getLongDescription());
+        
+        m.setValue("Light 2");
+        expression.setPointsTo(ExpressionReference.PointsTo.LIGHT);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        InstanceManager.getDefault(LightManager.class).newLight("IL2", "Light 2");
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is not Light", expression.getLongDescription());
+        
+        m.setValue("Memory 2");
+        expression.setPointsTo(ExpressionReference.PointsTo.MEMORY);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        InstanceManager.getDefault(MemoryManager.class).newMemory("IM6", "Memory 2");
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is not Memory", expression.getLongDescription());
+        
+        m.setValue("Sensor 2");
+        expression.setPointsTo(ExpressionReference.PointsTo.SENSOR);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        InstanceManager.getDefault(SensorManager.class).newSensor("IS2", "Sensor 2");
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is not Sensor", expression.getLongDescription());
+        
+        m.setValue("Signal Head 2");
+        expression.setPointsTo(ExpressionReference.PointsTo.SIGNAL_HEAD);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        SignalHead signalHeadIH2 = new VirtualSignalHead("IH2", "Signal Head 2");
+        InstanceManager.getDefault(SignalHeadManager.class).register(signalHeadIH2);
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is not SignalHead", expression.getLongDescription());
+        
+        m.setValue("IF$shsm:AAR-1946:CPL(IH2)");
+        expression.setPointsTo(ExpressionReference.PointsTo.SIGNAL_MAST);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH2)");
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is not SignalMast", expression.getLongDescription());
+        
+        m.setValue("Turnout 2");
+        expression.setPointsTo(ExpressionReference.PointsTo.TURNOUT);
+        Assert.assertTrue("evaluate returns true",expression.evaluate());
+        InstanceManager.getDefault(TurnoutManager.class).newTurnout("IT2", "Turnout 2");
+        Assert.assertFalse("evaluate returns false",expression.evaluate());
+        Assert.assertEquals("Reference \"{IM1}\" is not Turnout", expression.getLongDescription());
     }
-*/    
+    
     // The minimal setup for log4J
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initRouteManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initReporterManager();
+        JUnitUtil.initOBlockManager();
+        JUnitUtil.initWarrantManager();
+        JUnitUtil.initSignalMastLogicManager();
+        JUnitUtil.initLayoutBlockManager();
+        JUnitUtil.initSectionManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initDefaultSignalMastManager();
+        JUnitUtil.initIdTagManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initConditionalManager();
     }
 
     @After
     public void tearDown() {
+        // this created an audio manager, clean that up
+        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
+        
         JUnitUtil.tearDown();
     }
     
