@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrit.operations.routes.tools;
 
 import java.awt.GraphicsEnvironment;
 
@@ -7,6 +7,7 @@ import org.junit.Assume;
 import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.routes.tools.RouteCopyFrame;
 import jmri.util.JUnitUtil;
 
 /**

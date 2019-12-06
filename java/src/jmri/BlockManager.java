@@ -1,11 +1,9 @@
 package jmri;
 
 import java.beans.PropertyChangeEvent;
-import java.text.DecimalFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -43,9 +41,7 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
         super(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         InstanceManager.getDefault(SensorManager.class).addVetoableChangeListener(this);
         InstanceManager.getDefault(ReporterManager.class).addVetoableChangeListener(this);
-        InstanceManager.getList(PowerManager.class).forEach((pm) -> {
-            pm.addPropertyChangeListener(this);
-        });
+        InstanceManager.getList(PowerManager.class).forEach(pm -> pm.addPropertyChangeListener(this));
         powerManagerChangeName = InstanceManager.getListPropertyName(PowerManager.class);
         InstanceManager.addPropertyChangeListener(this);
     }
@@ -60,6 +56,11 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     @CheckReturnValue
     public char typeLetter() {
         return 'B';
+    }
+
+    @Override
+    public Class<Block> getNamedBeanClass() {
+        return Block.class;
     }
 
     private boolean saveBlockPath = true;
@@ -248,18 +249,16 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
     @Nonnull
     public List<Block> getBlocksOccupiedByRosterEntry(@Nonnull RosterEntry re) {
         List<Block> blockList = new ArrayList<>();
-
-        getNamedBeanSet().stream().forEach((b) -> {
-            Object obj;
-            if (b!= null && (obj = b.getValue()) != null) {
-                if (obj instanceof RosterEntry && obj == re) {
-                    blockList.add(b);
-                } else if (obj.toString().equals(re.getId()) || obj.toString().equals(re.getDccAddress())) {
+        getNamedBeanSet().stream().forEach(b -> {
+            if (b != null) {
+                Object obj = b.getValue();
+                if ((obj instanceof RosterEntry && obj == re) ||
+                        obj.toString().equals(re.getId()) ||
+                        obj.toString().equals(re.getDccAddress())) {
                     blockList.add(b);
                 }
             }
         });
-
         return blockList;
     }
 
@@ -319,10 +318,10 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
 
     @Override
     @Nonnull
-    public Block provide(@Nonnull String name) throws IllegalArgumentException {
+    public Block provide(@Nonnull String name) {
         return provideBlock(name);
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(BlockManager.class);
 
 }

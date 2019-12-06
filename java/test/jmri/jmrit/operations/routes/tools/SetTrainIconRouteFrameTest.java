@@ -1,4 +1,4 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrit.operations.routes.tools;
 
 import java.awt.GraphicsEnvironment;
 
@@ -10,6 +10,10 @@ import org.netbeans.jemmy.operators.JSpinnerOperator;
 
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.routes.tools.SetTrainIconRouteFrame;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;

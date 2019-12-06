@@ -1,7 +1,10 @@
 package jmri.jmrix.internal;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.util.NamedBeanPreferNumericComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -215,7 +218,7 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<?> type) {
         if (getDisabled()) {
             return null;
         }
@@ -224,46 +227,51 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
             configureManagers();
         }
 
-        if (T.equals(jmri.SensorManager.class)) {
+        if (type.equals(jmri.SensorManager.class)) {
             return (T) getSensorManager();
         }
-        if (T.equals(jmri.LightManager.class)) {
+        if (type.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
         }
-        if (T.equals(jmri.ReporterManager.class)) {
+        if (type.equals(jmri.ReporterManager.class)) {
             return (T) getReporterManager();
         }
-        if (T.equals(jmri.TurnoutManager.class)) {
+        if (type.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
 
         if (!defaultInstanceType) {
-            if (T.equals(jmri.PowerManager.class)) {
+            if (type.equals(jmri.PowerManager.class)) {
                 return (T) getPowerManager();
             }
 
-            if (T.equals(jmri.GlobalProgrammerManager.class)) {
+            if (type.equals(jmri.GlobalProgrammerManager.class)) {
                 return (T) getProgrammerManager();
             }
-            if (T.equals(jmri.AddressedProgrammerManager.class)) {
+            if (type.equals(jmri.AddressedProgrammerManager.class)) {
                 return (T) getProgrammerManager();
             }
 
-            if (T.equals(jmri.ThrottleManager.class)) {
+            if (type.equals(jmri.ThrottleManager.class)) {
                 return (T) getThrottleManager();
             }
-            if (T.equals(jmri.ConsistManager.class)) {
+            if (type.equals(jmri.ConsistManager.class)) {
                 return (T) getConsistManager();
             }
         }
 
-        return super.get(T);
+        return super.get(type);
     }
 
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         // No actions to add at start up
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanPreferNumericComparator<>();
     }
 
     @Override
@@ -279,6 +287,6 @@ public class InternalSystemConnectionMemo extends jmri.jmrix.SystemConnectionMem
         super.dispose();
     }
 
-    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSystemConnectionMemo.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(InternalSystemConnectionMemo.class);
 
 }

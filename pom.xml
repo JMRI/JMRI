@@ -227,6 +227,7 @@
                             <executable>scripts/tidy-check.sh</executable>
                             <arguments>
                                 <argument>help/en/*/*</argument>
+                                <argument>help/fr/*/*</argument>
                             </arguments>
                         </configuration>
                     </plugin>
@@ -278,7 +279,8 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
+                <version>1.8</version><!--$NO-MVN-MAN-VER$-->
+                <!-- above line-end comment silences warning in Eclipse -->
                 <!--
                 <executions>
                     <execution>
@@ -1224,7 +1226,7 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>1.0.10</version>
+            <version>1.0.28</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.paho</groupId>

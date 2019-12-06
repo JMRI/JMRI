@@ -15,6 +15,7 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
+import jmri.SignalHead;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrix.SystemConnectionMemo;
@@ -338,6 +339,14 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<IdTag> getNamedBeanClass() {
+        return IdTag.class;
     }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class);

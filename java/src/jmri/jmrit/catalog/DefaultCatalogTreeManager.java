@@ -6,6 +6,7 @@ import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
+import jmri.SignalSystem;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -181,6 +182,14 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameCatalogs" : "BeanNameCatalog");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<CatalogTree> getNamedBeanClass() {
+        return CatalogTree.class;
     }
 
     @Override

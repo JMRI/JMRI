@@ -1,9 +1,11 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrit.operations.routes.tools;
 
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
+
+import jmri.jmrit.operations.routes.Route;
 
 /**
  * Swing action to create and register a SetTrainIconRouteFrame object.

@@ -199,6 +199,12 @@
             </td>
 
             <td>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/">HTML Scan</a>
+                    <br><a href='http://jmri.tagadab.com/jenkins/job/Development/job/HTML%20Scan/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development%2FHTML+Scan'></a>
+                    <br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/lastBuild/warnings25Result/NORMAL/">
+                    <img src="http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/warnings4/trendGraph/png?url=PRIORITY">
+                </a>
             </td>
         </tr>
 

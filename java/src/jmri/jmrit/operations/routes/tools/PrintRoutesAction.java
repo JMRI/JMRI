@@ -1,14 +1,18 @@
-package jmri.jmrit.operations.routes;
+package jmri.jmrit.operations.routes.tools;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.setup.Control;
-import jmri.util.davidflanagan.HardcopyWriter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.routes.Route;
+import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.setup.Control;
+import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
  * Action to print all of the routes used in operations.
