@@ -1,8 +1,10 @@
 package jmri.jmrit.logix;
 
+import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.ShutDownManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 
@@ -200,6 +202,7 @@ public class TrackerTableActionTest {
     public void tearDown() {
         _OBlockMgr.dispose();
         _OBlockMgr = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

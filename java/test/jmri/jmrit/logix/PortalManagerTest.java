@@ -1,15 +1,16 @@
 package jmri.jmrit.logix;
 
+import jmri.BlockManager;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.ShutDownManager;
 import jmri.jmrit.display.controlPanelEditor.ControlPanelEditor;
 import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -150,6 +151,7 @@ public class PortalManagerTest {
     @After
     public void tearDown() {
         _portalMgr = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 
