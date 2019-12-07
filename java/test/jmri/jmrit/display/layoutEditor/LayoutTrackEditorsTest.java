@@ -923,6 +923,7 @@ public class LayoutTrackEditorsTest {
         layoutTrackEditors = null;
 
         JUnitUtil.resetWindows(false, false);
+        InstanceManager.deregister(InstanceManager.getDefault(BlockManager.class), BlockManager.class);
         JUnitUtil.tearDown();
     }
 
