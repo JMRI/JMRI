@@ -53,14 +53,12 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
 import jmri.ShutDownManager;
-import jmri.implementation.AbstractShutDownTask;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.DebugMenu;
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.PrintDecoderListAction;
 import jmri.jmrit.display.PanelMenu;
-import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.jython.RunJythonScript;
@@ -199,26 +197,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
         }
-
-        // add the default shutdown task to save blocks
-        // as a special case, register a ShutDownTask to write out blocks
-        InstanceManager.getDefault(ShutDownManager.class).
-                register(new AbstractShutDownTask("Writing Blocks") {
-                    @Override
-                    public boolean execute() {
-                        // Save block values prior to exit, if necessary
-                        log.debug("Start writing block info");
-                        try {
-                            new BlockValueFile().writeBlockValues();
-                        } //catch (org.jdom2.JDOMException jde) { log.error("Exception writing blocks: {}", jde); }
-                        catch (IOException ioe) {
-                            log.error("Exception writing blocks: {}", ioe.getMessage());
-                        }
-
-                        // continue shutdown
-                        return true;
-                    }
-                });
 
         // Install configuration manager and Swing error handler
         // Constructing the JmriConfigurationManager also loads various configuration services
