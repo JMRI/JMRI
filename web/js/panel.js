@@ -1244,7 +1244,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         $preloadWidgetImages($widget); //start loading all images
                                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                         $widget["systemName"] = $widget.name;
-//                                        $widget['id'] = $widget.ident;
                                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                                         $drawIcon($widget); //actually place and position the widget on the panel
                                         jmri.getSensor($widget["systemName"]);
@@ -1280,7 +1279,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                         }
                         $preloadWidgetImages($widget); //start loading all images
                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-//                        $widget['id'] = $widget.ident;
                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                         $drawIcon($widget); //actually place and position the widget on the panel
                         break;
@@ -1422,7 +1420,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                         	case "vertical_up"   : $widget.degrees = 270;
                         	case "vertical_down" : $widget.degrees = 90;
                         }
-//                        $widget['id'] = $widget.ident;
                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                         //put the text element on the page
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" + $widget.text + "</div>");
@@ -1458,7 +1455,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 jmri.getLayoutBlock($widget.systemName);
                                 break;
                             case "layoutturnout" :
-//                                $widget['id'] = $widget.ident;
+                                $widget['id'] = $widget.ident;
                                 $widget['name'] = $widget.turnoutname; //normalize name
                                 $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                 $widget.jsonType = "turnout"; // JSON object type
@@ -1710,7 +1707,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget['occupancystateBD'] = $gBlks[$widget.blocknamebd].state;
                                 }
                                 //store widget in persistent array
-//                                $widget['id'] = $widget.ident;
+                                $widget['id'] = $widget.ident;
                                 $gWidgets[$widget.id] = $widget;
                                 //also store the xing's 4 end points for other connections
                                 $storeLevelXingPoints($widget);
@@ -3276,8 +3273,8 @@ var $setWidgetPosition = function(e) {
     var $id = e.attr('id');
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
-    //don't bother if widget not found or BeanSwitch
-    if (typeof $widget !== "undefined" && typeof e[0] !== "undefined" && $widget.widgetType != "beanswitch") {  
+    //don't bother if widget not found or not BeanSwitch
+    if (isDefined($widget) && isDefined(e[0]) && ($widget.widgetType != "beanswitch")) {
 
         var $height = 0;
         var $width  = 0;
@@ -3369,14 +3366,13 @@ var $reDrawIcon = function($widget) {
 };
 
 // set new value for widget, showing proper icon, return widgets changed
-var $setWidgetState = function($id, $newState, data) {
+var $setWidgetState = function($id, $newState) {
     var $widget = $gWidgets[$id];
 
     // if undefined widget this must be a slip
-    if (typeof $widget === "undefined") {
+    if (isUndefined($widget)) {
         // does it have "l" or "r" suffix?
         if ($id.endsWith("l") || $id.endsWith("r")) {   // (yes!)
-            //jmri_logging = true;
             if (jmri_logging) {
                 jmri.log("\n#### INFO: clicked slip " + $id + " to state " + $newState);
             }
@@ -3437,14 +3433,11 @@ var $setWidgetState = function($id, $newState, data) {
                        " to " + slipStateToString($newState));
                }
             }
-            //jmri_logging = false;
 
             // set $id to slip id
             $id = slipID;
         } else {
-            if (jmri_logging) {
-            	jmri.log("$setWidgetState unknown $id: '" + $id + "'.");
-            }
+            jmri.log("$setWidgetState unknown $id: '" + $id + "'.");
             return;
         }
     } else if ($widget.widgetType == 'layoutSlip') {
@@ -3463,15 +3456,9 @@ var $setWidgetState = function($id, $newState, data) {
         }
         $widget.state = $newState;
 
-        //override the state with idTag's "name" in a very specific circumstance
-        if (($widget.jsonType=="memory" || $widget.jsonType=="block" || $widget.jsonType=="reporter" ) &&
-        		$widget.widgetFamily=="icon" && data.value.type=="idTag") {
-        	$widget.state = data.value.data.name;
-        }
-        
         switch ($widget.widgetFamily) {
             case "icon" :
-               	$reDrawIcon($widget)
+                $reDrawIcon($widget)
                 break;
             case "text" :
                 if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
@@ -3808,13 +3795,12 @@ var $drawAllIconWidgets = function() {
     });
 };
 
-function updateWidgets(name, state, data) {   
-	if (name )
-	//update all widgets based on the element that changed, using systemname
+function updateWidgets(name, state, data) {
+    //update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
         if (jmri_logging) jmri.log("updateWidgets(" + name + ", " + state + ", data);");
         $.each(whereUsed[name], function(index, widgetId) {
-            $setWidgetState(widgetId, state, data);
+            $setWidgetState(widgetId, state);
         });
 //    } else {
 //      jmri.log("system name " + name + " not found, can't set state to " + state);
@@ -3823,7 +3809,7 @@ function updateWidgets(name, state, data) {
     if (whereUsed[data.userName]) {
         if (jmri_logging) jmri.log("updateWidgets(" + data.userName + ", " + state + ", data);");
         $.each(whereUsed[data.userName], function(index, widgetId) {
-            $setWidgetState(widgetId, state, data);
+            $setWidgetState(widgetId, state);
         });
 //    } else {
 //      jmri.log("userName " + name + " not found, can't set state to " + state);
@@ -3979,7 +3965,6 @@ $(document).ready(function() {
         // hide the Show XML menu when listing panels
         $("#navbar-panel-xml").addClass("hidden").removeClass("show");
     } else {
-    	getRateFactor();
         jmri = $.JMRI({
             didReconnect: function() {
                 // if a reconnect is triggered, reload the page - it is the
@@ -3991,26 +3976,12 @@ $(document).ready(function() {
                 updateWidgets(name, state, data);
             },
             block: function(name, value, data) {
-            	if (value !== null) {
-            		if (value.type == "idTag") {
-            			value = value.data.userName; //for idTags, use the value in userName instead
-            		} else if (value.type == "reporter"){
-            			value = value.data.value;    //for reporters, use the value in data instead            		
-            		}
-            	}
                 updateWidgets(name, value, data);
             },
             layoutBlock: function(name, value, data) {
                 setBlockColor(name, data.blockColor);
             },
             memory: function(name, value, data) {
-            	if (value !== null) {
-            		if (value.type == "idTag") {
-            			value = value.data.userName; //for idTags, use the value in userName instead
-            		} else if (value.type == "reporter"){
-            			value = value.data.value;    //for reporters, use the value in data instead            		
-            		}
-            	}
                 updateWidgets(name, value, data);
             },
             reporter: function(name, value, data) {
@@ -4038,6 +4009,8 @@ $(document).ready(function() {
 
         // include name of panel in page title. Will be updated to userName later
         setTitle(panelName);
+
+       	getRateFactor();
 
         // request actual xml of panel, and process it on return
         // uses setTimeout simply to not block other JavaScript since
@@ -4134,7 +4107,7 @@ function getSlipStateForTurnoutStatesClosest(slipWidget, stateA, stateB, useClos
         result = STATE_AC;
     } else if ((stateA == slipWidget.turnoutA_AD) && (stateB == slipWidget.turnoutB_AD)) {
         result = STATE_AD;
-    } else if (($widget.slipType == DOUBLE_SLIP)
+    } else if ((slipWidget.slipType == DOUBLE_SLIP)
         && (stateA == slipWidget.turnoutA_BC) && (stateB == slipWidget.turnoutB_BC)) {
         result = STATE_BC;
     } else if ((stateA == slipWidget.turnoutA_BD) && (stateB == slipWidget.turnoutB_BD)) {
@@ -4144,7 +4117,7 @@ function getSlipStateForTurnoutStatesClosest(slipWidget, stateA, stateB, useClos
             result = STATE_AC;
         } else if ((stateA == slipWidget.turnoutA_AD) || (stateB == slipWidget.turnoutB_AD)) {
             result = STATE_AD;
-        } else if (($widget.slipType == DOUBLE_SLIP)
+        } else if ((slipWidget.slipType == DOUBLE_SLIP)
             && (stateA == slipWidget.turnoutA_BC) || (stateB == slipWidget.turnoutB_BC)) {
             result = STATE_BC;
         } else if ((stateA == slipWidget.turnoutA_BD) || (stateB == slipWidget.turnoutB_BD)) {
