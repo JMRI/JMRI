@@ -1,17 +1,10 @@
 package jmri.jmrix.loconet;
 
-import java.awt.GraphicsEnvironment;
-import jmri.Block;
 import jmri.BlockManager;
-import jmri.JmriException;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalMast;
 import jmri.SignalMastManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 
@@ -78,6 +71,7 @@ public class LnCabSignalTest extends jmri.implementation.DefaultCabSignalTest {
     public void tearDown() {
         cs.dispose(); // verify no exceptions
         cs = null;
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

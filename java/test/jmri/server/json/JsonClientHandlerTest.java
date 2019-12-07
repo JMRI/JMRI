@@ -8,6 +8,10 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+
+import jmri.BlockManager;
+import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.profile.NullProfile;
 import jmri.util.FileUtil;
 import jmri.util.JUnitAppender;
@@ -36,6 +40,7 @@ public class JsonClientHandlerTest {
 
     @After
     public void tearDown() {
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 
