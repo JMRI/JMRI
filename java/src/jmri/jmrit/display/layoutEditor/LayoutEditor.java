@@ -217,7 +217,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient int toolbarHeight = 100;
     private transient int toolbarWidth = 100;
 
-    //private transient int numTurnouts = 0;
     private transient TrackSegment newTrack = null;
     private transient boolean panelChanged = false;
 
