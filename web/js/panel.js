@@ -1244,7 +1244,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                                         $preloadWidgetImages($widget); //start loading all images
                                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                         $widget["systemName"] = $widget.name;
-//                                        $widget['id'] = $widget.ident;
                                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                                         $drawIcon($widget); //actually place and position the widget on the panel
                                         jmri.getSensor($widget["systemName"]);
@@ -1280,7 +1279,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                         }
                         $preloadWidgetImages($widget); //start loading all images
                         $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-//                        $widget['id'] = $widget.ident;
                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                         $drawIcon($widget); //actually place and position the widget on the panel
                         break;
@@ -1422,7 +1420,6 @@ function processPanelXML($returnedData, $success, $xhr) {
                         	case "vertical_up"   : $widget.degrees = 270;
                         	case "vertical_down" : $widget.degrees = 90;
                         }
-//                        $widget['id'] = $widget.ident;
                         $gWidgets[$widget.id] = $widget; //store widget in persistent array
                         //put the text element on the page
                         $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" + $widget.text + "</div>");
@@ -1458,7 +1455,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 jmri.getLayoutBlock($widget.systemName);
                                 break;
                             case "layoutturnout" :
-//                                $widget['id'] = $widget.ident;
+                                $widget['id'] = $widget.ident;
                                 $widget['name'] = $widget.turnoutname; //normalize name
                                 $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                 $widget.jsonType = "turnout"; // JSON object type
@@ -1835,7 +1832,6 @@ function $handleClick(e) {
             } else if (this.id.endsWith("r")) {
                 $widget["side"] = "right";
             }
-            //jmri_logging = true;
             if (jmri_logging) jmri.log("\nlayoutSlip-side:" + $widget.side);
 
             // convert current slip state to current turnout states
@@ -3276,8 +3272,8 @@ var $setWidgetPosition = function(e) {
     var $id = e.attr('id');
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
-    //don't bother if widget not found or BeanSwitch
-    if (typeof $widget !== "undefined" && typeof e[0] !== "undefined" && $widget.widgetType != "beanswitch") {  
+    //don't bother if widget not found or not BeanSwitch
+    if (isDefined($widget) && isDefined(e[0]) && ($widget.widgetType != "beanswitch")) {  
 
         var $height = 0;
         var $width  = 0;
@@ -3373,10 +3369,9 @@ var $setWidgetState = function($id, $newState, data) {
     var $widget = $gWidgets[$id];
 
     // if undefined widget this must be a slip
-    if (typeof $widget === "undefined") {
+    if (isUndefined($widget)) {
         // does it have "l" or "r" suffix?
         if ($id.endsWith("l") || $id.endsWith("r")) {   // (yes!)
-            //jmri_logging = true;
             if (jmri_logging) {
                 jmri.log("\n#### INFO: clicked slip " + $id + " to state " + $newState);
             }
@@ -4136,7 +4131,7 @@ function getSlipStateForTurnoutStatesClosest(slipWidget, stateA, stateB, useClos
         result = STATE_AC;
     } else if ((stateA == slipWidget.turnoutA_AD) && (stateB == slipWidget.turnoutB_AD)) {
         result = STATE_AD;
-    } else if (($widget.slipType == DOUBLE_SLIP)
+    } else if ((slipwidget.slipType == DOUBLE_SLIP)
         && (stateA == slipWidget.turnoutA_BC) && (stateB == slipWidget.turnoutB_BC)) {
         result = STATE_BC;
     } else if ((stateA == slipWidget.turnoutA_BD) && (stateB == slipWidget.turnoutB_BD)) {
@@ -4146,7 +4141,7 @@ function getSlipStateForTurnoutStatesClosest(slipWidget, stateA, stateB, useClos
             result = STATE_AC;
         } else if ((stateA == slipWidget.turnoutA_AD) || (stateB == slipWidget.turnoutB_AD)) {
             result = STATE_AD;
-        } else if (($widget.slipType == DOUBLE_SLIP)
+        } else if ((slipwidget.slipType == DOUBLE_SLIP)
             && (stateA == slipWidget.turnoutA_BC) || (stateB == slipWidget.turnoutB_BC)) {
             result = STATE_BC;
         } else if ((stateA == slipWidget.turnoutA_BD) || (stateB == slipWidget.turnoutB_BD)) {
