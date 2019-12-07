@@ -21,10 +21,7 @@ import org.slf4j.LoggerFactory;
  * The standard insets command fails on Linux - this class attempts to rectify
  * that.
  * <p>
- * <a href="http://forums.sun.com/thread.jspa?threadID=5169228&start=29">
  * Borrows heavily from the Linsets class created by: A. Tres Finocchiaro
- * </a>
- *
  *
  * @author Matt Harris
  */
