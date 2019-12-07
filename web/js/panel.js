@@ -3273,7 +3273,7 @@ var $setWidgetPosition = function(e) {
     var $widget = $gWidgets[$id];  //look up the widget and get its panel properties
 
     //don't bother if widget not found or not BeanSwitch
-    if (isDefined($widget) && isDefined(e[0]) && ($widget.widgetType != "beanswitch")) {  
+    if (isDefined($widget) && isDefined(e[0]) && ($widget.widgetType != "beanswitch")) {
 
         var $height = 0;
         var $width  = 0;
@@ -3804,7 +3804,6 @@ var $drawAllIconWidgets = function() {
 };
 
 function updateWidgets(name, state, data) {   
-	if (name )
 	//update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
         if (jmri_logging) jmri.log("updateWidgets(" + name + ", " + state + ", data);");
@@ -4131,7 +4130,7 @@ function getSlipStateForTurnoutStatesClosest(slipWidget, stateA, stateB, useClos
         result = STATE_AC;
     } else if ((stateA == slipWidget.turnoutA_AD) && (stateB == slipWidget.turnoutB_AD)) {
         result = STATE_AD;
-    } else if ((slipwidget.slipType == DOUBLE_SLIP)
+    } else if ((slipWidget.slipType == DOUBLE_SLIP)
         && (stateA == slipWidget.turnoutA_BC) && (stateB == slipWidget.turnoutB_BC)) {
         result = STATE_BC;
     } else if ((stateA == slipWidget.turnoutA_BD) && (stateB == slipWidget.turnoutB_BD)) {
@@ -4141,7 +4140,7 @@ function getSlipStateForTurnoutStatesClosest(slipWidget, stateA, stateB, useClos
             result = STATE_AC;
         } else if ((stateA == slipWidget.turnoutA_AD) || (stateB == slipWidget.turnoutB_AD)) {
             result = STATE_AD;
-        } else if ((slipwidget.slipType == DOUBLE_SLIP)
+        } else if ((slipWidget.slipType == DOUBLE_SLIP)
             && (stateA == slipWidget.turnoutA_BC) || (stateB == slipWidget.turnoutB_BC)) {
             result = STATE_BC;
         } else if ((stateA == slipWidget.turnoutA_BD) || (stateB == slipWidget.turnoutB_BD)) {
