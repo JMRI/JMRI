@@ -25,7 +25,7 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
-    static private File defaultFile = null;
+    private File defaultFile = null;
 
     public StoreXmlUserAction() {
         this(rb.getString("MenuItemStore"));
