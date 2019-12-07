@@ -54,7 +54,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
             return r;
         }
         // Route does not exist, create a new route
-        r = new DefaultRoute(validateSystemNameFormat(systemName), userName);
+        r = new DefaultRoute(systemName, userName);
         // save in the maps
         register(r);
 
