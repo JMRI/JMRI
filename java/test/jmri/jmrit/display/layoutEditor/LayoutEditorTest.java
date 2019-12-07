@@ -74,7 +74,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
 
-        //delete this file so we won't get the "<xxx> exists... do you want to replace?" dialog
+        //delete this file so we won't get the "<xxx> exists... do you want to replace?" dialog.
         new File("temp/Layout Editor Test Layout.xml").delete();
 
         // test the file -> delete panel menu item
