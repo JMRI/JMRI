@@ -521,6 +521,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         this("My Layout");
     }
 
+    private transient StoreXmlUserAction store = new StoreXmlUserAction();
+
     public LayoutEditor(@Nonnull String name) {
         super(name);
         setSaveSize(true);
@@ -545,7 +547,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenuItem storeItem = new JMenuItem(Bundle.getMessage("MenuItemStore"));
         fileMenu.add(storeItem);
         storeItem.addActionListener((ActionEvent event) -> {
-            StoreXmlUserAction store = new StoreXmlUserAction();
             store.setDefaultFile(new File(layoutName + ".xml"));
             store.actionPerformed(event);
         });

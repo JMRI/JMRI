@@ -25,7 +25,7 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
-    private File defaultFile = null;
+    static private File defaultFile = null;
 
     public StoreXmlUserAction() {
         this(rb.getString("MenuItemStore"));
@@ -51,20 +51,26 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
         userFileChooser.setDialogTitle(rb.getString("StorePanelTitle"));
 
         if (defaultFile != null) {
-            userFileChooser.setCurrentDirectory(defaultFile);
-            userFileChooser.setSelectedFile(defaultFile);
+            File currentDir = userFileChooser.getCurrentDirectory();
+            if (currentDir == null) {
+                userFileChooser.setCurrentDirectory(defaultFile);
+            }
+            File selectedFile = userFileChooser.getSelectedFile();
+            if (selectedFile == null) {
+                userFileChooser.setSelectedFile(defaultFile);
+            }
         }
 
-        File file = getFileCustom(userFileChooser);
-        if (file != null) {
+        defaultFile = getFileCustom(userFileChooser);
+        if (defaultFile != null) {
             // make a backup file
             ConfigureManager cm = InstanceManager.getNullableDefault(jmri.ConfigureManager.class);
             if (cm == null) {
                 log.error("Failed to make backup due to unable to get default configure manager");
             } else {
-                cm.makeBackup(file);
+                cm.makeBackup(defaultFile);
                 // and finally store
-                boolean results = cm.storeUser(file);
+                boolean results = cm.storeUser(defaultFile);
                 //log.debug(results ? "store was successful" : "store failed");
                 if (!results) {
                     JOptionPane.showMessageDialog(null,
