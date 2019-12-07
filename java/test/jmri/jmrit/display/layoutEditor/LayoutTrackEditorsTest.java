@@ -9,6 +9,7 @@ import javax.swing.JTextField;
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
+import jmri.ShutDownManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.util.JUnitUtil;
@@ -923,7 +924,7 @@ public class LayoutTrackEditorsTest {
         layoutTrackEditors = null;
 
         JUnitUtil.resetWindows(false, false);
-        InstanceManager.deregister(InstanceManager.getDefault(BlockManager.class), BlockManager.class);
+        InstanceManager.getDefault(ShutDownManager.class).deregister(InstanceManager.getDefault(BlockManager.class).shutDownTask);
         JUnitUtil.tearDown();
     }
 

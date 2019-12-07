@@ -40,7 +40,7 @@ import jmri.managers.AbstractManager;
 public class BlockManager extends AbstractManager<Block> implements ProvidingManager<Block>, InstanceManagerAutoDefault {
 
     private final String powerManagerChangeName;
-    private final ShutDownTask shutDownTask = new AbstractShutDownTask("Writing Blocks") {
+    public final ShutDownTask shutDownTask = new AbstractShutDownTask("Writing Blocks") {
         @Override
         public boolean execute() {
             try {
