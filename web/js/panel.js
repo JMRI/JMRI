@@ -1707,7 +1707,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     $widget['occupancystateBD'] = $gBlks[$widget.blocknamebd].state;
                                 }
                                 //store widget in persistent array
-                                $widget['id'] = $widget.ident;
+//                                $widget['id'] = $widget.ident;
                                 $gWidgets[$widget.id] = $widget;
                                 //also store the xing's 4 end points for other connections
                                 $storeLevelXingPoints($widget);
@@ -1832,7 +1832,6 @@ function $handleClick(e) {
             } else if (this.id.endsWith("r")) {
                 $widget["side"] = "right";
             }
-            //jmri_logging = true;
             if (jmri_logging) jmri.log("\nlayoutSlip-side:" + $widget.side);
 
             // convert current slip state to current turnout states
@@ -3366,7 +3365,7 @@ var $reDrawIcon = function($widget) {
 };
 
 // set new value for widget, showing proper icon, return widgets changed
-var $setWidgetState = function($id, $newState) {
+var $setWidgetState = function($id, $newState, data) {
     var $widget = $gWidgets[$id];
 
     // if undefined widget this must be a slip
@@ -3433,11 +3432,14 @@ var $setWidgetState = function($id, $newState) {
                        " to " + slipStateToString($newState));
                }
             }
+            //jmri_logging = false;
 
             // set $id to slip id
             $id = slipID;
         } else {
-            jmri.log("$setWidgetState unknown $id: '" + $id + "'.");
+            if (jmri_logging) {
+            	jmri.log("$setWidgetState unknown $id: '" + $id + "'.");
+            }
             return;
         }
     } else if ($widget.widgetType == 'layoutSlip') {
@@ -3456,9 +3458,15 @@ var $setWidgetState = function($id, $newState) {
         }
         $widget.state = $newState;
 
+        //override the state with idTag's "name" in a very specific circumstance
+        if (($widget.jsonType=="memory" || $widget.jsonType=="block" || $widget.jsonType=="reporter" ) &&
+        		$widget.widgetFamily=="icon" && data.value.type=="idTag") {
+        	$widget.state = data.value.data.name;
+        }
+        
         switch ($widget.widgetFamily) {
             case "icon" :
-                $reDrawIcon($widget)
+               	$reDrawIcon($widget)
                 break;
             case "text" :
                 if ($widget.jsonType == "memory" || $widget.jsonType == "block" || $widget.jsonType == "reporter" ) {
@@ -3795,12 +3803,12 @@ var $drawAllIconWidgets = function() {
     });
 };
 
-function updateWidgets(name, state, data) {
-    //update all widgets based on the element that changed, using systemname
+function updateWidgets(name, state, data) {   
+	//update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
         if (jmri_logging) jmri.log("updateWidgets(" + name + ", " + state + ", data);");
         $.each(whereUsed[name], function(index, widgetId) {
-            $setWidgetState(widgetId, state);
+            $setWidgetState(widgetId, state, data);
         });
 //    } else {
 //      jmri.log("system name " + name + " not found, can't set state to " + state);
@@ -3809,7 +3817,7 @@ function updateWidgets(name, state, data) {
     if (whereUsed[data.userName]) {
         if (jmri_logging) jmri.log("updateWidgets(" + data.userName + ", " + state + ", data);");
         $.each(whereUsed[data.userName], function(index, widgetId) {
-            $setWidgetState(widgetId, state);
+            $setWidgetState(widgetId, state, data);
         });
 //    } else {
 //      jmri.log("userName " + name + " not found, can't set state to " + state);
@@ -3976,12 +3984,26 @@ $(document).ready(function() {
                 updateWidgets(name, state, data);
             },
             block: function(name, value, data) {
+            	if (value !== null) {
+            		if (value.type == "idTag") {
+            			value = value.data.userName; //for idTags, use the value in userName instead
+            		} else if (value.type == "reporter"){
+            			value = value.data.value;    //for reporters, use the value in data instead            		
+            		}
+            	}
                 updateWidgets(name, value, data);
             },
             layoutBlock: function(name, value, data) {
                 setBlockColor(name, data.blockColor);
             },
             memory: function(name, value, data) {
+            	if (value !== null) {
+            		if (value.type == "idTag") {
+            			value = value.data.userName; //for idTags, use the value in userName instead
+            		} else if (value.type == "reporter"){
+            			value = value.data.value;    //for reporters, use the value in data instead            		
+            		}
+            	}
                 updateWidgets(name, value, data);
             },
             reporter: function(name, value, data) {
@@ -4010,7 +4032,8 @@ $(document).ready(function() {
         // include name of panel in page title. Will be updated to userName later
         setTitle(panelName);
 
-       	getRateFactor();
+        //get updates to fast clock rate
+        getRateFactor();
 
         // request actual xml of panel, and process it on return
         // uses setTimeout simply to not block other JavaScript since

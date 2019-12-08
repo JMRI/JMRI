@@ -89,7 +89,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 try {
                     panel.addContent(positionableElement(sub));
                 } catch (Exception ex) {
-                    log.error("Error storing panel element: " + ex, ex);
+                    log.error("Error storing panel positionable element: {}", ex);
                 }
             }
         }
@@ -133,7 +133,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 elem.setAttribute("occupiedcolor", ColorUtil.colorToColorName(b.getBlockOccupiedColor()));
                 elem.setAttribute("extracolor", ColorUtil.colorToColorName(b.getBlockExtraColor()));
                 if (!b.getMemoryName().isEmpty()) {
-                    elem.setAttribute("memory", b.getMemoryName());
+                    elem.setAttribute("memory", b.getMemory().getSystemName());
                 }
                 if (!b.useDefaultMetric()) {
                     elem.addContent(new Element("metric").addContent(Integer.toString(b.getBlockMetric())));
@@ -147,6 +147,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
 
         // include LayoutTracks
         List<LayoutTrack> layoutTracks = editor.getLayoutTracks();
+        log.debug("Number of LayoutTrack elements: {}", layoutTracks.size());
         for (Object sub : layoutTracks) {
             try {
                 Element e = jmri.configurexml.ConfigXmlManager.elementFromObject(sub);
@@ -158,7 +159,6 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
                 log.error("Error storing panel LayoutTrack element: " + e);
             }
         }
-        log.debug("Number of LayoutTrack elements: {}", layoutTracks.size());
 
         // include LayoutShapes
         List<LayoutShape> layoutShapes = editor.getLayoutShapes();
