@@ -34,7 +34,6 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     private Hold expressionHold;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Memory memory;
     
     
     @Override

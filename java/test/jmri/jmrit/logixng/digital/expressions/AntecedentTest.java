@@ -44,7 +44,6 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     private Antecedent expressionAntecedent;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Memory memory;
     
     
     @Override

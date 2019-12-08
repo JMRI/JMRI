@@ -34,7 +34,6 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
     private True expressionTrue;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Memory memory;
     
     
     @Override
@@ -109,7 +108,7 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
         
-        DigitalExpressionBean expressionTrue = new True("IQDE321", null);
+        expressionTrue = new True("IQDE321", null);
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTrue);
         ifThenElse.getChild(0).connect(maleSocket2);

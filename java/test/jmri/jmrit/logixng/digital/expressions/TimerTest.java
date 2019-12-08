@@ -35,7 +35,6 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     private Timer expressionTimer;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Memory memory;
     
     
     @Override

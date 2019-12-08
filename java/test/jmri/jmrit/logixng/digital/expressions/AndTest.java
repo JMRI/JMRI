@@ -31,10 +31,10 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
 
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
-    private And expressionAnd;
-    private ActionAtomicBoolean actionAtomicBoolean;
-    private AtomicBoolean atomicBoolean;
-    private Memory memory;
+//    private And expressionAnd;
+//    private ActionAtomicBoolean actionAtomicBoolean;
+//    private AtomicBoolean atomicBoolean;
+//    private Memory memory;
     
     
     @Override

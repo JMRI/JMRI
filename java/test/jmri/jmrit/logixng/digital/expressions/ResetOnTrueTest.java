@@ -35,7 +35,6 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
     private ResetOnTrue expressionResetOnTrue;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Memory memory;
     
     
     @Override
