@@ -29,13 +29,11 @@ public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExp
     private boolean _listenersAreRegistered = false;
     private final DigitalExpression _parentDigitalExpression;
 
-//    public AbstractScriptDigitalExpression(String sys, String user)
     public AbstractScriptDigitalExpression(DigitalExpression de)
             throws BadUserNameException, BadSystemNameException {
         // This bean is never stored in a manager and
-        // its system name nor user name is never used.
+        // its system name and user name is never used.
         super("IQDE0", null);
-//        super(sys, user);
         _parentDigitalExpression = de;
     }
     

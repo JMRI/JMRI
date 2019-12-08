@@ -5,12 +5,16 @@ import java.beans.PropertyVetoException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.Memory;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.Turnout;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.LogixNG;
@@ -31,8 +35,51 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class ExpressionSensorTest {
+public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
 
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private ExpressionSensor expressionSensor;
+    private ActionAtomicBoolean actionAtomicBoolean;
+    private AtomicBoolean atomicBoolean;
+    private Memory memory;
+    
+    
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return conditionalNG;
+    }
+    
+    @Override
+    public LogixNG getLogixNG() {
+        return logixNG;
+    }
+    
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Sensor Not selected is Active%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A new logix for test%n" +
+                "   ConditionalNG: A conditionalNG%n" +
+                "      ! %n" +
+                "         If E then A1 else A2%n" +
+                "            ? E%n" +
+                "               Sensor Not selected is Active%n" +
+                "            ! A1%n" +
+                "               Set the atomic boolean to true%n" +
+                "            ! A2%n" +
+                "               Socket not connected%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ExpressionSensor(systemName, null);
+    }
+    
     @Test
     public void testCtor() {
         ExpressionSensor t = new ExpressionSensor("IQDE321", null);
@@ -60,9 +107,9 @@ public class ExpressionSensorTest {
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         sensor.setCommandedState(Sensor.INACTIVE);
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNGbb");
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+                .createConditionalNG("A conditionalNGbb");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         logixNG.activateLogixNG();
@@ -119,17 +166,17 @@ public class ExpressionSensorTest {
         // Test setSensor() when listeners are registered
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IT1");
         Assert.assertNotNull("Sensor is not null", sensor);
-        ExpressionSensor expression =
+        ExpressionSensor expressionSensor =
                 new ExpressionSensor(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
                                 .getAutoSystemName(), null);
-        expression.setSensor(sensor);
+        expressionSensor.setSensor(sensor);
         
-        Assert.assertNotNull("Sensor is not null", expression.getSensor());
-        expression.registerListeners();
+        Assert.assertNotNull("Sensor is not null", expressionSensor.getSensor());
+        expressionSensor.registerListeners();
         boolean thrown = false;
         try {
-            expression.setSensor((String)null);
+            expressionSensor.setSensor((String)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -138,7 +185,7 @@ public class ExpressionSensorTest {
         
         thrown = false;
         try {
-            expression.setSensor((NamedBeanHandle<Sensor>)null);
+            expressionSensor.setSensor((NamedBeanHandle<Sensor>)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -147,7 +194,7 @@ public class ExpressionSensorTest {
         
         thrown = false;
         try {
-            expression.setSensor((Sensor)null);
+            expressionSensor.setSensor((Sensor)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -157,14 +204,14 @@ public class ExpressionSensorTest {
     
     @Test
     public void testVetoableChange() throws PropertyVetoException {
-        // Get the expression and set the sensor
+        // Get the expressionSensor and set the sensor
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         Assert.assertNotNull("Sensor is not null", sensor);
-        ExpressionSensor expression =
+        ExpressionSensor expressionSensor =
                 new ExpressionSensor(
                         InstanceManager.getDefault(DigitalExpressionManager.class)
                                 .getAutoSystemName(), null);
-        expression.setSensor(sensor);
+        expressionSensor.setSensor(sensor);
         
         // Get some other sensor for later use
         Sensor otherSensor = InstanceManager.getDefault(SensorManager.class).provide("IM99");
@@ -172,41 +219,64 @@ public class ExpressionSensorTest {
         Assert.assertNotEquals("Sensor is not equal", sensor, otherSensor);
         
         // Test vetoableChange() for some other propery
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Sensor matches", sensor, expression.getSensor().getBean());
+        expressionSensor.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
+        Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
         
         // Test vetoableChange() for a string
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Sensor matches", sensor, expression.getSensor().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Sensor matches", sensor, expression.getSensor().getBean());
+        expressionSensor.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
+        Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
+        expressionSensor.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
+        Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
         
         // Test vetoableChange() for another sensor
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherSensor, null));
-        Assert.assertEquals("Sensor matches", sensor, expression.getSensor().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherSensor, null));
-        Assert.assertEquals("Sensor matches", sensor, expression.getSensor().getBean());
+        expressionSensor.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherSensor, null));
+        Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
+        expressionSensor.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherSensor, null));
+        Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
         
         // Test vetoableChange() for its own sensor
         boolean thrown = false;
         try {
-            expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", sensor, null));
+            expressionSensor.vetoableChange(new PropertyChangeEvent(this, "CanDelete", sensor, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         
-        Assert.assertEquals("Sensor matches", sensor, expression.getSensor().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", sensor, null));
-        Assert.assertNull("Sensor is null", expression.getSensor());
+        Assert.assertEquals("Sensor matches", sensor, expressionSensor.getSensor().getBean());
+        expressionSensor.vetoableChange(new PropertyChangeEvent(this, "DoDelete", sensor, null));
+        Assert.assertNull("Sensor is null", expressionSensor.getSensor());
     }
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setRunOnGUIDelayed(false);
+        logixNG.addConditionalNG(conditionalNG);
+        IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        MaleSocket maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
+        conditionalNG.getChild(0).connect(maleSocket);
+        
+        expressionSensor = new ExpressionSensor("IQDE321", null);
+        MaleSocket maleSocket2 =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
+        ifThenElse.getChild(0).connect(maleSocket2);
+        
+        _base = expressionSensor;
+        _baseMaleSocket = maleSocket2;
+        
+        atomicBoolean = new AtomicBoolean(false);
+        actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
+        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
+        ifThenElse.getChild(1).connect(socketAtomicBoolean);
     }
 
     @After

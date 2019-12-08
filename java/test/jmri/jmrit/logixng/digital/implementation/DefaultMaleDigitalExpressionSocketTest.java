@@ -74,7 +74,7 @@ public class DefaultMaleDigitalExpressionSocketTest extends MaleSocketTestBase {
     private class MyDigitalExpression extends AbstractDigitalExpression {
         
         MyDigitalExpression(String sysName) {
-            super(sysName);
+            super(sysName, null);
         }
 
         @Override

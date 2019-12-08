@@ -20,7 +20,7 @@ public class DigitalExpressionPluginAdapter extends AbstractDigitalExpression {
     public DigitalExpressionPluginAdapter(String sys, DigitalExpressionBean pluginExpression)
             throws BadSystemNameException {
         
-        super(sys);
+        super(sys, null);
         
         _pluginExpression = pluginExpression;
     }

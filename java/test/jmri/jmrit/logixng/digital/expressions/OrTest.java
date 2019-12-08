@@ -4,6 +4,8 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Locale;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.Turnout;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -19,7 +21,6 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.digital.actions.ActionTurnout;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 
 /**
@@ -27,34 +28,22 @@ import jmri.jmrit.logixng.digital.actions.IfThenElse;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class OrTest extends AbstractBaseTestBase {
+public class OrTest extends AbstractDigitalExpressionTestBase {
 
-    LogixNG logixNG;
-    ConditionalNG conditionalNG;
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
     
-    @Test
-    public void testCtor() {
-        DigitalExpressionBean t = new Or("IQDE321", null);
-        Assert.assertNotNull("exists",t);
-    }
     
-    @Test
-    public void testDescription() {
-        DigitalExpressionBean e1 = new Or("IQDE321", null);
-        Assert.assertTrue("Or".equals(e1.getShortDescription()));
-        Assert.assertTrue("Or".equals(e1.getLongDescription()));
-    }
-
     @Override
     public ConditionalNG getConditionalNG() {
         return conditionalNG;
     }
-
+    
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
     }
-
+    
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
@@ -80,6 +69,24 @@ public class OrTest extends AbstractBaseTestBase {
                 "               Socket not connected%n");
     }
     
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new Or(systemName, null);
+    }
+    
+    @Test
+    public void testCtor() {
+        DigitalExpressionBean t = new Or("IQDE321", null);
+        Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testDescription() {
+        DigitalExpressionBean e1 = new Or("IQDE321", null);
+        Assert.assertTrue("Or".equals(e1.getShortDescription()));
+        Assert.assertTrue("Or".equals(e1.getLongDescription()));
+    }
+
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -91,16 +98,17 @@ public class OrTest extends AbstractBaseTestBase {
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
-        IfThenElse action = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
         
         DigitalExpressionBean expression = new Or("IQDE321", null);
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
-        action.getChild(0).connect(maleSocket2);
+        ifThenElse.getChild(0).connect(maleSocket2);
         
         _base = expression;
         _baseMaleSocket = maleSocket2;

@@ -21,16 +21,6 @@ public abstract class AbstractDigitalExpression extends AbstractBase
     private int _state = DigitalExpressionBean.UNKNOWN;
     
     
-    public AbstractDigitalExpression(String sys) throws BadSystemNameException {
-        super(sys);
-        
-        // Do this test here to ensure all the tests are using correct system names
-        NameValidity isNameValid = InstanceManager.getDefault(DigitalExpressionManager.class).validSystemNameFormat(mSystemName);
-        if (isNameValid != NameValidity.VALID) {
-            throw new IllegalArgumentException("system name is not valid");
-        }
-    }
-
     public AbstractDigitalExpression(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);

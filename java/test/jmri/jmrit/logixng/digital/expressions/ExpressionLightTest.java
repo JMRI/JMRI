@@ -7,10 +7,13 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.Turnout;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.LogixNG;
@@ -31,8 +34,51 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class ExpressionLightTest {
+public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
 
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private ExpressionLight expressionLight;
+    private ActionAtomicBoolean actionAtomicBoolean;
+    private AtomicBoolean atomicBoolean;
+    private Light light;
+    
+    
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return conditionalNG;
+    }
+    
+    @Override
+    public LogixNG getLogixNG() {
+        return logixNG;
+    }
+    
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Light IL1 is On%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A new logix for test%n" +
+                "   ConditionalNG: A conditionalNG%n" +
+                "      ! %n" +
+                "         If E then A1 else A2%n" +
+                "            ? E%n" +
+                "               Light IL1 is On%n" +
+                "            ! A1%n" +
+                "               Set the atomic boolean to true%n" +
+                "            ! A2%n" +
+                "               Socket not connected%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ExpressionLight(systemName, null);
+    }
+    
     @Test
     public void testCtor() {
         ExpressionLight t = new ExpressionLight("IQDE321", null);
@@ -41,10 +87,11 @@ public class ExpressionLightTest {
     
     @Test
     public void testDescription() {
-        ExpressionLight expressionLight = new ExpressionLight("IQDE321", null);
+//        ExpressionLight expressionLight = new ExpressionLight("IQDE321", null);
+        expressionLight.setLight((Light)null);
         Assert.assertTrue("Get light".equals(expressionLight.getShortDescription()));
         Assert.assertTrue("Light Not selected is On".equals(expressionLight.getLongDescription()));
-        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
+//        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         expressionLight.setLight(light);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionLight.setLightState(ExpressionLight.LightState.OFF);
@@ -57,42 +104,6 @@ public class ExpressionLightTest {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
-        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
-        light.setCommandedState(Light.OFF);
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-        LogixNG logixNG =
-                InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
-        conditionalNG.setRunOnGUIDelayed(false);
-        logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
-        
-        IfThenElse actionIfThen =
-                new IfThenElse(InstanceManager.getDefault(
-                        DigitalActionManager.class).getAutoSystemName(), null,
-                        IfThenElse.Type.TRIGGER_ACTION);
-        
-        MaleSocket socketIfThen =
-                InstanceManager.getDefault(DigitalActionManager.class)
-                        .registerAction(actionIfThen);
-        
-        conditionalNG.getChild(0).connect(socketIfThen);
-        
-        ExpressionLight expressionLight =
-                new ExpressionLight(InstanceManager.getDefault(
-                        DigitalExpressionManager.class).getAutoSystemName(), null);
-        
-        expressionLight.setLight(light);
-        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
-        expressionLight.setLightState(ExpressionLight.LightState.ON);
-        MaleSocket socketLight = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionLight);
-        socketIfThen.getChild(0).connect(socketLight);
-        
-        ActionAtomicBoolean actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
-        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
-        socketIfThen.getChild(1).connect(socketAtomicBoolean);
-        
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Throw the switch. This should not execute the conditional.
@@ -115,19 +126,12 @@ public class ExpressionLightTest {
     @Test
     public void testSetLight() {
         // Test setLight() when listeners are registered
-        Light light = InstanceManager.getDefault(LightManager.class).provide("IT1");
         Assert.assertNotNull("Light is not null", light);
-        ExpressionLight expression =
-                new ExpressionLight(
-                        InstanceManager.getDefault(
-                                DigitalExpressionManager.class).getAutoSystemName(), null);
-        expression.setLight(light);
-        
-        Assert.assertNotNull("Light is not null", expression.getLight());
-        expression.registerListeners();
+        Assert.assertNotNull("Light is not null", expressionLight.getLight());
+        expressionLight.registerListeners();
         boolean thrown = false;
         try {
-            expression.setLight((String)null);
+            expressionLight.setLight((String)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -136,7 +140,7 @@ public class ExpressionLightTest {
         
         thrown = false;
         try {
-            expression.setLight((NamedBeanHandle<Light>)null);
+            expressionLight.setLight((NamedBeanHandle<Light>)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -145,7 +149,7 @@ public class ExpressionLightTest {
         
         thrown = false;
         try {
-            expression.setLight((Light)null);
+            expressionLight.setLight((Light)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -156,13 +160,13 @@ public class ExpressionLightTest {
     @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Get the expression and set the light
-        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
+//        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         Assert.assertNotNull("Light is not null", light);
-        ExpressionLight expression =
-                new ExpressionLight(
-                        InstanceManager.getDefault(
-                                DigitalExpressionManager.class).getAutoSystemName(), null);
-        expression.setLight(light);
+//        ExpressionLight expression =
+//                new ExpressionLight(
+//                        InstanceManager.getDefault(
+//                                DigitalExpressionManager.class).getAutoSystemName(), null);
+//        expression.setLight(light);
         
         // Get some other light for later use
         Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IM99");
@@ -170,42 +174,69 @@ public class ExpressionLightTest {
         Assert.assertNotEquals("Light is not equal", light, otherLight);
         
         // Test vetoableChange() for some other propery
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
+        expressionLight.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
+        Assert.assertEquals("Light matches", light, expressionLight.getLight().getBean());
         
         // Test vetoableChange() for a string
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
+        expressionLight.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
+        Assert.assertEquals("Light matches", light, expressionLight.getLight().getBean());
+        expressionLight.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
+        Assert.assertEquals("Light matches", light, expressionLight.getLight().getBean());
         
         // Test vetoableChange() for another light
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherLight, null));
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherLight, null));
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
+        expressionLight.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherLight, null));
+        Assert.assertEquals("Light matches", light, expressionLight.getLight().getBean());
+        expressionLight.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherLight, null));
+        Assert.assertEquals("Light matches", light, expressionLight.getLight().getBean());
         
         // Test vetoableChange() for its own light
         boolean thrown = false;
         try {
-            expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null));
+            expressionLight.vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         
-        Assert.assertEquals("Light matches", light, expression.getLight().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
-        Assert.assertNull("Light is null", expression.getLight());
+        Assert.assertEquals("Light matches", light, expressionLight.getLight().getBean());
+        expressionLight.vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
+        Assert.assertNull("Light is null", expressionLight.getLight());
     }
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setRunOnGUIDelayed(false);
+        logixNG.addConditionalNG(conditionalNG);
+        logixNG.activateLogixNG();
+        IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        MaleSocket socketIfThenElse =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
+        conditionalNG.getChild(0).connect(socketIfThenElse);
+        
+        expressionLight = new ExpressionLight("IQDE321", null);
+        MaleSocket maleSocket2 =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionLight);
+        ifThenElse.getChild(0).connect(maleSocket2);
+        
+        _base = expressionLight;
+        _baseMaleSocket = maleSocket2;
+        
+        atomicBoolean = new AtomicBoolean(false);
+        actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
+        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
+        ifThenElse.getChild(1).connect(socketAtomicBoolean);
+        
+        light = InstanceManager.getDefault(LightManager.class).provide("IL1");
+        expressionLight.setLight(light);
     }
 
     @After

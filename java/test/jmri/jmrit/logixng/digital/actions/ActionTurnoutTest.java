@@ -36,26 +36,6 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     private Turnout turnout;
     
     
-    @Test
-    public void testTurnoutState() {
-        Assert.assertEquals("String matches", "Closed", ActionTurnout.TurnoutState.CLOSED.toString());
-        Assert.assertEquals("String matches", "Thrown", ActionTurnout.TurnoutState.THROWN.toString());
-        Assert.assertEquals("String matches", "Toggle", ActionTurnout.TurnoutState.TOGGLE.toString());
-        
-        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.CLOSED == ActionTurnout.TurnoutState.get(Turnout.CLOSED));
-        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.THROWN == ActionTurnout.TurnoutState.get(Turnout.THROWN));
-        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.TOGGLE == ActionTurnout.TurnoutState.get(-1));
-        
-        boolean hasThrown = false;
-        try {
-            ActionTurnout.TurnoutState.get(Turnout.UNKNOWN);
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", "invalid turnout state".equals(ex.getMessage()));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
-    }
-    
     @Override
     public ConditionalNG getConditionalNG() {
         return conditionalNG;
@@ -138,6 +118,26 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         
         // Test setup(). This method doesn't do anything, but execute it for coverage.
         _base.setup();
+    }
+    
+    @Test
+    public void testTurnoutState() {
+        Assert.assertEquals("String matches", "Closed", ActionTurnout.TurnoutState.CLOSED.toString());
+        Assert.assertEquals("String matches", "Thrown", ActionTurnout.TurnoutState.THROWN.toString());
+        Assert.assertEquals("String matches", "Toggle", ActionTurnout.TurnoutState.TOGGLE.toString());
+        
+        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.CLOSED == ActionTurnout.TurnoutState.get(Turnout.CLOSED));
+        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.THROWN == ActionTurnout.TurnoutState.get(Turnout.THROWN));
+        Assert.assertTrue("objects are equal", ActionTurnout.TurnoutState.TOGGLE == ActionTurnout.TurnoutState.get(-1));
+        
+        boolean hasThrown = false;
+        try {
+            ActionTurnout.TurnoutState.get(Turnout.UNKNOWN);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertTrue("Error message is correct", "invalid turnout state".equals(ex.getMessage()));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
     @Test

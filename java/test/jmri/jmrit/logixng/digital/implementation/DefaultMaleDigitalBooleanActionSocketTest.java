@@ -72,7 +72,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
     private class MyDigitalActionWithChange extends AbstractDigitalBooleanAction {
         
         MyDigitalActionWithChange(String sysName) {
-            super(sysName);
+            super(sysName, null);
         }
 
         @Override

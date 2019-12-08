@@ -7,9 +7,13 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.Memory;
+import jmri.NamedBean;
+import jmri.Turnout;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -29,7 +33,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class ExpressionScriptTest {
+public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
 
     private final String _scriptText = ""
             + "import java\n"
@@ -65,6 +69,49 @@ public class ExpressionScriptTest {
             + "params._scriptClass.set(MyExpression(params._parentExpression))\n";
     
     
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private ExpressionScript expressionScript;
+    private ActionAtomicBoolean actionAtomicBoolean;
+    private AtomicBoolean atomicBoolean;
+    private Memory memory;
+    
+    
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return conditionalNG;
+    }
+    
+    @Override
+    public LogixNG getLogixNG() {
+        return logixNG;
+    }
+    
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Evaluate script%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A new logix for test%n" +
+                "   ConditionalNG: A conditionalNG%n" +
+                "      ! %n" +
+                "         If E then A1 else A2%n" +
+                "            ? E%n" +
+                "               Evaluate script%n" +
+                "            ! A1%n" +
+                "               Set the atomic boolean to true%n" +
+                "            ! A2%n" +
+                "               Socket not connected%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ExpressionScript(systemName, null);
+    }
+    
     @Test
     public void testCtor() {
         ExpressionScript t = new ExpressionScript("IQDE321", null);
@@ -84,9 +131,9 @@ public class ExpressionScriptTest {
         light.setCommandedState(Light.OFF);
         AtomicBoolean atomicBoolean = new AtomicBoolean(false);
         LogixNG logixNG =
-                InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
+                InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNGbb");
         ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
+                .createConditionalNG("A conditionalNGbb");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         logixNG.activateLogixNG();
@@ -137,17 +184,17 @@ public class ExpressionScriptTest {
     public void testSetScript() {
         // Test setScript() when listeners are registered
         Assert.assertNotNull("Script is not null", _scriptText);
-        ExpressionScript expression =
+        ExpressionScript expressionScript =
                 new ExpressionScript(
                         InstanceManager.getDefault(
                                 DigitalExpressionManager.class).getAutoSystemName(), null);
-        expression.setScript(_scriptText);
+        expressionScript.setScript(_scriptText);
         
-        Assert.assertNotNull("Script is not null", expression.getScriptText());
-        expression.registerListeners();
+        Assert.assertNotNull("Script is not null", expressionScript.getScriptText());
+        expressionScript.registerListeners();
         boolean thrown = false;
         try {
-            expression.setScript(null);
+            expressionScript.setScript(null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -157,20 +204,20 @@ public class ExpressionScriptTest {
     
     @Test
     public void testVetoableChange() throws PropertyVetoException {
-        // This test calls expression.evaluate() to see if the script still has
-        // the light registered. Once the light is deleted, expression.evaluate()
+        // This test calls expressionScript.evaluate() to see if the script still has
+        // the light registered. Once the light is deleted, expressionScript.evaluate()
         // will throw a NullPointerException.
         
-        // Get the expression and set the light
+        // Get the expressionScript and set the light
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         Assert.assertNotNull("Light is not null", light);
         light.setCommandedState(Light.ON);
         
-        ExpressionScript expression =
+        ExpressionScript expressionScript =
                 new ExpressionScript(
                         InstanceManager.getDefault(
                                 DigitalExpressionManager.class).getAutoSystemName(), null);
-        expression.setScript(_scriptText);
+        expressionScript.setScript(_scriptText);
         
         // Get some other light for later use
         Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IM99");
@@ -178,35 +225,35 @@ public class ExpressionScriptTest {
         Assert.assertNotEquals("Light is not equal", light, otherLight);
         
         // Test vetoableChange() for some other propery
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertTrue("Evaluate returns true", expression.evaluate());
+        expressionScript.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
+        Assert.assertTrue("Evaluate returns true", expressionScript.evaluate());
         
         // Test vetoableChange() for a string
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertTrue("Evaluate returns true", expression.evaluate());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertTrue("Evaluate returns true", expression.evaluate());
+        expressionScript.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
+        Assert.assertTrue("Evaluate returns true", expressionScript.evaluate());
+        expressionScript.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
+        Assert.assertTrue("Evaluate returns true", expressionScript.evaluate());
         
         // Test vetoableChange() for another light
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherLight, null));
-        Assert.assertTrue("Evaluate returns true", expression.evaluate());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherLight, null));
-        Assert.assertTrue("Evaluate returns true", expression.evaluate());
+        expressionScript.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherLight, null));
+        Assert.assertTrue("Evaluate returns true", expressionScript.evaluate());
+        expressionScript.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherLight, null));
+        Assert.assertTrue("Evaluate returns true", expressionScript.evaluate());
         
         // Test vetoableChange() for its own light
         boolean thrown = false;
         try {
-            expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null));
+            expressionScript.vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
+        expressionScript.vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
         thrown = false;
         try {
             // If DoDelete has done its job, evaluate() will throw a NullPointerException.
-            expression.evaluate();
+            expressionScript.evaluate();
         } catch (NullPointerException ex) {
             thrown = true;
         }
@@ -215,11 +262,34 @@ public class ExpressionScriptTest {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setRunOnGUIDelayed(false);
+        logixNG.addConditionalNG(conditionalNG);
+        IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        MaleSocket maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
+        conditionalNG.getChild(0).connect(maleSocket);
+        
+        expressionScript = new ExpressionScript("IQDE321", null);
+        MaleSocket maleSocket2 =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionScript);
+        ifThenElse.getChild(0).connect(maleSocket2);
+        
+        _base = expressionScript;
+        _baseMaleSocket = maleSocket2;
+        
+        atomicBoolean = new AtomicBoolean(false);
+        actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
+        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
+        ifThenElse.getChild(1).connect(socketAtomicBoolean);
     }
 
     @After

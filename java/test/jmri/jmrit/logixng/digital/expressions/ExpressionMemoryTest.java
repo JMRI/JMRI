@@ -8,9 +8,12 @@ import jmri.JmriException;
 import jmri.NamedBeanHandle;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.NamedBean;
+import jmri.Turnout;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.LogixNG;
@@ -31,8 +34,51 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class ExpressionMemoryTest {
+public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
 
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private ExpressionMemory expressionMemory;
+    private ActionAtomicBoolean actionAtomicBoolean;
+    private AtomicBoolean atomicBoolean;
+    private Memory memory;
+    
+    
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return conditionalNG;
+    }
+    
+    @Override
+    public LogixNG getLogixNG() {
+        return logixNG;
+    }
+    
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Memory IM1 is equal to \"\"%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A new logix for test%n" +
+                "   ConditionalNG: A conditionalNG%n" +
+                "      ! %n" +
+                "         If E then A1 else A2%n" +
+                "            ? E%n" +
+                "               Memory IM1 is equal to \"\"%n" +
+                "            ! A1%n" +
+                "               Set the atomic boolean to true%n" +
+                "            ! A2%n" +
+                "               Socket not connected%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ExpressionMemory(systemName, null);
+    }
+    
     @Test
     public void testCtor() {
         ExpressionMemory t = new ExpressionMemory("IQDE321", null);
@@ -41,10 +87,11 @@ public class ExpressionMemoryTest {
     
     @Test
     public void testDescription() {
-        ExpressionMemory expressionMemory = new ExpressionMemory("IQDE321", null);
+//        ExpressionMemory expressionMemory = new ExpressionMemory("IQDE321", null);
+        expressionMemory.setMemory((Memory)null);
         Assert.assertEquals("Compare memory", expressionMemory.getShortDescription());
         Assert.assertEquals("Memory Not selected is equal to \"\"", expressionMemory.getLongDescription());
-        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+//        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         expressionMemory.setMemory(memory);
         expressionMemory.setConstantValue("A value");
         Assert.assertEquals("Memory IM1 is equal to \"A value\"", expressionMemory.getLongDescription());
@@ -55,38 +102,9 @@ public class ExpressionMemoryTest {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
-        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        memory.setValue("A value");
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
-        conditionalNG.setRunOnGUIDelayed(false);
-        logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
-        
-        IfThenElse actionIfThen =
-                new IfThenElse(
-                        InstanceManager.getDefault(
-                                DigitalActionManager.class).getAutoSystemName(), null,
-                                IfThenElse.Type.TRIGGER_ACTION);
-        MaleSocket socketIfThen = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThen);
-        conditionalNG.getChild(0).connect(socketIfThen);
-        
-        ExpressionMemory expressionMemory =
-                new ExpressionMemory(
-                        InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getAutoSystemName(), null);
-        expressionMemory.setMemory(memory);
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.VALUE);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.EQUAL);
         expressionMemory.setConstantValue("New value");
-        MaleSocket socketMemory = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionMemory);
-        socketIfThen.getChild(0).connect(socketMemory);
-        
-        ActionAtomicBoolean actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
-        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
-        socketIfThen.getChild(1).connect(socketAtomicBoolean);
         
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
@@ -113,19 +131,19 @@ public class ExpressionMemoryTest {
     @Test
     public void testSetMemory() {
         // Test setMemory() when listeners are registered
-        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IT1");
+//        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IT1");
         Assert.assertNotNull("Memory is not null", memory);
-        ExpressionMemory expression =
-                new ExpressionMemory(
-                        InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getAutoSystemName(), null);
-        expression.setMemory(memory);
+//        ExpressionMemory expression =
+//                new ExpressionMemory(
+//                        InstanceManager.getDefault(DigitalExpressionManager.class)
+//                                .getAutoSystemName(), null);
+//        expression.setMemory(memory);
         
-        Assert.assertNotNull("Memory is not null", expression.getMemory());
-        expression.registerListeners();
+        Assert.assertNotNull("Memory is not null", expressionMemory.getMemory());
+        expressionMemory.registerListeners();
         boolean thrown = false;
         try {
-            expression.setMemory((String)null);
+            expressionMemory.setMemory((String)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -134,7 +152,7 @@ public class ExpressionMemoryTest {
         
         thrown = false;
         try {
-            expression.setMemory((NamedBeanHandle<Memory>)null);
+            expressionMemory.setMemory((NamedBeanHandle<Memory>)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -143,7 +161,7 @@ public class ExpressionMemoryTest {
         
         thrown = false;
         try {
-            expression.setMemory((Memory)null);
+            expressionMemory.setMemory((Memory)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -154,13 +172,13 @@ public class ExpressionMemoryTest {
     @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Get the expression and set the memory
-        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IT1");
+//        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IT1");
         Assert.assertNotNull("Memory is not null", memory);
-        ExpressionMemory expression =
-                new ExpressionMemory(
-                        InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getAutoSystemName(), null);
-        expression.setMemory(memory);
+//        ExpressionMemory expressionMemory =
+//                new ExpressionMemory(
+//                        InstanceManager.getDefault(DigitalExpressionManager.class)
+//                                .getAutoSystemName(), null);
+//        expressionMemory.setMemory(memory);
         
         // Get some other memory for later use
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
@@ -168,41 +186,68 @@ public class ExpressionMemoryTest {
         Assert.assertNotEquals("Memory is not equal", memory, otherMemory);
         
         // Test vetoableChange() for some other propery
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
+        expressionMemory.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
+        Assert.assertEquals("Memory matches", memory, expressionMemory.getMemory().getBean());
         
         // Test vetoableChange() for a string
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
+        expressionMemory.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
+        Assert.assertEquals("Memory matches", memory, expressionMemory.getMemory().getBean());
+        expressionMemory.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
+        Assert.assertEquals("Memory matches", memory, expressionMemory.getMemory().getBean());
         
         // Test vetoableChange() for another memory
-        expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherMemory, null));
-        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherMemory, null));
-        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
+        expressionMemory.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherMemory, null));
+        Assert.assertEquals("Memory matches", memory, expressionMemory.getMemory().getBean());
+        expressionMemory.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherMemory, null));
+        Assert.assertEquals("Memory matches", memory, expressionMemory.getMemory().getBean());
         
         // Test vetoableChange() for its own memory
         boolean thrown = false;
         try {
-            expression.vetoableChange(new PropertyChangeEvent(this, "CanDelete", memory, null));
+            expressionMemory.vetoableChange(new PropertyChangeEvent(this, "CanDelete", memory, null));
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         
-        Assert.assertEquals("Memory matches", memory, expression.getMemory().getBean());
-        expression.vetoableChange(new PropertyChangeEvent(this, "DoDelete", memory, null));
-        Assert.assertNull("Memory is null", expression.getMemory());
+        Assert.assertEquals("Memory matches", memory, expressionMemory.getMemory().getBean());
+        expressionMemory.vetoableChange(new PropertyChangeEvent(this, "DoDelete", memory, null));
+        Assert.assertNull("Memory is null", expressionMemory.getMemory());
     }
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initMemoryManager();
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setRunOnGUIDelayed(false);
+        logixNG.addConditionalNG(conditionalNG);
+        logixNG.activateLogixNG();
+        IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        MaleSocket maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
+        conditionalNG.getChild(0).connect(maleSocket);
+        
+        expressionMemory = new ExpressionMemory("IQDE321", null);
+        MaleSocket maleSocket2 =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionMemory);
+        ifThenElse.getChild(0).connect(maleSocket2);
+        
+        _base = expressionMemory;
+        _baseMaleSocket = maleSocket2;
+        
+        atomicBoolean = new AtomicBoolean(false);
+        actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
+        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
+        ifThenElse.getChild(1).connect(socketAtomicBoolean);
+        
+        memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        expressionMemory.setMemory(memory);
     }
 
     @After

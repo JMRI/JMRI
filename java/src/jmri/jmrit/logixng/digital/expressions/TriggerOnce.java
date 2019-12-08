@@ -1,7 +1,9 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
+import jmri.Memory;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -10,6 +12,7 @@ import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,13 +31,16 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     private String _childExpressionSystemName;
     private final FemaleDigitalExpressionSocket _childExpression;
     private boolean _childLastState = false;
+    private ActionAtomicBoolean actionAtomicBoolean;
+    private AtomicBoolean atomicBoolean;
+    private Memory memory;
     
     public TriggerOnce(String sys, String user) {
         
         super(sys, user);
         
         _childExpression = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
+                .createFemaleSocket(this, this, "E");
     }
     
     public TriggerOnce(String sys, String user, MaleDigitalExpressionSocket expression) {
@@ -42,7 +48,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
         super(sys, user);
         
         _childExpression = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
+                .createFemaleSocket(this, this, "E");
         
         try {
             _childExpression.connect(expression);
