@@ -20,7 +20,7 @@ public class ActionAtomicBoolean extends AbstractDigitalAction {
     
     public ActionAtomicBoolean(AtomicBoolean atomicBoolean, boolean newValue)
             throws BadUserNameException {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName());
+        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
         _atomicBoolean = atomicBoolean;
         _newValue = newValue;
     }

@@ -73,7 +73,7 @@ public class DefaultMaleDigitalActionSocketTest extends MaleSocketTestBase{
     private class MyDigitalAction extends AbstractDigitalAction {
         
         MyDigitalAction(String sysName) {
-            super(sysName);
+            super(sysName, null);
         }
 
         @Override

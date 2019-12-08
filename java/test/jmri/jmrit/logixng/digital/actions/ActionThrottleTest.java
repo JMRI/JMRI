@@ -7,6 +7,7 @@ import jmri.JmriException;
 import jmri.LocoAddress;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.ThrottleListener;
@@ -79,6 +80,11 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
                 "               Socket not connected%n" +
                 "            ? E3%n" +
                 "               Socket not connected%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ActionThrottle(systemName, null);
     }
     
     @Test

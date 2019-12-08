@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -25,8 +26,12 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class ActionScriptTest {
+public class ActionScriptTest extends AbstractDigitalActionTestBase {
 
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private ActionScript actionScript;
+    
     private final String _scriptText = ""
             + "import java\n"
             + "import java.beans\n"
@@ -55,6 +60,35 @@ public class ActionScriptTest {
             + "params._scriptClass.set(MyAction(params._parentAction))\n";
     
     
+    @Override
+    public ConditionalNG getConditionalNG() {
+        return conditionalNG;
+    }
+    
+    @Override
+    public LogixNG getLogixNG() {
+        return logixNG;
+    }
+    
+    @Override
+    public String getExpectedPrintedTree() {
+        return String.format("Execute script%n");
+    }
+    
+    @Override
+    public String getExpectedPrintedTreeFromRoot() {
+        return String.format(
+                "LogixNG: A logixNG%n" +
+                "   ConditionalNG: A conditionalNG%n" +
+                "      ! %n" +
+                "         Execute script%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ActionScript(systemName, null);
+    }
+    
     @Test
     public void testCtor() {
         ActionScript t = new ActionScript("IQDA321", null);
@@ -63,7 +97,6 @@ public class ActionScriptTest {
     
     @Test
     public void testDescription() {
-        ActionScript actionScript = new ActionScript("IQDA321", null);
         Assert.assertTrue("Execute script".equals(actionScript.getShortDescription()));
         Assert.assertTrue("Execute script".equals(actionScript.getLongDescription()));
     }
@@ -73,22 +106,6 @@ public class ActionScriptTest {
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);
         
-        LogixNG logixNG =
-                InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNG");  // NOI18N
-        conditionalNG.setRunOnGUIDelayed(false);
-        logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
-        
-        ActionScript actionScript =
-                new ActionScript(InstanceManager.getDefault(
-                        DigitalActionManager.class).getAutoSystemName(), null);
-        
-        actionScript.setScript(_scriptText);
-        MaleSocket socketScript = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionScript);
-        conditionalNG.getChild(0).connect(socketScript);
-        
         // The action is not yet executed so the light should be off
         Assert.assertTrue("light is off", light.getState() == Light.OFF);
         // Enable the conditionalNG and all its children.
@@ -96,7 +113,7 @@ public class ActionScriptTest {
         // Execute the conditionalNG
         conditionalNG.execute();
         // The action should now be executed so the light should be on
-        Assert.assertTrue("light is off", light.getState() == Light.ON);
+        Assert.assertTrue("light is on", light.getState() == Light.ON);
     }
     
     @Test
@@ -181,11 +198,25 @@ public class ActionScriptTest {
     
     // The minimal setup for log4J
     @Before
-    public void setUp() {
+    public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
+        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+                .createConditionalNG("A conditionalNG");  // NOI18N
+        logixNG.addConditionalNG(conditionalNG);
+        conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setEnabled(true);
+        actionScript = new ActionScript(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        actionScript.setScript(_scriptText);
+        MaleSocket socket = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionScript);
+        conditionalNG.getChild(0).connect(socket);
+        
+        _base = actionScript;
+        _baseMaleSocket = socket;
     }
 
     @After

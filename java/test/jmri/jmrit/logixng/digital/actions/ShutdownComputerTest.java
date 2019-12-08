@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.actions;
 
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -46,6 +47,11 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Shutdown computer after 0 seconds%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ShutdownComputer(systemName, null, 0);
     }
     
     @Test

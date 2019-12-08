@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.actions;
 
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -55,6 +56,11 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
                 "               Socket not connected%n" +
                 "            !~ A1%n" +
                 "               Socket not connected%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new DoAnalogAction(systemName, null);
     }
     
     @Test

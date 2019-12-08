@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -51,6 +52,11 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Set the atomic boolean to true%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ActionAtomicBoolean(systemName, null);
     }
     
     @Test

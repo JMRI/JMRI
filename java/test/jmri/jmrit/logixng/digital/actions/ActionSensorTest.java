@@ -4,6 +4,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
@@ -77,6 +78,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Set sensor IS1 to Active%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ActionSensor(systemName, null);
     }
     
     @Test

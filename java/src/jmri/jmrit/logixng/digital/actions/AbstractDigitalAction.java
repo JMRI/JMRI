@@ -23,16 +23,6 @@ public abstract class AbstractDigitalAction extends AbstractBase
     private int _state = DigitalActionBean.UNKNOWN;
     
     
-    public AbstractDigitalAction(String sys) throws BadSystemNameException {
-        super(sys);
-        
-        // Do this test here to ensure all the tests are using correct system names
-        Manager.NameValidity isNameValid = InstanceManager.getDefault(DigitalActionManager.class).validSystemNameFormat(mSystemName);
-        if (isNameValid != Manager.NameValidity.VALID) {
-            throw new IllegalArgumentException("system name is not valid");
-        }
-    }
-
     public AbstractDigitalAction(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);

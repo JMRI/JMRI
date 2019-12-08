@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.actions;
 
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -48,6 +49,11 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Set turnout '' to Thrown%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new DigitalActionPluginSocket(systemName, null, new MyDigitalActionPlugin("IQDA3"));
     }
     
     @Test

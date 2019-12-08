@@ -7,6 +7,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -59,6 +60,11 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
                 "         Execute A after 0 milliseconds%n" +
                 "            ! A%n" +
                 "               Socket not connected%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ActionTimer(systemName, null);
     }
     
     @Test

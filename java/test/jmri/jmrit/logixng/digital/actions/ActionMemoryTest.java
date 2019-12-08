@@ -8,6 +8,7 @@ import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -57,6 +58,11 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
                 "         Set memory IM1 to \"\"%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new ActionMemory(systemName, null);
     }
     
     @Test
