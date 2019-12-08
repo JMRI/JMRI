@@ -10,7 +10,12 @@ import org.junit.runners.Suite;
     AbstractDigitalExpressionTest.class,
     AndTest.class,
     AntecedentTest.class,
+    ExpressionLightTest.class,
+    ExpressionMemoryTest.class,
+    ExpressionReferenceTest.class,
     ExpressionScriptTest.class,
+    ExpressionSensorTest.class,
+    ExpressionTurnoutTest.class,
     FalseTest.class,
     HoldTest.class,
     OrTest.class,
@@ -18,10 +23,6 @@ import org.junit.runners.Suite;
     TimerTest.class,
     TriggerOnceTest.class,
     TrueTest.class,
-    ExpressionLightTest.class,
-    ExpressionReferenceTest.class,
-    ExpressionSensorTest.class,
-    ExpressionTurnoutTest.class,
 })
 
 /**
