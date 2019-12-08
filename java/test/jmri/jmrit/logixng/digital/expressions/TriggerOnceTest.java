@@ -35,7 +35,6 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
     private TriggerOnce expressionTriggerOnce;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Memory memory;
     
     
     @Override
