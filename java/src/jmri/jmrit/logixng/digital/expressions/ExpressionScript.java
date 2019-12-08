@@ -152,7 +152,7 @@ public class ExpressionScript extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        _scriptClass.dispose();
+        if (_scriptClass != null) _scriptClass.dispose();
     }
     
     

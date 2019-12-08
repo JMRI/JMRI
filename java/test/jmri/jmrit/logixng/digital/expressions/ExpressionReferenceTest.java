@@ -46,7 +46,6 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     private ExpressionReference expressionReference;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Memory memory;
     
     
     @Override

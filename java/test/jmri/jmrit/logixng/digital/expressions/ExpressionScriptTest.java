@@ -74,7 +74,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     private ExpressionScript expressionScript;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Memory memory;
+    private Light light;
     
     
     @Override
@@ -120,46 +120,13 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testDescription() {
-        ExpressionScript expressionScript = new ExpressionScript("IQDE321", null);
         Assert.assertTrue("Evaluate script".equals(expressionScript.getShortDescription()));
         Assert.assertTrue("Evaluate script".equals(expressionScript.getLongDescription()));
     }
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
-        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
-        light.setCommandedState(Light.OFF);
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-        LogixNG logixNG =
-                InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNGbb");
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNGbb");  // NOI18N
-        conditionalNG.setRunOnGUIDelayed(false);
-        logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
-        
-        IfThenElse actionIfThen =
-                new IfThenElse(InstanceManager.getDefault(
-                        DigitalActionManager.class).getAutoSystemName(), null,
-                        IfThenElse.Type.TRIGGER_ACTION);
-        
-        MaleSocket socketIfThen =
-                InstanceManager.getDefault(DigitalActionManager.class)
-                        .registerAction(actionIfThen);
-        
-        conditionalNG.getChild(0).connect(socketIfThen);
-        
-        ExpressionScript expressionScript =
-                new ExpressionScript(InstanceManager.getDefault(
-                        DigitalExpressionManager.class).getAutoSystemName(), null);
-        
         expressionScript.setScript(_scriptText);
-        MaleSocket socketScript = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionScript);
-        socketIfThen.getChild(0).connect(socketScript);
-        
-        ActionAtomicBoolean actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
-        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
-        socketIfThen.getChild(1).connect(socketAtomicBoolean);
         
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
@@ -272,6 +239,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
+        logixNG.activateLogixNG();
         logixNG.addConditionalNG(conditionalNG);
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
@@ -290,6 +258,8 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
+        
+        light = InstanceManager.getDefault(LightManager.class).provide("IL1");
     }
 
     @After
