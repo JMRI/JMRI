@@ -10,6 +10,7 @@ import org.junit.runners.Suite;
     AbstractDigitalExpressionTest.class,
     AndTest.class,
     AntecedentTest.class,
+    ExpressionScriptTest.class,
     FalseTest.class,
     HoldTest.class,
     OrTest.class,
