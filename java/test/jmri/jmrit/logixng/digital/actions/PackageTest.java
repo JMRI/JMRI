@@ -9,7 +9,14 @@ import org.junit.runners.Suite;
     jmri.jmrit.logixng.digital.actions.configurexml.PackageTest.class,
     AbstractDigitalActionTest.class,
     ActionAtomicBooleanTest.class,
+    ActionLightTest.class,
     ActionListenOnBeansTest.class,
+    ActionMemoryTest.class,
+    ActionScriptTest.class,
+    ActionSensorTest.class,
+    ActionThrottleTest.class,
+    ActionTimerTest.class,
+    ActionTurnoutTest.class,
     DigitalActionPluginSocketTest.class,
     DoAnalogActionTest.class,
     DoStringActionTest.class,
@@ -17,11 +24,6 @@ import org.junit.runners.Suite;
     ManyTest.class,
     ShutdownComputerTest.class,
     SocketTest.class,
-    ActionLightTest.class,
-    ActionSensorTest.class,
-    ActionTimerTest.class,
-    ActionThrottleTest.class,
-    ActionTurnoutTest.class,
 })
 
 /**
