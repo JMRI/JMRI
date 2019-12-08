@@ -31,9 +31,9 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     private String _childExpressionSystemName;
     private final FemaleDigitalExpressionSocket _childExpression;
     private boolean _childLastState = false;
-    private ActionAtomicBoolean actionAtomicBoolean;
-    private AtomicBoolean atomicBoolean;
-    private Memory memory;
+//    private ActionAtomicBoolean actionAtomicBoolean;
+//    private AtomicBoolean atomicBoolean;
+//    private Memory memory;
     
     public TriggerOnce(String sys, String user) {
         
