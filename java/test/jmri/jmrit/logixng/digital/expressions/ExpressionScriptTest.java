@@ -151,10 +151,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     public void testSetScript() {
         // Test setScript() when listeners are registered
         Assert.assertNotNull("Script is not null", _scriptText);
-        ExpressionScript expressionScript =
-                new ExpressionScript(
-                        InstanceManager.getDefault(
-                                DigitalExpressionManager.class).getAutoSystemName(), null);
         expressionScript.setScript(_scriptText);
         
         Assert.assertNotNull("Script is not null", expressionScript.getScriptText());
@@ -176,14 +172,9 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // will throw a NullPointerException.
         
         // Get the expressionScript and set the light
-        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         Assert.assertNotNull("Light is not null", light);
         light.setCommandedState(Light.ON);
         
-        ExpressionScript expressionScript =
-                new ExpressionScript(
-                        InstanceManager.getDefault(
-                                DigitalExpressionManager.class).getAutoSystemName(), null);
         expressionScript.setScript(_scriptText);
         
         // Get some other light for later use

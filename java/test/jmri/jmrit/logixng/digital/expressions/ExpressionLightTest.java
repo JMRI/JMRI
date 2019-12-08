@@ -9,11 +9,9 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
-import jmri.Turnout;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.LogixNG;
@@ -87,11 +85,9 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testDescription() {
-//        ExpressionLight expressionLight = new ExpressionLight("IQDE321", null);
         expressionLight.setLight((Light)null);
         Assert.assertTrue("Get light".equals(expressionLight.getShortDescription()));
         Assert.assertTrue("Light Not selected is On".equals(expressionLight.getLongDescription()));
-//        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         expressionLight.setLight(light);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionLight.setLightState(ExpressionLight.LightState.OFF);
@@ -160,13 +156,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Get the expression and set the light
-//        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         Assert.assertNotNull("Light is not null", light);
-//        ExpressionLight expression =
-//                new ExpressionLight(
-//                        InstanceManager.getDefault(
-//                                DigitalExpressionManager.class).getAutoSystemName(), null);
-//        expression.setLight(light);
         
         // Get some other light for later use
         Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IM99");

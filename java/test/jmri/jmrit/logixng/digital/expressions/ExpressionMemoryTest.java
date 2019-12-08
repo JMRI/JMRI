@@ -9,13 +9,10 @@ import jmri.NamedBeanHandle;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
-import jmri.Turnout;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
@@ -87,11 +84,9 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testDescription() {
-//        ExpressionMemory expressionMemory = new ExpressionMemory("IQDE321", null);
         expressionMemory.setMemory((Memory)null);
         Assert.assertEquals("Compare memory", expressionMemory.getShortDescription());
         Assert.assertEquals("Memory Not selected is equal to \"\"", expressionMemory.getLongDescription());
-//        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         expressionMemory.setMemory(memory);
         expressionMemory.setConstantValue("A value");
         Assert.assertEquals("Memory IM1 is equal to \"A value\"", expressionMemory.getLongDescription());
@@ -131,14 +126,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testSetMemory() {
         // Test setMemory() when listeners are registered
-//        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IT1");
         Assert.assertNotNull("Memory is not null", memory);
-//        ExpressionMemory expression =
-//                new ExpressionMemory(
-//                        InstanceManager.getDefault(DigitalExpressionManager.class)
-//                                .getAutoSystemName(), null);
-//        expression.setMemory(memory);
-        
         Assert.assertNotNull("Memory is not null", expressionMemory.getMemory());
         expressionMemory.registerListeners();
         boolean thrown = false;
@@ -172,13 +160,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Get the expression and set the memory
-//        Memory memory = InstanceManager.getDefault(MemoryManager.class).provide("IT1");
         Assert.assertNotNull("Memory is not null", memory);
-//        ExpressionMemory expressionMemory =
-//                new ExpressionMemory(
-//                        InstanceManager.getDefault(DigitalExpressionManager.class)
-//                                .getAutoSystemName(), null);
-//        expressionMemory.setMemory(memory);
         
         // Get some other memory for later use
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");

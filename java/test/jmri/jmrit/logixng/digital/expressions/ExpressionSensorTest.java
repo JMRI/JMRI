@@ -42,7 +42,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     private ExpressionSensor expressionSensor;
     private ActionAtomicBoolean actionAtomicBoolean;
     private AtomicBoolean atomicBoolean;
-    private Memory memory;
+    private Sensor sensor;
     
     
     @Override
@@ -57,7 +57,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Sensor Not selected is Active%n");
+        return String.format("Sensor IS1 is Active%n");
     }
     
     @Override
@@ -68,7 +68,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
                 "      ! %n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
-                "               Sensor Not selected is Active%n" +
+                "               Sensor IS1 is Active%n" +
                 "            ! A1%n" +
                 "               Set the atomic boolean to true%n" +
                 "            ! A2%n" +
@@ -88,10 +88,9 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testDescription() {
-        ExpressionSensor expressionSensor = new ExpressionSensor("IQDE321", null);
+        expressionSensor.setSensor((Sensor)null);
         Assert.assertTrue("Get sensor".equals(expressionSensor.getShortDescription()));
         Assert.assertTrue("Sensor Not selected is Active".equals(expressionSensor.getLongDescription()));
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         expressionSensor.setSensor(sensor);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionSensor.setSensorState(ExpressionSensor.SensorState.INACTIVE);
@@ -104,43 +103,9 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
-        sensor.setCommandedState(Sensor.INACTIVE);
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNGbb");
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNGbb");  // NOI18N
-        conditionalNG.setRunOnGUIDelayed(false);
-        logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
-        
-        IfThenElse actionIfThen =
-                new IfThenElse(
-                        InstanceManager.getDefault(
-                                DigitalActionManager.class).getAutoSystemName(), null,
-                                IfThenElse.Type.TRIGGER_ACTION);
-        MaleSocket socketIfThen =
-                InstanceManager.getDefault(DigitalActionManager.class)
-                        .registerAction(actionIfThen);
-        conditionalNG.getChild(0).connect(socketIfThen);
-        
-        ExpressionSensor expressionSensor =
-                new ExpressionSensor(
-                        InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getAutoSystemName(), null);
         expressionSensor.setSensor(sensor);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionSensor.setSensorState(ExpressionSensor.SensorState.ACTIVE);
-        MaleSocket socketSensor =
-                InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .registerExpression(expressionSensor);
-        socketIfThen.getChild(0).connect(socketSensor);
-        
-        ActionAtomicBoolean actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
-        MaleSocket socketAtomicBoolean =
-                InstanceManager.getDefault(DigitalActionManager.class)
-                        .registerAction(actionAtomicBoolean);
-        socketIfThen.getChild(1).connect(socketAtomicBoolean);
         
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
@@ -164,12 +129,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testSetSensor() {
         // Test setSensor() when listeners are registered
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IT1");
         Assert.assertNotNull("Sensor is not null", sensor);
-        ExpressionSensor expressionSensor =
-                new ExpressionSensor(
-                        InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getAutoSystemName(), null);
         expressionSensor.setSensor(sensor);
         
         Assert.assertNotNull("Sensor is not null", expressionSensor.getSensor());
@@ -205,12 +165,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Get the expressionSensor and set the sensor
-        Sensor sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         Assert.assertNotNull("Sensor is not null", sensor);
-        ExpressionSensor expressionSensor =
-                new ExpressionSensor(
-                        InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getAutoSystemName(), null);
         expressionSensor.setSensor(sensor);
         
         // Get some other sensor for later use
@@ -260,6 +215,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
+        logixNG.activateLogixNG();
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
@@ -277,6 +233,9 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
+        
+        sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
+        expressionSensor.setSensor(sensor);
     }
 
     @After

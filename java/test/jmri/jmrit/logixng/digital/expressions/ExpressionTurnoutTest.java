@@ -12,7 +12,6 @@ import jmri.TurnoutManager;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.LogixNG;
@@ -55,7 +54,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Turnout Not selected is Thrown%n");
+        return String.format("Turnout IT1 is Thrown%n");
     }
     
     @Override
@@ -66,7 +65,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
                 "      ! %n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
-                "               Turnout Not selected is Thrown%n" +
+                "               Turnout IT1 is Thrown%n" +
                 "            ! A1%n" +
                 "               Set the atomic boolean to true%n" +
                 "            ! A2%n" +
@@ -86,10 +85,9 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testDescription() {
-        ExpressionTurnout expressionTurnout = new ExpressionTurnout("IQDE321", null);
+        expressionTurnout.setTurnout((Turnout)null);
         Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));
         Assert.assertTrue("Turnout Not selected is Thrown".equals(expressionTurnout.getLongDescription()));
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.CLOSED);
@@ -102,38 +100,9 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
-        turnout.setCommandedState(Turnout.CLOSED);
-        AtomicBoolean atomicBoolean = new AtomicBoolean(false);
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNGbb");
-        ConditionalNG conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
-                .createConditionalNG("A conditionalNGbb");  // NOI18N
-        conditionalNG.setRunOnGUIDelayed(false);
-        logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
-        
-        IfThenElse actionIfThen =
-                new IfThenElse(
-                        InstanceManager.getDefault(
-                                DigitalActionManager.class).getAutoSystemName(), null,
-                                IfThenElse.Type.TRIGGER_ACTION);
-        MaleSocket socketIfThen = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThen);
-        conditionalNG.getChild(0).connect(socketIfThen);
-        
-        ExpressionTurnout expressionTurnout =
-                new ExpressionTurnout(
-                        InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getAutoSystemName(), null);
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
-        MaleSocket socketTurnout = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout);
-        socketIfThen.getChild(0).connect(socketTurnout);
-        
-        ActionAtomicBoolean actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
-        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
-        socketIfThen.getChild(1).connect(socketAtomicBoolean);
-        
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Throw the switch. This should not execute the conditional.
@@ -155,15 +124,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSetTurnout() {
-        // Test setTurnout() when listeners are registered
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         Assert.assertNotNull("Turnout is not null", turnout);
-        ExpressionTurnout expressionTurnout =
-                new ExpressionTurnout(
-                        InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getAutoSystemName(), null);
-        expressionTurnout.setTurnout(turnout);
-        
         Assert.assertNotNull("Turnout is not null", expressionTurnout.getTurnout());
         expressionTurnout.registerListeners();
         boolean thrown = false;
@@ -197,12 +158,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Get the expressionTurnout and set the turnout
-        Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         Assert.assertNotNull("Turnout is not null", turnout);
-        ExpressionTurnout expressionTurnout =
-                new ExpressionTurnout(
-                        InstanceManager.getDefault(DigitalExpressionManager.class)
-                                .getAutoSystemName(), null);
         expressionTurnout.setTurnout(turnout);
         
         // Get some other turnout for later use
@@ -252,6 +208,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
+        logixNG.activateLogixNG();
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
@@ -269,6 +226,9 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
+        
+        turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
+        expressionTurnout.setTurnout(turnout);
     }
 
     @After

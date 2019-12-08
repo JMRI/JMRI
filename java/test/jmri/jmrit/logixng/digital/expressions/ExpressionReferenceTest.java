@@ -91,7 +91,6 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testDescription() {
-        ExpressionReference expressionReference = new ExpressionReference("IQDE321", null);
         Assert.assertEquals("Reference", expressionReference.getShortDescription());
         Assert.assertEquals("Reference \"Not selected\" is Nothing", expressionReference.getLongDescription());
     }
@@ -100,7 +99,6 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
         
         Memory m = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        ExpressionReference expressionReference = new ExpressionReference("IQDE321", null);
         
         expressionReference.setReference("{IM1}");
         
