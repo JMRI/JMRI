@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.digital.implementation;
 
-import jmri.jmrit.logixng.digital.implementation.*;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -21,7 +20,7 @@ public class DefaultFemaleDigitalBooleanActionSocketFactory implements FemaleSoc
 
     @Override
     public MaleSocket getBeanBySystemName(String systemName) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        throw new UnsupportedOperationException("Not supported.");
     }
 
     public String getNewSocketName(Base parent) {

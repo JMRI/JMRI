@@ -316,10 +316,6 @@ public abstract class AbstractBaseTestBase {
         Assert.assertTrue("Enum matches", Base.Lock.HARD_LOCK == _base.getLock());
         Assert.assertTrue("String matches", "Hard lock".equals(_base.getLock().toString()));
         Assert.assertFalse("isChangeableByUser", _base.getLock().isChangeableByUser());
-        _base.setLock(Base.Lock.TEMPLATE_LOCK);
-        Assert.assertTrue("Enum matches", Base.Lock.TEMPLATE_LOCK == _base.getLock());
-        Assert.assertTrue("String matches", "Template lock".equals(_base.getLock().toString()));
-        Assert.assertFalse("isChangeableByUser", _base.getLock().isChangeableByUser());
     }
     
     @Test

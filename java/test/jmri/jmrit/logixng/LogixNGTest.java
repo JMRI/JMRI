@@ -417,7 +417,6 @@ public class LogixNGTest {
         Assert.assertTrue("isChangeableByUser is correct", Base.Lock.NONE.isChangeableByUser());
         Assert.assertTrue("isChangeableByUser is correct", Base.Lock.USER_LOCK.isChangeableByUser());
         Assert.assertFalse("isChangeableByUser is correct", Base.Lock.HARD_LOCK.isChangeableByUser());
-        Assert.assertFalse("isChangeableByUser is correct", Base.Lock.TEMPLATE_LOCK.isChangeableByUser());
     }
     
     @Test

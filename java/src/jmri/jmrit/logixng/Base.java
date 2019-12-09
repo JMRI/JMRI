@@ -31,25 +31,7 @@ public interface Base {
          * user. But it can be removed by editing the xml file. This lock is
          * used for items that normally shouldn't be changed.
          */
-        HARD_LOCK("BaseLockHard"),
-        
-        /**
-         * The item is locked by a hard lock that cannot be unlocked by the
-         * user. The children are also locked in the sense that they cannot be
-         * added or removed.
-         * <p>
-         * But it can be removed by editing the xml file. This lock is
-         * used for items that normally shouldn't be changed.
-         */
-        HARD_WITH_CHILDREN_LOCK("BaseLockHardWithChildren"),
-        
-        /**
-         * The item is based on a template and therefore cannot be changed.
-         * The item should never be changed directly, not even by editing the
-         * xml file, but instead all changes must be done by editing the
-         * template.
-         */
-        TEMPLATE_LOCK("BaseLockTemplate");
+        HARD_LOCK("BaseLockHard");
         
         
         private final String _bundleKey;
@@ -65,8 +47,6 @@ public interface Base {
                     return true;
                     
                 case HARD_LOCK:
-                case HARD_WITH_CHILDREN_LOCK:
-                case TEMPLATE_LOCK:
                     return false;
                     
                 default:

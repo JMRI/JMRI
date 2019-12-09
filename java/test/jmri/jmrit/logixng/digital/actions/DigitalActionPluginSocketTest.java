@@ -100,12 +100,12 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
 
         @Override
         public void init(Map<String, String> config) {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not supported.");
         }
 
         @Override
         public Map<String, String> getConfig() {
-            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+            throw new UnsupportedOperationException("Not supported.");
         }
         
     }

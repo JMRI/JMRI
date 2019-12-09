@@ -29,6 +29,7 @@ public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExp
     private boolean _listenersAreRegistered = false;
     private final DigitalExpression _parentDigitalExpression;
 
+
     public AbstractScriptDigitalExpression(DigitalExpression de)
             throws BadUserNameException, BadSystemNameException {
         // This bean is never stored in a manager and
@@ -36,11 +37,11 @@ public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExp
         super("IQDE0", null);
         _parentDigitalExpression = de;
     }
-    
+
     @Override
     public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -52,7 +53,7 @@ public abstract class AbstractScriptDigitalExpression extends AbstractDigitalExp
     public boolean isExternal() {
         return true;
     }
-    
+
     /** {@inheritDoc} */
     @Override
     public void reset() {

@@ -26,26 +26,16 @@ import jmri.jmrit.logixng.FemaleSocket;
 public abstract class AbstractScriptDigitalAction extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
-    private AbstractScriptDigitalAction _template;
     private boolean _listenersAreRegistered = false;
     private final DigitalAction _parentDigitalExpression;
-
-//    public AbstractScriptDigitalExpression(String sys, String user)
+    
+    
     public AbstractScriptDigitalAction(DigitalAction de)
             throws BadUserNameException, BadSystemNameException {
         // This bean is never stored in a manager and
         // its system name nor user name is never used.
         super("IQDA0", null);
-//        super(sys, user);
         _parentDigitalExpression = de;
-    }
-    
-    private AbstractScriptDigitalAction(AbstractScriptDigitalAction template) {
-        super(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        _template = template;
-        if (_template == null) throw new NullPointerException();    // Temporary solution to make variable used.
-//        _parentDigitalExpression = null;
-        throw new UnsupportedOperationException("Not supported");
     }
     
     @Override
@@ -57,7 +47,7 @@ public abstract class AbstractScriptDigitalAction extends AbstractDigitalAction
     public Category getCategory() {
         return Category.ITEM;
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public boolean isExternal() {
@@ -68,17 +58,17 @@ public abstract class AbstractScriptDigitalAction extends AbstractDigitalAction
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
         throw new UnsupportedOperationException("Not supported.");
     }
-
+    
     @Override
     public int getChildCount() {
         return 0;
     }
-
+    
     @Override
     public String getShortDescription(Locale locale) {
         throw new UnsupportedOperationException("Not supported");
     }
-
+    
     @Override
     public String getLongDescription(Locale locale) {
         throw new UnsupportedOperationException("Not supported");
