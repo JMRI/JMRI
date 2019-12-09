@@ -3,7 +3,6 @@ package jmri.jmrit.logixng.digital.boolean_actions;
 import jmri.jmrit.logixng.digital.boolean_actions.AbstractDigitalBooleanAction;
 import java.util.Locale;
 import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -13,7 +12,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
 
 /**
  * Executes an action when the after some time.
@@ -47,7 +45,7 @@ public class OnChange extends AbstractDigitalBooleanAction
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.OTHER;
+        return Category.COMMON;
     }
 
     /** {@inheritDoc} */

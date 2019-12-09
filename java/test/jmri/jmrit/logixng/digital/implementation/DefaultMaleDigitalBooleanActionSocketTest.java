@@ -112,7 +112,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
 
         @Override
         public Category getCategory() {
-            return Category.COMMON;
+            return Category.OTHER;
         }
 
         @Override

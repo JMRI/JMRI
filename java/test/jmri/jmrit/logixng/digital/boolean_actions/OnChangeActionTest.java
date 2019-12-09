@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.boolean_actions;
 
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -45,6 +46,11 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
+                "On change to true%n" +
+                "   ! A%n" +
+                "      Set turnout '' to Thrown%n");
+/*        
+        return String.format(
                 "Logix%n" +
                 "   ? E%n" +
                 "      Sensor Not selected is Active%n" +
@@ -52,6 +58,7 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
                 "      On change to true%n" +
                 "         ! A%n" +
                 "            Set turnout '' to Thrown%n");
+*/
     }
     
     @Override
@@ -104,6 +111,9 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         
+        _category = Category.COMMON;
+        _isExternal = false;
+        
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
@@ -119,17 +129,17 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
         action.getChild(0).connect(maleSocket2);
         
         OnChange actionOnChange = new OnChange("IQDB322", null, OnChange.ChangeType.CHANGE_TO_TRUE);
-        maleSocket2 =
+        MaleSocket maleSocketActionOnChange =
                 InstanceManager.getDefault(DigitalBooleanActionManager.class).registerAction(actionOnChange);
-        action.getChild(1).connect(maleSocket2);
+        action.getChild(1).connect(maleSocketActionOnChange);
         
         ActionTurnout actionTurnout = new ActionTurnout("IQDA322", null);
         maleSocket2 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
         actionOnChange.getChild(0).connect(maleSocket2);
         
-        _base = action;
-        _baseMaleSocket = maleSocket;
+        _base = actionOnChange;
+        _baseMaleSocket = maleSocketActionOnChange;
     }
 
     @After
