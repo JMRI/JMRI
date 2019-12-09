@@ -9,6 +9,7 @@ import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -202,6 +203,9 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
+        
+        _category = Category.ITEM;
+        _isExternal = true;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)

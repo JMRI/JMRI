@@ -280,6 +280,9 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
         
+        _category = Category.ITEM;
+        _isExternal = true;
+        
         memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         memory.setValue("Old value");
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");

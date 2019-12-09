@@ -7,6 +7,7 @@ import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBean;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -203,6 +204,9 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
+        
+        _category = Category.ITEM;
+        _isExternal = true;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)

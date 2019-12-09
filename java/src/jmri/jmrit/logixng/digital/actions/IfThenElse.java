@@ -76,7 +76,7 @@ public class IfThenElse extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.OTHER;
+        return Category.COMMON;
     }
 
     /** {@inheritDoc} */

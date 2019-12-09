@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.digital.actions;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -68,6 +69,9 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        
+        _category = Category.ITEM;
+        _isExternal = true;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)

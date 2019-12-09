@@ -176,6 +176,9 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         
+        _category = Category.ITEM;
+        _isExternal = true;
+        
         atomicBoolean = new AtomicBoolean(false);
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)

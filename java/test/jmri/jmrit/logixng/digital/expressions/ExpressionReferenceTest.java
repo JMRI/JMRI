@@ -12,13 +12,12 @@ import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
 import jmri.SensorManager;
-import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.implementation.VirtualSignalHead;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.LogixNG;
@@ -259,6 +258,9 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.initIdTagManager();
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();
+        
+        _category = Category.ITEM;
+        _isExternal = true;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)

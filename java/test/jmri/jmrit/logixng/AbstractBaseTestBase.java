@@ -4,6 +4,7 @@ import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.util.Locale;
 import jmri.JmriException;
+import jmri.jmrit.logixng.digital.expressions.AbstractDigitalExpressionTestBase;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,12 +21,27 @@ public abstract class AbstractBaseTestBase {
     public final String TREE_INDENT = "   ";
     protected Base _base;
     protected MaleSocket _baseMaleSocket;
+    protected Category _category;
+    protected boolean _isExternal;
+    
     
     /**
      * Returns the LogixNG for _base.
      * @return the LogixNG for _base or null if _base doesn't have any LogixNG
      */
     public abstract ConditionalNG getConditionalNG();
+    
+    @Test
+    public void testCategory() {
+        Assert.assertNotNull("category is not null", _category);
+        Assert.assertEquals("getCategory() returns correct value", _category, _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertNotNull("isExternal is not null", _isExternal);
+        Assert.assertEquals("isExternal() returns correct value", _isExternal, _base.isExternal());
+    }
     
     @Test
     public void testGetConditionalNG() {

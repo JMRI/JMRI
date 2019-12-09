@@ -9,6 +9,7 @@ import jmri.NamedBeanHandle;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -203,6 +204,9 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initMemoryManager();
+        
+        _category = Category.ITEM;
+        _isExternal = true;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)

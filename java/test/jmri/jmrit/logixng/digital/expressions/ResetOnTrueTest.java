@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.NamedBean;
 import jmri.Turnout;
+import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
@@ -116,6 +117,9 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
+        
+        _category = Category.OTHER;
+        _isExternal = false;
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
