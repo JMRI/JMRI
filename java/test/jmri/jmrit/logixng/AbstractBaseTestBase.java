@@ -4,7 +4,6 @@ import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.util.Locale;
 import jmri.JmriException;
-import jmri.jmrit.logixng.digital.expressions.AbstractDigitalExpressionTestBase;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.junit.Assert;
 import org.junit.Test;
