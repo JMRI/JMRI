@@ -196,7 +196,7 @@ git push github
 
 - Merge all relevant [PRs in the JMRI/website repository](https://github.com/JMRI/website/pulls) to ensure release note draft is up to date
      
-- Create the _next_ release note, so that people will document new (overlapping) changes there. Best way to do this is to copy the current release note now, before you prune out all the headers and other info where changes weren't made. (We need to work through automation of version number values below) (If you're creating a production version, its release note is made from a merge of the features of all the test releases; also create the *.*.1 note for the next test release)
+- Create the _next_ release note. Best way to do this is to copy the current release note now, before you prune out all the headers and other info where changes weren't made. (We need to work through automation of version number values below) (If you're creating a production version, its release note is made from a merge of the features of all the test releases; also create the *.*.1 note for the next test release)
 
 ```    
         cd (local web copy)/releasenotes
@@ -297,7 +297,7 @@ FOR THE LAST TEST RELEASE FROM MASTER BEFORE A PRODUCTION RELEASE:
 ```
 The release-4.17.7 branch has been created. 
 
-Maintainers, please set the 4.17.8 milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
+Maintainers, please set the (next series) milestone on pulls from now on, as that will be the next test release from the HEAD of the master branch.
 
 Jenkins will be creating files shortly at the [CI server](http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.8/)
 
@@ -391,7 +391,7 @@ The following will take several minutes, so be patient:
 
 ```
 git checkout release-4.17.7
-ant clean compile
+ant realclean compile
 cd target
 rm -f properties.4.17.7.zip
 
@@ -441,16 +441,15 @@ Note: Once a GitHub Release is created it is *not* possible to change it to refe
 
 ```   
 
-[Release notes](https://www.jmri.org/releasenotes/jmri4.17.7.shtml)
+[Release notes](https://jmri.org/releasenotes/jmri4.17.7.shtml)
 
 Checksums:
 
 File | SHA256 checksum
 ---|---
-[JMRI.4.17.7+Rc861f38.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.7/JMRI.4.17.7+Rc861f38.dmg) | 7dce65a0bf9df31ed43148105614f159e13f35f6fea44bcc3756a20c5e7093fd
-[JMRI.4.17.7+Rc861f38.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.7/JMRI.4.17.7+Rc861f38.exe) | 01596ffdf16c443b7a600fd7e442b53642ab8604653cc2232a23ec1da4de4abb
-[JMRI.4.17.7+Rc861f38.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.7/JMRI.4.17.7+Rc861f38.tgz) | e293859e9b3096cb70265e75940f9e581c08a6120805b69f404dcfa4018ef508
-
+[JMRI.4.17.7+R7411860.dmg](https://github.com/JMRI/JMRI/releases/download/v4.17.7/JMRI.4.17.7+R7411860.dmg) | ad8c38aa7d3758302b071357f6d5e5ce85dc445407fa54785082755bd71c1a43
+[JMRI.4.17.7+R7411860.exe](https://github.com/JMRI/JMRI/releases/download/v4.17.7/JMRI.4.17.7+R7411860.exe) | 54a7746febee8476e4f0167bf42d54e22bdf36dc4b3dbedf467212e6022d5cfe
+[JMRI.4.17.7+R7411860.tgz](https://github.com/JMRI/JMRI/releases/download/v4.17.7/JMRI.4.17.7+R7411860.tgz) | cc856922e907a81b01953ba6c9bd22d0b80f1883cf06c5c1e75f25112ec9832d
 
 ```
 
@@ -747,8 +746,8 @@ Manual process for making help file indexes:
         git checkout master
         git pull
         (commit a version number increment to master)
-        git checkout -b {branch}
-        git push github {branch}
+        git checkout -b release-4.17.7
+        git push github release-4.17.7
         git checkout master    
         git pull
 ```
