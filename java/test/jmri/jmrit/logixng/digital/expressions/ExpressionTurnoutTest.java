@@ -7,6 +7,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.logixng.Category;
@@ -125,6 +126,25 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSetTurnout() {
+        expressionTurnout.unregisterListeners();
+        
+        Turnout otherTurnout = InstanceManager.getDefault(TurnoutManager.class).provide("IM99");
+        Assert.assertNotEquals("Turnouts are different", otherTurnout, expressionTurnout.getTurnout().getBean());
+        expressionTurnout.setTurnout(otherTurnout);
+        Assert.assertEquals("Turnouts are equal", otherTurnout, expressionTurnout.getTurnout().getBean());
+        
+        NamedBeanHandle<Turnout> otherTurnoutHandle =
+                InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(otherTurnout.getDisplayName(), otherTurnout);
+        expressionTurnout.setTurnout((Turnout)null);
+        Assert.assertNull("Turnout is null", expressionTurnout.getTurnout());
+        expressionTurnout.setTurnout(otherTurnoutHandle);
+        Assert.assertEquals("Turnouts are equal", otherTurnout, expressionTurnout.getTurnout().getBean());
+        Assert.assertEquals("TurnoutHandles are equal", otherTurnoutHandle, expressionTurnout.getTurnout());
+    }
+    
+    @Test
+    public void testSetTurnoutException() {
         Assert.assertNotNull("Turnout is not null", turnout);
         Assert.assertNotNull("Turnout is not null", expressionTurnout.getTurnout());
         expressionTurnout.registerListeners();

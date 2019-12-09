@@ -27,7 +27,8 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Bergqvist Copyright 2018
  */
 public class ExpressionReference extends AbstractDigitalExpression
-        implements PropertyChangeListener, VetoableChangeListener {
+        implements PropertyChangeListener {
+//        implements PropertyChangeListener, VetoableChangeListener {
 
     private String _reference;
     private Is_IsNot_Enum _is_IsNot = Is_IsNot_Enum.IS;
@@ -41,14 +42,14 @@ public class ExpressionReference extends AbstractDigitalExpression
     
     public void setReference(String reference) {
         if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setTurnout must not be called when listeners are registered");
-            log.error("setTurnout must not be called when listeners are registered", e);
+            RuntimeException e = new RuntimeException("setReference must not be called when listeners are registered");
+            log.error("setReference must not be called when listeners are registered", e);
             throw e;
         }
         _reference = reference;
     }
     
-    public String getRefernce() {
+    public String getReference() {
         return _reference;
     }
     

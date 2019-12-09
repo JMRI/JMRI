@@ -5,17 +5,15 @@ import java.beans.PropertyVetoException;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.Memory;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.Turnout;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
-import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.LogixNG;
@@ -129,6 +127,25 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSetSensor() {
+        expressionSensor.unregisterListeners();
+        
+        Sensor otherSensor = InstanceManager.getDefault(SensorManager.class).provide("IM99");
+        Assert.assertNotEquals("Sensors are different", otherSensor, expressionSensor.getSensor().getBean());
+        expressionSensor.setSensor(otherSensor);
+        Assert.assertEquals("Sensors are equal", otherSensor, expressionSensor.getSensor().getBean());
+        
+        NamedBeanHandle<Sensor> otherSensorHandle =
+                InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(otherSensor.getDisplayName(), otherSensor);
+        expressionSensor.setSensor((Sensor)null);
+        Assert.assertNull("Sensor is null", expressionSensor.getSensor());
+        expressionSensor.setSensor(otherSensorHandle);
+        Assert.assertEquals("Sensors are equal", otherSensor, expressionSensor.getSensor().getBean());
+        Assert.assertEquals("SensorHandles are equal", otherSensorHandle, expressionSensor.getSensor());
+    }
+    
+    @Test
+    public void testSetSensorException() {
         // Test setSensor() when listeners are registered
         Assert.assertNotNull("Sensor is not null", sensor);
         expressionSensor.setSensor(sensor);

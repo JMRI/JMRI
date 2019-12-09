@@ -8,6 +8,7 @@ import jmri.LightManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
+import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.SignalMastManager;
@@ -27,6 +28,7 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.NamedTableManager;
 import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -235,6 +237,24 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         InstanceManager.getDefault(TurnoutManager.class).newTurnout("IT2", "Turnout 2");
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         Assert.assertEquals("Reference \"{IM1}\" is not Turnout", expressionReference.getLongDescription());
+    }
+    
+    @Test
+    public void testSetScriptException() {
+        String reference = "{IM1}";
+        // Test setScript() when listeners are registered
+        Assert.assertNotNull("Reference is not null", reference);
+        expressionReference.setReference(reference);
+        Assert.assertNotNull("Reference is not null", expressionReference.getReference());
+        expressionReference.registerListeners();
+        boolean thrown = false;
+        try {
+            expressionReference.setReference((String)null);
+        } catch (RuntimeException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        JUnitAppender.assertErrorMessage("setReference must not be called when listeners are registered");
     }
     
     // The minimal setup for log4J

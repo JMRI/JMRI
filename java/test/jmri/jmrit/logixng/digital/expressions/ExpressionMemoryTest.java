@@ -9,6 +9,7 @@ import jmri.NamedBeanHandle;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
+import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -126,6 +127,25 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSetMemory() {
+        expressionMemory.unregisterListeners();
+        
+        Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
+        Assert.assertNotEquals("Memorys are different", otherMemory, expressionMemory.getMemory().getBean());
+        expressionMemory.setMemory(otherMemory);
+        Assert.assertEquals("Memorys are equal", otherMemory, expressionMemory.getMemory().getBean());
+        
+        NamedBeanHandle<Memory> otherMemoryHandle =
+                InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
+        expressionMemory.setMemory((Memory)null);
+        Assert.assertNull("Memory is null", expressionMemory.getMemory());
+        expressionMemory.setMemory(otherMemoryHandle);
+        Assert.assertEquals("Memorys are equal", otherMemory, expressionMemory.getMemory().getBean());
+        Assert.assertEquals("MemoryHandles are equal", otherMemoryHandle, expressionMemory.getMemory());
+    }
+    
+    @Test
+    public void testSetMemoryException() {
         // Test setMemory() when listeners are registered
         Assert.assertNotNull("Memory is not null", memory);
         Assert.assertNotNull("Memory is not null", expressionMemory.getMemory());

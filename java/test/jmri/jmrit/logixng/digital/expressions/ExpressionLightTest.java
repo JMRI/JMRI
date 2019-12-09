@@ -9,6 +9,7 @@ import jmri.Light;
 import jmri.LightManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
+import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -122,6 +123,25 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSetLight() {
+        expressionLight.unregisterListeners();
+        
+        Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IL99");
+        Assert.assertNotEquals("Lights are different", otherLight, expressionLight.getLight().getBean());
+        expressionLight.setLight(otherLight);
+        Assert.assertEquals("Lights are equal", otherLight, expressionLight.getLight().getBean());
+        
+        NamedBeanHandle<Light> otherLightHandle =
+                InstanceManager.getDefault(NamedBeanHandleManager.class)
+                        .getNamedBeanHandle(otherLight.getDisplayName(), otherLight);
+        expressionLight.setLight((Light)null);
+        Assert.assertNull("Light is null", expressionLight.getLight());
+        expressionLight.setLight(otherLightHandle);
+        Assert.assertEquals("Lights are equal", otherLight, expressionLight.getLight().getBean());
+        Assert.assertEquals("LightHandles are equal", otherLightHandle, expressionLight.getLight());
+    }
+    
+    @Test
+    public void testSetLightException() {
         // Test setLight() when listeners are registered
         Assert.assertNotNull("Light is not null", light);
         Assert.assertNotNull("Light is not null", expressionLight.getLight());
