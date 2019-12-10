@@ -86,6 +86,26 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testTurnoutState() {
+        Assert.assertEquals("String matches", "Closed", ExpressionTurnout.TurnoutState.CLOSED.toString());
+        Assert.assertEquals("String matches", "Thrown", ExpressionTurnout.TurnoutState.THROWN.toString());
+        Assert.assertEquals("String matches", "Other", ExpressionTurnout.TurnoutState.OTHER.toString());
+        
+        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.CLOSED == ExpressionTurnout.TurnoutState.get(Turnout.CLOSED));
+        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.THROWN == ExpressionTurnout.TurnoutState.get(Turnout.THROWN));
+        Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.OTHER == ExpressionTurnout.TurnoutState.get(-1));
+        
+        boolean hasThrown = false;
+        try {
+            ExpressionTurnout.TurnoutState.get(Turnout.UNKNOWN);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertTrue("Error message is correct", "invalid turnout state".equals(ex.getMessage()));
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testDescription() {
         expressionTurnout.setTurnout((Turnout)null);
         Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));

@@ -201,11 +201,14 @@ public class ExpressionLight extends AbstractDigitalExpression
     }
     
     
+    // Used only by the LightState class
+    private static final int LIGHT_STATE_OTHER_ID = -1;
+    
     
     public enum LightState {
         OFF(Light.OFF, Bundle.getMessage("StateOff")),
         ON(Light.ON, Bundle.getMessage("StateOn")),
-        OTHER(-1, Bundle.getMessage("LightOtherStatus"));
+        OTHER(LIGHT_STATE_OTHER_ID, Bundle.getMessage("LightOtherStatus"));
         
         private final int _id;
         private final String _text;
@@ -223,8 +226,11 @@ public class ExpressionLight extends AbstractDigitalExpression
                 case Light.ON:
                     return ON;
                     
-                default:
+                case LIGHT_STATE_OTHER_ID:
                     return OTHER;
+                    
+                default:
+                    throw new IllegalArgumentException("invalid light state");
             }
         }
         

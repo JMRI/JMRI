@@ -203,11 +203,14 @@ public class ExpressionSensor extends AbstractDigitalExpression
     }
     
     
+    // Used only by the SensorState class
+    private static final int SENSOR_STATE_OTHER_ID = -1;
+    
     
     public enum SensorState {
         INACTIVE(Sensor.INACTIVE, Bundle.getMessage("SensorStateInactive")),
         ACTIVE(Sensor.ACTIVE, Bundle.getMessage("SensorStateActive")),
-        OTHER(-1, Bundle.getMessage("SensorOtherStatus"));
+        OTHER(SENSOR_STATE_OTHER_ID, Bundle.getMessage("SensorOtherStatus"));
         
         private final int _id;
         private final String _text;
@@ -225,8 +228,11 @@ public class ExpressionSensor extends AbstractDigitalExpression
                 case Sensor.ACTIVE:
                     return ACTIVE;
                     
-                default:
+                case SENSOR_STATE_OTHER_ID:
                     return OTHER;
+                    
+                default:
+                    throw new IllegalArgumentException("invalid sensor state");
             }
         }
         
