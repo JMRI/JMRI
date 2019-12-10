@@ -10,6 +10,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.CheckForNull;
 import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.MenuElement;
@@ -18,6 +19,7 @@ import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
 import jmri.util.junit.rules.RetryRule;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.QueueTool;
@@ -56,13 +58,13 @@ public class LayoutEditorChecksTest {
     private static TrackSegment ts1 = null;
     private static TrackSegment ts2 = null;
 
-    ///@Test
+    @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", layoutEditorChecks);
     }
 
-    ///@Test
+    @Test
     public void testSetup() {
         Assert.assertNotNull("layoutEditor not null", layoutEditor);
         Assert.assertNotNull("layoutBlock not null", layoutBlock);
@@ -73,7 +75,7 @@ public class LayoutEditorChecksTest {
         Assert.assertNotNull("ts2 not null", ts2);
     }
 
-    ///@Test
+    @Test
     public void testBundleStrings() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -86,11 +88,12 @@ public class LayoutEditorChecksTest {
         Assert.assertNotNull("checkUnnecessaryAnchorsMenuTitle not null", checkUnnecessaryAnchorsMenuTitle);
     }
 
-    ///@Test
-    public void checkToolsMenuExists() {
+    @Test
+    public void checkToolsCheckMenuExists() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
         toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle, "/");
 ///        Assert.assertEquals("Menu Item Count", 17, checkJMO.getItemCount());
     }
@@ -98,7 +101,10 @@ public class LayoutEditorChecksTest {
     ///@Test
     public void testFoo() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+        Assert.assertNotNull("checkUnConnectedTracksMenuTitle not null", checkUnConnectedTracksMenuTitle);
         String paths[] = {toolsMenuTitle, checkMenuTitle, checkUnConnectedTracksMenuTitle, "TO1"};
         toolsJMO.showMenuItem(paths);
         dumpScreen();
@@ -107,10 +113,12 @@ public class LayoutEditorChecksTest {
     @Test
     public void testCheckUnConnectedTracks() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+        Assert.assertNotNull("checkUnConnectedTracksMenuTitle not null", checkUnConnectedTracksMenuTitle);
         toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + checkUnConnectedTracksMenuTitle, "/");
-
         new QueueTool().waitEmpty();
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
@@ -125,11 +133,23 @@ public class LayoutEditorChecksTest {
         Assert.assertEquals("checkSubMenuItem.getText(): ",
                 checkUnConnectedTracksMenuTitle,
                 checkSubMenuItem.getText());
-        //TODO:validate results
+//        //TODO:validate results
+
 //        JMenuOperator checkSubMenuMO = new JMenuOperator((JMenu) checkSubMenuItem);
-//        JPopupMenu checkSubMenuPopupMenu = checkSubMenuMO.getPopupMenu();
-//        JMenuItem resultsSubMenuItem = (JMenuItem) checkSubMenuPopupMenu.getComponent(0);
-//        dumpMenuElement(checkSubMenuItem);
+
+//        Assert.assertEquals("checkSubMenuMO.getText(): ",
+//                "FooBar",
+//                checkSubMenuMO.getText());
+//        JMenuItem xxxJMenuItem = toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle + "/"
+//                + checkUnConnectedTracksMenuTitle, "/");
+//        Assert.assertEquals("xxxJMenuItem.getText(): ",
+//                "FooBar",
+//                xxxJMenuItem.getText());
+//        new QueueTool().waitEmpty();
+        //dumpMenuBar(layoutEditor.getJMenuBar());
+        //dumpMenuElements(checkMenuItem);
+//        new QueueTool().waitEmpty();
+        //dumpMenuElements(toolsPopupMenu);
 //        MenuElement resultsMenuElements[] = checkSubMenuItem.getSubElements();
 //        int i = 0;
 //        for (MenuElement resultsMenuElement : resultsMenuElements) {
@@ -140,12 +160,16 @@ public class LayoutEditorChecksTest {
 //                "Mud", resultsMenuElements[0].getText());
     }   //testCheckUnConnectedTracks
 
-    ///@Test
+    @Test
     public void testCheckUnBlockedTracks() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+        Assert.assertNotNull("checkUnBlockedTracksMenuTitle not null", checkUnBlockedTracksMenuTitle);
         toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + checkUnBlockedTracksMenuTitle, "/");
+        new QueueTool().waitEmpty();
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -162,13 +186,16 @@ public class LayoutEditorChecksTest {
         //TODO:validate results
     }   //testCheckUnBlockedTracks
 
-    ///@Test
+    @Test
     public void testCheckNonContiguousBlocks() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+        Assert.assertNotNull("checkNonContiguousBlocksMenuTitle not null", checkNonContiguousBlocksMenuTitle);
         toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + checkNonContiguousBlocksMenuTitle, "/");
+        new QueueTool().waitEmpty();
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -185,13 +212,16 @@ public class LayoutEditorChecksTest {
         //TODO:validate results
     }   //testCheckNonContiguousBlocks
 
-    ///@Test
+    @Test
     public void testCheckUnnecessaryAnchors() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
+        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+        Assert.assertNotNull("checkUnnecessaryAnchorsMenuTitle not null", checkUnnecessaryAnchorsMenuTitle);
         toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
                 + checkUnnecessaryAnchorsMenuTitle, "/");
+        new QueueTool().waitEmpty();
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -208,8 +238,8 @@ public class LayoutEditorChecksTest {
         //TODO:validate results
     }   //testCheckUnnecessaryAnchors
 
-    @Before
-    public void setUp() {
+    @BeforeClass
+    public static void setUpClass() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
@@ -259,7 +289,7 @@ public class LayoutEditorChecksTest {
         }
     }
 
-    private TrackSegment addNewTrackSegment(
+    private static TrackSegment addNewTrackSegment(
             @CheckForNull LayoutTrack c1, int t1,
             @CheckForNull LayoutTrack c2, int t2) {
         TrackSegment result = null;
@@ -276,9 +306,10 @@ public class LayoutEditorChecksTest {
         return result;
     }
 
-    @After
-    public void tearDown() {
+    @AfterClass
+    public static void tearDownClass() {
         if (!GraphicsEnvironment.isHeadless()) {
+            new QueueTool().waitEmpty();
             JUnitUtil.dispose(layoutEditor);
             layoutEditor = null;
             layoutEditorChecks = null;
@@ -300,11 +331,7 @@ public class LayoutEditorChecksTest {
 //    public void tearDown() {
 //        JUnitUtil.tearDown();
 //    }
-
-    
     //TODO: remove or comment out for production
-    private int indent_level = 0;
-
     private String getSpaces(int cnt) {
         String result = "";
         for (int i = 0; i < indent_level; i++) {
@@ -313,13 +340,40 @@ public class LayoutEditorChecksTest {
         return result;
     }
 
+    private static int indent_level = 1;
+
     private void dumpMenuElement(MenuElement jMenuElement) {
-        System.out.println(getSpaces(indent_level) + "jMenuElement.getText(): " + ((JMenu) jMenuElement).getText());
+        //System.out.println(getSpaces(indent_level) + ((JMenuItem) jMenuElement).getText());
+        //System.out.format("%1$" + indent_level + "s\n", "| " + ((JMenuItem) jMenuElement).getText());
+        System.out.println(StringUtils.leftPad(((JMenuItem) jMenuElement).getText(), indent_level, " "));
         indent_level += 4;
-        for (MenuElement resultsMenuElement : jMenuElement.getSubElements()) {
-            dumpMenuElement(resultsMenuElement);
+        for (MenuElement subMenuElement : jMenuElement.getSubElements()) {
+            dumpMenuElement(subMenuElement);
         }
         indent_level -= 4;
+    }
+
+    private static void dumpMenuBar(JMenuBar menuBar) {
+        for (MenuElement element : menuBar.getSubElements()) {
+            dumpMenuElements(element);
+        }
+    }
+
+    private static void dumpMenuElements(MenuElement subElement) {
+        dumpMenuElements(subElement, 0);
+    }
+
+    private static void dumpMenuElements(MenuElement subElement, int index) {
+        if (subElement instanceof JMenuItem) {
+            String infoString = ((JMenuItem) subElement).getText() + " (" + index + "," + indent_level + ")";
+            System.out.println(StringUtils.leftPad("", indent_level * 2) + infoString);
+        }
+        int idx = 0;
+        for (MenuElement element : subElement.getSubElements()) {
+            indent_level++;
+            dumpMenuElements(element, idx++);
+            indent_level--;
+        }
     }
 
     private void dumpScreen() {
