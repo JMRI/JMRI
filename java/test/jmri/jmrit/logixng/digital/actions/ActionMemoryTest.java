@@ -91,7 +91,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         action2.setMemory(memory);
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM12");
         action2.setCopyToMemory(otherMemory);
-        Assert.assertTrue("atomic boolean is correct", memory == action2.getMemory().getBean());
+        Assert.assertTrue("memory is correct", memory == action2.getMemory().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Copy memory IM1 to memory IM12", action2.getLongDescription());

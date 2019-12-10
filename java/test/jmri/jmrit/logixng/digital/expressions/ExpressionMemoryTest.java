@@ -80,8 +80,51 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testCtor() {
-        ExpressionMemory t = new ExpressionMemory("IQDE321", null);
-        Assert.assertNotNull("exists",t);
+        ExpressionMemory expression2;
+        Assert.assertNotNull("memory is not null", memory);
+        
+        expression2 = new ExpressionMemory("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Memory '' is equal to \"\"", expression2.getLongDescription());
+        
+        expression2 = new ExpressionMemory("IQDE321", "My memory");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My memory", expression2.getUserName());
+        Assert.assertEquals("String matches", "Memory '' is equal to \"\"", expression2.getLongDescription());
+        
+        expression2 = new ExpressionMemory("IQDE321", null);
+        expression2.setMemory(memory);
+        Assert.assertTrue("memory is correct", memory == expression2.getMemory().getBean());
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Memory IM1 is equal to \"\"", expression2.getLongDescription());
+        
+        Memory l = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
+        expression2 = new ExpressionMemory("IQDE321", "My memory");
+        expression2.setMemory(l);
+        Assert.assertTrue("memory is correct", l == expression2.getMemory().getBean());
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My memory", expression2.getUserName());
+        Assert.assertEquals("String matches", "Memory IM2 is equal to \"\"", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new ExpressionMemory("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new ExpressionMemory("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
@@ -113,7 +156,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     public void testDescription() {
         expressionMemory.setMemory((Memory)null);
         Assert.assertEquals("Compare memory", expressionMemory.getShortDescription());
-        Assert.assertEquals("Memory Not selected is equal to \"\"", expressionMemory.getLongDescription());
+        Assert.assertEquals("Memory '' is equal to \"\"", expressionMemory.getLongDescription());
         expressionMemory.setMemory(memory);
         expressionMemory.setConstantValue("A value");
         Assert.assertEquals("Memory IM1 is equal to \"A value\"", expressionMemory.getLongDescription());

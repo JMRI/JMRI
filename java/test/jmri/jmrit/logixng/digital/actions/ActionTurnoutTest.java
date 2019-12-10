@@ -85,7 +85,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         
         action2 = new ActionTurnout("IQDA321", null);
         action2.setTurnout(turnout);
-        Assert.assertTrue("atomic boolean is correct", turnout == action2.getTurnout().getBean());
+        Assert.assertTrue("turnout is correct", turnout == action2.getTurnout().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Set turnout IT1 to Thrown", action2.getLongDescription());
@@ -93,7 +93,7 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         Turnout l = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         action2 = new ActionTurnout("IQDA321", "My turnout");
         action2.setTurnout(l);
-        Assert.assertTrue("atomic boolean is correct", l == action2.getTurnout().getBean());
+        Assert.assertTrue("turnout is correct", l == action2.getTurnout().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My turnout", action2.getUserName());
         Assert.assertEquals("String matches", "Set turnout IT1 to Thrown", action2.getLongDescription());

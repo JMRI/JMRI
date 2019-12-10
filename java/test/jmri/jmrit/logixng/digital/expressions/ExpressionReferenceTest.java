@@ -61,7 +61,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Reference \"Not selected\" is Nothing%n");
+        return String.format("Reference '' is Nothing%n");
     }
     
     @Override
@@ -72,7 +72,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
                 "      ! %n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
-                "               Reference \"Not selected\" is Nothing%n" +
+                "               Reference '' is Nothing%n" +
                 "            ! A1%n" +
                 "               Set the atomic boolean to true%n" +
                 "            ! A2%n" +
@@ -86,14 +86,41 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testCtor() {
-        ExpressionReference t = new ExpressionReference("IQDE321", null);
-        Assert.assertNotNull("exists",t);
+        ExpressionReference expression2;
+        
+        expression2 = new ExpressionReference("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Reference '' is Nothing", expression2.getLongDescription());
+        
+        expression2 = new ExpressionReference("IQDE321", "My expression");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        Assert.assertEquals("String matches", "Reference '' is Nothing", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new ExpressionReference("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new ExpressionReference("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
     public void testDescription() {
         Assert.assertEquals("Reference", expressionReference.getShortDescription());
-        Assert.assertEquals("Reference \"Not selected\" is Nothing", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference '' is Nothing", expressionReference.getLongDescription());
     }
     
     @Test
@@ -111,42 +138,42 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         m.setValue("");
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is Nothing", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is Nothing", expressionReference.getLongDescription());
         
         m.setValue("Table 1");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.TABLE);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         InstanceManager.getDefault(NamedTableManager.class).newTable("IQT1", "Table 1", 2, 3);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is Table", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is Table", expressionReference.getLongDescription());
         
         m.setValue("Audio 1");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.AUDIO);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         InstanceManager.getDefault(AudioManager.class).newAudio("IAB1", "Audio 1");
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is Audio", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is Audio", expressionReference.getLongDescription());
         
         m.setValue("Light 1");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.LIGHT);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         InstanceManager.getDefault(LightManager.class).newLight("IL1", "Light 1");
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is Light", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is Light", expressionReference.getLongDescription());
         
         m.setValue("Memory 1");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.MEMORY);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         InstanceManager.getDefault(MemoryManager.class).newMemory("IM5", "Memory 1");
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is Memory", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is Memory", expressionReference.getLongDescription());
         
         m.setValue("Sensor 1");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.SENSOR);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         InstanceManager.getDefault(SensorManager.class).newSensor("IS1", "Sensor 1");
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is Sensor", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is Sensor", expressionReference.getLongDescription());
         
         m.setValue("Signal Head 1");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.SIGNAL_HEAD);
@@ -154,21 +181,21 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         SignalHead signalHeadIH1 = new VirtualSignalHead("IH1", "Signal Head 1");
         InstanceManager.getDefault(SignalHeadManager.class).register(signalHeadIH1);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is SignalHead", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is SignalHead", expressionReference.getLongDescription());
         
         m.setValue("IF$shsm:AAR-1946:CPL(IH1)");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.SIGNAL_MAST);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH1)");
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is SignalMast", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is SignalMast", expressionReference.getLongDescription());
         
         m.setValue("Turnout 1");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.TURNOUT);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
         InstanceManager.getDefault(TurnoutManager.class).newTurnout("IT1", "Turnout 1");
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is Turnout", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is Turnout", expressionReference.getLongDescription());
         
         
         // Test IS_NOT
@@ -179,42 +206,42 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
         m.setValue("");
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is not Nothing", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is not Nothing", expressionReference.getLongDescription());
         
         m.setValue("Table 2");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.TABLE);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
         InstanceManager.getDefault(NamedTableManager.class).newTable("IQT2", "Table 2", 2, 3);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is not Table", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is not Table", expressionReference.getLongDescription());
         
         m.setValue("Audio 2");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.AUDIO);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
         InstanceManager.getDefault(AudioManager.class).newAudio("IAB2", "Audio 2");
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is not Audio", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is not Audio", expressionReference.getLongDescription());
         
         m.setValue("Light 2");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.LIGHT);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
         InstanceManager.getDefault(LightManager.class).newLight("IL2", "Light 2");
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is not Light", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is not Light", expressionReference.getLongDescription());
         
         m.setValue("Memory 2");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.MEMORY);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
         InstanceManager.getDefault(MemoryManager.class).newMemory("IM6", "Memory 2");
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is not Memory", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is not Memory", expressionReference.getLongDescription());
         
         m.setValue("Sensor 2");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.SENSOR);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
         InstanceManager.getDefault(SensorManager.class).newSensor("IS2", "Sensor 2");
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is not Sensor", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is not Sensor", expressionReference.getLongDescription());
         
         m.setValue("Signal Head 2");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.SIGNAL_HEAD);
@@ -222,21 +249,21 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         SignalHead signalHeadIH2 = new VirtualSignalHead("IH2", "Signal Head 2");
         InstanceManager.getDefault(SignalHeadManager.class).register(signalHeadIH2);
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is not SignalHead", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is not SignalHead", expressionReference.getLongDescription());
         
         m.setValue("IF$shsm:AAR-1946:CPL(IH2)");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.SIGNAL_MAST);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
         InstanceManager.getDefault(SignalMastManager.class).provideSignalMast("IF$shsm:AAR-1946:CPL(IH2)");
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is not SignalMast", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is not SignalMast", expressionReference.getLongDescription());
         
         m.setValue("Turnout 2");
         expressionReference.setPointsTo(ExpressionReference.PointsTo.TURNOUT);
         Assert.assertTrue("evaluate returns true",expressionReference.evaluate());
         InstanceManager.getDefault(TurnoutManager.class).newTurnout("IT2", "Turnout 2");
         Assert.assertFalse("evaluate returns false",expressionReference.evaluate());
-        Assert.assertEquals("Reference \"{IM1}\" is not Turnout", expressionReference.getLongDescription());
+        Assert.assertEquals("Reference {IM1} is not Turnout", expressionReference.getLongDescription());
     }
     
     @Test

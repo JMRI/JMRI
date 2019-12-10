@@ -89,13 +89,50 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     
     @Test
     public void testCtor() {
-        Antecedent t = new Antecedent("IQDE321", null, "R1");
-        Assert.assertNotNull("exists",t);
+        Antecedent expression2;
+        
+        expression2 = new Antecedent("IQDE321", null, "R1");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Antecedent: R1", expression2.getLongDescription());
+        
+        expression2 = new Antecedent("IQDE321", "My expression", "R1");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        Assert.assertEquals("String matches", "Antecedent: R1", expression2.getLongDescription());
+        
+        expression2 = new Antecedent("IQDE321", null, "R1 and R2");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Antecedent: R1 and R2", expression2.getLongDescription());
+        
+        expression2 = new Antecedent("IQDE321", "My expression", "R1 or R2");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        Assert.assertEquals("String matches", "Antecedent: R1 or R2", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new Antecedent("IQE55:12:XY11", null, "R1");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new Antecedent("IQE55:12:XY11", "A name", "R1");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
     public void testDescription() {
-        DigitalExpressionBean e1 = new Antecedent("IQDE321", null, "");
+        Antecedent e1 = new Antecedent("IQDE321", null, "");
         Assert.assertEquals("strings matches", "Antecedent", e1.getShortDescription());
         Assert.assertEquals("strings matches", "Antecedent: empty", e1.getLongDescription());
     }

@@ -77,13 +77,40 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testCtor() {
-        DigitalExpressionBean t = new Or("IQDE321", null);
-        Assert.assertNotNull("exists",t);
+        Or expression2;
+        
+        expression2 = new Or("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Or", expression2.getLongDescription());
+        
+        expression2 = new Or("IQDE321", "My expression");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        Assert.assertEquals("String matches", "Or", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new Or("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new Or("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
     public void testDescription() {
-        DigitalExpressionBean e1 = new Or("IQDE321", null);
+        Or e1 = new Or("IQDE321", null);
         Assert.assertTrue("Or".equals(e1.getShortDescription()));
         Assert.assertTrue("Or".equals(e1.getLongDescription()));
     }

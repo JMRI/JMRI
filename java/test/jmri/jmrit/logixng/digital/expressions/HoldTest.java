@@ -81,13 +81,40 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testCtor() {
-        DigitalExpressionBean t = new Hold("IQDE321", null);
-        Assert.assertNotNull("exists",t);
+        Hold expression2;
+        
+        expression2 = new Hold("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Hold while E1. Trigger on E2", expression2.getLongDescription());
+        
+        expression2 = new Hold("IQDE321", "My expression");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        Assert.assertEquals("String matches", "Hold while E1. Trigger on E2", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new Hold("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new Hold("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
     public void testDescription() {
-        DigitalExpressionBean e1 = new Hold("IQDE321", null);
+        Hold e1 = new Hold("IQDE321", null);
         Assert.assertTrue("Hold".equals(e1.getShortDescription()));
         Assert.assertTrue("Hold while E1. Trigger on E2".equals(e1.getLongDescription()));
     }

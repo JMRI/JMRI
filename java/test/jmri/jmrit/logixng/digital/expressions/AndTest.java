@@ -80,13 +80,40 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testCtor() {
-        DigitalExpressionBean t = new And("IQDE321", null);
-        Assert.assertNotNull("exists",t);
+        And expression2;
+        
+        expression2 = new And("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "And", expression2.getLongDescription());
+        
+        expression2 = new And("IQDE321", "My expression");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        Assert.assertEquals("String matches", "And", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new And("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new And("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
     public void testDescription() {
-        DigitalExpressionBean e1 = new And("IQDE321", null);
+        And e1 = new And("IQDE321", null);
         Assert.assertTrue("And".equals(e1.getShortDescription()));
         Assert.assertTrue("And".equals(e1.getLongDescription()));
     }

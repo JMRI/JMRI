@@ -53,7 +53,7 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
         return String.format(
                 "Logix%n" +
                 "   ? E%n" +
-                "      Sensor Not selected is Active%n" +
+                "      Sensor '' is Active%n" +
                 "   ! A%n" +
                 "      On change to true%n" +
                 "         ! A%n" +
@@ -69,7 +69,7 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
                 "      ! %n" +
                 "         Logix%n" +
                 "            ? E%n" +
-                "               Sensor Not selected is Active%n" +
+                "               Sensor '' is Active%n" +
                 "            ! A%n" +
                 "               On change to true%n" +
                 "                  ! A%n" +

@@ -105,7 +105,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         
         action2 = new ActionLight("IQDA321", null);
         action2.setLight(light);
-        Assert.assertTrue("atomic boolean is correct", light == action2.getLight().getBean());
+        Assert.assertTrue("light is correct", light == action2.getLight().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Set light IL1 to On", action2.getLongDescription());
@@ -113,7 +113,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         Light l = InstanceManager.getDefault(LightManager.class).provide("IL1");
         action2 = new ActionLight("IQDA321", "My light");
         action2.setLight(l);
-        Assert.assertTrue("atomic boolean is correct", l == action2.getLight().getBean());
+        Assert.assertTrue("light is correct", l == action2.getLight().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My light", action2.getUserName());
         Assert.assertEquals("String matches", "Set light IL1 to On", action2.getLongDescription());

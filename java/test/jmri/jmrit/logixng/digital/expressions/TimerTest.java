@@ -74,13 +74,40 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testCtor() {
-        DigitalExpressionBean t = new Timer("IQDE321", null);
-        Assert.assertNotNull("exists",t);
+        Timer expression2;
+        
+        expression2 = new Timer("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Timer", expression2.getLongDescription());
+        
+        expression2 = new Timer("IQDE321", "My expression");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        Assert.assertEquals("String matches", "Timer", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new Timer("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new Timer("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
     public void testDescription() {
-        DigitalExpressionBean e1 = new Timer("IQDE321", null);
+        Timer e1 = new Timer("IQDE321", null);
         Assert.assertTrue("Timer".equals(e1.getShortDescription()));
         Assert.assertTrue("Timer".equals(e1.getLongDescription()));
     }

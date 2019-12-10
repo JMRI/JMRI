@@ -80,9 +80,53 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testCtor() {
-        ExpressionTurnout t = new ExpressionTurnout("IQDE321", null);
-        Assert.assertNotNull("exists",t);
+    public void testCtor() throws JmriException {
+        ExpressionTurnout expression2;
+        Assert.assertNotNull("turnout is not null", turnout);
+        turnout.setState(Turnout.THROWN);
+        
+        expression2 = new ExpressionTurnout("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Turnout '' is Thrown", expression2.getLongDescription());
+        
+        expression2 = new ExpressionTurnout("IQDE321", "My turnout");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My turnout", expression2.getUserName());
+        Assert.assertEquals("String matches", "Turnout '' is Thrown", expression2.getLongDescription());
+        
+        expression2 = new ExpressionTurnout("IQDE321", null);
+        expression2.setTurnout(turnout);
+        Assert.assertTrue("turnout is correct", turnout == expression2.getTurnout().getBean());
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Turnout IT1 is Thrown", expression2.getLongDescription());
+        
+        Turnout t = InstanceManager.getDefault(TurnoutManager.class).provide("IT2");
+        expression2 = new ExpressionTurnout("IQDE321", "My turnout");
+        expression2.setTurnout(t);
+        Assert.assertTrue("turnout is correct", t == expression2.getTurnout().getBean());
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My turnout", expression2.getUserName());
+        Assert.assertEquals("String matches", "Turnout IT2 is Thrown", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new ExpressionTurnout("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new ExpressionTurnout("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
@@ -109,7 +153,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     public void testDescription() {
         expressionTurnout.setTurnout((Turnout)null);
         Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));
-        Assert.assertTrue("Turnout Not selected is Thrown".equals(expressionTurnout.getLongDescription()));
+        Assert.assertTrue("Turnout '' is Thrown".equals(expressionTurnout.getLongDescription()));
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.CLOSED);

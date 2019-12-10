@@ -87,24 +87,69 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
             throws NamedBean.BadUserNameException,
                     NamedBean.BadSystemNameException,
                     SocketAlreadyConnectedException {
-        ResetOnTrue expressionResetOnTrue = new ResetOnTrue("IQDE351", null);
+        
+        ExpressionSensor primaryExpression = new ExpressionSensor("IQDE351", null);
         MaleDigitalExpressionSocket primaryExpressionSocket =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionResetOnTrue);
-        expressionResetOnTrue = new ResetOnTrue("IQDE352", null);
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(primaryExpression);
+        ExpressionSensor secondaryExpression = new ExpressionSensor("IQDE352", null);
         MaleDigitalExpressionSocket secondaryExpressionSocket =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionResetOnTrue);
-        DigitalExpressionBean t = new ResetOnTrue("IQDE353", null, primaryExpressionSocket, secondaryExpressionSocket);
-        Assert.assertNotNull("exists",t);
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(secondaryExpression);
+        
+        
+        ResetOnTrue expression2;
+        
+        expression2 = new ResetOnTrue("IQDE353", null, primaryExpressionSocket, secondaryExpressionSocket);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Reset on true", expression2.getLongDescription());
+        
+        expression2 = new ResetOnTrue("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Reset on true", expression2.getLongDescription());
+        
+        expression2 = new ResetOnTrue("IQDE321", "My expression");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        Assert.assertEquals("String matches", "Reset on true", expression2.getLongDescription());
+        
+        expression2 = new ResetOnTrue("IQDE353", null, primaryExpressionSocket, secondaryExpressionSocket);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Reset on true", expression2.getLongDescription());
+        
+        expression2 = new ResetOnTrue("IQDE353", "My expression", primaryExpressionSocket, secondaryExpressionSocket);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
+        Assert.assertEquals("String matches", "Reset on true", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new ResetOnTrue("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new ResetOnTrue("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
     public void testDescription() throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, NamedBean.BadSystemNameException, SocketAlreadyConnectedException {
-        ExpressionTurnout expressionResetOnTrue = new ExpressionTurnout("IQDE351", null);
+        ExpressionTurnout primaryExpression = new ExpressionTurnout("IQDE351", null);
         MaleDigitalExpressionSocket primaryExpressionSocket =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionResetOnTrue);
-        expressionResetOnTrue = new ExpressionTurnout("IQDE352", null);
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(primaryExpression);
+        ExpressionTurnout secondaryExpression = new ExpressionTurnout("IQDE352", null);
         MaleDigitalExpressionSocket secondaryExpressionSocket =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionResetOnTrue);
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(secondaryExpression);
         DigitalExpressionBean e1 = new ResetOnTrue("IQDE353", null, primaryExpressionSocket, secondaryExpressionSocket);
         Assert.assertTrue("Reset on true".equals(e1.getShortDescription()));
         Assert.assertTrue("Reset on true".equals(e1.getLongDescription()));

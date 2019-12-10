@@ -81,11 +81,50 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
             throws NamedBean.BadUserNameException,
                     NamedBean.BadSystemNameException,
                     SocketAlreadyConnectedException {
-        ExpressionTurnout expressionTriggerOnce = new ExpressionTurnout("IQDE:AUTO:321", null);
+        
+        ExpressionTurnout expressionTurnout = new ExpressionTurnout("IQDE:AUTO:321", null);
         MaleDigitalExpressionSocket expressionSocket =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTriggerOnce);
-        DigitalExpressionBean t = new TriggerOnce("IQDE321", null, expressionSocket);
-        Assert.assertNotNull("exists",t);
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout);
+        
+        TriggerOnce expression2;
+        
+        expression2 = new TriggerOnce("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Trigger once", expression2.getLongDescription());
+        
+        expression2 = new TriggerOnce("IQDE321", "My sensor");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My sensor", expression2.getUserName());
+        Assert.assertEquals("String matches", "Trigger once", expression2.getLongDescription());
+        
+        expression2 = new TriggerOnce("IQDE321", null, expressionSocket);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Trigger once", expression2.getLongDescription());
+        
+        expression2 = new TriggerOnce("IQDE321", "My sensor", expressionSocket);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My sensor", expression2.getUserName());
+        Assert.assertEquals("String matches", "Trigger once", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new TriggerOnce("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new TriggerOnce("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
@@ -93,9 +132,9 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
             throws NamedBean.BadUserNameException,
                     NamedBean.BadSystemNameException,
                     SocketAlreadyConnectedException {
-        ExpressionTurnout expressionTriggerOnce = new ExpressionTurnout("IQDE:AUTO:321", null);
+        ExpressionTurnout expressionTriggerOnce2 = new ExpressionTurnout("IQDE:AUTO:321", null);
         MaleDigitalExpressionSocket expressionSocket =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTriggerOnce);
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTriggerOnce2);
         DigitalExpressionBean e1 = new TriggerOnce("IQDE321", null, expressionSocket);
         Assert.assertTrue("Trigger once".equals(e1.getShortDescription()));
         Assert.assertTrue("Trigger once".equals(e1.getLongDescription()));

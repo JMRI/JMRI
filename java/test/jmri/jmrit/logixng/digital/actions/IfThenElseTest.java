@@ -46,7 +46,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         return String.format(
                 "If E then A1 else A2%n" +
                 "   ? E%n" +
-                "      Sensor Not selected is Active%n" +
+                "      Sensor '' is Active%n" +
                 "   ! A1%n" +
                 "      Set turnout '' to Thrown%n" +
                 "   ! A2%n" +
@@ -61,7 +61,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
                 "      ! %n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
-                "               Sensor Not selected is Active%n" +
+                "               Sensor '' is Active%n" +
                 "            ! A1%n" +
                 "               Set turnout '' to Thrown%n" +
                 "            ! A2%n" +

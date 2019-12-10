@@ -105,7 +105,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         
         action2 = new ActionSensor("IQDA321", null);
         action2.setSensor(sensor);
-        Assert.assertTrue("atomic boolean is correct", sensor == action2.getSensor().getBean());
+        Assert.assertTrue("sensor is correct", sensor == action2.getSensor().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertNull("Username matches", action2.getUserName());
         Assert.assertEquals("String matches", "Set sensor IS1 to Active", action2.getLongDescription());
@@ -113,7 +113,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         Sensor l = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         action2 = new ActionSensor("IQDA321", "My sensor");
         action2.setSensor(l);
-        Assert.assertTrue("atomic boolean is correct", l == action2.getSensor().getBean());
+        Assert.assertTrue("sensor is correct", l == action2.getSensor().getBean());
         Assert.assertNotNull("object exists", action2);
         Assert.assertEquals("Username matches", "My sensor", action2.getUserName());
         Assert.assertEquals("String matches", "Set sensor IS1 to Active", action2.getLongDescription());

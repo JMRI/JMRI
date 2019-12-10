@@ -81,8 +81,52 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testCtor() {
-        ExpressionLight t = new ExpressionLight("IQDE321", null);
-        Assert.assertNotNull("exists",t);
+        ExpressionLight expression2;
+        Assert.assertNotNull("light is not null", light);
+        light.setState(Light.ON);
+        
+        expression2 = new ExpressionLight("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Light '' is On", expression2.getLongDescription());
+        
+        expression2 = new ExpressionLight("IQDE321", "My light");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My light", expression2.getUserName());
+        Assert.assertEquals("String matches", "Light '' is On", expression2.getLongDescription());
+        
+        expression2 = new ExpressionLight("IQDE321", null);
+        expression2.setLight(light);
+        Assert.assertTrue("light is correct", light == expression2.getLight().getBean());
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Light IL1 is On", expression2.getLongDescription());
+        
+        Light l = InstanceManager.getDefault(LightManager.class).provide("IL2");
+        expression2 = new ExpressionLight("IQDE321", "My light");
+        expression2.setLight(l);
+        Assert.assertTrue("light is correct", l == expression2.getLight().getBean());
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My light", expression2.getUserName());
+        Assert.assertEquals("String matches", "Light IL2 is On", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new ExpressionLight("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new ExpressionLight("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
@@ -109,7 +153,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     public void testDescription() {
         expressionLight.setLight((Light)null);
         Assert.assertTrue("Get light".equals(expressionLight.getShortDescription()));
-        Assert.assertTrue("Light Not selected is On".equals(expressionLight.getLongDescription()));
+        Assert.assertTrue("Light '' is On".equals(expressionLight.getLongDescription()));
         expressionLight.setLight(light);
         expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionLight.setLightState(ExpressionLight.LightState.OFF);

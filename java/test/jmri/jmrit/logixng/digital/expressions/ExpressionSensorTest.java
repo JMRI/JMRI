@@ -80,9 +80,53 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testCtor() {
-        ExpressionSensor t = new ExpressionSensor("IQDE321", null);
-        Assert.assertNotNull("exists",t);
+    public void testCtor() throws JmriException {
+        ExpressionSensor expression2;
+        Assert.assertNotNull("sensor is not null", sensor);
+        sensor.setState(Sensor.ON);
+        
+        expression2 = new ExpressionSensor("IQDE321", null);
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Sensor '' is Active", expression2.getLongDescription());
+        
+        expression2 = new ExpressionSensor("IQDE321", "My sensor");
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My sensor", expression2.getUserName());
+        Assert.assertEquals("String matches", "Sensor '' is Active", expression2.getLongDescription());
+        
+        expression2 = new ExpressionSensor("IQDE321", null);
+        expression2.setSensor(sensor);
+        Assert.assertTrue("sensor is correct", sensor == expression2.getSensor().getBean());
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertNull("Username matches", expression2.getUserName());
+        Assert.assertEquals("String matches", "Sensor IS1 is Active", expression2.getLongDescription());
+        
+        Sensor s = InstanceManager.getDefault(SensorManager.class).provide("IS2");
+        expression2 = new ExpressionSensor("IQDE321", "My sensor");
+        expression2.setSensor(s);
+        Assert.assertTrue("sensor is correct", s == expression2.getSensor().getBean());
+        Assert.assertNotNull("object exists", expression2);
+        Assert.assertEquals("Username matches", "My sensor", expression2.getUserName());
+        Assert.assertEquals("String matches", "Sensor IS2 is Active", expression2.getLongDescription());
+        
+        boolean thrown = false;
+        try {
+            // Illegal system name
+            new ExpressionSensor("IQE55:12:XY11", null);
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        thrown = false;
+        try {
+            // Illegal system name
+            new ExpressionSensor("IQE55:12:XY11", "A name");
+        } catch (IllegalArgumentException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
     }
     
     @Test
@@ -108,8 +152,8 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     @Test
     public void testDescription() {
         expressionSensor.setSensor((Sensor)null);
-        Assert.assertTrue("Get sensor".equals(expressionSensor.getShortDescription()));
-        Assert.assertTrue("Sensor Not selected is Active".equals(expressionSensor.getLongDescription()));
+        Assert.assertEquals("Get sensor", expressionSensor.getShortDescription());
+        Assert.assertEquals("Sensor '' is Active", expressionSensor.getLongDescription());
         expressionSensor.setSensor(sensor);
         expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionSensor.setSensorState(ExpressionSensor.SensorState.INACTIVE);
