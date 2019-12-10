@@ -115,6 +115,20 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == actionAtomicBoolean.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            actionAtomicBoolean.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testAction() throws SocketAlreadyConnectedException {
         // Set new value to true
         actionAtomicBoolean.setNewValue(true);

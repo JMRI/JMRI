@@ -142,6 +142,20 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == actionSensor.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            actionSensor.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testSetSensor() {
         Sensor sensor11 = InstanceManager.getDefault(SensorManager.class).provide("IS11");
         Sensor sensor12 = InstanceManager.getDefault(SensorManager.class).provide("IS12");

@@ -143,6 +143,25 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 2", 2 == expressionResetOnTrue.getChildCount());
+        
+        Assert.assertNotNull("getChild(0) returns a non null value",
+                expressionResetOnTrue.getChild(0));
+        Assert.assertNotNull("getChild(1) returns a non null value",
+                expressionResetOnTrue.getChild(1));
+        
+        boolean hasThrown = false;
+        try {
+            expressionResetOnTrue.getChild(2);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "index has invalid value: 2", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testDescription() throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, NamedBean.BadSystemNameException, SocketAlreadyConnectedException {
         ExpressionTurnout primaryExpression = new ExpressionTurnout("IQDE351", null);
         MaleDigitalExpressionSocket primaryExpressionSocket =

@@ -25,8 +25,9 @@ import org.junit.Test;
  */
 public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase {
 
-    LogixNG logixNG;
-    ConditionalNG conditionalNG;
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private DigitalActionPluginSocket actionDigitalActionPluginSocket;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -62,6 +63,20 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         Assert.assertNotNull("exists", new DigitalActionPluginSocket("IQDA1", null, new MyDigitalActionPlugin("IQDA2")));
     }
     
+    @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == actionDigitalActionPluginSocket.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            actionDigitalActionPluginSocket.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -77,11 +92,11 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        DigitalActionPluginSocket action = new DigitalActionPluginSocket("IQDA1", null, new MyDigitalActionPlugin("IQDA2"));
+        actionDigitalActionPluginSocket = new DigitalActionPluginSocket("IQDA1", null, new MyDigitalActionPlugin("IQDA2"));
         MaleSocket maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDigitalActionPluginSocket);
         conditionalNG.getChild(0).connect(maleSocket);
-        _base = action;
+        _base = actionDigitalActionPluginSocket;
         _baseMaleSocket = maleSocket;
     }
 

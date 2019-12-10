@@ -118,6 +118,20 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == expressionReference.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            expressionReference.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testDescription() {
         Assert.assertEquals("Reference", expressionReference.getShortDescription());
         Assert.assertEquals("Reference '' is Nothing", expressionReference.getLongDescription());

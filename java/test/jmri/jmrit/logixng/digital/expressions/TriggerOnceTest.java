@@ -128,6 +128,23 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 1", 1 == expressionTriggerOnce.getChildCount());
+        
+        Assert.assertNotNull("getChild(0) returns a non null value",
+                expressionTriggerOnce.getChild(0));
+        
+        boolean hasThrown = false;
+        try {
+            expressionTriggerOnce.getChild(1);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "index has invalid value: 1", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testDescription()
             throws NamedBean.BadUserNameException,
                     NamedBean.BadSystemNameException,

@@ -30,6 +30,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
 
     LogixNG logixNG;
     ConditionalNG conditionalNG;
+    IfThenElse actionIfThenElse;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -82,6 +83,27 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 3", 3 == actionIfThenElse.getChildCount());
+        
+        Assert.assertNotNull("getChild(0) returns a non null value",
+                actionIfThenElse.getChild(0));
+        Assert.assertNotNull("getChild(1) returns a non null value",
+                actionIfThenElse.getChild(1));
+        Assert.assertNotNull("getChild(2) returns a non null value",
+                actionIfThenElse.getChild(2));
+        
+        boolean hasThrown = false;
+        try {
+            actionIfThenElse.getChild(3);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "index has invalid value: 3", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testToString() {
         DigitalActionBean a1 = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         Assert.assertEquals("strings are equal", "If then else", a1.getShortDescription());
@@ -114,22 +136,22 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        IfThenElse action = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        actionIfThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionIfThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
         
         ExpressionSensor expressionSensor = new ExpressionSensor("IQDE321", null);
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionSensor);
-        action.getChild(0).connect(maleSocket2);
+        actionIfThenElse.getChild(0).connect(maleSocket2);
         
         ActionTurnout actionTurnout = new ActionTurnout("IQDA322", null);
         maleSocket2 =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTurnout);
-        action.getChild(1).connect(maleSocket2);
+        actionIfThenElse.getChild(1).connect(maleSocket2);
         
-        _base = action;
+        _base = actionIfThenElse;
         _baseMaleSocket = maleSocket;
     }
 

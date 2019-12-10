@@ -130,6 +130,20 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == expressionTurnout.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            expressionTurnout.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testTurnoutState() {
         Assert.assertEquals("String matches", "Closed", ExpressionTurnout.TurnoutState.CLOSED.toString());
         Assert.assertEquals("String matches", "Thrown", ExpressionTurnout.TurnoutState.THROWN.toString());

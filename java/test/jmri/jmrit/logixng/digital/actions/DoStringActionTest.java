@@ -25,6 +25,7 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
 
     LogixNG logixNG;
     ConditionalNG conditionalNG;
+    DoStringAction actionDoStringAction;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -69,6 +70,25 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         Assert.assertNotNull("exists", new DoStringAction("IQDA321", null));
     }
     
+    @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 2", 2 == actionDoStringAction.getChildCount());
+        
+        Assert.assertNotNull("getChild(0) returns a non null value",
+                actionDoStringAction.getChild(0));
+        Assert.assertNotNull("getChild(1) returns a non null value",
+                actionDoStringAction.getChild(1));
+        
+        boolean hasThrown = false;
+        try {
+            actionDoStringAction.getChild(2);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "index has invalid value: 2", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -84,11 +104,11 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        DoStringAction action = new DoStringAction("IQDA321", null);
+        actionDoStringAction = new DoStringAction("IQDA321", null);
         MaleSocket maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoStringAction);
         conditionalNG.getChild(0).connect(maleSocket);
-        _base = action;
+        _base = actionDoStringAction;
         _baseMaleSocket = maleSocket;
     }
 

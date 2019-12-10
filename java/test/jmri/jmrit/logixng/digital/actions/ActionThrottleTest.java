@@ -121,6 +121,27 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 3", 3 == actionThrottle.getChildCount());
+        
+        Assert.assertNotNull("getChild(0) returns a non null value",
+                actionThrottle.getChild(0));
+        Assert.assertNotNull("getChild(1) returns a non null value",
+                actionThrottle.getChild(1));
+        Assert.assertNotNull("getChild(2) returns a non null value",
+                actionThrottle.getChild(2));
+        
+        boolean hasThrown = false;
+        try {
+            actionThrottle.getChild(3);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "index has invalid value: 3", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
     }

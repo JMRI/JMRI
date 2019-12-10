@@ -106,6 +106,20 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == expressionTrue.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            expressionTrue.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testDescription() {
         DigitalExpressionBean e1 = new True("IQDE321", null);
         Assert.assertTrue("Always true".equals(e1.getShortDescription()));

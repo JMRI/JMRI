@@ -128,6 +128,20 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == expressionMemory.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            expressionMemory.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testMemoryOperation() {
         Assert.assertEquals("String matches", "is less than", ExpressionMemory.MemoryOperation.LESS_THAN.toString());
         Assert.assertEquals("String matches", "is less than or equal", ExpressionMemory.MemoryOperation.LESS_THAN_OR_EQUAL.toString());

@@ -106,6 +106,20 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == expressionTimer.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            expressionTimer.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testDescription() {
         Timer e1 = new Timer("IQDE321", null);
         Assert.assertTrue("Timer".equals(e1.getShortDescription()));

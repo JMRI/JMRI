@@ -122,6 +122,20 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == actionTurnout.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            actionTurnout.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testTurnoutState() {
         Assert.assertEquals("String matches", "Closed", ActionTurnout.TurnoutState.CLOSED.toString());
         Assert.assertEquals("String matches", "Thrown", ActionTurnout.TurnoutState.THROWN.toString());

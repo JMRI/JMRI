@@ -106,6 +106,20 @@ public class FalseTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == expressionFalse.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            expressionFalse.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testDescription() {
         False e1 = new False("IQDE321", null);
         Assert.assertTrue("Always false".equals(e1.getShortDescription()));

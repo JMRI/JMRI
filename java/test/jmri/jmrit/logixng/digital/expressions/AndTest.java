@@ -112,6 +112,34 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() throws SocketAlreadyConnectedException {
+        And expression2 = new And("IQDE321", null);
+        
+        for (int i=0; i < 3; i++) {
+            Assert.assertTrue("getNumChilds() returns "+i, i+1 == expression2.getChildCount());
+
+            Assert.assertNotNull("getChild(0) returns a non null value",
+                    expression2.getChild(0));
+
+            boolean hasThrown = false;
+            try {
+                expression2.getChild(i+1);
+            } catch (IndexOutOfBoundsException ex) {
+                hasThrown = true;
+                String msg = String.format("Index: %d, Size: %d", i+1, i+1);
+                Assert.assertEquals("Error message is correct", msg, ex.getMessage());
+            }
+            Assert.assertTrue("Exception is thrown", hasThrown);
+            
+            // Connect a new child expression
+            True expr = new True("IQDE"+i, null);
+            MaleSocket maleSocket =
+                    InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expr);
+            expression2.getChild(i).connect(maleSocket);
+        }
+    }
+    
+    @Test
     public void testDescription() {
         And e1 = new And("IQDE321", null);
         Assert.assertTrue("And".equals(e1.getShortDescription()));

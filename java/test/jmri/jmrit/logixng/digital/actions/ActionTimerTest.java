@@ -33,6 +33,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
 
     LogixNG logixNG;
     ConditionalNG conditionalNG;
+    ActionTimer actionTimer;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -74,6 +75,23 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         Assert.assertNotNull("exists",t);
         t = new ActionTimer("IQDA321", null);
         Assert.assertNotNull("exists",t);
+    }
+    
+    @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 1", 1 == actionTimer.getChildCount());
+        
+        Assert.assertNotNull("getChild(0) returns a non null value",
+                actionTimer.getChild(0));
+        
+        boolean hasThrown = false;
+        try {
+            actionTimer.getChild(1);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "index has invalid value: 1", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
     @Test
@@ -132,11 +150,11 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        ActionTimer action = new ActionTimer("IQDA321", null);
+        actionTimer = new ActionTimer("IQDA321", null);
         MaleSocket maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionTimer);
         conditionalNG.getChild(0).connect(maleSocket);
-        _base = action;
+        _base = actionTimer;
         _baseMaleSocket = maleSocket;
     }
 

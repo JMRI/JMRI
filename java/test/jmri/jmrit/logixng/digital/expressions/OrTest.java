@@ -33,6 +33,7 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
 
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
+    private Or expressionOr;
     
     
     @Override
@@ -109,6 +110,34 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() throws SocketAlreadyConnectedException {
+        Or expression2 = new Or("IQDE321", null);
+        
+        for (int i=0; i < 3; i++) {
+            Assert.assertTrue("getNumChilds() returns "+i, i+1 == expression2.getChildCount());
+
+            Assert.assertNotNull("getChild(0) returns a non null value",
+                    expression2.getChild(0));
+
+            boolean hasThrown = false;
+            try {
+                expression2.getChild(i+1);
+            } catch (IndexOutOfBoundsException ex) {
+                hasThrown = true;
+                String msg = String.format("Index: %d, Size: %d", i+1, i+1);
+                Assert.assertEquals("Error message is correct", msg, ex.getMessage());
+            }
+            Assert.assertTrue("Exception is thrown", hasThrown);
+            
+            // Connect a new child expression
+            True expr = new True("IQDE"+i, null);
+            MaleSocket maleSocket =
+                    InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expr);
+            expression2.getChild(i).connect(maleSocket);
+        }
+    }
+    
+    @Test
     public void testDescription() {
         Or e1 = new Or("IQDE321", null);
         Assert.assertTrue("Or".equals(e1.getShortDescription()));
@@ -136,12 +165,12 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
         
-        DigitalExpressionBean expression = new Or("IQDE321", null);
+        expressionOr = new Or("IQDE321", null);
         MaleSocket maleSocket2 =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionOr);
         ifThenElse.getChild(0).connect(maleSocket2);
         
-        _base = expression;
+        _base = expressionOr;
         _baseMaleSocket = maleSocket2;
     }
 

@@ -70,6 +70,34 @@ public class ManyTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
+    public void testGetChild() throws SocketAlreadyConnectedException {
+        Many action2 = new Many("IQDA321", null);
+        
+        for (int i=0; i < 3; i++) {
+            Assert.assertTrue("getNumChilds() returns "+i, i+1 == action2.getChildCount());
+
+            Assert.assertNotNull("getChild(0) returns a non null value",
+                    action2.getChild(0));
+
+            boolean hasThrown = false;
+            try {
+                action2.getChild(i+1);
+            } catch (IndexOutOfBoundsException ex) {
+                hasThrown = true;
+                String msg = String.format("Index: %d, Size: %d", i+1, i+1);
+                Assert.assertEquals("Error message is correct", msg, ex.getMessage());
+            }
+            Assert.assertTrue("Exception is thrown", hasThrown);
+            
+            // Connect a new child expression
+            ActionLight expr = new ActionLight("IQDA"+i, null);
+            MaleSocket maleSocket =
+                    InstanceManager.getDefault(DigitalActionManager.class).registerAction(expr);
+            action2.getChild(i).connect(maleSocket);
+        }
+    }
+    
+    @Test
     @Override
     public void testSupportsEnableExecution() throws SocketAlreadyConnectedException {
         DigitalAction da = new Many("IQDA321", null);

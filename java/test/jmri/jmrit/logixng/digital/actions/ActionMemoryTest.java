@@ -120,6 +120,20 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == actionMemory.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            actionMemory.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testSetMemory() {
         Memory memory11 = InstanceManager.getDefault(MemoryManager.class).provide("IL11");
         Memory memory12 = InstanceManager.getDefault(MemoryManager.class).provide("IL12");

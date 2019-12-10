@@ -113,6 +113,25 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 2", 2 == expressionHold.getChildCount());
+        
+        Assert.assertNotNull("getChild(0) returns a non null value",
+                expressionHold.getChild(0));
+        Assert.assertNotNull("getChild(1) returns a non null value",
+                expressionHold.getChild(1));
+        
+        boolean hasThrown = false;
+        try {
+            expressionHold.getChild(2);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "index has invalid value: 2", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testDescription() {
         Hold e1 = new Hold("IQDE321", null);
         Assert.assertTrue("Hold".equals(e1.getShortDescription()));

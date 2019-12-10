@@ -144,6 +144,20 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == expressionScript.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            expressionScript.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
     public void testDescription() {
         Assert.assertTrue("Evaluate script".equals(expressionScript.getShortDescription()));
         Assert.assertTrue("Evaluate script".equals(expressionScript.getLongDescription()));

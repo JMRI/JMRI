@@ -23,8 +23,9 @@ import org.junit.Test;
  */
 public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
 
-    LogixNG logixNG;
-    ConditionalNG conditionalNG;
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private ShutdownComputer actionShutdownComputer;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -60,6 +61,20 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         Assert.assertNotNull("exists", new ShutdownComputer("IQDA321", null, 0));
     }
     
+    @Test
+    public void testGetChild() {
+        Assert.assertTrue("getNumChilds() returns 0", 0 == actionShutdownComputer.getChildCount());
+        
+        boolean hasThrown = false;
+        try {
+            actionShutdownComputer.getChild(0);
+        } catch (UnsupportedOperationException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -75,11 +90,11 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG);
-        ShutdownComputer action = new ShutdownComputer("IQDA321", null, 0);
+        actionShutdownComputer = new ShutdownComputer("IQDA321", null, 0);
         MaleSocket maleSocket =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionShutdownComputer);
         conditionalNG.getChild(0).connect(maleSocket);
-        _base = action;
+        _base = actionShutdownComputer;
         _baseMaleSocket = maleSocket;
     }
 
