@@ -17,6 +17,7 @@
         but if multiple dependencies are linked, use a property for single
         dependency source) -->
         <cucumber.version>4.3.1</cucumber.version>
+        <jacoco.version>0.8.5</jacoco.version>
         <jetty.version>9.4.7.v20170914</jetty.version>
         <jemmy.version>22-00c9f753cd0a</jemmy.version> <!-- this is a custom version, see lib/README.md -->
         <slf4j.version>1.7.25</slf4j.version>
@@ -582,7 +583,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.2</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
@@ -827,7 +828,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>${jacoco.version}</version>
                 <reportSets>
                     <reportSet>
                         <reports>
