@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -133,19 +134,20 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
         actionMemory.setMemory(memory11);
         Assert.assertTrue("memory is correct", memory11 == actionMemory.getMemory().getBean());
         
-        actionMemory.setMemory((NamedBeanHandle<Memory>)null);
+        actionMemory.setMemory((Memory)null);
         Assert.assertNull("memory handle is null", actionMemory.getMemory());
         
         actionMemory.setMemory(memoryHandle12);
         Assert.assertTrue("memory handle is correct", memoryHandle12 == actionMemory.getMemory());
         
-        actionMemory.setMemoryName("A non existent memory");
+        actionMemory.setMemory("A non existent memory");
         Assert.assertNull("memory handle is null", actionMemory.getMemory());
+        JUnitAppender.assertErrorMessage("memory \"A non existent memory\" is not found");
         
-        actionMemory.setMemoryName(memory13.getSystemName());
+        actionMemory.setMemory(memory13.getSystemName());
         Assert.assertTrue("memory is correct", memory13 == actionMemory.getMemory().getBean());
         
-        actionMemory.setMemoryName(memory14.getUserName());
+        actionMemory.setMemory(memory14.getUserName());
         Assert.assertTrue("memory is correct", memory14 == actionMemory.getMemory().getBean());
     }
     

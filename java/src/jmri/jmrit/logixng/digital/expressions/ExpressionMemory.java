@@ -8,6 +8,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
@@ -41,22 +42,15 @@ public class ExpressionMemory extends AbstractDigitalExpression
         super(sys, user);
     }
     
-    public void setMemory(String memoryName) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
-            log.error("setMemory must not be called when listeners are registered", e);
-            throw e;
-        }
+    public void setMemory(@Nonnull String memoryName) {
         Memory memory = InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName);
-        if (memory != null) {
-            _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memoryName, memory);
-        } else {
-            log.error("memory {} is not found", memoryName);
-            _memoryHandle = null;
+        setMemory(memory);
+        if (memory == null) {
+            log.error("memory \"{}\" is not found", memoryName);
         }
     }
     
-    public void setMemory(NamedBeanHandle<Memory> handle) {
+    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setMemory must not be called when listeners are registered");
             log.error("setMemory must not be called when listeners are registered", e);
@@ -72,10 +66,14 @@ public class ExpressionMemory extends AbstractDigitalExpression
             throw e;
         }
         if (memory != null) {
+            if (_memoryHandle != null) {
+                InstanceManager.memoryManagerInstance().addVetoableChangeListener(this);
+            }
             _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(memory.getDisplayName(), memory);
         } else {
             _memoryHandle = null;
+            InstanceManager.memoryManagerInstance().removeVetoableChangeListener(this);
         }
     }
     

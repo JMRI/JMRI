@@ -4,14 +4,13 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
@@ -34,34 +33,27 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         super(sys, user);
     }
     
-    public void setMemoryName(String memoryName) {
+    public void setMemory(String memoryName) {
         MemoryManager memoryManager = InstanceManager.getDefault(MemoryManager.class);
         Memory memory = memoryManager.getMemory(memoryName);
-        if (memory != null) {
-            _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memoryName, memory);
-            memoryManager.addVetoableChangeListener(this);
-        } else {
-            _memoryHandle = null;
-            memoryManager.removeVetoableChangeListener(this);
+        setMemory(memory);
+        if (memory == null) {
+            log.error("memory \"{}\" is not found", memoryName);
         }
     }
     
-    public void setMemory(NamedBeanHandle<Memory> handle) {
+    public void setMemory(@Nonnull NamedBeanHandle<Memory> handle) {
         _memoryHandle = handle;
-        if (_memoryHandle != null) {
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
-        } else {
-            InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
-        }
+        InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
     }
     
     public void setMemory(@CheckForNull Memory memory) {
         if (memory != null) {
+            if (_memoryHandle != null) {
+                InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
+            }
             _memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(memory.getDisplayName(), memory);
-            // I have a bug here for every action/expression that does this. If 'this' is already registred,
-            // I should not register it again.
-            InstanceManager.getDefault(MemoryManager.class).addVetoableChangeListener(this);
         } else {
             _memoryHandle = null;
             InstanceManager.getDefault(MemoryManager.class).removeVetoableChangeListener(this);
@@ -135,7 +127,7 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Memory) {
                 if (evt.getOldValue().equals(getMemory().getBean())) {
-                    setMemory((Memory)null);
+                    ActionMemory.this.setMemory((Memory)null);
                 }
             }
         }

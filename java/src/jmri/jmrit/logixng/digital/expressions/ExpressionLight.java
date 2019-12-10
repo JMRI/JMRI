@@ -6,6 +6,7 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
@@ -35,22 +36,15 @@ public class ExpressionLight extends AbstractDigitalExpression
         super(sys, user);
     }
     
-    public void setLight(String lightName) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setLight must not be called when listeners are registered");
-            log.error("setLight must not be called when listeners are registered", e);
-            throw e;
-        }
+    public void setLight(@Nonnull String lightName) {
         Light light = InstanceManager.getDefault(LightManager.class).getLight(lightName);
-        if (light != null) {
-            _lightHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(lightName, light);
-        } else {
-            log.error("light {} is not found", lightName);
-            _lightHandle = null;
+        setLight(light);
+        if (light == null) {
+            log.error("light \"{}\" is not found", lightName);
         }
     }
     
-    public void setLight(NamedBeanHandle<Light> handle) {
+    public void setLight(@Nonnull NamedBeanHandle<Light> handle) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setLight must not be called when listeners are registered");
             log.error("setLight must not be called when listeners are registered", e);
@@ -66,10 +60,14 @@ public class ExpressionLight extends AbstractDigitalExpression
             throw e;
         }
         if (light != null) {
+            if (_lightHandle != null) {
+                InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
+            }
             _lightHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(light.getDisplayName(), light);
         } else {
             _lightHandle = null;
+            InstanceManager.lightManagerInstance().removeVetoableChangeListener(this);
         }
     }
     

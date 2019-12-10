@@ -209,6 +209,40 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testSetSensor2() {
+        Sensor sensor11 = InstanceManager.getDefault(SensorManager.class).provide("IL11");
+        Sensor sensor12 = InstanceManager.getDefault(SensorManager.class).provide("IL12");
+        NamedBeanHandle<Sensor> sensorHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensor12.getDisplayName(), sensor12);
+        Sensor sensor13 = InstanceManager.getDefault(SensorManager.class).provide("IL13");
+        Sensor sensor14 = InstanceManager.getDefault(SensorManager.class).provide("IL14");
+        sensor14.setUserName("Some user name");
+        
+        expressionSensor.setSensor((Sensor)null);
+        Assert.assertNull("sensor handle is null", expressionSensor.getSensor());
+        
+        expressionSensor.setSensor(sensor11);
+        Assert.assertTrue("sensor is correct", sensor11 == expressionSensor.getSensor().getBean());
+        
+        expressionSensor.setSensor((Sensor)null);
+        Assert.assertNull("sensor handle is null", expressionSensor.getSensor());
+        
+        expressionSensor.setSensor(sensorHandle12);
+        Assert.assertTrue("sensor handle is correct", sensorHandle12 == expressionSensor.getSensor());
+        
+        expressionSensor.setSensor("A non existent sensor");
+        Assert.assertNull("sensor handle is null", expressionSensor.getSensor());
+        JUnitAppender.assertErrorMessage("sensor \"A non existent sensor\" is not found");
+        
+        expressionSensor.setSensor(sensor13.getSystemName());
+        Assert.assertTrue("sensor is correct", sensor13 == expressionSensor.getSensor().getBean());
+        
+        String userName = sensor14.getUserName();
+        Assert.assertNotNull("sensor is not null", userName);
+        expressionSensor.setSensor(userName);
+        Assert.assertTrue("sensor is correct", sensor14 == expressionSensor.getSensor().getBean());
+    }
+    
+    @Test
     public void testSetSensorException() {
         // Test setSensor() when listeners are registered
         Assert.assertNotNull("Sensor is not null", sensor);
@@ -218,7 +252,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         expressionSensor.registerListeners();
         boolean thrown = false;
         try {
-            expressionSensor.setSensor((String)null);
+            expressionSensor.setSensor("A sensor");
         } catch (RuntimeException ex) {
             thrown = true;
         }

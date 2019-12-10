@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -142,11 +143,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testSetSensor() {
-        Sensor sensor11 = InstanceManager.getDefault(SensorManager.class).provide("IL11");
-        Sensor sensor12 = InstanceManager.getDefault(SensorManager.class).provide("IL12");
+        Sensor sensor11 = InstanceManager.getDefault(SensorManager.class).provide("IS11");
+        Sensor sensor12 = InstanceManager.getDefault(SensorManager.class).provide("IS12");
         NamedBeanHandle<Sensor> sensorHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensor12.getDisplayName(), sensor12);
-        Sensor sensor13 = InstanceManager.getDefault(SensorManager.class).provide("IL13");
-        Sensor sensor14 = InstanceManager.getDefault(SensorManager.class).provide("IL14");
+        Sensor sensor13 = InstanceManager.getDefault(SensorManager.class).provide("IS13");
+        Sensor sensor14 = InstanceManager.getDefault(SensorManager.class).provide("IS14");
         sensor14.setUserName("Some user name");
         
         actionSensor.setSensor((Sensor)null);
@@ -155,19 +156,20 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
         actionSensor.setSensor(sensor11);
         Assert.assertTrue("sensor is correct", sensor11 == actionSensor.getSensor().getBean());
         
-        actionSensor.setSensor((NamedBeanHandle<Sensor>)null);
+        actionSensor.setSensor((Sensor)null);
         Assert.assertNull("sensor handle is null", actionSensor.getSensor());
         
         actionSensor.setSensor(sensorHandle12);
         Assert.assertTrue("sensor handle is correct", sensorHandle12 == actionSensor.getSensor());
         
-        actionSensor.setSensorName("A non existent sensor");
+        actionSensor.setSensor("A non existent sensor");
         Assert.assertNull("sensor handle is null", actionSensor.getSensor());
+        JUnitAppender.assertErrorMessage("sensor \"A non existent sensor\" is not found");
         
-        actionSensor.setSensorName(sensor13.getSystemName());
+        actionSensor.setSensor(sensor13.getSystemName());
         Assert.assertTrue("sensor is correct", sensor13 == actionSensor.getSensor().getBean());
         
-        actionSensor.setSensorName(sensor14.getUserName());
+        actionSensor.setSensor(sensor14.getUserName());
         Assert.assertTrue("sensor is correct", sensor14 == actionSensor.getSensor().getBean());
     }
     

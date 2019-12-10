@@ -4,16 +4,17 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.util.ThreadingUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This action sets the state of a turnout.
@@ -30,31 +31,26 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         super(sys, user);
     }
     
-    public void setTurnoutName(String turnoutName) {
+    public void setTurnout(String turnoutName) {
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName);
-        if (turnout != null) {
-            _turnoutHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
-            InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        } else {
-            _turnoutHandle = null;
-            InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
+        setTurnout(turnout);
+        if (turnout == null) {
+            log.error("turnout \"{}\" is not found", turnoutName);
         }
     }
     
-    public void setTurnout(NamedBeanHandle<Turnout> handle) {
+    public void setTurnout(@Nonnull NamedBeanHandle<Turnout> handle) {
         _turnoutHandle = handle;
-        if (_turnoutHandle != null) {
-            InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
-        } else {
-            InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
-        }
+        InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
     }
     
     public void setTurnout(@CheckForNull Turnout turnout) {
         if (turnout != null) {
+            if (_turnoutHandle != null) {
+                InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+            }
             _turnoutHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-            InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
         } else {
             _turnoutHandle = null;
             InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
@@ -84,7 +80,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Turnout) {
                 if (evt.getOldValue().equals(getTurnout().getBean())) {
-                    setTurnout((Turnout)null);
+                    ActionTurnout.this.setTurnout((Turnout)null);
                 }
             }
         }
@@ -213,5 +209,7 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
         }
         
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(ActionTurnout.class);
     
 }

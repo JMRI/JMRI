@@ -213,6 +213,40 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testSetMemory2() {
+        Memory memory11 = InstanceManager.getDefault(MemoryManager.class).provide("IM11");
+        Memory memory12 = InstanceManager.getDefault(MemoryManager.class).provide("IM12");
+        NamedBeanHandle<Memory> memoryHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memory12.getDisplayName(), memory12);
+        Memory memory13 = InstanceManager.getDefault(MemoryManager.class).provide("IM13");
+        Memory memory14 = InstanceManager.getDefault(MemoryManager.class).provide("IM14");
+        memory14.setUserName("Some user name");
+        
+        expressionMemory.setMemory((Memory)null);
+        Assert.assertNull("memory handle is null", expressionMemory.getMemory());
+        
+        expressionMemory.setMemory(memory11);
+        Assert.assertTrue("memory is correct", memory11 == expressionMemory.getMemory().getBean());
+        
+        expressionMemory.setMemory((Memory)null);
+        Assert.assertNull("memory handle is null", expressionMemory.getMemory());
+        
+        expressionMemory.setMemory(memoryHandle12);
+        Assert.assertTrue("memory handle is correct", memoryHandle12 == expressionMemory.getMemory());
+        
+        expressionMemory.setMemory("A non existent memory");
+        Assert.assertNull("memory handle is null", expressionMemory.getMemory());
+        JUnitAppender.assertErrorMessage("memory \"A non existent memory\" is not found");
+        
+        expressionMemory.setMemory(memory13.getSystemName());
+        Assert.assertTrue("memory is correct", memory13 == expressionMemory.getMemory().getBean());
+        
+        String userName = memory14.getUserName();
+        Assert.assertNotNull("memory is not null", userName);
+        expressionMemory.setMemory(userName);
+        Assert.assertTrue("memory is correct", memory14 == expressionMemory.getMemory().getBean());
+    }
+    
+    @Test
     public void testSetMemoryException() {
         // Test setMemory() when listeners are registered
         Assert.assertNotNull("Memory is not null", memory);
@@ -220,7 +254,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         expressionMemory.registerListeners();
         boolean thrown = false;
         try {
-            expressionMemory.setMemory((String)null);
+            expressionMemory.setMemory("A memory");
         } catch (RuntimeException ex) {
             thrown = true;
         }

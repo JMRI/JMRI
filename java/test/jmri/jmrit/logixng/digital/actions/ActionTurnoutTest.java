@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -155,19 +156,20 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
         actionTurnout.setTurnout(turnout11);
         Assert.assertTrue("turnout is correct", turnout11 == actionTurnout.getTurnout().getBean());
         
-        actionTurnout.setTurnout((NamedBeanHandle<Turnout>)null);
+        actionTurnout.setTurnout((Turnout)null);
         Assert.assertNull("turnout handle is null", actionTurnout.getTurnout());
         
         actionTurnout.setTurnout(turnoutHandle12);
         Assert.assertTrue("turnout handle is correct", turnoutHandle12 == actionTurnout.getTurnout());
         
-        actionTurnout.setTurnoutName("A non existent turnout");
+        actionTurnout.setTurnout("A non existent turnout");
         Assert.assertNull("turnout handle is null", actionTurnout.getTurnout());
+        JUnitAppender.assertErrorMessage("turnout \"A non existent turnout\" is not found");
         
-        actionTurnout.setTurnoutName(turnout13.getSystemName());
+        actionTurnout.setTurnout(turnout13.getSystemName());
         Assert.assertTrue("turnout is correct", turnout13 == actionTurnout.getTurnout().getBean());
         
-        actionTurnout.setTurnoutName(turnout14.getUserName());
+        actionTurnout.setTurnout(turnout14.getUserName());
         Assert.assertTrue("turnout is correct", turnout14 == actionTurnout.getTurnout().getBean());
     }
     

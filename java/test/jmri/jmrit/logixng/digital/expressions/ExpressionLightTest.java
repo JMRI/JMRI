@@ -205,6 +205,40 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testSetLight2() {
+        Light light11 = InstanceManager.getDefault(LightManager.class).provide("IL11");
+        Light light12 = InstanceManager.getDefault(LightManager.class).provide("IL12");
+        NamedBeanHandle<Light> lightHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(light12.getDisplayName(), light12);
+        Light light13 = InstanceManager.getDefault(LightManager.class).provide("IL13");
+        Light light14 = InstanceManager.getDefault(LightManager.class).provide("IL14");
+        light14.setUserName("Some user name");
+        
+        expressionLight.setLight((Light)null);
+        Assert.assertNull("light handle is null", expressionLight.getLight());
+        
+        expressionLight.setLight(light11);
+        Assert.assertTrue("light is correct", light11 == expressionLight.getLight().getBean());
+        
+        expressionLight.setLight((Light)null);
+        Assert.assertNull("light handle is null", expressionLight.getLight());
+        
+        expressionLight.setLight(lightHandle12);
+        Assert.assertTrue("light handle is correct", lightHandle12 == expressionLight.getLight());
+        
+        expressionLight.setLight("A non existent light");
+        Assert.assertNull("light handle is null", expressionLight.getLight());
+        JUnitAppender.assertErrorMessage("light \"A non existent light\" is not found");
+        
+        expressionLight.setLight(light13.getSystemName());
+        Assert.assertTrue("light is correct", light13 == expressionLight.getLight().getBean());
+        
+        String userName = light14.getUserName();
+        Assert.assertNotNull("light is not null", userName);
+        expressionLight.setLight(userName);
+        Assert.assertTrue("light is correct", light14 == expressionLight.getLight().getBean());
+    }
+    
+    @Test
     public void testSetLightException() {
         // Test setLight() when listeners are registered
         Assert.assertNotNull("Light is not null", light);
@@ -212,7 +246,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         expressionLight.registerListeners();
         boolean thrown = false;
         try {
-            expressionLight.setLight((String)null);
+            expressionLight.setLight("A light");
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -283,7 +317,6 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalLightManager();
         
         _category = Category.ITEM;

@@ -208,13 +208,47 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testSetTurnout2() {
+        Turnout turnout11 = InstanceManager.getDefault(TurnoutManager.class).provide("IT11");
+        Turnout turnout12 = InstanceManager.getDefault(TurnoutManager.class).provide("IT12");
+        NamedBeanHandle<Turnout> turnoutHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnout12.getDisplayName(), turnout12);
+        Turnout turnout13 = InstanceManager.getDefault(TurnoutManager.class).provide("IT13");
+        Turnout turnout14 = InstanceManager.getDefault(TurnoutManager.class).provide("IT14");
+        turnout14.setUserName("Some user name");
+        
+        expressionTurnout.setTurnout((Turnout)null);
+        Assert.assertNull("turnout handle is null", expressionTurnout.getTurnout());
+        
+        expressionTurnout.setTurnout(turnout11);
+        Assert.assertTrue("turnout is correct", turnout11 == expressionTurnout.getTurnout().getBean());
+        
+        expressionTurnout.setTurnout((Turnout)null);
+        Assert.assertNull("turnout handle is null", expressionTurnout.getTurnout());
+        
+        expressionTurnout.setTurnout(turnoutHandle12);
+        Assert.assertTrue("turnout handle is correct", turnoutHandle12 == expressionTurnout.getTurnout());
+        
+        expressionTurnout.setTurnout("A non existent turnout");
+        Assert.assertNull("turnout handle is null", expressionTurnout.getTurnout());
+        JUnitAppender.assertErrorMessage("turnout \"A non existent turnout\" is not found");
+        
+        expressionTurnout.setTurnout(turnout13.getSystemName());
+        Assert.assertTrue("turnout is correct", turnout13 == expressionTurnout.getTurnout().getBean());
+        
+        String userName = turnout14.getUserName();
+        Assert.assertNotNull("turnout is not null", userName);
+        expressionTurnout.setTurnout(userName);
+        Assert.assertTrue("turnout is correct", turnout14 == expressionTurnout.getTurnout().getBean());
+    }
+    
+    @Test
     public void testSetTurnoutException() {
         Assert.assertNotNull("Turnout is not null", turnout);
         Assert.assertNotNull("Turnout is not null", expressionTurnout.getTurnout());
         expressionTurnout.registerListeners();
         boolean thrown = false;
         try {
-            expressionTurnout.setTurnout((String)null);
+            expressionTurnout.setTurnout("A turnout");
         } catch (RuntimeException ex) {
             thrown = true;
         }

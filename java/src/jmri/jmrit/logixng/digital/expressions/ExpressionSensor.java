@@ -6,14 +6,13 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import org.slf4j.Logger;
@@ -37,28 +36,22 @@ public class ExpressionSensor extends AbstractDigitalExpression
         super(sys, user);
     }
     
-    public void setSensor(String sensorName) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setSensor must not be called when listeners are registered");
-            log.error("setSensor must not be called when listeners are registered", e);
-            throw e;
-        }
+    public void setSensor(@Nonnull String sensorName) {
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
-        if (sensor != null) {
-            _sensorHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-        } else {
-            log.error("light {} is not found", sensorName);
-            _sensorHandle = null;
+        setSensor(sensor);
+        if (sensor == null) {
+            log.error("sensor \"{}\" is not found", sensorName);
         }
     }
     
-    public void setSensor(NamedBeanHandle<Sensor> handle) {
+    public void setSensor(@Nonnull NamedBeanHandle<Sensor> handle) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setSensor must not be called when listeners are registered");
             log.error("setSensor must not be called when listeners are registered", e);
             throw e;
         }
         _sensorHandle = handle;
+        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
     
     public void setSensor(@CheckForNull Sensor sensor) {
@@ -68,10 +61,14 @@ public class ExpressionSensor extends AbstractDigitalExpression
             throw e;
         }
         if (sensor != null) {
+            if (_sensorHandle != null) {
+                InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+            }
             _sensorHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(sensor.getDisplayName(), sensor);
         } else {
             _sensorHandle = null;
+            InstanceManager.sensorManagerInstance().removeVetoableChangeListener(this);
         }
     }
     

@@ -4,16 +4,17 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Light;
 import jmri.LightManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.util.ThreadingUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This action sets the state of a light.
@@ -30,31 +31,26 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         super(sys, user);
     }
     
-    public void setLightName(String lightName) {
+    public void setLight(String lightName) {
         Light light = InstanceManager.getDefault(LightManager.class).getLight(lightName);
-        if (light != null) {
-            _lightHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(lightName, light);
-            InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
-        } else {
-            _lightHandle = null;
-            InstanceManager.lightManagerInstance().removeVetoableChangeListener(this);
+        setLight(light);
+        if (light == null) {
+            log.error("light \"{}\" is not found", lightName);
         }
     }
     
-    public void setLight(NamedBeanHandle<Light> handle) {
+    public void setLight(@Nonnull NamedBeanHandle<Light> handle) {
         _lightHandle = handle;
-        if (_lightHandle != null) {
-            InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
-        } else {
-            InstanceManager.lightManagerInstance().removeVetoableChangeListener(this);
-        }
+        InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
     }
     
     public void setLight(@CheckForNull Light light) {
         if (light != null) {
+            if (_lightHandle != null) {
+                InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
+            }
             _lightHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(light.getDisplayName(), light);
-            InstanceManager.lightManagerInstance().addVetoableChangeListener(this);
         } else {
             _lightHandle = null;
             InstanceManager.lightManagerInstance().removeVetoableChangeListener(this);
@@ -84,7 +80,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Light) {
                 if (evt.getOldValue().equals(getLight().getBean())) {
-                    setLight((Light)null);
+                    ActionLight.this.setLight((Light)null);
                 }
             }
         }
@@ -211,5 +207,7 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
         }
         
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(ActionLight.class);
     
 }

@@ -4,16 +4,17 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.util.ThreadingUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This action sets the state of a sensor.
@@ -30,31 +31,26 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         super(sys, user);
     }
     
-    public void setSensorName(String sensorName) {
+    public void setSensor(String sensorName) {
         Sensor sensor = InstanceManager.getDefault(SensorManager.class).getSensor(sensorName);
-        if (sensor != null) {
-            _sensorHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensorName, sensor);
-            InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        } else {
-            _sensorHandle = null;
-            InstanceManager.sensorManagerInstance().removeVetoableChangeListener(this);
+        setSensor(sensor);
+        if (sensor == null) {
+            log.error("sensor \"{}\" is not found", sensorName);
         }
     }
     
-    public void setSensor(NamedBeanHandle<Sensor> handle) {
+    public void setSensor(@Nonnull NamedBeanHandle<Sensor> handle) {
         _sensorHandle = handle;
-        if (_sensorHandle != null) {
-            InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
-        } else {
-            InstanceManager.sensorManagerInstance().removeVetoableChangeListener(this);
-        }
+        InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
     }
     
     public void setSensor(@CheckForNull Sensor sensor) {
         if (sensor != null) {
+            if (_sensorHandle != null) {
+                InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
+            }
             _sensorHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(sensor.getDisplayName(), sensor);
-            InstanceManager.sensorManagerInstance().addVetoableChangeListener(this);
         } else {
             _sensorHandle = null;
             InstanceManager.sensorManagerInstance().removeVetoableChangeListener(this);
@@ -84,7 +80,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         } else if ("DoDelete".equals(evt.getPropertyName())) { // No I18N
             if (evt.getOldValue() instanceof Sensor) {
                 if (evt.getOldValue().equals(getSensor().getBean())) {
-                    setSensor((Sensor)null);
+                    ActionSensor.this.setSensor((Sensor)null);
                 }
             }
         }
@@ -213,5 +209,7 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
         }
         
     }
+    
+    private final static Logger log = LoggerFactory.getLogger(ActionSensor.class);
     
 }

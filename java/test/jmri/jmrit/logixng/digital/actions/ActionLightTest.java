@@ -17,6 +17,7 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -155,19 +156,20 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
         actionLight.setLight(light11);
         Assert.assertTrue("light is correct", light11 == actionLight.getLight().getBean());
         
-        actionLight.setLight((NamedBeanHandle<Light>)null);
+        actionLight.setLight((Light)null);
         Assert.assertNull("light handle is null", actionLight.getLight());
         
         actionLight.setLight(lightHandle12);
         Assert.assertTrue("light handle is correct", lightHandle12 == actionLight.getLight());
         
-        actionLight.setLightName("A non existent light");
+        actionLight.setLight("A non existent light");
         Assert.assertNull("light handle is null", actionLight.getLight());
+        JUnitAppender.assertErrorMessage("light \"A non existent light\" is not found");
         
-        actionLight.setLightName(light13.getSystemName());
+        actionLight.setLight(light13.getSystemName());
         Assert.assertTrue("light is correct", light13 == actionLight.getLight().getBean());
         
-        actionLight.setLightName(light14.getUserName());
+        actionLight.setLight(light14.getUserName());
         Assert.assertTrue("light is correct", light14 == actionLight.getLight().getBean());
     }
     

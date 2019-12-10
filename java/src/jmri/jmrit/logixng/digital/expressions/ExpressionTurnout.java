@@ -6,14 +6,13 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
-import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import org.slf4j.Logger;
@@ -37,22 +36,15 @@ public class ExpressionTurnout extends AbstractDigitalExpression
         super(sys, user);
     }
     
-    public void setTurnout(String turnoutName) {
-        if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setTurnout must not be called when listeners are registered");
-            log.error("setTurnout must not be called when listeners are registered", e);
-            throw e;
-        }
+    public void setTurnout(@Nonnull String turnoutName) {
         Turnout turnout = InstanceManager.getDefault(TurnoutManager.class).getTurnout(turnoutName);
-        if (turnout != null) {
-            _turnoutHandle = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnoutName, turnout);
-        } else {
-            log.error("turnout {} is not found", turnoutName);
-            _turnoutHandle = null;
+        setTurnout(turnout);
+        if (turnout == null) {
+            log.error("turnout \"{}\" is not found", turnoutName);
         }
     }
     
-    public void setTurnout(NamedBeanHandle<Turnout> handle) {
+    public void setTurnout(@Nonnull NamedBeanHandle<Turnout> handle) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setTurnout must not be called when listeners are registered");
             log.error("setTurnout must not be called when listeners are registered", e);
@@ -68,10 +60,14 @@ public class ExpressionTurnout extends AbstractDigitalExpression
             throw e;
         }
         if (turnout != null) {
+            if (_turnoutHandle != null) {
+                InstanceManager.turnoutManagerInstance().addVetoableChangeListener(this);
+            }
             _turnoutHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                     .getNamedBeanHandle(turnout.getDisplayName(), turnout);
         } else {
             _turnoutHandle = null;
+            InstanceManager.turnoutManagerInstance().removeVetoableChangeListener(this);
         }
     }
     
