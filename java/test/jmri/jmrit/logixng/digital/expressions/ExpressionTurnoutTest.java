@@ -186,6 +186,27 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         turnout.setCommandedState(Turnout.THROWN);
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        // Clear the atomic boolean.
+        atomicBoolean.set(false);
+        // Close the switch. This should not execute the conditional.
+        turnout.setCommandedState(Turnout.CLOSED);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        
+        // Test IS_NOT
+        expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        // Throw the switch. This should not execute the conditional.
+        turnout.setCommandedState(Turnout.THROWN);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        // Close the switch. This should not execute the conditional.
+        turnout.setCommandedState(Turnout.CLOSED);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        
+        // Test reset(). The method ExpressionTurnout.reset() doesn't do
+        // anything so we only call it for coverage.
+        expressionTurnout.reset();
     }
     
     @Test
@@ -257,7 +278,10 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         
         thrown = false;
         try {
-            expressionTurnout.setTurnout((NamedBeanHandle<Turnout>)null);
+            Turnout turnout99 = InstanceManager.getDefault(TurnoutManager.class).provide("IT99");
+            NamedBeanHandle<Turnout> turnoutHandle99 =
+                    InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnout99.getDisplayName(), turnout99);
+            expressionTurnout.setTurnout(turnoutHandle99);
         } catch (RuntimeException ex) {
             thrown = true;
         }

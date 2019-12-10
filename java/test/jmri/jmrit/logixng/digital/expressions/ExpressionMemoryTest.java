@@ -263,7 +263,10 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         
         thrown = false;
         try {
-            expressionMemory.setMemory((NamedBeanHandle<Memory>)null);
+            Memory memory99 = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
+            NamedBeanHandle<Memory> memoryHandle99 =
+                    InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memory99.getDisplayName(), memory99);
+            expressionMemory.setMemory(memoryHandle99);
         } catch (RuntimeException ex) {
             thrown = true;
         }

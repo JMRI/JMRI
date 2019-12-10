@@ -168,7 +168,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Throw the switch. This should not execute the conditional.
+        // Turn the light on. This should not execute the conditional.
         light.setCommandedState(Light.ON);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
@@ -179,10 +179,31 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Throw the switch. This should execute the conditional.
+        // Turn the light on. This should execute the conditional.
         light.setCommandedState(Light.ON);
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        // Clear the atomic boolean.
+        atomicBoolean.set(false);
+        // Turn the light off. This should not execute the conditional.
+        light.setCommandedState(Light.OFF);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        
+        // Test IS_NOT
+        expressionLight.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        // Turn the light on. This should not execute the conditional.
+        light.setCommandedState(Light.ON);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        // Turn the light off. This should not execute the conditional.
+        light.setCommandedState(Light.OFF);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        
+        // Test reset(). The method ExpressionLight.reset() doesn't do
+        // anything so we only call it for coverage.
+        expressionLight.reset();
     }
     
     @Test
@@ -255,7 +276,10 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         
         thrown = false;
         try {
-            expressionLight.setLight((NamedBeanHandle<Light>)null);
+            Light light99 = InstanceManager.getDefault(LightManager.class).provide("IL99");
+            NamedBeanHandle<Light> lightHandle99 =
+                    InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(light99.getDisplayName(), light99);
+            expressionLight.setLight(lightHandle99);
         } catch (RuntimeException ex) {
             thrown = true;
         }

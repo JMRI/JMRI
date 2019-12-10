@@ -172,21 +172,42 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Throw the switch. This should not execute the conditional.
+        // Activate the sensor. This should not execute the conditional.
         sensor.setCommandedState(Sensor.ACTIVE);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Close the switch. This should not execute the conditional.
+        // Inactivate the sensor. This should not execute the conditional.
         sensor.setCommandedState(Sensor.INACTIVE);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Throw the switch. This should execute the conditional.
+        // Activate the sensor. This should execute the conditional.
         sensor.setCommandedState(Sensor.ACTIVE);
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        // Clear the atomic boolean.
+        atomicBoolean.set(false);
+        // Inactivate the sensor. This should not execute the conditional.
+        sensor.setCommandedState(Sensor.INACTIVE);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        
+        // Test IS_NOT
+        expressionSensor.set_Is_IsNot(Is_IsNot_Enum.IS_NOT);
+        // Activate the sensor. This should not execute the conditional.
+        sensor.setCommandedState(Sensor.ACTIVE);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        // Inactivate the sensor. This should not execute the conditional.
+        sensor.setCommandedState(Sensor.INACTIVE);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        
+        // Test reset(). The method ExpressionSensor.reset() doesn't do
+        // anything so we only call it for coverage.
+        expressionSensor.reset();
     }
     
     @Test
@@ -261,7 +282,10 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         
         thrown = false;
         try {
-            expressionSensor.setSensor((NamedBeanHandle<Sensor>)null);
+            Sensor sensor99 = InstanceManager.getDefault(SensorManager.class).provide("IS99");
+            NamedBeanHandle<Sensor> sensorHandle99 =
+                    InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(sensor99.getDisplayName(), sensor99);
+            expressionSensor.setSensor(sensorHandle99);
         } catch (RuntimeException ex) {
             thrown = true;
         }
