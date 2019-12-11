@@ -5,6 +5,8 @@ import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.script.Bindings;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
@@ -30,7 +32,7 @@ public class ExpressionScript extends AbstractDigitalExpression
     private AbstractScriptDigitalExpression _scriptClass;
     private boolean _listenersAreRegistered = false;
 
-    public ExpressionScript(String sys, String user)
+    public ExpressionScript(@Nonnull String sys, @CheckForNull String user)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
     }
@@ -49,6 +51,8 @@ public class ExpressionScript extends AbstractDigitalExpression
             _scriptClass = params._scriptClass.get();
         } catch (ScriptException e) {
             log.error("cannot load script", e);
+            _scriptText = null;
+            _scriptClass = null;
         }
         
         if (_scriptClass == null) {
@@ -56,7 +60,7 @@ public class ExpressionScript extends AbstractDigitalExpression
         }
     }
     
-    public void setScript(String script) {
+    public void setScript(@Nonnull String script) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setScript must not be called when listeners are registered");
             log.error("setScript must not be called when listeners are registered", e);
@@ -71,7 +75,7 @@ public class ExpressionScript extends AbstractDigitalExpression
     }
     
     @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+    public void vetoableChange(@Nonnull java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
         _scriptClass.vetoableChange(evt);
     }
     
@@ -110,12 +114,12 @@ public class ExpressionScript extends AbstractDigitalExpression
     }
 
     @Override
-    public String getShortDescription(Locale locale) {
+    public String getShortDescription(@Nonnull Locale locale) {
         return Bundle.getMessage(locale, "Script_Short");
     }
 
     @Override
-    public String getLongDescription(Locale locale) {
+    public String getLongDescription(@Nonnull Locale locale) {
         return Bundle.getMessage(locale, "Script_Long");
     }
     
@@ -145,7 +149,7 @@ public class ExpressionScript extends AbstractDigitalExpression
     
     /** {@inheritDoc} */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(@Nonnull PropertyChangeEvent evt) {
         getConditionalNG().execute();
     }
     
@@ -163,7 +167,7 @@ public class ExpressionScript extends AbstractDigitalExpression
         
         public final DigitalExpression _parentExpression;
         
-        public ScriptParams(DigitalExpression parentExpression) {
+        public ScriptParams(@Nonnull DigitalExpression parentExpression) {
             _parentExpression  = parentExpression;
         }
     }

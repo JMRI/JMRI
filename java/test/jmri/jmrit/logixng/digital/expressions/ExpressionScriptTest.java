@@ -191,16 +191,30 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // Test setScript() when listeners are registered
         Assert.assertNotNull("Script is not null", _scriptText);
         expressionScript.setScript(_scriptText);
-        
         Assert.assertNotNull("Script is not null", expressionScript.getScriptText());
+        
+        // Test bad script
+        expressionScript.setScript("This is a bad script");
+        Assert.assertNull("Script is null", expressionScript.getScriptText());
+        JUnitAppender.assertErrorMessage("cannot load script");
+        
+        // Test script that did not initialized params._scriptClass
+        expressionScript.unregisterListeners();
+        expressionScript.setScript("");
+        JUnitAppender.assertErrorMessage("script has not initialized params._scriptClass");
+        
+        // Test setScript() when listeners are registered
+        Assert.assertNotNull("Script is not null", expressionScript.getScriptText());
+        expressionScript.setScript(_scriptText);    // The expressionScript needs a script to register listeners
         expressionScript.registerListeners();
-        boolean thrown = false;
+        boolean hasThrown = false;
         try {
-            expressionScript.setScript(null);
+            expressionScript.setScript(_scriptText);
         } catch (RuntimeException ex) {
-            thrown = true;
+            hasThrown = true;
         }
-        Assert.assertTrue("Expected exception thrown", thrown);
+        Assert.assertTrue("Expected exception thrown", hasThrown);
+        JUnitAppender.assertErrorMessage("script has not initialized params._scriptClass");
         JUnitAppender.assertErrorMessage("setScript must not be called when listeners are registered");
     }
     
