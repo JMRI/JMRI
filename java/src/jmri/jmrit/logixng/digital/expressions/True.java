@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.digital.expressions;
 
-import java.util.List;
 import java.util.Locale;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
@@ -17,11 +16,6 @@ public class True extends AbstractDigitalExpression {
         super(sys, user);
     }
     
-    public True(String sys, String user, List<String> childrenSystemNames)
-            throws BadUserNameException, BadSystemNameException {
-        super(sys, user);
-    }
-
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
