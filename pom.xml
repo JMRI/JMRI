@@ -646,9 +646,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>      
-                        <configuration>
-                            <dataFile>${jacoco.reportDir}jacoco-unit.exec</dataFile>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>default-check</id>
