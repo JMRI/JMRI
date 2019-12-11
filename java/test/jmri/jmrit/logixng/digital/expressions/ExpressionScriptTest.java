@@ -201,8 +201,11 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // Listerners are not registered so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         
-        // Test execute() without script
+        // Test execute() without script. This shouldn't do anything but we
+        // do it for coverage.
         expressionScript.setScript(null);
+        expressionScript.evaluate();
+/*        
         // Register listeners
         expressionScript.registerListeners();
         atomicBoolean.set(false);
@@ -212,6 +215,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         light.setCommandedState(Light.ON);
         // Listerners are not registered so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+*/
     }
     
     @Test
