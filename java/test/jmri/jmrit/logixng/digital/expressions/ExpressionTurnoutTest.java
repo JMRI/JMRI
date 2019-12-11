@@ -154,6 +154,10 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.OTHER == ExpressionTurnout.TurnoutState.get(Turnout.UNKNOWN));
         Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.OTHER == ExpressionTurnout.TurnoutState.get(Turnout.INCONSISTENT));
         Assert.assertTrue("objects are equal", ExpressionTurnout.TurnoutState.OTHER == ExpressionTurnout.TurnoutState.get(-1));
+        
+        Assert.assertEquals("ID matches", Turnout.CLOSED, ExpressionTurnout.TurnoutState.CLOSED.getID());
+        Assert.assertEquals("ID matches", Turnout.THROWN, ExpressionTurnout.TurnoutState.THROWN.getID());
+        Assert.assertEquals("ID matches", -1, ExpressionTurnout.TurnoutState.OTHER.getID());
     }
     
     @Test

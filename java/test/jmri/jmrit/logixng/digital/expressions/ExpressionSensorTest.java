@@ -154,6 +154,10 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.OTHER == ExpressionSensor.SensorState.get(Sensor.UNKNOWN));
         Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.OTHER == ExpressionSensor.SensorState.get(Sensor.INCONSISTENT));
         Assert.assertTrue("objects are equal", ExpressionSensor.SensorState.OTHER == ExpressionSensor.SensorState.get(-1));
+        
+        Assert.assertEquals("ID matches", Sensor.INACTIVE, ExpressionSensor.SensorState.INACTIVE.getID());
+        Assert.assertEquals("ID matches", Sensor.ACTIVE, ExpressionSensor.SensorState.ACTIVE.getID());
+        Assert.assertEquals("ID matches", -1, ExpressionSensor.SensorState.OTHER.getID());
     }
     
     @Test
