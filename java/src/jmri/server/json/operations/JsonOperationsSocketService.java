@@ -15,7 +15,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Locale;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
@@ -35,6 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
+import jmri.server.json.JsonRequest;
 import jmri.server.json.JsonSocketService;
 
 /**
@@ -52,7 +52,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     private final HashMap<String, EngineListener> engineListeners = new HashMap<>();
     private final EnginesListener enginesListener = new EnginesListener();
 
-    private final static Logger log = LoggerFactory.getLogger(JsonOperationsSocketService.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonOperationsSocketService.class);
 
     public JsonOperationsSocketService(JsonConnection connection) {
         this(connection, new JsonOperationsHttpService(connection.getObjectMapper()));
@@ -63,39 +63,38 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale, int id)
+    public void onMessage(String type, JsonNode data, String method, JsonRequest request)
             throws IOException, JmriException, JsonException {
-        this.setLocale(locale);
         String name = data.path(JSON.NAME).asText();
         // add listener to name if not already listening
         if (!method.equals(JSON.DELETE)) {
             switch (type) {
                 case TRAIN:
-                    if (!this.trainListeners.containsKey(name)) {
-                        this.trainListeners.put(name, new TrainListener(name));
+                    if (!trainListeners.containsKey(name)) {
+                        trainListeners.put(name, new TrainListener(name));
                         InstanceManager.getDefault(TrainManager.class).getTrainById(name)
-                                .addPropertyChangeListener(this.trainListeners.get(name));
+                                .addPropertyChangeListener(trainListeners.get(name));
                     }
                     break;
                 case CAR:
-                    if (!this.carListeners.containsKey(name)) {
-                        this.carListeners.put(name, new CarListener(name));
+                    if (!carListeners.containsKey(name)) {
+                        carListeners.put(name, new CarListener(name));
                         InstanceManager.getDefault(CarManager.class).getById(name)
-                                .addPropertyChangeListener(this.carListeners.get(name));
+                                .addPropertyChangeListener(carListeners.get(name));
                     }
                     break;
                 case LOCATION:
-                    if (!this.locationListeners.containsKey(name)) {
-                        this.locationListeners.put(name, new LocationListener(name));
+                    if (!locationListeners.containsKey(name)) {
+                        locationListeners.put(name, new LocationListener(name));
                         InstanceManager.getDefault(LocationManager.class).getLocationById(name)
-                                .addPropertyChangeListener(this.locationListeners.get(name));
+                                .addPropertyChangeListener(locationListeners.get(name));
                     }
                     break;
                 case ENGINE:
-                    if (!this.engineListeners.containsKey(name)) {
-                        this.engineListeners.put(name, new EngineListener(name));
+                    if (!engineListeners.containsKey(name)) {
+                        engineListeners.put(name, new EngineListener(name));
                         InstanceManager.getDefault(EngineManager.class).getById(name)
-                                .addPropertyChangeListener(this.engineListeners.get(name));
+                                .addPropertyChangeListener(engineListeners.get(name));
                     }
                     break;
                 default:
@@ -105,24 +104,23 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         }
         switch (method) {
             case JSON.GET:
-                connection.sendMessage(service.doGet(type, name, data, locale, id), id);
+                connection.sendMessage(service.doGet(type, name, data, request), request.id);
                 break;
             case JSON.DELETE:
-                service.doDelete(type, name, data, locale, id);
+                service.doDelete(type, name, data, request);
                 break;
             case JSON.PUT:
-                connection.sendMessage(service.doPut(type, name, data, locale, id), id);
+                connection.sendMessage(service.doPut(type, name, data, request), request.id);
                 break;
             case JSON.POST:
             default:
-                connection.sendMessage(service.doPost(type, name, data, locale, id), id);
+                connection.sendMessage(service.doPost(type, name, data, request), request.id);
         }
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
-        this.setLocale(locale);
-        this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
+    public void onList(String type, JsonNode data, JsonRequest request) throws IOException, JmriException, JsonException {
+        connection.sendMessage(service.doGetList(type, data, request), request.id);
         switch (type) {
             case TRAIN:
             case TRAINS:
@@ -154,51 +152,49 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
     }
 
     private void addListenersToTrains() {
-        InstanceManager.getDefault(TrainManager.class).getTrainsByIdList().stream().forEach((t) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(TrainManager.class).getTrainsByIdList().stream().forEach(t -> { //add listeners to each child (if not already)
             if (!trainListeners.containsKey(t.getId())) {
                 log.debug("adding TrainListener for Train ID '{}'", t.getId());
                 trainListeners.put(t.getId(), new TrainListener(t.getId()));
-                t.addPropertyChangeListener(this.trainListeners.get(t.getId()));
+                t.addPropertyChangeListener(trainListeners.get(t.getId()));
             }
         });
     }
 
     private void addListenersToCars() {
-        InstanceManager.getDefault(CarManager.class).getByIdList().stream().forEach((t) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(CarManager.class).getByIdList().stream().forEach(t -> { //add listeners to each child (if not already)
             if (!carListeners.containsKey(t.getId())) {
                 log.debug("adding CarListener for Car ID '{}'", t.getId());
                 carListeners.put(t.getId(), new CarListener(t.getId()));
-                t.addPropertyChangeListener(this.carListeners.get(t.getId()));
+                t.addPropertyChangeListener(carListeners.get(t.getId()));
             }
         });
     }
 
     private void addListenersToLocations() {
-        InstanceManager.getDefault(LocationManager.class).getLocationsByIdList().stream().forEach((t) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(LocationManager.class).getLocationsByIdList().stream().forEach(t -> { //add listeners to each child (if not already)
             if (!locationListeners.containsKey(t.getId())) {
                 log.debug("adding LocationListener for Location ID '{}'", t.getId());
                 locationListeners.put(t.getId(), new LocationListener(t.getId()));
-                t.addPropertyChangeListener(this.locationListeners.get(t.getId()));
+                t.addPropertyChangeListener(locationListeners.get(t.getId()));
             }
         });
     }
 
     private void addListenersToEngines() {
-        InstanceManager.getDefault(EngineManager.class).getByIdList().stream().forEach((t) -> { //add listeners to each child (if not already)
+        InstanceManager.getDefault(EngineManager.class).getByIdList().stream().forEach(t -> { //add listeners to each child (if not already)
             if (!engineListeners.containsKey(t.getId())) {
                 log.debug("adding EngineListener for Engine ID '{}'", t.getId());
                 engineListeners.put(t.getId(), new EngineListener(t.getId()));
-                t.addPropertyChangeListener(this.engineListeners.get(t.getId()));
+                t.addPropertyChangeListener(engineListeners.get(t.getId()));
             }
         });
     }
 
     @Override
     public void onClose() {
-        this.trainListeners.values().forEach((listener) -> {
-            listener.train.removePropertyChangeListener(listener);
-        });
-        this.trainListeners.clear();
+        trainListeners.values().forEach(listener -> listener.train.removePropertyChangeListener(listener));
+        trainListeners.clear();
         InstanceManager.getDefault(TrainManager.class).removePropertyChangeListener(trainsListener);
     }
 
@@ -207,17 +203,17 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         protected final Train train;
 
         protected TrainListener(String id) {
-            this.train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
+            train = InstanceManager.getDefault(TrainManager.class).getTrainById(id);
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in TrainListener for '{}' '{}' ('{}'=>'{}')", this.train.getId(), evt.getPropertyName(),
+            log.debug("in TrainListener for '{}' '{}' ('{}'=>'{}')", train.getId(), evt.getPropertyName(),
                     evt.getOldValue(), evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGet(TRAIN, this.train.getId(),
-                            connection.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
+                    connection.sendMessage(service.doGet(TRAIN, train.getId(),
+                            connection.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
                 } catch (JsonException ex) {
                     log.warn("json error sending Train: {}", ex.getJsonMessage());
                     connection.sendMessage(ex.getJsonMessage(), 0);
@@ -225,8 +221,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             } catch (IOException ex) {
                 // if we get an error, de-register
                 log.debug("deregistering trainListener due to IOException");
-                this.train.removePropertyChangeListener(this);
-                trainListeners.remove(this.train.getId());
+                train.removePropertyChangeListener(this);
+                trainListeners.remove(train.getId());
             }
         }
     }
@@ -239,7 +235,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGetList(TRAINS, service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
+                    connection.sendMessage(service.doGetList(TRAINS, service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToTrains();
@@ -261,17 +257,17 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         protected final Car car;
 
         protected CarListener(String id) {
-            this.car = InstanceManager.getDefault(CarManager.class).getById(id);
+            car = InstanceManager.getDefault(CarManager.class).getById(id);
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in CarListener for '{}' '{}' ('{}'=>'{}')", this.car.getId(), evt.getPropertyName(),
+            log.debug("in CarListener for '{}' '{}' ('{}'=>'{}')", car.getId(), evt.getPropertyName(),
                     evt.getOldValue(), evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGet(CAR, this.car.getId(),
-                            connection.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
+                    connection.sendMessage(service.doGet(CAR, car.getId(),
+                            connection.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
                 } catch (JsonException ex) {
                     log.warn("json error sending Car: {}", ex.getJsonMessage());
                     connection.sendMessage(ex.getJsonMessage(), 0);
@@ -279,8 +275,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             } catch (IOException ex) {
                 // if we get an error, de-register
                 log.debug("deregistering carListener due to IOException");
-                this.car.removePropertyChangeListener(this);
-                carListeners.remove(this.car.getId());
+                car.removePropertyChangeListener(this);
+                carListeners.remove(car.getId());
             }
         }
     }
@@ -293,7 +289,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGetList(CARS, service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
+                    connection.sendMessage(service.doGetList(CARS, service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("RollingStockListLength")) { // NOI18N
                         addListenersToCars();
@@ -315,12 +311,12 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         protected final Location location;
 
         protected LocationListener(String id) {
-            this.location = InstanceManager.getDefault(LocationManager.class).getLocationById(id);
+            location = InstanceManager.getDefault(LocationManager.class).getLocationById(id);
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in LocationListener for '{}' '{}' ('{}'=>'{}')", this.location.getId(), evt.getPropertyName(),
+            log.debug("in LocationListener for '{}' '{}' ('{}'=>'{}')", location.getId(), evt.getPropertyName(),
                     evt.getOldValue(), evt.getNewValue());
             //only send changes to properties that are included in object
             if (evt.getPropertyName().equals(JSON.ID) ||
@@ -329,9 +325,9 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getPropertyName().equals(LOCATION_COMMENT)) {
                 try {
                     try {
-                        connection.sendMessage(service.doGet(LOCATION, this.location.getId(),
-                                connection.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
-                        log.debug(" sent Location '{}'", this.location.getId());
+                        connection.sendMessage(service.doGet(LOCATION, location.getId(),
+                                connection.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
+                        log.debug(" sent Location '{}'", location.getId());
                     } catch (JsonException ex) {
                         log.warn("json error sending Location: {}", ex.getJsonMessage());
                         connection.sendMessage(ex.getJsonMessage(), 0);
@@ -339,8 +335,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                 } catch (IOException ex) {
                     // if we get an error, de-register
                     log.debug("deregistering locationListener due to IOException");
-                    this.location.removePropertyChangeListener(this);
-                    locationListeners.remove(this.location.getId());
+                    location.removePropertyChangeListener(this);
+                    locationListeners.remove(location.getId());
                 }
             }
         }
@@ -354,7 +350,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGetList(LOCATIONS, service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
+                    connection.sendMessage(service.doGetList(LOCATIONS, service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("length")) { // NOI18N
                         addListenersToLocations();
@@ -376,17 +372,17 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
         protected final Engine engine;
 
         protected EngineListener(String id) {
-            this.engine = InstanceManager.getDefault(EngineManager.class).getById(id);
+            engine = InstanceManager.getDefault(EngineManager.class).getById(id);
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
-            log.debug("in EngineListener for '{}' '{}' ('{}'=>'{}')", this.engine.getId(), evt.getPropertyName(),
+            log.debug("in EngineListener for '{}' '{}' ('{}'=>'{}')", engine.getId(), evt.getPropertyName(),
                     evt.getOldValue(), evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGet(ENGINE, this.engine.getId(),
-                            connection.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
+                    connection.sendMessage(service.doGet(ENGINE, engine.getId(),
+                            connection.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
                 } catch (JsonException ex) {
                     log.warn("json error sending Engine: {}", ex.getJsonMessage());
                     connection.sendMessage(ex.getJsonMessage(), 0);
@@ -394,8 +390,8 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
             } catch (IOException ex) {
                 // if we get an error, de-register
                 log.debug("deregistering engineListener due to IOException");
-                this.engine.removePropertyChangeListener(this);
-                carListeners.remove(this.engine.getId());
+                engine.removePropertyChangeListener(this);
+                carListeners.remove(engine.getId());
             }
         }
     }
@@ -408,7 +404,7 @@ public class JsonOperationsSocketService extends JsonSocketService<JsonOperation
                     evt.getNewValue());
             try {
                 try {
-                    connection.sendMessage(service.doGetList(ENGINES, service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
+                    connection.sendMessage(service.doGetList(ENGINES, service.getObjectMapper().createObjectNode(), new JsonRequest(getLocale(), getVersion(), 0)), 0);
                     //child added or removed, reset listeners
                     if (evt.getPropertyName().equals("RollingStockListLength")) { // NOI18N
                         addListenersToEngines();

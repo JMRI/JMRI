@@ -19,6 +19,7 @@ import jmri.InstanceManagerAutoDefault;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonRequest;
 import jmri.spi.JsonServiceFactory;
 
 /**
@@ -40,7 +41,8 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     public JsonSchemaServiceCache() {
         Map<String, String> map = new HashMap<>();
         try {
-            for (JsonNode mapping : mapper.readTree(JsonSchemaServiceCache.class.getResource("/jmri/server/json/schema-map.json"))) {
+            for (JsonNode mapping : mapper
+                    .readTree(JsonSchemaServiceCache.class.getResource("/jmri/server/json/schema-map.json"))) {
                 map.put(mapping.get("publicURL").asText(),
                         mapping.get("localURL").asText());
             }
@@ -52,7 +54,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
 
     @Nonnull
     public synchronized Set<JsonHttpService> getServices(@Nonnull String type) {
-        this.cacheServices();
+        cacheServices();
         return services.getOrDefault(type, new HashSet<>());
     }
 
@@ -64,9 +66,9 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      */
     @Nonnull
     public synchronized Set<String> getTypes() {
-        this.cacheServices();
-        Set<String> set = this.getClientTypes();
-        set.addAll(this.getServerTypes());
+        cacheServices();
+        Set<String> set = getClientTypes();
+        set.addAll(getServerTypes());
         return set;
     }
 
@@ -77,8 +79,8 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      */
     @Nonnull
     public synchronized Set<String> getClientTypes() {
-        this.cacheServices();
-        return new HashSet<>(this.clientTypes);
+        cacheServices();
+        return new HashSet<>(clientTypes);
     }
 
     /**
@@ -88,53 +90,95 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      */
     @Nonnull
     public synchronized Set<String> getServerTypes() {
-        this.cacheServices();
-        return new HashSet<>(this.serverTypes);
+        cacheServices();
+        return new HashSet<>(serverTypes);
+    }
+
+    /**
+     * Get the client schema for JSON messages or for specific JSON data schema.
+     *
+     * @param type    the type; use {@link JSON#JSON} to get the schema for
+     *                messages, or any other value for a data schema
+     * @param request the JSON request
+     * @return the requested schema
+     * @throws JsonException            if unable to get schema due to errors
+     *                                  processing schema
+     * @throws IllegalArgumentException if no JSON service provides schemas for
+     *                                  type
+     */
+    @Nonnull
+    public JsonSchema getClientSchema(@Nonnull String type, @Nonnull JsonRequest request) throws JsonException {
+        return getSchema(type, false, clientSchemas, request);
     }
 
     /**
      * Get the client schema for JSON messages or for specific JSON data schema.
      *
      * @param type   the type; use {@link JSON#JSON} to get the schema for
-     *                   messages, or any other value for a data schema
+     *               messages, or any other value for a data schema
      * @param locale the locale for error messages, if any
      * @param id     message id set by client
      * @return the requested schema
      * @throws JsonException            if unable to get schema due to errors
-     *                                      processing schema
+     *                                  processing schema
      * @throws IllegalArgumentException if no JSON service provides schemas for
-     *                                      type
+     *                                  type
+     * @deprecated since 4.19.2; use
+     *             {@link #getClientSchema(String, JsonRequest)} instead
      */
+    @Deprecated
     @Nonnull
     public JsonSchema getClientSchema(@Nonnull String type, @Nonnull Locale locale, int id) throws JsonException {
-        return this.getSchema(type, false, locale, this.clientSchemas, id);
+        return getClientSchema(type, new JsonRequest(locale, JSON.V5, id));
+    }
+
+    /**
+     * Get the server schema for JSON messages or for specific JSON data schema.
+     *
+     * @param type    the type; use {@link JSON#JSON} to get the schema for
+     *                messages, or any other value for a data schema
+     * @param request the JSON request
+     * @return the requested schema
+     * @throws JsonException            if unable to get schema due to errors
+     *                                  processing schema
+     * @throws IllegalArgumentException if no JSON service provides schemas for
+     *                                  type
+     */
+    @Nonnull
+    public JsonSchema getServerSchema(@Nonnull String type, @Nonnull JsonRequest request) throws JsonException {
+        return getSchema(type, true, serverSchemas, request);
     }
 
     /**
      * Get the server schema for JSON messages or for specific JSON data schema.
      *
      * @param type   the type; use {@link JSON#JSON} to get the schema for
-     *                   messages, or any other value for a data schema
+     *               messages, or any other value for a data schema
      * @param locale the locale for error messages, if any
      * @param id     message id set by client
      * @return the requested schema
      * @throws JsonException            if unable to get schema due to errors
-     *                                      processing schema
+     *                                  processing schema
      * @throws IllegalArgumentException if no JSON service provides schemas for
-     *                                      type
+     *                                  type
+     * @deprecated since 4.19.2; use
+     *             {@link #getServerSchema(String, JsonRequest)} instead
      */
+    @Deprecated
     @Nonnull
     public JsonSchema getServerSchema(@Nonnull String type, @Nonnull Locale locale, int id) throws JsonException {
-        return this.getSchema(type, true, locale, this.serverSchemas, id);
+        return getServerSchema(type, new JsonRequest(locale, JSON.V5, id));
     }
 
-    private synchronized JsonSchema getSchema(@Nonnull String type, boolean server, @Nonnull Locale locale, @Nonnull Map<String, JsonSchema> map, int id) throws JsonException {
-        this.cacheServices();
+    private synchronized JsonSchema getSchema(@Nonnull String type, boolean server,
+            @Nonnull Map<String, JsonSchema> map, @Nonnull JsonRequest request) throws JsonException {
+        cacheServices();
         JsonSchema result = map.get(type);
         if (result == null) {
-            for (JsonHttpService service : this.getServices(type)) {
+            for (JsonHttpService service : getServices(type)) {
                 log.debug("Processing {} with {}", type, service);
-                result = JsonSchemaFactory.getInstance().getSchema(service.doSchema(type, server, locale, id).path(JSON.DATA).path(JSON.SCHEMA), config);
+                result = JsonSchemaFactory.getInstance()
+                        .getSchema(service.doSchema(type, server, request).path(JSON.DATA).path(JSON.SCHEMA), config);
                 if (result != null) {
                     map.put(type, result);
                     break;
@@ -153,71 +197,109 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      *
      * @param message the message to validate
      * @param server  true if message is from the JSON server; false otherwise
-     * @param locale  the locale for any exceptions that need to be reported to
-     *                clients
-     * @param id      the id to be included with any exceptions reported to
-     *                clients
+     * @param request the JSON request
      * @throws JsonException if the message does not validate
      */
-    public void validateMessage(@Nonnull JsonNode message, boolean server, @Nonnull Locale locale, int id) throws JsonException {
-        log.trace("validateMessage(\"{}\", \"{}\", \"{}\", ...)", message, server, locale);
-        Map<String, JsonSchema> map = server ? this.serverSchemas : this.clientSchemas;
-        this.validateJsonNode(message, JSON.JSON, server, locale, map, id);
+    public void validateMessage(@Nonnull JsonNode message, boolean server, @Nonnull JsonRequest request)
+            throws JsonException {
+        log.trace("validateMessage(\"{}\", \"{}\", \"{}\", ...)", message, server, request);
+        Map<String, JsonSchema> map = server ? serverSchemas : clientSchemas;
+        validateJsonNode(message, JSON.JSON, server, map, request);
         if (message.isArray()) {
             for (JsonNode item : message) {
-                this.validateMessage(item, server, locale, id);
+                validateMessage(item, server, request);
             }
         } else {
             String type = message.path(JSON.TYPE).asText();
             JsonNode data = message.path(JSON.DATA);
             if (!data.isMissingNode()) {
                 if (!data.isArray()) {
-                    this.validateJsonNode(data, type, server, locale, map, id);
+                    validateJsonNode(data, type, server, map, request);
                 } else {
-                    this.validateMessage(data, server, locale, id);
+                    validateMessage(data, server, request);
                 }
             }
         }
     }
 
     /**
-     * Validate a JSON data object against the schema for JSON messages and data.
+     * Validate a JSON message against the schema for JSON messages and data.
      *
-     * @param type    the type of data object
-     * @param data    the data object to validate
+     * @param message the message to validate
      * @param server  true if message is from the JSON server; false otherwise
      * @param locale  the locale for any exceptions that need to be reported to
      *                clients
      * @param id      the id to be included with any exceptions reported to
      *                clients
      * @throws JsonException if the message does not validate
+     * @deprecated since 4.19.2; use
+     *             {@link #validateMessage(JsonNode, boolean, JsonRequest)}
+     *             instead
      */
-    public void validateData(@Nonnull String type, @Nonnull JsonNode data, boolean server, @Nonnull Locale locale, int id) throws JsonException {
-        log.trace("validateData(\"{}\", \"{}\", \"{}\", \"{}\", ...)", type, data, server, locale);
-        Map<String, JsonSchema> map = server ? this.serverSchemas : this.clientSchemas;
+    @Deprecated
+    public void validateMessage(@Nonnull JsonNode message, boolean server, @Nonnull Locale locale, int id)
+            throws JsonException {
+        validateMessage(message, server, new JsonRequest(locale, JSON.V5, id));
+    }
+
+    /**
+     * Validate a JSON data object against the schema for JSON messages and
+     * data.
+     *
+     * @param type   the type of data object
+     * @param data   the data object to validate
+     * @param server true if message is from the JSON server; false otherwise
+     * @param request the JSON request
+     * @throws JsonException if the message does not validate
+     */
+    public void validateData(@Nonnull String type, @Nonnull JsonNode data, boolean server, @Nonnull JsonRequest request) throws JsonException {
+        log.trace("validateData(\"{}\", \"{}\", \"{}\", \"{}\", ...)", type, data, server, request);
+        Map<String, JsonSchema> map = server ? serverSchemas : clientSchemas;
         if (data.isArray()) {
             for (JsonNode item : data) {
-                validateData(type, item, server, locale, id);
+                validateData(type, item, server, request);
             }
         } else {
-            validateJsonNode(data, type, server, locale, map, id);
+            validateJsonNode(data, type, server, map, request);
         }
     }
 
-    private void validateJsonNode(@Nonnull JsonNode node, @Nonnull String type, boolean server, @Nonnull Locale locale, @Nonnull Map<String, JsonSchema> map, int id) throws JsonException {
+    /**
+     * Validate a JSON data object against the schema for JSON messages and
+     * data.
+     *
+     * @param type   the type of data object
+     * @param data   the data object to validate
+     * @param server true if message is from the JSON server; false otherwise
+     * @param locale the locale for any exceptions that need to be reported to
+     *               clients
+     * @param id     the id to be included with any exceptions reported to
+     *               clients
+     * @throws JsonException if the message does not validate
+     * @deprecated since 4.19.2; use {@link #validateData(String, JsonNode, boolean, JsonRequest)} instead
+     */
+    @Deprecated
+    public void validateData(@Nonnull String type, @Nonnull JsonNode data, boolean server, @Nonnull Locale locale,
+            int id) throws JsonException {
+        validateData(type, data, server, new JsonRequest(locale, JSON.V5, id));
+    }
+
+    private void validateJsonNode(@Nonnull JsonNode node, @Nonnull String type, boolean server,
+            @Nonnull Map<String, JsonSchema> map, @Nonnull JsonRequest request) throws JsonException {
         log.trace("validateJsonNode(\"{}\", \"{}\", \"{}\", ...)", node, type, server);
         Set<ValidationMessage> errors = null;
         try {
-            errors = this.getSchema(type, server, locale, map, id).validate(node);
+            errors = getSchema(type, server, map, request).validate(node);
         } catch (JsonException ex) {
             log.error("Unable to validate JSON schemas", ex);
         }
         if (errors != null && !errors.isEmpty()) {
             log.warn("Errors validating {}", node);
-            errors.forEach(error -> 
-                log.warn("JSON Validation Error: {}\n\t{}\n\t{}\n\t{}", error.getCode(), error.getMessage(),
-                        error.getPath(), error.getType()));
-            throw new JsonException(server ? 500 : 400, Bundle.getMessage(locale, JsonException.LOGGED_ERROR), id);
+            errors.forEach(error -> log.warn("JSON Validation Error: {}\n\t{}\n\t{}\n\t{}", error.getCode(),
+                    error.getMessage(),
+                    error.getPath(), error.getType()));
+            throw new JsonException(server ? 500 : 400, Bundle.getMessage(request.locale, JsonException.LOGGED_ERROR),
+                    request.id);
         }
     }
 
@@ -225,21 +307,21 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
         if (services == null) {
             services = new HashMap<>();
             for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
-                JsonHttpService service = factory.getHttpService(this.mapper);
-                for (String type : factory.getTypes()) {
+                JsonHttpService service = factory.getHttpService(mapper, "v5");
+                for (String type : factory.getTypes("v5")) {
                     Set<JsonHttpService> set = services.computeIfAbsent(type, v -> new HashSet<>());
-                    this.clientTypes.add(type);
-                    this.serverTypes.add(type);
+                    clientTypes.add(type);
+                    serverTypes.add(type);
                     set.add(service);
                 }
-                for (String type : factory.getSentTypes()) {
+                for (String type : factory.getSentTypes("v5")) {
                     Set<JsonHttpService> set = services.computeIfAbsent(type, v -> new HashSet<>());
-                    this.serverTypes.add(type);
+                    serverTypes.add(type);
                     set.add(service);
                 }
-                for (String type : factory.getReceivedTypes()) {
+                for (String type : factory.getReceivedTypes("v5")) {
                     Set<JsonHttpService> set = services.computeIfAbsent(type, v -> new HashSet<>());
-                    this.clientTypes.add(type);
+                    clientTypes.add(type);
                     set.add(service);
                 }
             }

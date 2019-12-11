@@ -6,9 +6,9 @@ import static jmri.server.json.route.JsonRouteServiceFactory.ROUTES;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.ProvidingManager;
 import jmri.Route;
 import jmri.RouteManager;
@@ -16,6 +16,7 @@ import jmri.Sensor;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  * Provide JSON HTTP services for managing {@link jmri.Route}s.
@@ -29,8 +30,8 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
     }
 
     @Override
-    public ObjectNode doGet(Route route, String name, String type, Locale locale, int id) throws JsonException {
-        ObjectNode root = this.getNamedBean(route, name, type, locale, id); // throws JsonException if route == null
+    public ObjectNode doGet(Route route, String name, String type, JsonRequest request) throws JsonException {
+        ObjectNode root = this.getNamedBean(route, name, type, request); // throws JsonException if route == null
         ObjectNode data = root.with(JSON.DATA);
         if (route != null) {
             switch (route.getState()) {
@@ -40,10 +41,10 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
                 case Sensor.INACTIVE:
                     data.put(JSON.STATE, JSON.INACTIVE);
                     break;
-                case Sensor.INCONSISTENT:
+                case NamedBean.INCONSISTENT:
                     data.put(JSON.STATE, JSON.INCONSISTENT);
                     break;
-                case Sensor.UNKNOWN:
+                case NamedBean.UNKNOWN:
                 default:
                     data.put(JSON.STATE, JSON.UNKNOWN);
                     break;
@@ -69,16 +70,16 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
      *               {@link jmri.server.json.route.JsonRouteServiceFactory#ROUTE}
      *               or
      *               {@link jmri.server.json.route.JsonRouteServiceFactory#ROUTES}
-     * @param name   the name of the requested route.
+     * @param name   the name of the requested route
      * @param data   JSON data set of attributes of the requested route to be
-     *               updated.
-     * @param locale the requesting client's Locale.
+     *               updated
+     * @param request the JSON request
      * @return a JSON description of the requested route. Since a route changes
      *         state on a separate thread, this may return a route in the state
      *         prior to this call, the target state, or an intermediate state.
      */
     @Override
-    public ObjectNode doPost(Route route, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public ObjectNode doPost(Route route, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         int state = data.path(JSON.STATE).asInt(JSON.UNKNOWN);
         switch (state) {
             case JSON.ACTIVE:
@@ -90,18 +91,18 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
                 // leave state alone in this case
                 break;
             default:
-                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", ROUTE, state), id); // NOI18N
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", ROUTE, state), request.id); // NOI18N
         }
-        return this.doGet(route, name, type, locale, id);
+        return this.doGet(route, name, type, request);
     }
 
     @Override
-    public JsonNode doPut(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
-        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed", type), id);
+    public JsonNode doPut(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(request.locale, "PutNotAllowed", type), request.id);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case ROUTE:
             case ROUTES:
@@ -109,9 +110,9 @@ public class JsonRouteHttpService extends JsonNamedBeanHttpService<Route> {
                         server,
                         "jmri/server/json/route/route-server.json",
                         "jmri/server/json/route/route-client.json",
-                        id);
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 

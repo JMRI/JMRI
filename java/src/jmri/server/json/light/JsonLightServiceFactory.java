@@ -17,7 +17,7 @@ public class JsonLightServiceFactory implements JsonServiceFactory<JsonLightHttp
 
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{LIGHT, LIGHTS};
     }
 
@@ -27,7 +27,7 @@ public class JsonLightServiceFactory implements JsonServiceFactory<JsonLightHttp
     }
 
     @Override
-    public JsonLightHttpService getHttpService(ObjectMapper mapper) {
+    public JsonLightHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonLightHttpService(mapper);
     }
 

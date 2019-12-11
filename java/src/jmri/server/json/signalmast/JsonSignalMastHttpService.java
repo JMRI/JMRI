@@ -14,7 +14,6 @@ import static jmri.server.json.signalmast.JsonSignalMast.SIGNAL_MASTS;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.ProvidingManager;
@@ -22,6 +21,7 @@ import jmri.SignalMast;
 import jmri.SignalMastManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  * JSON HTTP service for {@link jmri.SignalMast}s.
@@ -35,8 +35,8 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
     }
 
     @Override
-    public ObjectNode doGet(SignalMast signalMast, String name, String type, Locale locale, int id) throws JsonException {
-        ObjectNode root = this.getNamedBean(signalMast, name, type, locale, id); // throws if signalMast is null
+    public ObjectNode doGet(SignalMast signalMast, String name, String type, JsonRequest request) throws JsonException {
+        ObjectNode root = this.getNamedBean(signalMast, name, type, request); // throws if signalMast is null
         ObjectNode data = root.with(DATA);
         String aspect = signalMast.getAspect();
         if (aspect == null) {
@@ -57,7 +57,7 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
     }
 
     @Override
-    public ObjectNode doPost(SignalMast signalMast, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public ObjectNode doPost(SignalMast signalMast, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         if (data.path(STATE).isTextual()) {
             String aspect = data.path(STATE).asText();
             if (aspect.equals(ASPECT_HELD)) {
@@ -70,14 +70,14 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
                     signalMast.setAspect(aspect);
                 }
             } else {
-                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", SIGNAL_MAST, aspect), id);
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", SIGNAL_MAST, aspect), request.id);
             }
         }
-        return this.doGet(signalMast, name, type, locale, id);
+        return this.doGet(signalMast, name, type, request);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case SIGNAL_MAST:
             case SIGNAL_MASTS:
@@ -85,9 +85,9 @@ public class JsonSignalMastHttpService extends JsonNamedBeanHttpService<SignalMa
                         server,
                         "jmri/server/json/signalmast/signalMast-server.json",
                         "jmri/server/json/signalmast/signalMast-client.json",
-                        id);
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 

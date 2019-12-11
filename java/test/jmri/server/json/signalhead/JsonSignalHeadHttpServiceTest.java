@@ -14,6 +14,7 @@ import jmri.SignalHead;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -39,13 +40,13 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
 
         JsonNode result;
         //retrieve by systemname
-        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, sysName, NullNode.getInstance(), locale, 42);
+        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, sysName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(JsonSignalHead.SIGNAL_HEAD, result.path(JSON.TYPE).asText());
         assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
 
         //retrieve by username, should get systemname back
-        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, NullNode.getInstance(), locale, 42);
+        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(sysName, result.path(JSON.DATA).path(JSON.NAME).asText());
 
@@ -53,15 +54,15 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
         assertEquals(SignalHead.DARK, result.path(JSON.DATA).path(JSON.STATE).asInt());
         //change to Green, then verify change
         s.setAppearance(SignalHead.GREEN);
-        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, NullNode.getInstance(), locale, 42);
+        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         assertEquals(SignalHead.GREEN, result.path(JSON.DATA).path(JSON.STATE).asInt());
         //set Held, then verify change
         s.setHeld(true);
-        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, NullNode.getInstance(), locale, 42);
+        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         assertTrue(result.path(JSON.DATA).path(JSON.TOKEN_HELD).asBoolean());
         //set to Not Held, then verify change
         s.setHeld(false);
-        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, NullNode.getInstance(), locale, 42);
+        result = service.doGet(JsonSignalHead.SIGNAL_HEAD, userName, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
         assertFalse(result.path(JSON.DATA).path(JSON.TOKEN_HELD).asBoolean());
     }
 
@@ -79,7 +80,7 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
 
         //set signalhead to Green and verify change
         message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.GREEN);
-        result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, locale, 42);
+        result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, new JsonRequest(locale, JSON.V5, 42));
         validate(result);
         assertEquals(SignalHead.GREEN, s.getState());
         assertEquals(SignalHead.GREEN, result.path(JSON.DATA).path(JSON.STATE).asInt());
@@ -90,7 +91,7 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
         message = null;
         try {
             message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.FLASHLUNAR);
-            result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, locale, 42);
+            result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(400, ex.getCode());
@@ -100,25 +101,25 @@ public class JsonSignalHeadHttpServiceTest extends JsonHttpServiceTestBase<JsonS
         assertEquals(false, s.getHeld());
         // set signalmast to Held, then verify
         message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.HELD);
-        result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, locale, 42);
+        result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, new JsonRequest(locale, JSON.V5, 42));
         assertEquals(true, s.getHeld());
 
         assertEquals(true, s.getHeld());
         // set signalmast to something other than Held, then verify Held is released
         message = mapper.createObjectNode().put(JSON.NAME, userName).put(JSON.STATE, SignalHead.RED);
-        result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, locale, 42);
+        result = service.doPost(JsonSignalHead.SIGNAL_HEAD, userName, message, new JsonRequest(locale, JSON.V5, 42));
         assertEquals(false, s.getHeld());
     }
 
     @Test
     public void testDoGetList() throws JsonException {
         JsonNode result;
-        result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, NullNode.getInstance(), locale, 0);
+        result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertEquals(0, result.size());
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH1","Head 1"));
         jmri.InstanceManager.getDefault(jmri.SignalHeadManager.class).register(new jmri.implementation.VirtualSignalHead("IH2","Head 2"));
-        result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, NullNode.getInstance(), locale, 0);
+        result = service.doGetList(JsonSignalHead.SIGNAL_HEAD, NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 0));
         validate(result);
         assertEquals(2, result.size());
     }

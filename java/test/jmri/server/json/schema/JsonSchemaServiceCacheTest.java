@@ -5,6 +5,7 @@ import java.util.Set;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -45,7 +46,7 @@ public class JsonSchemaServiceCacheTest {
             }
             services.forEach((service) -> {
                 try {
-                    service.doSchema(type, true, locale, 0);
+                    service.doSchema(type, true, new JsonRequest(locale, JSON.V5, 0));
                 } catch (JsonException ex) {
                     Throwable cause = ex.getCause();
                     Assert.assertEquals("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage()
@@ -58,7 +59,7 @@ public class JsonSchemaServiceCacheTest {
                             ex.getMessage());
                 }
                 try {
-                    service.doSchema(type, false, locale, 0);
+                    service.doSchema(type, false, new JsonRequest(locale, JSON.V5, 0));
                 } catch (JsonException ex) {
                     Throwable cause = ex.getCause();
                     Assert.assertEquals("Unexpected exception for type " + type + " from service " + service + "\n" + ex.getMessage()
@@ -71,7 +72,7 @@ public class JsonSchemaServiceCacheTest {
                 }
                 // test that every service throws an expected exception
                 try {
-                    service.doSchema("invalid-type", true, locale, 0);
+                    service.doSchema("invalid-type", true, new JsonRequest(locale, JSON.V5, 0));
                     Assert.fail("Expected exception for type \"invalid-type\" not thrown by " + service);
                 } catch (JsonException ex) {
                     Throwable cause = ex.getCause();

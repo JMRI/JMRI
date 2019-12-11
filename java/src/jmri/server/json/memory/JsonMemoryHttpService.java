@@ -8,7 +8,6 @@ import static jmri.server.json.memory.JsonMemory.MEMORY;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.Memory;
@@ -16,6 +15,7 @@ import jmri.MemoryManager;
 import jmri.ProvidingManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  *
@@ -28,8 +28,8 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
     }
 
     @Override
-    public ObjectNode doGet(Memory memory, String name, String type, Locale locale, int id) throws JsonException {
-        ObjectNode root = this.getNamedBean(memory, name, type, locale, id);
+    public ObjectNode doGet(Memory memory, String name, String type, JsonRequest request) throws JsonException {
+        ObjectNode root = this.getNamedBean(memory, name, type, request);
         ObjectNode data = root.with(DATA);
         if (memory != null) {
             if (memory.getValue() == null) {
@@ -42,7 +42,7 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
     }
 
     @Override
-    public ObjectNode doPost(Memory memory, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public ObjectNode doPost(Memory memory, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         if (!data.path(VALUE).isMissingNode()) {
             if (data.path(VALUE).isNull()) {
                 memory.setValue(null);
@@ -50,11 +50,11 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
                 memory.setValue(data.path(VALUE).asText());
             }
         }
-        return this.doGet(memory, name, type, locale, id);
+        return this.doGet(memory, name, type, request);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case MEMORY:
             case MEMORIES:
@@ -62,9 +62,9 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
                         server,
                         "jmri/server/json/memory/memory-server.json",
                         "jmri/server/json/memory/memory-client.json",
-                        id);
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 

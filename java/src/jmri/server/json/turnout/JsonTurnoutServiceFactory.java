@@ -16,7 +16,7 @@ public class JsonTurnoutServiceFactory implements JsonServiceFactory<JsonTurnout
     public static final String TURNOUTS = "turnouts"; // NOI18N
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{TURNOUT, TURNOUTS};
     }
 
@@ -26,7 +26,7 @@ public class JsonTurnoutServiceFactory implements JsonServiceFactory<JsonTurnout
     }
 
     @Override
-    public JsonTurnoutHttpService getHttpService(ObjectMapper mapper) {
+    public JsonTurnoutHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonTurnoutHttpService(mapper);
     }
 

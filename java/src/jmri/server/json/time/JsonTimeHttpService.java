@@ -13,7 +13,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.util.StdDateFormat;
 import java.text.ParseException;
 import java.util.Date;
-import java.util.Locale;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
@@ -22,6 +21,7 @@ import jmri.Timebase;
 import jmri.TimebaseRateException;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  * @author Randall Wood
@@ -34,10 +34,10 @@ public class JsonTimeHttpService extends JsonHttpService {
 
     @Override
     // using @CheckForNull to override @Nonnull in super class
-    public JsonNode doGet(String type, @CheckForNull String name, JsonNode data, Locale locale, int id)
+    public JsonNode doGet(String type, @CheckForNull String name, JsonNode data, JsonRequest request)
             throws JsonException {
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
-        return doGet(timebase, timebase.getTime(), id);
+        return doGet(timebase, timebase.getTime(), request.id);
     }
 
     public JsonNode doGet(@Nonnull Timebase timebase, @Nonnull Date date, int id) {
@@ -50,7 +50,7 @@ public class JsonTimeHttpService extends JsonHttpService {
 
     @Override
     // using @CheckForNull to override @Nonnull in super class
-    public JsonNode doPost(String type, @CheckForNull String name, JsonNode data, Locale locale, int id)
+    public JsonNode doPost(String type, @CheckForNull String name, JsonNode data, JsonRequest request)
             throws JsonException {
         Timebase timebase = InstanceManager.getDefault(Timebase.class);
         try {
@@ -60,37 +60,37 @@ public class JsonTimeHttpService extends JsonHttpService {
             if (data.path(RATE).isDouble() || data.path(RATE).isInt()) {
                 timebase.userSetRate(data.path(RATE).asDouble());
             }
-            int state = data.findPath(STATE).asInt(0);
+            int state = data.path(STATE).asInt(0);
             // passing the state UNKNOWN (0) will not trigger change
             if (state == ON || state == OFF) {
                 timebase.setRun(state == ON);
             }
         } catch (ParseException ex) {
-            throw new JsonException(400, Bundle.getMessage(locale, "ErrorTimeFormat"), id);
+            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorTimeFormat"), request.id);
         } catch (TimebaseRateException e) {
-            throw new JsonException(400, Bundle.getMessage(locale, "ErrorRateFactor"), id);
+            throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorRateFactor"), request.id);
         }
-        return this.doGet(type, name, data, locale, id);
+        return this.doGet(type, name, data, request);
     }
 
     @Override
-    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGetList(String type, JsonNode data, JsonRequest request) throws JsonException {
         ArrayNode array = this.mapper.createArrayNode();
-        array.add(this.doGet(type, null, data, locale, id));
-        return message(array, id);
+        array.add(this.doGet(type, null, data, request));
+        return message(array, request.id);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         if (TIME.equals(type)) {
             return doSchema(type,
                     server,
                     "jmri/server/json/time/time-server.json",
                     "jmri/server/json/time/time-client.json",
-                    id);
+                    request.id);
         } else {
             throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                    Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                    Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 }

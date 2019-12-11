@@ -14,7 +14,7 @@ public class JsonConsistServiceFactory implements JsonServiceFactory<JsonConsist
 
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{JsonConsist.CONSIST, JsonConsist.CONSISTS};
     }
 
@@ -24,7 +24,7 @@ public class JsonConsistServiceFactory implements JsonServiceFactory<JsonConsist
     }
 
     @Override
-    public JsonConsistHttpService getHttpService(ObjectMapper mapper) {
+    public JsonConsistHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonConsistHttpService(mapper);
     }
 

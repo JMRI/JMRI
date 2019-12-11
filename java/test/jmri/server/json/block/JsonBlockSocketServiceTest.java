@@ -12,6 +12,7 @@ import jmri.JmriException;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -37,7 +38,7 @@ public class JsonBlockSocketServiceTest {
         Block block1 = manager.provideBlock("IB1");
         Assert.assertEquals("Block has only one listener", 1, block1.getNumPropertyChangeListeners());
         JsonBlockSocketService service = new JsonBlockSocketService(connection);
-        service.onMessage(JsonBlock.BLOCK, message, JSON.POST, locale, 42);
+        service.onMessage(JsonBlock.BLOCK, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
         Assert.assertEquals("Block is being listened to by service", 2, block1.getNumPropertyChangeListeners());
         JsonNode result = connection.getMessage();
         Assert.assertNotNull(result);
@@ -66,7 +67,7 @@ public class JsonBlockSocketServiceTest {
         }, "Block to close");
         Assert.assertEquals(Block.OCCUPIED, block1.getState());
         Assert.assertEquals("Block is no longer listened to by service", 1, block1.getNumPropertyChangeListeners());
-        service.onMessage(JsonBlock.BLOCK, message, JSON.POST, locale, 42);
+        service.onMessage(JsonBlock.BLOCK, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
         Assert.assertEquals("Block is being listened to by service", 2, block1.getNumPropertyChangeListeners());
         service.onClose();
         Assert.assertEquals("Block is no longer listened to by service", 1, block1.getNumPropertyChangeListeners());
@@ -81,21 +82,21 @@ public class JsonBlockSocketServiceTest {
         Block block1 = manager.provideBlock("IB1");
         // Block UNOCCUPIED
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.OFF);
-        service.onMessage(JsonBlock.BLOCK, message, JSON.POST, locale, 42);
+        service.onMessage(JsonBlock.BLOCK, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
         Assert.assertEquals(Block.UNOCCUPIED, block1.getState());
         // Block OCCUPIED
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.ON);
-        service.onMessage(JsonBlock.BLOCK, message, JSON.POST, locale, 42);
+        service.onMessage(JsonBlock.BLOCK, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
         Assert.assertEquals(Block.OCCUPIED, block1.getState());
         // Block UNKNOWN - remains OCCUPIED
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.UNKNOWN);
-        service.onMessage(JsonBlock.BLOCK, message, JSON.POST, locale, 42);
+        service.onMessage(JsonBlock.BLOCK, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
         Assert.assertEquals(Block.OCCUPIED, block1.getState());
         // Block Invalid State
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, 42); // invalid state
         JsonException exception = null;
         try {
-            service.onMessage(JsonBlock.BLOCK, message, JSON.POST, locale, 42);
+            service.onMessage(JsonBlock.BLOCK, message, JSON.POST, new JsonRequest(locale, JSON.V5, 42));
         } catch (JsonException ex) {
             exception = ex;
         }
@@ -112,7 +113,7 @@ public class JsonBlockSocketServiceTest {
         BlockManager manager = InstanceManager.getDefault(BlockManager.class);
         // Block UNOCCUPIED
         message = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "IB1").put(JSON.STATE, JSON.OFF);
-        service.onMessage(JsonBlock.BLOCK, message, JSON.PUT, locale, 42);
+        service.onMessage(JsonBlock.BLOCK, message, JSON.PUT, new JsonRequest(locale, JSON.V5, 42));
         Block block1 = manager.getBySystemName("IB1");
         Assert.assertNotNull("Block was created by PUT", block1);
         Assert.assertEquals(Block.UNOCCUPIED, block1.getState());

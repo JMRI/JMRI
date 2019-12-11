@@ -18,7 +18,7 @@ public class JsonBlockServiceFactory implements JsonServiceFactory<JsonBlockHttp
 
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{BLOCK, BLOCKS};
     }
 
@@ -28,7 +28,7 @@ public class JsonBlockServiceFactory implements JsonServiceFactory<JsonBlockHttp
     }
 
     @Override
-    public JsonBlockHttpService getHttpService(ObjectMapper mapper) {
+    public JsonBlockHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonBlockHttpService(mapper);
     }
 

@@ -21,7 +21,7 @@ public class JsonTimeServiceFactory implements JsonServiceFactory<JsonTimeHttpSe
     public final static String TIME = JSON.TIME;
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{TIME};
     }
 
@@ -31,7 +31,7 @@ public class JsonTimeServiceFactory implements JsonServiceFactory<JsonTimeHttpSe
     }
 
     @Override
-    public JsonTimeHttpService getHttpService(ObjectMapper mapper) {
+    public JsonTimeHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonTimeHttpService(mapper);
     }
 

@@ -20,7 +20,7 @@ public class JsonPowerServiceFactory implements JsonServiceFactory<JsonPowerHttp
     public static final String POWER = "power";
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{POWER};
     }
 
@@ -30,7 +30,7 @@ public class JsonPowerServiceFactory implements JsonServiceFactory<JsonPowerHttp
     }
 
     @Override
-    public JsonPowerHttpService getHttpService(ObjectMapper mapper) {
+    public JsonPowerHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonPowerHttpService(mapper);
     }
 

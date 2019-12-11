@@ -16,7 +16,7 @@ public class JsonTestServiceFactory implements JsonServiceFactory<JsonTestHttpSe
     public static final String TEST = "test";
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{TEST};
     }
 
@@ -26,7 +26,7 @@ public class JsonTestServiceFactory implements JsonServiceFactory<JsonTestHttpSe
     }
 
     @Override
-    public JsonTestHttpService getHttpService(ObjectMapper mapper) {
+    public JsonTestHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonTestHttpService(mapper);
     }
 

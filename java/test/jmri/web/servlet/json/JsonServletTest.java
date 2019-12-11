@@ -5,7 +5,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
+
+import jmri.InstanceManager;
+import jmri.jmris.json.JsonServerPreferences;
 import jmri.util.JUnitUtil;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -46,7 +50,21 @@ public class JsonServletTest {
         Mockito.doNothing().when(instance).superInit();
         instance.init(config);
         ObjectNode result = new ObjectMapper().createObjectNode();
-        result.put("foo", "bar");
+        // test a schema valid message with validation on
+        result.put("type", "pong");
+        request.setAttribute("result", result);
+        instance.doGet(request, response);
+        Assert.assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        Assert.assertEquals("Contains result", result.toString(), response.getContentAsString());
+        // test a schema invalid message with validation on
+        result.put("type", "invalid-type");
+        request.setAttribute("result", result);
+        instance.doGet(request, response);
+        Assert.assertEquals("HTTP Internal Error", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, response.getStatus());
+        Assert.assertNotEquals("Contains result", result.toString(), response.getContentAsString());
+        // test a schema invalid message with validation off
+        InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(false);
+        result.put("type", "invalid-type");
         request.setAttribute("result", result);
         instance.doGet(request, response);
         Assert.assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
@@ -56,7 +74,8 @@ public class JsonServletTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
+        InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
     }
 
     @After

@@ -19,6 +19,10 @@ import jmri.util.JUnitAppender;
  */
 public class JsonThrottleManagerTest {
 
+    /**
+     * Test that a deprecated method functions correctly.
+     */
+    @SuppressWarnings("deprecation")
     @Test
     public void testGetDefault() {
         Assert.assertEquals("Default instance", InstanceManager.getDefault(JsonThrottleManager.class),

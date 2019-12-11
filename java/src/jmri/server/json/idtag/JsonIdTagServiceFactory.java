@@ -17,7 +17,7 @@ public class JsonIdTagServiceFactory implements JsonServiceFactory<JsonIdTagHttp
 
 
     @Override
-    public String[] getTypes() {
+    public String[] getTypes(String version) {
         return new String[]{IDTAG};
     }
 
@@ -27,7 +27,7 @@ public class JsonIdTagServiceFactory implements JsonServiceFactory<JsonIdTagHttp
     }
 
     @Override
-    public JsonIdTagHttpService getHttpService(ObjectMapper mapper) {
+    public JsonIdTagHttpService getHttpService(ObjectMapper mapper, String version) {
         return new JsonIdTagHttpService(mapper);
     }
 

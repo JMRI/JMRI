@@ -22,6 +22,7 @@ import static jmri.server.json.JSON.OWNER;
 import static jmri.server.json.JSON.ROAD;
 import static jmri.server.json.JSON.SELECTED_ICON;
 import static jmri.server.json.JSON.SHUNTING_FUNCTION;
+import static jmri.server.json.JSON.V5;
 import static jmri.server.json.JSON.VALUE;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -41,6 +42,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  *
@@ -53,53 +55,53 @@ public class JsonRosterHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         switch (type) {
             case JsonRoster.ROSTER:
-                ObjectNode node = this.mapper.createObjectNode();
+                ObjectNode node = mapper.createObjectNode();
                 if (!name.isEmpty()) {
                     node.put(GROUP, name);
                 }
-                return this.getRoster(locale, node, id);
+                return getRoster(request.locale, node, request.id);
             case JsonRoster.ROSTER_ENTRY:
-                return this.getRosterEntry(locale, name, id);
+                return getRosterEntry(request.locale, name, request.id);
             case JsonRoster.ROSTER_GROUP:
-                return this.getRosterGroup(locale, name, id);
+                return getRosterGroup(request.locale, name, request.id);
             case JsonRoster.ROSTER_GROUPS:
-                return this.getRosterGroups(locale, id);
+                return getRosterGroups(request);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doPost(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
         switch (type) {
             case JsonRoster.ROSTER:
                 break;
             case JsonRoster.ROSTER_ENTRY:
-                return this.postRosterEntry(locale, name, data, id);
+                return postRosterEntry(request.locale, name, data, request.id);
             case JsonRoster.ROSTER_GROUP:
                 break;
             case JsonRoster.ROSTER_GROUPS:
                 break;
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
-        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PostNotAllowed", type), id);
+        throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(request.locale, "PostNotAllowed", type), request.id);
     }
 
     @Override
-    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGetList(String type, JsonNode data, JsonRequest request) throws JsonException {
         switch (type) {
             case JsonRoster.ROSTER:
             case JsonRoster.ROSTER_ENTRY:
-                return this.getRoster(locale, this.mapper.createObjectNode(), id);
+                return getRoster(request.locale, mapper.createObjectNode(), request.id);
             case JsonRoster.ROSTER_GROUP:
             case JsonRoster.ROSTER_GROUPS:
-                return this.getRosterGroups(locale, id);
+                return getRosterGroups(request);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 
@@ -115,7 +117,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         String decoderModel = (!data.path(DECODER_MODEL).isMissingNode()) ? data.path(DECODER_MODEL).asText() : null;
         String decoderFamily = (!data.path(DECODER_FAMILY).isMissingNode()) ? data.path(DECODER_FAMILY).asText() : null;
         String name = (!data.path(NAME).isMissingNode()) ? data.path(NAME).asText() : null;
-        ArrayNode array = this.mapper.createArrayNode();
+        ArrayNode array = mapper.createArrayNode();
         for (RosterEntry entry : Roster.getDefault().getEntriesMatchingCriteria(roadName, roadNumber, dccAddress, mfg, decoderModel, decoderFamily, name, group)) {
             array.add(getRosterEntry(locale, entry, id));
         }
@@ -138,7 +140,7 @@ public class JsonRosterHttpService extends JsonHttpService {
      */
     public JsonNode getRosterEntry(Locale locale, String name, int id) throws JsonException {
         try {
-            return this.getRosterEntry(locale, Roster.getDefault().getEntryForId(name), id);
+            return getRosterEntry(locale, Roster.getDefault().getEntryForId(name), id);
         } catch (NullPointerException ex) {
             throw new JsonException(HttpServletResponse.SC_NOT_FOUND, Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, JsonRoster.ROSTER_ENTRY, name), id);
         }
@@ -165,7 +167,7 @@ public class JsonRosterHttpService extends JsonHttpService {
         } catch (UnsupportedEncodingException ex) {
             throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, "ErrorUnencodeable", JsonRoster.ROSTER_ENTRY, entry.getId(), NAME), id);
         }
-        ObjectNode data = this.mapper.createObjectNode();
+        ObjectNode data = mapper.createObjectNode();
         data.put(NAME, entry.getId());
         data.put(ADDRESS, entry.getDccAddress());
         data.put(IS_LONG_ADDRESS, entry.isLongAddress());
@@ -214,13 +216,34 @@ public class JsonRosterHttpService extends JsonHttpService {
         return message(JsonRoster.ROSTER_ENTRY, data, id);
     }
 
-    public JsonNode getRosterGroups(Locale locale, int id) throws JsonException {
+    /**
+     * Get a list of roster groups.
+     * 
+     * @param request the JSON request
+     * @return a message containing the roster groups
+     * @throws JsonException if a requested roster group does not exist
+     */
+    public JsonNode getRosterGroups(JsonRequest request) throws JsonException {
         ArrayNode array = mapper.createArrayNode();
-        array.add(getRosterGroup(locale, Roster.ALLENTRIES, id));
+        array.add(getRosterGroup(request.locale, Roster.ALLENTRIES, request.id));
         for (String name : Roster.getDefault().getRosterGroupList()) {
-            array.add(getRosterGroup(locale, name, id));
+            array.add(getRosterGroup(request.locale, name, request.id));
         }
-        return message(array, id);
+        return message(array, request.id);
+    }
+
+    /**
+     * Get a list of roster groups.
+     * 
+     * @param locale the client locale
+     * @param id the request id set by the client
+     * @return a message containing the roster groups
+     * @throws JsonException if a requested roster group does not exist
+     * @deprecated since 4.19.2; use {@link #getRosterGroups(JsonRequest)} instead
+     */
+    @Deprecated
+    public JsonNode getRosterGroups(Locale locale, int id) throws JsonException {
+        return getRosterGroups(new JsonRequest(locale, V5, id));
     }
 
     public JsonNode getRosterGroup(Locale locale, String name, int id) throws JsonException {
@@ -236,7 +259,7 @@ public class JsonRosterHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case JsonRoster.ROSTER:
             case JsonRoster.ROSTER_ENTRY:
@@ -244,16 +267,16 @@ public class JsonRosterHttpService extends JsonHttpService {
                         server,
                         "jmri/server/json/roster/" + type + "-server.json",
                         "jmri/server/json/roster/" + type + "-client.json",
-                        id);
+                        request.id);
             case JsonRoster.ROSTER_GROUP:
             case JsonRoster.ROSTER_GROUPS:
                 return doSchema(type,
                         server,
                         "jmri/server/json/roster/rosterGroup-server.json",
                         "jmri/server/json/roster/rosterGroup-client.json",
-                        id);
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 
@@ -340,7 +363,7 @@ public class JsonRosterHttpService extends JsonHttpService {
             entry.setOwner(data.path(OWNER).isTextual() ? data.path(OWNER).asText() : null);
         }
         entry.updateFile();
-        return this.getRosterEntry(locale, entry, id);
+        return getRosterEntry(locale, entry, id);
     }
 
 }
