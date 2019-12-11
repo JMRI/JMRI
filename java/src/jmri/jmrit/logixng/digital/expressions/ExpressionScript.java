@@ -53,6 +53,7 @@ public class ExpressionScript extends AbstractDigitalExpression
             log.error("cannot load script", e);
             _scriptText = null;
             _scriptClass = null;
+            return;
         }
         
         if (_scriptClass == null) {

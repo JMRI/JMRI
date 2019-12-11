@@ -45,8 +45,8 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
             + "  def registerScriptListeners(self):\n"
             + "    self.l.addPropertyChangeListener(\"KnownState\", self);\n"
             + ""
-            + "  def unregisterScriptListeners():\n"
-            + "    l.removePropertyChangeListener(\"KnownState\", this);\n"
+            + "  def unregisterScriptListeners(self):\n"
+            + "    self.l.removePropertyChangeListener(\"KnownState\", self);\n"
             + ""
             + "  def evaluate(self):\n"
             + "    if self.l is None:\n"
@@ -169,21 +169,31 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Throw the switch. This should not execute the conditional.
+        // Turrn the light on. This should not execute the conditional.
         light.setCommandedState(Light.ON);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Close the switch. This should not execute the conditional.
+        // Turrn the light off. This should not execute the conditional.
         light.setCommandedState(Light.OFF);
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Throw the switch. This should execute the conditional.
+        // Turrn the light on. This should execute the conditional.
         light.setCommandedState(Light.ON);
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());
+        
+        // Unregister listeners
+        expressionScript.unregisterListeners();
+        atomicBoolean.set(false);
+        // Turrn the light off. This should not execute the conditional.
+        light.setCommandedState(Light.OFF);
+        // Turrn the light on. This not should execute the conditional since listerners are not registered.
+        light.setCommandedState(Light.ON);
+        // Listerners are not registered so the atomic boolean should be false
+        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
     }
     
     @Test
@@ -199,7 +209,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         JUnitAppender.assertErrorMessage("cannot load script");
         
         // Test script that did not initialized params._scriptClass
-        expressionScript.unregisterListeners();
         expressionScript.setScript("");
         JUnitAppender.assertErrorMessage("script has not initialized params._scriptClass");
         
@@ -214,7 +223,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
             hasThrown = true;
         }
         Assert.assertTrue("Expected exception thrown", hasThrown);
-        JUnitAppender.assertErrorMessage("script has not initialized params._scriptClass");
         JUnitAppender.assertErrorMessage("setScript must not be called when listeners are registered");
     }
     
