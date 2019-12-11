@@ -635,8 +635,7 @@
                               <fileSet>
                                  <directory>${jacoco.reportDir}</directory>
                                  <includes>
-                                 <!--    <include>junit-it.exec</include> -->
-                                     <include>junit-unit.exec</include>     
+                                   <include>*.exec</include>
                                  </includes>
                               </fileSet>
                            </fileSets>
