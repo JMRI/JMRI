@@ -7,6 +7,8 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -87,6 +89,13 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
             + "    if self.l is None:\n"
             + "      raise java.lang.NullPointerException()\n"
             + "    self.l.commandedState = ON\n"  // Do this to test that reset() is called
+            + ""
+            // setup() method is used to lookup system names for child sockets,
+            // turnouts, sensors, and so on. But we only want to check that it's
+            // executed. So we set a memory to some value.
+            + "  def setup(self):\n"
+            + "    m = memories.provideMemory(\"IM1\")\n"
+            + "    m.setValue(\"setup is executed\")\n"
             + ""
             + "  def vetoableChange(self,evt):\n"
             + "    if (\"CanDelete\" == evt.getPropertyName()):\n"
@@ -283,6 +292,22 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // Do reset()
         expressionScript.reset();
         Assert.assertEquals("light is OFF", Light.OFF, light.getState());
+    }
+    
+    @Test
+    public void testSetup() {
+        Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        Assert.assertNull("the value of memory is null", m1.getValue());
+        
+        // Test setup() without script
+        expressionScript.setScript(null);
+        expressionScript.setup();
+        Assert.assertNull("the value of memory is null", m1.getValue());
+        
+        // Test setup() with script
+        expressionScript.setScript(_scriptText);
+        expressionScript.setup();
+        Assert.assertEquals("the value of memory is hello", "setup is executed", m1.getValue());
     }
     
     @Test

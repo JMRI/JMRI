@@ -135,11 +135,11 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testSetMemory() {
-        Memory memory11 = InstanceManager.getDefault(MemoryManager.class).provide("IL11");
-        Memory memory12 = InstanceManager.getDefault(MemoryManager.class).provide("IL12");
+        Memory memory11 = InstanceManager.getDefault(MemoryManager.class).provide("IM11");
+        Memory memory12 = InstanceManager.getDefault(MemoryManager.class).provide("IM12");
         NamedBeanHandle<Memory> memoryHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memory12.getDisplayName(), memory12);
-        Memory memory13 = InstanceManager.getDefault(MemoryManager.class).provide("IL13");
-        Memory memory14 = InstanceManager.getDefault(MemoryManager.class).provide("IL14");
+        Memory memory13 = InstanceManager.getDefault(MemoryManager.class).provide("IM13");
+        Memory memory14 = InstanceManager.getDefault(MemoryManager.class).provide("IM14");
         memory14.setUserName("Some user name");
         
         actionMemory.setMemory((Memory)null);
