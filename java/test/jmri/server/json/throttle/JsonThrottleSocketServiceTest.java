@@ -75,7 +75,7 @@ public class JsonThrottleSocketServiceTest {
         Assert.assertEquals("Throttle", "42", message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertEquals("Throttle", "42", message.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         Assert.assertEquals("Throttle status has 36 data elements", 36, message.findPath(JSON.DATA).size());
-        connection.sendMessage(connection.getObjectMapper().nullNode(), 42); // clear messages
+        connection.sendMessage(null, 42); // clear messages
         // set a speed of 50% in reverse
         data = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "42");
         data.put(JSON.SPEED, 0.5);
@@ -187,7 +187,7 @@ public class JsonThrottleSocketServiceTest {
         Assert.assertEquals("Throttle", "42", message.path(JSON.DATA).path(JSON.NAME).asText());
         Assert.assertEquals("Throttle", "42", message.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         Assert.assertEquals("Throttle status has 37 data elements", 37, message.findPath(JSON.DATA).size());
-        connection.sendMessage(connection.getObjectMapper().nullNode(), 42); // clear messages
+        connection.sendMessage(null, 42); // clear messages
         // press F1 and F2
         data = connection.getObjectMapper().createObjectNode().put(JSON.NAME, "42");
         data.put(F0, true);
@@ -276,7 +276,7 @@ public class JsonThrottleSocketServiceTest {
         Assert.assertEquals("50% Speed", 0.5, message2.path(JSON.DATA).path(JSON.SPEED).asDouble(), 0.0);
         Assert.assertEquals("Client 2", "client2", message2.path(JSON.DATA).path(JsonThrottle.THROTTLE).asText());
         connection1.setThrowIOException(true);
-        connection2.sendMessage(connection1.getObjectMapper().nullNode(), 42);
+        connection2.sendMessage(null, 42);
         data2 = connection2.getObjectMapper().createObjectNode().put(JsonThrottle.THROTTLE, "client2");
         service2.onMessage(JsonThrottle.THROTTLE, data2.putNull(JsonThrottle.ESTOP), JSON.POST, new JsonRequest(locale, JSON.V5, 42));
         message2 = connection2.getMessages();

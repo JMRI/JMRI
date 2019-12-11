@@ -86,7 +86,7 @@ public class JsonRosterSocketServiceTest {
         new org.netbeans.jemmy.QueueTool().waitEmpty();
 
         // list the groups in a JSON message for assertions
-        this.connection.sendMessage(connection.getObjectMapper().nullNode(), 0);
+        this.connection.sendMessage(null, 0);
         instance.onMessage(JsonRoster.ROSTER_GROUPS, NullNode.getInstance(), JSON.GET, new JsonRequest(locale, JSON.V5, 0));
         JsonNode message = this.connection.getMessage();
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
@@ -97,7 +97,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertTrue("Contains group AllEntries", message.findValuesAsText(JSON.NAME).contains(Roster.allEntries(locale)));
 
         // add a roster group and verify message sent by listener
-        this.connection.sendMessage(connection.getObjectMapper().nullNode(), 0);
+        this.connection.sendMessage(null, 0);
         Roster.getDefault().addRosterGroup("NewRosterGroup");
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         message = this.connection.getMessage();
@@ -108,7 +108,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertTrue("Contains group NewRosterGroup", message.findValuesAsText(JSON.NAME).contains("NewRosterGroup"));
 
         // rename a roster group and verify message sent by listener
-        this.connection.sendMessage(connection.getObjectMapper().nullNode(), 0);
+        this.connection.sendMessage(null, 0);
         Roster.getDefault().getRosterGroups().get("NewRosterGroup").setName("AgedRosterGroup");
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         message = this.connection.getMessage();
@@ -120,7 +120,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertFalse("Contains group NewRosterGroup", message.findValuesAsText(JSON.NAME).contains("NewRosterGroup"));
 
         // remove a roster group and verify message sent by listener
-        this.connection.sendMessage(connection.getObjectMapper().nullNode(), 0);
+        this.connection.sendMessage(null, 0);
         Roster.getDefault().removeRosterGroup(Roster.getDefault().getRosterGroups().get("AgedRosterGroup"));
         Assert.assertEquals("Single message sent", 1, this.connection.getMessages().size());
         message = this.connection.getMessage();
@@ -132,7 +132,7 @@ public class JsonRosterSocketServiceTest {
         Assert.assertFalse("Contains group NewRosterGroup", message.findValuesAsText(JSON.NAME).contains("NewRosterGroup"));
 
         // Set unknown roster group directly as attribute of RosterEntry
-        this.connection.sendMessage(connection.getObjectMapper().nullNode(), 0);
+        this.connection.sendMessage(null, 0);
         RosterEntry re = Roster.getDefault().getEntryForId("testEntry1");
         Assert.assertEquals("instance is listening to RosterEntry", 3, re.getPropertyChangeListeners().length);
         re.putAttribute(Roster.ROSTER_GROUP_PREFIX + "attribute", "yes");
@@ -149,7 +149,7 @@ public class JsonRosterSocketServiceTest {
         JUnitUtil.waitFor(() -> {
             return Roster.getDefault().getRosterGroupList().contains("NewRosterGroup");
         }, "Roster Group was not added");
-        this.connection.sendMessage(connection.getObjectMapper().nullNode(), 0); // clear out messages
+        this.connection.sendMessage(null, 0); // clear out messages
         re.putAttribute(Roster.ROSTER_GROUP_PREFIX + "NewRosterGroup", "yes"); // add new group to roster entry
         // wait for all expected messages to be sent before testing messages are as expected
         JUnitUtil.waitFor(() -> {
@@ -166,7 +166,7 @@ public class JsonRosterSocketServiceTest {
                 values.toArray(new String[5]));
 
         // Remove known roster group directly as attribute of RosterEntry
-        this.connection.sendMessage(connection.getObjectMapper().nullNode(), 0); // clear out messages
+        this.connection.sendMessage(null, 0); // clear out messages
         re.deleteAttribute(Roster.ROSTER_GROUP_PREFIX + "NewRosterGroup"); // remove group from roster entry
         // wait for all expected messages to be sent before testing messages are as expected
         JUnitUtil.waitFor(() -> {
