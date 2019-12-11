@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng.digital.expressions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.CheckForNull;
@@ -22,8 +19,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2019
  */
-public class ExpressionScript extends AbstractDigitalExpression
-        implements PropertyChangeListener, VetoableChangeListener {
+public class ExpressionScript extends AbstractDigitalExpression {
 
     private String _scriptText;
     private AbstractScriptDigitalExpression _scriptClass;
@@ -74,11 +70,6 @@ public class ExpressionScript extends AbstractDigitalExpression
     
     public String getScriptText() {
         return _scriptText;
-    }
-    
-    @Override
-    public void vetoableChange(@Nonnull java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        _scriptClass.vetoableChange(evt);
     }
     
     /** {@inheritDoc} */
@@ -159,12 +150,6 @@ public class ExpressionScript extends AbstractDigitalExpression
             _scriptClass.unregisterListeners();
             _listenersAreRegistered = false;
         }
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public void propertyChange(@Nonnull PropertyChangeEvent evt) {
-        getConditionalNG().execute();
     }
     
     /** {@inheritDoc} */

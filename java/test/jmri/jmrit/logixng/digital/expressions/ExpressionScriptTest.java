@@ -43,10 +43,10 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
             + "  l = lights.provideLight(\"IL1\")\n"
             + ""
             + "  def registerScriptListeners(self):\n"
-            + "    self.l.addPropertyChangeListener(\"KnownState\", self);\n"
+            + "    self.l.addPropertyChangeListener(\"KnownState\", self)\n"
             + ""
             + "  def unregisterScriptListeners(self):\n"
-            + "    self.l.removePropertyChangeListener(\"KnownState\", self);\n"
+            + "    self.l.removePropertyChangeListener(\"KnownState\", self)\n"
             + ""
             + "  def evaluate(self):\n"
             + "    if self.l is None:\n"
@@ -68,8 +68,9 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
             + "        if (evt.getOldValue() is self.l):\n"
             + "          self.l = None\n"
             + ""
-            + ""
-            + "params._scriptClass.set(MyExpression(params._parentExpression))\n";
+            + "myClass = MyExpression(params._parentExpression)\n"
+            + "lights.addVetoableChangeListener(myClass)\n"
+            + "params._scriptClass.set(myClass)\n";
     
     
     private LogixNG logixNG;
@@ -298,13 +299,13 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // Test vetoableChange() for its own light
         boolean thrown = false;
         try {
-            expressionScript.vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null));
+            InstanceManager.getDefault(LightManager.class).deleteBean(light, "CanDelete");
         } catch (PropertyVetoException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         
-        expressionScript.vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
+        InstanceManager.getDefault(LightManager.class).deleteBean(light, "DoDelete");
         thrown = false;
         try {
             // If DoDelete has done its job, evaluate() will throw a NullPointerException.
