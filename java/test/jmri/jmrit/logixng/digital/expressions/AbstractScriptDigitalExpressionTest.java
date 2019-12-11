@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions;
 
+import java.beans.PropertyVetoException;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -24,7 +25,7 @@ import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
 public class AbstractScriptDigitalExpressionTest {
 
     @Test
-    public void testMethods() {
+    public void testMethods() throws PropertyVetoException {
         ExpressionScript expressionScript = new ExpressionScript("IQDE321", null);
         MyExpression expression = new MyExpression(expressionScript);
         
@@ -42,6 +43,12 @@ public class AbstractScriptDigitalExpressionTest {
         
         // This method does nothing but we do it for coverage.
         expression.reset();
+        
+        // This method does nothing but we do it for coverage.
+        expression.setup();
+        
+        // This method does nothing but we do it for coverage.
+        expression.vetoableChange(null);
         
         // Test getCategory()
         boolean hasThrown = false;
