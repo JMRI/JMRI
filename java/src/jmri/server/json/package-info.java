@@ -166,9 +166,10 @@
  * supported by the running JMRI instance.</li>
  * </ul>
  * </dd>
- * <dt>5.1.1 (JMRI 4.17.7)</dt>
+ * <dt>5.2.0 (JMRI 4.17.7)</dt>
  * <dd>
  * <ul>
+ * <li>memory and block now return idTag and reporter values as json objects</li>
  * <li>for networkService, add userName and change name to mDNS type</li>
  * <li>Add configProfile.isNextProfile</li>
  * <li>several schema fixes</li>

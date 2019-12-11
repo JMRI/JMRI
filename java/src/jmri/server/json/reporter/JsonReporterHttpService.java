@@ -46,7 +46,7 @@ public class JsonReporterHttpService extends JsonNamedBeanHttpService<Reporter> 
     }
 
     @Override
-    protected ObjectNode doGet(Reporter reporter, String name, String type, JsonRequest request) throws JsonException {
+    public ObjectNode doGet(Reporter reporter, String name, String type, JsonRequest request) throws JsonException {
         ObjectNode root = getNamedBean(reporter, name, type, request); // throws JsonException if reporter == null
         ObjectNode data = root.with(JSON.DATA);
         data.put(JSON.STATE, reporter.getState());
