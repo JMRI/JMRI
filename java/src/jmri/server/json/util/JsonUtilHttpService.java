@@ -629,7 +629,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * 
      * @param profile the requested profile
      * @param manager the in use profile manager
-     * @param id      message set by the client
+     * @param request the JSON request
      * @return the data for this profile as a JSON Node
      */
     private JsonNode getConfigProfile(@Nonnull Profile profile, @Nonnull ProfileManager manager,

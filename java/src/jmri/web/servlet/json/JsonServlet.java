@@ -511,7 +511,7 @@ public class JsonServlet extends WebSocketServlet {
      * @param response the HTTP response
      * @param code the HTTP response code
      * @param message the message to send
-     * @param id set by client for message
+     * @param request the JSON request
      * @throws IOException if unable to send
      */
     private void sendMessage(@Nonnull HttpServletResponse response, int code, @Nonnull JsonNode message, @Nonnull JsonRequest request) throws IOException {
