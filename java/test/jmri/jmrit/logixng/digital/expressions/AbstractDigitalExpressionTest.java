@@ -25,11 +25,11 @@ public class AbstractDigitalExpressionTest {
     // This method is CPU intensive so we don't want to run it for every expression.
     @Test
     public void testGetNewSocketName() {
-        MyExpression action = new MyExpression();
+        MyExpression expression = new MyExpression();
         boolean hasThrown = false;
         try {
             // Create a bean with bad system name. This must throw an exception
-            String socketName = action.getNewSocketName();
+            String socketName = expression.getNewSocketName();
             // We should never get here.
             Assert.assertNotNull("Name is not null", socketName);
         } catch (RuntimeException e) {
