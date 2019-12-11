@@ -10,11 +10,8 @@ import javax.annotation.Nonnull;
 import javax.script.Bindings;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalExpression;
-import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.script.JmriScriptEngineManager;
 import org.slf4j.Logger;
@@ -95,23 +92,35 @@ public class ExpressionScript extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
-        return _scriptClass.evaluate();
+        if (_scriptClass != null) {
+            return _scriptClass.evaluate();
+        } else {
+            return false;
+        }
     }
 
     /** {@inheritDoc} */
     @Override
     public void reset() {
-        // Do nothing.
+        if (_scriptClass != null) _scriptClass.reset();
     }
 
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        throw new UnsupportedOperationException("Not supported.");
+        if (_scriptClass != null) {
+            return _scriptClass.getChild(index);
+        } else {
+            throw new UnsupportedOperationException("Not supported.");
+        }
     }
 
     @Override
     public int getChildCount() {
-        return 0;
+        if (_scriptClass != null) {
+            return _scriptClass.getChildCount();
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -127,7 +136,7 @@ public class ExpressionScript extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        _scriptClass.setup();
+        if (_scriptClass != null) _scriptClass.setup();
     }
     
     /** {@inheritDoc} */

@@ -279,6 +279,18 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Expected exception thrown", thrown);
     }
     
+    @Test
+    public void testDispose2() {
+        // Test dispose() without script
+        ExpressionScript expression = new ExpressionScript("IQDE321", null);
+        expression.dispose();
+        
+        // Test dispose() with script
+        expression = new ExpressionScript("IQDE321", null);
+        expression.setScript(_scriptText);
+        expression.dispose();
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
