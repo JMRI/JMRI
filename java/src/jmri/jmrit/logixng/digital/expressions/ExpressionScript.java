@@ -58,14 +58,18 @@ public class ExpressionScript extends AbstractDigitalExpression
         }
     }
     
-    public void setScript(@Nonnull String script) {
+    public void setScript(String script) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setScript must not be called when listeners are registered");
             log.error("setScript must not be called when listeners are registered", e);
             throw e;
         }
         _scriptText = script;
-        loadScript();
+        if (_scriptText != null) {
+            loadScript();
+        } else {
+            _scriptClass = null;
+        }
     }
     
     public String getScriptText() {
