@@ -151,16 +151,9 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         
         Assert.assertTrue("objects are equal", ExpressionLight.LightState.OFF == ExpressionLight.LightState.get(Light.OFF));
         Assert.assertTrue("objects are equal", ExpressionLight.LightState.ON == ExpressionLight.LightState.get(Light.ON));
+        Assert.assertTrue("objects are equal", ExpressionLight.LightState.OTHER == ExpressionLight.LightState.get(Light.UNKNOWN));
+        Assert.assertTrue("objects are equal", ExpressionLight.LightState.OTHER == ExpressionLight.LightState.get(Light.INCONSISTENT));
         Assert.assertTrue("objects are equal", ExpressionLight.LightState.OTHER == ExpressionLight.LightState.get(-1));
-        
-        boolean hasThrown = false;
-        try {
-            ExpressionLight.LightState.get(Light.UNKNOWN);
-        } catch (IllegalArgumentException ex) {
-            hasThrown = true;
-            Assert.assertTrue("Error message is correct", "invalid light state".equals(ex.getMessage()));
-        }
-        Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
     @Test

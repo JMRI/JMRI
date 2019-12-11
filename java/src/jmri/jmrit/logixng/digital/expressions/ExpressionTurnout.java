@@ -199,14 +199,11 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     }
     
     
-    // Used only by the TurnoutState class
-    private static final int TURNOUT_STATE_OTHER_ID = -1;
-    
     
     public enum TurnoutState {
         CLOSED(Turnout.CLOSED, InstanceManager.getDefault(TurnoutManager.class).getClosedText()),
         THROWN(Turnout.THROWN, InstanceManager.getDefault(TurnoutManager.class).getThrownText()),
-        OTHER(TURNOUT_STATE_OTHER_ID, Bundle.getMessage("TurnoutOtherStatus"));
+        OTHER(-1, Bundle.getMessage("TurnoutOtherStatus"));
         
         private final int _id;
         private final String _text;
@@ -224,11 +221,8 @@ public class ExpressionTurnout extends AbstractDigitalExpression
                 case Turnout.THROWN:
                     return THROWN;
                     
-                case TURNOUT_STATE_OTHER_ID:
-                    return OTHER;
-                    
                 default:
-                    throw new IllegalArgumentException("invalid turnout state");
+                    return OTHER;
             }
         }
         
