@@ -129,7 +129,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 0", 0 == expressionMemory.getChildCount());
+        Assert.assertTrue("getChildCount() returns 0", 0 == expressionMemory.getChildCount());
         
         boolean hasThrown = false;
         try {

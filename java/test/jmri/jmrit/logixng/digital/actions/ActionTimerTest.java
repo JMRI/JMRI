@@ -79,7 +79,7 @@ public class ActionTimerTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 1", 1 == actionTimer.getChildCount());
+        Assert.assertTrue("getChildCount() returns 1", 1 == actionTimer.getChildCount());
         
         Assert.assertNotNull("getChild(0) returns a non null value",
                 actionTimer.getChild(0));

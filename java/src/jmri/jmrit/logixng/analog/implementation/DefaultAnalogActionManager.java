@@ -121,7 +121,7 @@ public class DefaultAnalogActionManager extends AbstractManager<MaleAnalogAction
     }
 
     @Override
-    public FemaleAnalogActionSocket createFemaleAnalogActionSocket(
+    public FemaleAnalogActionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
         return new DefaultFemaleAnalogActionSocket(parent, listener, socketName);
     }

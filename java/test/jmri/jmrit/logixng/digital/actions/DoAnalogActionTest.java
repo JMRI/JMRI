@@ -72,7 +72,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 2", 2 == actionDoAnalogAction.getChildCount());
+        Assert.assertTrue("getChildCount() returns 2", 2 == actionDoAnalogAction.getChildCount());
         
         Assert.assertNotNull("getChild(0) returns a non null value",
                 actionDoAnalogAction.getChild(0));

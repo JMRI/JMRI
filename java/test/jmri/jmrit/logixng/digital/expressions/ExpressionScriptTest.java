@@ -11,12 +11,19 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
+import jmri.jmrit.logixng.AnalogAction;
+import jmri.jmrit.logixng.AnalogExpression;
+import jmri.jmrit.logixng.DigitalAction;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalBooleanAction;
+import jmri.jmrit.logixng.DigitalExpression;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.StringAction;
+import jmri.jmrit.logixng.StringExpression;
 import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.util.JUnitAppender;
@@ -38,7 +45,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
             + "import java.beans\n"
             + "import jmri\n"
             + ""
-            + "class MyExpression(jmri.jmrit.logixng.digital.expressions.AbstractScriptDigitalExpression):\n"
+            + "class MyExpression(jmri.jmrit.logixng.digital.expressions.AbstractScriptDigitalExpression, jmri.jmrit.logixng.FemaleSocketListener):\n"
             + ""
             + "  l = lights.provideLight(\"IL1\")\n"
             + ""
@@ -47,6 +54,29 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
             + ""
             + "  def unregisterScriptListeners(self):\n"
             + "    self.l.removePropertyChangeListener(\"KnownState\", self)\n"
+            + ""
+            // One purpose with this function is to test that the script has
+            // access to all the managers of LogixNG.
+            + "  def getChild(self, index):\n"
+            + "    if index == 0:\n"
+            + "      return self.childAnalogAction\n"
+            + "    elif index == 1:\n"
+            + "      return self.childAnalogExpression\n"
+            + "    elif index == 2:\n"
+            + "      return self.childDigitalAction\n"
+            + "    elif index == 3:\n"
+            + "      return self.childDigitalBooleanAction\n"
+            + "    elif index == 4:\n"
+            + "      return self.childDigitalExpression\n"
+            + "    elif index == 5:\n"
+            + "      return self.childStringAction\n"
+            + "    elif index == 6:\n"
+            + "      return self.childStringExpression\n"
+            + "    else:\n"
+            + "      raise java.lang.IllegalArgumentException(\"index is bad\")\n"
+            + ""
+            + "  def getChildCount(self):\n"
+            + "    return 7\n"
             + ""
             + "  def evaluate(self):\n"
             + "    if self.l is None:\n"
@@ -69,6 +99,13 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
             + "          self.l = None\n"
             + ""
             + "myClass = MyExpression(params._parentExpression)\n"
+            + "myClass.childAnalogAction = analogActions.createFemaleSocket(myClass, myClass, \"AA\")\n"
+            + "myClass.childAnalogExpression = analogExpressions.createFemaleSocket(myClass, myClass, \"AE\")\n"
+            + "myClass.childDigitalAction = digitalActions.createFemaleSocket(myClass, myClass, \"DA\")\n"
+            + "myClass.childDigitalBooleanAction = digitalBooleanActions.createFemaleSocket(myClass, myClass, \"DBA\")\n"
+            + "myClass.childDigitalExpression = digitalExpressions.createFemaleSocket(myClass, myClass, \"DE\")\n"
+            + "myClass.childStringAction = stringActions.createFemaleSocket(myClass, myClass, \"SA\")\n"
+            + "myClass.childStringExpression = stringExpressions.createFemaleSocket(myClass, myClass, \"SE\")\n"
             + "lights.addVetoableChangeListener(myClass)\n"
             + "params._scriptClass.set(myClass)\n";
     
@@ -151,7 +188,9 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 0", 0 == expressionScript.getChildCount());
+        // Test without script
+        expressionScript.setScript(null);
+        Assert.assertTrue("getChildCount() returns 0", 0 == expressionScript.getChildCount());
         
         boolean hasThrown = false;
         try {
@@ -159,6 +198,26 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         } catch (UnsupportedOperationException ex) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+        
+        // Test with script
+        expressionScript.setScript(_scriptText);
+        Assert.assertTrue("getChildCount() returns 7", 7 == expressionScript.getChildCount());
+        Assert.assertTrue("getChild(0) is an AnalogAction", expressionScript.getChild(0) instanceof AnalogAction);
+        Assert.assertTrue("getChild(1) is an AnalogAction", expressionScript.getChild(1) instanceof AnalogExpression);
+        Assert.assertTrue("getChild(2) is an AnalogAction", expressionScript.getChild(2) instanceof DigitalAction);
+        Assert.assertTrue("getChild(3) is an AnalogAction", expressionScript.getChild(3) instanceof DigitalBooleanAction);
+        Assert.assertTrue("getChild(4) is an AnalogAction", expressionScript.getChild(4) instanceof DigitalExpression);
+        Assert.assertTrue("getChild(5) is an AnalogAction", expressionScript.getChild(5) instanceof StringAction);
+        Assert.assertTrue("getChild(6) is an AnalogAction", expressionScript.getChild(6) instanceof StringExpression);
+        
+        hasThrown = false;
+        try {
+            expressionScript.getChild(8);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "index is bad", ex.getMessage());
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
@@ -205,17 +264,6 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         // do it for coverage.
         expressionScript.setScript(null);
         expressionScript.evaluate();
-/*        
-        // Register listeners
-        expressionScript.registerListeners();
-        atomicBoolean.set(false);
-        // Turn the light off. This should not execute the conditional.
-        light.setCommandedState(Light.OFF);
-        // Turrn the light on. This not should execute the conditional since listerners are not registered.
-        light.setCommandedState(Light.ON);
-        // Listerners are not registered so the atomic boolean should be false
-        Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-*/
     }
     
     @Test

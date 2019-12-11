@@ -121,7 +121,7 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 0", 0 == actionMemory.getChildCount());
+        Assert.assertTrue("getChildCount() returns 0", 0 == actionMemory.getChildCount());
         
         boolean hasThrown = false;
         try {

@@ -144,7 +144,7 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 2", 2 == expressionResetOnTrue.getChildCount());
+        Assert.assertTrue("getChildCount() returns 2", 2 == expressionResetOnTrue.getChildCount());
         
         Assert.assertNotNull("getChild(0) returns a non null value",
                 expressionResetOnTrue.getChild(0));

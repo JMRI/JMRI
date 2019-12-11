@@ -143,7 +143,7 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 0", 0 == actionSensor.getChildCount());
+        Assert.assertTrue("getChildCount() returns 0", 0 == actionSensor.getChildCount());
         
         boolean hasThrown = false;
         try {

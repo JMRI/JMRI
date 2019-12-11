@@ -143,7 +143,7 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 0", 0 == actionLight.getChildCount());
+        Assert.assertTrue("getChildCount() returns 0", 0 == actionLight.getChildCount());
         
         boolean hasThrown = false;
         try {

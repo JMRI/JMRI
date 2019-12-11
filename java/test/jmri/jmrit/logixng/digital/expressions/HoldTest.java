@@ -114,7 +114,7 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 2", 2 == expressionHold.getChildCount());
+        Assert.assertTrue("getChildCount() returns 2", 2 == expressionHold.getChildCount());
         
         Assert.assertNotNull("getChild(0) returns a non null value",
                 expressionHold.getChild(0));

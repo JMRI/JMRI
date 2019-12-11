@@ -71,7 +71,7 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 0", 0 == actionListenOnBeans.getChildCount());
+        Assert.assertTrue("getChildCount() returns 0", 0 == actionListenOnBeans.getChildCount());
         
         boolean hasThrown = false;
         try {

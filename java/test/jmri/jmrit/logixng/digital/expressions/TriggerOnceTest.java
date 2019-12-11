@@ -129,7 +129,7 @@ public class TriggerOnceTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 1", 1 == expressionTriggerOnce.getChildCount());
+        Assert.assertTrue("getChildCount() returns 1", 1 == expressionTriggerOnce.getChildCount());
         
         Assert.assertNotNull("getChild(0) returns a non null value",
                 expressionTriggerOnce.getChild(0));

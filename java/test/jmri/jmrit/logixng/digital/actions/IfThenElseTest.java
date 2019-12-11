@@ -84,7 +84,7 @@ public class IfThenElseTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 3", 3 == actionIfThenElse.getChildCount());
+        Assert.assertTrue("getChildCount() returns 3", 3 == actionIfThenElse.getChildCount());
         
         Assert.assertNotNull("getChild(0) returns a non null value",
                 actionIfThenElse.getChild(0));

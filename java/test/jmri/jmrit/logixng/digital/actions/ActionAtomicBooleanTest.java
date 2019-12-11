@@ -116,7 +116,7 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 0", 0 == actionAtomicBoolean.getChildCount());
+        Assert.assertTrue("getChildCount() returns 0", 0 == actionAtomicBoolean.getChildCount());
         
         boolean hasThrown = false;
         try {

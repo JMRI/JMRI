@@ -74,7 +74,7 @@ public class ManyTest extends AbstractDigitalActionTestBase {
         Many action2 = new Many("IQDA321", null);
         
         for (int i=0; i < 3; i++) {
-            Assert.assertTrue("getNumChilds() returns "+i, i+1 == action2.getChildCount());
+            Assert.assertTrue("getChildCount() returns "+i, i+1 == action2.getChildCount());
 
             Assert.assertNotNull("getChild(0) returns a non null value",
                     action2.getChild(0));

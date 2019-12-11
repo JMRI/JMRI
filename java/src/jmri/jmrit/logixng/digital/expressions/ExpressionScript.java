@@ -7,8 +7,16 @@ import javax.annotation.Nonnull;
 import javax.script.Bindings;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.AnalogActionManager;
+import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.DigitalExpression;
+import jmri.jmrit.logixng.DigitalExpressionManager;
+import jmri.jmrit.logixng.StringActionManager;
+import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.script.JmriScriptEngineManager;
 import org.slf4j.Logger;
@@ -36,6 +44,16 @@ public class ExpressionScript extends AbstractDigitalExpression {
 
             Bindings bindings = new SimpleBindings();
             ScriptParams params = new ScriptParams(this);
+            
+            // this should agree with help/en/html/tools/scripting/Start.shtml - this link is wrong and should point to LogixNG documentation
+            bindings.put("analogActions", InstanceManager.getNullableDefault(AnalogActionManager.class));
+            bindings.put("analogExpressions", InstanceManager.getNullableDefault(AnalogExpressionManager.class));
+            bindings.put("digitalActions", InstanceManager.getNullableDefault(DigitalActionManager.class));
+            bindings.put("digitalBooleanActions", InstanceManager.getNullableDefault(DigitalBooleanActionManager.class));
+            bindings.put("digitalExpressions", InstanceManager.getNullableDefault(DigitalExpressionManager.class));
+            bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
+            bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
+            
             bindings.put("params", params);    // Give the script access to the local variable 'params'
             
             scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)

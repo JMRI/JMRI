@@ -135,7 +135,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         Antecedent expression2 = new Antecedent("IQDE321", null, "R1");
         
         for (int i=0; i < 3; i++) {
-            Assert.assertTrue("getNumChilds() returns "+i, i+1 == expression2.getChildCount());
+            Assert.assertTrue("getChildCount() returns "+i, i+1 == expression2.getChildCount());
 
             Assert.assertNotNull("getChild(0) returns a non null value",
                     expression2.getChild(0));

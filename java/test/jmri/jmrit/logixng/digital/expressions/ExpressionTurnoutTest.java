@@ -131,7 +131,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 0", 0 == expressionTurnout.getChildCount());
+        Assert.assertTrue("getChildCount() returns 0", 0 == expressionTurnout.getChildCount());
         
         boolean hasThrown = false;
         try {

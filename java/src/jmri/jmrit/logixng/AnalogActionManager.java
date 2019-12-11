@@ -29,7 +29,7 @@ public interface AnalogActionManager extends Manager<MaleAnalogActionSocket> {
      */
     public String getAutoSystemName();
 
-    public FemaleAnalogActionSocket createFemaleAnalogActionSocket(
+    public FemaleAnalogActionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName);
 
     /**

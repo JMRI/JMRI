@@ -65,7 +65,7 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 0", 0 == actionDigitalActionPluginSocket.getChildCount());
+        Assert.assertTrue("getChildCount() returns 0", 0 == actionDigitalActionPluginSocket.getChildCount());
         
         boolean hasThrown = false;
         try {

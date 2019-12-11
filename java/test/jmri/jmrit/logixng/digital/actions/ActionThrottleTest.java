@@ -122,7 +122,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getNumChilds() returns 3", 3 == actionThrottle.getChildCount());
+        Assert.assertTrue("getChildCount() returns 3", 3 == actionThrottle.getChildCount());
         
         Assert.assertNotNull("getChild(0) returns a non null value",
                 actionThrottle.getChild(0));
