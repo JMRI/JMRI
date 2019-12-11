@@ -24,7 +24,6 @@ import jmri.server.json.idtag.JsonIdTagHttpService;
 import jmri.server.json.reporter.JsonReporterHttpService;
 
 /**
- *
  * @author Randall Wood
  */
 public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
@@ -45,15 +44,16 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
             if (val == null) {
                 data.putNull(VALUE);
             } else {
-                //set memory value based on type
-                if (val instanceof jmri.IdTag){
-                    ObjectNode idTagValue = idTagService.doGet((jmri.IdTag)val, name, IDTAG, locale, id);
+                // set memory value based on type
+                if (val instanceof jmri.IdTag) {
+                    ObjectNode idTagValue = idTagService.doGet((jmri.IdTag) val, name, IDTAG, request);
                     data.set(VALUE, idTagValue);
                 } else if (val instanceof Reportable) {
-                    ObjectNode reporterValue = reporterService.doGet((jmri.Reporter)val, name, REPORTER, locale, id);
+                    ObjectNode reporterValue = reporterService.doGet((jmri.Reporter) val, name, REPORTER, request);
                     data.set(VALUE, reporterValue);
                 } else {
-                    data.put(VALUE, val.toString()); //send string for types not explicitly handled
+                    // send string for types not explicitly handled
+                    data.put(VALUE, val.toString());
                 }
             }
         }
@@ -61,7 +61,8 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
     }
 
     @Override
-    public ObjectNode doPost(Memory memory, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
+    public ObjectNode doPost(Memory memory, String name, String type, JsonNode data, JsonRequest request)
+            throws JsonException {
         if (!data.path(VALUE).isMissingNode()) {
             if (data.path(VALUE).isNull()) {
                 memory.setValue(null);
@@ -83,7 +84,8 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
                         "jmri/server/json/memory/memory-client.json",
                         request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 

@@ -32,7 +32,6 @@ import jmri.server.json.reporter.JsonReporterHttpService;
 import jmri.server.json.sensor.JsonSensor;
 
 /**
- *
  * @author mstevetodd Copyright 2018
  * @author Randall Wood Copyright 2018, 2019
  */
@@ -47,7 +46,7 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
 
     @Override
     public ObjectNode doGet(Block block, String name, String type, JsonRequest request) throws JsonException {
-        ObjectNode root = this.getNamedBean(block, name, type, request); // throws JsonException if block == null
+        ObjectNode root = this.getNamedBean(block, name, type, request);
         ObjectNode data = root.with(JSON.DATA);
         switch (block.getState()) {
             case Block.UNDETECTED:
@@ -57,18 +56,19 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
             default:
                 data.put(JSON.STATE, block.getState());
         }
-        //set block value based on type stored there
+        // set block value based on type stored there
         Object bv = block.getValue();
         if (bv == null) {
             data.putNull(VALUE);
-        } else if (bv instanceof jmri.IdTag){
-            ObjectNode idTagValue = idTagService.doGet((jmri.IdTag)bv, name, IDTAG, locale, id);
+        } else if (bv instanceof jmri.IdTag) {
+            ObjectNode idTagValue = idTagService.doGet((jmri.IdTag) bv, name, IDTAG, request);
             data.set(VALUE, idTagValue);
         } else if (bv instanceof Reportable) {
-            ObjectNode reporterValue = reporterService.doGet((jmri.Reporter)bv, name, REPORTER, locale, id);
+            ObjectNode reporterValue = reporterService.doGet((jmri.Reporter) bv, name, REPORTER, request);
             data.set(VALUE, reporterValue);
         } else {
-            data.put(VALUE, bv.toString()); //send string for types not explicitly handled
+            // send string for types not explicitly handled
+            data.put(VALUE, bv.toString());
         }
         data.put(JsonSensor.SENSOR, block.getSensor() != null ? block.getSensor().getSystemName() : null);
         data.put(JsonReporter.REPORTER, block.getReporter() != null ? block.getReporter().getSystemName() : null);
@@ -105,7 +105,8 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                 // leave state alone in this case
                 break;
             default:
-                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", BLOCK, state), request.id);
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", BLOCK, state),
+                        request.id);
         }
         if (!data.path(JsonSensor.SENSOR).isMissingNode()) {
             JsonNode node = data.path(JsonSensor.SENSOR);
@@ -117,7 +118,9 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                     block.setSensor(sensor.getSystemName());
                 } else {
                     throw new JsonException(404,
-                            Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, JsonSensor.SENSOR, node.asText()), request.id);
+                            Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, JsonSensor.SENSOR,
+                                    node.asText()),
+                            request.id);
                 }
             }
         }
@@ -131,7 +134,9 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                     block.setReporter(reporter);
                 } else {
                     throw new JsonException(404,
-                            Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, JsonReporter.REPORTER, node.asText()), request.id);
+                            Bundle.getMessage(request.locale, JsonException.ERROR_NOT_FOUND, JsonReporter.REPORTER,
+                                    node.asText()),
+                            request.id);
                 }
             }
         }
@@ -139,7 +144,9 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         try {
             block.setBlockSpeed(text);
         } catch (JmriException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, JsonException.ERROR_BAD_PROPERTY_VALUE, text, JSON.SPEED, type), request.id);
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                    Bundle.getMessage(request.locale, JsonException.ERROR_BAD_PROPERTY_VALUE, text, JSON.SPEED, type),
+                    request.id);
         }
         block.setCurvature(data.path(JsonBlock.CURVATURE).asInt(block.getCurvature()));
         block.setDirection(data.path(JSON.DIRECTION).asInt(block.getDirection()));
@@ -167,7 +174,8 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
                         "jmri/server/json/block/block-client.json",
                         request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+                        Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 
