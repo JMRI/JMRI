@@ -423,7 +423,7 @@
                             <goal>verify</goal>
                         </goals>
                         <configuration>
-                            <argline>${failsafe.argLine}</argline>
+                            <argLine>@{argLine} ${failsafe.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                         </configuration>
                     </execution>
                 </executions>
@@ -620,7 +620,7 @@
                         </goals>      
                         <configuration>
                             <append>true</append>
-                            <destFile>${jacoco.reportDir}/jacoco-unit.exec</destFile>
+                            <destFile>${jacoco.reportDir}/jacoco-it.exec</destFile>
                             <propertyName>failsafe.argLine</propertyName>
                          </configuration>
                     </execution>
