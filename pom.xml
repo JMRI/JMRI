@@ -24,7 +24,7 @@
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.26</openlcb.version>
         <netbeans.version>RELEASE110</netbeans.version>
-        <jacoco.version>0.8.5</jacoco.version>
+        <jacoco.version>0.8.2</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
@@ -620,7 +620,7 @@
                         </goals>      
                         <configuration>
                             <append>true</append>
-                            <destFile>${jacoco.reportDir}/jacoco-it.exec</destFile>
+                            <destFile>${jacoco.reportDir}/jacoco-unit.exec</destFile>
                             <propertyName>failsafe.argLine</propertyName>
                          </configuration>
                     </execution>
@@ -635,7 +635,7 @@
                               <fileSet>
                                  <directory>${jacoco.reportDir}</directory>
                                  <includes>
-                                     <include>*.exec</include>
+                                   <include>*.exec</include>
                                  </includes>
                               </fileSet>
                            </fileSets>
@@ -646,9 +646,6 @@
                         <goals>
                             <goal>report</goal>
                         </goals>      
-                        <configuration>
-                            <dataFile>${jacoco.reportDir}jacoco-unit.exec</dataFile>
-                        </configuration>
                     </execution>
                     <execution>
                         <id>default-check</id>
