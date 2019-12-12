@@ -155,10 +155,8 @@ public class LayoutEditorChecksTest {
         JMenuOperator unConnectedTracksJMO = new JMenuOperator((JMenu) unConnectedTracksMenuItem);
         unConnectedTracksJMO.push();
         JPopupMenu unConnectedTracksPopupMenu = unConnectedTracksJMO.getPopupMenu();
-//        JMenuItem resultsMenuItem = (JMenuItem) unConnectedTracksPopupMenu.getComponent(0);
-//        Assert.assertEquals("resultsMenuItem.getText(): ",
-//                "Check In Progress...", resultsMenuItem.getText());
 
+        //verify results
         JMenuItem resultsMenuItem = (JMenuItem) unConnectedTracksPopupMenu.getComponent(0);
         Assert.assertEquals("resultsMenuItem.getText(): ",
                 rightHandName, resultsMenuItem.getText());
@@ -193,6 +191,8 @@ public class LayoutEditorChecksTest {
         JMenuOperator checkUnBlockedTracksJMO = new JMenuOperator((JMenu) checkUnBlockedTracksMenuItem);
         checkUnBlockedTracksJMO.push();
         JPopupMenu checkUnBlockedTracksPopupMenu = checkUnBlockedTracksJMO.getPopupMenu();
+
+        //verify results
         JMenuItem resultsMenuItem = (JMenuItem) checkUnBlockedTracksPopupMenu.getComponent(0);
         Assert.assertEquals("resultsMenuItem0.getText(): ", ts1.getName(), resultsMenuItem.getText());
         resultsMenuItem = (JMenuItem) checkUnBlockedTracksPopupMenu.getComponent(1);
@@ -227,6 +227,8 @@ public class LayoutEditorChecksTest {
         checkNonContiguousBlocksJMO.push();
 
         JPopupMenu checkNonContiguousBlocksPopupMenu = checkNonContiguousBlocksJMO.getPopupMenu();
+
+        //verify results
         JMenuItem resultsMenuItem = (JMenuItem) checkNonContiguousBlocksPopupMenu.getComponent(0);
         Assert.assertEquals("resultsMenuItem0.getText(): ", myBlockName, resultsMenuItem.getText());
 
@@ -264,6 +266,8 @@ public class LayoutEditorChecksTest {
         checkUnnecessaryAnchorsJMO.push();
 
         JPopupMenu checkUnnecessaryAnchorsPopupMenu = checkUnnecessaryAnchorsJMO.getPopupMenu();
+
+        //verify results
         JMenuItem resultsMenuItem = (JMenuItem) checkUnnecessaryAnchorsPopupMenu.getComponent(0);
         Assert.assertEquals("resultsMenuItem0.getText(): ", a1.getName(), resultsMenuItem.getText());
         resultsMenuItem = (JMenuItem) checkUnnecessaryAnchorsPopupMenu.getComponent(1);
