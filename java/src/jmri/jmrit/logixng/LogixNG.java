@@ -113,6 +113,7 @@ public interface LogixNG extends Base, NamedBean {
     /**
      * Is this LogixNG active?
      */
+    @Override
     public boolean isActive();
 
     /**

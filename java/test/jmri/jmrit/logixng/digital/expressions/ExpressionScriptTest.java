@@ -254,7 +254,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
-        // Turrn the light on. This should execute the conditional.
+        // Turn the light on. This should execute the conditional.
         light.setCommandedState(Light.ON);
         // The action should now be executed so the atomic boolean should be true
         Assert.assertTrue("atomicBoolean is true",atomicBoolean.get());

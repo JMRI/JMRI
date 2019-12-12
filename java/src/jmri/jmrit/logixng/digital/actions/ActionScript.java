@@ -1,16 +1,21 @@
 package jmri.jmrit.logixng.digital.actions;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.VetoableChangeListener;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.script.Bindings;
 import javax.script.ScriptException;
 import javax.script.SimpleBindings;
+import jmri.InstanceManager;
+import jmri.jmrit.logixng.AnalogActionManager;
+import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.DigitalAction;
+import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalBooleanActionManager;
+import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.StringActionManager;
+import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.script.JmriScriptEngineManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,8 +25,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2019
  */
-public class ActionScript extends AbstractDigitalAction
-        implements PropertyChangeListener, VetoableChangeListener {
+public class ActionScript extends AbstractDigitalAction {
 
     private String _scriptText;
     private AbstractScriptDigitalAction _scriptClass;
@@ -38,6 +42,16 @@ public class ActionScript extends AbstractDigitalAction
 
             Bindings bindings = new SimpleBindings();
             ScriptParams params = new ScriptParams(this);
+            
+            // this should agree with help/en/html/tools/scripting/Start.shtml - this link is wrong and should point to LogixNG documentation
+            bindings.put("analogActions", InstanceManager.getNullableDefault(AnalogActionManager.class));
+            bindings.put("analogExpressions", InstanceManager.getNullableDefault(AnalogExpressionManager.class));
+            bindings.put("digitalActions", InstanceManager.getNullableDefault(DigitalActionManager.class));
+            bindings.put("digitalBooleanActions", InstanceManager.getNullableDefault(DigitalBooleanActionManager.class));
+            bindings.put("digitalExpressions", InstanceManager.getNullableDefault(DigitalExpressionManager.class));
+            bindings.put("stringActions", InstanceManager.getNullableDefault(StringActionManager.class));
+            bindings.put("stringExpressions", InstanceManager.getNullableDefault(StringExpressionManager.class));
+            
             bindings.put("params", params);    // Give the script access to the local variable 'params'
             
             scriptEngineManager.getEngineByName(JmriScriptEngineManager.PYTHON)
@@ -46,6 +60,9 @@ public class ActionScript extends AbstractDigitalAction
             _scriptClass = params._scriptClass.get();
         } catch (ScriptException e) {
             log.error("cannot load script", e);
+            _scriptText = null;
+            _scriptClass = null;
+            return;
         }
         
         if (_scriptClass == null) {
@@ -60,16 +77,15 @@ public class ActionScript extends AbstractDigitalAction
             throw e;
         }
         _scriptText = script;
-        loadScript();
+        if (_scriptText != null) {
+            loadScript();
+        } else {
+            _scriptClass = null;
+        }
     }
     
     public String getScriptText() {
         return _scriptText;
-    }
-    
-    @Override
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
-        _scriptClass.vetoableChange(evt);
     }
     
     /** {@inheritDoc} */
@@ -92,12 +108,20 @@ public class ActionScript extends AbstractDigitalAction
 
     @Override
     public FemaleSocket getChild(int index) throws IllegalArgumentException, UnsupportedOperationException {
-        throw new UnsupportedOperationException("Not supported.");
+        if (_scriptClass != null) {
+            return _scriptClass.getChild(index);
+        } else {
+            throw new UnsupportedOperationException("Not supported.");
+        }
     }
 
     @Override
     public int getChildCount() {
-        return 0;
+        if (_scriptClass != null) {
+            return _scriptClass.getChildCount();
+        } else {
+            return 0;
+        }
     }
 
     @Override
@@ -113,7 +137,7 @@ public class ActionScript extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        _scriptClass.setup();
+        if (_scriptClass != null) _scriptClass.setup();
     }
     
     /** {@inheritDoc} */
@@ -136,14 +160,8 @@ public class ActionScript extends AbstractDigitalAction
     
     /** {@inheritDoc} */
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
-        getConditionalNG().execute();
-    }
-    
-    /** {@inheritDoc} */
-    @Override
     public void disposeMe() {
-        _scriptClass.dispose();
+        if (_scriptClass != null) _scriptClass.dispose();
     }
     
     

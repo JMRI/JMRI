@@ -528,8 +528,10 @@ public class DefaultFemaleGenericExpressionSocket
         /** {@inheritDoc} */
         @Override
         public void disconnect() {
-            DefaultFemaleGenericExpressionSocket.this.disconnect();
-            _listener.disconnected(this);
+            if (DefaultFemaleGenericExpressionSocket.this.isConnected()) {
+                DefaultFemaleGenericExpressionSocket.this.disconnect();
+                _listener.disconnected(this);
+            }
         }
 
         /** {@inheritDoc} */
@@ -644,8 +646,10 @@ public class DefaultFemaleGenericExpressionSocket
         /** {@inheritDoc} */
         @Override
         public void disconnect() {
-            DefaultFemaleGenericExpressionSocket.this.disconnect();
-            _listener.disconnected(this);
+            if (DefaultFemaleGenericExpressionSocket.this.isConnected()) {
+                DefaultFemaleGenericExpressionSocket.this.disconnect();
+                _listener.disconnected(this);
+            }
         }
 
         /** {@inheritDoc} */
@@ -760,8 +764,10 @@ public class DefaultFemaleGenericExpressionSocket
         /** {@inheritDoc} */
         @Override
         public void disconnect() {
-            DefaultFemaleGenericExpressionSocket.this.disconnect();
-            _listener.disconnected(this);
+            if (DefaultFemaleGenericExpressionSocket.this.isConnected()) {
+                DefaultFemaleGenericExpressionSocket.this.disconnect();
+                _listener.disconnected(this);
+            }
         }
 
         /** {@inheritDoc} */
