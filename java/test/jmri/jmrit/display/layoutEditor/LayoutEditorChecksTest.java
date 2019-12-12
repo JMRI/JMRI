@@ -3,11 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.CheckForNull;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -24,8 +20,6 @@ import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.JMenuOperator;
-import org.netbeans.jemmy.util.Dumper;
-import org.netbeans.jemmy.util.PNGEncoder;
 
 /**
  *
@@ -48,15 +42,21 @@ public class LayoutEditorChecksTest {
     private String checkNonContiguousBlocksMenuTitle = Bundle.getMessage("CheckNonContiguousBlocksMenuTitle");
     private String checkUnnecessaryAnchorsMenuTitle = Bundle.getMessage("CheckUnnecessaryAnchorsMenuTitle");
 
+    private static String myBlockName = "My Block";
+    private static String rightHandName = "Right Hand";
+    private static String leftHandName = "Left Hand";
+
     private static EditorFrameOperator layoutEditorEFO = null;
 
     private static LayoutEditor layoutEditor = null;
     private static LayoutEditorChecks layoutEditorChecks = null;
     private static LayoutBlock layoutBlock = null;
     private static LayoutTurnout ltRH = null, ltLH = null;
-    private static PositionablePoint pp = null;
+    private static PositionablePoint a1 = null;
+    private static PositionablePoint a2 = null;
     private static TrackSegment ts1 = null;
     private static TrackSegment ts2 = null;
+    private static TrackSegment ts3 = null;
 
     @Test
     public void testCTor() {
@@ -66,13 +66,33 @@ public class LayoutEditorChecksTest {
 
     @Test
     public void testSetup() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("layoutEditor not null", layoutEditor);
+
         Assert.assertNotNull("layoutBlock not null", layoutBlock);
+        Assert.assertEquals("layoutBlock.getUserName()", myBlockName, layoutBlock.getUserName());
+
         Assert.assertNotNull("ltRH not null", ltRH);
+        Assert.assertEquals("ltRH.getName()", rightHandName, ltRH.getName());
+
         Assert.assertNotNull("ltLH not null", ltLH);
-        Assert.assertNotNull("pp not null", pp);
+        Assert.assertEquals("ltLH.getName()", leftHandName, ltLH.getName());
+
+        Assert.assertNotNull("a1 not null", a1);
+        Assert.assertEquals("a1.getName()", "A1", a1.getName());
+
+        Assert.assertNotNull("a2 not null", a2);
+        Assert.assertEquals("a2.getName()", "A2", a2.getName());
+
         Assert.assertNotNull("ts1 not null", ts1);
+        Assert.assertEquals("ts1.getName()", "T1", ts1.getName());
+
         Assert.assertNotNull("ts2 not null", ts2);
+        Assert.assertEquals("ts2.getName()", "T2", ts2.getName());
+
+        Assert.assertNotNull("ts3 not null", ts3);
+        Assert.assertEquals("ts3.getName()", "T3", ts3.getName());
+
     }
 
     @Test
@@ -107,7 +127,7 @@ public class LayoutEditorChecksTest {
         Assert.assertNotNull("checkUnConnectedTracksMenuTitle not null", checkUnConnectedTracksMenuTitle);
         String paths[] = {toolsMenuTitle, checkMenuTitle, checkUnConnectedTracksMenuTitle, "TO1"};
         toolsJMO.showMenuItem(paths);
-        dumpScreen();
+        //dumpScreen();
     }
 
     @Test
@@ -126,38 +146,26 @@ public class LayoutEditorChecksTest {
         Assert.assertEquals("checkMenuItem.getText(): ",
                 checkMenuTitle, checkMenuItem.getText());
 
-        JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
-        JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
+        JMenuOperator checkJMO = new JMenuOperator((JMenu) checkMenuItem);
+        JPopupMenu checksPopupMenu = checkJMO.getPopupMenu();
+        JMenuItem unConnectedTracksMenuItem = (JMenuItem) checksPopupMenu.getComponent(0);
+        Assert.assertEquals("subMenuItem.getText(): ",
+                checkUnConnectedTracksMenuTitle, unConnectedTracksMenuItem.getText());
 
-        JMenuItem checkSubMenuItem = (JMenuItem) checkPopupMenu.getComponent(0);
-        Assert.assertEquals("checkSubMenuItem.getText(): ",
-                checkUnConnectedTracksMenuTitle,
-                checkSubMenuItem.getText());
-//        //TODO:validate results
+        JMenuOperator unConnectedTracksJMO = new JMenuOperator((JMenu) unConnectedTracksMenuItem);
+        unConnectedTracksJMO.push();
+        JPopupMenu unConnectedTracksPopupMenu = unConnectedTracksJMO.getPopupMenu();
+//        JMenuItem resultsMenuItem = (JMenuItem) unConnectedTracksPopupMenu.getComponent(0);
+//        Assert.assertEquals("resultsMenuItem.getText(): ",
+//                "Check In Progress...", resultsMenuItem.getText());
 
-//        JMenuOperator checkSubMenuMO = new JMenuOperator((JMenu) checkSubMenuItem);
+        JMenuItem resultsMenuItem = (JMenuItem) unConnectedTracksPopupMenu.getComponent(0);
+        Assert.assertEquals("resultsMenuItem.getText(): ",
+                rightHandName, resultsMenuItem.getText());
 
-//        Assert.assertEquals("checkSubMenuMO.getText(): ",
-//                "FooBar",
-//                checkSubMenuMO.getText());
-//        JMenuItem xxxJMenuItem = toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle + "/"
-//                + checkUnConnectedTracksMenuTitle, "/");
-//        Assert.assertEquals("xxxJMenuItem.getText(): ",
-//                "FooBar",
-//                xxxJMenuItem.getText());
-//        new QueueTool().waitEmpty();
-        //dumpMenuBar(layoutEditor.getJMenuBar());
-        //dumpMenuElements(checkMenuItem);
-//        new QueueTool().waitEmpty();
-        //dumpMenuElements(toolsPopupMenu);
-//        MenuElement resultsMenuElements[] = checkSubMenuItem.getSubElements();
-//        int i = 0;
-//        for (MenuElement resultsMenuElement : resultsMenuElements) {
-//            System.out.println("resultsMenuElements[" + i++ + "]: " + resultsMenuElement.toString());
-//        }
-//        JMenuItem resultsSubMenuItem = (JMenuItem) checkSubMenuItem.getComponent(0);
-//        Assert.assertEquals("resultsSubMenuItem.getText(): ",
-//                "Mud", resultsMenuElements[0].getText());
+        resultsMenuItem = (JMenuItem) unConnectedTracksPopupMenu.getComponent(1);
+        Assert.assertEquals("resultsMenuItem.getText(): ",
+                leftHandName, resultsMenuItem.getText());
     }   //testCheckUnConnectedTracks
 
     @Test
@@ -176,14 +184,21 @@ public class LayoutEditorChecksTest {
         Assert.assertEquals("checkMenuItem.getText(): ",
                 checkMenuTitle, checkMenuItem.getText());
 
-        JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
-        JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
+        JMenuOperator checkJMO = new JMenuOperator((JMenu) checkMenuItem);
+        JPopupMenu checksPopupMenu = checkJMO.getPopupMenu();
+        JMenuItem checkUnBlockedTracksMenuItem = (JMenuItem) checksPopupMenu.getComponent(1);
+        Assert.assertEquals("subMenuItem.getText(): ",
+                checkUnBlockedTracksMenuTitle, checkUnBlockedTracksMenuItem.getText());
 
-        JMenuItem checkSubMenuItem = (JMenuItem) checkPopupMenu.getComponent(1);
-        Assert.assertEquals("checkSubMenuItem.getText(): ",
-                checkUnBlockedTracksMenuTitle,
-                checkSubMenuItem.getText());
-        //TODO:validate results
+        JMenuOperator checkUnBlockedTracksJMO = new JMenuOperator((JMenu) checkUnBlockedTracksMenuItem);
+        checkUnBlockedTracksJMO.push();
+        JPopupMenu checkUnBlockedTracksPopupMenu = checkUnBlockedTracksJMO.getPopupMenu();
+        JMenuItem resultsMenuItem = (JMenuItem) checkUnBlockedTracksPopupMenu.getComponent(0);
+        Assert.assertEquals("resultsMenuItem0.getText(): ", ts1.getName(), resultsMenuItem.getText());
+        resultsMenuItem = (JMenuItem) checkUnBlockedTracksPopupMenu.getComponent(1);
+        Assert.assertEquals("resultsMenuItem1.getText(): ", ts2.getName(), resultsMenuItem.getText());
+        resultsMenuItem = (JMenuItem) checkUnBlockedTracksPopupMenu.getComponent(2);
+        Assert.assertEquals("resultsMenuItem2.getText(): ", ts3.getName(), resultsMenuItem.getText());
     }   //testCheckUnBlockedTracks
 
     @Test
@@ -202,14 +217,25 @@ public class LayoutEditorChecksTest {
         Assert.assertEquals("checkMenuItem.getText(): ",
                 checkMenuTitle, checkMenuItem.getText());
 
-        JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
-        JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
+        JMenuOperator checkJMO = new JMenuOperator((JMenu) checkMenuItem);
+        JPopupMenu checksPopupMenu = checkJMO.getPopupMenu();
+        JMenuItem checkNonContiguousBlocksMenuItem = (JMenuItem) checksPopupMenu.getComponent(2);
+        Assert.assertEquals("subMenuItem.getText(): ",
+                checkNonContiguousBlocksMenuTitle, checkNonContiguousBlocksMenuItem.getText());
 
-        JMenuItem checkSubMenuItem = (JMenuItem) checkPopupMenu.getComponent(2);
-        Assert.assertEquals("checkSubMenuItem.getText(): ",
-                checkNonContiguousBlocksMenuTitle,
-                checkSubMenuItem.getText());
-        //TODO:validate results
+        JMenuOperator checkNonContiguousBlocksJMO = new JMenuOperator((JMenu) checkNonContiguousBlocksMenuItem);
+        checkNonContiguousBlocksJMO.push();
+
+        JPopupMenu checkNonContiguousBlocksPopupMenu = checkNonContiguousBlocksJMO.getPopupMenu();
+        JMenuItem resultsMenuItem = (JMenuItem) checkNonContiguousBlocksPopupMenu.getComponent(0);
+        Assert.assertEquals("resultsMenuItem0.getText(): ", myBlockName, resultsMenuItem.getText());
+
+        JMenuOperator resultsJMO = new JMenuOperator((JMenu) resultsMenuItem);
+        JPopupMenu resultsPopupMenu = resultsJMO.getPopupMenu();
+        JMenuItem resultsSubMenuItem = (JMenuItem) resultsPopupMenu.getComponent(0);
+        Assert.assertEquals("resultsSubMenuItem0.getText(): ", myBlockName + ":#1", resultsSubMenuItem.getText());
+        resultsSubMenuItem = (JMenuItem) resultsPopupMenu.getComponent(1);
+        Assert.assertEquals("resultsSubMenuItem1.getText(): ", myBlockName + ":#2", resultsSubMenuItem.getText());
     }   //testCheckNonContiguousBlocks
 
     @Test
@@ -228,14 +254,20 @@ public class LayoutEditorChecksTest {
         Assert.assertEquals("checkMenuItem.getText(): ",
                 checkMenuTitle, checkMenuItem.getText());
 
-        JMenuOperator checkMO = new JMenuOperator((JMenu) checkMenuItem);
-        JPopupMenu checkPopupMenu = checkMO.getPopupMenu();
+        JMenuOperator checkJMO = new JMenuOperator((JMenu) checkMenuItem);
+        JPopupMenu checksPopupMenu = checkJMO.getPopupMenu();
+        JMenuItem checkUnnecessaryAnchorsMenuItem = (JMenuItem) checksPopupMenu.getComponent(3);
+        Assert.assertEquals("subMenuItem.getText(): ",
+                checkUnnecessaryAnchorsMenuTitle, checkUnnecessaryAnchorsMenuItem.getText());
 
-        JMenuItem checkSubMenuItem = (JMenuItem) checkPopupMenu.getComponent(3);
-        Assert.assertEquals("checkSubMenuItem.getText(): ",
-                checkUnnecessaryAnchorsMenuTitle,
-                checkSubMenuItem.getText());
-        //TODO:validate results
+        JMenuOperator checkUnnecessaryAnchorsJMO = new JMenuOperator((JMenu) checkUnnecessaryAnchorsMenuItem);
+        checkUnnecessaryAnchorsJMO.push();
+
+        JPopupMenu checkUnnecessaryAnchorsPopupMenu = checkUnnecessaryAnchorsJMO.getPopupMenu();
+        JMenuItem resultsMenuItem = (JMenuItem) checkUnnecessaryAnchorsPopupMenu.getComponent(0);
+        Assert.assertEquals("resultsMenuItem0.getText(): ", a1.getName(), resultsMenuItem.getText());
+        resultsMenuItem = (JMenuItem) checkUnnecessaryAnchorsPopupMenu.getComponent(1);
+        Assert.assertEquals("resultsMenuItem1.getText(): ", a2.getName(), resultsMenuItem.getText());
     }   //testCheckUnnecessaryAnchors
 
     @BeforeClass
@@ -252,53 +284,68 @@ public class LayoutEditorChecksTest {
             layoutEditorEFO = new EditorFrameOperator(layoutEditor);
 
             Point2D point = new Point2D.Double(150.0, 100.0);
-            Point2D delta = new Point2D.Double(50.0, 75.0);
+            Point2D delta = new Point2D.Double(100.0, 50.0);
             List<LayoutTrack> layoutTracks = layoutEditor.getLayoutTracks();
             Assert.assertNotNull("layoutTracks not null", layoutTracks);
 
             //create a layout block
-            layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, "My Block");
+            layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, myBlockName);
 
             //add 1st turnout
-            ltRH = new LayoutTurnout("Right Hand", LayoutTurnout.RH_TURNOUT,
+            ltRH = new LayoutTurnout(rightHandName, LayoutTurnout.RH_TURNOUT,
                     point, 33.0, 1.1, 1.2, layoutEditor);
             layoutTracks.add(ltRH);
+            //set its block
             ltRH.setLayoutBlock(layoutBlock);
 
-            //add an anchor
+            //add 1st anchor
             point = MathUtil.add(point, delta);
-            pp = new PositionablePoint("A1", PositionablePoint.ANCHOR, point, layoutEditor);
-            Assert.assertNotNull("PositionablePoint", pp);
-            layoutTracks.add(pp);
+            a1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, point, layoutEditor);
+            Assert.assertNotNull("PositionablePoint", a1);
+            layoutTracks.add(a1);
 
-            //connect 1st turnout to anchor
-            ts1 = addNewTrackSegment(ltRH, LayoutTrack.TURNOUT_B, pp, LayoutTrack.POS_POINT);
+            //connect 1st turnout to 1st anchor
+            int tsIdx = 1;
+            ts1 = addNewTrackSegment(ltRH, LayoutTrack.TURNOUT_B, a1, LayoutTrack.POS_POINT, tsIdx++);
+
+            //add 2nd anchor
+            //point = MathUtil.add(point, delta);
+            a2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, point, layoutEditor);
+            Assert.assertNotNull("PositionablePoint", a2);
+            layoutTracks.add(a2);
+
+            //connect 1st anchor to 2nd anchor
+            ts2 = addNewTrackSegment(a1, LayoutTrack.POS_POINT, a2, LayoutTrack.POS_POINT, tsIdx++);
+            //set its block
+            //ts2.setLayoutBlock(layoutBlock);
 
             //add 2nd turnout
             point = MathUtil.add(point, delta);
-            ltLH = new LayoutTurnout("Left Hand", LayoutTurnout.LH_TURNOUT,
+            ltLH = new LayoutTurnout(leftHandName, LayoutTurnout.LH_TURNOUT,
                     point, 66.0, 1.3, 1.4, layoutEditor);
             layoutTracks.add(ltLH);
+            //set its block
             ltLH.setLayoutBlock(layoutBlock);
 
-            //connect anchor to 2nd turnout
-            ts2 = addNewTrackSegment(pp, LayoutTrack.POS_POINT, ltLH, LayoutTrack.TURNOUT_A);
+            //connect 2nd anchor to 2nd turnout
+            ts3 = addNewTrackSegment(a2, LayoutTrack.POS_POINT, ltLH, LayoutTrack.TURNOUT_A, tsIdx++);
 
-            //wait for layout editor to finish drawing
+            //wait for layout editor to finish setup and drawing
             new QueueTool().waitEmpty();
         }
     }
 
     private static TrackSegment addNewTrackSegment(
             @CheckForNull LayoutTrack c1, int t1,
-            @CheckForNull LayoutTrack c2, int t2) {
+            @CheckForNull LayoutTrack c2, int t2,
+            int idx) {
         TrackSegment result = null;
         if ((c1 != null) && (c2 != null)) {
             //create new track segment
-            String name = layoutEditor.getFinder().uniqueName("T", 1);
+            String name = layoutEditor.getFinder().uniqueName("T", idx);
             result = new TrackSegment(name, c1, t1, c2, t2,
                     false, false, layoutEditor);
-            layoutEditor.getLayoutTracks().add(ts1);
+            layoutEditor.getLayoutTracks().add(result);
             //link to connected objects
             layoutEditor.setLink(c1, t1, result, LayoutTrack.TRACK);
             layoutEditor.setLink(c2, t2, result, LayoutTrack.TRACK);
@@ -331,26 +378,18 @@ public class LayoutEditorChecksTest {
 //    public void tearDown() {
 //        JUnitUtil.tearDown();
 //    }
-    //TODO: remove or comment out for production
-    private String getSpaces(int cnt) {
-        String result = "";
-        for (int i = 0; i < indent_level; i++) {
-            result += " ";
-        }
-        return result;
-    }
+//
+//  TODO: remove or comment out for production
+//
+    private static int indent_spaces = 1;
 
-    private static int indent_level = 1;
-
-    private void dumpMenuElement(MenuElement jMenuElement) {
-        //System.out.println(getSpaces(indent_level) + ((JMenuItem) jMenuElement).getText());
-        //System.out.format("%1$" + indent_level + "s\n", "| " + ((JMenuItem) jMenuElement).getText());
-        System.out.println(StringUtils.leftPad(((JMenuItem) jMenuElement).getText(), indent_level, " "));
-        indent_level += 4;
-        for (MenuElement subMenuElement : jMenuElement.getSubElements()) {
+    private void dumpMenuElement(MenuElement menuElement) {
+        System.out.println(StringUtils.leftPad(((JMenuItem) menuElement).getText(), indent_spaces, " "));
+        indent_spaces += 4;
+        for (MenuElement subMenuElement : menuElement.getSubElements()) {
             dumpMenuElement(subMenuElement);
         }
-        indent_level -= 4;
+        indent_spaces -= 4;
     }
 
     private static void dumpMenuBar(JMenuBar menuBar) {
@@ -359,32 +398,27 @@ public class LayoutEditorChecksTest {
         }
     }
 
-    private static void dumpMenuElements(MenuElement subElement) {
-        dumpMenuElements(subElement, 0);
-    }
-
-    private static void dumpMenuElements(MenuElement subElement, int index) {
-        if (subElement instanceof JMenuItem) {
-            String infoString = ((JMenuItem) subElement).getText() + " (" + index + "," + indent_level + ")";
-            System.out.println(StringUtils.leftPad("", indent_level * 2) + infoString);
+    private static void dumpMenuElements(MenuElement menuElement) {
+        if (menuElement instanceof JMenuItem) {
+            System.out.println(StringUtils.leftPad("", indent_spaces * 2)
+                    + ((JMenuItem) menuElement).getText());
         }
-        int idx = 0;
-        for (MenuElement element : subElement.getSubElements()) {
-            indent_level++;
-            dumpMenuElements(element, idx++);
-            indent_level--;
+        for (MenuElement subElement : menuElement.getSubElements()) {
+            indent_spaces++;
+            dumpMenuElements(subElement);
+            indent_spaces--;
         }
     }
-
-    private void dumpScreen() {
-        String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
-        PNGEncoder.captureScreen(desktopPath + File.separator + "screen.png");
-        try {
-            Dumper.dumpAll(desktopPath + File.separator + "screen.xml");
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(LayoutEditorChecksTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
+//
+//    private void dumpScreen() {
+//        String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
+//        PNGEncoder.captureScreen(desktopPath + File.separator + "screen.png");
+//        try {
+//            Dumper.dumpAll(desktopPath + File.separator + "screen.xml");
+//        } catch (FileNotFoundException ex) {
+//            Logger.getLogger(LayoutEditorChecksTest.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+//
     //private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorChecksTest.class);
 }
