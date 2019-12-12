@@ -1529,16 +1529,23 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @return the allocated section or null if not successful
      */
     public AllocatedSection allocateSection(AllocationRequest ar, Section ns) {
+//        log.debug("{}: Checking Section [{}]", ar.getActiveTrain().getTrainName(), (ns != null ? ns.getDisplayName() : "auto"));
         AllocatedSection as = null;
         Section nextSection = null;
         int nextSectionSeqNo = 0;
         if (ar != null) {
             ActiveTrain at = ar.getActiveTrain();
-            if (at.holdAllocation() || at.reachedRestartPoint()) {
+            Section s = ar.getSection();
+            if (at.reachedRestartPoint()) {
+                log.debug("{}: waiting for restart, [{}] not allocated", at.getTrainName(), s.getUserName());
                 return null;
             }
-            Section s = ar.getSection();
+            if (at.holdAllocation()) {
+                log.debug("{}: allocation is held, [{}] not allocated", at.getTrainName(), s.getUserName());
+                return null;
+            }
             if (s.getState() != Section.FREE) {
+                log.debug("{}: section [{}] is not free", at.getTrainName(), s.getUserName());
                 return null;
             }
             // skip occupancy check if this is the first allocation and the train is occupying the Section
@@ -1615,6 +1622,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 // need to reverse Transit direction when train is in the last Section, set next section.
                 if (at.getResetWhenDone()) {
                     if (at.getDelayedRestart() != ActiveTrain.NODELAY) {
+                        log.debug("{}: setting allocation to held", at.getTrainName());
                         at.holdAllocation(true);
                     }
                 }
@@ -1637,6 +1645,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                 //      has reached the beginning of the Transit--check for automatic restart
                 if (at.getResetWhenDone()) {
                     if (at.getDelayedRestart() != ActiveTrain.NODELAY) {
+                        log.debug("{}: setting allocation to held", at.getTrainName());
                         at.holdAllocation(true);
                     }
                     nextSection = at.getSecondAllocatedSection();
@@ -1861,6 +1870,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         }
         at.addAllocatedSection(as);
         allocatedSections.add(as);
+        log.debug("{}: Allocated section [{}]", at.getTrainName(), as.getSectionName());
         return as;
     }
 
@@ -2152,7 +2162,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                                         }
                                     }
                                     if (foundOne) {
-                                        log.debug("{}: releasing {}", at.getTrainName(), as.getSectionName());
+                                        log.debug("{}: releasing section [{}]", at.getTrainName(), as.getSectionName());
                                         releaseAllocatedSection(as, false);
                                     }
                                 }

@@ -1120,6 +1120,7 @@ public class ActiveTrain {
     }
 
     protected void restart() {
+        log.debug("{}: restarting", getTrainName());        
         restartPoint = false;
         holdAllocation = false;
         setStatus(WAITING);

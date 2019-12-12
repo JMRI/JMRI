@@ -550,7 +550,7 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             _forward = !_activeTrain.isTransitReversed();
         }
-        log.debug("flipping direction was [{}] now [{}]",_forward,oldFwd);
+        log.trace("flipping direction was [{}] now [{}]",_forward,oldFwd);
     }
 
     protected AllocatedSection getCurrentAllocatedSection() {
@@ -664,7 +664,7 @@ public class AutoActiveTrain implements ThrottleListener {
      *        even if it is not on the immediate block boundary
      */
     protected synchronized void setupNewCurrentSignal(AllocatedSection as, boolean forceSpeedChange) {
-        log.debug("setupNewCurrentSignal Called Section[{}] forceSpeedChange[{}]", as != null ? as.getSectionName() : "null",forceSpeedChange);
+        log.trace("setupNewCurrentSignal Called Section[{}] forceSpeedChange[{}]", as != null ? as.getSectionName() : "null",forceSpeedChange);
         removeCurrentSignal();
         if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD) {
             SignalHead sh = _lbManager.getFacingSignalHead(_currentBlock, _nextBlock);
@@ -682,7 +682,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     }
                 });
                 if (log.isDebugEnabled()) {
-                    log.debug("new current signal = " + sh.getSystemName());
+                    log.debug("new current signal = {}", sh.getSystemName());
                 }
                 setSpeedBySignal();
             } // Note: null signal head will result when exiting throat-to-throat blocks.
@@ -810,7 +810,7 @@ public class AutoActiveTrain implements ThrottleListener {
 
     // called by above or when resuming after stopped action
     protected synchronized void setSpeedBySignal() {
-        log.debug("Set Speed by Signal");
+        log.trace("Set Speed by Signal");
         if (_pausingActive || ((_activeTrain.getStatus() != ActiveTrain.RUNNING)
                 && (_activeTrain.getStatus() != ActiveTrain.WAITING)) || ((_controllingSignal == null)
                 && InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALHEAD)
@@ -875,7 +875,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     useSpeed = signalSpeed;
                 }
 
-                log.debug("BlockSpeed[" + blockSpeed + "] SignalSpeed[" + signalSpeed + "]");
+                log.trace("BlockSpeed[" + blockSpeed + "] SignalSpeed[" + signalSpeed + "]");
                 if (useSpeed < 0.01f) {
                     // check to to see if its allocated to us!!!
                     //      check Block occupancy sensor if it is in an allocated block, which must change before signal.
@@ -1214,7 +1214,7 @@ public class AutoActiveTrain implements ThrottleListener {
     protected synchronized void executeStopTasks(int task) {
         // clean up stopping
         cancelStopInCurrentSection();
-        log.debug("exec[{}]",task);
+        log.trace("exec[{}]",task);
         switch (task) {
             case NO_TASK:
                 // clean up stop
@@ -1387,7 +1387,7 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     private synchronized void setTargetSpeedState(int speedState) {
         _autoEngineer.slowToStop(false);
-        log.debug("Speed[{}]",speedState);
+        log.trace("Speed[{}]",speedState);
         if (speedState > STOP_SPEED) {
             _targetSpeed = applyMaxThrottleAndFactor(_speedRatio[speedState]);
         } else if (useSpeedProfile && _stopBySpeedProfile) {
@@ -1403,7 +1403,7 @@ public class AutoActiveTrain implements ThrottleListener {
         // the speed comes in as units of warrents (mph, kph, mm/s etc)
             try {
                 float throttleSetting = _activeTrain.getRosterEntry().getSpeedProfile().getThrottleSettingFromSignalMapSpeed(speedState, _forward);
-                log.debug("{}:setTargetSpeedByProfile: SpeedState[{}]",_activeTrain.getTrainName(),throttleSetting,speedState);
+                log.debug("{}: setTargetSpeedByProfile: SpeedState[{}]",_activeTrain.getTrainName(),throttleSetting,speedState);
                 if (throttleSetting > 0.009) {
                     _autoEngineer.setHalt(false);
                     _autoEngineer.slowToStop(false);
@@ -1431,7 +1431,7 @@ public class AutoActiveTrain implements ThrottleListener {
      * throttle.
      */
     private synchronized void setTargetSpeedValue(float speed) {
-        log.debug("{}:setTargetSpeedValue: Speed[{}]",_activeTrain.getTrainName(),speed);
+        log.debug("{}: setTargetSpeedValue: Speed[{}]",_activeTrain.getTrainName(),speed);
         if (useSpeedProfile) {
             setTargetSpeedByProfile(speed);
             return;
@@ -1588,7 +1588,7 @@ public class AutoActiveTrain implements ThrottleListener {
                         Thread.sleep(_delay);
                     }
                 }
-                log.debug("executing task[{}]",_task);
+                log.trace("executing task[{}]",_task);
                 executeStopTasks(_task);
             } catch (InterruptedException e) {
                 log.warn("Waiting for train to stop interrupted - stop tasks not executing");
