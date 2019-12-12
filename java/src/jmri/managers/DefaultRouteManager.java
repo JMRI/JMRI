@@ -67,6 +67,26 @@ public class DefaultRouteManager extends AbstractManager<Route>
     /**
      * {@inheritDoc}
      *
+     * Permit Route names without a "R" type letter. Marked as deprecated because this
+     * is temporary; it should be entirely removed once a migration is complete.
+     * @deprecated formally in 4.17.7
+     */
+    @Deprecated // 4.17.7
+    @Override
+    @javax.annotation.Nonnull
+    public String validateSystemNameFormat(@javax.annotation.Nonnull String name, @javax.annotation.Nonnull java.util.Locale locale) 
+                        throws jmri.NamedBean.BadSystemNameException {
+        try {
+            validateSystemNamePrefix(name, locale);
+        } catch (jmri.NamedBean.BadSystemNameException e) {
+            jmri.util.Log4JUtil.warnOnce(log, "Invalid Route Name: {} must start with IR", name, new Exception("traceback"));
+        }
+        return name;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * Keep autostring in line with {@link #provideRoute(String, String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */

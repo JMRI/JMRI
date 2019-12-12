@@ -445,7 +445,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return minutes;
     }
 
-    protected int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
+    public int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
         int minutes = 0;
         if (!isTrainEnRoute()) {
             minutes += Integer.parseInt(getDepartureTimeMinute());

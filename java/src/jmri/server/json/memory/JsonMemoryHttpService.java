@@ -4,24 +4,33 @@ import static jmri.server.json.JSON.DATA;
 import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.memory.JsonMemory.MEMORIES;
 import static jmri.server.json.memory.JsonMemory.MEMORY;
+import static jmri.server.json.idtag.JsonIdTag.IDTAG;
+import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
+
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.ProvidingManager;
+import jmri.Reportable;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.idtag.JsonIdTagHttpService;
+import jmri.server.json.reporter.JsonReporterHttpService;
 
 /**
  *
  * @author Randall Wood
  */
 public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
+
+    private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
+    private JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
 
     public JsonMemoryHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -32,10 +41,20 @@ public class JsonMemoryHttpService extends JsonNamedBeanHttpService<Memory> {
         ObjectNode root = this.getNamedBean(memory, name, type, locale, id);
         ObjectNode data = root.with(DATA);
         if (memory != null) {
-            if (memory.getValue() == null) {
+            Object val = memory.getValue();
+            if (val == null) {
                 data.putNull(VALUE);
             } else {
-                data.put(VALUE, memory.getValue().toString());
+                //set memory value based on type
+                if (val instanceof jmri.IdTag){
+                    ObjectNode idTagValue = idTagService.doGet((jmri.IdTag)val, name, IDTAG, locale, id);
+                    data.set(VALUE, idTagValue);
+                } else if (val instanceof Reportable) {
+                    ObjectNode reporterValue = reporterService.doGet((jmri.Reporter)val, name, REPORTER, locale, id);
+                    data.set(VALUE, reporterValue);
+                } else {
+                    data.put(VALUE, val.toString()); //send string for types not explicitly handled
+                }
             }
         }
         return root;
