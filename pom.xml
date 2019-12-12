@@ -635,7 +635,7 @@
                               <fileSet>
                                  <directory>${jacoco.reportDir}</directory>
                                  <includes>
-                                   <include>*.exec</include>
+                                   <File>**/*.exec</File>
                                  </includes>
                               </fileSet>
                            </fileSets>
