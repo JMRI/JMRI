@@ -43,33 +43,6 @@ import org.junit.Test;
  */
 public class ActionScriptTest extends AbstractDigitalActionTestBase {
 
-    private final String _scriptText_old = ""
-            + "import java\n"
-            + "import java.beans\n"
-            + "import jmri\n"
-            + ""
-            + "class MyAction(jmri.jmrit.logixng.digital.actions.AbstractScriptDigitalAction):\n"
-            + ""
-            + "  l = lights.provideLight(\"IL1\")\n"
-            + ""
-            + "  def execute(self):\n"
-            + "    if self.l is None:\n"
-            + "      raise java.lang.NullPointerException()\n"
-            + "    self.l.commandedState = ON\n"
-            + ""
-            + "  def vetoableChange(self,evt):\n"
-            + "    if (\"CanDelete\" == evt.getPropertyName()):\n"
-            + "      if (isinstance(evt.getOldValue(),jmri.Light)):\n"
-            + "        if (evt.getOldValue() is self.l):\n"
-            + "          raise java.beans.PropertyVetoException(self.getDisplayName(), evt)\n"
-            + "    if (\"DoDelete\" == evt.getPropertyName()):\n"
-            + "      if (isinstance(evt.getOldValue(),jmri.Light)):\n"
-            + "        if (evt.getOldValue() is self.l):\n"
-            + "          self.l = None\n"
-            + ""
-            + ""
-            + "params._scriptClass.set(MyAction(params._parentAction))\n";
-    
     private final String _scriptText = ""
             + "import java\n"
             + "import java.beans\n"
@@ -374,27 +347,6 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testSetScript() {
-/*        
-        // Test setScript() when listeners are registered
-        Assert.assertNotNull("Script is not null", _scriptText);
-        ActionScript action =
-                new ActionScript(
-                        InstanceManager.getDefault(
-                                DigitalActionManager.class).getAutoSystemName(), null);
-        action.setScript(_scriptText);
-        
-        Assert.assertNotNull("Script is not null", action.getScriptText());
-        action.registerListeners();
-        boolean thrown = false;
-        try {
-            action.setScript(null);
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setScript must not be called when listeners are registered");
-*/        
-        
         // Test setScript() when listeners are registered
         Assert.assertNotNull("Script is not null", _scriptText);
         actionScript.setScript(_scriptText);
@@ -421,6 +373,12 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         }
         Assert.assertTrue("Expected exception thrown", hasThrown);
         JUnitAppender.assertErrorMessage("setScript must not be called when listeners are registered");
+        
+        // Test registerListeners() without script. This shouldn't do anything
+        // but we do it for coverage.
+        actionScript.unregisterListeners();
+        actionScript.setScript(null);
+        actionScript.registerListeners();
     }
     
     @Test
@@ -475,64 +433,6 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
-        
-        
-/*DANIEL        
-        // This test calls action.execute() to see if the script still has
-        // the light registered. Once the light is deleted, action.execute()
-        // will throw a NullPointerException.
-        
-        // Get the expression and set the light
-        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
-        Assert.assertNotNull("Light is not null", light);
-        light.setCommandedState(Light.ON);
-        
-        ActionScript action =
-                new ActionScript(
-                        InstanceManager.getDefault(
-                                DigitalActionManager.class).getAutoSystemName(), null);
-        action.setScript(_scriptText);
-        
-        // Get some other light for later use
-        Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IM99");
-        Assert.assertNotNull("Light is not null", otherLight);
-        Assert.assertNotEquals("Light is not equal", light, otherLight);
-        
-        // Test vetoableChange() for some other propery
-        action.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
-        action.execute();
-        
-        // Test vetoableChange() for a string
-        action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
-        action.execute();
-        action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
-        action.execute();
-        
-        // Test vetoableChange() for another light
-        action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherLight, null));
-        action.execute();
-        action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherLight, null));
-        action.execute();
-/*        
-        // Test vetoableChange() for its own light
-        boolean thrown = false;
-        try {
-            action.vetoableChange(new PropertyChangeEvent(this, "CanDelete", light, null));
-        } catch (PropertyVetoException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
-        
-        action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", light, null));
-        thrown = false;
-        try {
-            // If DoDelete has done its job, execute() will throw a NullPointerException.
-            action.execute();
-        } catch (NullPointerException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
-*/
     }
     
     @Test
