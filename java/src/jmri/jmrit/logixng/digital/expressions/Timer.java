@@ -76,6 +76,8 @@ public class Timer extends AbstractDigitalExpression {
                     return true;
                     
                 case WAIT_ONCE_TRIG_UNTIL_RESET:
+                    // Don't clear _hasTimePassed since we want to keep
+                    // returning true until reset()
                     return true;
                     
                 case REPEAT_SINGLE_DELAY:
@@ -105,18 +107,26 @@ public class Timer extends AbstractDigitalExpression {
     }
     
     private void startTimer() {
+        final Timer t = this;
+        
+        // Ensure timer is not running
+        _timer.cancel();
+        
+        // Clear flag
+        _hasTimePassed = false;
+        
         TimerTask timerTask = new TimerTask() {
             @Override
             public void run() {
-                timerTaskMethod();
+                t.getConditionalNG().execute();
             }
         };
         
         switch (_timerType) {
             case WAIT_ONCE_TRIG_ONCE:
-                //$FALL-THROUGH$
+                // fall through
             case WAIT_ONCE_TRIG_UNTIL_RESET:
-                //$FALL-THROUGH$
+                // fall through
             case REPEAT_SINGLE_DELAY:
                 _timer.schedule(timerTask, _delayOff);
                 break;
@@ -182,16 +192,6 @@ public class Timer extends AbstractDigitalExpression {
     }
     
     
-    public void timerTaskMethod() {
-        System.out.println("Task performed: Daniel");
-//        System.out.println("Task performed on " + new Date());
-    }
-    
-    
-    
-    // * Wait some time and then return 'true' once. Timer is restarted upon reset.
-    // * Wait some time and then return 'true' until reset.
-    // * Wait some time and then return 'true' once. Once evaluate() is called, the timer is reset and starts again.
     
     public enum TimerType {
         WAIT_ONCE_TRIG_ONCE(Bundle.getMessage("TimerType_WaitOnceTrigOnce")),
