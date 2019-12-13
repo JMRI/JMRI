@@ -115,7 +115,7 @@ public class LayoutEditorChecksTest {
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
         Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
         toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle, "/");
-///        Assert.assertEquals("Menu Item Count", 17, checkJMO.getItemCount());
+        //Assert.assertEquals("Menu Item Count", 17, checkJMO.getItemCount());
     }
 
     ///@Test
