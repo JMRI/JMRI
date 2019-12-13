@@ -6,19 +6,29 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.Memory;
+import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.jmrit.logixng.AnalogAction;
+import jmri.jmrit.logixng.AnalogExpression;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
+import jmri.jmrit.logixng.DigitalAction;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalBooleanAction;
+import jmri.jmrit.logixng.DigitalExpression;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.StringAction;
+import jmri.jmrit.logixng.StringExpression;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.digital.expressions.True;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -68,12 +78,13 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
             + "class MyAction(jmri.jmrit.logixng.digital.actions.AbstractScriptDigitalAction, jmri.jmrit.logixng.FemaleSocketListener):\n"
             + ""
             + "  l = lights.provideLight(\"IL1\")\n"
+            + "  s = sensors.provideSensor(\"IS2\")\n"
             + ""
             + "  def registerScriptListeners(self):\n"
-            + "    self.l.addPropertyChangeListener(\"KnownState\", self)\n"
+            + "    self.s.addPropertyChangeListener(\"KnownState\", self)\n"
             + ""
             + "  def unregisterScriptListeners(self):\n"
-            + "    self.l.removePropertyChangeListener(\"KnownState\", self)\n"
+            + "    self.s.removePropertyChangeListener(\"KnownState\", self)\n"
             + ""
             // One purpose with this function is to test that the script has
             // access to all the managers of LogixNG.
@@ -134,6 +145,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
+    private IfThenElse ifThenElse;
     private ActionScript actionScript;
     private Sensor sensor;
     
@@ -237,7 +249,8 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
-/*        
+        // Test without script
+        actionScript.setScript(null);
         Assert.assertTrue("getChildCount() returns 0", 0 == actionScript.getChildCount());
         
         boolean hasThrown = false;
@@ -248,7 +261,26 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
             Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
-*/
+        
+        // Test with script
+        actionScript.setScript(_scriptText);
+        Assert.assertTrue("getChildCount() returns 7", 7 == actionScript.getChildCount());
+        Assert.assertTrue("getChild(0) is an AnalogAction", actionScript.getChild(0) instanceof AnalogAction);
+        Assert.assertTrue("getChild(1) is an AnalogAction", actionScript.getChild(1) instanceof AnalogExpression);
+        Assert.assertTrue("getChild(2) is an AnalogAction", actionScript.getChild(2) instanceof DigitalAction);
+        Assert.assertTrue("getChild(3) is an AnalogAction", actionScript.getChild(3) instanceof DigitalBooleanAction);
+        Assert.assertTrue("getChild(4) is an AnalogAction", actionScript.getChild(4) instanceof DigitalExpression);
+        Assert.assertTrue("getChild(5) is an AnalogAction", actionScript.getChild(5) instanceof StringAction);
+        Assert.assertTrue("getChild(6) is an AnalogAction", actionScript.getChild(6) instanceof StringExpression);
+        
+        hasThrown = false;
+        try {
+            actionScript.getChild(8);
+        } catch (IllegalArgumentException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "index is bad", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
     @Test
@@ -259,25 +291,90 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testAction() throws SocketAlreadyConnectedException, JmriException {
+        // Test action
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);
         
         // The action is not yet executed so the light should be off
         Assert.assertTrue("light is off", light.getState() == Light.OFF);
-        // Register listeners
-////        conditionalNG.registerListeners();
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
-        // Execute the conditionalNG
-//        conditionalNG.execute();
         // Set the sensor to execute the conditionalNG
         sensor.setState(Sensor.ACTIVE);
         // The action should now be executed so the light should be on
         Assert.assertTrue("light is on", light.getState() == Light.ON);
+        
+        
+        // Test action when triggered because the script is listening on the sensor IS2
+        Sensor sensor2 = InstanceManager.getDefault(SensorManager.class).provide("IS2");
+        sensor2.setCommandedState(Sensor.INACTIVE);
+        light.setCommandedState(Light.OFF);
+        
+        actionScript.unregisterListeners();
+        
+        // Disconnect the expressionSensor and replace it with a True expression
+        // since we always want the result "true" for this test.
+        ifThenElse.getChild(0).disconnect();
+        True expressionTrue = new True("IQDE322", null);
+        MaleSocket maleSocketTrue =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTrue);
+        ifThenElse.getChild(0).connect(maleSocketTrue);
+        
+        actionScript.setScript(_scriptText);
+        
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        // Activate the sensor. This should not execute the conditional.
+        sensor2.setCommandedState(Sensor.ACTIVE);
+        // The conditionalNG is not yet enabled so it shouldn't be executed.
+        // So the atomic boolean should be false
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        // Inactivate the sensor. This should not execute the conditional.
+        sensor2.setCommandedState(Sensor.INACTIVE);
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
+        // The action is not yet executed so the atomic boolean should be false
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        // Activate the sensor. This should execute the conditional.
+        sensor2.setCommandedState(Sensor.ACTIVE);
+        // The action should now be executed so the atomic boolean should be true
+        Assert.assertEquals("light is on",Light.ON,light.getState());
+        
+        // Unregister listeners
+        actionScript.unregisterListeners();
+        light.setState(Light.OFF);
+        // Turn the light off.
+        light.setCommandedState(Light.OFF);
+        // Activate the sensor. This not should execute the conditional since listerners are not registered.
+        sensor2.setCommandedState(Sensor.ACTIVE);
+        // Listerners are not registered so the atomic boolean should be false
+        Assert.assertEquals("light is off",Light.OFF,light.getState());
+        
+        // Test execute() without script. This shouldn't do anything but we
+        // do it for coverage.
+        actionScript.setScript(null);
+        actionScript.execute();
+    }
+    
+    @Test
+    public void testSetup() {
+        Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        Assert.assertNull("the value of memory is null", m1.getValue());
+        
+        // Test setup() without script
+        actionScript.setScript(null);
+        actionScript.setup();
+        Assert.assertNull("the value of memory is null", m1.getValue());
+        
+        // Test setup() with script
+        actionScript.setScript(_scriptText);
+        actionScript.setup();
+        Assert.assertEquals("the value of memory is hello", "setup is executed", m1.getValue());
     }
     
     @Test
     public void testSetScript() {
+/*        
         // Test setScript() when listeners are registered
         Assert.assertNotNull("Script is not null", _scriptText);
         ActionScript action =
@@ -296,10 +393,91 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         JUnitAppender.assertErrorMessage("setScript must not be called when listeners are registered");
+*/        
+        
+        // Test setScript() when listeners are registered
+        Assert.assertNotNull("Script is not null", _scriptText);
+        actionScript.setScript(_scriptText);
+        Assert.assertNotNull("Script is not null", actionScript.getScriptText());
+        
+        // Test bad script
+        actionScript.setScript("This is a bad script");
+        Assert.assertNull("Script is null", actionScript.getScriptText());
+        JUnitAppender.assertErrorMessage("cannot load script");
+        
+        // Test script that did not initialized params._scriptClass
+        actionScript.setScript("");
+        JUnitAppender.assertErrorMessage("script has not initialized params._scriptClass");
+        
+        // Test setScript() when listeners are registered
+        Assert.assertNotNull("Script is not null", actionScript.getScriptText());
+        actionScript.setScript(_scriptText);    // The actionScript needs a script to register listeners
+        actionScript.registerListeners();
+        boolean hasThrown = false;
+        try {
+            actionScript.setScript(_scriptText);
+        } catch (RuntimeException ex) {
+            hasThrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", hasThrown);
+        JUnitAppender.assertErrorMessage("setScript must not be called when listeners are registered");
     }
     
     @Test
     public void testVetoableChange() throws PropertyVetoException {
+        // This test calls actionScript.evaluate() to see if the script still has
+        // the light registered. Once the light is deleted, actionScript.evaluate()
+        // will throw a NullPointerException.
+        
+        // Get the actionScript and set the light
+        Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
+        Assert.assertNotNull("Light is not null", light);
+        light.setCommandedState(Light.ON);
+        
+        actionScript.setScript(_scriptText);
+        
+        // Get some other light for later use
+        Light otherLight = InstanceManager.getDefault(LightManager.class).provide("IM99");
+        Assert.assertNotNull("Light is not null", otherLight);
+        Assert.assertNotEquals("Light is not equal", light, otherLight);
+        
+        // Test vetoableChange() for some other propery
+        actionScript.vetoableChange(new PropertyChangeEvent(this, "CanSomething", "test", null));
+        actionScript.execute();
+        
+        // Test vetoableChange() for a string
+        actionScript.vetoableChange(new PropertyChangeEvent(this, "CanDelete", "test", null));
+        actionScript.execute();
+        actionScript.vetoableChange(new PropertyChangeEvent(this, "DoDelete", "test", null));
+        actionScript.execute();
+        
+        // Test vetoableChange() for another light
+        actionScript.vetoableChange(new PropertyChangeEvent(this, "CanDelete", otherLight, null));
+        actionScript.execute();
+        actionScript.vetoableChange(new PropertyChangeEvent(this, "DoDelete", otherLight, null));
+        actionScript.execute();
+        
+        // Test vetoableChange() for its own light
+        boolean thrown = false;
+        try {
+            InstanceManager.getDefault(LightManager.class).deleteBean(light, "CanDelete");
+        } catch (PropertyVetoException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        InstanceManager.getDefault(LightManager.class).deleteBean(light, "DoDelete");
+        thrown = false;
+        try {
+            // If DoDelete has done its job, evaluate() will throw a NullPointerException.
+            actionScript.execute();
+        } catch (NullPointerException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        
+        
+/*DANIEL        
         // This test calls action.execute() to see if the script still has
         // the light registered. Once the light is deleted, action.execute()
         // will throw a NullPointerException.
@@ -357,6 +535,18 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
 */
     }
     
+    @Test
+    public void testDispose2() {
+        // Test dispose() without script
+        ActionScript expression = new ActionScript("IQDA321", null);
+        expression.dispose();
+        
+        // Test dispose() with script
+        expression = new ActionScript("IQDA321", null);
+        expression.setScript(_scriptText);
+        expression.dispose();
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -377,7 +567,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         conditionalNG.setEnabled(true);
         
         
-        IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
+        ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);

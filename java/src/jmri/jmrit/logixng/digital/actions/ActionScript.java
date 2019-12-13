@@ -103,7 +103,7 @@ public class ActionScript extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        _scriptClass.execute();
+        if (_scriptClass != null) _scriptClass.execute();
     }
 
     @Override
