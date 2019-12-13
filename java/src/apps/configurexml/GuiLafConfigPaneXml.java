@@ -1,7 +1,7 @@
 package apps.configurexml;
 
 import apps.GuiLafConfigPane;
-import apps.gui.GuiLafPreferencesManager;
+
 import java.awt.Font;
 import java.util.Enumeration;
 import java.util.Locale;
@@ -10,6 +10,8 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.util.gui.GuiLafPreferencesManager;
+
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;

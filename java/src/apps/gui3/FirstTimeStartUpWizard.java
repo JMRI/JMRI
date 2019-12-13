@@ -1,6 +1,5 @@
 package apps.gui3;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -34,6 +33,8 @@ import jmri.jmrix.PortAdapter;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
+import jmri.util.gui.GuiLafPreferencesManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

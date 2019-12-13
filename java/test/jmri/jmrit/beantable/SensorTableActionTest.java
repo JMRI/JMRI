@@ -1,12 +1,13 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
+import jmri.util.gui.GuiLafPreferencesManager;
+
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;

@@ -22,7 +22,6 @@ import org.netbeans.jemmy.operators.JDialogOperator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import apps.gui.GuiLafPreferencesManager;
 import jmri.*;
 import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.Editor;
@@ -42,6 +41,7 @@ import jmri.profile.NullProfile;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.progdebugger.DebugProgrammerManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.managers.InternalLightManagerThrowExceptionScaffold;
 import jmri.util.managers.MemoryManagerThrowExceptionScaffold;
 import jmri.util.managers.OBlockManagerThrowExceptionScaffold;

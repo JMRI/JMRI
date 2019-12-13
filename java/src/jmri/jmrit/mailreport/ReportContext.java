@@ -11,7 +11,6 @@ import java.util.Enumeration;
 
 import javax.swing.JFrame;
 
-import apps.gui.GuiLafPreferencesManager;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -22,6 +21,7 @@ import jmri.util.JmriInsets;
 import jmri.util.JmriJFrame;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.util.zeroconf.ZeroConfServiceManager;
 import purejavacomm.CommPortIdentifier;

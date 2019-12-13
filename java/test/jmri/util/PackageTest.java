@@ -29,7 +29,7 @@ import org.junit.runners.Suite;
         jmri.util.junit.PackageTest.class,
         jmri.util.swing.PackageTest.class,
         jmri.util.zeroconf.PackageTest.class,
-
+        jmri.util.gui.PackageTest.class,
         jmri.util.prefs.PackageTest.class,
         jmri.util.javamail.PackageTest.class,
         jmri.util.davidflanagan.PackageTest.class,

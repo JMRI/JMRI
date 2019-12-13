@@ -1,6 +1,5 @@
 package jmri.jmrit.roster.swing;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -35,6 +34,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.XTableColumnModel;
 

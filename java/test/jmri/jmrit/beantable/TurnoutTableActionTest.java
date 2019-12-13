@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JPopupMenu;
@@ -12,6 +11,8 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.swing.ManagerComboBox;
 import jmri.util.JUnitUtil;
+import jmri.util.gui.GuiLafPreferencesManager;
+
 import org.junit.*;
 import org.netbeans.jemmy.operators.*;
 import org.slf4j.Logger;

@@ -154,7 +154,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         }
 
         // If available, override location and size with machine dependent values
-        if (!InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
+        if (!InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize()) {
             jmri.UserPreferencesManager prefsMgr = InstanceManager.getNullableDefault(jmri.UserPreferencesManager.class);
             if (prefsMgr != null) {
                 String windowFrameRef = "jmri.jmrit.display.controlPanelEditor.ControlPanelEditor:" + name;

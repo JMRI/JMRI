@@ -1,6 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import apps.gui.GuiLafPreferencesManager;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -102,6 +101,7 @@ import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 import jmri.util.SystemType;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
@@ -526,7 +526,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setSaveSize(true);
         layoutName = name;
 
-        editorUseOldLocSize = InstanceManager.getDefault(apps.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize();
+        editorUseOldLocSize = InstanceManager.getDefault(jmri.util.gui.GuiLafPreferencesManager.class).isEditorUseOldLocSize();
 
         //initialise keycode map
         initStringsToVTCodes();

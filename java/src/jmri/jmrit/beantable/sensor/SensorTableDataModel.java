@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable.sensor;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
@@ -30,6 +29,7 @@ import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.beantable.BeanTableDataModel;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

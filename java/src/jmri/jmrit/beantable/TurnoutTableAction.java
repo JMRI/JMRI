@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
@@ -58,6 +57,7 @@ import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.XTableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

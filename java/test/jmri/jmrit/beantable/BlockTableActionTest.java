@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -12,6 +11,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.util.JUnitUtil;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.junit.annotations.*;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;

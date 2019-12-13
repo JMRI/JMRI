@@ -1,6 +1,5 @@
 package jmri.jmrit.display.configurexml;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Font;
 import jmri.InstanceManager;
@@ -11,6 +10,8 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 import jmri.jmrit.display.ToolTip;
+import jmri.util.gui.GuiLafPreferencesManager;
+
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;

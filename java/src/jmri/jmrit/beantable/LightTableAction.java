@@ -41,7 +41,6 @@ import javax.swing.table.TableColumnModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import apps.gui.GuiLafPreferencesManager;
 import com.alexandriasoftware.swing.Validation;
 import jmri.InstanceManager;
 import jmri.Light;
@@ -55,6 +54,7 @@ import jmri.swing.ManagerComboBox;
 import jmri.swing.NamedBeanComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JmriJFrame;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.ComboBoxToolTipRenderer;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;

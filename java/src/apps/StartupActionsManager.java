@@ -1,6 +1,5 @@
 package apps;
 
-import apps.gui.GuiLafPreferencesManager;
 import apps.startup.StartupActionModelUtil;
 import apps.startup.StartupModel;
 import apps.startup.StartupModelFactory;
@@ -23,6 +22,7 @@ import jmri.profile.ProfileUtils;
 import jmri.server.web.app.WebAppManager;
 import jmri.spi.PreferencesManager;
 import jmri.swing.JmriJTablePersistenceManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.jdom.JDOMUtil;
 import jmri.util.prefs.AbstractPreferencesManager;
 import jmri.util.prefs.InitializationException;

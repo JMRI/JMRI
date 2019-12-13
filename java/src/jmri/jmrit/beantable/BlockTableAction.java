@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
@@ -43,6 +42,8 @@ import jmri.Reporter;
 import jmri.Sensor;
 import jmri.implementation.SignalSpeedMap;
 import jmri.util.JmriJFrame;
+import jmri.util.gui.GuiLafPreferencesManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

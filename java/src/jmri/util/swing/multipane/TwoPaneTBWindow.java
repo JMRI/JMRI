@@ -1,6 +1,5 @@
 package jmri.util.swing.multipane;
 
-import apps.gui.GuiLafPreferencesManager;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -17,6 +16,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JToolBar;
 import javax.swing.border.BevelBorder;
 import jmri.InstanceManager;
+import jmri.util.gui.GuiLafPreferencesManager;
 import jmri.util.swing.JMenuUtil;
 import jmri.util.swing.JToolBarUtil;
 
