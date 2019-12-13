@@ -131,6 +131,15 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue(Category.COMMON.equals(new Timer("IQDE321", null).getCategory()));
     }
     
+    @Test
+    public void testExecuteAndReset() {
+        Timer e1 = new Timer("IQDE321", null);
+        
+        
+        Assert.assertTrue("Timer".equals(e1.getShortDescription()));
+        Assert.assertTrue("Timer".equals(e1.getLongDescription()));
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -153,6 +162,8 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         conditionalNG.getChild(0).connect(maleSocket);
         
         expressionTimer = new Timer("IQDE321", null);
+        // We want our own timer class for testing
+//        expressionTimer._timer = new MyTimer(null);
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTimer);
         ifThenElse.getChild(0).connect(maleSocket2);
@@ -169,6 +180,71 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+    }
+    
+    
+    
+    private class MyTimer extends java.util.Timer {
+        
+        private final AtomicBoolean _abTimerTrigged;
+        private final AtomicBoolean _abTimerCancelled;
+        
+        public MyTimer(AtomicBoolean abTimerTrigged, AtomicBoolean abTimerCancelled) {
+            super(true);    // Run timer as daemon
+            _abTimerTrigged = abTimerTrigged;
+            _abTimerCancelled = abTimerCancelled;
+        }
+        
+        @Override
+        public void cancel() {
+            _abTimerCancelled.set(true);
+            // Terminates this timer, discarding any currently scheduled tasks.
+//            throw new UnsupportedOperationException("Not supported.");
+        }
+        
+        @Override
+        public int purge() {
+            // Removes all cancelled tasks from this timer's task queue.
+            throw new UnsupportedOperationException("Not supported.");
+//            return 0;
+        }
+        
+        @Override
+        public void schedule(java.util.TimerTask task, java.util.Date time) {
+            // Schedules the specified task for execution at the specified time.
+            throw new UnsupportedOperationException("Not supported.");
+        }
+        
+        @Override
+        public void schedule(java.util.TimerTask task, java.util.Date firstTime, long period) {
+            // Schedules the specified task for repeated fixed-delay execution, beginning at the specified time.
+            throw new UnsupportedOperationException("Not supported.");
+        }
+        
+        @Override
+        public void schedule(java.util.TimerTask task, long delay) {
+            // Schedules the specified task for execution after the specified delay.
+            throw new UnsupportedOperationException("Not supported.");
+        }
+        
+        @Override
+        public void schedule(java.util.TimerTask task, long delay, long period) {
+            // Schedules the specified task for repeated fixed-delay execution, beginning after the specified delay.
+            throw new UnsupportedOperationException("Not supported.");
+        }
+        
+        @Override
+        public void scheduleAtFixedRate(java.util.TimerTask task, java.util.Date firstTime, long period) {
+            // Schedules the specified task for repeated fixed-rate execution, beginning at the specified time.
+            throw new UnsupportedOperationException("Not supported.");
+        }
+        
+        @Override
+        public void scheduleAtFixedRate(java.util.TimerTask task, long delay, long period) {
+            // Schedules the specified task for repeated fixed-rate execution, beginning after the specified delay.
+            throw new UnsupportedOperationException("Not supported.");
+        }
+        
     }
     
 }
