@@ -1,25 +1,18 @@
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.util.List;
 import javax.annotation.CheckForNull;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.MenuElement;
+import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrit.display.EditorFrameOperator;
-import jmri.util.JUnitUtil;
-import jmri.util.MathUtil;
+import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
-import org.apache.commons.lang3.StringUtils;
 import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.QueueTool;
-import org.netbeans.jemmy.operators.JMenuOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  *
@@ -29,10 +22,10 @@ import org.netbeans.jemmy.operators.JMenuOperator;
 public class LayoutEditorChecksTest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(1); // 10 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
-    @Rule    // allow 2 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(3); // allow 2 retries
+    @Rule
+    public RetryRule retryRule = new RetryRule(5); // allow 5 retries
 
     //LayoutEditorChecks Bundle Strings
     private String toolsMenuTitle = Bundle.getMessage("MenuTools");
@@ -69,30 +62,25 @@ public class LayoutEditorChecksTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("layoutEditor not null", layoutEditor);
 
+        //everything not null?
         Assert.assertNotNull("layoutBlock not null", layoutBlock);
-        Assert.assertEquals("layoutBlock.getUserName()", myBlockName, layoutBlock.getUserName());
-
         Assert.assertNotNull("ltRH not null", ltRH);
-        Assert.assertEquals("ltRH.getName()", rightHandName, ltRH.getName());
-
         Assert.assertNotNull("ltLH not null", ltLH);
-        Assert.assertEquals("ltLH.getName()", leftHandName, ltLH.getName());
-
         Assert.assertNotNull("a1 not null", a1);
-        Assert.assertEquals("a1.getName()", "A1", a1.getName());
-
         Assert.assertNotNull("a2 not null", a2);
-        Assert.assertEquals("a2.getName()", "A2", a2.getName());
-
         Assert.assertNotNull("ts1 not null", ts1);
-        Assert.assertEquals("ts1.getName()", "T1", ts1.getName());
-
         Assert.assertNotNull("ts2 not null", ts2);
-        Assert.assertEquals("ts2.getName()", "T2", ts2.getName());
-
         Assert.assertNotNull("ts3 not null", ts3);
-        Assert.assertEquals("ts3.getName()", "T3", ts3.getName());
 
+        //everything named correctly?
+        Assert.assertEquals("layoutBlock.getUserName()", myBlockName, layoutBlock.getUserName());
+        Assert.assertEquals("ltRH.getName()", rightHandName, ltRH.getName());
+        Assert.assertEquals("ltLH.getName()", leftHandName, ltLH.getName());
+        Assert.assertEquals("a1.getName()", "A1", a1.getName());
+        Assert.assertEquals("a2.getName()", "A2", a2.getName());
+        Assert.assertEquals("ts1.getName()", "T1", ts1.getName());
+        Assert.assertEquals("ts2.getName()", "T2", ts2.getName());
+        Assert.assertEquals("ts3.getName()", "T3", ts3.getName());
     }
 
     @Test
@@ -116,18 +104,6 @@ public class LayoutEditorChecksTest {
         Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
         toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle, "/");
         //Assert.assertEquals("Menu Item Count", 17, checkJMO.getItemCount());
-    }
-
-    ///@Test
-    public void testFoo() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
-        JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
-        Assert.assertNotNull("checkUnConnectedTracksMenuTitle not null", checkUnConnectedTracksMenuTitle);
-        String paths[] = {toolsMenuTitle, checkMenuTitle, checkUnConnectedTracksMenuTitle, "TO1"};
-        toolsJMO.showMenuItem(paths);
-        //dumpScreen();
     }
 
     @Test
@@ -157,13 +133,13 @@ public class LayoutEditorChecksTest {
         JPopupMenu unConnectedTracksPopupMenu = unConnectedTracksJMO.getPopupMenu();
 
         //verify results
+        Assert.assertEquals("Correct number of check unconnected tracks results menu items",
+                2, unConnectedTracksPopupMenu.getSubElements().length);
         JMenuItem resultsMenuItem = (JMenuItem) unConnectedTracksPopupMenu.getComponent(0);
-        Assert.assertEquals("resultsMenuItem.getText(): ",
-                rightHandName, resultsMenuItem.getText());
+        Assert.assertEquals("resultsMenuItem.getText(): ", rightHandName, resultsMenuItem.getText());
 
         resultsMenuItem = (JMenuItem) unConnectedTracksPopupMenu.getComponent(1);
-        Assert.assertEquals("resultsMenuItem.getText(): ",
-                leftHandName, resultsMenuItem.getText());
+        Assert.assertEquals("resultsMenuItem.getText(): ", leftHandName, resultsMenuItem.getText());
     }   //testCheckUnConnectedTracks
 
     @Test
@@ -193,6 +169,8 @@ public class LayoutEditorChecksTest {
         JPopupMenu checkUnBlockedTracksPopupMenu = checkUnBlockedTracksJMO.getPopupMenu();
 
         //verify results
+        Assert.assertEquals("Correct number of check unblocked tracks results menu items",
+                3, checkUnBlockedTracksPopupMenu.getSubElements().length);
         JMenuItem resultsMenuItem = (JMenuItem) checkUnBlockedTracksPopupMenu.getComponent(0);
         Assert.assertEquals("resultsMenuItem0.getText(): ", ts1.getName(), resultsMenuItem.getText());
         resultsMenuItem = (JMenuItem) checkUnBlockedTracksPopupMenu.getComponent(1);
@@ -229,11 +207,15 @@ public class LayoutEditorChecksTest {
         JPopupMenu checkNonContiguousBlocksPopupMenu = checkNonContiguousBlocksJMO.getPopupMenu();
 
         //verify results
+        Assert.assertEquals("Correct number of check noncontiguous blocks results menu items",
+                1, checkNonContiguousBlocksPopupMenu.getSubElements().length);
         JMenuItem resultsMenuItem = (JMenuItem) checkNonContiguousBlocksPopupMenu.getComponent(0);
         Assert.assertEquals("resultsMenuItem0.getText(): ", myBlockName, resultsMenuItem.getText());
 
         JMenuOperator resultsJMO = new JMenuOperator((JMenu) resultsMenuItem);
         JPopupMenu resultsPopupMenu = resultsJMO.getPopupMenu();
+        Assert.assertEquals("Correct number of check noncontiguous blocks results submenu items",
+                2, resultsPopupMenu.getSubElements().length);
         JMenuItem resultsSubMenuItem = (JMenuItem) resultsPopupMenu.getComponent(0);
         Assert.assertEquals("resultsSubMenuItem0.getText(): ", myBlockName + ":#1", resultsSubMenuItem.getText());
         resultsSubMenuItem = (JMenuItem) resultsPopupMenu.getComponent(1);
@@ -268,6 +250,8 @@ public class LayoutEditorChecksTest {
         JPopupMenu checkUnnecessaryAnchorsPopupMenu = checkUnnecessaryAnchorsJMO.getPopupMenu();
 
         //verify results
+        Assert.assertEquals("Correct number of check unnecessary anchors results menu items",
+                2, checkUnnecessaryAnchorsPopupMenu.getSubElements().length);
         JMenuItem resultsMenuItem = (JMenuItem) checkUnnecessaryAnchorsPopupMenu.getComponent(0);
         Assert.assertEquals("resultsMenuItem0.getText(): ", a1.getName(), resultsMenuItem.getText());
         resultsMenuItem = (JMenuItem) checkUnnecessaryAnchorsPopupMenu.getComponent(1);
@@ -284,6 +268,9 @@ public class LayoutEditorChecksTest {
             layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
             layoutEditor.setVisible(true);
             layoutEditorChecks = layoutEditor.getLEChecks();
+
+            // set default string matching comparator to one that exactly matches and is case sensitive
+            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
 
             layoutEditorEFO = new EditorFrameOperator(layoutEditor);
 
@@ -369,60 +356,4 @@ public class LayoutEditorChecksTest {
         }
         JUnitUtil.tearDown();
     }
-
-//    @Before
-//    public void setUp() {
-//        JUnitUtil.setUp();
-//        if (!GraphicsEnvironment.isHeadless()) {
-//            JUnitUtil.resetProfileManager();
-//        }
-//    }
-//
-//    @After
-//    public void tearDown() {
-//        JUnitUtil.tearDown();
-//    }
-//
-//  TODO: remove or comment out for production
-//
-    private static int indent_spaces = 1;
-
-    private void dumpMenuElement(MenuElement menuElement) {
-        System.out.println(StringUtils.leftPad(((JMenuItem) menuElement).getText(), indent_spaces, " "));
-        indent_spaces += 4;
-        for (MenuElement subMenuElement : menuElement.getSubElements()) {
-            dumpMenuElement(subMenuElement);
-        }
-        indent_spaces -= 4;
-    }
-
-    private static void dumpMenuBar(JMenuBar menuBar) {
-        for (MenuElement element : menuBar.getSubElements()) {
-            dumpMenuElements(element);
-        }
-    }
-
-    private static void dumpMenuElements(MenuElement menuElement) {
-        if (menuElement instanceof JMenuItem) {
-            System.out.println(StringUtils.leftPad("", indent_spaces * 2)
-                    + ((JMenuItem) menuElement).getText());
-        }
-        for (MenuElement subElement : menuElement.getSubElements()) {
-            indent_spaces++;
-            dumpMenuElements(subElement);
-            indent_spaces--;
-        }
-    }
-//
-//    private void dumpScreen() {
-//        String desktopPath = System.getProperty("user.home") + File.separator + "Desktop";
-//        PNGEncoder.captureScreen(desktopPath + File.separator + "screen.png");
-//        try {
-//            Dumper.dumpAll(desktopPath + File.separator + "screen.xml");
-//        } catch (FileNotFoundException ex) {
-//            Logger.getLogger(LayoutEditorChecksTest.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
-//
-    //private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorChecksTest.class);
 }
