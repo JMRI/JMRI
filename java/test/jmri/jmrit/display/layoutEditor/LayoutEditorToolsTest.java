@@ -1,39 +1,21 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TURNOUT_A;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TURNOUT_B;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TURNOUT_C;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.ANCHOR;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.END_BUMPER;
+import static jmri.jmrit.display.layoutEditor.LayoutTrack.*;
+import static jmri.jmrit.display.layoutEditor.PositionablePoint.*;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import javax.swing.JComboBox;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBeanHandle;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
-import jmri.Turnout;
-import jmri.implementation.SingleTurnoutSignalHead;
-import jmri.implementation.VirtualSignalHead;
-import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
+import jmri.*;
+import jmri.implementation.*;
+import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.QueueTool;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JComboBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Test simple functioning of LayoutEditorTools
@@ -46,9 +28,8 @@ public class LayoutEditorToolsTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); //10 second timeout for methods in this test class.
 
-    //allow 2 retries of intermittent tests
     @Rule
-    public RetryRule retryRule = new RetryRule(2); //allow 2 retries
+    public RetryRule retryRule = new RetryRule(2); //allow 2 retries of intermittent tests
 
     private LayoutEditor le = null;
     private LayoutEditorTools let = null;
@@ -139,6 +120,9 @@ public class LayoutEditorToolsTest {
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(0);  //TODO:fix hardcoded index
+        Assert.assertEquals("turnout",
+                "ITTO0",
+                jComboBoxOperator.getSelectedItem().toString());
 
         //pressing "Done" should throw up a "Turnout XXX is not drawn on the panel" (SignalsError3)
         //error dialog... dismiss it
@@ -182,6 +166,9 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+        Assert.assertEquals("throat continuing",
+                "SH0",
+                jComboBoxOperator.getSelectedItem().toString());
 
         //pressing "Done" should throw up a "Signal head name was not entered"  (SignalsError5)
         //error dialog... dismiss it
@@ -199,6 +186,9 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+        Assert.assertEquals("throat diverging",
+                "SH1",
+                jComboBoxOperator.getSelectedItem().toString());
 
         //pressing "Done" should throw up a "Signal head name was not entered"  (SignalsError5)
         //error dialog... dismiss it
@@ -211,12 +201,14 @@ public class LayoutEditorToolsTest {
         }, "modalDialogOperatorThread3 finished");
 
         //select signal head for this combobox
-        //NOTE: index used here because "Continuing" matches against "ThroadContinuing" above
         JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("Continuing")), 1);
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("Continuing")));
         jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
+        Assert.assertEquals("continuing",
+                "SH2",
+                jComboBoxOperator.getSelectedItem().toString());
 
         //pressing "Done" should throw up a "Signal head name was not entered"  (SignalsError5)
         //error dialog... dismiss it
@@ -229,12 +221,14 @@ public class LayoutEditorToolsTest {
         }, "modalDialogOperatorThread4 finished");
 
         //select signal head for this combobox
-        //NOTE: index used here because "Diverging" matches against "ThroadDiverging" above
         JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("Diverging")), 1);
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("Diverging")));
         jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(4); //TODO:fix hardcoded index
+        Assert.assertEquals("diverging",
+                "SH3",
+                jComboBoxOperator.getSelectedItem().toString());
 
         testSetupSSL(0);    //test Throat Continuing SSL logic setup
         testSetupSSL(1);    //test Throat Diverging SSL logic setup
@@ -603,6 +597,9 @@ public class LayoutEditorToolsTest {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
+
+            // set default string matching comparator to one that exactly matches and is case sensitive
+            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
 
             le = new LayoutEditor();
             le.setVisible(true);

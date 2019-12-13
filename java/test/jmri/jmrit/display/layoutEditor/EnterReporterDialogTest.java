@@ -7,10 +7,7 @@ import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.*;
 import org.junit.rules.Timeout;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Test simple functioning of enterReporterDialog
@@ -35,6 +32,9 @@ public class EnterReporterDialogTest {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
+            // set default string matching comparator to one that exactly matches and is case sensitive
+            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
+
             layoutEditor = new LayoutEditor();
             enterReporterDialog = new EnterReporterDialog(layoutEditor);
             layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
@@ -101,7 +101,8 @@ public class EnterReporterDialogTest {
         reporterNameTextFieldOperator.setText("ClarkKent");
         addNewLabelButtonOperator.doClick();
         jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"IR\".");
-        //TODO: any way to verify that the dialog is closed?
+        //verify that the dialog closed
+        jFrameOperator.waitClosed();
 
         enterReporterDialog.enterReporter(150, 200);
         jFrameOperator = new JFrameOperator(Bundle.getMessage("AddReporter"));

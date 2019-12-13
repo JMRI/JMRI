@@ -30,10 +30,13 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 public class LayoutTrackEditorsTest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(20); // 10 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
     @Rule    // allow 2 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
+    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
+
+    private String closedString = Bundle.getMessage("BeanStateClosed");
+    private String thrownString = Bundle.getMessage("BeanStateThrown");
 
     private LayoutEditor layoutEditor = null;
     private LayoutTrackEditors layoutTrackEditors = null;
@@ -53,6 +56,13 @@ public class LayoutTrackEditorsTest {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("exists", layoutTrackEditors);
+    }
+
+    @Test
+    public void testBundleStrings() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("closedString", closedString);
+        Assert.assertNotNull("thrownString", thrownString);
     }
 
     @Test
@@ -122,7 +132,7 @@ public class LayoutTrackEditorsTest {
         new JButtonOperator(jFrameOperator, Bundle.getMessage("EditBlock", "")).doClick();
 
         //TODO: frame (dialog) titles hard coded here...
-        // it should be based on Bundle.getMessage("EditBean", "Block", "DX Blk A"));
+        // it should be based on Bundle.getMessage("EditBean", "Block", "Blk 2"));
         // but that isn't working...
         JFrameOperator blkFO = new JFrameOperator("Edit Block Blk 2");
         new JButtonOperator(blkFO, Bundle.getMessage("ButtonOK")).doClick();
@@ -201,6 +211,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator mainTurnoutComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) mainTurnoutLabelOperator.getLabelFor());
         mainTurnoutComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+        Assert.assertEquals("main selected turnout name",
+                turnout0.getSystemName(),
+                mainTurnoutComboBoxOperator.getSelectedItem().toString());
 
         // Enable second turnout and select it
         new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SupportingTurnout")).doClick();
@@ -210,6 +223,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator supportingTurnoutComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) supportingTurnoutLabelOperator.getLabelFor());
         supportingTurnoutComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+        Assert.assertEquals("supporting selected turnout name",
+                turnout1.getSystemName(),
+                supportingTurnoutComboBoxOperator.getSelectedItem().toString());
 
         // Enable Invert and Hide
         new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SecondTurnoutInvert")).doClick();
@@ -295,6 +311,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator mainTurnoutComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) mainTurnoutLabelOperator.getLabelFor());
         mainTurnoutComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+        Assert.assertEquals("main selected turnout name",
+                turnout0.getSystemName(),
+                mainTurnoutComboBoxOperator.getSelectedItem().toString());
 
         // Enable second turnout and select it
         new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("ThrowTwoTurnouts")).doClick();
@@ -304,6 +323,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator supportingTurnoutComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) supportingTurnoutLabelOperator.getLabelFor());
         supportingTurnoutComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+        Assert.assertEquals("supporting selected turnout name",
+                turnout1.getSystemName(),
+                supportingTurnoutComboBoxOperator.getSelectedItem().toString());
 
         // Enable Invert and Hide
         new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SecondTurnoutInvert")).doClick();
@@ -315,6 +337,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator continuingTurnoutComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) continuingTurnoutLabelOperator.getLabelFor());
         continuingTurnoutComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+        Assert.assertEquals("continuing selected turnout state",
+                thrownString,
+                continuingTurnoutComboBoxOperator.getSelectedItem().toString());
 
         // put a new block name in the block combobox's textfield
         JTextFieldOperator blockTextFieldOperator = new JTextFieldOperator(jFrameOperator,
@@ -400,6 +425,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator firstTurnoutComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) firstTurnoutLabelOperator.getLabelFor());
         firstTurnoutComboBoxOperator.selectItem(1); //TODO: fix hardcoded index
+        Assert.assertEquals("first selected turnout name",
+                turnout0.getSystemName(),
+                firstTurnoutComboBoxOperator.getSelectedItem().toString());
 
         // Select turnout B
         JLabelOperator secondTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
@@ -407,6 +435,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator secondTurnoutComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) secondTurnoutLabelOperator.getLabelFor());
         secondTurnoutComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+        Assert.assertEquals("second selected turnout name",
+                turnout1.getSystemName(),
+                secondTurnoutComboBoxOperator.getSelectedItem().toString());
 
         // Create a (new) block
         JTextFieldOperator blockTextFieldOperator = new JTextFieldOperator(jFrameOperator,
@@ -459,6 +490,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator firstTurnoutComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) firstTurnoutLabelOperator.getLabelFor());
         firstTurnoutComboBoxOperator.selectItem(1); //TODO: fix hardcoded index
+        Assert.assertEquals("first selected turnout name",
+                turnout0.getSystemName(),
+                firstTurnoutComboBoxOperator.getSelectedItem().toString());
 
         // Select turnout B
         JLabelOperator secondTurnoutLabelOperator = new JLabelOperator(jFrameOperator,
@@ -466,6 +500,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator secondTurnoutComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) secondTurnoutLabelOperator.getLabelFor());
         secondTurnoutComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+        Assert.assertEquals("second selected turnout name",
+                turnout1.getSystemName(),
+                secondTurnoutComboBoxOperator.getSelectedItem().toString());
 
         // Create a (new) block
         JTextFieldOperator blockTextFieldOperator = new JTextFieldOperator(jFrameOperator,
@@ -549,6 +586,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator acBlockComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) acBlockLabelOperator.getLabelFor());
         acBlockComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+        Assert.assertEquals("ac selected block name",
+                "IB1",
+                acBlockComboBoxOperator.getSelectedItem().toString());
 
         // Select BD block
         JLabelOperator bdBlockLabelOperator = new JLabelOperator(jFrameOperator,
@@ -556,6 +596,9 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator bdBlockComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) bdBlockLabelOperator.getLabelFor());
         bdBlockComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+        Assert.assertEquals("BD selected block name",
+                "IB2",
+                bdBlockComboBoxOperator.getSelectedItem().toString());
 
         // Enable Hide
         new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("HideCrossing")).doClick();
@@ -689,22 +732,46 @@ public class LayoutTrackEditorsTest {
         JComboBoxOperator state_cbo = new JComboBoxOperator(jFrameOperator, 1);
 
         turnout_cbo.selectItem(1); //TODO: fix hardcoded index
-        state_cbo.selectItem(0); //TODO: fix hardcoded index
+        Assert.assertEquals("turnout name",
+                turnout0.getSystemName(),
+                turnout_cbo.getSelectedItem().toString());
+        state_cbo.selectItem(closedString);
+        Assert.assertEquals("turnout state",
+                closedString,
+                state_cbo.getSelectedItem().toString());
 
         turnout_cbo = new JComboBoxOperator(jFrameOperator, 2);
         state_cbo = new JComboBoxOperator(jFrameOperator, 3);
         turnout_cbo.selectItem(1); //TODO: fix hardcoded index
-        state_cbo.selectItem(1); //TODO: fix hardcoded index
+        Assert.assertEquals("turnout name",
+                turnout0.getSystemName(),
+                turnout_cbo.getSelectedItem().toString());
+        state_cbo.selectItem(thrownString);
+        Assert.assertEquals("turnout state",
+                thrownString,
+                state_cbo.getSelectedItem().toString());
 
         turnout_cbo = new JComboBoxOperator(jFrameOperator, 4);
         state_cbo = new JComboBoxOperator(jFrameOperator, 5);
         turnout_cbo.selectItem(2); //TODO: fix hardcoded index
-        state_cbo.selectItem(0); //TODO: fix hardcoded index
+        Assert.assertEquals("turnout name",
+                turnout1.getSystemName(),
+                turnout_cbo.getSelectedItem().toString());
+        state_cbo.selectItem(closedString);
+        Assert.assertEquals("turnout state",
+                closedString,
+                state_cbo.getSelectedItem().toString());
 
         turnout_cbo = new JComboBoxOperator(jFrameOperator, 6);
         state_cbo = new JComboBoxOperator(jFrameOperator, 7);
         turnout_cbo.selectItem(2); //TODO: fix hardcoded index
-        state_cbo.selectItem(1); //TODO: fix hardcoded index
+        Assert.assertEquals("turnout name",
+                turnout1.getSystemName(),
+                turnout_cbo.getSelectedItem().toString());
+        state_cbo.selectItem(thrownString);
+        Assert.assertEquals("turnout state",
+                thrownString,
+                state_cbo.getSelectedItem().toString());
 
         // Add a valid ray and then change the angle to an invalid value
         jtxt = new JTextFieldOperator(jFrameOperator, 2);
@@ -822,12 +889,15 @@ public class LayoutTrackEditorsTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        InstanceManager.setDefault(BlockManager.class, new BlockManager());
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
             JUnitUtil.resetInstanceManager();
             JUnitUtil.initInternalTurnoutManager();
             JUnitUtil.initInternalSensorManager();
+            InstanceManager.setDefault(BlockManager.class, new BlockManager());
+
+            // set default string matching comparator to one that exactly matches and is case sensitive
+            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
 
             layoutEditor = new LayoutEditor();
             layoutTrackEditors = layoutEditor.getLayoutTrackEditors();
@@ -927,7 +997,7 @@ public class LayoutTrackEditorsTest {
     }
 
     /*
-     * this is used to find a component by matching against its tooltip 
+     * this is used to find a component by matching against its tooltip
      */
     private static class ToolTipComponentChooser implements ComponentChooser {
 
