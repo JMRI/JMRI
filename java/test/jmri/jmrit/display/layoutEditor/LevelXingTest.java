@@ -2,6 +2,7 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
+import java.util.List;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -12,6 +13,7 @@ import jmri.implementation.VirtualSignalHead;
 import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import jmri.util.MathUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.*;
 import org.junit.rules.Timeout;
@@ -36,6 +38,15 @@ public class LevelXingTest {
 
     private static LayoutBlock layoutBlock1 = null;
     private static LayoutBlock layoutBlock2 = null;
+
+    private static PositionablePoint a1 = null;
+    private static PositionablePoint a2 = null;
+    private static PositionablePoint a3 = null;
+    private static PositionablePoint a4 = null;
+    private static TrackSegment ts1 = null;
+    private static TrackSegment ts2 = null;
+    private static TrackSegment ts3 = null;
+    private static TrackSegment ts4 = null;
 
     private static SignalHead sh1 = null;
     private static SignalHead sh2 = null;
@@ -511,6 +522,64 @@ public class LevelXingTest {
         Assert.assertEquals("levelXing.getSensorDName()",
                 "", levelXing.getSensorDName());
     }
+
+    private void setupTracks() {
+        List<LayoutTrack> layoutTracks = layoutEditor.getLayoutTracks();
+        Assert.assertNotNull("layoutTracks not null", layoutTracks);
+
+        //add 1st anchor
+        a1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(10, 30), layoutEditor);
+        Assert.assertNotNull("PositionablePoint", a1);
+        layoutTracks.add(a1);
+
+        //connect the levelXing leg A to 1st anchor
+        int tsIdx = 1;
+        ts1 = addNewTrackSegment(levelXing, LayoutTrack.LEVEL_XING_A, a1, LayoutTrack.POS_POINT, tsIdx++);
+
+        //add 2nd anchor
+        //point = MathUtil.add(point, delta);
+        a2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, point, layoutEditor);
+        Assert.assertNotNull("PositionablePoint", a2);
+        layoutTracks.add(a2);
+
+        //connect 1st anchor to 2nd anchor
+        ts2 = addNewTrackSegment(a1, LayoutTrack.POS_POINT, a2, LayoutTrack.POS_POINT, tsIdx++);
+        //set its block
+        //ts2.setLayoutBlock(layoutBlock);
+
+        //add 2nd turnout
+        point = MathUtil.add(point, delta);
+        ltLH = new LayoutTurnout(leftHandName, LayoutTurnout.LH_TURNOUT,
+                point, 66.0, 1.3, 1.4, layoutEditor);
+        layoutTracks.add(ltLH);
+        //set its block
+        ltLH.setLayoutBlock(layoutBlock);
+
+        //connect 2nd anchor to 2nd turnout
+        ts3 = addNewTrackSegment(a2, LayoutTrack.POS_POINT, ltLH, LayoutTrack.TURNOUT_A, tsIdx++);
+
+        //wait for layout editor to finish setup and drawing
+        new QueueTool().waitEmpty();
+
+    }
+
+    private static TrackSegment addNewTrackSegment(
+             @CheckForNull LayoutTrack c1, int t1,
+             @CheckForNull LayoutTrack c2, int t2,
+             int idx) {
+         TrackSegment result = null;
+         if ((c1 != null) && (c2 != null)) {
+             //create new track segment
+             String name = layoutEditor.getFinder().uniqueName("T", idx);
+             result = new TrackSegment(name, c1, t1, c2, t2,
+                     false, false, layoutEditor);
+             layoutEditor.getLayoutTracks().add(result);
+             //link to connected objects
+             layoutEditor.setLink(c1, t1, result, LayoutTrack.TRACK);
+             layoutEditor.setLink(c2, t2, result, LayoutTrack.TRACK);
+         }
+         return result;
+     }
 
     //
     // from here down is testing infrastructure
