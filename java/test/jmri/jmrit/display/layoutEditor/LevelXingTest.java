@@ -2,18 +2,11 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
-import java.util.List;
+import java.util.*;
 import javax.annotation.CheckForNull;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.implementation.VirtualSignalHead;
-import jmri.implementation.VirtualSignalMast;
-import jmri.util.JUnitAppender;
-import jmri.util.JUnitUtil;
+import jmri.*;
+import jmri.implementation.*;
+import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.*;
 import org.junit.rules.Timeout;
@@ -640,14 +633,44 @@ public class LevelXingTest {
 
         setupTracks();
 
-        Assert.assertFalse("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
+        //setup blocks
         levelXing.setLayoutBlockAC(layoutBlockAC);
-        Assert.assertTrue("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
-        levelXing.setLayoutBlockAC(null);
         levelXing.setLayoutBlockBD(layoutBlockBD);
-        Assert.assertFalse("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
-        levelXing.setLayoutBlockAC(layoutBlockAC);
-        Assert.assertTrue("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
+
+        ts1.setLayoutBlock(layoutBlockBD);
+        ts2.setLayoutBlock(layoutBlockAC);
+        ts3.setLayoutBlock(layoutBlockBD);
+        ts4.setLayoutBlock(layoutBlockAC);
+
+        HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps = new HashMap<>();
+        levelXing.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);
+        Assert.assertEquals("number of noncontiguous blocks", 2, blockNamesToTrackNameSetMaps.size());
+
+        Assert.assertNull("map['BOGUS'] not null", blockNamesToTrackNameSetMaps.get("BOGUS"));
+
+        //layoutBlockAC
+        List<Set<String>> trackNameSets = blockNamesToTrackNameSetMaps.get(layoutBlockAC.getUserName());
+        Assert.assertNotNull("map['Test Block 1']", trackNameSets);
+        Assert.assertEquals("trackNameSets.size()", 1, trackNameSets.size());
+
+        Set<String> trackNameSet = trackNameSets.get(0);
+        Assert.assertNotNull("trackNameSet", trackNameSet);
+        Assert.assertEquals("trackNameSet.size()", 1, trackNameSet.size());
+
+        Iterator<String> it = trackNameSet.iterator();
+        Assert.assertEquals("levelXing name", levelXing.getName(), it.next());
+
+        //layoutBlockBD
+        trackNameSets = blockNamesToTrackNameSetMaps.get(layoutBlockBD.getUserName());
+        Assert.assertNotNull("trackNameSet", trackNameSet);
+        Assert.assertEquals("trackNameSets.size()", 1, trackNameSets.size());
+
+        trackNameSet = trackNameSets.get(0);
+        Assert.assertNotNull("trackNameSet", trackNameSet);
+        Assert.assertEquals("trackNameSet.size()", 1, trackNameSet.size());
+
+        it = trackNameSet.iterator();
+        Assert.assertEquals("levelXing name", levelXing.getName(), it.next());
     }
 
     //
