@@ -35,6 +35,7 @@ public class LayoutEditorChecksTest {
     private String checkNonContiguousBlocksMenuTitle = Bundle.getMessage("CheckNonContiguousBlocksMenuTitle");
     private String checkUnnecessaryAnchorsMenuTitle = Bundle.getMessage("CheckUnnecessaryAnchorsMenuTitle");
 
+    //name strings
     private static String myBlockName = "My Block";
     private static String rightHandName = "Right Hand";
     private static String leftHandName = "Left Hand";
