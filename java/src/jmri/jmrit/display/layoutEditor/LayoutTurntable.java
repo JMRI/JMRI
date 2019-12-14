@@ -132,11 +132,11 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Add a ray at the specified angle.
      *
-     * @param angle the angle
+     * @param angleDEG the angle
      * @return the RayTrack
      */
-    protected RayTrack addRay(double angle) {
-        RayTrack rt = new RayTrack(angle, getNewIndex());
+    protected RayTrack addRay(double angleDEG) {
+        RayTrack rt = new RayTrack(angleDEG, getNewIndex());
         rayList.add(rt);
         return rt;
     }
@@ -494,8 +494,8 @@ public class LayoutTurntable extends LayoutTrack {
     @Override
     public void setConnection(int connectionType, LayoutTrack o, int type) throws jmri.JmriException {
         if ((type != TRACK) && (type != NONE)) {
-            log.error("unexpected type of connection to LevelXing - " + type);
-            throw new jmri.JmriException("unexpected type of connection to LevelXing - " + type);
+            log.error("unexpected type of connection to layoutTurntable - " + type);
+            throw new jmri.JmriException("unexpected type of connection to layoutTurntable - " + type);
         }
         if (connectionType >= TURNTABLE_RAY_OFFSET) {
             if ((o == null) || (o instanceof TrackSegment)) {
@@ -861,11 +861,11 @@ public class LayoutTurntable extends LayoutTrack {
         /**
          * constructor for RayTracks
          *
-         * @param angle its angle
+         * @param angleDEG its angle
          * @param index its index
          */
-        public RayTrack(double angle, int index) {
-            rayAngle = MathUtil.wrapPM360(angle);
+        public RayTrack(double angleDEG, int index) {
+            rayAngle = MathUtil.wrapPM360(angleDEG);
             connect = null;
             connectionIndex = index;
 
