@@ -19,6 +19,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
+import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.util.swing.SwingSettings;
 import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
@@ -85,38 +86,51 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     @Override
     public void initialize(Profile profile) throws InitializationException {
         if (!initialized) {
-            Preferences preferences = ProfileUtils.getPreferences(profile, getClass(), true);
-            setLocale(Locale.forLanguageTag(preferences.get(LOCALE, getLocale().toLanguageTag())));
-            setLookAndFeel(preferences.get(LOOK_AND_FEEL, getLookAndFeel()));
-
-            setDefaultFontSize(); // before we change anything
-            setFontSize(preferences.getInt(FONT_SIZE, getDefaultFontSize()));
-            if (getFontSize() == 0) {
-                setFontSize(getDefaultFontSize());
-            }
-
-            setFontByName(preferences.get(FONT_NAME, getDefaultFont().getFontName()));
-            if (getFont() == null) {
-                setFont(getDefaultFont());
-            }
-
-            setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, isNonStandardMouseEvent()));
-            setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, isGraphicTableState()));
-            setEditorUseOldLocSize(preferences.getBoolean(EDITOR_USE_OLD_LOC_SIZE, isEditorUseOldLocSize()));
-            setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, getToolTipDismissDelay()));
-
-            log.debug("About to setDefault Locale");
-            Locale.setDefault(getLocale());
-            javax.swing.JComponent.setDefaultLocale(getLocale());
-            javax.swing.JOptionPane.setDefaultLocale(getLocale());
-
-            applyLookAndFeel();
-            applyFontSize();
-            SwingSettings.setNonStandardMouseEvent(isNonStandardMouseEvent());
+            @SuppressWarnings("deprecation")
+            boolean migrate = false;
+            // using deprecated call to enable migration of
+            // preferences keys from apps.gui.* to jmri.util.gui.*
+            getPreferences(JmriPreferencesProvider.getPreferences(profile, "apps.gui", true));
+            migrate = dirty;
+            setDirty(false);
+            getPreferences(ProfileUtils.getPreferences(profile, getClass(), true));
             setDirty(false);
             setRestartRequired(false);
+            if (migrate) {
+                savePreferences(profile);
+            }
             initialized = true;
         }
+    }
+
+    private void getPreferences(Preferences preferences) {
+        setLocale(Locale.forLanguageTag(preferences.get(LOCALE, getLocale().toLanguageTag())));
+        setLookAndFeel(preferences.get(LOOK_AND_FEEL, getLookAndFeel()));
+
+        setDefaultFontSize(); // before we change anything
+        setFontSize(preferences.getInt(FONT_SIZE, getDefaultFontSize()));
+        if (getFontSize() == 0) {
+            setFontSize(getDefaultFontSize());
+        }
+
+        setFontByName(preferences.get(FONT_NAME, getDefaultFont().getFontName()));
+        if (getFont() == null) {
+            setFont(getDefaultFont());
+        }
+
+        setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, isNonStandardMouseEvent()));
+        setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, isGraphicTableState()));
+        setEditorUseOldLocSize(preferences.getBoolean(EDITOR_USE_OLD_LOC_SIZE, isEditorUseOldLocSize()));
+        setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, getToolTipDismissDelay()));
+
+        log.debug("About to setDefault Locale");
+        Locale.setDefault(getLocale());
+        javax.swing.JComponent.setDefaultLocale(getLocale());
+        javax.swing.JOptionPane.setDefaultLocale(getLocale());
+
+        applyLookAndFeel();
+        applyFontSize();
+        SwingSettings.setNonStandardMouseEvent(isNonStandardMouseEvent());
     }
 
     @Override

@@ -926,8 +926,12 @@ public class JUnitUtil {
         if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
 
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
-        List<ShutDownTask> list = sm.tasks();
-        while (list != null && list.size() > 0) {
+        List<ShutDownTask> list = new ArrayList<>(sm.tasks());
+        // if list is null, the ShutDownManager API contract has not been honored
+        // by the ShutDownManager implementation and that implementation needs to
+        // be fixed, so don't test that list is null, but allow the exception to
+        // be thrown
+        while (list.size() > 0) {
             ShutDownTask task = list.get(0);
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
@@ -947,7 +951,11 @@ public class JUnitUtil {
         
         ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
-        while (list != null && !list.isEmpty()) {
+        // if list is null, the ShutDownManager API contract has not been honored
+        // by the ShutDownManager implementation and that implementation needs to
+        // be fixed, so don't test that list is null, but allow the exception to
+        // be thrown
+        while (!list.isEmpty()) {
             ShutDownTask task = list.get(0);
             log.error("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
                         Log4JUtil.shortenStacktrace(new Exception("traceback")));
