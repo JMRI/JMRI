@@ -24,7 +24,7 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  * @author Paul Bender Copyright (C) 2017
- * @author George Warner Copyright: (c) 2019
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutTrackEditorsTest {
 
@@ -35,6 +35,7 @@ public class LayoutTrackEditorsTest {
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     private LayoutEditor layoutEditor = null;
+    private LayoutTrackEditors layoutTrackEditors = null;
 
     private Turnout turnout0 = null;
     private Turnout turnout1 = null;
@@ -50,32 +51,28 @@ public class LayoutTrackEditorsTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutTrackEditors t = new LayoutTrackEditors(layoutEditor);
-        Assert.assertNotNull("exists", t);
+        Assert.assertNotNull("exists", layoutTrackEditors);
     }
 
     @Test
     public void testHasNxSensorPairsNull() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutTrackEditors t = new LayoutTrackEditors(layoutEditor);
-        Assert.assertFalse("null block NxSensorPairs", t.hasNxSensorPairs(null));
+        Assert.assertFalse("null block NxSensorPairs", layoutTrackEditors.hasNxSensorPairs(null));
     }
 
     @Test
     public void testHasNxSensorPairsDisconnectedBlock() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutTrackEditors t = new LayoutTrackEditors(layoutEditor);
         LayoutBlock b = new LayoutBlock("test", "test");
-        Assert.assertFalse("disconnected block NxSensorPairs", t.hasNxSensorPairs(b));
+        Assert.assertFalse("disconnected block NxSensorPairs", layoutTrackEditors.hasNxSensorPairs(b));
     }
 
     @Test
     public void testShowSensorMessage() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        LayoutTrackEditors t = new LayoutTrackEditors(layoutEditor);
-        t.sensorList.add("Test");
-        Assert.assertFalse(t.sensorList.isEmpty());
-        t.showSensorMessage();
+        layoutTrackEditors.sensorList.add("Test");
+        Assert.assertFalse(layoutTrackEditors.sensorList.isEmpty());
+        layoutTrackEditors.showSensorMessage();
     }
 
     @Test
@@ -88,8 +85,7 @@ public class LayoutTrackEditorsTest {
         createBlocks();
 
         // Edit the track trackSegment
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(trackSegment);
+        layoutTrackEditors.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Select dashed
@@ -141,8 +137,7 @@ public class LayoutTrackEditorsTest {
         trackSegment.setCircle(false);
 
         // Edit the track trackSegment
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(trackSegment);
+        layoutTrackEditors.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Create empty block edit dialog
@@ -163,8 +158,7 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Edit the track trackSegment
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(trackSegment);
+        layoutTrackEditors.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -178,8 +172,7 @@ public class LayoutTrackEditorsTest {
         trackSegment.setCircle(true);
 
         // Edit the track trackSegment
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(trackSegment);
+        layoutTrackEditors.editLayoutTrack(trackSegment);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTrackSegment"));
 
         // Set arc angle
@@ -198,8 +191,7 @@ public class LayoutTrackEditorsTest {
         createTurnouts();
 
         // Edit the double crossover
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(doubleXoverLayoutTurnout);
+        layoutTrackEditors.editLayoutTrack(doubleXoverLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         // Select main turnout
@@ -293,8 +285,7 @@ public class LayoutTrackEditorsTest {
         createBlocks();
 
         // Edit the rh turnout
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(rightHandLayoutTurnout);
+        layoutTrackEditors.editLayoutTrack(rightHandLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurnout"));
 
         // Select main turnout
@@ -338,8 +329,7 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Edit the double crossover
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(doubleXoverLayoutTurnout);
+        layoutTrackEditors.editLayoutTrack(doubleXoverLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         // Invoke layout block editor with no block assigned
@@ -384,8 +374,7 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Edit the double crossover
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(doubleXoverLayoutTurnout);
+        layoutTrackEditors.editLayoutTrack(doubleXoverLayoutTurnout);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXover"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -401,8 +390,7 @@ public class LayoutTrackEditorsTest {
         createBlocks();
 
         // Edit the double Slip
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(doubleLayoutSlip);
+        layoutTrackEditors.editLayoutTrack(doubleLayoutSlip);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Select turnout A
@@ -461,8 +449,7 @@ public class LayoutTrackEditorsTest {
         createBlocks();
 
         // Edit the single Slip
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(singleLayoutSlip);
+        layoutTrackEditors.editLayoutTrack(singleLayoutSlip);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Select turnout A
@@ -516,8 +503,7 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Edit the double doubleLayoutSlip
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(doubleLayoutSlip);
+        layoutTrackEditors.editLayoutTrack(doubleLayoutSlip);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         // Invoke layout block editor with no block assigned
@@ -538,8 +524,7 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Edit the double doubleLayoutSlip
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(doubleLayoutSlip);
+        layoutTrackEditors.editLayoutTrack(doubleLayoutSlip);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditSlip"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -554,8 +539,7 @@ public class LayoutTrackEditorsTest {
         createBlocks();
 
         // Edit the level crossing
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(levelXing);
+        layoutTrackEditors.editLayoutTrack(levelXing);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         // Select AC block
@@ -609,8 +593,7 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Edit the level crossing
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(levelXing);
+        layoutTrackEditors.editLayoutTrack(levelXing);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         // Invoke layout block editor with no block assigned
@@ -639,8 +622,7 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Edit the level crossing
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(levelXing);
+        layoutTrackEditors.editLayoutTrack(levelXing);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditXing"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -655,8 +637,7 @@ public class LayoutTrackEditorsTest {
         createTurnouts();
 
         // Edit the layoutTurntable
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(layoutTurntable);
+        layoutTrackEditors.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Set good radius
@@ -752,8 +733,7 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Edit the Turntable
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(layoutTurntable);
+        layoutTrackEditors.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel")).doClick();
@@ -765,8 +745,7 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Edit the Turntable
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(layoutTurntable);
+        layoutTrackEditors.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone")).doClick();
@@ -778,8 +757,7 @@ public class LayoutTrackEditorsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         // Edit the layoutTurntable
-        LayoutTrackEditors trackEditor = new LayoutTrackEditors(layoutEditor);
-        trackEditor.editLayoutTrack(layoutTurntable);
+        layoutTrackEditors.editLayoutTrack(layoutTurntable);
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("EditTurntable"));
 
         // Ray angle
@@ -823,19 +801,19 @@ public class LayoutTrackEditorsTest {
     }
 
     public void createTurnouts() {
-        turnout0 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT101");
+        turnout0 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT101");
         turnout0.setUserName("Turnout 101");
         turnout0.setCommandedState(Turnout.CLOSED);
 
-        turnout1 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT102");
+        turnout1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT102");
         turnout1.setUserName("Turnout 102");
         turnout1.setCommandedState(Turnout.CLOSED);
     }
 
     public void createBlocks() {
-        Block block1 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB1");
+        Block block1 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB1");
         block1.setUserName("Blk 1");
-        Block block2 = InstanceManager.getDefault(jmri.BlockManager.class).provideBlock("IB2");
+        Block block2 = InstanceManager.getDefault(BlockManager.class).provideBlock("IB2");
         block2.setUserName("Blk 2");
     }
 
@@ -846,11 +824,12 @@ public class LayoutTrackEditorsTest {
         InstanceManager.setDefault(BlockManager.class, new BlockManager());
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
-            jmri.util.JUnitUtil.resetInstanceManager();
-            jmri.util.JUnitUtil.initInternalTurnoutManager();
-            jmri.util.JUnitUtil.initInternalSensorManager();
+            JUnitUtil.resetInstanceManager();
+            JUnitUtil.initInternalTurnoutManager();
+            JUnitUtil.initInternalSensorManager();
 
             layoutEditor = new LayoutEditor();
+            layoutTrackEditors = layoutEditor.getLayoutTrackEditors();
 
             Point2D point = new Point2D.Double(150.0, 100.0);
             Point2D delta = new Point2D.Double(50.0, 10.0);
@@ -940,6 +919,7 @@ public class LayoutTrackEditorsTest {
         }
 
         layoutEditor = null;
+        layoutTrackEditors = null;
 
         JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();

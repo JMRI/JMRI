@@ -43,7 +43,7 @@ function rebuildTable(data) {
 		var tbody = '';	
 		data.forEach(function (item) {
 			jmri.socket.send(item.type, { name: item.data.name }); //request updates from server
-			tbody += '<tr data-name="' + item.data.name + '">';
+			tbody += "<tr data-name='" + item.data.name + "'>";
 			tbody += buildRow(item.data) + '</tr>';
 		});
 		$("table#jmri-data tbody").html(tbody);
@@ -70,8 +70,8 @@ function buildRow(data) {
 	tableType = $("html").data("table-type");
 	//note: syntax below required since some JMRI json objects have a "length" attribute equal 0
 	$.each(Object.keys(data), function (index, value) {
-		r += '<td class=' + value + " data-" + value + "='" + data[value] + "'>" 
-			+ displayCellValue(tableType, value, data[value]) + '</td>'; 
+		r += "<td class='" + value + "' data-" + value + "='" + data[value] + "'>" 
+			+ displayCellValue(tableType, value, data[value]) + "</td>"; 
 	});
 	return r;
 }
@@ -125,7 +125,9 @@ function displayCellValue(type, colName, value) {
 		return ret;
 	}
 	if (typeof value === "object") {
-		if (value.name) {
+	    if (value.type == "idTag"){
+	    	return value.data.userName // handle idTag object by displaying userName
+	    } else if (value.name) {
 			return value.name;  // return name of object if it has one
 		} else {
 			return "[obj]"; //placeholder				

@@ -1587,7 +1587,7 @@ public class LevelXing extends LayoutTrack {
     @Override
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(layoutEditor.getDefaultTrackColorColor());
-        //TODO:uncomment this line g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
+        g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
 
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);

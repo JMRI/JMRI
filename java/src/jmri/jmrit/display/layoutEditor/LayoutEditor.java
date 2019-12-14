@@ -480,11 +480,24 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuFileMnemonic")));
         menuBar.add(fileMenu);
-        StoreXmlUserAction store = new StoreXmlUserAction(Bundle.getMessage("MenuItemStore"));
+
+        // changed this to Performed the StoreXmlUserAction indirectly 
+        // so we would get a chance to set the default file
+        // before it's Performed.
+        JMenuItem storeItem = new JMenuItem(Bundle.getMessage("MenuItemStore"));
+        fileMenu.add(storeItem);
+        storeItem.addActionListener((ActionEvent event) -> {
+            StoreXmlUserAction store = new StoreXmlUserAction();
+            store.setDefaultFile(new File(layoutName + ".xml"));
+            store.actionPerformed(event);
+        });
+
+        storeItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")));
         int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-        store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
+        storeItem.setAccelerator(KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")), primary_modifier));
-        fileMenu.add(store);
+
+        fileMenu.add(storeItem);
         fileMenu.addSeparator();
 
         JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("DeletePanel"));
@@ -1978,6 +1991,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenu toolBarMenu = new JMenu(Bundle.getMessage("ToolBar")); //used for ToolBar SubMenu
         optionMenu.add(toolBarMenu);
 
+        JMenu toolBarSideMenu = new JMenu(Bundle.getMessage("ToolBarSide"));
+        ButtonGroup toolBarSideGroup = new ButtonGroup();
+
         //
         //create toolbar side menu items: (top, left, bottom, right)
         //
@@ -1986,44 +2002,41 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             setToolBarSide(ToolBarSide.eTOP);
         });
         toolBarSideTopButton.setSelected(toolBarSide.equals(ToolBarSide.eTOP));
+        toolBarSideMenu.add(toolBarSideTopButton);
+        toolBarSideGroup.add(toolBarSideTopButton);
 
         toolBarSideLeftButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideLeft"));
         toolBarSideLeftButton.addActionListener((ActionEvent event) -> {
             setToolBarSide(ToolBarSide.eLEFT);
         });
         toolBarSideLeftButton.setSelected(toolBarSide.equals(ToolBarSide.eLEFT));
+        toolBarSideMenu.add(toolBarSideLeftButton);
+        toolBarSideGroup.add(toolBarSideLeftButton);
 
         toolBarSideBottomButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideBottom"));
         toolBarSideBottomButton.addActionListener((ActionEvent event) -> {
             setToolBarSide(ToolBarSide.eBOTTOM);
         });
         toolBarSideBottomButton.setSelected(toolBarSide.equals(ToolBarSide.eBOTTOM));
+        toolBarSideMenu.add(toolBarSideBottomButton);
+        toolBarSideGroup.add(toolBarSideBottomButton);
 
         toolBarSideRightButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideRight"));
         toolBarSideRightButton.addActionListener((ActionEvent event) -> {
             setToolBarSide(ToolBarSide.eRIGHT);
         });
         toolBarSideRightButton.setSelected(toolBarSide.equals(ToolBarSide.eRIGHT));
+        toolBarSideMenu.add(toolBarSideRightButton);
+        toolBarSideGroup.add(toolBarSideRightButton);
 
         toolBarSideFloatButton = new JRadioButtonMenuItem(Bundle.getMessage("ToolBarSideFloat"));
         toolBarSideFloatButton.addActionListener((ActionEvent event) -> {
             setToolBarSide(ToolBarSide.eFLOAT);
         });
         toolBarSideFloatButton.setSelected(toolBarSide.equals(ToolBarSide.eFLOAT));
-
-        JMenu toolBarSideMenu = new JMenu(Bundle.getMessage("ToolBarSide"));
-        toolBarSideMenu.add(toolBarSideTopButton);
-        toolBarSideMenu.add(toolBarSideLeftButton);
-        toolBarSideMenu.add(toolBarSideBottomButton);
-        toolBarSideMenu.add(toolBarSideRightButton);
         toolBarSideMenu.add(toolBarSideFloatButton);
-
-        ButtonGroup toolBarSideGroup = new ButtonGroup();
-        toolBarSideGroup.add(toolBarSideTopButton);
-        toolBarSideGroup.add(toolBarSideLeftButton);
-        toolBarSideGroup.add(toolBarSideBottomButton);
-        toolBarSideGroup.add(toolBarSideRightButton);
         toolBarSideGroup.add(toolBarSideFloatButton);
+
         toolBarMenu.add(toolBarSideMenu);
 
         //
@@ -2782,7 +2795,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
             addEntryExitPairAction.actionPerformed(event);
         });
-    }
+    }   // setupToolsMenu
 
     private void setToolBarSide(ToolBarSide newToolBarSide) {
         // null if edit toolbar is not setup yet...
@@ -2825,7 +2838,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 helpBarPanel.setVisible(isEditable() && getShowHelpBar());
             }
         }
-    }
+    }   // setToolBarSide
 
     //
     //
@@ -2856,7 +2869,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 helpBarPanel.setVisible(isEditable() && getShowHelpBar());
             }
         }
-    }
+    }   // setToolBarWide
 
     //
     //
@@ -3021,7 +3034,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 scrollPane.addMouseWheelListener(this);
             }
         });
-    }
+    }   // setupZoomMenu
 
     private transient MouseWheelListener[] mouseWheelListeners;
 
@@ -9134,7 +9147,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Collections.sort(layoutShapes, new Comparator<LayoutShape>() {
             @Override
             public int compare(LayoutShape lhs, LayoutShape rhs) {
-                // -1 == less than, +1 == greater than, 0 == equal
+                // -1 == less than, 0 == equal, +1 == greater than
                 return Integer.signum(lhs.getLevel() - rhs.getLevel());
             }
         });

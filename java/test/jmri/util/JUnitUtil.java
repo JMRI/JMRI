@@ -167,6 +167,7 @@ public class JUnitUtil {
     
     static private boolean isLoggingInitialized = false;
     static private String initPrefsDir = null;
+
     /**
      * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
      * annotated method.

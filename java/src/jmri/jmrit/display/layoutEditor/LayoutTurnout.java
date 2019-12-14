@@ -138,6 +138,7 @@ import org.slf4j.LoggerFactory;
 public class LayoutTurnout extends LayoutTrack {
 
     // defined constants - turnout types
+    public static final int NONE = 0;
     public static final int RH_TURNOUT = 1;
     public static final int LH_TURNOUT = 2;
     public static final int WYE_TURNOUT = 3;
@@ -201,14 +202,14 @@ public class LayoutTurnout extends LayoutTrack {
     protected NamedBeanHandle<SignalHead> signalD1HeadNamed = null; // single or double crossover only
     protected NamedBeanHandle<SignalHead> signalD2HeadNamed = null; // LH_Xover and double crossover only
 
-    public static final int POINTA = 0x01;
+    public static final int POINTA1 = 0x01;
     public static final int POINTA2 = 0x03;
     public static final int POINTA3 = 0x05;
-    public static final int POINTB = 0x10;
+    public static final int POINTB1 = 0x10;
     public static final int POINTB2 = 0x12;
-    public static final int POINTC = 0x20;
+    public static final int POINTC1 = 0x20;
     public static final int POINTC2 = 0x22;
-    public static final int POINTD = 0x30;
+    public static final int POINTD1 = 0x30;
     public static final int POINTD2 = 0x32;
 
     protected NamedBeanHandle<SignalMast> signalAMastNamed = null; // Throat
@@ -428,7 +429,7 @@ public class LayoutTurnout extends LayoutTrack {
     public SignalHead getSignalHead(int loc) {
         NamedBeanHandle<SignalHead> signalHead = null;
         switch (loc) {
-            case POINTA:
+            case POINTA1:
                 signalHead = signalA1HeadNamed;
                 break;
             case POINTA2:
@@ -437,19 +438,19 @@ public class LayoutTurnout extends LayoutTrack {
             case POINTA3:
                 signalHead = signalA3HeadNamed;
                 break;
-            case POINTB:
+            case POINTB1:
                 signalHead = signalB1HeadNamed;
                 break;
             case POINTB2:
                 signalHead = signalB2HeadNamed;
                 break;
-            case POINTC:
+            case POINTC1:
                 signalHead = signalC1HeadNamed;
                 break;
             case POINTC2:
                 signalHead = signalC2HeadNamed;
                 break;
-            case POINTD:
+            case POINTD1:
                 signalHead = signalD1HeadNamed;
                 break;
             case POINTD2:
@@ -736,7 +737,7 @@ public class LayoutTurnout extends LayoutTrack {
                 setSensorD(null);
             }
         } else if (nb instanceof SignalHead) {
-            if (nb.equals(getSignalHead(POINTA))) {
+            if (nb.equals(getSignalHead(POINTA1))) {
                 setSignalA1Name(null);
             }
             if (nb.equals(getSignalHead(POINTA2))) {
@@ -745,19 +746,19 @@ public class LayoutTurnout extends LayoutTrack {
             if (nb.equals(getSignalHead(POINTA3))) {
                 setSignalA3Name(null);
             }
-            if (nb.equals(getSignalHead(POINTB))) {
+            if (nb.equals(getSignalHead(POINTB1))) {
                 setSignalB1Name(null);
             }
             if (nb.equals(getSignalHead(POINTB2))) {
                 setSignalB2Name(null);
             }
-            if (nb.equals(getSignalHead(POINTC))) {
+            if (nb.equals(getSignalHead(POINTC1))) {
                 setSignalC1Name(null);
             }
             if (nb.equals(getSignalHead(POINTC2))) {
                 setSignalC2Name(null);
             }
-            if (nb.equals(getSignalHead(POINTD))) {
+            if (nb.equals(getSignalHead(POINTD1))) {
                 setSignalD1Name(null);
             }
             if (nb.equals(getSignalHead(POINTD2))) {

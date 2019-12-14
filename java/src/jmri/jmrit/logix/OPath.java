@@ -8,6 +8,7 @@ import java.util.Objects;
 import javax.swing.Timer;
 import jmri.BeanSetting;
 import jmri.Block;
+import jmri.InstanceManager;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,24 +74,6 @@ public class OPath extends jmri.Path {
         }
     }
 
-    @SuppressFBWarnings(value = "UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR", justification="Adds logging not available in super implementation")
-    // OPath ctor invokes Path ctor via super(), which calls this, before the internal
-    // _block variable has been set so that Path.getPath() can work.  In this implementation,
-    // getPath() only controls whether log.debug(...) is fired, but this might change if/when
-    // super.setBlock(...) is changed, in which case this logic will fail.
-    @Override
-    public void setBlock(Block block) {
-        if (getBlock() == block) {
-            return;
-        }
-        if (log.isDebugEnabled()) {
-            log.debug("OPath \"{}\" changing blocks from {} to {}.",
-                    _name, (getBlock() != null ? getBlock().getDisplayName() : null),
-                    (block != null ? block.getDisplayName() : null));
-        }
-        super.setBlock(block);
-    }
-
     protected String getOppositePortalName(String name) {
         if (_fromPortal != null && _fromPortal.getName().equals(name)) {
             if (_toPortal != null) {
@@ -114,8 +97,8 @@ public class OPath extends jmri.Path {
         String oldName = _name;
         _name = name;
         OBlock block = (OBlock) getBlock();
-        block.pseudoPropertyChange("pathName", oldName, _name);
-        WarrantTableAction.pathNameChange(block, oldName, _name);
+        block.pseudoPropertyChange("pathName", oldName, _name); // for IndicatorTrack icons
+        InstanceManager.getDefault(WarrantManager.class).pathNameChange(block, oldName, _name);
         if (_fromPortal != null) {
             if (_fromPortal.addPath(this)) {
                 return;

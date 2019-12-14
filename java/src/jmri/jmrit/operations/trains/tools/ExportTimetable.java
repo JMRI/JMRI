@@ -149,6 +149,10 @@ public class ExportTimetable extends XmlFile {
             fileOut.close();
         } catch (IOException e) {
             log.error("Can not open export timetable CSV file: " + file.getName());
+            JOptionPane.showMessageDialog(null,
+                    MessageFormat.format(Bundle.getMessage("ExportedTimetableToFile"),
+                            new Object[]{defaultOperationsFilename()}),
+                    Bundle.getMessage("ExportFailed"), JOptionPane.ERROR_MESSAGE);
             return;
         }
     }
@@ -277,6 +281,11 @@ public class ExportTimetable extends XmlFile {
     private void loadTrains(PrintWriter fileOut) {
         int type = 1; // cycle through the 4 train types (chart colors)
         int defaultSpeed = 4;
+        
+        // the following works pretty good for travel times between 1 and 4 minutes
+        if (Setup.getTravelTime() > 0) {
+            defaultSpeed = defaultSpeed/Setup.getTravelTime();
+        }
 
         for (Train train : InstanceManager.getDefault(TrainManager.class).getTrainsByTimeList()) {
             if (!train.isBuildEnabled()) {
@@ -325,9 +334,13 @@ public class ExportTimetable extends XmlFile {
                 int duration = 0;
                 if ((rl != train.getRoute().getDepartsRouteLocation() && !rl.getLocation().isStaging())) {
                     if (train.isBuilt()) {
-                        duration = train.getWorkTimeAtLocation(rl);
+                        duration = train.getWorkTimeAtLocation(rl) + rl.getWait();
+                        if (!rl.getDepartureTime().isEmpty() && !train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
+                            duration = 60 * Integer.parseInt(rl.getDepartureTimeHour()) 
+                                    + Integer.parseInt(rl.getDepartureTimeMinute()) - train.getExpectedTravelTimeInMinutes(rl);
+                        }
                     } else {
-                        duration = rl.getMaxCarMoves() * Setup.getSwitchTime();
+                        duration = rl.getMaxCarMoves() * Setup.getSwitchTime() + rl.getWait();
                     }
                 }
                 line = "Stop" +
