@@ -4502,10 +4502,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             } else if (LayoutTrack.isPopupHitType(foundHitPointType)) {
                 foundTrack.showPopup(event);
             } else if ((foundHitPointType >= LayoutTrack.TURNOUT_A)
-                    && (foundHitPointType <= LayoutTrack.TURNOUT_D)) {
+                    && (foundHitPointType <= LayoutTrack.LEVEL_XING_D)) {
                 // don't curently have edit popup for these
             } else {
-                log.warn("Unknown foundPointType:" + foundHitPointType);
+                log.warn("Unknown foundPointType: " + foundHitPointType);
             }
         } else {
             do {

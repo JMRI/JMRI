@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.*;
 import java.util.List;
+import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -13,7 +14,6 @@ import jmri.implementation.VirtualSignalHead;
 import jmri.implementation.VirtualSignalMast;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import jmri.util.MathUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.*;
 import org.junit.rules.Timeout;
@@ -36,8 +36,8 @@ public class LevelXingTest {
     private static LayoutEditor layoutEditor = null;
     private static LevelXing levelXing = null;
 
-    private static LayoutBlock layoutBlock1 = null;
-    private static LayoutBlock layoutBlock2 = null;
+    private static LayoutBlock layoutBlockAC = null;
+    private static LayoutBlock layoutBlockBD = null;
 
     private static PositionablePoint a1 = null;
     private static PositionablePoint a2 = null;
@@ -72,8 +72,8 @@ public class LevelXingTest {
         Assert.assertNotNull("layoutEditor is null", layoutEditor);
         Assert.assertNotNull("levelXing is null", levelXing);
 
-        Assert.assertNotNull("layoutBlock1 is null", layoutBlock1);
-        Assert.assertNotNull("layoutBlock2 is null", layoutBlock2);
+        Assert.assertNotNull("layoutBlockAC is null", layoutBlockAC);
+        Assert.assertNotNull("layoutBlockBD is null", layoutBlockBD);
 
         Assert.assertNotNull("sh1 is null", sh1);
         Assert.assertNotNull("sh2 is null", sh2);
@@ -369,14 +369,38 @@ public class LevelXingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("layoutEditor is null", layoutEditor);
         Assert.assertNotNull("levelXing is null", levelXing);
-        Assert.assertNotNull("layoutBlock1 is null", layoutBlock1);
-        Assert.assertNotNull("layoutBlock2 is null", layoutBlock2);
+        Assert.assertNotNull("layoutBlockAC is null", layoutBlockAC);
+        Assert.assertNotNull("layoutBlockBD is null", layoutBlockBD);
 
-        levelXing.setLayoutBlockAC(layoutBlock1);
-        levelXing.setLayoutBlockBD(layoutBlock2);
+        //these should both be null
+        Assert.assertNull("levelXing.getLayoutBlockAC() is null", levelXing.getLayoutBlockAC());
+        Assert.assertNull("levelXing.getLayoutBlockBD() is null", levelXing.getLayoutBlockBD());
+
+        levelXing.setAllLayoutBlocks(layoutBlockAC);
+        Assert.assertEquals("levelXing.getLayoutBlockAC() == layoutBlockAC", layoutBlockAC, levelXing.getLayoutBlockAC());
+        Assert.assertEquals("levelXing.getLayoutBlockBD() == layoutBlockAC", layoutBlockAC, levelXing.getLayoutBlockBD());
 
         levelXing.setLayoutBlockAC(null);
+        Assert.assertNull("levelXing.getLayoutBlockAC() is null", levelXing.getLayoutBlockAC());
+        Assert.assertNull("levelXing.getLayoutBlockBD() is null", levelXing.getLayoutBlockBD());
+
         levelXing.setLayoutBlockBD(null);
+        Assert.assertNull("levelXing.getLayoutBlockAC() is null", levelXing.getLayoutBlockAC());
+        Assert.assertNull("levelXing.getLayoutBlockBD() is null", levelXing.getLayoutBlockBD());
+
+        levelXing.setLayoutBlockAC(layoutBlockAC);
+        Assert.assertEquals("levelXing.getLayoutBlockAC() == layoutBlockAC", layoutBlockAC, levelXing.getLayoutBlockAC());
+        Assert.assertEquals("levelXing.getLayoutBlockBD() == layoutBlockAC", layoutBlockAC, levelXing.getLayoutBlockBD());
+        levelXing.setLayoutBlockBD(layoutBlockBD);
+        Assert.assertEquals("levelXing.getLayoutBlockAC() == layoutBlockAC", layoutBlockAC, levelXing.getLayoutBlockAC());
+        Assert.assertEquals("levelXing.getLayoutBlockBD() == layoutBlockBD", layoutBlockBD, levelXing.getLayoutBlockBD());
+
+        levelXing.setLayoutBlockAC(null);
+        Assert.assertNull("levelXing.getLayoutBlockAC() is null", levelXing.getLayoutBlockAC());
+        Assert.assertEquals("levelXing.getLayoutBlockBD() == layoutBlockBD", layoutBlockBD, levelXing.getLayoutBlockBD());
+        levelXing.setLayoutBlockBD(null);
+        Assert.assertNull("levelXing.getLayoutBlockAC() is null", levelXing.getLayoutBlockAC());
+        Assert.assertNull("levelXing.getLayoutBlockBD() is null", levelXing.getLayoutBlockBD());
     }
 
     @Test
@@ -384,8 +408,8 @@ public class LevelXingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("layoutEditor is null", layoutEditor);
         Assert.assertNotNull("levelXing is null", levelXing);
-        Assert.assertNotNull("layoutBlock1 is null", layoutBlock1);
-        Assert.assertNotNull("layoutBlock2 is null", layoutBlock2);
+        Assert.assertNotNull("layoutBlockAC is null", layoutBlockAC);
+        Assert.assertNotNull("layoutBlockBD is null", layoutBlockBD);
 
 //        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
 //                Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
@@ -394,13 +418,236 @@ public class LevelXingTest {
 //            return !(misc1.isAlive());
 //        }, "misc1 finished");
 
-        levelXing.setLayoutBlockAC(layoutBlock1);
-        levelXing.setLayoutBlockBD(layoutBlock2);
+        levelXing.setLayoutBlockAC(layoutBlockAC);
+        levelXing.setLayoutBlockBD(layoutBlockBD);
 
         levelXing.canRemove();
 
         levelXing.setLayoutBlockAC(null);
         levelXing.setLayoutBlockBD(null);
+    }
+
+    @Test
+    public void testIsMainlines() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("layoutEditor is null", layoutEditor);
+        Assert.assertNotNull("levelXing is null", levelXing);
+
+        setupTracks();
+
+        Assert.assertTrue("levelXing.isMainline() is not true", levelXing.isMainline());
+        Assert.assertTrue("levelXing.isMainlineAC() is not true", levelXing.isMainlineAC());
+        Assert.assertTrue("levelXing.isMainlineBD() is not true", levelXing.isMainlineBD());
+
+        ts1.setMainline(true);
+        Assert.assertTrue("levelXing.isMainline() is not true", levelXing.isMainline());
+        Assert.assertTrue("levelXing.isMainlineAC() is not true", levelXing.isMainlineAC());
+        Assert.assertTrue("levelXing.isMainlineBD() is not true", levelXing.isMainlineBD());
+        ts1.setMainline(false);
+
+        ts2.setMainline(true);
+        Assert.assertTrue("levelXing.isMainline() is not true", levelXing.isMainline());
+        Assert.assertTrue("levelXing.isMainlineAC() is not true", levelXing.isMainlineAC());
+        Assert.assertTrue("levelXing.isMainlineBD() is not true", levelXing.isMainlineBD());
+        ts2.setMainline(false);
+
+        ts3.setMainline(true);
+        Assert.assertTrue("levelXing.isMainline() is not true", levelXing.isMainline());
+        Assert.assertTrue("levelXing.isMainlineAC() is not true", levelXing.isMainlineAC());
+        Assert.assertTrue("levelXing.isMainlineBD() is not true", levelXing.isMainlineBD());
+        ts3.setMainline(false);
+
+        ts4.setMainline(true);
+        Assert.assertTrue("levelXing.isMainline() is not true", levelXing.isMainline());
+        Assert.assertFalse("levelXing.isMainlineAC() is not true", levelXing.isMainlineAC());
+        Assert.assertTrue("levelXing.isMainlineBD() is not true", levelXing.isMainlineBD());
+        ts4.setMainline(false);
+    }
+
+    @Test
+    public void testSetCoords() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("layoutEditor is null", layoutEditor);
+        Assert.assertNotNull("levelXing is null", levelXing);
+
+        Point2D newCenter = new Point2D.Double(200, 100);
+        levelXing.setCoordsCenter(newCenter);
+        Assert.assertEquals("levelXing.getCoordsCenter()",
+                newCenter, levelXing.getCoordsCenter());
+
+        Point2D newA = new Point2D.Double(150, 100);
+        levelXing.setCoordsA(newA);
+        Assert.assertEquals("levelXing.getCoordsA()",
+                newA, levelXing.getCoordsA());
+
+        Point2D newB = new Point2D.Double(170, 130);
+        levelXing.setCoordsB(newB);
+        Assert.assertEquals("levelXing.getCoordsB()",
+                newB, levelXing.getCoordsB());
+
+        Point2D newC = new Point2D.Double(240, 100);
+        levelXing.setCoordsC(newC);
+        Assert.assertEquals("levelXing.getCoordsC()",
+                newC, levelXing.getCoordsC());
+
+        Point2D newD = new Point2D.Double(230, 70);
+        levelXing.setCoordsD(newD);
+        Assert.assertEquals("levelXing.getCoordsD()",
+                newD, levelXing.getCoordsD());
+    }
+
+    @Test
+    public void testScaleCoords() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("layoutEditor is null", layoutEditor);
+        Assert.assertNotNull("levelXing is null", levelXing);
+
+        levelXing.scaleCoords(3, 4);
+
+        Assert.assertEquals("levelXing.getCoordsCenter()",
+                new Point2D.Double(150, 200), levelXing.getCoordsCenter());
+        Assert.assertEquals("levelXing.getCoordsA()",
+                new Point2D.Double(90, 200), levelXing.getCoordsA());
+        Assert.assertEquals("levelXing.getCoordsB()",
+                new Point2D.Double(108, 256), levelXing.getCoordsB());
+        Assert.assertEquals("levelXing.getCoordsC()",
+                new Point2D.Double(210, 200), levelXing.getCoordsC());
+        Assert.assertEquals("levelXing.getCoordsD()",
+                new Point2D.Double(192, 144), levelXing.getCoordsD());
+    }
+
+    @Test
+    public void testTranslateCoords() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("layoutEditor is null", layoutEditor);
+        Assert.assertNotNull("levelXing is null", levelXing);
+
+        levelXing.translateCoords(50, 20);
+        Assert.assertEquals("levelXing.getCoordsCenter()",
+                new Point2D.Double(100, 70), levelXing.getCoordsCenter());
+        Assert.assertEquals("levelXing.getCoordsA()",
+                new Point2D.Double(80, 70), levelXing.getCoordsA());
+        Assert.assertEquals("levelXing.getCoordsB()",
+                new Point2D.Double(86, 84), levelXing.getCoordsB());
+        Assert.assertEquals("levelXing.getCoordsC()",
+                new Point2D.Double(120, 70), levelXing.getCoordsC());
+        Assert.assertEquals("levelXing.getCoordsD()",
+                new Point2D.Double(114, 56), levelXing.getCoordsD());
+    }
+
+    @Test
+    public void testGetBlockBoundaries() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("layoutEditor is null", layoutEditor);
+        Assert.assertNotNull("levelXing is null", levelXing);
+        Assert.assertNotNull("layoutBlockAC is null", layoutBlockAC);
+        Assert.assertNotNull("layoutBlockBD is null", layoutBlockBD);
+
+        //no blocks... no errors
+        String[] blockBoundaries = levelXing.getBlockBoundaries();
+        Assert.assertNull("levelXing.getBlockBoundaries()[0] is null", blockBoundaries[0]);
+        Assert.assertNull("levelXing.getBlockBoundaries()[1] is null", blockBoundaries[1]);
+        Assert.assertNull("levelXing.getBlockBoundaries()[2] is null", blockBoundaries[2]);
+        Assert.assertNull("levelXing.getBlockBoundaries()[3] is null", blockBoundaries[3]);
+
+        //setup tracks
+        setupTracks();
+        //setup blocks
+        ts1.setLayoutBlock(layoutBlockBD);
+        ts2.setLayoutBlock(layoutBlockAC);
+        ts3.setLayoutBlock(layoutBlockBD);
+        ts4.setLayoutBlock(layoutBlockAC);
+        levelXing.setLayoutBlockAC(layoutBlockAC);
+        levelXing.setLayoutBlockBD(layoutBlockBD);
+
+        //blocks and tracks...
+        blockBoundaries = levelXing.getBlockBoundaries();
+        Assert.assertEquals("levelXing.getBlockBoundaries()[0]", "Test Block BD - Test Block AC", blockBoundaries[0]);
+        Assert.assertEquals("levelXing.getBlockBoundaries()[1]", "Test Block AC - Test Block BD", blockBoundaries[1]);
+        Assert.assertEquals("levelXing.getBlockBoundaries()[2]", "Test Block BD - Test Block AC", blockBoundaries[2]);
+        Assert.assertEquals("levelXing.getBlockBoundaries()[3]", "Test Block AC - Test Block BD", blockBoundaries[3]);
+    }
+
+    @Test
+    public void testRemoveIsActive() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("layoutEditor is null", layoutEditor);
+        Assert.assertNotNull("levelXing is null", levelXing);
+
+        Assert.assertTrue("levelXing.isActive()", levelXing.isActive());
+        levelXing.remove(); //this will clear the active flag
+        Assert.assertFalse("levelXing.isActive()", levelXing.isActive());
+    }
+
+    @Test
+    public void testAddRemoveSignalMastLogic() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("layoutEditor is null", layoutEditor);
+        Assert.assertNotNull("levelXing is null", levelXing);
+
+        levelXing.addSignalMastLogic(sm1);
+        levelXing.addSignalMastLogic(sm1);  //note:duplicate to test already added code
+        levelXing.addSignalMastLogic(sm2);
+        levelXing.addSignalMastLogic(sm3);
+        levelXing.addSignalMastLogic(sm4);
+
+        levelXing.removeSignalMastLogic(sm1);
+        levelXing.removeSignalMastLogic(sm1);  //note:duplicate to test already removed code
+        levelXing.removeSignalMastLogic(sm2);
+        levelXing.removeSignalMastLogic(sm3);
+        levelXing.removeSignalMastLogic(sm4);
+    }
+
+    @Test
+    public void testCheckForFreeConnections() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("layoutEditor is null", layoutEditor);
+        Assert.assertNotNull("levelXing is null", levelXing);
+
+        List l = levelXing.checkForFreeConnections();
+        Assert.assertEquals("Number of free connections", 4, l.size());
+        Assert.assertEquals("connections[0]", LayoutTrack.LEVEL_XING_A, l.get(0));
+        Assert.assertEquals("connections[1]", LayoutTrack.LEVEL_XING_B, l.get(1));
+        Assert.assertEquals("connections[2]", LayoutTrack.LEVEL_XING_C, l.get(2));
+        Assert.assertEquals("connections[3]", LayoutTrack.LEVEL_XING_D, l.get(3));
+    }
+
+    @Test
+    public void testCheckForUnAssignedBlocks() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("layoutEditor is null", layoutEditor);
+        Assert.assertNotNull("levelXing is null", levelXing);
+        Assert.assertNotNull("layoutBlockAC is null", layoutBlockAC);
+        Assert.assertNotNull("layoutBlockBD is null", layoutBlockBD);
+
+        Assert.assertFalse("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
+        levelXing.setLayoutBlockAC(layoutBlockAC);
+        Assert.assertTrue("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
+        levelXing.setLayoutBlockAC(null);
+        levelXing.setLayoutBlockBD(layoutBlockBD);
+        Assert.assertFalse("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
+        levelXing.setLayoutBlockAC(layoutBlockAC);
+        Assert.assertTrue("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
+    }
+
+    @Test
+    public void testCheckForNonContiguousBlocks() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("layoutEditor is null", layoutEditor);
+        Assert.assertNotNull("levelXing is null", levelXing);
+        Assert.assertNotNull("layoutBlockAC is null", layoutBlockAC);
+        Assert.assertNotNull("layoutBlockBD is null", layoutBlockBD);
+
+        setupTracks();
+
+        Assert.assertFalse("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
+        levelXing.setLayoutBlockAC(layoutBlockAC);
+        Assert.assertTrue("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
+        levelXing.setLayoutBlockAC(null);
+        levelXing.setLayoutBlockBD(layoutBlockBD);
+        Assert.assertFalse("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
+        levelXing.setLayoutBlockAC(layoutBlockAC);
+        Assert.assertTrue("levelXing.checkForUnAssignedBlocks()", levelXing.checkForUnAssignedBlocks());
     }
 
     //
@@ -525,11 +772,11 @@ public class LevelXingTest {
 
     private void setupTracks() {
         List<LayoutTrack> layoutTracks = layoutEditor.getLayoutTracks();
-        Assert.assertNotNull("layoutTracks not null", layoutTracks);
+        Assert.assertNotNull("layoutTracks is null", layoutTracks);
 
         //add 1st anchor
-        a1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(10, 30), layoutEditor);
-        Assert.assertNotNull("PositionablePoint", a1);
+        a1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(10, 50), layoutEditor);
+        Assert.assertNotNull("a1 is null", a1);
         layoutTracks.add(a1);
 
         //connect the levelXing leg A to 1st anchor
@@ -537,49 +784,51 @@ public class LevelXingTest {
         ts1 = addNewTrackSegment(levelXing, LayoutTrack.LEVEL_XING_A, a1, LayoutTrack.POS_POINT, tsIdx++);
 
         //add 2nd anchor
-        //point = MathUtil.add(point, delta);
-        a2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, point, layoutEditor);
-        Assert.assertNotNull("PositionablePoint", a2);
+        a2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(20, 80), layoutEditor);
+        Assert.assertNotNull("a2 is null", a2);
         layoutTracks.add(a2);
 
-        //connect 1st anchor to 2nd anchor
-        ts2 = addNewTrackSegment(a1, LayoutTrack.POS_POINT, a2, LayoutTrack.POS_POINT, tsIdx++);
-        //set its block
-        //ts2.setLayoutBlock(layoutBlock);
+        //connect the levelXing leg B to 2st anchor
+        ts2 = addNewTrackSegment(levelXing, LayoutTrack.LEVEL_XING_B, a2, LayoutTrack.POS_POINT, tsIdx++);
 
-        //add 2nd turnout
-        point = MathUtil.add(point, delta);
-        ltLH = new LayoutTurnout(leftHandName, LayoutTurnout.LH_TURNOUT,
-                point, 66.0, 1.3, 1.4, layoutEditor);
-        layoutTracks.add(ltLH);
-        //set its block
-        ltLH.setLayoutBlock(layoutBlock);
+        //add 3rd anchor
+        a3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(90, 50), layoutEditor);
+        Assert.assertNotNull("a3 is null", a3);
+        layoutTracks.add(a3);
 
-        //connect 2nd anchor to 2nd turnout
-        ts3 = addNewTrackSegment(a2, LayoutTrack.POS_POINT, ltLH, LayoutTrack.TURNOUT_A, tsIdx++);
+        //connect the levelXing leg B to 2st anchor
+        ts3 = addNewTrackSegment(levelXing, LayoutTrack.LEVEL_XING_C, a3, LayoutTrack.POS_POINT, tsIdx++);
+
+        //add 4th anchor
+        a4 = new PositionablePoint("A4", PositionablePoint.ANCHOR, new Point2D.Double(80, 20), layoutEditor);
+        Assert.assertNotNull("a4 is null", a4);
+        layoutTracks.add(a4);
+
+        //connect the levelXing leg B to 2st anchor
+        ts4 = addNewTrackSegment(levelXing, LayoutTrack.LEVEL_XING_D, a4, LayoutTrack.POS_POINT, tsIdx++);
 
         //wait for layout editor to finish setup and drawing
         new QueueTool().waitEmpty();
-
     }
 
     private static TrackSegment addNewTrackSegment(
-             @CheckForNull LayoutTrack c1, int t1,
-             @CheckForNull LayoutTrack c2, int t2,
-             int idx) {
-         TrackSegment result = null;
-         if ((c1 != null) && (c2 != null)) {
-             //create new track segment
-             String name = layoutEditor.getFinder().uniqueName("T", idx);
-             result = new TrackSegment(name, c1, t1, c2, t2,
-                     false, false, layoutEditor);
-             layoutEditor.getLayoutTracks().add(result);
-             //link to connected objects
-             layoutEditor.setLink(c1, t1, result, LayoutTrack.TRACK);
-             layoutEditor.setLink(c2, t2, result, LayoutTrack.TRACK);
-         }
-         return result;
-     }
+            @CheckForNull LayoutTrack c1, int t1,
+            @CheckForNull LayoutTrack c2, int t2,
+            int idx) {
+        TrackSegment result = null;
+        if ((c1 != null) && (c2 != null)) {
+            //create new track segment
+            String name = layoutEditor.getFinder().uniqueName("T", idx);
+            result = new TrackSegment(name, c1, t1, c2, t2,
+                    false, true, layoutEditor);
+            Assert.assertNotNull("new TrackSegment is null", result);
+            layoutEditor.getLayoutTracks().add(result);
+            //link to connected objects
+            layoutEditor.setLink(c1, t1, result, LayoutTrack.TRACK);
+            layoutEditor.setLink(c2, t2, result, LayoutTrack.TRACK);
+        }
+        return result;
+    }
 
     //
     // from here down is testing infrastructure
@@ -597,8 +846,8 @@ public class LevelXingTest {
             layoutEditor.setVisible(true);
 
             //create a layout block
-            layoutBlock1 = new LayoutBlock("ILB1", "Test Block 1");
-            layoutBlock2 = new LayoutBlock("ILB2", "Test Block 2");
+            layoutBlockAC = new LayoutBlock("ILB1", "Test Block AC");
+            layoutBlockBD = new LayoutBlock("ILB2", "Test Block BD");
 
             //create signal heads
             sh1 = new VirtualSignalHead("VH1", "signal head 1");

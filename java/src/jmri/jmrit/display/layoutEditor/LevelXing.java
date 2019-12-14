@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.*;
@@ -101,7 +100,6 @@ public class LevelXing extends LayoutTrack {
     /*
      * Accessor methods
      */
-
     @Nonnull
     public String getBlockNameAC() {
         String result = null;
@@ -729,7 +727,7 @@ public class LevelXing extends LayoutTrack {
     /**
      * Add Layout Blocks.
      */
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
+    ///@SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlockAC(LayoutBlock newLayoutBlock) {
         LayoutBlock blockAC = getLayoutBlockAC();
         LayoutBlock blockBD = getLayoutBlockBD();
@@ -752,7 +750,7 @@ public class LevelXing extends LayoutTrack {
         }
     }
 
-    @SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
+    ///@SuppressFBWarnings(value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification = "Null is accepted as a valid value")
     public void setLayoutBlockBD(LayoutBlock newLayoutBlock) {
         LayoutBlock blockAC = getLayoutBlockAC();
         LayoutBlock blockBD = getLayoutBlockBD();
@@ -772,7 +770,6 @@ public class LevelXing extends LayoutTrack {
                 blockBD.decrementUse();
             }
         }
-
     }
 
     protected void updateBlockInfo() {
@@ -829,8 +826,8 @@ public class LevelXing extends LayoutTrack {
     /**
      * Test if mainline track or not.
      *
-     * @return true if either connecting track segment is mainline; Defaults
-     * to not mainline if connecting track segments are missing
+     * @return true if either connecting track segment is mainline; Defaults to
+     *         not mainline if connecting track segments are missing
      */
     public boolean isMainlineAC() {
         if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
@@ -889,7 +886,8 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * Translate (2D move) this LayoutTrack's coordinates by the x and y factors.
+     * Translate (2D move) this LayoutTrack's coordinates by the x and y
+     * factors.
      *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
@@ -1042,31 +1040,57 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * Build a list of sensors, signal heads, and signal masts attached to a level crossing point.
+     * Build a list of sensors, signal heads, and signal masts attached to a
+     * level crossing point.
+     *
      * @param pointName Specify the point (A-D) or all (All) points.
      * @return a list of bean reference names.
      */
     public ArrayList<String> getBeanReferences(String pointName) {
         ArrayList<String> references = new ArrayList<>();
         if (pointName.equals("A") || pointName.equals("All")) {  //NOI18N
-            if (!getSignalAMastName().isEmpty()) references.add(getSignalAMastName());
-            if (!getSensorAName().isEmpty()) references.add(getSensorAName());
-            if (!getSignalAName().isEmpty()) references.add(getSignalAName());
+            if (!getSignalAMastName().isEmpty()) {
+                references.add(getSignalAMastName());
+            }
+            if (!getSensorAName().isEmpty()) {
+                references.add(getSensorAName());
+            }
+            if (!getSignalAName().isEmpty()) {
+                references.add(getSignalAName());
+            }
         }
         if (pointName.equals("B") || pointName.equals("All")) {  //NOI18N
-            if (!getSignalBMastName().isEmpty()) references.add(getSignalBMastName());
-            if (!getSensorBName().isEmpty()) references.add(getSensorBName());
-            if (!getSignalBName().isEmpty()) references.add(getSignalBName());
+            if (!getSignalBMastName().isEmpty()) {
+                references.add(getSignalBMastName());
+            }
+            if (!getSensorBName().isEmpty()) {
+                references.add(getSensorBName());
+            }
+            if (!getSignalBName().isEmpty()) {
+                references.add(getSignalBName());
+            }
         }
         if (pointName.equals("C") || pointName.equals("All")) {  //NOI18N
-            if (!getSignalCMastName().isEmpty()) references.add(getSignalCMastName());
-            if (!getSensorCName().isEmpty()) references.add(getSensorCName());
-            if (!getSignalCName().isEmpty()) references.add(getSignalCName());
+            if (!getSignalCMastName().isEmpty()) {
+                references.add(getSignalCMastName());
+            }
+            if (!getSensorCName().isEmpty()) {
+                references.add(getSensorCName());
+            }
+            if (!getSignalCName().isEmpty()) {
+                references.add(getSignalCName());
+            }
         }
         if (pointName.equals("D") || pointName.equals("All")) {  //NOI18N
-            if (!getSignalDMastName().isEmpty()) references.add(getSignalDMastName());
-            if (!getSensorDName().isEmpty()) references.add(getSensorDName());
-            if (!getSignalDName().isEmpty()) references.add(getSignalDName());
+            if (!getSignalDMastName().isEmpty()) {
+                references.add(getSignalDMastName());
+            }
+            if (!getSensorDName().isEmpty()) {
+                references.add(getSensorDName());
+            }
+            if (!getSignalDName().isEmpty()) {
+                references.add(getSignalDName());
+            }
         }
         return references;
     }
@@ -1215,8 +1239,6 @@ public class LevelXing extends LayoutTrack {
                 }
             }
 
-            final String[] boundaryBetween = getBlockBoundaries();
-            boolean blockBoundaries = false;
             if (jmri.InstanceManager.getDefault(LayoutBlockManager.class).isAdvancedRoutingEnabled()) {
                 if (blockACAssigned && !blockBDAssigned) {
                     popup.add(new AbstractAction(Bundle.getMessage("ViewBlockRouting")) {
@@ -1256,9 +1278,12 @@ public class LevelXing extends LayoutTrack {
                 }
             }
 
+            final String[] boundaryBetween = getBlockBoundaries();
+            boolean blockBoundaries = false;
             for (int i = 0; i < 4; i++) {
                 if (boundaryBetween[i] != null) {
                     blockBoundaries = true;
+                    break;
                 }
             }
             if (blockBoundaries) {
@@ -1298,7 +1323,7 @@ public class LevelXing extends LayoutTrack {
         String blockNameBD = getBlockNameBD();
 
         LayoutBlock blockAC = getLayoutBlockAC();
-        LayoutBlock blockBD = getLayoutBlockAC();
+        LayoutBlock blockBD = getLayoutBlockBD();
 
         if (!blockNameAC.isEmpty() && (blockAC != null)) {
             if ((connectA instanceof TrackSegment) && (((TrackSegment) connectA).getLayoutBlock() != blockAC)) {
@@ -1358,7 +1383,7 @@ public class LevelXing extends LayoutTrack {
         active = false;
     }
 
-    boolean active = true;
+    private boolean active = true;
 
     /**
      * "active" means that the object is still displayed, and should be stored.
@@ -1367,39 +1392,40 @@ public class LevelXing extends LayoutTrack {
         return active;
     }
 
-    ArrayList<SignalMast> sml = new ArrayList<>();
+    private ArrayList<SignalMast> signalMasts = new ArrayList<>();
 
     public void addSignalMastLogic(SignalMast sm) {
-        if (sml.contains(sm)) {
-            return;
-        }
-        if (sml.isEmpty()) {
-            sml.add(sm);
-            return;
-        }
-        SignalMastLogic sl = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
-        for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic s = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sml.get(i));
-            if (s != null) {
-                s.setConflictingLogic(sm, this);
+        if (!signalMasts.contains(sm)) {
+            if (!signalMasts.isEmpty()) {
+                SignalMastLogic smSML = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
+                for (SignalMast signalMast : signalMasts) {
+                    SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(signalMast);
+                    if (sml != null) {
+                        sml.setConflictingLogic(sm, this);
+                    }
+                    if (smSML != null) {
+                        smSML.setConflictingLogic(signalMast, this);
+                    }
+                }
             }
-            sl.setConflictingLogic(sml.get(i), this);
+            signalMasts.add(sm);
         }
-        sml.add(sm);
     }
 
     public void removeSignalMastLogic(SignalMast sm) {
-        if (!sml.contains(sm)) {
-            return;
-        }
-        sml.remove(sm);
-        if (sml.isEmpty()) {
-            return;
-        }
-        for (int i = 0; i < sml.size(); i++) {
-            SignalMastLogic s = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
-            if (s != null) {
-                s.removeConflictingLogic(sm, this);
+        if (signalMasts.contains(sm)) {
+            signalMasts.remove(sm);
+            if (!signalMasts.isEmpty()) {
+                SignalMastLogic smSML = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(sm);
+                for (SignalMast signalMast : signalMasts) {
+                    SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).getSignalMastLogic(signalMast);
+                    if (sml != null) {
+                        sml.removeConflictingLogic(sm, this);
+                    }
+                    if (smSML != null) {
+                        smSML.removeConflictingLogic(signalMast, this);
+                    }
+                }
             }
         }
     }
