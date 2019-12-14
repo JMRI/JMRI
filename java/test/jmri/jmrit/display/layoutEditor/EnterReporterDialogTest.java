@@ -3,14 +3,12 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
-import jmri.util.JUnitUtil;
+import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
+import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.rules.Timeout;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Test simple functioning of enterReporterDialog
@@ -90,7 +88,7 @@ public class EnterReporterDialogTest {
         JButtonOperator addNewLabelButtonOperator = new JButtonOperator(jFrameOperator,
                 Bundle.getMessage("AddNewLabel"));
 
-        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread misc1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         addNewLabelButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -100,7 +98,7 @@ public class EnterReporterDialogTest {
         // ok, now set the reporter name to an invalid (doesn't start with IB) value
         reporterNameTextFieldOperator.setText("ClarkKent");
         addNewLabelButtonOperator.doClick();
-        jmri.util.JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"IR\".");
+        JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"IR\".");
         //TODO: any way to verify that the dialog is closed?
 
         enterReporterDialog.enterReporter(150, 200);
@@ -121,7 +119,7 @@ public class EnterReporterDialogTest {
                 (JTextField) reporterLocationX.getLabelFor());
         xLocationTextFieldOperator.setText("NumberFormatException string");
 
-        Thread misc2 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread misc2 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         addNewLabelButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -138,7 +136,7 @@ public class EnterReporterDialogTest {
                 (JTextField) reporterLocationY.getLabelFor());
         yLocationTextFieldOperator.setText("NumberFormatException string");
 
-        Thread misc3 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread misc3 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         addNewLabelButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {

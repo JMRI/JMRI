@@ -5,12 +5,10 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
+import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.rules.Timeout;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Test simple functioning of enterGridSizesDialog
@@ -90,7 +88,7 @@ public class EnterGridSizesDialogTest {
         // try to enter an invalid value in the primary grid size text field
         primaryGridSizeTextFieldOperator.setText("NumberFormatException string");
 
-        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread misc1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -109,7 +107,7 @@ public class EnterGridSizesDialogTest {
 
         secondaryGridSizeTextFieldOperator.setText("NumberFormatException string");
 
-        Thread misc2 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread misc2 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {

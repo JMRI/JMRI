@@ -5,15 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
+import java.util.*;
+import javax.annotation.*;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
-import jmri.JmriException;
-import jmri.Turnout;
+import jmri.*;
 import jmri.util.ColorUtil;
 import jmri.util.MathUtil;
 
@@ -306,10 +302,10 @@ public abstract class LayoutTrack {
         for (String item : itemList) {
             msg.append("\n    " + item);  // NOI18N
         }
-        javax.swing.JOptionPane.showMessageDialog(layoutEditor,
+        JOptionPane.showMessageDialog(layoutEditor,
                 msg.toString(),
                 Bundle.getMessage("WarningTitle"),  // NOI18N
-                javax.swing.JOptionPane.WARNING_MESSAGE);
+                JOptionPane.WARNING_MESSAGE);
     }
 
     /**
