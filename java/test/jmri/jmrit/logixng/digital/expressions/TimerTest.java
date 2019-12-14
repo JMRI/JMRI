@@ -183,7 +183,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     }
     
     
-    
+/*    
     private class MyTimer extends java.util.Timer {
         
         private final AtomicBoolean _abTimerTrigged;
@@ -246,5 +246,5 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         }
         
     }
-    
+*/    
 }
