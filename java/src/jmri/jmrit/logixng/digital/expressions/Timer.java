@@ -23,7 +23,8 @@ public class Timer extends AbstractDigitalExpression {
     // with its own timer class.
 //    protected java.util.Timer _timer;
     private final java.util.Timer _timer;
-    private final TimerType _timerType = TimerType.WAIT_ONCE_TRIG_ONCE;
+    private TimerTask _timerTask;
+    private TimerType _timerType = TimerType.WAIT_ONCE_TRIG_ONCE;
     private boolean _listenersAreRegistered = false;
     private boolean _hasTimePassed = false;
     private boolean _onOrOff = false;
@@ -48,10 +49,23 @@ public class Timer extends AbstractDigitalExpression {
         return false;
     }
     
+    public void setTimerType(TimerType timerType) {
+        if (_listenersAreRegistered) {
+            RuntimeException e = new RuntimeException("setTimerType must not be called when listeners are registered");
+            log.error("setTimerType must not be called when listeners are registered", e);
+            throw e;
+        }
+        _timerType = timerType;
+    }
+    
+    public TimerType getTimerType() {
+        return _timerType;
+    }
+    
     public void setTimerDelay(long delayOff, long delayOn) {
         if (_listenersAreRegistered) {
-            RuntimeException e = new RuntimeException("setSensor must not be called when listeners are registered");
-            log.error("setSensor must not be called when listeners are registered", e);
+            RuntimeException e = new RuntimeException("setTimerDelay must not be called when listeners are registered");
+            log.error("setTimerDelay must not be called when listeners are registered", e);
             throw e;
         }
         _delayOff = delayOff;
@@ -110,12 +124,13 @@ public class Timer extends AbstractDigitalExpression {
         final Timer t = this;
         
         // Ensure timer is not running
-        _timer.cancel();
+        if (_timerTask != null) _timerTask.cancel();
+//        _timer.cancel();
         
         // Clear flag
         _hasTimePassed = false;
         
-        TimerTask timerTask = new TimerTask() {
+        _timerTask = new TimerTask() {
             @Override
             public void run() {
                 t.getConditionalNG().execute();
@@ -128,11 +143,11 @@ public class Timer extends AbstractDigitalExpression {
             case WAIT_ONCE_TRIG_UNTIL_RESET:
                 // fall through
             case REPEAT_SINGLE_DELAY:
-                _timer.schedule(timerTask, _delayOff);
+                _timer.schedule(_timerTask, _delayOff);
                 break;
                 
             case REPEAT_DOUBLE_DELAY:
-                _timer.schedule(timerTask, _onOrOff ? _delayOn : _delayOff);
+                _timer.schedule(_timerTask, _onOrOff ? _delayOn : _delayOff);
                 break;
                 
             default:
@@ -141,7 +156,8 @@ public class Timer extends AbstractDigitalExpression {
     }
     
     private void stopTimer() {
-        _timer.cancel();
+        if (_timerTask != null) _timerTask.cancel();
+//        _timer.cancel();
     }
     
     @Override
@@ -161,7 +177,23 @@ public class Timer extends AbstractDigitalExpression {
     
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "Timer_Long");
+        switch (_timerType) {
+            case WAIT_ONCE_TRIG_ONCE:
+                return Bundle.getMessage(locale, "Timer_Long_WaitOnceTrigOnce", _delayOff);
+                
+            case WAIT_ONCE_TRIG_UNTIL_RESET:
+                return Bundle.getMessage(locale, "Timer_Long_WaitOnceTrigUntilReset", _delayOff);
+                
+            case REPEAT_SINGLE_DELAY:
+                return Bundle.getMessage(locale, "Timer_Long_RepeatSingleDelay", _delayOff);
+                
+            case REPEAT_DOUBLE_DELAY:
+                return Bundle.getMessage(locale, "Timer_Long_RepeatDoubleDelay", _delayOff, _delayOn);
+                
+            default:
+                throw new RuntimeException("Unknown value of _timerType: "+_timerType.name());
+        }
+//        return Bundle.getMessage(locale, "Timer_Long");
     }
 
     /** {@inheritDoc} */
@@ -174,7 +206,8 @@ public class Timer extends AbstractDigitalExpression {
     @Override
     public void registerListenersForThisClass() {
         if (!_listenersAreRegistered && (_delayOff != 0)) {
-            startTimer();
+            _listenersAreRegistered = true;
+//            startTimer();
         }
     }
     
@@ -188,12 +221,18 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        _timer.cancel();
+        if (_timerTask != null) _timerTask.cancel();
+//        _timer.cancel();
     }
     
     
     
     public enum TimerType {
+        WAIT_ONCE_TRIG_ONCE,
+        WAIT_ONCE_TRIG_UNTIL_RESET,
+        REPEAT_SINGLE_DELAY,
+        REPEAT_DOUBLE_DELAY;
+/*        
         WAIT_ONCE_TRIG_ONCE(Bundle.getMessage("TimerType_WaitOnceTrigOnce")),
         WAIT_ONCE_TRIG_UNTIL_RESET(Bundle.getMessage("TimerType_WaitOnceTrigUntilReset")),
         REPEAT_SINGLE_DELAY(Bundle.getMessage("TimerType_RepeatSingleDelay")),
@@ -209,7 +248,7 @@ public class Timer extends AbstractDigitalExpression {
         public String toString() {
             return _text;
         }
-        
+*/        
     }
     
     

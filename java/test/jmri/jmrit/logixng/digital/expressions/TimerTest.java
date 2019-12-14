@@ -22,6 +22,8 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
+import jmri.jmrit.logixng.digital.expressions.Timer.TimerType;
+import jmri.util.JUnitAppender;
 
 /**
  * Test Timer
@@ -49,7 +51,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Timer%n");
+        return String.format("One shot timer: Wait 0 seconds and trigger once.%n");
     }
     
     @Override
@@ -60,7 +62,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
                 "      ! %n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
-                "               Timer%n" +
+                "               One shot timer: Wait 0 seconds and trigger once.%n" +
                 "            ! A1%n" +
                 "               Set the atomic boolean to true%n" +
                 "            ! A2%n" +
@@ -79,12 +81,12 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         expression2 = new Timer("IQDE321", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "Timer", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "One shot timer: Wait 0 seconds and trigger once.", expression2.getLongDescription());
         
         expression2 = new Timer("IQDE321", "My expression");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
-        Assert.assertEquals("String matches", "Timer", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "One shot timer: Wait 0 seconds and trigger once.", expression2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -123,7 +125,22 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     public void testDescription() {
         Timer e1 = new Timer("IQDE321", null);
         Assert.assertTrue("Timer".equals(e1.getShortDescription()));
-        Assert.assertTrue("Timer".equals(e1.getLongDescription()));
+        
+        e1.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
+        e1.setTimerDelay(10, 0);
+        Assert.assertEquals("One shot timer: Wait 10 seconds and trigger once.", e1.getLongDescription());
+        
+        e1.setTimerType(TimerType.WAIT_ONCE_TRIG_UNTIL_RESET);
+        e1.setTimerDelay(20, 0);
+        Assert.assertEquals("One shot timer: Wait 20 seconds. Restart timer when reset.", e1.getLongDescription());
+        
+        e1.setTimerType(TimerType.REPEAT_SINGLE_DELAY);
+        e1.setTimerDelay(30, 0);
+        Assert.assertEquals("Continuous timer: Wait 30 seconds and trigger once.", e1.getLongDescription());
+        
+        e1.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
+        e1.setTimerDelay(40, 50);
+        Assert.assertEquals("Continuous timer: Wait 40 seconds and then trigger. Stay on for 50 seconds.", e1.getLongDescription());
     }
     
     @Test
@@ -132,6 +149,50 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void setTimerType() {
+        expressionTimer.setTimerDelay(10,20);
+        
+        expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
+        Assert.assertEquals("timerType is correct", TimerType.WAIT_ONCE_TRIG_ONCE, expressionTimer.getTimerType());
+        
+        expressionTimer.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
+        Assert.assertEquals("timerType is correct", TimerType.REPEAT_DOUBLE_DELAY, expressionTimer.getTimerType());
+        
+        expressionTimer.registerListeners();
+        boolean hasThrown = false;
+        try {
+            expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
+        } catch (RuntimeException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "setTimerType must not be called when listeners are registered", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+        JUnitAppender.assertErrorMessage("setTimerType must not be called when listeners are registered");
+    }
+    
+    @Test
+    public void testSetTimerDelay() {
+        expressionTimer.setTimerDelay(10,20);
+        Assert.assertEquals("delayOff is correct", 10, expressionTimer.getTimerDelayOff());
+        Assert.assertEquals("delayOn is correct", 20, expressionTimer.getTimerDelayOn());
+        
+        expressionTimer.setTimerDelay(43,28);
+        Assert.assertEquals("delayOff is correct", 43, expressionTimer.getTimerDelayOff());
+        Assert.assertEquals("delayOn is correct", 28, expressionTimer.getTimerDelayOn());
+        
+        expressionTimer.registerListeners();
+        boolean hasThrown = false;
+        try {
+            expressionTimer.setTimerDelay(3,2);
+        } catch (RuntimeException ex) {
+            hasThrown = true;
+            Assert.assertEquals("Error message is correct", "setTimerDelay must not be called when listeners are registered", ex.getMessage());
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+        JUnitAppender.assertErrorMessage("setTimerDelay must not be called when listeners are registered");
+    }
+/*    
+    @Test
     public void testExecuteAndReset() {
         Timer e1 = new Timer("IQDE321", null);
         
@@ -139,6 +200,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Timer".equals(e1.getShortDescription()));
         Assert.assertTrue("Timer".equals(e1.getLongDescription()));
     }
+*/    
     
     // The minimal setup for log4J
     @Before
