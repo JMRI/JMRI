@@ -60,6 +60,7 @@ public class MoveSelectionDialog {
             JLabel xMoveLabel = new JLabel(Bundle.getMessage("XTranslateLabel"));
             panel31.add(xMoveLabel);
             xMoveLabel.setLabelFor(xMoveField);
+            panel31.add(xMoveField);
             xMoveField.setName("XTranslateLabel");
             xMoveField.setToolTipText(Bundle.getMessage("XTranslateHint"));
             theContentPane.add(panel31);
