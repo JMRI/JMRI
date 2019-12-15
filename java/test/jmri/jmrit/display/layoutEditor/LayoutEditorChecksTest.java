@@ -15,7 +15,6 @@ import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.*;
 
 /**
- *
  * @author Paul Bender Copyright (C) 2017
  * @author George Warner Copyright: (C) 2019
  */
