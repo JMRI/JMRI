@@ -290,7 +290,7 @@ public class LayoutEditorToolsTest {
                     layoutEditor.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to (re)appear,
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
 
         //define connection
         String uName = "T" + (idx + 1);
@@ -328,7 +328,7 @@ public class LayoutEditorToolsTest {
             layoutEditorTools.setSignalsAtTurnout(layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to (re)appear,
-        jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
 
         //change anchor to end bumper
         positionablePoints[idx].setType(PositionablePoint.END_BUMPER);
@@ -355,7 +355,7 @@ public class LayoutEditorToolsTest {
             layoutEditorTools.setSignalsAtTurnout(layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to (re)appear,
-        jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
 
         //pressing "Done" should throw up a "block XXX doesn''t have an occupancy sensor"  (InfoMessage4)
         //error dialog... dismiss it
@@ -378,7 +378,7 @@ public class LayoutEditorToolsTest {
             layoutEditorTools.setSignalsAtTurnout(layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to (re)appear,
-        jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
 
         doneButtonOperator.doClick();
         // make sure the dialog closed
