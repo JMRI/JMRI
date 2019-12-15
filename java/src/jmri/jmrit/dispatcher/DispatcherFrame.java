@@ -2242,20 +2242,23 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         // allow this train to start
                         at.setStarted();
                         delayedTrains.remove(i);
-                        if (_AutoAllocate) {
-                            autoAllocate.scanAllocationRequestList(allocationRequests);
-                        }
+//                        if (_AutoAllocate) {
+//                            autoAllocate.scanAllocationRequestList(allocationRequests);
+//                        }
                     }
                 }
             } else if (at.getStarted() && at.getStatus() == ActiveTrain.READY && at.reachedRestartPoint()) {
                 if (isFastClockTimeGE(at.getRestartDepartHr(), at.getRestartDepartMin())) {
                     at.restart();
                     delayedTrains.remove(i);
-                    if (_AutoAllocate) {
-                        autoAllocate.scanAllocationRequestList(allocationRequests);
-                    }
+//                    if (_AutoAllocate) {
+//                        autoAllocate.scanAllocationRequestList(allocationRequests);
+//                    }
                 }
             }
+        }
+        if (_AutoAllocate) {
+            autoAllocate.scanAllocationRequestList(allocationRequests);
         }
     }
 
