@@ -3208,7 +3208,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                                 ancestor,
                                 event.getID(),
                                 event.getWhen(),
-                                event.getModifiers(),
+                                event.getModifiersEx(),
                                 event.getX(),
                                 event.getY(),
                                 event.getXOnScreen(),
