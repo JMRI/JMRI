@@ -26,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
  * @author Randall Wood (C) 2015
  */
 @ServiceProvider(service = PreferencesManager.class)
@@ -40,10 +39,15 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     /**
      * Display state in bean tables as icon.
      */
-    public static final String GRAPHICTABLESTATE = "graphicTableState";
+    public static final String GRAPHIC_TABLE_STATE = "graphicTableState";
+    /**
+     * @deprecated since 4.19.2; use {@link #GRAPHIC_TABLE_STATE} instead
+     */
+    @Deprecated
+    public static final String GRAPHICTABLESTATE = GRAPHIC_TABLE_STATE;
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public static final String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
-    public static final String EDITOR_USE_OLD_LOC_SIZE= "editorUseOldLocSize";
+    public static final String EDITOR_USE_OLD_LOC_SIZE = "editorUseOldLocSize";
     /**
      * Smallest font size a user can set the font size to other than zero
      * ({@value}). A font size of 0 indicates that the system default font size
@@ -60,9 +64,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final int MAX_FONT_SIZE = 36;
     public static final String PROP_DIRTY = "dirty";
     public static final String PROP_RESTARTREQUIRED = "restartRequired";
+    private static final String LIST_FONT = "List.font";
 
     // preferences with default values
-    private Locale locale = Locale.getDefault();
+    private Locale currentLocale = Locale.getDefault();
     private Font currentFont = null;
     private Font defaultFont = null;
     private int fontSize = 0;
@@ -119,14 +124,13 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         }
 
         setNonStandardMouseEvent(preferences.getBoolean(NONSTANDARD_MOUSE_EVENT, isNonStandardMouseEvent()));
-        setGraphicTableState(preferences.getBoolean(GRAPHICTABLESTATE, isGraphicTableState()));
+        setGraphicTableState(preferences.getBoolean(GRAPHIC_TABLE_STATE, isGraphicTableState()));
         setEditorUseOldLocSize(preferences.getBoolean(EDITOR_USE_OLD_LOC_SIZE, isEditorUseOldLocSize()));
         setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, getToolTipDismissDelay()));
 
         log.debug("About to setDefault Locale");
         Locale.setDefault(getLocale());
         javax.swing.JComponent.setDefaultLocale(getLocale());
-        javax.swing.JOptionPane.setDefaultLocale(getLocale());
 
         applyLookAndFeel();
         applyFontSize();
@@ -163,7 +167,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         String currentFontName = currentFont.getFontName();
         if (currentFontName != null) {
             String prefFontName = preferences.get(FONT_NAME, currentFontName);
-            if ((prefFontName == null) || ( ! prefFontName.equals(currentFontName))) {
+            if ((prefFontName == null) || (!prefFontName.equals(currentFontName))) {
                 preferences.put(FONT_NAME, currentFontName);
             }
         }
@@ -176,7 +180,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             preferences.putInt(FONT_SIZE, temp);
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, isNonStandardMouseEvent());
-        preferences.putBoolean(GRAPHICTABLESTATE, isGraphicTableState()); // use graphic icons in bean table state column
+        preferences.putBoolean(GRAPHIC_TABLE_STATE, isGraphicTableState()); // use
+                                                                            // graphic
+                                                                            // icons
+                                                                            // in
+                                                                            // bean
+                                                                            // table
+                                                                            // state
+                                                                            // column
         preferences.putBoolean(EDITOR_USE_OLD_LOC_SIZE, isEditorUseOldLocSize());
         preferences.putInt(SHOW_TOOL_TIP_TIME, getToolTipDismissDelay());
         try {
@@ -191,7 +202,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * @return the locale
      */
     public Locale getLocale() {
-        return locale;
+        return currentLocale;
     }
 
     /**
@@ -199,7 +210,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      */
     public void setLocale(Locale locale) {
         Locale oldLocale = locale;
-        this.locale = locale;
+        this.currentLocale = locale;
         setDirty(true);
         setRestartRequired(true);
         firePropertyChange(LOCALE, oldLocale, locale);
@@ -251,9 +262,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * Called to load the current {@literal Look & Feel} default font,
-     * based on looking up the "List.font"
-     * <br><br>
+     * Called to load the current {@literal Look & Feel} default font, based on
+     * looking up the "List.font" <br>
+     * <br>
      * The value can be can be read by calling {@link #getDefaultFont()}
      */
     public void setDefaultFont() {
@@ -262,7 +273,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
 
-            if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals("List.font")) {
+            if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals(LIST_FONT)) {
                 Font f = UIManager.getFont(key);
                 log.debug("Key: {} Font: {}", key, f.getName());
                 defaultFont = f;
@@ -270,7 +281,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             }
         }
         // couldn't find the default return a reasonable font
-        defaultFont = UIManager.getFont("List.font");
+        defaultFont = UIManager.getFont(LIST_FONT);
         if (defaultFont == null) {
             // or maybe not quite as reasonable
             defaultFont = UIManager.getFont("TextArea.font");
@@ -310,9 +321,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * Called to load the current {@literal Look & Feel} default font size,
+     * Load the current {@literal Look & Feel} default font size,
      * based on looking up the "List.font" size
-     * <br><br>
+     * <p>
      * The value can be can be read by calling {@link #getDefaultFontSize()}
      */
     public void setDefaultFontSize() {
@@ -321,14 +332,15 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
 
-            if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals("List.font")) {
+            if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals(LIST_FONT)) {
                 Font f = UIManager.getFont(key);
                 log.debug("Key: {} Font: {} size: {}", key, f.getName(), f.getSize());
                 defaultFontSize = f.getSize();
                 return;
             }
         }
-        defaultFontSize = 11;   // couldn't find the default return a reasonable font size
+        // couldn't find the default; so use a reasonable font size
+        defaultFontSize = 11;
     }
 
     /**
@@ -343,18 +355,20 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             while (keys.hasMoreElements()) {
                 Object key = keys.nextElement();
                 Object value = UIManager.get(key);
-                if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
+                if (value instanceof javax.swing.plaf.FontUIResource ||
+                        value instanceof java.awt.Font ||
+                        key.toString().endsWith(".font")) {
                     Font f = UIManager.getFont(key);
-                    log.trace("Class={}; Key: {} Font: {} size: {}", value.getClass().getName(), key, f.getName(), f.getSize());
+                    log.trace("Class={}; Key: {} Font: {} size: {}", value.getClass().getName(), key, f.getName(),
+                            f.getSize());
                 }
             }
         }
     }
 
     /**
-     * Sets the time a tooltip is displayed before it goes away.
-     *
-     * Note that this preference takes effect immediately.
+     * Sets the time a tooltip is displayed before it goes away. Note that this
+     * preference takes effect immediately.
      *
      * @param time the delay in seconds.
      */
@@ -365,7 +379,6 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     *
      * @return the int
      */
     public int getToolTipDismissDelay() {
@@ -405,7 +418,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         this.graphicTableState = graphicTableState;
         setDirty(true);
         setRestartRequired(true);
-        firePropertyChange(GRAPHICTABLESTATE, oldGraphicTableState, graphicTableState);
+        firePropertyChange(GRAPHIC_TABLE_STATE, oldGraphicTableState, graphicTableState);
     }
 
     /**
@@ -464,7 +477,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             // accept either name or classname of look and feel
             if (LAF.getClassName().equals(lookAndFeel) || LAF.getName().equals(lookAndFeel)) {
                 lafClassName = LAF.getClassName();
-                break; // use first match, not last match (unlikely to be different, but you never know)
+                break; // use first match, not last match (unlikely to be
+                       // different, but you never know)
             }
         }
         log.debug("Look and feel selection \"{}\" ({})", lookAndFeel, lafClassName);
@@ -475,7 +489,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
                     UIManager.setLookAndFeel(lafClassName);
                 } catch (ClassNotFoundException ex) {
                     log.error("Could not find look and feel \"{}\".", lookAndFeel);
-                } catch (IllegalAccessException | InstantiationException ex) {
+                } catch (
+                        IllegalAccessException |
+                        InstantiationException ex) {
                     log.error("Could not load look and feel \"{}\".", lookAndFeel);
                 } catch (UnsupportedLookAndFeelException ex) {
                     log.error("Look and feel \"{}\" is not supported on this platform.", lookAndFeel);
@@ -487,8 +503,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * Applies a new calculated font size to all found fonts.
-     * <br><br>
+     * Applies a new calculated font size to all found fonts. <br>
+     * <br>
      * Calls {@link #getCalcFontSize(int) getCalcFontSize} to calculate new size
      * for each.
      */
@@ -501,8 +517,11 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             while (keys.hasMoreElements()) {
                 Object key = keys.nextElement();
                 Object value = UIManager.get(key);
-                if (value instanceof javax.swing.plaf.FontUIResource || value instanceof java.awt.Font || key.toString().endsWith(".font")) {
-                    UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), getCalcFontSize(((Font) value).getSize())));
+                if (value instanceof javax.swing.plaf.FontUIResource ||
+                        value instanceof java.awt.Font ||
+                        key.toString().endsWith(".font")) {
+                    UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(),
+                            getCalcFontSize(((Font) value).getSize())));
                 }
             }
             if (log.isTraceEnabled()) {
@@ -512,28 +531,27 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * Stand-alone service routine to
-     * set the default Locale.
-     *
-     * Intended to be invoked early, as soon as a profile is
-     * available, to ensure the correct language is set as
-     * startup proceeds. Must be followed eventually
-     * by a complete {@link #setLocale}.
+     * Stand-alone service routine to set the default Locale.
+     * <p>
+     * Intended to be invoked early, as soon as a profile is available, to
+     * ensure the correct language is set as startup proceeds. Must be followed
+     * eventually by a complete {@link #setLocale}.
      * 
      * @param profile The profile to get the locale from
      */
     public static void setLocaleMinimally(Profile profile) {
-        String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get("locale","en"); // "en" is default if not found
+        // use current default if no setting specified
+        String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get(LOCALE,
+                Locale.getDefault().toLanguageTag());
         log.debug("setLocaleMinimally found language {}, setting", name);
-        Locale.setDefault(new Locale(name));
-        javax.swing.JComponent.setDefaultLocale(new Locale(name));
-        javax.swing.JOptionPane.setDefaultLocale(new Locale(name));
+        Locale locale = Locale.forLanguageTag(name);
+        Locale.setDefault(locale);
+        javax.swing.JComponent.setDefaultLocale(locale);
     }
 
     /**
      * @return a new calculated font size based on difference between default
      *         size and selected size
-     *
      * @param oldSize the old font size
      */
     private int getCalcFontSize(int oldSize) {
