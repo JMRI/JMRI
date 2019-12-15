@@ -133,6 +133,7 @@ public class Timer extends AbstractDigitalExpression {
         _timerTask = new TimerTask() {
             @Override
             public void run() {
+                System.out.println("timer: Timer has trigged. Run ConditionalNG.execute()");
                 t.getConditionalNG().execute();
             }
         };
@@ -205,7 +206,7 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_delayOff != 0)) {
+        if (!_listenersAreRegistered) {
             _listenersAreRegistered = true;
 //            startTimer();
         }

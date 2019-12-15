@@ -2,19 +2,12 @@ package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
-import jmri.Memory;
 import jmri.NamedBean;
-import jmri.Turnout;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -24,6 +17,10 @@ import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.jmrit.logixng.digital.expressions.Timer.TimerType;
 import jmri.util.JUnitAppender;
+import org.junit.After;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  * Test Timer
@@ -190,6 +187,22 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
         JUnitAppender.assertErrorMessage("setTimerDelay must not be called when listeners are registered");
+    }
+    
+    @Test
+    public void testExecute() {
+        atomicBoolean.set(false);
+        expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
+        expressionTimer.setTimerDelay(2, 0);
+        expressionTimer.registerListeners();
+//        JUnitUtil.waitFor(()->{return atomicBoolean.get();}, "timer has not triggered");
+        
+        
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException ex) {
+            System.out.println("Interrupted exception");
+        }
     }
 /*    
     @Test
