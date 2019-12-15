@@ -111,7 +111,7 @@ public class AutoAllocate {
                 // Check to see if there is a sensor temporarily block allocation blocking allocation
                 ActiveTrain activeTrain = ar.getActiveTrain();
                 String trainName = activeTrain.getTrainName();
-                log.debug("{}: try to allocate [{}]", trainName, ar.getSectionName());
+                log.trace("{}: try to allocate [{}]", trainName, ar.getSectionName());
                 if (activeTrain.getLastAllocatedSection() != null) {
                     //do stuff associated with the last allocated section
                     Transit arTransit = activeTrain.getTransit();
@@ -194,9 +194,11 @@ public class AutoAllocate {
                                 continue;
                             }
                         }
-                        if (allocateIfLessThanThreeAhead(ar)) {
-                            continue;
-                        }
+//                        if (allocateIfLessThanThreeAhead(ar)) {
+//                            continue;
+//                        }
+                        allocateMore(ar);
+                        continue;                        
                     }
                 }
                 log.trace("Using Regular");
@@ -207,7 +209,7 @@ public class AutoAllocate {
                 if (getPlanThisTrain(activeTrain) != null) {
                     // this train is in an active Allocation Plan, anything to do now?
                     if (willAllocatingFollowPlan(ar, getPlanThisTrain(activeTrain))) {
-                        if (allocateIfLessThanThreeAhead(ar)) {
+                        if (allocateMore(ar)) {
                             continue;
                         }
                     }
@@ -223,7 +225,7 @@ public class AutoAllocate {
                         List<ActiveTrain> activeTrainsList = _dispatcher.getActiveTrainsList();
                         if (activeTrainsList.size() == 1) {
                             // this is the only ActiveTrain
-                            if (allocateIfLessThanThreeAhead(ar)) {
+                            if (allocateMore(ar)) {
                                 continue;
                             }
                         } else {
@@ -287,7 +289,7 @@ public class AutoAllocate {
                                 }
                             }
                             if (okToAllocate) {
-                                if (allocateIfLessThanThreeAhead(ar)) {
+                                if (allocateMore(ar)) {
                                     continue;
                                 }
                             }
@@ -496,8 +498,9 @@ public class AutoAllocate {
 
     // test to see how far ahead allocations have already been made
     // and go no farther than the number requested, or the next safe section.
-    private boolean allocateIfLessThanThreeAhead(AllocationRequest ar) {
-        log.trace("in allocateIfLessThanThreeAhead, ar.Section={}", ar.getSectionName());
+    // return true if allocation successful, false otherwise
+    private boolean allocateMore(AllocationRequest ar) {
+        log.trace("in allocateMore, ar.Section={}", ar.getSectionName());
         int allocateSectionsAhead = ar.getActiveTrain().getAllocateMethod();
         if (allocateSectionsAhead == ActiveTrain.ALLOCATE_AS_FAR_AS_IT_CAN) {
             _dispatcher.allocateSection(ar, null);
