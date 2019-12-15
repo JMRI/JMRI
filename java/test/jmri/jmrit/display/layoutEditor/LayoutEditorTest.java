@@ -5,15 +5,14 @@ import java.awt.Toolkit;
 import java.io.File;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrit.display.AbstractEditorTestBase;
-import jmri.jmrit.display.EditorFrameOperator;
+import jmri.jmrit.display.*;
 import jmri.util.*;
 import jmri.util.junit.rules.*;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
-import org.junit.rules.*;
-import org.netbeans.jemmy.EventTool;
-import org.netbeans.jemmy.QueueTool;
+import org.junit.Test;
+import org.junit.rules.Timeout;
+import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
