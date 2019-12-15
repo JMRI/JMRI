@@ -3,16 +3,10 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JTextField;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.Turnout;
+import javax.swing.*;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.*;
-import jmri.util.JUnitUtil;
-import jmri.util.MathUtil;
+import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
@@ -801,11 +795,11 @@ public class LayoutTrackEditorsTest {
     }
 
     public void createTurnouts() {
-        turnout0 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT101");
+        turnout0 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT101");
         turnout0.setUserName("Turnout 101");
         turnout0.setCommandedState(Turnout.CLOSED);
 
-        turnout1 = InstanceManager.getDefault(TurnoutManager.class).provideTurnout("IT102");
+        turnout1 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("IT102");
         turnout1.setUserName("Turnout 102");
         turnout1.setCommandedState(Turnout.CLOSED);
     }
