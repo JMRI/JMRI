@@ -19,10 +19,10 @@ import org.netbeans.jemmy.operators.Operator;
  */
 public class LayoutTurntableTest {
 
-    @Rule   // 10 second timeout for methods in this test class.
+    @Rule   //10 second timeout for methods in this test class.
     public Timeout globalTimeout = Timeout.seconds(10);
 
-    @Rule   // allow 2 retries of intermittent tests
+    @Rule   //allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2);
 
     private static LayoutEditor layoutEditor = null;
@@ -715,14 +715,14 @@ public class LayoutTurntableTest {
     }
 
     //
-    // from here down is testing infrastructure
+    //from here down is testing infrastructure
     //
     @BeforeClass
     public static void setUpClass() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
-            // set default string matching comparator to one that exactly matches and is case sensitive
+            //set default string matching comparator to one that exactly matches and is case sensitive
             Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
 
             layoutEditor = new LayoutEditor("LayoutTurntable Tests Layout");
