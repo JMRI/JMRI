@@ -1,39 +1,18 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TURNOUT_A;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TURNOUT_B;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TURNOUT_C;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.ANCHOR;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.END_BUMPER;
-
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import javax.swing.JComboBox;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBeanHandle;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
-import jmri.Turnout;
-import jmri.implementation.SingleTurnoutSignalHead;
-import jmri.implementation.VirtualSignalHead;
-import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
+import jmri.*;
+import jmri.implementation.*;
+import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.QueueTool;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JComboBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Test simple functioning of LayoutEditorTools
@@ -46,9 +25,8 @@ public class LayoutEditorToolsTest {
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); //10 second timeout for methods in this test class.
 
-    //allow 2 retries of intermittent tests
     @Rule
-    public RetryRule retryRule = new RetryRule(2); //allow 2 retries
+    public RetryRule retryRule = new RetryRule(4);      //allow 4 retries of intermittent tests
 
     private LayoutEditor le = null;
     private LayoutEditorTools let = null;
@@ -102,15 +80,15 @@ public class LayoutEditorToolsTest {
         Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
         le.getLayoutTracks().add(layoutTurnout);
 
-        positionablePoint1 = new PositionablePoint("A1", ANCHOR, new Point2D.Double(250.0, 100.0), le);
+        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(250.0, 100.0), le);
         Assert.assertNotNull("positionablePoint1 for testSetSignalsAtTurnoutWithDone", positionablePoint1);
         le.getLayoutTracks().add(positionablePoint1);
 
-        positionablePoint2 = new PositionablePoint("A2", ANCHOR, new Point2D.Double(50.0, 100.0), le);
+        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(50.0, 100.0), le);
         le.getLayoutTracks().add(positionablePoint2);
         Assert.assertNotNull("positionablePoint2 for testSetSignalsAtTurnoutWithDone", positionablePoint2);
 
-        positionablePoint3 = new PositionablePoint("A3", ANCHOR, new Point2D.Double(250.0, 150.0), le);
+        positionablePoint3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(250.0, 150.0), le);
         le.getLayoutTracks().add(positionablePoint3);
         Assert.assertNotNull("positionablePoint3 for testSetSignalsAtTurnoutWithDone", positionablePoint3);
 
@@ -280,11 +258,11 @@ public class LayoutEditorToolsTest {
 
         //define connection
         String uName = "T" + (idx + 1);
-        int types[] = {TURNOUT_B, TURNOUT_C, TURNOUT_A, TURNOUT_A};
+        int types[] = {LayoutTurnout.TURNOUT_B, LayoutTurnout.TURNOUT_C, LayoutTurnout.TURNOUT_A, LayoutTurnout.TURNOUT_A};
         PositionablePoint[] positionablePoints = {positionablePoint2, positionablePoint3, positionablePoint1, positionablePoint1};
         TrackSegment trackSegment = new TrackSegment(uName,
                 layoutTurnout, types[idx],
-                positionablePoints[idx], POS_POINT,
+                positionablePoints[idx], LayoutTurnout.POS_POINT,
                 false, false, le);
         Assert.assertNotNull("trackSegment not null", trackSegment);
         le.getLayoutTracks().add(trackSegment);
@@ -313,7 +291,7 @@ public class LayoutEditorToolsTest {
         });
 
         //change anchor to end bumper
-        positionablePoints[idx].setType(END_BUMPER);
+        positionablePoints[idx].setType(PositionablePoint.END_BUMPER);
 
         //pressing "Done" should throw up a "blocks have not been defined around this item."  (InfoMessage6)
         //error dialog... dismiss it
@@ -378,9 +356,9 @@ public class LayoutEditorToolsTest {
         trackSegment.setLayoutBlock(null);
         layoutBlocks[lbIndex[idx]].setOccupancySensorName(null);
         //le.removeTrackSegment(trackSegment);
-        positionablePoint1.setType(ANCHOR);
-        positionablePoint2.setType(ANCHOR);
-        positionablePoint3.setType(ANCHOR);
+        positionablePoint1.setType(PositionablePoint.ANCHOR);
+        positionablePoint2.setType(PositionablePoint.ANCHOR);
+        positionablePoint3.setType(PositionablePoint.ANCHOR);
     }
 
     @Test
