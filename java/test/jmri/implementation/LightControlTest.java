@@ -8,13 +8,9 @@ import jmri.Timebase;
 import jmri.TimebaseRateException;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.junit.*;
+
 /**
  * Tests for the LightControl class
  *
@@ -585,7 +581,8 @@ public class LightControlTest {
 
     @Test
     public void testTimedSensorFollowing() throws jmri.JmriException {
-
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        
         l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         Sensor s = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
 

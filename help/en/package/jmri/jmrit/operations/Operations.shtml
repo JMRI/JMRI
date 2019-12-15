@@ -5005,10 +5005,13 @@
    <p>During the export, the program will calculate the maximum work times at each train's location based on the move
    counts in the train's route for trains that aren't built, and the actual work time for built trains.  The work time
    is referred to as "Duration" in the Timetable application stop sequence.</p>
-   
-   <p>Only trains that are selected in the build column are exported.  Each export will create a new schedule based
-   on the date of the export.</p>
-   
+
+   <p>
+    Only trains that are selected in the build column are exported. Each export will create a new schedule based on the
+    date of the export. The export works best if the travel time in the <a href="#Settings">Settings</a> window is
+    between 1 and 4 minutes.
+   </p>
+
    <a name="SwitcherService" id="SwitcherService"></a>
    <h3>Switcher Service (Local)</h3>
    Many operators assign a locomotive to a location to do the local switching. Using the location's
