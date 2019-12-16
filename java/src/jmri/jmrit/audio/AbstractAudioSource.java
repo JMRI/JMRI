@@ -845,13 +845,9 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this.fading;
     }
 
-    // note that this doesn't properly implement the 
-    // contract in {@link NamedBean.toString()}, 
-    // which means things like tables and persistance 
-    // might not behave properly.
     @Override
     @Nonnull
-    public String toString() {
+    public String getDebugString() {
         return "Pos: " + this.getPosition().toString()
                 + ", bound to: " + this.getAssignedBufferName()
                 + ", loops: "

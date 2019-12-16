@@ -849,4 +849,14 @@ public interface AudioSource extends Audio {
      */
     public void fadeOut();
 
+    /**
+     * Get debug info about this audio source.
+     * AbstractAudioSource overrides this to get more debug info. It was
+     * previously the method toString().
+     * @return a string with debug info or the result of the method toString()
+     */
+    default public String getDebugString() {
+        return toString();
+    }
+    
 }
