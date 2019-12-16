@@ -2853,7 +2853,31 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
             addEntryExitPairAction.actionPerformed(event);
         });
-    }   // setupToolsMenu
+//        if (true) {   //TODO: disable for production
+//            jmi = new JMenuItem("GEORGE");
+//            toolsMenu.add(jmi);
+//            jmi.addActionListener((ActionEvent event) -> {
+//                //do GEORGE stuff here!
+//
+//                SortedSet<LayoutBlock> layoutBlockBeans = InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet();
+//                int blkIdx = 0;
+//                for (LayoutBlock layoutBlock : layoutBlockBeans) {
+//                    System.out.format("        lcs = layoutEditorAuxTools.getConnectivityList(layoutBlocks[%d]);\n", blkIdx);
+//                    List<LayoutConnectivity> lcs = auxTools.getConnectivityList(layoutBlock);
+//                    System.out.format("        Assert.assertEquals(\"lcs%d.size()\", %d, lcs.size());\n", blkIdx, lcs.size());
+//                    int idx = 0;
+//                    for (LayoutConnectivity layoutConnectivity : lcs) {
+//                        System.out.format("        Assert.assertEquals(\"lcs%d[%d]\",\n", blkIdx, idx);
+//                        System.out.format("                \"%s\",\n", layoutConnectivity.toString());
+//                        System.out.format("                lcs.get(%d).toString());\n", idx);
+//                        idx++;
+//                    }
+//                    System.out.print("\n");
+//                    blkIdx++;
+//                }
+//            });
+//        }
+    } // setupToolsMenu
 
     private void setToolBarSide(ToolBarSide newToolBarSide) {
         // null if edit toolbar is not setup yet...

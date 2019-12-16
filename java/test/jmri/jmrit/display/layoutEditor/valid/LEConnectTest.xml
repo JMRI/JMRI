@@ -3,8 +3,8 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>17</minor>
-    <test>8</test>
+    <minor>19</minor>
+    <test>1</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -376,7 +376,7 @@
     </turnout>
   </turnouts>
   <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
-    <memory value="8:35 PM">
+    <memory value="9:28 AM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -1440,18 +1440,6 @@
       <systemName>ILB6</systemName>
       <userName>6</userName>
     </layoutblock>
-    <layoutblock systemName="ILB7" occupancysensor="75" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
-      <systemName>ILB7</systemName>
-      <userName>75</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB8" occupancysensor="76" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
-      <systemName>ILB8</systemName>
-      <userName>76</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB9" occupancysensor="77" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
-      <systemName>ILB9</systemName>
-      <userName>77</userName>
-    </layoutblock>
     <layoutblock systemName="ILB10" occupancysensor="IS10" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
       <systemName>ILB10</systemName>
       <userName>10</userName>
@@ -1483,14 +1471,6 @@
     <layoutblock systemName="ILB17" occupancysensor="IS17" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
       <systemName>ILB17</systemName>
       <userName>17</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB18" occupancysensor="78" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
-      <systemName>ILB18</systemName>
-      <userName>78</userName>
-    </layoutblock>
-    <layoutblock systemName="ILB19" occupancysensor="79" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
-      <systemName>ILB19</systemName>
-      <userName>79</userName>
     </layoutblock>
     <layoutblock systemName="ILB20" occupancysensor="IS20" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
       <systemName>ILB20</systemName>
@@ -1608,6 +1588,26 @@
       <systemName>ILB74</systemName>
       <userName>74</userName>
     </layoutblock>
+    <layoutblock systemName="ILB75" occupancysensor="75" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
+      <systemName>ILB75</systemName>
+      <userName>75</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB76" occupancysensor="76" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
+      <systemName>ILB76</systemName>
+      <userName>76</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB77" occupancysensor="77" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
+      <systemName>ILB77</systemName>
+      <userName>77</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB78" occupancysensor="78" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
+      <systemName>ILB78</systemName>
+      <userName>78</userName>
+    </layoutblock>
+    <layoutblock systemName="ILB79" occupancysensor="79" occupiedsense="2" trackcolor="green" occupiedcolor="red" extracolor="yellow">
+      <systemName>ILB79</systemName>
+      <userName>79</userName>
+    </layoutblock>
   </layoutblocks>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
     <logicDelay>500</logicDelay>
@@ -1640,7 +1640,7 @@
       <sideTieLength>0</sideTieLength>
       <sideTieWidth>0</sideTieWidth>
     </layoutTrackDrawingOptions>
-    <sensoricon sensor="1" x="80" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="1" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="1" x="80" y="140" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="1" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1659,7 +1659,7 @@
       <unknownText text="1" red="0" green="0" blue="255" />
       <inconsistentText text="1" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="2" x="160" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="2" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="2" x="160" y="140" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="2" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1678,7 +1678,7 @@
       <unknownText text="2" red="0" green="0" blue="255" />
       <inconsistentText text="2" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="3" x="230" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="3" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="3" x="230" y="140" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="3" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1697,7 +1697,7 @@
       <unknownText text="3" red="0" green="0" blue="255" />
       <inconsistentText text="3" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="4" x="190" y="200" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="4" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="4" x="190" y="180" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="4" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1716,7 +1716,7 @@
       <unknownText text="4" red="0" green="0" blue="255" />
       <inconsistentText text="4" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="5" x="240" y="200" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="5" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="5" x="240" y="180" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="5" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1735,7 +1735,7 @@
       <unknownText text="5" red="0" green="0" blue="255" />
       <inconsistentText text="5" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="6" x="130" y="200" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="6" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="6" x="130" y="180" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="6" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1754,7 +1754,7 @@
       <unknownText text="6" red="0" green="0" blue="255" />
       <inconsistentText text="6" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="10" x="130" y="240" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="10" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="10" x="130" y="230" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="10" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1773,7 +1773,7 @@
       <unknownText text="10" red="0" green="0" blue="255" />
       <inconsistentText text="10" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="11" x="180" y="240" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="11" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="11" x="180" y="230" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="11" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1792,7 +1792,7 @@
       <unknownText text="11" red="0" green="0" blue="255" />
       <inconsistentText text="11" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="12" x="200" y="240" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="12" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="12" x="200" y="230" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="12" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1811,7 +1811,7 @@
       <unknownText text="12" red="0" green="0" blue="255" />
       <inconsistentText text="12" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="13" x="220" y="280" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="13" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="13" x="220" y="270" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="13" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1830,7 +1830,7 @@
       <unknownText text="13" red="0" green="0" blue="255" />
       <inconsistentText text="13" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="14" x="160" y="280" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="14" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="14" x="160" y="270" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="14" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1849,7 +1849,7 @@
       <unknownText text="14" red="0" green="0" blue="255" />
       <inconsistentText text="14" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="15" x="240" y="240" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="15" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="15" x="240" y="230" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="15" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1868,7 +1868,7 @@
       <unknownText text="15" red="0" green="0" blue="255" />
       <inconsistentText text="15" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="16" x="260" y="280" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="16" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="16" x="260" y="270" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="16" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -1887,7 +1887,7 @@
       <unknownText text="16" red="0" green="0" blue="255" />
       <inconsistentText text="16" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="17" x="120" y="280" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="17" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="17" x="120" y="270" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="17" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -2039,7 +2039,7 @@
       <unknownText text="61" red="0" green="0" blue="255" />
       <inconsistentText text="61" red="64" green="64" blue="128" />
     </sensoricon>
-    <sensoricon sensor="62" x="470" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="62" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="62" x="480" y="160" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" momentary="false" icon="no" text="62" size="12" style="0" red="0" green="0" blue="255" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </active>
@@ -2554,8 +2554,14 @@
       <inconsistentText text="79" red="0" green="0" blue="0" />
     </sensoricon>
     <positionablelabel x="530" y="330" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Double Slip" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <layoutturnout ident="TO1" type="5" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="180.0" ycen="190.0" xa="150.0" ya="180.0" xb="189.99999" yb="180.0" xc="210.0" yc="200.0" xd="170.00001" yd="200.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="IT1" blockname="2" blockbname="3" blockcname="4" blockdname="6" connectaname="T2" connectbname="T3" connectcname="T4" connectdname="T5" />
-    <layoutturnout ident="TO2" type="6" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="190.0" ycen="270.0" xa="179.99752807617188" ya="260.0074768066406" xb="219.99994360790527" yb="259.99999999913217" xc="200.00247192382812" yc="279.9925231933594" xd="160.00005639209473" yd="280.00000000086783" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="IT2" blockname="11" blockbname="12" blockcname="13" blockdname="14" connectaname="T10" connectbname="T11" connectcname="T13" connectdname="T15" />
+    <positionablelabel x="160" y="30" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Yard" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="60" y="130" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="RHXover" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="60" y="230" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="LHXover" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="30" y="310" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="DoubleXover" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="590" y="50" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Xing" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="520" y="160" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Turnout" size="13" style="0" red="0" green="0" blue="0" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <layoutturnout ident="TO1" type="5" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="180.0" ycen="170.0" xa="150.0" ya="160.0" xb="189.99999" yb="160.0" xc="210.0" yc="180.0" xd="170.00001" yd="180.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="IT1" blockname="2" blockbname="3" blockcname="4" blockdname="6" connectaname="T2" connectbname="T3" connectcname="T4" connectdname="T5" />
+    <layoutturnout ident="TO2" type="6" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="190.0" ycen="260.0" xa="179.99752807617188" ya="250.00747680664062" xb="219.99994360790527" yb="249.99999999913217" xc="200.00247192382812" yc="269.9925231933594" xd="160.00005639209473" yd="270.00000000086783" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="IT2" blockname="11" blockbname="12" blockcname="13" blockdname="14" connectaname="T10" connectbname="T11" connectcname="T13" connectdname="T15" />
     <layoutturnout ident="TO3" type="4" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="190.0" ycen="340.0" xa="160.0" ya="330.0" xb="220.28912832063557" yb="330.9132676073259" xc="220.0" yc="350.0" xd="159.71087167936443" yd="349.0867323926741" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="IT3" blockname="21" blockbname="22" blockcname="26" blockdname="25" connectaname="T19" connectbname="T17" connectcname="T18" connectdname="T20" />
     <layoutturnout ident="TO4" type="1" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="510.0" ycen="180.0" xa="490.0" ya="180.0" xb="530.0" yb="180.0" xc="530.0" yc="200.0" xd="490.0" yd="180.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="IT6" blockname="62" connectaname="T21" connectbname="T22" connectcname="T23" />
     <layoutturnout ident="TO5" type="1" hidden="no" disabled="no" disableWhenOccupied="no" continuing="2" xcen="160.0" ycen="60.0" xa="140.0" ya="60.0" xb="180.0" yb="60.0" xc="180.0" yc="80.0" xd="140.0" yd="60.0" ver="1" class="jmri.jmrit.display.layoutEditor.configurexml.LayoutTurnoutXml" turnoutname="IT7" blockname="32" connectaname="T28" connectbname="T29" connectcname="T31" />
@@ -2741,22 +2747,22 @@
         <bumper end="stop" color="#000000" linewidth="3" length="9" />
       </decorations>
     </tracksegment>
-    <positionablepoint ident="A1" type="1" x="110.0" y="180.0" connect1name="T1" connect2name="T2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A2" type="1" x="280.0" y="200.0" connect1name="T4" connect2name="T8" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB1" type="2" x="60.0" y="180.0" connect1name="T1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A3" type="1" x="280.0" y="180.0" connect1name="T3" connect2name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A4" type="1" x="110.0" y="200.0" connect1name="T5" connect2name="T6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB2" type="2" x="310.0" y="180.0" connect1name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB3" type="2" x="310.0" y="200.0" connect1name="T8" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB4" type="2" x="60.0" y="200.0" connect1name="T6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A5" type="1" x="130.0" y="260.0" connect1name="T9" connect2name="T10" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A6" type="1" x="120.0" y="280.0" connect1name="T15" connect2name="T16" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A7" type="1" x="272.0" y="259.0" connect1name="T11" connect2name="T12" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="A8" type="1" x="250.0" y="280.0" connect1name="T13" connect2name="T14" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB5" type="2" x="301.0" y="259.0" connect1name="T12" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB6" type="2" x="300.0" y="280.0" connect1name="T14" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB7" type="2" x="90.0" y="280.0" connect1name="T16" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
-    <positionablepoint ident="EB8" type="2" x="90.0" y="260.0" connect1name="T9" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A1" type="1" x="110.0" y="160.0" connect1name="T1" connect2name="T2" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A2" type="1" x="280.0" y="180.0" connect1name="T4" connect2name="T8" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB1" type="2" x="60.0" y="160.0" connect1name="T1" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A3" type="1" x="280.0" y="160.0" connect1name="T3" connect2name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A4" type="1" x="110.0" y="180.0" connect1name="T5" connect2name="T6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB2" type="2" x="310.0" y="160.0" connect1name="T7" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB3" type="2" x="310.0" y="180.0" connect1name="T8" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB4" type="2" x="60.0" y="180.0" connect1name="T6" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A5" type="1" x="130.0" y="250.0" connect1name="T9" connect2name="T10" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A6" type="1" x="120.0" y="270.0" connect1name="T15" connect2name="T16" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A7" type="1" x="272.0" y="249.0" connect1name="T11" connect2name="T12" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="A8" type="1" x="250.0" y="270.0" connect1name="T13" connect2name="T14" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB5" type="2" x="301.0" y="249.0" connect1name="T12" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB6" type="2" x="300.0" y="270.0" connect1name="T14" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB7" type="2" x="90.0" y="270.0" connect1name="T16" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
+    <positionablepoint ident="EB8" type="2" x="90.0" y="250.0" connect1name="T9" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="EB9" type="2" x="300.0" y="330.0" connect1name="T17" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="EB10" type="2" x="300.0" y="350.0" connect1name="T18" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
     <positionablepoint ident="EB11" type="2" x="90.0" y="330.0" connect1name="T19" class="jmri.jmrit.display.layoutEditor.configurexml.PositionablePointXml" />
@@ -2836,104 +2842,104 @@
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Sun Dec 15 20:34:43 PST 2019</date>
+      <date>Mon Dec 16 09:28:48 PST 2019</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Sun Dec 15 20:34:46 PST 2019</date>
+      <date>Mon Dec 16 09:28:51 PST 2019</date>
       <filename>/Volumes/Geo512GB/Users/Shared/Dropbox/Model%20Railroading/JMRI/GeoDebugging/GeoDebugging.xml</filename>
       <filehistory>
         <operation>
           <type>app</type>
-          <date>Sun Dec 15 20:20:59 PST 2019</date>
+          <date>Sun Dec 15 21:55:07 PST 2019</date>
           <filename>JMRI program</filename>
         </operation>
         <operation>
           <type>Load OK</type>
-          <date>Sun Dec 15 20:21:02 PST 2019</date>
+          <date>Sun Dec 15 21:55:09 PST 2019</date>
           <filename>/Volumes/Geo512GB/Users/Shared/Dropbox/Model%20Railroading/JMRI/GeoDebugging/GeoDebugging.xml</filename>
           <filehistory>
             <operation>
               <type>app</type>
-              <date>Sun Dec 15 20:00:42 PST 2019</date>
+              <date>Sun Dec 15 20:34:43 PST 2019</date>
               <filename>JMRI program</filename>
             </operation>
             <operation>
               <type>Load OK</type>
-              <date>Sun Dec 15 20:00:44 PST 2019</date>
+              <date>Sun Dec 15 20:34:46 PST 2019</date>
               <filename>/Volumes/Geo512GB/Users/Shared/Dropbox/Model%20Railroading/JMRI/GeoDebugging/GeoDebugging.xml</filename>
               <filehistory>
                 <operation>
                   <type>app</type>
-                  <date>Sun Dec 15 19:55:10 PST 2019</date>
+                  <date>Sun Dec 15 20:20:59 PST 2019</date>
                   <filename>JMRI program</filename>
                 </operation>
                 <operation>
                   <type>Load OK</type>
-                  <date>Sun Dec 15 19:55:12 PST 2019</date>
+                  <date>Sun Dec 15 20:21:02 PST 2019</date>
                   <filename>/Volumes/Geo512GB/Users/Shared/Dropbox/Model%20Railroading/JMRI/GeoDebugging/GeoDebugging.xml</filename>
                   <filehistory>
                     <operation>
                       <type>app</type>
-                      <date>Sun Dec 15 19:42:53 PST 2019</date>
+                      <date>Sun Dec 15 20:00:42 PST 2019</date>
                       <filename>JMRI program</filename>
                     </operation>
                     <operation>
                       <type>Load OK</type>
-                      <date>Sun Dec 15 19:42:56 PST 2019</date>
+                      <date>Sun Dec 15 20:00:44 PST 2019</date>
                       <filename>/Volumes/Geo512GB/Users/Shared/Dropbox/Model%20Railroading/JMRI/GeoDebugging/GeoDebugging.xml</filename>
                       <filehistory>
                         <operation>
                           <type>app</type>
-                          <date>Sun Dec 15 18:30:08 PST 2019</date>
+                          <date>Sun Dec 15 19:55:10 PST 2019</date>
                           <filename>JMRI program</filename>
                         </operation>
                         <operation>
                           <type>Load OK</type>
-                          <date>Sun Dec 15 18:30:10 PST 2019</date>
+                          <date>Sun Dec 15 19:55:12 PST 2019</date>
                           <filename>/Volumes/Geo512GB/Users/Shared/Dropbox/Model%20Railroading/JMRI/GeoDebugging/GeoDebugging.xml</filename>
                         </operation>
                         <operation>
                           <type>Store</type>
-                          <date>Sun Dec 15 19:32:49 PST 2019</date>
+                          <date>Sun Dec 15 19:57:43 PST 2019</date>
                           <filename />
                         </operation>
                       </filehistory>
                     </operation>
                     <operation>
                       <type>Store</type>
-                      <date>Sun Dec 15 19:53:24 PST 2019</date>
+                      <date>Sun Dec 15 20:02:25 PST 2019</date>
                       <filename />
                     </operation>
                   </filehistory>
                 </operation>
                 <operation>
                   <type>Store</type>
-                  <date>Sun Dec 15 19:57:43 PST 2019</date>
+                  <date>Sun Dec 15 20:21:44 PST 2019</date>
                   <filename />
                 </operation>
               </filehistory>
             </operation>
             <operation>
               <type>Store</type>
-              <date>Sun Dec 15 20:02:25 PST 2019</date>
+              <date>Sun Dec 15 20:35:03 PST 2019</date>
               <filename />
             </operation>
           </filehistory>
         </operation>
         <operation>
           <type>Store</type>
-          <date>Sun Dec 15 20:21:44 PST 2019</date>
+          <date>Sun Dec 15 22:36:21 PST 2019</date>
           <filename />
         </operation>
       </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Sun Dec 15 20:35:07 PST 2019</date>
+      <date>Mon Dec 16 09:28:59 PST 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.8ish+geowar+20191216T0434Z+Ra7c0fb6b13 on Sun Dec 15 20:35:07 PST 2019-->
+  <!--Written by JMRI version 4.19.1ish+geowar+20191216T1728Z+R93b18b0f6d on Mon Dec 16 09:28:59 PST 2019-->
 </layout-config>
