@@ -29,6 +29,7 @@ import org.netbeans.jemmy.operators.Operator;
  * Swing tests for the LayoutEditor
  *
  * @author	Dave Duchamp Copyright 2011
+ * @author      George Warner Copyright (C) 2019
  */
 public class LayoutEditorConnectivityTest {
 
