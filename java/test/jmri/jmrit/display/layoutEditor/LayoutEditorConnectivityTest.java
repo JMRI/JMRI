@@ -3,33 +3,21 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.Turnout;
-import jmri.configurexml.ConfigXmlManager;
-import jmri.configurexml.JmriConfigureXmlException;
+import jmri.*;
+import jmri.configurexml.*;
 import jmri.jmrit.display.EditorFrameOperator;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-import jmri.util.ThreadingUtil;
+import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Rule;
-import org.junit.Test;
+import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.Operator;
 
 /**
- * Swing tests for the LayoutEditor
+ * LayoutEditorConnectivityTest
  *
  * @author	Dave Duchamp Copyright 2011
- * @author      George Warner Copyright (C) 2019
+ * @author  George Warner Copyright (C) 2019
  */
 public class LayoutEditorConnectivityTest {
 
