@@ -42,7 +42,7 @@ public class TranspondingTagTest {
         TranspondingTag r = new TranspondingTag("ID1234");
         // set the entryexit property
         r.setProperty("entryexit","exits");
-        Assert.assertEquals("TranspondingTag toString ", "1234 exits", r.toString());
+        Assert.assertEquals("TranspondingTag toString ", "ID1234", r.toString());
     }
 
     @Test

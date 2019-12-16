@@ -33,7 +33,7 @@ public class JoalAudioBufferTest {
         Assert.assertNotNull("exists", l);
         Assert.assertEquals("testsysname", l.getSystemName());
         Assert.assertEquals("testusername", l.getUserName());
-        Assert.assertEquals("Empty buffer", l.toString());
+        Assert.assertEquals("testsysname", l.toString());
         Assert.assertEquals(0, l.getLength());
     }
 
