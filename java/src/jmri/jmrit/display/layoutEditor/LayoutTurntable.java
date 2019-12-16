@@ -12,25 +12,13 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.beans.*;
+import java.util.*;
 import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.NamedBeanHandle;
-import jmri.Turnout;
+import javax.swing.*;
+import jmri.*;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LayoutTurntable is a representation used by LayoutEditor to display a
@@ -573,9 +561,10 @@ public class LayoutTurntable extends LayoutTrack {
      * @param yFactor the amount to scale Y coordinates
      */
     @Override
-    public void scaleCoords(float xFactor, float yFactor) {
+    public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        radius *= Math.hypot(xFactor, yFactor);
     }
 
     /**
@@ -585,9 +574,20 @@ public class LayoutTurntable extends LayoutTrack {
      * @param yFactor the amount to translate Y coordinates
      */
     @Override
-    public void translateCoords(float xFactor, float yFactor) {
+    public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.add(center, factor);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void rotateCoords(double angleDEG) {
+        // rotate all rayTracks
+        for (RayTrack rayTrack : rayList) {
+            rayTrack.setAngle(rayTrack.getAngle() + angleDEG);
+        }
     }
 
     /**
