@@ -20,11 +20,11 @@ import org.netbeans.jemmy.operators.*;
  */
 public class LayoutEditorChecksTest {
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+    @Rule   // 10 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(10);
 
-    @Rule
-    public RetryRule retryRule = new RetryRule(5); // allow 5 retries
+    @Rule   // allow 5 retries
+    public RetryRule retryRule = new RetryRule(5);
 
     //LayoutEditorChecks Bundle Strings
     private String toolsMenuTitle = Bundle.getMessage("MenuTools");
@@ -102,8 +102,7 @@ public class LayoutEditorChecksTest {
         Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
         Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
-        toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle, "/");
-        //Assert.assertEquals("Menu Item Count", 17, checkJMO.getItemCount());
+        toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle, "/");
     }
 
     @Test
@@ -113,9 +112,6 @@ public class LayoutEditorChecksTest {
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
         Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
         Assert.assertNotNull("checkUnConnectedTracksMenuTitle not null", checkUnConnectedTracksMenuTitle);
-        toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
-                + checkUnConnectedTracksMenuTitle, "/");
-        new QueueTool().waitEmpty();
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -129,7 +125,8 @@ public class LayoutEditorChecksTest {
                 checkUnConnectedTracksMenuTitle, unConnectedTracksMenuItem.getText());
 
         JMenuOperator unConnectedTracksJMO = new JMenuOperator((JMenu) unConnectedTracksMenuItem);
-        unConnectedTracksJMO.push();
+        unConnectedTracksJMO.doClick();
+
         JPopupMenu unConnectedTracksPopupMenu = unConnectedTracksJMO.getPopupMenu();
 
         //verify results
@@ -149,9 +146,6 @@ public class LayoutEditorChecksTest {
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
         Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
         Assert.assertNotNull("checkUnBlockedTracksMenuTitle not null", checkUnBlockedTracksMenuTitle);
-        toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
-                + checkUnBlockedTracksMenuTitle, "/");
-        new QueueTool().waitEmpty();
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -165,7 +159,8 @@ public class LayoutEditorChecksTest {
                 checkUnBlockedTracksMenuTitle, checkUnBlockedTracksMenuItem.getText());
 
         JMenuOperator checkUnBlockedTracksJMO = new JMenuOperator((JMenu) checkUnBlockedTracksMenuItem);
-        checkUnBlockedTracksJMO.push();
+        checkUnBlockedTracksJMO.doClick();
+
         JPopupMenu checkUnBlockedTracksPopupMenu = checkUnBlockedTracksJMO.getPopupMenu();
 
         //verify results
@@ -186,9 +181,6 @@ public class LayoutEditorChecksTest {
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
         Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
         Assert.assertNotNull("checkNonContiguousBlocksMenuTitle not null", checkNonContiguousBlocksMenuTitle);
-        toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
-                + checkNonContiguousBlocksMenuTitle, "/");
-        new QueueTool().waitEmpty();
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -202,7 +194,7 @@ public class LayoutEditorChecksTest {
                 checkNonContiguousBlocksMenuTitle, checkNonContiguousBlocksMenuItem.getText());
 
         JMenuOperator checkNonContiguousBlocksJMO = new JMenuOperator((JMenu) checkNonContiguousBlocksMenuItem);
-        checkNonContiguousBlocksJMO.push();
+        checkNonContiguousBlocksJMO.doClick();
 
         JPopupMenu checkNonContiguousBlocksPopupMenu = checkNonContiguousBlocksJMO.getPopupMenu();
 
@@ -229,9 +221,6 @@ public class LayoutEditorChecksTest {
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
         Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
         Assert.assertNotNull("checkUnnecessaryAnchorsMenuTitle not null", checkUnnecessaryAnchorsMenuTitle);
-        toolsJMO.pushMenuNoBlock(toolsMenuTitle + "/" + checkMenuTitle + "/"
-                + checkUnnecessaryAnchorsMenuTitle, "/");
-        new QueueTool().waitEmpty();
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -245,7 +234,7 @@ public class LayoutEditorChecksTest {
                 checkUnnecessaryAnchorsMenuTitle, checkUnnecessaryAnchorsMenuItem.getText());
 
         JMenuOperator checkUnnecessaryAnchorsJMO = new JMenuOperator((JMenu) checkUnnecessaryAnchorsMenuItem);
-        checkUnnecessaryAnchorsJMO.push();
+        checkUnnecessaryAnchorsJMO.doClick();
 
         JPopupMenu checkUnnecessaryAnchorsPopupMenu = checkUnnecessaryAnchorsJMO.getPopupMenu();
 
