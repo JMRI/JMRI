@@ -12,7 +12,6 @@ import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.QueueTool;
 import org.netbeans.jemmy.operators.Operator;
-import org.slf4j.*;
 
 /**
  * Test simple functioning of LayoutEditorAuxTools
@@ -568,5 +567,5 @@ public class LayoutEditorAuxToolsTest {
     public void tearDown() {
         JUnitUtil.tearDown();
     }
-    private final static Logger log = LoggerFactory.getLogger(LayoutEditorAuxToolsTest.class.getName());
+    //private final static Logger log = LoggerFactory.getLogger(LayoutEditorAuxToolsTest.class.getName());
 }

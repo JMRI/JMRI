@@ -1,39 +1,18 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.POS_POINT;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TURNOUT_A;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TURNOUT_B;
-import static jmri.jmrit.display.layoutEditor.LayoutTrack.TURNOUT_C;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.ANCHOR;
-import static jmri.jmrit.display.layoutEditor.PositionablePoint.END_BUMPER;
-
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
 import javax.swing.JComboBox;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.NamedBeanHandle;
-import jmri.Sensor;
-import jmri.SensorManager;
-import jmri.SignalHead;
-import jmri.SignalHeadManager;
-import jmri.Turnout;
-import jmri.implementation.SingleTurnoutSignalHead;
-import jmri.implementation.VirtualSignalHead;
-import jmri.util.JUnitUtil;
-import jmri.util.ThreadingUtil;
+import jmri.*;
+import jmri.implementation.*;
+import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.rules.Timeout;
 import org.netbeans.jemmy.QueueTool;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JComboBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
+import org.netbeans.jemmy.operators.*;
 
 /**
  * Test simple functioning of LayoutEditorTools
@@ -43,15 +22,14 @@ import org.netbeans.jemmy.operators.JLabelOperator;
  */
 public class LayoutEditorToolsTest {
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); //10 second timeout for methods in this test class.
+    @Rule   //10 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(10);
 
-    //allow 2 retries of intermittent tests
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); //allow 2 retries
+    @Rule   //allow 4 retries of intermittent tests
+    public RetryRule retryRule = new RetryRule(4);
 
-    private LayoutEditor le = null;
-    private LayoutEditorTools let = null;
+    private LayoutEditor layoutEditor = null;
+    private LayoutEditorTools layoutEditorTools = null;
 
     //these all have to contain the same number of elements
     private LayoutBlock layoutBlocks[] = new LayoutBlock[5];
@@ -67,14 +45,14 @@ public class LayoutEditorToolsTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists", let);
+        Assert.assertNotNull("exists", layoutEditorTools);
     }
 
     @Test
     public void testHitEndBumper() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //we haven't done anything, so reachedEndBumper should return false.
-        Assert.assertFalse("reached end bumper", let.reachedEndBumper());
+        Assert.assertFalse("reached end bumper", layoutEditorTools.reachedEndBumper());
     }
 
     @Test
@@ -82,7 +60,7 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtTurnout(layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to appear,
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
@@ -98,25 +76,28 @@ public class LayoutEditorToolsTest {
         //create a new Layout Turnout
         layoutTurnout = new LayoutTurnout("Right Hand",
                 LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
-                33.0, 1.1, 1.2, le);
-        Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
-        le.getLayoutTracks().add(layoutTurnout);
+                33.0, 1.1, 1.2, layoutEditor);
+        Assert.assertNotNull("layoutTurnout not null", layoutTurnout);
+        layoutEditor.getLayoutTracks().add(layoutTurnout);
 
-        positionablePoint1 = new PositionablePoint("A1", ANCHOR, new Point2D.Double(250.0, 100.0), le);
-        Assert.assertNotNull("positionablePoint1 for testSetSignalsAtTurnoutWithDone", positionablePoint1);
-        le.getLayoutTracks().add(positionablePoint1);
+        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.ANCHOR,
+                new Point2D.Double(250.0, 100.0), layoutEditor);
+        Assert.assertNotNull("positionablePoint1 not null", positionablePoint1);
+        layoutEditor.getLayoutTracks().add(positionablePoint1);
 
-        positionablePoint2 = new PositionablePoint("A2", ANCHOR, new Point2D.Double(50.0, 100.0), le);
-        le.getLayoutTracks().add(positionablePoint2);
-        Assert.assertNotNull("positionablePoint2 for testSetSignalsAtTurnoutWithDone", positionablePoint2);
+        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.ANCHOR,
+                new Point2D.Double(50.0, 100.0), layoutEditor);
+        layoutEditor.getLayoutTracks().add(positionablePoint2);
+        Assert.assertNotNull("positionablePoint2 not null", positionablePoint2);
 
-        positionablePoint3 = new PositionablePoint("A3", ANCHOR, new Point2D.Double(250.0, 150.0), le);
-        le.getLayoutTracks().add(positionablePoint3);
-        Assert.assertNotNull("positionablePoint3 for testSetSignalsAtTurnoutWithDone", positionablePoint3);
+        positionablePoint3 = new PositionablePoint("A3", PositionablePoint.ANCHOR,
+                new Point2D.Double(250.0, 150.0), layoutEditor);
+        layoutEditor.getLayoutTracks().add(positionablePoint3);
+        Assert.assertNotNull("positionablePoint3 not null", positionablePoint3);
 
         //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtTurnout(layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
 
         //the JFrameOperator waits for the set signal frame to appear
@@ -211,9 +192,8 @@ public class LayoutEditorToolsTest {
         }, "modalDialogOperatorThread3 finished");
 
         //select signal head for this combobox
-        //NOTE: index used here because "Continuing" matches against "ThroadContinuing" above
         JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("Continuing")), 1);
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("Continuing")));
         jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
@@ -229,9 +209,8 @@ public class LayoutEditorToolsTest {
         }, "modalDialogOperatorThread4 finished");
 
         //select signal head for this combobox
-        //NOTE: index used here because "Diverging" matches against "ThroadDiverging" above
         JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("Diverging")), 1);
+                Bundle.getMessage("MakeLabel", Bundle.getMessage("Diverging")));
         jComboBoxOperator = new JComboBoxOperator(
                 (JComboBox) JLabelOperator.getLabelFor());
         jComboBoxOperator.selectItem(4); //TODO:fix hardcoded index
@@ -253,11 +232,14 @@ public class LayoutEditorToolsTest {
      * test SSL logic setup
      */
     private void testSetupSSL(int idx) {
-        JFrameOperator jfoSignalsAtTurnout = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
-        JButtonOperator doneButtonOperator = new JButtonOperator(jfoSignalsAtTurnout, Bundle.getMessage("ButtonDone"));
+        JFrameOperator jfoSignalsAtTurnout = new JFrameOperator(
+                Bundle.getMessage("SignalsAtTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(
+                jfoSignalsAtTurnout, Bundle.getMessage("ButtonDone"));
 
         //NOTE: index used here because there are four identical buttons
-        JCheckBoxOperator cboSetLogic = new JCheckBoxOperator(jfoSignalsAtTurnout, Bundle.getMessage("SetLogic"), idx);
+        JCheckBoxOperator cboSetLogic = new JCheckBoxOperator(
+                jfoSignalsAtTurnout, Bundle.getMessage("SetLogic"), idx);
         cboSetLogic.doClick(); //click on
 
         //pressing "Done" should throw up a "all connections have not been defined"  (InfoMessage7)
@@ -275,19 +257,24 @@ public class LayoutEditorToolsTest {
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtTurnout(
+                    layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
+        //the JFrameOperator waits for the set signal frame to appear
+        new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
 
         //define connection
         String uName = "T" + (idx + 1);
-        int types[] = {TURNOUT_B, TURNOUT_C, TURNOUT_A, TURNOUT_A};
-        PositionablePoint[] positionablePoints = {positionablePoint2, positionablePoint3, positionablePoint1, positionablePoint1};
+        int types[] = {LayoutTrack.TURNOUT_B, LayoutTrack.TURNOUT_C,
+            LayoutTrack.TURNOUT_A, LayoutTrack.TURNOUT_A};
+        PositionablePoint[] positionablePoints = {positionablePoint2,
+            positionablePoint3, positionablePoint1, positionablePoint1};
         TrackSegment trackSegment = new TrackSegment(uName,
                 layoutTurnout, types[idx],
-                positionablePoints[idx], POS_POINT,
-                false, false, le);
+                positionablePoints[idx], LayoutTrack.POS_POINT,
+                false, false, layoutEditor);
         Assert.assertNotNull("trackSegment not null", trackSegment);
-        le.getLayoutTracks().add(trackSegment);
+        layoutEditor.getLayoutTracks().add(trackSegment);
         try {
             layoutTurnout.setConnection(types[idx], trackSegment, LayoutTrack.TRACK);
         } catch (JmriException ex) {
@@ -309,11 +296,15 @@ public class LayoutEditorToolsTest {
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtTurnout(
+                    layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
 
+        //the JFrameOperator waits for the set signal frame to appear
+        new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+
         //change anchor to end bumper
-        positionablePoints[idx].setType(END_BUMPER);
+        positionablePoints[idx].setType(PositionablePoint.END_BUMPER);
 
         //pressing "Done" should throw up a "blocks have not been defined around this item."  (InfoMessage6)
         //error dialog... dismiss it
@@ -334,8 +325,11 @@ public class LayoutEditorToolsTest {
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtTurnout(
+                    layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
+        //the JFrameOperator waits for the set signal frame to appear
+        new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
 
         //pressing "Done" should throw up a "block XXX doesn''t have an occupancy sensor"  (InfoMessage4)
         //error dialog... dismiss it
@@ -355,8 +349,11 @@ public class LayoutEditorToolsTest {
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtTurnout(
+                    layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
+        //the JFrameOperator waits for the set signal frame to appear
+        new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
 
         doneButtonOperator.doClick();
         // make sure the dialog closed
@@ -364,23 +361,26 @@ public class LayoutEditorToolsTest {
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtTurnout(
+                    layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
 
         //the JFrameOperator waits for the set signal frame to (re)appear
-        jfoSignalsAtTurnout = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        jfoSignalsAtTurnout = new JFrameOperator(
+                Bundle.getMessage("SignalsAtTurnout"));
         //doneButtonOperator = new JButtonOperator(jfoSignalsAtTurnout, Bundle.getMessage("ButtonDone"));
 
-        cboSetLogic = new JCheckBoxOperator(jfoSignalsAtTurnout, Bundle.getMessage("SetLogic"), idx);
+        cboSetLogic = new JCheckBoxOperator(
+                jfoSignalsAtTurnout, Bundle.getMessage("SetLogic"), idx);
         cboSetLogic.doClick(); //click off
 
         //reset these
         trackSegment.setLayoutBlock(null);
         layoutBlocks[lbIndex[idx]].setOccupancySensorName(null);
         //le.removeTrackSegment(trackSegment);
-        positionablePoint1.setType(ANCHOR);
-        positionablePoint2.setType(ANCHOR);
-        positionablePoint3.setType(ANCHOR);
+        positionablePoint1.setType(PositionablePoint.ANCHOR);
+        positionablePoint2.setType(PositionablePoint.ANCHOR);
+        positionablePoint3.setType(PositionablePoint.ANCHOR);
     }
 
     @Test
@@ -389,17 +389,20 @@ public class LayoutEditorToolsTest {
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
+                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
             to.setTurnout(turnouts[0].getSystemName());
-            le.getLayoutTracks().add(to);
+            layoutEditor.getLayoutTracks().add(to);
 
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
-            let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtTurnoutFromMenu(
+                    to, layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to appear
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JFrameOperator jFrameOperator = new JFrameOperator(
+                Bundle.getMessage("SignalsAtTurnout"));
         //then we find and press the "Done" button.
-        JButtonOperator jbo = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel"));
+        JButtonOperator jbo = new JButtonOperator(
+                jFrameOperator, Bundle.getMessage("ButtonCancel"));
         jbo.press();
         jFrameOperator.requestClose();
         jFrameOperator.waitClosed();    // make sure the dialog closed
@@ -412,14 +415,16 @@ public class LayoutEditorToolsTest {
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
-                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, le);
+                    LayoutTurnout.RH_TURNOUT, point, 33.0, 1.1, 1.2, layoutEditor);
             to.setTurnout(turnouts[0].getSystemName());
-            le.getLayoutTracks().add(to);
+            layoutEditor.getLayoutTracks().add(to);
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
-            let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtTurnoutFromMenu(to,
+                    layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JFrameOperator jFrameOperator = new JFrameOperator(
+                Bundle.getMessage("SignalsAtTurnout"));
         //then closes it.
         jFrameOperator.requestClose();
         jFrameOperator.waitClosed();    // make sure the dialog closed
@@ -431,10 +436,12 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
             //this causes a "set Signal Heads Level Crossing" dialog to be displayed.
-            let.setSignalsAtLevelXing(le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtLevelXing(
+                    layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
+        JFrameOperator jFrameOperator = new JFrameOperator(
+                Bundle.getMessage("SignalsAtLevelXing"));
         //then closes it.
         jFrameOperator.requestClose();
         jFrameOperator.waitClosed();    // make sure the dialog closed
@@ -445,15 +452,17 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
-            LevelXing lx = new LevelXing("LevelCrossing", point, le);
+            LevelXing lx = new LevelXing("LevelCrossing", point, layoutEditor);
             lx.setLayoutBlockAC(layoutBlocks[0]);
             lx.setLayoutBlockBD(layoutBlocks[1]);
 
             //this causes a "set Signal Heads Level Crossing" dialog to be displayed.
-            let.setSignalsAtLevelXingFromMenu(lx, le.signalIconEditor, le.getTargetFrame());
+            layoutEditorTools.setSignalsAtLevelXingFromMenu(
+                    lx, layoutEditor.signalIconEditor, layoutEditor.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
+        JFrameOperator jFrameOperator = new JFrameOperator(
+                Bundle.getMessage("SignalsAtLevelXing"));
         //then closes it.
         jFrameOperator.requestClose();
         jFrameOperator.waitClosed();    // make sure the dialog closed
@@ -462,13 +471,15 @@ public class LayoutEditorToolsTest {
     @Test
     public void testGetHeadFromNameNullName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNull("null signal head for null name", let.getHeadFromName(null));
+        Assert.assertNull("getHeadFromName(null)",
+                layoutEditorTools.getHeadFromName(null));
     }
 
     @Test
     public void testGetHeadFromNameEmptyName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNull("null signal head for empty name", let.getHeadFromName(""));
+        Assert.assertNull("getHeadFromName(\"\")",
+                layoutEditorTools.getHeadFromName(""));
     }
 
     @Test
@@ -477,28 +488,29 @@ public class LayoutEditorToolsTest {
         VirtualSignalHead h = new VirtualSignalHead("IH1");
         InstanceManager.getDefault(SignalHeadManager.class).register(h);
 
-        Assert.assertEquals("signal head for valid name", h, let.getHeadFromName("IH1"));
+        Assert.assertEquals("getHeadFromName(validname)", h,
+                layoutEditorTools.getHeadFromName("IH1"));
     }
 
     @Test
     public void testRemoveSignalHeadFromPanelNameNullName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this test verifies there is no exception
-        let.removeSignalHeadFromPanel(null);
+        layoutEditorTools.removeSignalHeadFromPanel(null);
     }
 
     @Test
     public void testRemoveSignalHeadFromPanelEmptyName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this test verifies there is no exception
-        let.removeSignalHeadFromPanel("");
+        layoutEditorTools.removeSignalHeadFromPanel("");
     }
 
     @Test
     public void testFinalizeBlockBossLogicNullInput() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this test verifies there is no exception
-        let.finalizeBlockBossLogic();
+        layoutEditorTools.finalizeBlockBossLogic();
     }
 
     @Test
@@ -506,17 +518,20 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
         InstanceManager.getDefault(SignalHeadManager.class).register(h);
-        Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
-        let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
+        Assert.assertFalse("Signal head not on panel before set",
+                layoutEditorTools.isHeadOnPanel(h));
+        layoutEditorTools.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
-        let.removeSignalHeadFromPanel("IH1");
+        Assert.assertTrue("Signal head on panel after set",
+                layoutEditorTools.isHeadOnPanel(h));
+        layoutEditorTools.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel after remove",
+                layoutEditorTools.isHeadOnPanel(h));
     }
 
     @Test
@@ -524,18 +539,21 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
         InstanceManager.getDefault(SignalHeadManager.class).register(h);
-        Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel before set",
+                layoutEditorTools.isHeadOnPanel(h));
         Point2D point = new Point2D.Double(150.0, 100.0);
-        let.setSignalHeadOnPanel(0.D, "IH1", point);
+        layoutEditorTools.setSignalHeadOnPanel(0.D, "IH1", point);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
-        let.removeSignalHeadFromPanel("IH1");
+        Assert.assertTrue("Signal head on panel after set",
+                layoutEditorTools.isHeadOnPanel(h));
+        layoutEditorTools.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel after remove",
+                layoutEditorTools.isHeadOnPanel(h));
     }
 
     @Test
@@ -543,17 +561,20 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
         InstanceManager.getDefault(SignalHeadManager.class).register(h);
-        Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
-        let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
+        Assert.assertFalse("Signal head not on panel before set",
+                layoutEditorTools.isHeadOnPanel(h));
+        layoutEditorTools.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
-        let.removeSignalHeadFromPanel("IH1");
+        Assert.assertTrue("Signal head on panel after set",
+                layoutEditorTools.isHeadOnPanel(h));
+        layoutEditorTools.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel after remove",
+                layoutEditorTools.isHeadOnPanel(h));
     }
 
     @Test
@@ -561,7 +582,8 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
         InstanceManager.getDefault(SignalHeadManager.class).register(h);
-        Assert.assertNotNull("Signal head icon for panel", let.getSignalHeadIcon("IH1"));
+        Assert.assertNotNull("Signal head icon for panel",
+                layoutEditorTools.getSignalHeadIcon("IH1"));
     }
 
     @Test
@@ -569,7 +591,8 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
         InstanceManager.getDefault(SignalHeadManager.class).register(h);
-        Assert.assertFalse("Signal head not on panel", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel",
+                layoutEditorTools.isHeadOnPanel(h));
     }
 
     @Test
@@ -577,7 +600,8 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
         InstanceManager.getDefault(SignalHeadManager.class).register(h);
-        Assert.assertFalse("Signal head not on panel", let.isHeadAssignedAnywhere(h));
+        Assert.assertFalse("Signal head not on panel",
+                layoutEditorTools.isHeadAssignedAnywhere(h));
     }
 
     @Test
@@ -586,7 +610,7 @@ public class LayoutEditorToolsTest {
         VirtualSignalHead h = new VirtualSignalHead("IH1");
         InstanceManager.getDefault(SignalHeadManager.class).register(h);
         //just verify this doesn't thrown an error.
-        let.removeAssignment(h);
+        layoutEditorTools.removeAssignment(h);
     }
 
     @Test
@@ -594,20 +618,33 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
         InstanceManager.getDefault(SignalHeadManager.class).register(h);
-        Assert.assertTrue("Signal head block boss logic started", let.initializeBlockBossLogic("IH1"));
+        Assert.assertTrue("Signal head block boss logic started",
+                layoutEditorTools.initializeBlockBossLogic("IH1"));
     }
 
-    //from here down is testing infrastructure
+    //
+    // from here down is testing infrastructure
+    //
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+            // set default string matching comparator to one that exactly matches and is case sensitive
+            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
 
-            le = new LayoutEditor();
-            le.setVisible(true);
+            layoutEditor = new LayoutEditor("LayoutEditorToolsTest");
+            layoutEditor.setVisible(true);
 
-            let = le.getLETools();
+            layoutEditorTools = layoutEditor.getLETools();
 
             for (int i = 0; i < layoutBlocks.length; i++) {
                 String sBlockName = "IB" + i;
@@ -621,7 +658,8 @@ public class LayoutEditorToolsTest {
                 String uName = "signal head " + i;
                 NamedBeanHandle<Turnout> nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(toName, turnouts[i]);
                 if (nbh != null) {
-                    signalHeads[i] = new SingleTurnoutSignalHead(sName, uName, nbh, SignalHead.GREEN, SignalHead.RED);
+                    signalHeads[i] = new SingleTurnoutSignalHead(
+                            sName, uName, nbh, SignalHead.GREEN, SignalHead.RED);
                     InstanceManager.getDefault(jmri.SignalHeadManager.class).register(signalHeads[i]);
                 }
 
@@ -632,15 +670,17 @@ public class LayoutEditorToolsTest {
                 //(no sensor assigned to block) first
                 //layoutBlocks[i].setOccupancySensorName(uName);
             }
+            //wait for layout editor window to appear
+            new JFrameOperator("LayoutEditorToolsTest");
         }
     }
 
     @After
     public void tearDown() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.dispose(le);
-            le = null;
-            let = null;
+            JUnitUtil.dispose(layoutEditor);
+            layoutEditor = null;
+            layoutEditorTools = null;
             for (int i = 0; i < layoutBlocks.length; i++) {
                 layoutBlocks[i] = null;
                 turnouts[i] = null;
