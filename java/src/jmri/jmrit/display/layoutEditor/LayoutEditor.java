@@ -2802,13 +2802,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
             addEntryExitPairAction.actionPerformed(event);
         });
-        if (true) {   //TODO: disable for production
-            jmi = new JMenuItem("GEORGE");
-            toolsMenu.add(jmi);
-            jmi.addActionListener((ActionEvent event) -> {
-                //do GEORGE stuff here!
-            });
-        }
+//        if (true) {   //TODO: disable for production
+//            jmi = new JMenuItem("GEORGE");
+//            toolsMenu.add(jmi);
+//            jmi.addActionListener((ActionEvent event) -> {
+//                //do GEORGE stuff here!
+//            });
+//        }
     }   // setupToolsMenu
 
     private void setToolBarSide(ToolBarSide newToolBarSide) {
