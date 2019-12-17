@@ -13,7 +13,9 @@ import jmri.jmrit.logixng.MaleSocket;
  * The abstract class that is the base class for all LogixNG classes that
  * implements the Base interface.
  */
-public abstract class AbstractBase extends AbstractNamedBean implements Base {
+public abstract class AbstractBase
+        extends AbstractNamedBean
+        implements Base, InternalBase {
 
     public AbstractBase(String sys) throws BadSystemNameException {
         super(sys);
@@ -89,23 +91,34 @@ public abstract class AbstractBase extends AbstractNamedBean implements Base {
     public final void registerListeners() {
         registerListenersForThisClass();
         for (int i=0; i < getChildCount(); i++) {
-            getChild(i).registerListeners();
+            ((InternalBase)getChild(i)).registerListeners();
         }
     }
     
+    /*.* {@inheritDoc} *./
+    @Override
+    public final void registerListeners() {
+        registerListenersInternal();
+//        registerListenersForThisClass();
+//        for (int i=0; i < getChildCount(); i++) {
+//            getChild(i).registerListeners();
+//        }
+    }
+*/    
     /** {@inheritDoc} */
     @Override
     public final void unregisterListeners() {
         unregisterListenersForThisClass();
         for (int i=0; i < getChildCount(); i++) {
-            getChild(i).unregisterListeners();
+            ((InternalBase)getChild(i)).unregisterListeners();
         }
     }
     
     /** {@inheritDoc} */
     @Override
     public final boolean isActive() {
-        return isEnabled() && ((getParent() == null) || getParent().isEnabled());
+        return isEnabled() && ((getParent() == null) || getParent().isActive());
+//        return isEnabled() && ((getParent() == null) || getParent().isEnabled());
     }
     
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {

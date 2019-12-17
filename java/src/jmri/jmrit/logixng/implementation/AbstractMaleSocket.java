@@ -3,14 +3,17 @@ package jmri.jmrit.logixng.implementation;
 import java.io.PrintWriter;
 import java.util.Locale;
 import jmri.jmrit.logixng.Base;
+import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.implementation.InternalBase;
 
 /**
  * The abstract class that is the base class for all LogixNG classes that
  * implements the Base interface.
  */
-public abstract class AbstractMaleSocket implements Base {
+public abstract class AbstractMaleSocket implements Base, InternalBase {
 
     /** {@inheritDoc} */
     @Override
@@ -47,23 +50,38 @@ public abstract class AbstractMaleSocket implements Base {
     public final void registerListeners() {
         registerListenersForThisClass();
         for (int i=0; i < getChildCount(); i++) {
-            getChild(i).registerListeners();
+            ((InternalBase)getChild(i)).registerListeners();
         }
     }
     
+    /*.* {@inheritDoc} *./
+    @Override
+    public final void registerListeners() {
+//        throw new UnsupportedOperationException("call registerListeners() on LogixNG or ConditionalNG only");
+        if ((this instanceof LogixNG) || (this instanceof ConditionalNG)) {
+            registerListenersInternal();
+        } else {
+            ((InternalBase)getConditionalNG()).registerListenersInternal();
+        }
+//        registerListenersForThisClass();
+//        for (int i=0; i < getChildCount(); i++) {
+//            getChild(i).registerListeners();
+//        }
+    }
+*/    
     /** {@inheritDoc} */
     @Override
     public final void unregisterListeners() {
         unregisterListenersForThisClass();
         for (int i=0; i < getChildCount(); i++) {
-            getChild(i).unregisterListeners();
+            ((InternalBase)getChild(i)).unregisterListeners();
         }
     }
     
     /** {@inheritDoc} */
     @Override
     public final boolean isActive() {
-        return isEnabled() && ((getParent() == null) || getParent().isEnabled());
+        return isEnabled() && ((getParent() == null) || getParent().isActive());
     }
     
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {

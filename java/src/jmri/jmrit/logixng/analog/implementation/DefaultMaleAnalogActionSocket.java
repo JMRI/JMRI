@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleAnalogActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
+import jmri.jmrit.logixng.implementation.InternalBase;
 import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -267,7 +268,7 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void registerListenersForThisClass() {
-        _action.registerListeners();
+        ((InternalBase)_action).registerListeners();
     }
     
     /**
@@ -275,7 +276,7 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void unregisterListenersForThisClass() {
-        _action.unregisterListeners();
+        ((InternalBase)_action).unregisterListeners();
     }
     
     @Override

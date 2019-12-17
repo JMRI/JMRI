@@ -26,6 +26,7 @@ public class Timer extends AbstractDigitalExpression {
     private TimerTask _timerTask;
     private TimerType _timerType = TimerType.WAIT_ONCE_TRIG_ONCE;
     private boolean _listenersAreRegistered = false;
+    private boolean _isTimerActive = false;
     private boolean _hasTimePassed = false;
     private boolean _onOrOff = false;
     private long _delayOff = 0;
@@ -83,6 +84,47 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
+        boolean result = false;
+        switch (_timerType) {
+            case WAIT_ONCE_TRIG_ONCE:
+                if (!_isTimerActive) {
+                    startTimer();
+                } else if (_hasTimePassed) {
+                    _hasTimePassed = false;
+                    result = true;
+                }
+                break;
+                
+            case WAIT_ONCE_TRIG_UNTIL_RESET:
+                if (!_isTimerActive) {
+                    startTimer();
+                } else if (_hasTimePassed) {
+                    // Don't clear _hasTimePassed since we want to keep
+                    // returning true until reset()
+                    result = true;
+                }
+                break;
+                
+            case REPEAT_SINGLE_DELAY:
+                _hasTimePassed = false;
+                startTimer();
+//                return true;
+                break;
+
+            case REPEAT_DOUBLE_DELAY:
+                _hasTimePassed = false;
+                _onOrOff = ! _onOrOff;
+                startTimer();
+//                return true;
+                break;
+
+            default:
+                throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
+        }
+        
+        return result;
+        
+/*        
         if (_hasTimePassed) {
             switch (_timerType) {
                 case WAIT_ONCE_TRIG_ONCE:
@@ -111,6 +153,7 @@ public class Timer extends AbstractDigitalExpression {
         }
         
         return false;
+*/        
     }
 
     /** {@inheritDoc} */
@@ -120,6 +163,46 @@ public class Timer extends AbstractDigitalExpression {
         startTimer();
     }
     
+    private void startTimer() {
+        if (1==1) return;
+        final Timer t = this;
+        final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
+        
+        if (getConditionalNG() == null) throw new NullPointerException("getConditionalNG() returns null");
+        
+        // Ensure timer is not running
+        if (_timerTask != null) _timerTask.cancel();
+        
+        // Clear flag
+        _hasTimePassed = false;
+        
+        _timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("timer: Timer has trigged. Run ConditionalNG.execute()");
+                c.execute();
+//                t.getConditionalNG().execute();
+            }
+        };
+        
+        switch (_timerType) {
+            case WAIT_ONCE_TRIG_ONCE:
+                // fall through
+            case WAIT_ONCE_TRIG_UNTIL_RESET:
+                // fall through
+            case REPEAT_SINGLE_DELAY:
+                _timer.schedule(_timerTask, _delayOff);
+                break;
+                
+            case REPEAT_DOUBLE_DELAY:
+                _timer.schedule(_timerTask, _onOrOff ? _delayOn : _delayOff);
+                break;
+                
+            default:
+                throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
+        }
+    }
+/*    
     private void startTimer() {
         final Timer t = this;
         
@@ -155,7 +238,7 @@ public class Timer extends AbstractDigitalExpression {
                 throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
         }
     }
-    
+*/    
     private void stopTimer() {
         if (_timerTask != null) _timerTask.cancel();
 //        _timer.cancel();
@@ -206,9 +289,16 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
+//        if (getConditionalNG() == null) throw new NullPointerException("getConditionalNG() returns null");
         if (!_listenersAreRegistered) {
             _listenersAreRegistered = true;
-//            startTimer();
+            
+            // Trigger execution of the ConditionalNG
+            getConditionalNG().execute();
+            
+//            if (_timerType == TimerType.REPEAT_SINGLE_DELAY || _timerType == TimerType.REPEAT_DOUBLE_DELAY) {
+//                startTimer();
+//            }
         }
     }
     

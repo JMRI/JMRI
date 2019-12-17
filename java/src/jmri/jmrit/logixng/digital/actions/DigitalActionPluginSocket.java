@@ -6,6 +6,7 @@ import javax.annotation.Nonnull;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.DigitalActionPlugin;
+import jmri.jmrit.logixng.implementation.InternalBase;
 
 /**
  * This class has a plugin class.
@@ -65,13 +66,13 @@ public class DigitalActionPluginSocket extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        _actionPlugin.registerListeners();
+        ((InternalBase)_actionPlugin).registerListeners();
     }
     
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
-        _actionPlugin.unregisterListeners();
+        ((InternalBase)_actionPlugin).unregisterListeners();
     }
     
     /** {@inheritDoc} */

@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.MaleStringActionSocket;
 import jmri.jmrit.logixng.StringActionBean;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
+import jmri.jmrit.logixng.implementation.InternalBase;
 
 /**
  * Every StringActionBean has an DefaultMaleStringActionSocket as its parent.
@@ -225,7 +226,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void registerListenersForThisClass() {
-        _action.registerListeners();
+        ((InternalBase)_action).registerListeners();
     }
     
     /**
@@ -233,7 +234,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
      */
     @Override
     public void unregisterListenersForThisClass() {
-        _action.unregisterListeners();
+        ((InternalBase)_action).unregisterListeners();
     }
     
     @Override

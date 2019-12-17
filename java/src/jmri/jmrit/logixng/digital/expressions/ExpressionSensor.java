@@ -124,6 +124,8 @@ public class ExpressionSensor extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
+        if (_sensorHandle == null) return false;
+        
         SensorState currentSensorState = SensorState.get(_sensorHandle.getBean().getCommandedState());
         if (_is_IsNot == Is_IsNot_Enum.IS) {
             return currentSensorState == _sensorState;

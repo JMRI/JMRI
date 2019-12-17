@@ -11,6 +11,7 @@ public interface ConditionalNG extends Base, NamedBean {
 
     /**
      * Get the female socket of this ConditionalNG.
+     * @return the female socket
      */
     public FemaleSocket getFemaleSocket();
     
@@ -89,5 +90,21 @@ public interface ConditionalNG extends Base, NamedBean {
      * to ensure that the call comes from the correct thread.
      */
     public void execute();
-
+    
+    /**
+     * Register listeners for the ConditionalNG tree.
+     * <P>
+     * Important: This method may be called more than once. Methods overriding
+     * this method must ensure that listeners are not registered more than once.
+     */
+    public void registerListeners();
+    
+    /**
+     * Unregister listeners for the ConditionalNG tree.
+     * <P>
+     * Important: This method may be called more than once. Methods overriding
+     * this method must ensure that listeners are not unregistered more than once.
+     */
+    public void unregisterListeners();
+    
 }

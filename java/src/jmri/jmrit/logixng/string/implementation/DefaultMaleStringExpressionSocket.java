@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.MaleStringExpressionSocket;
 import jmri.jmrit.logixng.StringExpressionBean;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
+import jmri.jmrit.logixng.implementation.InternalBase;
 
 /**
  * Every StringExpressionBean has an DefaultMaleStringExpressionSocket as its parent.
@@ -232,7 +233,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
      */
     @Override
     public void registerListenersForThisClass() {
-        _expression.registerListeners();
+        ((InternalBase)_expression).registerListeners();
     }
     
     /**
@@ -240,7 +241,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
      */
     @Override
     public void unregisterListenersForThisClass() {
-        _expression.unregisterListeners();
+        ((InternalBase)_expression).unregisterListeners();
     }
     
     @Override

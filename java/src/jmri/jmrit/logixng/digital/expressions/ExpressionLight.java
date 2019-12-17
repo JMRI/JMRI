@@ -123,6 +123,8 @@ public class ExpressionLight extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
+        if (_lightHandle == null) return false;
+        
         LightState currentLightState = LightState.get(_lightHandle.getBean().getCommandedState());
         if (_is_IsNot == Is_IsNot_Enum.IS) {
             return currentLightState == _lightState;

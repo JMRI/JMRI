@@ -132,5 +132,21 @@ public interface LogixNG extends Base, NamedBean {
      * A LogixNG must be deactivated before it's ConditionalNGs are changed.
      */
     public void deActivateLogixNG();
-
+    
+    /**
+     * Register listeners for the ConditionalNG tree.
+     * <P>
+     * Important: This method may be called more than once. Methods overriding
+     * this method must ensure that listeners are not registered more than once.
+     */
+    public void registerListeners();
+    
+    /**
+     * Unregister listeners for the ConditionalNG tree.
+     * <P>
+     * Important: This method may be called more than once. Methods overriding
+     * this method must ensure that listeners are not unregistered more than once.
+     */
+    public void unregisterListeners();
+    
 }

@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.AnalogExpressionBean;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
+import jmri.jmrit.logixng.implementation.InternalBase;
 import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -284,7 +285,7 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
      */
     @Override
     public void registerListenersForThisClass() {
-        _expression.registerListeners();
+        ((InternalBase)_expression).registerListeners();
     }
     
     /**
@@ -292,7 +293,7 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
      */
     @Override
     public void unregisterListenersForThisClass() {
-        _expression.unregisterListeners();
+        ((InternalBase)_expression).unregisterListeners();
     }
     
     @Override

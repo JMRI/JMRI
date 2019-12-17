@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.MaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
+import jmri.jmrit.logixng.implementation.InternalBase;
 
 /**
  * Every DigitalExpressionBean has an DefaultMaleDigitalExpressionSocket as its parent.
@@ -235,7 +236,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
      */
     @Override
     public void registerListenersForThisClass() {
-        _expression.registerListeners();
+        ((InternalBase)_expression).registerListeners();
     }
     
     /**
@@ -243,7 +244,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
      */
     @Override
     public void unregisterListenersForThisClass() {
-        _expression.unregisterListeners();
+        ((InternalBase)_expression).unregisterListeners();
     }
     
     @Override

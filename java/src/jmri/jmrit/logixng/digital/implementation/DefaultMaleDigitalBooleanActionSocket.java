@@ -18,6 +18,7 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.MaleDigitalActionWithChangeSocket;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
+import jmri.jmrit.logixng.implementation.InternalBase;
 
 /**
  * Every DigitalBooleanActionBean has an DefaultMaleDigitalBooleanActionSocket as its parent.
@@ -222,7 +223,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
      */
     @Override
     public void registerListenersForThisClass() {
-        _action.registerListeners();
+        ((InternalBase)_action).registerListeners();
     }
     
     /**
@@ -230,7 +231,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
      */
     @Override
     public void unregisterListenersForThisClass() {
-        _action.unregisterListeners();
+        ((InternalBase)_action).unregisterListeners();
     }
     
     @Override

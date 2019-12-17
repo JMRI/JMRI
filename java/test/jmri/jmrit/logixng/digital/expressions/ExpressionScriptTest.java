@@ -441,6 +441,11 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
         
         light = InstanceManager.getDefault(LightManager.class).provide("IL1");
+        
+        logixNG.setEnabled(true);
+        conditionalNG.setEnabled(true);
+        maleSocket.setEnabled(true);
+        logixNG.setParentForAllChildren();
     }
 
     @After

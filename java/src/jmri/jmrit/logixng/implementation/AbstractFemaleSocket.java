@@ -19,7 +19,7 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
  * 
  * @author Daniel Bergqvist 2019
  */
-public abstract class AbstractFemaleSocket implements FemaleSocket {
+public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase {
     
     private Base _parent;
     protected final FemaleSocketListener _listener;
@@ -187,12 +187,26 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
      */
     @Override
     public void registerListeners() {
+//    public void registerListenersInternal() {
         registerListenersForThisClass();
         if (isConnected()) {
-            getConnectedSocket().registerListeners();
+            ((InternalBase)getConnectedSocket()).registerListeners();
+//            ((InternalBase)getConnectedSocket()).registerListenersInternal();
         }
     }
     
+    /*.*
+     * Register listeners if this object needs that.
+     *./
+    @Override
+    public void registerListeners() {
+        registerListenersInternal();
+//        registerListenersForThisClass();
+//        if (isConnected()) {
+//            getConnectedSocket().registerListeners();
+//        }
+    }
+*/    
     /**
      * Register listeners if this object needs that.
      */
@@ -200,14 +214,14 @@ public abstract class AbstractFemaleSocket implements FemaleSocket {
     public void unregisterListeners() {
         unregisterListenersForThisClass();
         if (isConnected()) {
-            getConnectedSocket().unregisterListeners();
+            ((InternalBase)getConnectedSocket()).unregisterListeners();
         }
     }
     
     /** {@inheritDoc} */
     @Override
     public final boolean isActive() {
-        throw new UnsupportedOperationException("Not supported.");
+        return isEnabled() && ((getParent() == null) || getParent().isActive());
     }
     
     /** {@inheritDoc} */

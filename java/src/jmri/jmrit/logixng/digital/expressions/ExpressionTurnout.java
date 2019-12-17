@@ -123,6 +123,8 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
+        if (_turnoutHandle == null) return false;
+        
         TurnoutState currentTurnoutState = TurnoutState.get(_turnoutHandle.getBean().getCommandedState());
         if (_is_IsNot == Is_IsNot_Enum.IS) {
             return currentTurnoutState == _turnoutState;

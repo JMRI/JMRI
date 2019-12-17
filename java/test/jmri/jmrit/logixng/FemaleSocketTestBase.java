@@ -383,7 +383,7 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+/*        
         errorFlag.set(false);
         try {
             femaleSocket.isActive();
@@ -391,7 +391,7 @@ public abstract class FemaleSocketTestBase {
             errorFlag.set(true);
         }
         Assert.assertTrue("method not supported", errorFlag.get());
-        
+*/        
         errorFlag.set(false);
         try {
             femaleSocket.isExternal();
@@ -565,7 +565,7 @@ public abstract class FemaleSocketTestBase {
         public void dispose() {
             throw new UnsupportedOperationException("Not supported.");
         }
-
+/*
         @Override
         public void registerListeners() {
             throw new UnsupportedOperationException("Not supported.");
@@ -575,7 +575,7 @@ public abstract class FemaleSocketTestBase {
         public void unregisterListeners() {
             throw new UnsupportedOperationException("Not supported.");
         }
-
+*/
         @Override
         public void printTree(PrintWriter writer, String indent) {
             throw new UnsupportedOperationException("Not supported.");

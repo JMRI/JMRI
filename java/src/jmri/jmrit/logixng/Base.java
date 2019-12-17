@@ -295,22 +295,22 @@ public interface Base {
         return true;
     }
     
-    /**
+    /*.*
      * Register listeners if this object needs that.
      * <P>
      * Important: This method may be called more than once. Methods overriding
      * this method must ensure that listeners are not registered more than once.
-     */
+     *./
     public void registerListeners();
     
-    /**
+    /*.*
      * Unregister listeners if this object needs that.
      * <P>
      * Important: This method may be called more than once. Methods overriding
      * this method must ensure that listeners are not unregistered more than once.
-     */
+     *./
     public void unregisterListeners();
-    
+*/    
      /**
      * Print the tree to a stream.
      * 

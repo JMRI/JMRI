@@ -250,6 +250,8 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
+        
+        logixNG.setParentForAllChildren();
     }
 
     @After

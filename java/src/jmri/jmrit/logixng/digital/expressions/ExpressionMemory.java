@@ -261,6 +261,8 @@ public class ExpressionMemory extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
+        if (_memoryHandle == null) return false;
+        
         // ConditionalVariable, line 661:  boolean compare(String value1, String value2, boolean caseInsensitive) {
         String memoryValue = getString(_memoryHandle.getBean().getValue());
         String otherValue = null;
