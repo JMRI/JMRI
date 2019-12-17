@@ -39,6 +39,7 @@ public class LayoutEditorChecksTest {
     private static String rightHandName = "Right Hand";
     private static String leftHandName = "Left Hand";
 
+    //jemmy operators
     private static EditorFrameOperator layoutEditorEFO = null;
 
     private static LayoutEditor layoutEditor = null;
