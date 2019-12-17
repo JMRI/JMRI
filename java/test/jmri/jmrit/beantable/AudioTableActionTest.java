@@ -1,5 +1,6 @@
 package jmri.jmrit.beantable;
 
+import jmri.Audio;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
@@ -8,7 +9,7 @@ import org.junit.*;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class AudioTableActionTest extends AbstractTableActionBase {
+public class AudioTableActionTest extends AbstractTableActionBase<Audio> {
 
     @Test
     public void testCTor() {
@@ -90,7 +91,7 @@ public class AudioTableActionTest extends AbstractTableActionBase {
     @After
     @Override
     public void tearDown() {
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
         a = null;
     }

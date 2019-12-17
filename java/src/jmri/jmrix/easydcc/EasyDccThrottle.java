@@ -208,7 +208,7 @@ public class EasyDccThrottle extends AbstractThrottle {
         tc.sendEasyDccMessage(m, null);
 
         if (oldSpeed != this.speedSetting) {
-            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+            notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
         }
         record(speed);
     }
@@ -219,7 +219,7 @@ public class EasyDccThrottle extends AbstractThrottle {
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 

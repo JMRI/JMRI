@@ -4,8 +4,6 @@ import jmri.implementation.AbstractLight;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.TrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,8 +13,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Matthew Harris Copyright (C) 2015
  */
-public class CbusLight extends AbstractLight
-        implements CanListener {
+public class CbusLight extends AbstractLight implements CanListener {
 
     CbusAddress addrOn;   // go to on state
     CbusAddress addrOff;   // go to off state
@@ -25,7 +22,6 @@ public class CbusLight extends AbstractLight
         super(prefix + "L" + address);
         this.tc = tc;
         init(address);
-
     }
 
     TrafficController tc;
@@ -41,7 +37,7 @@ public class CbusLight extends AbstractLight
         CbusAddress[] v = a.split();
         switch (v.length) {
             case 0:
-                log.error("Did not find usable system name: " + address);
+                log.error("Did not find usable system name: {}", address);
                 return;
             case 1:
                 addrOn = v[0];
@@ -52,7 +48,7 @@ public class CbusLight extends AbstractLight
                 } else if (address.startsWith("-")) {
                     addrOff = new CbusAddress("+" + address.substring(1));
                 } else {
-                    log.error("can't make 2nd event from systemname " + address);
+                    log.error("can't make 2nd event from systemname {}", address);
                     return;
                 }
                 break;
@@ -61,11 +57,11 @@ public class CbusLight extends AbstractLight
                 addrOff = v[1];
                 break;
             default:
-                log.error("Can't parse CbusSensor system name: " + address);
+                log.error("Can't parse CbusLight system name: {}", address);
                 return;
         }
         // connect
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     /**
@@ -75,16 +71,20 @@ public class CbusLight extends AbstractLight
     @Override
     protected void doNewState(int oldState, int newState) {
         CanMessage m;
-        if (newState == ON) {
-            m = addrOn.makeMessage(tc.getCanid());
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
-        } else if (newState == OFF) {
-            m = addrOff.makeMessage(tc.getCanid());
-            CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
-            tc.sendCanMessage(m, this);
-        } else {
-            log.warn("illegal state requested for Light: " + getSystemName());
+        switch (newState) {
+            case ON:
+                m = addrOn.makeMessage(tc.getCanid());
+                CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+                tc.sendCanMessage(m, this);
+                break;
+            case OFF:
+                m = addrOff.makeMessage(tc.getCanid());
+                CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
+                tc.sendCanMessage(m, this);
+                break;
+            default:
+                log.warn("illegal state requested for Light: {}", getSystemName());
+                break;
         }
     }
 
@@ -106,7 +106,7 @@ public class CbusLight extends AbstractLight
     
     @Override
     public void message(CanMessage f) {
-        if ( f.isExtended() || f.isRtr() ) {
+        if ( f.extendedOrRtr() ) {
             return;
         }
         if (addrOn.match(f)) {
@@ -118,7 +118,7 @@ public class CbusLight extends AbstractLight
 
     @Override
     public void reply(CanReply f) {
-        if ( f.isExtended() || f.isRtr() ) {
+        if ( f.extendedOrRtr() ) {
             return;
         }
         // convert response events to normal
@@ -131,7 +131,8 @@ public class CbusLight extends AbstractLight
     }
     
     /**
-     * Package method returning CanMessage for the On Light Address
+     * Get a CanMessage for the On Light Address.
+     * @return CanMessage for Light ON
      */    
     public CanMessage getAddrOn(){
         CanMessage m;
@@ -140,7 +141,8 @@ public class CbusLight extends AbstractLight
     }
     
     /**
-     * Package method returning CanMessage for the Off Light Address
+     * Get a CanMessage for the Off Light Address.
+     * @return CanMessage for Light ON
      */    
     public CanMessage getAddrOff(){
         CanMessage m;

@@ -22,7 +22,9 @@ public class LawicellTrafficControllerTest extends jmri.jmrix.can.TrafficControl
     @After
     public void tearDown(){
         tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+ 
     }
 
 }

@@ -23,7 +23,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -38,15 +37,14 @@ import javax.swing.JRootPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
-import javax.swing.SwingUtilities;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import jmri.*;
 import jmri.NamedBean.DisplayOptions;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
+import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
-import jmri.swing.NamedBeanComboBox;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,9 +92,9 @@ public class LayoutTrackEditors {
     List<String> sensorList = new ArrayList<>();
 
     /**
-     * Create a list of NX sensors that refer to the current layout block.
-     * This is used to disable block selection in the edit dialog.
-     * The list is built by {@link jmri.jmrit.entryexit.EntryExitPairs#layoutBlockSensors}.
+     * Create a list of NX sensors that refer to the current layout block. This
+     * is used to disable block selection in the edit dialog. The list is built
+     * by {@link jmri.jmrit.entryexit.EntryExitPairs#layoutBlockSensors}.
      *
      * @since 4.11.2
      * @param loBlk The current layout block.
@@ -116,9 +114,9 @@ public class LayoutTrackEditors {
     }
 
     /**
-     * Display a message describing the reason for the block selection combo box being disabled.
-     * An option is provided to hide the message.
-     * Note: The PanelMenu class is being used to satisfy the showInfoMessage requirement
+     * Display a message describing the reason for the block selection combo box
+     * being disabled. An option is provided to hide the message. Note: The
+     * PanelMenu class is being used to satisfy the showInfoMessage requirement
      * for a default manager type class.
      *
      * @since 4.11.2
@@ -140,11 +138,11 @@ public class LayoutTrackEditors {
         }
         msg.append("<br>&nbsp;</html>");  // NOI18N
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-            showInfoMessage(
-                Bundle.getMessage("BlockSensorTitle"),  // NOI18N
-                msg.toString(),
-                "jmri.jmrit.display.PanelMenu",  // NOI18N
-                "BlockSensorMessage");  // NOI18N
+                showInfoMessage(
+                        Bundle.getMessage("BlockSensorTitle"), // NOI18N
+                        msg.toString(),
+                        "jmri.jmrit.display.PanelMenu", // NOI18N
+                        "BlockSensorMessage");  // NOI18N
         return;
     }
 
@@ -155,13 +153,10 @@ public class LayoutTrackEditors {
     private TrackSegment trackSegment;
 
     private JmriJFrame editTrackSegmentFrame = null;
-
     private JComboBox<String> editTrackSegmentMainlineComboBox = new JComboBox<String>();
-
+//    private JCheckBox editTrackSegmentMainlineCheckBox = new JCheckBox(Bundle.getMessage("Mainline"));
     private JComboBox<String> editTrackSegmentDashedComboBox = new JComboBox<String>();
-
     private JCheckBox editTrackSegmentHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTrack"));  // NOI18N
-
     private NamedBeanComboBox<Block> editTrackSegmentBlockNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JTextField editTrackSegmentArcTextField = new JTextField(5);
@@ -192,6 +187,7 @@ public class LayoutTrackEditors {
         rp.getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT).put(
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), "close"); // NOI18N
     }
+
     /**
      * Edit a Track Segment.
      */
@@ -218,19 +214,23 @@ public class LayoutTrackEditors {
             editTrackSegmentDashedComboBox.addItem(Bundle.getMessage("Dashed"));  // NOI18N
             editTrackSegmentDashedIndex = 1;
             editTrackSegmentDashedComboBox.setToolTipText(Bundle.getMessage("DashedToolTip"));  // NOI18N
-            panel31.add(new JLabel(Bundle.getMessage("Style") + " : "));
+            JLabel label31a = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Style")));
+            panel31.add(label31a);
+            label31a.setLabelFor(editTrackSegmentDashedComboBox);
             panel31.add(editTrackSegmentDashedComboBox);
             contentPane.add(panel31);
 
             // add mainline choice
             JPanel panel32 = new JPanel();
             panel32.setLayout(new FlowLayout());
+
             editTrackSegmentMainlineComboBox.removeAllItems();
             editTrackSegmentMainlineComboBox.addItem(Bundle.getMessage("Mainline"));  // NOI18N
             editTrackSegmentMainlineTrackIndex = 0;
             editTrackSegmentMainlineComboBox.addItem(Bundle.getMessage("NotMainline"));  // NOI18N
             editTrackSegmentSideTrackIndex = 1;
             editTrackSegmentMainlineComboBox.setToolTipText(Bundle.getMessage("MainlineToolTip"));  // NOI18N
+            editTrackSegmentMainlineComboBox.setName(Bundle.getMessage("Mainline"));
             panel32.add(editTrackSegmentMainlineComboBox);
             contentPane.add(panel32);
 
@@ -246,8 +246,10 @@ public class LayoutTrackEditors {
             panel2.setLayout(new FlowLayout());
             JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));  // NOI18N
             panel2.add(blockNameLabel);
-            LayoutEditor.setupComboBox(editTrackSegmentBlockNameComboBox, false, true);
+            blockNameLabel.setLabelFor(editTrackSegmentBlockNameComboBox);
+            LayoutEditor.setupComboBox(editTrackSegmentBlockNameComboBox, false, true, true);
             editTrackSegmentBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
+
             panel2.add(editTrackSegmentBlockNameComboBox);
 
             contentPane.add(panel2);
@@ -256,6 +258,7 @@ public class LayoutTrackEditors {
             panel20.setLayout(new FlowLayout());
             JLabel arcLabel = new JLabel(Bundle.getMessage("SetArcAngle"));  // NOI18N
             panel20.add(arcLabel);
+            arcLabel.setLabelFor(editTrackSegmentArcTextField);
             panel20.add(editTrackSegmentArcTextField);
             editTrackSegmentArcTextField.setToolTipText(Bundle.getMessage("SetArcAngleHint"));  // NOI18N
             contentPane.add(panel20);
@@ -288,7 +291,7 @@ public class LayoutTrackEditors {
         }
         editTrackSegmentHiddenCheckBox.setSelected(trackSegment.isHidden());
         Block block = InstanceManager.getDefault(BlockManager.class).getBlock(trackSegment.getBlockName());
-        editTrackSegmentBlockNameComboBox.setSelectedItem(block);
+        editTrackSegmentBlockNameComboBox.getEditor().setItem(block);   // Select the item via the editor, empty text field if null
         editTrackSegmentBlockNameComboBox.setEnabled(!hasNxSensorPairs(trackSegment.getLayoutBlock()));
 
         if (trackSegment.isArc() && trackSegment.isCircle()) {
@@ -315,15 +318,13 @@ public class LayoutTrackEditors {
     private void editTrackSegmentEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editTrackSegmentBlockNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if ((trackSegment.getBlockName().isEmpty())
                 || !trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                trackSegment.setLayoutBlock(null);
-            }
+            trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editTrackSegmentNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             trackSegment.updateBlockInfo();
@@ -331,7 +332,7 @@ public class LayoutTrackEditors {
         // check if a block exists to edit
         if (trackSegment.getLayoutBlock() == null) {
             JOptionPane.showMessageDialog(editTrackSegmentFrame,
-                    Bundle.getMessage("Error1"),  // NOI18N
+                    Bundle.getMessage("Error1"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
@@ -371,15 +372,13 @@ public class LayoutTrackEditors {
         }
         // check if Block changed
         String newName = editTrackSegmentBlockNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if ((trackSegment.getBlockName().isEmpty())
                 || !trackSegment.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                trackSegment.setLayoutBlock(null);
-            }
+            trackSegment.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editTrackSegmentNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             trackSegment.updateBlockInfo();
@@ -429,7 +428,7 @@ public class LayoutTrackEditors {
     private NamedBeanComboBox<Block> editLayoutTurnoutBlockDNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private JComboBox<String> editLayoutTurnoutStateComboBox = new JComboBox<String>();
-    private JCheckBox editLayoutTurnoutHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTurnout"));  // NOI18N
+    private JCheckBox editLayoutTurnoutHiddenCheckBox = null;
     private JButton editLayoutTurnoutBlockButton;
     private JButton editLayoutTurnoutBlockBButton;
     private JButton editLayoutTurnoutBlockCButton;
@@ -454,6 +453,7 @@ public class LayoutTrackEditors {
             editLayoutTurnoutFrame.setVisible(true);
         } else if (editLayoutTurnoutFrame == null) { // Initialize if needed
             editLayoutTurnoutFrame = new JmriJFrame(Bundle.getMessage("EditTurnout"), false, true);  // NOI18N
+
             editLayoutTurnoutFrame.addHelpMenu("package.jmri.jmrit.display.EditLayoutTurnout", true);  // NOI18N
             editLayoutTurnoutFrame.setLocation(50, 30);
             Container contentPane = editLayoutTurnoutFrame.getContentPane();
@@ -465,10 +465,11 @@ public class LayoutTrackEditors {
             panel1.add(turnoutNameLabel);
 
             // add combobox to select turnout
-            editLayoutTurnout1stTurnoutComboBox = new NamedBeanComboBox<>
-                    (InstanceManager.getDefault(TurnoutManager.class));
+            editLayoutTurnout1stTurnoutComboBox = new NamedBeanComboBox<>(
+                    InstanceManager.getDefault(TurnoutManager.class));
             editLayoutTurnout1stTurnoutComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
-            LayoutEditor.setupComboBox(editLayoutTurnout1stTurnoutComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutTurnout1stTurnoutComboBox, false, true, false);
+            turnoutNameLabel.setLabelFor(editLayoutTurnout1stTurnoutComboBox);
 
             panel1.add(editLayoutTurnout1stTurnoutComboBox);
             contentPane.add(panel1);
@@ -476,10 +477,10 @@ public class LayoutTrackEditors {
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new BoxLayout(panel1a, BoxLayout.Y_AXIS));
 
-            editLayoutTurnout2ndTurnoutComboBox = new NamedBeanComboBox<>
-                    (InstanceManager.getDefault(TurnoutManager.class));
+            editLayoutTurnout2ndTurnoutComboBox = new NamedBeanComboBox<>(
+                    InstanceManager.getDefault(TurnoutManager.class));
             editLayoutTurnout2ndTurnoutComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
-            LayoutEditor.setupComboBox(editLayoutTurnout2ndTurnoutComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutTurnout2ndTurnoutComboBox, false, true, false);
 
             editLayoutTurnout2ndTurnoutCheckBox.addActionListener((ActionEvent e) -> {
                 boolean additionalEnabled = editLayoutTurnout2ndTurnoutCheckBox.isSelected();
@@ -494,6 +495,7 @@ public class LayoutTrackEditors {
             editLayoutTurnout2ndTurnoutLabel.setEnabled(false);
             JPanel panel1b = new JPanel();
             panel1b.add(editLayoutTurnout2ndTurnoutLabel);
+            editLayoutTurnout2ndTurnoutLabel.setLabelFor(editLayoutTurnout2ndTurnoutComboBox);
             panel1b.add(editLayoutTurnout2ndTurnoutComboBox);
             editLayoutTurnout2ndTurnoutInvertCheckBox.addActionListener((ActionEvent e) -> {
                 layoutTurnout.setSecondTurnoutInverted(editLayoutTurnout2ndTurnoutInvertCheckBox.isSelected());
@@ -503,9 +505,7 @@ public class LayoutTrackEditors {
             contentPane.add(panel1b);
 
             // add continuing state choice, if not crossover
-            if ((layoutTurnout.getTurnoutType() != LayoutTurnout.DOUBLE_XOVER)
-                    && (layoutTurnout.getTurnoutType() != LayoutTurnout.RH_XOVER)
-                    && (layoutTurnout.getTurnoutType() != LayoutTurnout.LH_XOVER)) {
+            if (!layoutTurnout.isTurnoutTypeXover()) {
                 JPanel panel3 = new JPanel();
                 panel3.setLayout(new FlowLayout());
                 editLayoutTurnoutStateComboBox.removeAllItems();
@@ -514,16 +514,19 @@ public class LayoutTrackEditors {
                 editLayoutTurnoutStateComboBox.addItem(InstanceManager.turnoutManagerInstance().getThrownText());
                 editLayoutTurnoutThrownIndex = 1;
                 editLayoutTurnoutStateComboBox.setToolTipText(Bundle.getMessage("StateToolTip"));  // NOI18N
-                panel3.add(new JLabel(Bundle.getMessage("ContinuingState")));  // NOI18N
+                JLabel label3 = new JLabel(Bundle.getMessage("ContinuingState"));
+                panel3.add(label3);  // NOI18N
+                label3.setLabelFor(editLayoutTurnoutStateComboBox);
                 panel3.add(editLayoutTurnoutStateComboBox);
                 contentPane.add(panel3);
             }
 
-            JPanel panel33 = new JPanel();
-            panel33.setLayout(new FlowLayout());
+            JPanel panel3a = new JPanel();
+            panel3a.setLayout(new FlowLayout());
+            editLayoutTurnoutHiddenCheckBox = new JCheckBox(Bundle.getMessage("HideTurnout"));  // NOI18N
             editLayoutTurnoutHiddenCheckBox.setToolTipText(Bundle.getMessage("HiddenToolTip"));  // NOI18N
-            panel33.add(editLayoutTurnoutHiddenCheckBox);
-            contentPane.add(panel33);
+            panel3a.add(editLayoutTurnoutHiddenCheckBox);
+            contentPane.add(panel3a);
 
             TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
             border.setTitle(Bundle.getMessage("BeanNameBlock"));  // NOI18N
@@ -532,22 +535,22 @@ public class LayoutTrackEditors {
             panel2.setBorder(border);
             panel2.setLayout(new FlowLayout());
             panel2.add(editLayoutTurnoutBlockNameComboBox);
-            LayoutEditor.setupComboBox(editLayoutTurnoutBlockNameComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutTurnoutBlockNameComboBox, false, true, true);
             editLayoutTurnoutBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
             panel2.add(editLayoutTurnoutBlockButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
+            editLayoutTurnoutBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
             editLayoutTurnoutBlockButton.addActionListener((ActionEvent e) -> {
                 editLayoutTurnoutEditBlockPressed(e);
             });
             contentPane.add(panel2);
-            if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                    || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                    || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+
+            if (layoutTurnout.isTurnoutTypeXover()) {
                 JPanel panel21 = new JPanel();
                 panel21.setLayout(new FlowLayout());
                 TitledBorder borderblk2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk2.setTitle(Bundle.getMessage("BeanNameBlock") + " 2");  // NOI18N
                 panel21.setBorder(borderblk2);
-                LayoutEditor.setupComboBox(editLayoutTurnoutBlockBNameComboBox, false, true);
+                LayoutEditor.setupComboBox(editLayoutTurnoutBlockBNameComboBox, false, true, true);
                 editLayoutTurnoutBlockBNameComboBox.setToolTipText(Bundle.getMessage("EditBlockBNameHint"));  // NOI18N
                 panel21.add(editLayoutTurnoutBlockBNameComboBox);
 
@@ -563,7 +566,7 @@ public class LayoutTrackEditors {
                 TitledBorder borderblk3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk3.setTitle(Bundle.getMessage("BeanNameBlock") + " 3");  // NOI18N
                 panel22.setBorder(borderblk3);
-                LayoutEditor.setupComboBox(editLayoutTurnoutBlockCNameComboBox, false, true);
+                LayoutEditor.setupComboBox(editLayoutTurnoutBlockCNameComboBox, false, true, true);
                 editLayoutTurnoutBlockCNameComboBox.setToolTipText(Bundle.getMessage("EditBlockCNameHint"));  // NOI18N
                 panel22.add(editLayoutTurnoutBlockCNameComboBox);
                 panel22.add(editLayoutTurnoutBlockCButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
@@ -578,7 +581,7 @@ public class LayoutTrackEditors {
                 TitledBorder borderblk4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
                 borderblk4.setTitle(Bundle.getMessage("BeanNameBlock") + " 4");  // NOI18N
                 panel23.setBorder(borderblk4);
-                LayoutEditor.setupComboBox(editLayoutTurnoutBlockDNameComboBox, false, true);
+                LayoutEditor.setupComboBox(editLayoutTurnoutBlockDNameComboBox, false, true, true);
                 editLayoutTurnoutBlockDNameComboBox.setToolTipText(Bundle.getMessage("EditBlockDNameHint"));  // NOI18N
                 panel23.add(editLayoutTurnoutBlockDNameComboBox);
                 panel23.add(editLayoutTurnoutBlockDButton = new JButton(Bundle.getMessage("CreateEdit")));  // NOI18N
@@ -593,14 +596,19 @@ public class LayoutTrackEditors {
             panel5.setLayout(new FlowLayout());
             // Edit Block
 
-            editLayoutTurnoutBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
-
             addDoneCancelButtons(panel5, editLayoutTurnoutFrame.getRootPane(),
                     this::editLayoutTurnoutDonePressed, this::editLayoutTurnoutCancelPressed);
             contentPane.add(panel5);
         }
 
         // Set up for Edit
+        if (layoutTurnout.isTurnoutTypeXover()) {
+            editLayoutTurnoutFrame.setTitle(Bundle.getMessage("EditXover"));
+            editLayoutTurnoutHiddenCheckBox.setText(Bundle.getMessage("HideXover"));
+        } else {
+            editLayoutTurnoutFrame.setTitle(Bundle.getMessage("EditTurnout"));
+            editLayoutTurnoutHiddenCheckBox.setText(Bundle.getMessage("HideTurnout"));
+        }
         editLayoutTurnoutHiddenCheckBox.setSelected(layoutTurnout.isHidden());
 
         List<Turnout> currentTurnouts = new ArrayList<>();
@@ -611,26 +619,17 @@ public class LayoutTrackEditors {
         editLayoutTurnout1stTurnoutComboBox.addPopupMenuListener(
                 layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout1stTurnoutComboBox, currentTurnouts));
 
-        editLayoutTurnout2ndTurnoutComboBox.addPopupMenuListener(
-                layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutTurnout2ndTurnoutComboBox, currentTurnouts));
-
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
-        editLayoutTurnoutBlockNameComboBox.setSelectedItem(bm.getBlock(layoutTurnout.getBlockName()));
+        editLayoutTurnoutBlockNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockName()));
         editLayoutTurnoutBlockNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlock()));
-        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
-            editLayoutTurnoutBlockBNameComboBox.setSelectedItem(bm.getBlock(layoutTurnout.getBlockBName()));
-            editLayoutTurnoutBlockCNameComboBox.setSelectedItem(bm.getBlock(layoutTurnout.getBlockCName()));
-            editLayoutTurnoutBlockDNameComboBox.setSelectedItem(bm.getBlock(layoutTurnout.getBlockDName()));
+        if (layoutTurnout.isTurnoutTypeXover()) {
+            editLayoutTurnoutBlockBNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockBName()));
+            editLayoutTurnoutBlockCNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockCName()));
+            editLayoutTurnoutBlockDNameComboBox.getEditor().setItem(bm.getBlock(layoutTurnout.getBlockDName()));
             editLayoutTurnoutBlockBNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlockB()));
             editLayoutTurnoutBlockCNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlockC()));
             editLayoutTurnoutBlockDNameComboBox.setEnabled(!hasNxSensorPairs(layoutTurnout.getLayoutBlockD()));
-        }
-
-        if ((layoutTurnout.getTurnoutType() != LayoutTurnout.DOUBLE_XOVER)
-                && (layoutTurnout.getTurnoutType() != LayoutTurnout.RH_XOVER)
-                && (layoutTurnout.getTurnoutType() != LayoutTurnout.LH_XOVER)) {
+        } else {
             editLayoutTurnout2ndTurnoutCheckBox.setText(Bundle.getMessage("ThrowTwoTurnouts"));  // NOI18N
         }
 
@@ -647,9 +646,7 @@ public class LayoutTrackEditors {
             editLayoutTurnout2ndTurnoutComboBox.setSelectedItem(null);
         }
 
-        if ((layoutTurnout.getTurnoutType() != LayoutTurnout.DOUBLE_XOVER)
-                && (layoutTurnout.getTurnoutType() != LayoutTurnout.RH_XOVER)
-                && (layoutTurnout.getTurnoutType() != LayoutTurnout.LH_XOVER)) {
+        if (!layoutTurnout.isTurnoutTypeXover()) {
             if (layoutTurnout.getContinuingSense() == Turnout.CLOSED) {
                 editLayoutTurnoutStateComboBox.setSelectedIndex(editLayoutTurnoutClosedIndex);
             } else {
@@ -674,21 +671,19 @@ public class LayoutTrackEditors {
     private void editLayoutTurnoutEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutTurnout.setLayoutBlock(null);
-            }
+            layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
         // check if a block exists to edit
         if (layoutTurnout.getLayoutBlock() == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    Bundle.getMessage("Error1"),  // NOI18N
+                    Bundle.getMessage("Error1"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
@@ -700,21 +695,19 @@ public class LayoutTrackEditors {
     private void editLayoutTurnoutEditBlockBPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockBNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!layoutTurnout.getBlockBName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutTurnout.setLayoutBlockB(null);
-            }
+            layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
         // check if a block exists to edit
         if (layoutTurnout.getLayoutBlockB() == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    Bundle.getMessage("Error1"),  // NOI18N
+                    Bundle.getMessage("Error1"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
@@ -726,21 +719,19 @@ public class LayoutTrackEditors {
     private void editLayoutTurnoutEditBlockCPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockCNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!layoutTurnout.getBlockCName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutTurnout.setLayoutBlockC(null);
-            }
+            layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
         // check if a block exists to edit
         if (layoutTurnout.getLayoutBlockC() == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    Bundle.getMessage("Error1"),  // NOI18N
+                    Bundle.getMessage("Error1"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
@@ -752,21 +743,19 @@ public class LayoutTrackEditors {
     private void editLayoutTurnoutEditBlockDPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutTurnoutBlockDNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!layoutTurnout.getBlockDName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutTurnout.setLayoutBlockD(null);
-            }
+            layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
         // check if a block exists to edit
         if (layoutTurnout.getLayoutBlockD() == null) {
             JOptionPane.showMessageDialog(editLayoutTurnoutFrame,
-                    Bundle.getMessage("Error1"),  // NOI18N
+                    Bundle.getMessage("Error1"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
@@ -778,7 +767,9 @@ public class LayoutTrackEditors {
     private void editLayoutTurnoutDonePressed(ActionEvent a) {
         // check if Turnout changed
         String newName = editLayoutTurnout1stTurnoutComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!layoutTurnout.getTurnoutName().equals(newName)) {
             // turnout has changed
             if (layoutEditor.validatePhysicalTurnout(
@@ -793,11 +784,11 @@ public class LayoutTrackEditors {
 
         if (editLayoutTurnout2ndTurnoutCheckBox.isSelected()) {
             newName = editLayoutTurnout2ndTurnoutComboBox.getSelectedItemDisplayName();
-            if (newName == null) newName = "";
+            if (newName == null) {
+                newName = "";
+            }
             if (!layoutTurnout.getSecondTurnoutName().equals(newName)) {
-                if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                        || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)
-                        || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)) {
+                if (layoutTurnout.isTurnoutTypeXover()) {
                     // turnout has changed
                     if (layoutEditor.validatePhysicalTurnout(
                             newName, editLayoutTurnoutFrame)) {
@@ -828,56 +819,46 @@ public class LayoutTrackEditors {
 
         // check if Block changed
         newName = editLayoutTurnoutBlockNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!layoutTurnout.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutTurnout.setLayoutBlock(null);
-            }
+            layoutTurnout.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutTurnoutNeedRedraw = true;
             editLayoutTurnoutNeedsBlockUpdate = true;
         }
-        if ((layoutTurnout.getTurnoutType() == LayoutTurnout.DOUBLE_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.LH_XOVER)
-                || (layoutTurnout.getTurnoutType() == LayoutTurnout.RH_XOVER)) {
+        if (layoutTurnout.isTurnoutTypeXover()) {
             // check if Block 2 changed
             newName = editLayoutTurnoutBlockBNameComboBox.getSelectedItemDisplayName();
-            if (newName == null) newName = "";
+            if (newName == null) {
+                newName = "";
+            }
             if (!layoutTurnout.getBlockBName().equals(newName)) {
                 // get new block, or null if block has been removed
-                try {
-                    layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    layoutTurnout.setLayoutBlockB(null);
-                }
+                layoutTurnout.setLayoutBlockB(layoutEditor.provideLayoutBlock(newName));
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
             }
             // check if Block 3 changed
             newName = editLayoutTurnoutBlockCNameComboBox.getSelectedItemDisplayName();
-            if (newName == null) newName = "";
+            if (newName == null) {
+                newName = "";
+            }
             if (!layoutTurnout.getBlockCName().equals(newName)) {
                 // get new block, or null if block has been removed
-                try {
-                    layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    layoutTurnout.setLayoutBlockC(null);
-                }
+                layoutTurnout.setLayoutBlockC(layoutEditor.provideLayoutBlock(newName));
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
             }
             // check if Block 4 changed
             newName = editLayoutTurnoutBlockDNameComboBox.getSelectedItemDisplayName();
-            if (newName == null) newName = "";
+            if (newName == null) {
+                newName = "";
+            }
             if (!layoutTurnout.getBlockDName().equals(newName)) {
                 // get new block, or null if block has been removed
-                try {
-                    layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    layoutTurnout.setLayoutBlockD(null);
-                }
+                layoutTurnout.setLayoutBlockD(layoutEditor.provideLayoutBlock(newName));
                 editLayoutTurnoutNeedRedraw = true;
                 editLayoutTurnoutNeedsBlockUpdate = true;
             }
@@ -925,8 +906,6 @@ public class LayoutTrackEditors {
     private LayoutSlip layoutSlip = null;
 
     private JmriJFrame editLayoutSlipFrame = null;
-    private JButton editLayoutSlipDoneButton;
-    private JButton editLayoutSlipCancelButton;
     private JButton editLayoutSlipBlockButton;
     private NamedBeanComboBox<Turnout> editLayoutSlipTurnoutAComboBox;
     private NamedBeanComboBox<Turnout> editLayoutSlipTurnoutBComboBox;
@@ -958,24 +937,24 @@ public class LayoutTrackEditors {
             // Setup turnout A
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A " + Bundle.getMessage("Name"));  // NOI18N
+            JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " A");  // NOI18N
             panel1.add(turnoutNameLabel);
-            editLayoutSlipTurnoutAComboBox = new NamedBeanComboBox<>
-                    (InstanceManager.getDefault(TurnoutManager.class));
+            editLayoutSlipTurnoutAComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class));
             editLayoutSlipTurnoutAComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
-            LayoutEditor.setupComboBox(editLayoutSlipTurnoutAComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutSlipTurnoutAComboBox, false, true, false);
+            turnoutNameLabel.setLabelFor(editLayoutSlipTurnoutAComboBox);
             panel1.add(editLayoutSlipTurnoutAComboBox);
             contentPane.add(panel1);
 
             // Setup turnout B
             JPanel panel1a = new JPanel();
             panel1a.setLayout(new FlowLayout());
-            JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B " + Bundle.getMessage("Name"));  // NOI18N
+            JLabel turnoutBNameLabel = new JLabel(Bundle.getMessage("BeanNameTurnout") + " B");  // NOI18N
             panel1a.add(turnoutBNameLabel);
-            editLayoutSlipTurnoutBComboBox = new NamedBeanComboBox<>
-                    (InstanceManager.getDefault(TurnoutManager.class));
+            editLayoutSlipTurnoutBComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class));
             editLayoutSlipTurnoutBComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
-            LayoutEditor.setupComboBox(editLayoutSlipTurnoutBComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutSlipTurnoutBComboBox, false, true, false);
+            turnoutBNameLabel.setLabelFor(editLayoutSlipTurnoutBComboBox);
             panel1a.add(editLayoutSlipTurnoutBComboBox);
 
             contentPane.add(panel1a);
@@ -1018,8 +997,9 @@ public class LayoutTrackEditors {
             panel3.setLayout(new FlowLayout());
             JLabel block1NameLabel = new JLabel(Bundle.getMessage("BlockID"));  // NOI18N
             panel3.add(block1NameLabel);
+            block1NameLabel.setLabelFor(editLayoutSlipBlockNameComboBox);
             panel3.add(editLayoutSlipBlockNameComboBox);
-            LayoutEditor.setupComboBox(editLayoutSlipBlockNameComboBox, false, true);
+            LayoutEditor.setupComboBox(editLayoutSlipBlockNameComboBox, false, true, true);
             editLayoutSlipBlockNameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
 
             contentPane.add(panel3);
@@ -1036,29 +1016,12 @@ public class LayoutTrackEditors {
             editLayoutSlipBlockButton.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
 
             contentPane.add(panel4);
+
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(editLayoutSlipDoneButton = new JButton(Bundle.getMessage("ButtonDone")));  // NOI18N
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(editLayoutSlipDoneButton);
-                rootPane.setDefaultButton(editLayoutSlipDoneButton);
-            }
-            );
-
-            editLayoutSlipDoneButton.addActionListener((ActionEvent event) -> {
-                editLayoutSlipDonePressed(event);
-            });
-            editLayoutSlipDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
-            // Cancel
-            panel5.add(editLayoutSlipCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));  // NOI18N
-            editLayoutSlipCancelButton.addActionListener((ActionEvent event) -> {
-                editLayoutSlipCancelPressed(event);
-            });
-            editLayoutSlipCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
+            addDoneCancelButtons(panel5, editLayoutSlipFrame.getRootPane(),
+                    this::editLayoutSlipDonePressed, this::editLayoutSlipCancelPressed);
             contentPane.add(panel5);
         }
 
@@ -1078,7 +1041,7 @@ public class LayoutTrackEditors {
                 layoutEditor.newTurnoutComboBoxPopupMenuListener(editLayoutSlipTurnoutBComboBox, currentTurnouts));
 
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
-        editLayoutSlipBlockNameComboBox.setSelectedItem(bm.getBlock(layoutSlip.getBlockName()));
+        editLayoutSlipBlockNameComboBox.getEditor().setItem(bm.getBlock(layoutSlip.getBlockName()));
         editLayoutSlipBlockNameComboBox.setEnabled(!hasNxSensorPairs(layoutSlip.getLayoutBlock()));
 
         editLayoutSlipFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1260,14 +1223,12 @@ public class LayoutTrackEditors {
     private void editLayoutSlipEditBlockPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLayoutSlipBlockNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!layoutSlip.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutSlip.setLayoutBlock(null);
-            }
+            layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutSlipNeedsRedraw = true;
             editLayoutSlipNeedsBlockUpdate = true;
         }
@@ -1285,7 +1246,9 @@ public class LayoutTrackEditors {
 
     private void editLayoutSlipDonePressed(ActionEvent a) {
         String newName = editLayoutSlipTurnoutAComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!layoutSlip.getTurnoutName().equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutSlipFrame)) {
                 layoutSlip.setTurnout(newName);
@@ -1296,7 +1259,9 @@ public class LayoutTrackEditors {
         }
 
         newName = editLayoutSlipTurnoutBComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!layoutSlip.getTurnoutBName().equals(newName)) {
             if (layoutEditor.validatePhysicalTurnout(newName, editLayoutSlipFrame)) {
                 layoutSlip.setTurnoutB(newName);
@@ -1307,16 +1272,12 @@ public class LayoutTrackEditors {
         }
 
         newName = editLayoutSlipBlockNameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!layoutSlip.getBlockName().equals(newName)) {
             // get new block, or null if block has been removed
-            try {
-                layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
-            } catch (IllegalArgumentException ex) {
-                layoutSlip.setLayoutBlock(null);
-                editLayoutSlipBlockNameComboBox.setSelectedItem(null);
-                editLayoutSlipBlockNameComboBox.setSelectedIndex(-1);
-            }
+            layoutSlip.setLayoutBlock(layoutEditor.provideLayoutBlock(newName));
             editLayoutSlipNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLayoutSlipNeedsBlockUpdate = true;
@@ -1375,8 +1336,6 @@ public class LayoutTrackEditors {
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
     private NamedBeanComboBox<Block> editLevelXingBlock2NameComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, DisplayOptions.DISPLAYNAME);
-    private JButton editLevelXingDoneButton;
-    private JButton editLevelXingCancelButton;
     private JButton editLevelXingBlock1Button;
     private JButton editLevelXingBlock2Button;
 
@@ -1407,23 +1366,27 @@ public class LayoutTrackEditors {
             panel33.add(editLevelXingHiddenCheckBox);
             contentPane.add(panel33);
 
-            // setup block 1 name
+            // setup block AC name
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
-            JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", 1));  // NOI18N
+            JLabel block1NameLabel = new JLabel(Bundle.getMessage("Block_ID", "AC"));  // NOI18N
             panel1.add(block1NameLabel);
+            block1NameLabel.setLabelFor(editLevelXingBlock1NameComboBox);
             panel1.add(editLevelXingBlock1NameComboBox);
-            LayoutEditor.setupComboBox(editLevelXingBlock1NameComboBox, false, true);
+            editLevelXingBlock1NameComboBox.setName("Block AC");
+            LayoutEditor.setupComboBox(editLevelXingBlock1NameComboBox, false, true, true);
             editLevelXingBlock1NameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
             contentPane.add(panel1);
 
-            // setup block 2 name
+            // setup block BD name
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
-            JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", 2));  // NOI18N
+            JLabel block2NameLabel = new JLabel(Bundle.getMessage("Block_ID", "BD"));  // NOI18N
             panel2.add(block2NameLabel);
+            block2NameLabel.setLabelFor(editLevelXingBlock2NameComboBox);
             panel2.add(editLevelXingBlock2NameComboBox);
-            LayoutEditor.setupComboBox(editLevelXingBlock2NameComboBox, false, true);
+            editLevelXingBlock2NameComboBox.setName("Block BD");
+            LayoutEditor.setupComboBox(editLevelXingBlock2NameComboBox, false, true, true);
             editLevelXingBlock2NameComboBox.setToolTipText(Bundle.getMessage("EditBlockNameHint"));  // NOI18N
             contentPane.add(panel2);
 
@@ -1431,40 +1394,24 @@ public class LayoutTrackEditors {
             JPanel panel4 = new JPanel();
             panel4.setLayout(new FlowLayout());
             // Edit 1 Block
-            panel4.add(editLevelXingBlock1Button = new JButton(Bundle.getMessage("EditBlock", 1)));  // NOI18N
+            panel4.add(editLevelXingBlock1Button = new JButton(Bundle.getMessage("EditBlock", "AC")));  // NOI18N
             editLevelXingBlock1Button.addActionListener((ActionEvent e) -> {
                 editLevelXingBlockACPressed(e);
             });
             editLevelXingBlock1Button.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
             // Edit 2 Block
-            panel4.add(editLevelXingBlock2Button = new JButton(Bundle.getMessage("EditBlock", 2)));  // NOI18N
+            panel4.add(editLevelXingBlock2Button = new JButton(Bundle.getMessage("EditBlock", "BD")));  // NOI18N
             editLevelXingBlock2Button.addActionListener((ActionEvent e) -> {
                 editLevelXingBlockBDPressed(e);
             });
             editLevelXingBlock2Button.setToolTipText(Bundle.getMessage("EditBlockHint", "")); // empty value for block 1  // NOI18N
             contentPane.add(panel4);
+
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(editLevelXingDoneButton = new JButton(Bundle.getMessage("ButtonDone")));  // NOI18N
-            editLevelXingDoneButton.addActionListener((ActionEvent e) -> {
-                editLevelXingDonePressed(e);
-            });
-            editLevelXingDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(editLevelXingDoneButton);
-                rootPane.setDefaultButton(editLevelXingDoneButton);
-            });
-
-            // Cancel
-            panel5.add(editLevelXingCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));  // NOI18N
-            editLevelXingCancelButton.addActionListener((ActionEvent e) -> {
-                editLevelXingCancelPressed(e);
-            });
-            editLevelXingCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
+            addDoneCancelButtons(panel5, editLevelXingFrame.getRootPane(),
+                    this::editLevelXingDonePressed, this::editLevelXingCancelPressed);
             contentPane.add(panel5);
         }
 
@@ -1472,8 +1419,8 @@ public class LayoutTrackEditors {
 
         // Set up for Edit
         BlockManager bm = InstanceManager.getDefault(BlockManager.class);
-        editLevelXingBlock1NameComboBox.setSelectedItem(bm.getBlock(levelXing.getBlockNameAC()));
-        editLevelXingBlock2NameComboBox.setSelectedItem(bm.getBlock(levelXing.getBlockNameBD()));
+        editLevelXingBlock1NameComboBox.getEditor().setItem(bm.getBlock(levelXing.getBlockNameAC()));
+        editLevelXingBlock2NameComboBox.getEditor().setItem(bm.getBlock(levelXing.getBlockNameBD()));
         editLevelXingBlock1NameComboBox.setEnabled(!hasNxSensorPairs(levelXing.getLayoutBlockAC()));  // NOI18N
         editLevelXingBlock2NameComboBox.setEnabled(!hasNxSensorPairs(levelXing.getLayoutBlockBD()));  // NOI18N
         editLevelXingFrame.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -1493,20 +1440,12 @@ public class LayoutTrackEditors {
     private void editLevelXingBlockACPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLevelXingBlock1NameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!levelXing.getBlockNameAC().equals(newName)) {
             // get new block, or null if block has been removed
-            if (!newName.isEmpty()) {
-                try {
-                    levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    levelXing.setLayoutBlockAC(null);
-                    editLevelXingBlock1NameComboBox.setSelectedItem(null);
-                    editLevelXingBlock1NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                levelXing.setLayoutBlockAC(null);
-            }
+            levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
             editLevelXingNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLevelXingNeedsBlockUpdate = true;
@@ -1514,7 +1453,7 @@ public class LayoutTrackEditors {
         // check if a block exists to edit
         if (levelXing.getLayoutBlockAC() == null) {
             JOptionPane.showMessageDialog(editLevelXingFrame,
-                    Bundle.getMessage("Error1"),  // NOI18N
+                    Bundle.getMessage("Error1"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
@@ -1525,20 +1464,12 @@ public class LayoutTrackEditors {
     private void editLevelXingBlockBDPressed(ActionEvent a) {
         // check if a block name has been entered
         String newName = editLevelXingBlock2NameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!levelXing.getBlockNameBD().equals(newName)) {
             // get new block, or null if block has been removed
-            if (!newName.isEmpty()) {
-                try {
-                    levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    levelXing.setLayoutBlockBD(null);
-                    editLevelXingBlock2NameComboBox.setSelectedItem(null);
-                    editLevelXingBlock2NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                levelXing.setLayoutBlockBD(null);
-            }
+            levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
             editLevelXingNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLevelXingNeedsBlockUpdate = true;
@@ -1546,7 +1477,7 @@ public class LayoutTrackEditors {
         // check if a block exists to edit
         if (levelXing.getLayoutBlockBD() == null) {
             JOptionPane.showMessageDialog(editLevelXingFrame,
-                    Bundle.getMessage("Error1"),  // NOI18N
+                    Bundle.getMessage("Error1"), // NOI18N
                     Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);  // NOI18N
             return;
         }
@@ -1557,39 +1488,23 @@ public class LayoutTrackEditors {
     private void editLevelXingDonePressed(ActionEvent a) {
         // check if Blocks changed
         String newName = editLevelXingBlock1NameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!levelXing.getBlockNameAC().equals(newName)) {
             // get new block, or null if block has been removed
-            if (!newName.isEmpty()) {
-                try {
-                    levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    levelXing.setLayoutBlockAC(null);
-                    editLevelXingBlock1NameComboBox.setSelectedItem(null);
-                    editLevelXingBlock1NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                levelXing.setLayoutBlockAC(null);
-            }
+            levelXing.setLayoutBlockAC(layoutEditor.provideLayoutBlock(newName));
             editLevelXingNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLevelXingNeedsBlockUpdate = true;
         }
         newName = editLevelXingBlock2NameComboBox.getSelectedItemDisplayName();
-        if (newName == null) newName = "";
+        if (newName == null) {
+            newName = "";
+        }
         if (!levelXing.getBlockNameBD().equals(newName)) {
             // get new block, or null if block has been removed
-            if (!newName.isEmpty()) {
-                try {
-                    levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
-                } catch (IllegalArgumentException ex) {
-                    levelXing.setLayoutBlockBD(null);
-                    editLevelXingBlock2NameComboBox.setSelectedItem(null);
-                    editLevelXingBlock2NameComboBox.setSelectedIndex(-1);
-                }
-            } else {
-                levelXing.setLayoutBlockBD(null);
-            }
+            levelXing.setLayoutBlockBD(layoutEditor.provideLayoutBlock(newName));
             editLevelXingNeedsRedraw = true;
             layoutEditor.getLEAuxTools().setBlockConnectivityChanged();
             editLevelXingNeedsBlockUpdate = true;
@@ -1640,12 +1555,9 @@ public class LayoutTrackEditors {
     private JmriJFrame editLayoutTurntableFrame = null;
     private JTextField editLayoutTurntableRadiusTextField = new JTextField(8);
     private JTextField editLayoutTurntableAngleTextField = new JTextField(8);
-    private JButton editLayoutTurntableDoneButton;
-    private JButton editLayoutTurntableCancelButton;
 
     private JPanel editLayoutTurntableRayPanel;
     private JButton editLayoutTurntableAddRayTrackButton;
-    //private JButton editLayoutTurntableDeleteRayTrackButton;
     private JCheckBox editLayoutTurntableDccControlledCheckBox;
 
     private String editLayoutTurntableOldRadius = "";
@@ -1676,24 +1588,27 @@ public class LayoutTrackEditors {
             contentPane.add(headerPane, BorderLayout.NORTH);
             contentPane.add(footerPane, BorderLayout.SOUTH);
 
-            // setup radius
+            // setup radius text field
             JPanel panel1 = new JPanel();
             panel1.setLayout(new FlowLayout());
             JLabel radiusLabel = new JLabel(Bundle.getMessage("TurntableRadius"));  // NOI18N
             panel1.add(radiusLabel);
+            radiusLabel.setLabelFor(editLayoutTurntableRadiusTextField);
             panel1.add(editLayoutTurntableRadiusTextField);
             editLayoutTurntableRadiusTextField.setToolTipText(Bundle.getMessage("TurntableRadiusHint"));  // NOI18N
             headerPane.add(panel1);
 
-            // setup add ray track
+            // setup ray track angle text field
             JPanel panel2 = new JPanel();
             panel2.setLayout(new FlowLayout());
             JLabel rayAngleLabel = new JLabel(Bundle.getMessage("RayAngle"));  // NOI18N
             panel2.add(rayAngleLabel);
+            rayAngleLabel.setLabelFor(editLayoutTurntableAngleTextField);
             panel2.add(editLayoutTurntableAngleTextField);
             editLayoutTurntableAngleTextField.setToolTipText(Bundle.getMessage("RayAngleHint"));  // NOI18N
             headerPane.add(panel2);
 
+            // setup add ray track button
             JPanel panel3 = new JPanel();
             panel3.setLayout(new FlowLayout());
             panel3.add(editLayoutTurntableAddRayTrackButton = new JButton(Bundle.getMessage("AddRayTrack")));  // NOI18N
@@ -1709,25 +1624,8 @@ public class LayoutTrackEditors {
             // set up Done and Cancel buttons
             JPanel panel5 = new JPanel();
             panel5.setLayout(new FlowLayout());
-            panel5.add(editLayoutTurntableDoneButton = new JButton(Bundle.getMessage("ButtonDone")));  // NOI18N
-            editLayoutTurntableDoneButton.addActionListener((ActionEvent e) -> {
-                editLayoutTurntableDonePressed(e);
-            });
-
-            // make this button the default button (return or enter activates)
-            // Note: We have to invoke this later because we don't currently have a root pane
-            SwingUtilities.invokeLater(() -> {
-                JRootPane rootPane = SwingUtilities.getRootPane(editLayoutTurntableDoneButton);
-                rootPane.setDefaultButton(editLayoutTurntableDoneButton);
-            });
-
-            editLayoutTurntableDoneButton.setToolTipText(Bundle.getMessage("DoneHint", Bundle.getMessage("ButtonDone")));  // NOI18N
-            // Cancel
-            panel5.add(editLayoutTurntableCancelButton = new JButton(Bundle.getMessage("ButtonCancel")));  // NOI18N
-            editLayoutTurntableCancelButton.addActionListener((ActionEvent e) -> {
-                turntableEditCancelPressed(e);
-            });
-            editLayoutTurntableCancelButton.setToolTipText(Bundle.getMessage("CancelHint", Bundle.getMessage("ButtonCancel")));  // NOI18N
+            addDoneCancelButtons(panel5, editLayoutTurntableFrame.getRootPane(),
+                    this::editLayoutTurntableDonePressed, this::turntableEditCancelPressed);
             footerPane.add(panel5);
 
             editLayoutTurntableRayPanel = new JPanel();
@@ -1798,8 +1696,8 @@ public class LayoutTrackEditors {
         try {
             ang = Float.parseFloat(editLayoutTurntableAngleTextField.getText());
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "  // NOI18N
-                    + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),  // NOI18N
+            JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
+                    + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
                     JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -1809,37 +1707,7 @@ public class LayoutTrackEditors {
         editLayoutTurntableNeedsRedraw = false;
     }
 
-    //TODO: find where/when this was used and re-implement or dead-code strip
-    //note: commented out to fix findbugs
-    //private void deleteRayTrackPressed(ActionEvent a) {
-    //    double ang = 0.0;
-    //    try {
-    //        ang = Float.parseFloat(editLayoutTurntableAngleTextField.getText());
-    //    } catch (Exception e) {
-    //        JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "
-    //                + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),
-    //                JOptionPane.ERROR_MESSAGE);
-    //        return;
-    //    }
-    //    // scan rays to find the one to delete
-    //    LayoutTurntable.RayTrack closest = null;
-    //    double bestDel = 360.0;
-    //    for (LayoutTurntable.RayTrack rt : layoutTurntable.getRayList()) {
-    //        double del = MathUtil.absDiffAngleDEG(rt.getAngle(), ang);
-    //        if (del < bestDel) {
-    //            bestDel = del;
-    //            closest = rt;
-    //        }
-    //    }
-    //    if (bestDel > 30.0) {
-    //        JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("Error13"),
-    //                Bundle.getMessage("ErrorTitle"), JOptionPane.ERROR_MESSAGE);
-    //        return;
-    //    }
-    //    layoutTurntable.deleteRay(closest);
-    //}
-
-  private void editLayoutTurntableDonePressed(ActionEvent a) {
+    private void editLayoutTurntableDonePressed(ActionEvent a) {
         // check if new radius was entered
         String str = editLayoutTurntableRadiusTextField.getText();
         if (!str.equals(editLayoutTurntableOldRadius)) {
@@ -1847,8 +1715,8 @@ public class LayoutTrackEditors {
             try {
                 rad = Float.parseFloat(str);
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "  // NOI18N
-                        + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),  // NOI18N
+                JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
+                        + e + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
                         JOptionPane.ERROR_MESSAGE);
                 return;
             }
@@ -1904,10 +1772,11 @@ public class LayoutTrackEditors {
 
             JPanel top = new JPanel();
 
-            /*JLabel lbl = new JLabel("Index :"+connectionIndex);
-                 top.add(lbl);*/
-            top.add(new JLabel(Bundle.getMessage("RayAngle") + " : "));  // NOI18N
+            JLabel rayAngleLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("RayAngle")));
+            top.add(rayAngleLabel);
             top.add(rayAngleTextField = new JTextField(5));
+            rayAngleLabel.setLabelFor(rayAngleTextField);
+
             rayAngleTextField.addFocusListener(new FocusListener() {
                 @Override
                 public void focusGained(FocusEvent e) {
@@ -1918,8 +1787,8 @@ public class LayoutTrackEditors {
                     try {
                         Float.parseFloat(rayAngleTextField.getText());
                     } catch (Exception ex) {
-                        JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": "  // NOI18N
-                                + ex + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"),  // NOI18N
+                        JOptionPane.showMessageDialog(editLayoutTurntableFrame, Bundle.getMessage("EntryError") + ": " // NOI18N
+                                + ex + Bundle.getMessage("TryAgain"), Bundle.getMessage("ErrorTitle"), // NOI18N
                                 JOptionPane.ERROR_MESSAGE);
                         return;
                     }
@@ -1929,10 +1798,9 @@ public class LayoutTrackEditors {
             this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             this.add(top);
 
-            turnoutNameComboBox = new NamedBeanComboBox<>
-                    (InstanceManager.getDefault(TurnoutManager.class));
+            turnoutNameComboBox = new NamedBeanComboBox<>(InstanceManager.getDefault(TurnoutManager.class));
             turnoutNameComboBox.setToolTipText(Bundle.getMessage("EditTurnoutToolTip"));
-            LayoutEditor.setupComboBox(turnoutNameComboBox, false, true);
+            LayoutEditor.setupComboBox(turnoutNameComboBox, false, true, false);
             turnoutNameComboBox.setSelectedItem(rayTrack.getTurnout());
             turnoutNameComboBox.addPopupMenuListener(
                     layoutEditor.newTurnoutComboBoxPopupMenuListener(turnoutNameComboBox, turntableTurnouts));
@@ -1947,6 +1815,7 @@ public class LayoutTrackEditors {
             rayTurnoutPanel.setBorder(new EtchedBorder());
             rayTurnoutPanel.add(turnoutNameComboBox);
             rayTurnoutPanel.add(rayTurnoutStateLabel);
+            rayTurnoutStateLabel.setLabelFor(rayTurnoutStateComboBox);
             rayTurnoutPanel.add(rayTurnoutStateComboBox);
             if (rayTrack.getTurnoutState() == Turnout.CLOSED) {
                 rayTurnoutStateComboBox.setSelectedItem(turnoutStateClosed);
@@ -1971,16 +1840,20 @@ public class LayoutTrackEditors {
             rayAngleTextField.setText(twoDForm.format(rayTrack.getAngle()));
             rayTitledBorder.setTitle(Bundle.getMessage("Ray") + " : " + rayTrack.getConnectionIndex());  // NOI18N
             if (rayTrack.getConnect() == null) {
-                rayTitledBorder.setTitle(Bundle.getMessage("Unconnected") + " : " + rayTrack.getConnectionIndex());  // NOI18N
+                rayTitledBorder.setTitle(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("Unconnected")) + " "
+                        + rayTrack.getConnectionIndex());  // NOI18N
             } else if (rayTrack.getConnect().getLayoutBlock() != null) {
-                rayTitledBorder.setTitle(Bundle.getMessage("Connected") + " : " + rayTrack.getConnect().getLayoutBlock().getDisplayName());  // NOI18N
+                rayTitledBorder.setTitle(Bundle.getMessage("MakeLabel",
+                        Bundle.getMessage("Connected")) + " "
+                        + rayTrack.getConnect().getLayoutBlock().getDisplayName());  // NOI18N
             }
         }
 
         private void delete() {
             int n = JOptionPane.showConfirmDialog(null,
-                    Bundle.getMessage("Question7"),  // NOI18N
-                    Bundle.getMessage("WarningTitle"),  // NOI18N
+                    Bundle.getMessage("Question7"), // NOI18N
+                    Bundle.getMessage("WarningTitle"), // NOI18N
                     JOptionPane.YES_NO_OPTION);
             if (n == JOptionPane.YES_OPTION) {
                 layoutTurntable.deleteRay(rayTrack);
@@ -1992,7 +1865,9 @@ public class LayoutTrackEditors {
                 return;
             }
             String turnoutName = turnoutNameComboBox.getSelectedItemDisplayName();
-            if (turnoutName == null) turnoutName = "";
+            if (turnoutName == null) {
+                turnoutName = "";
+            }
             rayTrack.setTurnout(turnoutName, rayTurnoutStateValues[rayTurnoutStateComboBox.getSelectedIndex()]);
             if (!rayAngleTextField.getText().equals(twoDForm.format(rayTrack.getAngle()))) {
                 try {

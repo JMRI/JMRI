@@ -5,6 +5,7 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Manager;
+import jmri.SignalHead;
 import jmri.implementation.DefaultLogix;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -14,8 +15,9 @@ import org.slf4j.LoggerFactory;
 /**
  * Basic Implementation of a LogixManager.
  * <p>
- * Note that Logix system names must begin with IX, and be followed by a string,
- * usually, but not always, a number. This is enforced when a Logix is created.
+ * Note that Logix system names must begin with system prefix and type character,
+ * usually IX, and be followed by a string, usually, but not always, a number. This
+ * is enforced when a Logix is created.
  * <p>
  * The system names of Conditionals belonging to a Logix begin with the Logix's
  * system name, then there is a capital C and a number.
@@ -51,11 +53,10 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     /**
-     * Method to create a new Logix if the Logix does not exist.
-     * <p>
-     * Returns null if
-     * a Logix with the same systemName or userName already exists, or if there
-     * is trouble creating a new Logix.
+     * Create a new Logix if the Logix does not exist.
+     *
+     * @return null if a Logix with the same systemName or userName
+     * already exists, or if there is trouble creating a new Logix
      */
     @Override
     public Logix createNewLogix(String systemName, String userName) {
@@ -76,34 +77,16 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         // save in the maps
         register(x);
 
-        /*The following keeps track of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them*/
-        if (systemName.startsWith("IX:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoLogixRef) {
-                    lastAutoLogixRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
-            }
-        }
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return x;
     }
 
     @Override
     public Logix createNewLogix(String userName) {
-        int nextAutoLogixRef = lastAutoLogixRef + 1;
-        StringBuilder b = new StringBuilder("IX:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoLogixRef);
-        b.append(nextNumber);
-        return createNewLogix(b.toString(), userName);
+        return createNewLogix(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoLogixRef = 0;
 
     /**
      * Remove an existing Logix and delete all its conditionals. Logix must have
@@ -155,8 +138,8 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     /**
-     * Method to get an existing Logix. First looks up assuming that name is a
-     * User Name. If this fails looks up assuming that name is a System Name. If
+     * Get an existing Logix. First looks up assuming name is a
+     * User Name. If this fails looks up assuming name is a System Name. If
      * both fail, returns null.
      */
     @Override
@@ -203,5 +186,14 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         return Bundle.getMessage(plural ? "BeanNameLogixes" : "BeanNameLogix");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Logix> getNamedBeanClass() {
+        return Logix.class;
+    }
+
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);
+
 }

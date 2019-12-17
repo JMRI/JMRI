@@ -67,6 +67,11 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     } // NOI18N
 
     @Override
+    public Class<NamedBean> getNamedBeanClass() {
+        return NamedBean.class;
+    }
+
+    @Override
     public int getXMLOrder() {
         return 65400;
     }
@@ -843,28 +848,44 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
 
         @Override
         public void run() {
+            boolean result = true;
             log.debug("Waiting for the Ecos preferences to be loaded before loading the loco database on the Ecos");
             while (!wait) {
-                waitForPrefLoad();
+                result = waitForPrefLoad();
             }
-            loadData();
+            if (result) {
+                loadData();
+            } else {
+                log.debug("waitForPrefLoad requested skip loadData()");
+            }
         }
 
         boolean wait = false;
-        int x = 0;
+        int count = 0;
 
-        private void waitForPrefLoad() {
+        /**
+         * @return true if OK to proceed to load data, false if should abort
+         */
+        private boolean waitForPrefLoad() {
             try {
-                Thread.sleep(1000);
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                log.trace("waitForPrefLoad received InterruptedException, honoring termination request");
+                wait = true;
+                return false;
             } catch (Exception e) {
+                wait = true;
                 log.error(e.toString());
+                return false;
             }
             wait = p.getPreferencesLoaded();
-            if (x >= 100) {
+            if (count >= 1000) {
                 wait = true;
-                log.warn("Timeout {} occurred on waiting for the Ecos preferences to be loaded", x);
+                log.warn("Timeout {} occurred on waiting for the Ecos preferences to be loaded", count);
+                return false;
             }
-            x++;
+            count++;
+            return true;
         }
     }
 

@@ -1,7 +1,7 @@
 package jmri.util.managers;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.jmrix.internal.InternalSensorManager;
@@ -28,6 +28,7 @@ public class SensorManagerThrowExceptionScaffold extends InternalSensorManager {
     
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Sensor provideSensor(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
@@ -46,13 +47,14 @@ public class SensorManagerThrowExceptionScaffold extends InternalSensorManager {
     
     /** {@inheritDoc} */
     @Override
-    public Sensor getByUserName(String key) {
+    public Sensor getByUserName(@Nonnull String key) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
-    public Sensor newSensor(@Nonnull String systemName, @Nullable String userName) {
+    @Nonnull
+    public Sensor newSensor(@Nonnull String systemName, @CheckForNull String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     

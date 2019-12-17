@@ -3,6 +3,8 @@ package jmri.jmrit.display.controlPanelEditor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -27,7 +29,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Pete Cressman Copyright: Copyright (c) 2011
  */
-public class EditCircuitFrame extends EditFrame {
+public class EditCircuitFrame extends EditFrame implements PropertyChangeListener {
 
     private JTextField _blockName;
     private JTextField _detectorSensorName;
@@ -43,6 +45,7 @@ public class EditCircuitFrame extends EditFrame {
     public EditCircuitFrame(String title, CircuitBuilder parent, OBlock block) {
         super(title, parent, block);
         updateContentPanel();
+        _homeBlock.addPropertyChangeListener("deleted", this);
         pack();
     }
 
@@ -349,6 +352,12 @@ public class EditCircuitFrame extends EditFrame {
         }
         _numTrackSeg.setText(String.valueOf(segments));
         _numTurnouts.setText(String.valueOf(turnouts));
+    }
+
+    public void propertyChange(PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("deleted")) {
+            closingEvent(true);
+        }
     }
 
     private final static Logger log = LoggerFactory.getLogger(EditCircuitFrame.class);

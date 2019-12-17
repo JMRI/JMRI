@@ -7,6 +7,7 @@ import javax.annotation.CheckForNull;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.SignalHead;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -47,7 +48,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         if (t != null) {
             return t;
         }
-        if (sName.startsWith("" + getSystemPrefix() + typeLetter())) {
+        if (sName.startsWith(getSystemNamePrefix())) {
             return newMemory(sName, null);
         } else {
             return newMemory(makeSystemName(sName), null);
@@ -116,35 +117,17 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         // save in the maps
         register(s);
 
-        /*The following keeps trace of the last created auto system name.  
-         currently we do not reuse numbers, although there is nothing to stop the 
-         user from manually recreating them*/
-        if (systemName.startsWith("IM:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoMemoryRef) {
-                    lastAutoMemoryRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
-            }
-        }
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return s;
     }
 
     /** {@inheritDoc} */
     @Override
     public @Nonnull Memory newMemory(@Nonnull String userName) {
-        int nextAutoMemoryRef = lastAutoMemoryRef + 1;
-        StringBuilder b = new StringBuilder("IM:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoMemoryRef);
-        b.append(nextNumber);
-        return newMemory(b.toString(), userName);
+        return newMemory(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoMemoryRef = 0;
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
@@ -162,6 +145,14 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     @Nonnull 
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameMemories" : "BeanNameMemory");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Memory> getNamedBeanClass() {
+        return Memory.class;
     }
 
     @Override

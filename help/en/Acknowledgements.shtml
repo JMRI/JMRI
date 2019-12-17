@@ -17,14 +17,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h2>Acknowledgements: People who've contributed to JMRI</h2>
       <p>A number of people have contributed their effort to JMRI.
       They are listed below in alphabetical order and deserve our
@@ -80,7 +81,9 @@
 
         <li>Cees Baarda, who expanded the DigiRails DR4018/DR4024 decoder definitions</li>
         
-        <li>Harald Barth, who improved the SRCP implementation</li>
+        <li>Harald Barth, <!-- habazut -->
+        who improved the SRCP implementation
+        and the DCC++ implementation.</li>
 
         <li>Michal Basta, who contributed the Czech
         internationalization</li>

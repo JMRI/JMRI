@@ -23,8 +23,6 @@ import jmri.ReporterManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpServiceTestBase;
-import jmri.server.json.idtag.JsonIdTag;
-import jmri.server.json.idtag.JsonIdTagHttpService;
 import jmri.server.json.reporter.JsonReporter;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
@@ -52,6 +50,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
     @After
     @Override
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager();
         super.tearDown();
     }
 
@@ -205,20 +204,6 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         JsonNode result = instance.doGetList(JsonIdTag.IDTAG, mapper.createObjectNode(), locale, 0);
         assertEquals(1, result.size());
         validate(result);
-    }
-
-    /**
-     * Test of doSchema method, of class JsonIdTagHttpService.
-     *
-     * @throws jmri.server.json.JsonException if something goes wrong
-     */
-    @Test
-    public void testDoSchema() throws JsonException {
-        JsonIdTagHttpService instance = new JsonIdTagHttpService(mapper);
-        JsonNode idTag = instance.doSchema(JsonIdTag.IDTAG, false, locale, 42);
-        validate(idTag);
-        idTag = instance.doSchema(JsonIdTag.IDTAG, true, locale, 42);
-        validate(idTag);
     }
 
 }

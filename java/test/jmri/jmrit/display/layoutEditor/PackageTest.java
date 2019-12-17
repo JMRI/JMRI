@@ -23,6 +23,10 @@ import org.junit.runners.Suite;
         LayoutConnectivityTest.class,
         LayoutEditorActionTest.class,
         LayoutEditorAuxToolsTest.class,
+        EnterGridSizesDialogTest.class,
+        EnterReporterDialogTest.class,
+        MoveSelectionDialogTest.class,
+        ScaleTrackDiagramDialogTest.class,
         LayoutEditorFindItemsTest.class,
         LayoutEditorLoadAndStoreTest.class,
         LayoutEditorTest.class,
@@ -47,6 +51,7 @@ import org.junit.runners.Suite;
         LayoutTrackDrawingOptionsDialogTest.class,
         LayoutTrackDrawingOptionsTest.class,
         LayoutTrackExpectedStateTest.class,
+        LoadAndStoreTest.class
 
 })
 public class PackageTest {

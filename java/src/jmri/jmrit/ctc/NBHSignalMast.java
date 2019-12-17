@@ -45,11 +45,13 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
             SignalMast signalMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(signal);
             if (signalMast != null) {
                 _mNamedBeanHandleSignalMast = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(signal, signalMast);
-                _mDangerAppearance = getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+                String temp = getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER);
+                if (temp == null) temp = "Stop"; // Safety
+                _mDangerAppearance = temp;
                 return;
             }
         }
-        _mDangerAppearance = "";                // Never used, just required for "final"
+        _mDangerAppearance = "Stop";            // Never used, just required for "final"
         _mNamedBeanHandleSignalMast = null;
     }
 
@@ -70,17 +72,38 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
 
 //  Fake for SignalHead support:
     @Override
-    public String[] getValidStateNames() { return new String[0]; }
+    public int[] getValidStates() { return new int[0]; }
 
     @Override
-    public int[] getValidStates() { return new int[0]; }
+    public String[] getValidStateKeys() { return new String[0]; }
+
+    @Override
+    public String[] getValidStateNames() { return new String[0]; }
 
     @Override
     public void setAppearance(int newAppearance) {}
 
+/**
+ *
+ * Function to insure that a non null aspect value is always returned to the caller.
+ *
+ * Background (regarding the value contained in "_mDangerAppearance"):
+ * In this objects constructor, "_mDangerAppearance" is set to getAppearanceMap().getSpecificAppearance(SignalAppearanceMap.DANGER).
+ * If "...getSpecificAppearance..." returns "null" (undocumented in JMRI documents as of 9/18/2019),
+ * "_mDangerAppearance" is set to "Stop" for safety.
+ * So "_mDangerAppearance" will NEVER be null for use as follows:
+ *
+ * SignalMast.getAspect() can return "null" (undocumented in JMRI documents as of 9/18/2019) if (for instance) the signal has no
+ * rules (i.e. no "Discover" done yet, or the signal is shown on the screen as a big red "X").
+ * In this case, we return "_mDangerAppearance".
+ *
+ * @return  Return a guaranteed non null aspect name.
+ */
     public String getAspect() {
         if (_mNamedBeanHandleSignalMast == null) return DEFAULT_STRING_RV;
-        return _mNamedBeanHandleSignalMast.getBean().getAspect();
+        String returnAspect = _mNamedBeanHandleSignalMast.getBean().getAspect();
+        if (returnAspect == null) return _mDangerAppearance;    // Safety
+        return returnAspect;
     }
 
     public SignalAppearanceMap getAppearanceMap() {
@@ -117,4 +140,5 @@ public class NBHSignalMast extends NBHAbstractSignalCommon {
         if (_mNamedBeanHandleSignalMast == null) return;
         _mNamedBeanHandleSignalMast.getBean().removePropertyChangeListener(l);
     }
+
 }

@@ -8,9 +8,13 @@
   },
   "author": "JMRI Community",
   "license": "GPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/JMRI/JMRI.git"
+  },
   "dependencies": {
-    "angular": "1.7.8",
-    "angular-patternfly": "5.0.1",
+    "angular": "1.7.9",
+    "angular-patternfly": "5.0.3",
     "angular-resource": "1.7.8",
     "angular-route": "1.7.8",
     "angular-translate": "2.18.1",
@@ -19,7 +23,7 @@
     "angular-websocket": "2.0.1",
     "angularjs-datatables": "0.5.9",
     "bootstrap": "3.4.1",
-    "lodash": "4.17.11",
+    "lodash": "4.17.15",
     "moment": "2.24.0"
   }
 }

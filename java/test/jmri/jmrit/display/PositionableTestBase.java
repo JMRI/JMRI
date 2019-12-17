@@ -139,6 +139,7 @@ abstract public class PositionableTestBase {
         Editor es = new EditorScaffold();
         p.setEditor(es);
         Assert.assertEquals("Editor",es,p.getEditor());
+        JUnitUtil.dispose(es);
     }
 
     @Test

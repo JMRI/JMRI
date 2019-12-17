@@ -1,6 +1,5 @@
 package jmri.managers;
 
-import java.text.DecimalFormat;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Route;
@@ -55,23 +54,34 @@ public class DefaultRouteManager extends AbstractManager<Route>
             return r;
         }
         // Route does not exist, create a new route
-        r = new DefaultRoute(systemName, userName);
+        r = new DefaultRoute(validateSystemNameFormat(systemName), userName);
         // save in the maps
         register(r);
-        /* The following keeps track of the last created auto system name.
-         Currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them. */
-        if (systemName.startsWith("IR:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoRouteRef) {
-                    lastAutoRouteRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName {} is not in the correct format", systemName);
-            }
-        }
+
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return r;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * Permit Route names without a "R" type letter. Marked as deprecated because this
+     * is temporary; it should be entirely removed once a migration is complete.
+     * @deprecated formally in 4.17.7
+     */
+    @Deprecated // 4.17.7
+    @Override
+    @javax.annotation.Nonnull
+    public String validateSystemNameFormat(@javax.annotation.Nonnull String name, @javax.annotation.Nonnull java.util.Locale locale) 
+                        throws jmri.NamedBean.BadSystemNameException {
+        try {
+            validateSystemNamePrefix(name, locale);
+        } catch (jmri.NamedBean.BadSystemNameException e) {
+            jmri.util.Log4JUtil.warnOnce(log, "Invalid Route Name: {} must start with IR", name, new Exception("traceback"));
+        }
+        return name;
     }
 
     /**
@@ -82,16 +92,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
      */
     @Override
     public Route newRoute(String userName) {
-        int nextAutoRouteRef = lastAutoRouteRef + 1;
-        StringBuilder b = new StringBuilder("IR:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoRouteRef);
-        b.append(nextNumber);
-        return provideRoute(b.toString(), userName);
+        return provideRoute(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoRouteRef = 0;
 
     /**
      * Remove an existing route. Route must have been deactivated before
@@ -132,7 +134,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
      */
     @Deprecated
-    static public DefaultRouteManager instance() {
+    public static DefaultRouteManager instance() {
         return InstanceManager.getDefault(DefaultRouteManager.class);
     }
 
@@ -141,11 +143,19 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return Bundle.getMessage(plural ? "BeanNameRoutes" : "BeanNameRoute");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Route provide(String name) throws IllegalArgumentException {
+    public Class<Route> getNamedBeanClass() {
+        return Route.class;
+    }
+
+    @Override
+    public Route provide(String name) {
         return provideRoute(name, null);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultRouteManager.class);
 
 }

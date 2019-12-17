@@ -16,9 +16,9 @@ import org.slf4j.LoggerFactory;
  * This doesn't have a "new" interface, since Sections are independently
  * implemented, instead of being system-specific.
  * <p>
- * Note that Section system names must begin with IY, and be followed by a
- * string, usually, but not always, a number. This is enforced when a Section is
- * created.
+ * Note that Section system names must begin with system prefix and type character,
+ * usually IY, and be followed by a string, usually, but not always, a number. This
+ * is enforced when a Section is created.
  * <br>
  * <hr>
  * This file is part of JMRI.
@@ -51,6 +51,11 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         return 'Y';
     }
 
+    @Override
+    public Class<Section> getNamedBeanClass() {
+        return Section.class;
+    }
+
     /**
      * Method to create a new Section if the Section does not exist.
      *
@@ -67,8 +72,8 @@ public class SectionManager extends AbstractManager<Section> implements Instance
             return null;
         }
         String sysName = systemName;
-        if ((sysName.length() < 2) || (!sysName.substring(0, 2).equals("IY"))) {
-            sysName = "IY" + sysName;
+        if (!sysName.startsWith(getSystemNamePrefix())) {
+            sysName = makeSystemName(sysName);
         }
         // Check that Section does not already exist
         Section y;
@@ -86,33 +91,16 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         y = new Section(sysName, userName);
         // save in the maps
         register(y);
-        /*The following keeps trace of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them*/
-        if (systemName.startsWith("IY:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoSectionRef) {
-                    lastAutoSectionRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
-            }
-        }
+
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return y;
     }
 
     public Section createNewSection(String userName) {
-        int nextAutoSectionRef = lastAutoSectionRef + 1;
-        StringBuilder b = new StringBuilder("IY:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoSectionRef);
-        b.append(nextNumber);
-        return createNewSection(b.toString(), userName);
+        return createNewSection(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoSectionRef = 0;
 
     /**
      * Remove an existing Section.

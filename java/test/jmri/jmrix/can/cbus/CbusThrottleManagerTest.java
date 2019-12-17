@@ -34,7 +34,9 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     }
 
     @Test
-    public void testIncomingFuntions() {
+    public void testIncomingFunctions() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+    
         CbusThrottleManager cbtm = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtm);
         DccLocoAddress addr = new DccLocoAddress(1234,true);
@@ -139,7 +141,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     }
     
     @Test
-    public void testIncomingFuntionsDecimal() {
+    public void testIncomingFunctionsDecimal() {
         CbusThrottleManager cbtmb = ( CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtmb);
         DccLocoAddress addr = new DccLocoAddress(221,true);
@@ -167,6 +169,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
     
     @Test
     public void testIncomingSpeedDirection() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         CbusThrottleManager cbtmb = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtmb);
         DccLocoAddress addr = new DccLocoAddress(422,true);
@@ -176,107 +180,107 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "reply didn't arrive");
         
-        Assert.assertEquals("speed setting",0.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("speed increment",(1.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedIncrement"));
-        Assert.assertEquals("speed step mode",SpeedStepMode.NMRA_DCC_128,cbtmb.getThrottleInfo(addr,"SpeedStepMode"));
+        Assert.assertEquals("speed setting",0.0f,cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("speed increment",(1.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDINCREMENT));
+        Assert.assertEquals("speed step mode",SpeedStepMode.NMRA_DCC_128,cbtmb.getThrottleInfo(addr,Throttle.SPEEDSTEPMODE));
 
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 0 },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("speed setting 0",0.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 0",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 0",0.0f,cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 0",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 77, 77 },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("different session speed unchanged",0.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
+        Assert.assertEquals("different session speed unchanged",0.0f,cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
         
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 1 },0x12 );
         cbtmb.reply(r);  
-        Assert.assertEquals("speed setting 1",-1.0f,cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 1",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 1",-1.0f,cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 1",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         
         r.setElement(2, 2);
         cbtmb.reply(r);  
-        Assert.assertEquals("speed setting 2",(1.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 2",false,cbtmb.getThrottleInfo(addr,"IsForward"));        
+        Assert.assertEquals("speed setting 2",(1.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 2",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r.setElement(2, 77);
         cbtmb.reply(r);  
-        Assert.assertEquals("speed setting 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 77",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 77",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r.setElement(2, 126);
         cbtmb.reply(r);  
-        Assert.assertEquals("speed setting 126",(125.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 126",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 126",(125.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 126",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         
         r.setElement(2, 127);
         cbtmb.reply(r);  
-        Assert.assertEquals("speed setting 127",(1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 127",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 127",(1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 127",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r.setElement(2, 128);
         cbtmb.reply(r);  
-        Assert.assertEquals("speed setting 128",(0.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 128",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 128",(0.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 128",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r.setElement(2, 129);
         cbtmb.reply(r);  
-        Assert.assertEquals("speed setting 129",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 129",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 129",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 129",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r.setElement(2, 130);
         cbtmb.reply(r);  
-        Assert.assertEquals("speed setting 130",(1.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 130",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 130",(1.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 130",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r.setElement(2, 211);
         cbtmb.reply(r);  
-        Assert.assertEquals("speed setting 211",(82.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 211",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 211",(82.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 211",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r.setElement(2, 254);
         cbtmb.reply(r);  
-        Assert.assertEquals("speed setting 254",(125.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 254",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 254",(125.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 254",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r.setElement(2, 255);
         cbtmb.reply(r);
-        Assert.assertEquals("speed setting 255",(1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 255",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 255",(1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 255",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r = new CanReply( new int[]{CbusConstants.CBUS_ESTOP },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("speed setting estop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("estop forward",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting estop",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("estop forward",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 77 },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("speed setting before reverse estop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward b4 estop 77",false,cbtmb.getThrottleInfo(addr,"IsForward"));        
+        Assert.assertEquals("speed setting before reverse estop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward b4 estop 77",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         r = new CanReply( new int[]{CbusConstants.CBUS_ESTOP },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("speed setting estop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("estop reverse",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting estop",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("estop reverse",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 255 },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("speed setting 255",(1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward 255",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting 255",(1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward 255",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r = new CanReply( new int[]{CbusConstants.CBUS_RESTP },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("speed setting r estop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("restop forward",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting r estop",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("restop forward",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 77 },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("speed setting before reverse restop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("is forward b4 restop 77",false,cbtmb.getThrottleInfo(addr,"IsForward"));        
+        Assert.assertEquals("speed setting before reverse restop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("is forward b4 restop 77",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         r = new CanReply( new int[]{CbusConstants.CBUS_RESTP },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("speed setting restop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("restop reverse",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("speed setting restop",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("restop reverse",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r = null;
 
@@ -284,6 +288,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
     @Test
     public void testMessage() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
         
         CbusThrottleManager cbtmb = (CbusThrottleManager) tm;
         Assert.assertNotNull("exists",cbtmb);
@@ -297,80 +302,80 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 88 },0x12 );
         r.setExtended(true);
         cbtmb.reply(r);
-        Assert.assertTrue((float)cbtmb.getThrottleInfo(addr,"SpeedSetting")==0f);
+        Assert.assertTrue((float)cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING)==0f);
         
         r.setExtended(false);
         r.setRtr(true);
         cbtmb.reply(r);
-        Assert.assertTrue((float)cbtmb.getThrottleInfo(addr,"SpeedSetting")==0f);
+        Assert.assertTrue((float)cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING)==0f);
         
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 77 },0x12 );
         // rtr and extended both false by default
         
         cbtmb.reply(r);
         
-        JUnitUtil.waitFor(()->{ return(((float)cbtmb.getThrottleInfo(addr,"SpeedSetting"))!=0f); }, "Speed command not received");
-        Assert.assertEquals("msg speed setting before reverse estop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("msg is forward b4 estop 77",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        JUnitUtil.waitFor(()->{ return(((float)cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING))!=0f); }, "Speed command not received");
+        Assert.assertEquals("msg speed setting before reverse estop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("msg is forward b4 estop 77",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         CanMessage m = new CanMessage( new int[]{CbusConstants.CBUS_RESTP },0x12 );
         cbtmb.message(m);
-        Assert.assertEquals("msg speed setting estop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("msg estop reverse",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("msg speed setting estop",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("msg estop reverse",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 44, 77 },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("msg speed setting unchanged wrong address",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
+        Assert.assertEquals("msg speed setting unchanged wrong address",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
         
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 77 },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("msg speed setting before reverse estop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("msg is forward b4 estop 77",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("msg speed setting before reverse estop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("msg is forward b4 estop 77",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         m = new CanMessage( new int[]{CbusConstants.CBUS_ESTOP },0x12 );
         
         m.setExtended(true);
         cbtmb.message(m);
-        Assert.assertEquals("msg speed setting Extended CAN ignored",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
+        Assert.assertEquals("msg speed setting Extended CAN ignored",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
         
         m.setExtended(false);
         m.setRtr(true);
         cbtmb.message(m);
-        Assert.assertEquals("msg speed setting Rtr CAN ignored",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
+        Assert.assertEquals("msg speed setting Rtr CAN ignored",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
         
         m.setRtr(false);
         cbtmb.message(m);
         
-        Assert.assertEquals("msg speed setting estop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("msg estop reverse",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("msg speed setting estop",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("msg estop reverse",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         r = new CanReply( new int[]{CbusConstants.CBUS_DSPD, 1, 77 },0x12 );
         cbtmb.reply(r);
-        Assert.assertEquals("msg speed setting before reverse estop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("msg is forward b4 estop 77",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("msg speed setting before reverse estop 77",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("msg is forward b4 estop 77",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         m = new CanMessage( new int[]{CbusConstants.CBUS_DSPD, 1, 99 },0x12 );
         cbtmb.message(m);
-        Assert.assertEquals("msg speed does not change",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("msg estop reverse",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("msg speed does not change",(76.0f/126.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("msg estop reverse",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         m.setElement(2, 1);
         cbtmb.message(m);
-        Assert.assertEquals("msg speed change estop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("msg estop reverse",false,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("msg speed change estop",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("msg estop reverse",false,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
 
         m.setElement(2, 129);
         cbtmb.message(m);
-        Assert.assertEquals("msg speed change estop",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
-        Assert.assertEquals("msg estop reverse",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("msg speed change estop",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
+        Assert.assertEquals("msg estop reverse",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         
         m = new CanMessage( new int[]{CbusConstants.CBUS_KLOC, 22 },0x12 );
         cbtmb.message(m);
-        Assert.assertEquals("addr unchanged as no session number match",true,cbtmb.getThrottleInfo(addr,"IsForward"));
+        Assert.assertEquals("addr unchanged as no session number match",true,cbtmb.getThrottleInfo(addr,Throttle.ISFORWARD));
         
         m = new CanMessage( new int[]{CbusConstants.CBUS_KLOC, 1 },0x12 );
         cbtmb.message(m);
         
         m = new CanMessage( new int[]{CbusConstants.CBUS_DSPD, 1, 11 },0x12 );
         cbtmb.message(m);
-        Assert.assertEquals("msg speed change ignored as session cancelled",(-1.0f),cbtmb.getThrottleInfo(addr,"SpeedSetting"));
+        Assert.assertEquals("msg speed change ignored as session cancelled",(-1.0f),cbtmb.getThrottleInfo(addr,Throttle.SPEEDSETTING));
         
     }
 
@@ -1013,7 +1018,6 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         InstanceManager.setThrottleManager( tm );
         _cs = new CbusDummyCS(memo); // we are testing the tm, not the command station
         _cs.setDelay(0); // no need to simulate network delay
-        
     }
 
     @After
@@ -1021,9 +1025,15 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         CbusThrottleManager dtm = (CbusThrottleManager)tm;
         dtm.dispose();
         tm=null;
+        dtm=null;
         _cs.dispose();
         _cs = null;
+        memo.dispose();
+        memo = null;
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     private final static Logger log = LoggerFactory.getLogger(CbusThrottleManagerTest.class);

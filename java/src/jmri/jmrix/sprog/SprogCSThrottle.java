@@ -138,7 +138,7 @@ public class SprogCSThrottle extends AbstractThrottle {
             }
             commandStation.setSpeed(SpeedStepMode.NMRA_DCC_28, address, value, isForward);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+                notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
             }
         } else {
             // 128 step mode speed commands are
@@ -157,7 +157,7 @@ public class SprogCSThrottle extends AbstractThrottle {
             }
             commandStation.setSpeed(SpeedStepMode.NMRA_DCC_128, address, value, isForward);
             if (Math.abs(oldSpeed - this.speedSetting) > 0.0001) {
-                notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting);
+                notifyPropertyChangeListener(SPEEDSETTING, oldSpeed, this.speedSetting);
             }
         }
         record(speed);
@@ -169,7 +169,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         isForward = forward;
         setSpeedSetting(speedSetting);  // Update the speed setting
         if (old != isForward) {
-            notifyPropertyChangeListener("IsForward", old, isForward);
+            notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 

@@ -22,7 +22,7 @@ public class CbusPowerManager implements PowerManager, CanListener {
         // connect to the TrafficManager
         this.memo = memo;
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     CanSystemConnectionMemo memo;

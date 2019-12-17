@@ -4,6 +4,8 @@ import javax.annotation.Nonnull;
 
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.SignalHead;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -190,6 +192,14 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Sensor> getNamedBeanClass() {
+        return Sensor.class;
     }
 
     /**

@@ -16,7 +16,7 @@ public final class JSON {
      * history. Starting with 5.0.0, this is a semantic version string; prior to
      * that, it is just an X.Y version string.
      */
-    public static final String JSON_PROTOCOL_VERSION = "5.1.0"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "5.2.0"; // NOI18N
 
     /* JSON structure */
     /**
@@ -205,6 +205,10 @@ public final class JSON {
      * {@value #IS_AUTO_START}
      */
     public static final String IS_AUTO_START = "isAutoStart"; // NOI18N
+    /**
+     * {@value #IS_NEXT_PROFILE}
+     */
+    public static final String IS_NEXT_PROFILE = "isNextProfile"; // NOI18N
 
     /* JSON data types */
     /**

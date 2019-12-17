@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI: CTC</title><!-- Style -->
+  <title>JMRI: CTC</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,14 +15,15 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: CTC</h1>
 
       <p>
@@ -30,19 +32,23 @@
       CTC features, it is not a CTC course.  There are many books written on
       the subject, for example Dr. Bruce Chubb's CTC manuals.  Other materials
       (too numerous to list) exist on the Internet as well, such as Mike
-      Burgett's web site (since shut down, but may be active in the future again).
+      Burgett's web site (since shut down, but may be active in the future again)
+      and Michael J. Burgett's <a href="http://www.ctcparts.com/about.htm">The
+      Engineering Basics of CTC</a>.<br>
+      As a starter, check our <a href="#ctcDefinitions">CTC Definitions</a> at
+      the bottom of this page.
       </p>
 
       <p>
       <strong>Important</strong>: A requirement of CTC is that a fully functional
-      ABS (Automatic Block Signaling) signaling system exist already in your system.
-      As you may already know, CTC is just a layer on top of ABS.
+      ABS (Automatic Block Signaling) signaling system  already is in place on your
+      layout. As you may already know, CTC is just a layer on top of ABS.
       </p>
 
       <h2>Overview</h2>
       <p>
       The CTC system consists of three main components.  The first one is the
-      <strong>CTCEditor</strong> which is used to define the CTC system.  The
+      <strong>CTC Editor</strong> which is used to define the CTC system.  The
       second component is <strong>CTCMain</strong>, which is a run time
       component which executes the rules created by the editor.  These
       components are started by using the PanelPro <strong>Tools</strong> menu
@@ -58,13 +64,13 @@
       signaling before adding CTC. This includes proper block boundaries.
       </p>
 
-      <h3>CTCEditor</h3>
+      <h3>CTC Editor</h3>
       <p>
-      To start the CTCEditor, on the main PanelPro screen select Tools/CTC,
-      then press "Open CTC Configuration Editor".
+      To start the CTC Editor, on the main PanelPro screen select the Tools &gt; CTC menu item
+      and select "CTC Configuration Editor".
       </p>
       <p>
-      The CTCEditor is used to define the CTC components and the rules that will
+      The CTC Editor is used to define the CTC components and the rules that will
       be used by the run time component.  The resulting data is stored in an XML
       file:  <strong>CTCSystem.xml</strong>.  This file is located at the
       <em>user files location</em> in the <strong>ctc</strong> directory.
@@ -83,17 +89,17 @@
       CTCMain is the run time component that provides all of the logic to
       implement a CTC machine.  It responds to layout and panel inputs and
       takes appropriate actions based on the definitions provided by the
-      CTCEditor.  It eliminates the need to create Logix or scripts.
+      CTC Editor.  It eliminates the need to create Logix or scripts.
       </p>
 
       <h2>Defining a CTC System</h2>
       <p>
       Use the following table of contents to jump to various topics. For new
-      CTC implementations, the topics should be reviewed/done in order.
+      CTC implementations, the topics should be reviewed/carried out in order.
       </p>
 
       <ol>
-        <li><a href="#editor">CTCEditor</a>
+        <li><a href="#editor">CTC Editor</a>
           <ol>
             <li>Menus
               <ol>
@@ -122,12 +128,12 @@
               </ol>
             </li>
             <li><a href="#osList">O.S. Sections List</a>
-<!--              <ol>
-              </ol>  -->
+              <!-- <ol>
+              </ol> -->
             </li>
             <li>Edit Buttons
               <ol>
-                <li><a href="#frmCB">Code button</a></li>
+                <li><a href="#frmCB">Code Button</a></li>
                 <li><a href="#frmSIDI">Signal direction indicators</a></li>
                 <li><a href="#frmSIDL">Signal direction lever</a></li>
                 <li><a href="#frmSWDI">Switch direction indicators</a></li>
@@ -146,10 +152,10 @@
       </ol>
 
     <a name="editor" id="editor"></a>
-    <h2>CTCEditor</h2>
+    <h2>CTC Editor</h2>
 
     <p>
-    The CTCEditor consists of a menu bar, a section containing a list of the
+    The CTC Editor consists of a menu bar, a section containing a list of the
     defined OS sections with related buttons and a group of 9 buttons at the
     bottom.  With the exception of the <strong>Code</strong> button, the
     remaining buttons can be enabled to activate the selected CTC feature.
@@ -174,12 +180,12 @@
       <p>
       The <strong>Save</strong> menu item writes the current editor configuration
       to the CTCSystem.xml
-      file.  The CTCEditor program is not closed.
+      file.  The CTC Editor program is not closed.
       </p>
 
       <p>
       The <strong>Exit without saving</strong> menu item after asking for confirmation
-      that you really want to do this, discards any changes and closes the CTCEditor.
+      that you really want to do this, discards any changes and closes the CTC Editor.
       </p>
 
       <a name="menuEditFind" id="menuEditFind"></a>
@@ -190,7 +196,7 @@
         important point is that it will search everything in the system for
         references to things that may be changing.  For example, when changing
         "IS8:LDGL" -> "IS8:XYZZY", the program will list all of these references,
-        and if approved will change all of them, so that there are no
+        and - if approved - will change all of them, so that there are no
         "dangling references" to something that no longer exists.  In this
         manner, it is a "refactor / replace" function (for programmers who
         understand these terms).
@@ -208,7 +214,7 @@
           and Exact / Contains radio buttons.
           </p>
           <p>
-          Once the <strong>Search</strong> button is pressed, the results are
+          Once the <strong>Find</strong> button is pressed, the results are
           shown on the right.  This shows where the search string was found in
           the system, and the context it is used in.  No items are selected.
           Press <strong>Select all</strong> to select all rows.  That button
@@ -245,7 +251,7 @@
 
           <p><strong>Note</strong>: Depending on the nature of the change,
           it is possible that new sensors are required.  For example, changing
-          IS2:CB to IS2:CodeBtn results in a new code button sensor.  If the
+          IS2:CB to IS2:CodeBtn results in a new Code Button sensor.  If the
           panel xml file already refers to the old sensor name, it will have to
           be modified.</p>
 
@@ -262,12 +268,12 @@
       <a name="menuCfgDeb" id="menuCfgDeb"></a>
       <h4>Configure menu</h4>
         <h5>Debugging</h5>
-        <p>The defaults here are good enough, but may modified if desired.</p>
+        <p>The defaults here are good enough, but may be modified if desired.</p>
 
         <p>
         <strong>CTC system reload sensor</strong>: This sensor, when triggered
         (set to active) will cause the entire CTC system to reload.  This makes
-        it possible to make CTCEditor changes and then test them immediately
+        it possible to make CTC Editor changes and then test them immediately
         without having to restart JMRI each time. See "Running the CTC system
         under JMRI" for more information on this.
         </p>
@@ -275,7 +281,7 @@
         <p>
         <strong>CTC debug traffic locking rules triggered display sensor</strong>:
         When active, the number of the Traffic Locking rule that was true is
-        logged when a code button is pressed.  It is logged as an INFO message
+        logged when a Code Button is pressed.  It is logged as an INFO message
         to the System Console.  In order to see the System Console within JMRI
         select Help &gt; System Console...  It's the "Green Screen".
         </p>
@@ -309,21 +315,21 @@
 
         <p><strong>Time values</strong> (for Signal and Switch
         directions): These are values that are given to
-        each CTC O.S. section as default values when the CTC O.S. section is
+        each CTC O.S. Section as default values when the CTC O.S. Section is
         created. The timing values edit boxes are standard CTC values, refer to
         Definitions for more information on each.</p>
 
-        <p><strong>No code button delay in milliseconds</strong>:  This is the
-        default for newly created O.S. Sections. Individual O.S. sections can be
-        changed if needed.  Background: Normal CTC panels always had a code
-        button for every O.S. section which means a value of zero is appropriate.
-        Certain tower situations did not have a code button(s) present when some
-        or all or the O.S. Section(s) were local to the tower.  In this case,
+        <p><strong>No Code Button delay in milliseconds</strong>:  This is the
+        default for newly created O.S. Sections. Individual O.S. (for "On Sheet")
+        Sections can be changed if needed.  Background: Normal CTC panels always had a code
+        button for every O.S. Section which means a value of zero is appropriate.
+        Certain tower situations did not have a Code Button(s) present when some
+        or all of the O.S. Section(s) were local to the tower.  In this case,
         the tower operator changing either the switch direction and/or signal
         direction levers was enough to transmit the request to the field.  On
         the prototype, there was a built in delay so that the tower operator
         could change both the switch and signal levers before the code was
-        transmitted to the local O.S. section. That delay is simulated with
+        transmitted to the local O.S. Section. That delay is simulated with
         this value.  Having a larger value will increase  this delay, and a
         large enough value will allow the tower operator to change both the
         switch and signal lever before the codes are transmitted to the field.
@@ -354,15 +360,15 @@
 
         <p>
         Patterns are used for all of the internal sensors created by this
-        system.  When an O.S. section is created, there are two numbers that
-        are associated with that O.S. section: a switch number (always odd)
+        system.  When an O.S. Section is created, there are two numbers that
+        are associated with that O.S. Section: a switch number (always odd)
         and the corresponding signal number (always even and always one more
         than the switch number).
         </p>
 
         <p>
         The pattern format is IS#:XXX. The "#" character in the edit boxes are
-        substituted automatically when the CTC O.S. section is first created.
+        substituted automatically when the CTC O.S. Section is first created.
         The respective switch / signal areas use the respective switch # /
         signal # given for the O.S. Section.  If more than one "#" appears, every "#"
         will get the corresponding substituted number.
@@ -374,47 +380,51 @@
         </p>
 
         <p>
-        Every time an O.S. section is created, the program will apply a set
+        Every time an O.S. Section is created, the program will apply a set
         of patterns provided by the user: a default set of patterns is
         automatically generated by the program at startup which the user can
         override at will.  This will be explained in more detail later.
         In order to see these default patterns, start the program and choose
-        "Configure / Patterns"".
+        the "Configure &gt; Patterns" menu.
         </p>
         <p>
         Changing anything on this screen has no effect on existing information
-        in the system.  It is only used when a <strong>new</strong> O.S. section (via Add button) is
-        created.  However, you may selectively re-apply this pattern to the
+        in the system.  It is only used when a <strong>new</strong> O.S. Section is
+        created (via the Add... button).<br>
+        However, you may selectively re-apply this pattern to the
         whole system or individual pieces of the system.  Here's how:
         </p>
         <p>
-        <strong>Reapplying patterns to existing information:</strong>
-Once you've changed this screen, you may want the new pattern to be selectively applied.  There are two choices:
-1.) Reapply pattern to selected item (a single O.S. section) or 2.)
-Reapply pattern to selected item (a single O.S. section) specific sub-system.
-To do 1, get to the main screen, and select a single O.S. section.  The "Reapply patterns to selected item"
-button will be enabled.  When you press this button, a confirmation dialog will appear.  Pressing "Yes" will
-then take the new pattern specified and completely apply it to all of the O.S. Sections sub-systems.
-To do 2, get to the main screen, and select a single O.S. section.  Then at the bottom of the screen, press
-the "Edit" button for the sub-system you want to modify.  NOTE: Some sub-systems are not affected by this,
-so what follows may not appear.  You will then see a button at the bottom of the sub-system selected with
-"Reapply patterns - this form ONLY!".  Pressing that will immediately show you the results of the new
-pattern in the edit boxes of that screen.
+        <strong>Reapplying patterns to existing information:</strong><br>
+        Once you've changed this screen, you may want the new pattern to be selectively applied.
+        There are two choices:</p>
+        <ol>
+        <li>Reapply pattern to selected item (a single O.S. Section) or</li>
+        <li>Reapply pattern to selected item (a single O.S. Section) specific sub-system.</li>
+        </ol>
+        <p>To do 1, get to the main screen, and select a single O.S. Section.  The "Reapply patterns to selected item"
+        button will be enabled.  When you press this button, a confirmation dialog will appear.  Pressing "Yes" will
+        then take the new pattern specified and completely apply it to all of the O.S. Sections sub-systems.
+        To do 2, get to the main screen, and select a single O.S. Section.  Then at the bottom of the screen, press
+        the "Edit" button for the sub-system you want to modify.  NOTE: Some sub-systems are not affected by this,
+        so what follows may not appear.  You will then see a button at the bottom of the sub-system selected, called
+        "Reapply patterns - this form ONLY!". Pressing it will immediately show you the results of the new
+        pattern in the edit boxes of that screen.
         </p>
-
 
         <a name="menuCfgGui" id="menuCfgGui"></a>
         <h5>GUI Design</h5>
 <p>
 <strong>GUI Design - automatic creation of the JMRI GUI screen</strong>:
 An additional feature of this program is to be able to automatically create a "standard" USS CTC panel
-from the parameters specified elsewhere in this program.  This screen configures those available options.
-See "Files created for support...." for more information and procedures for loading them into the JMRI system.
+from the parameters specified elsewhere in this program.  This screen configures the available options.
+See <a href="#ctcFiles">"Files created for support..."</a> for more information and procedures for loading
+them into the JMRI system.
 Everything is put in pre-determined locations on the screen.  It is an easy procedure in JMRI's Panel Editor
 (or other) to reposition those items.
-<strong>Caveat emptor:</strong>
-If you do change the locations of these items, JMRI does not modify the files created by this program.
-It is not designed to keep track of which file contains which modifications.  Only if you save the panel to
+<strong>Caveat:</strong>
+If you do change the locations of items on a panel, JMRI does not modify the files created by this program.
+It is not designed to keep track of which file contains which modifications.  Only if you save the panel to a
 completely different panel name will those changes be saved.  You should completely design the CTC panel using
 this program before saving to another name in JMRI, and then begin the final changes to that panel from within JMRI.
 </p>
@@ -486,12 +496,12 @@ LocoNet to loose messages at system startup.
 <h4>The Prototype CTC machine and this program</h4>
 A prototype CTC machine is organized by columns (my term).  A single CTC machine column can be blank, or contain an O.S.
 section and all of the associated controls.  I begin the numbering of my CTC machine columns with 1.  This column number
-has no relation or correlation at all to the Switch or Signal numbers of a normal O.S. section.  You can create as many columns
+has no relation or correlation at all to the Switch or Signal numbers of a normal O.S. Section.  You can create as many columns
 as you like on the computer screen(s).
 <h4>OS Sections</h4>
-A non-blank column always has an O.S. section with a code button associated with it.  An O.S. section always has an odd
+A non-blank column always has an O.S. Section with a Code Button associated with it.  An O.S. Section always has an odd
 switch number and an even signal number, where the signal number is always one more than the switch number.
-Each O.S. section as it is created does not have to be 2 more than the prior switch number entry.  Example: 1, 3, 7, 15, 17....
+Each O.S. Section as it is created does not have to be 2 more than the prior switch number entry.  Example: 1, 3, 7, 15, 17....
 They do not have to be in ascending sequence, their order has no impact on the program.  However, it is strongly suggested per
 prototype practice that they are in ascending sequence.  You may re-order them on the main screen using up/down buttons in case
 you entered them out of order, which is described in another section.
@@ -514,11 +524,13 @@ in the CTC system and verify that a definition exists for it within JMRI already
 This is just a sanity check, and normally you should not encounter any errors.  If you
 do, then define the missing object(s) in JMRI.
 </p>
-      <h3>Action buttons (to the right of the "Presently defined CTC O.S. sections:")</h3>
+      <h3>Action buttons</h3>
       <p>
-      These buttons are dynamically enabled or disabled based upon the selected item.  Button "Add" is always available.
+      These are located to the right of the "Presently defined CTC O.S. Sections:" list.<br>
+      The "Add..." button is always available.<br>
+      Other buttons are dynamically enabled or disabled based upon the selected item.
       </p>
-        <h4>Add</h4>
+        <h4>Add...</h4>
         <p>
         Allows you to add another column.
         </p>
@@ -543,40 +555,42 @@ do, then define the missing object(s) in JMRI.
         The general format is #/# indicating which switch and signal column entry is referencing this entry,
         followed by the following letter possibilities:
         "TrL:" Traffic Locking rule references this.  If there is an 'L' appended, it indicates left traffic rules, otherwise right traffic rules.
-        "Sw:" Switch Slaved references this.
+          "Sw:" Switch Slaved references this.</p>
 
-      <h3>Edit Buttons (at the bottom of the screen)</h3>
+      <h3>Edit Buttons</h3>
+      <p>At the bottom of the screen are buttons to configure the selected entry in the list:</p>
         <a name="frmCB" id="frmCB"></a>
-        <h4>Code button</h4>
+        <h4>Code Button</h4>
         <p>
-        This provides the major information for a single O.S. section.
+        This provides the major information for a single O.S. Section. It is enabled as soon as an item is selected in
+        the list.
         </p>
 
         <p>
-        <strong>Code button sensor</strong>: Required.  Enter the sensor associated with this code button.  This name
+        <strong>Code Button sensor</strong>: Required.  Enter the sensor associated with this Code Button.  This name
         is automatically generated by the patterns system.
         </p>
 
         <p>
-        <strong>Primary O.S. section occupied sensor</strong>: Required.  So long as this sensor is active (indicating
-        that the O.S. section is occupied), then the following cannot be changed: signals, turnout change,
+        <strong>Primary O.S. Section occupied sensor</strong>: Required.  So long as this sensor is active (indicating
+        that the O.S. Section is occupied), then the following cannot be changed: signals, turnout change,
         lock/unlock turnout and call on.  This should be the main occupancy sensor.
         </p>
 
         <p>
-        <strong>Secondary O.S. section occupied sensor</strong>: Optional.  Typically this is entered when a crossover
-        is in an O.S. section and you have two sensors, one for each parallel track.  This is the non-primary route, for
+        <strong>Secondary O.S. Section occupied sensor</strong>: Optional.  Typically this is entered when a crossover
+        is in an O.S. Section and you have two sensors, one for each parallel track.  This is the non-primary route, for
         instance the other side's track sensor.  When active, it prevents turnout change and lock/unlock turnout only.
         </p>
 
         <p>
-        <strong>Switch slaved to O.S. section #</strong>: Optional.  Use this to slave another O.S. section
-        with <strong> just </strong> a turnout in it to this O.S. section.  Used primarily when one track goes
+        <strong>Switch slaved to O.S. Section #</strong>: Optional.  Use this to slave another O.S. Section
+        with <strong> just </strong> a turnout in it to this O.S. Section.  Used primarily when one track goes
         to 3 or more other tracks via multiple turnouts.
         </p>
 
         <p>
-        <strong>No code button delay in milliseconds</strong>: Required.  If there is no code button (i.e. a tower
+        <strong>No Code Button delay in milliseconds</strong>: Required.  If there is no Code Button (i.e. a tower
         operation), then put in the delay between when either the turnout or traffic direction switches are changed
         and when the action actually occurs.
         </p>
@@ -591,33 +605,33 @@ do, then define the missing object(s) in JMRI.
         <p>
         <strong>Left, Normal and Right indicator sensors</strong>: Normal and one or both of Left and Right
         required.  The three indicators on the panel.  These names are automatically generated by the patterns
-        system.  If this is a unidirectional O.S. section, then leave either the Left or Right sensor blank (not both!).
+        system.  If this is a unidirectional O.S. Section, then leave either the Left or Right sensor blank (not both!).
         </p>
 
         <p>
         <strong>Coding and response time milliseconds: and Time locking interval milliseconds</strong>: Required.  Values
-        are defaulted from the defaults screen.  Change as you see fit to make each section unique if you want.
+        are defaulted from the CTC Defaults screen.  Change as you see fit to make each section unique if you want.
         </p>
 
         <p>
         <strong>Left to right and Right to left traffic signal lists</strong>: Here you specify each of the
-        signal masts or individual signal heads associated in each direction with this O.S. section.
-        There must be at least one entry in each, <strong>unless</strong> it is a uni-directional O.S. section.
+        signal masts or individual signal heads associated in each direction with this O.S. Section.
+        There must be at least one entry in each, <strong>unless</strong> it is a uni-directional O.S. Section.
         </p>
 
         <a name="frmSIDL" id="frmSIDL"></a>
         <h4>Signal direction lever</h4>
         <p>
-        Defines all of the sensors required for the JMRI object MultiSensor in order to select a signal direction.
+        Defines all of the sensors required for the JMRI MultiSensor object in order to select a signal direction.
         </p>
 
         <p>
         <strong>Left, Normal and Right lever sensors</strong>: Normal and one or both of Left and Right
         required.  This defines the three sensors associated with the 3 corresponding positions of the
         MultiSensor.  These names are automatically generated by the patterns system.  If this is a
-        unidirectional O.S. section, then leave either the Left or Right sensor blank (not both!).  The
+        unidirectional O.S. Section, then leave either the Left or Right sensor blank (not both!).  The
         missing entry should match the corresponding missing entry in the Signal Direction Indicators
-        for this O.S. section.
+        for this O.S. Section.
         </p>
 
         <a name="frmSWDI" id="frmSWDI"></a>
@@ -638,7 +652,7 @@ do, then define the missing object(s) in JMRI.
 
         <p>
         <strong>Coding and response time milliseconds</strong>: Required.  Values are defaulted from
-        the defaults screen.  Change as you see fit to make each section unique if you want.
+        the CTC Defaults screen.  Change as you see fit to make each section unique if you want.
         </p>
 
         <p>
@@ -681,8 +695,10 @@ do, then define the missing object(s) in JMRI.
         clicking on it, and then the "Edit Below" and "Delete" buttons become available, along with
         various field(s) below being enabled for changing.  In order to get
         started, press "Add New" the first time here, and various fields below will be enabled
-        based upon how you have configured you system for Signal Heads or Signal Masts in "Configure / Defaults".
-        All fields will be described below, but may not be available based upon Signal Heads or Signal Masts selected:
+        based upon how you have configured you system for Signal Heads or Signal Masts via the "Configure &gt;
+        Defaults" menu.
+        Below all fields are described, but some may not be available based upon Signal Heads or Signal Masts
+          selected:
         </p>
 
         <p>
@@ -708,22 +724,22 @@ do, then define the missing object(s) in JMRI.
 
         <p>
         <strong>--- Route ---</strong>  Choose up to 6 switch direction indicators that when lit specify the
-        route from the O.S. section to the called on block (Signal Masts) or sensor associated with the block (Signal Heads).
+        route from the O.S. Section to the called on block (Signal Masts) or sensor associated with the block (Signal Heads).
         </p>
 
         <a name="frmTRL" id="frmTRL"></a>
         <h4>Traffic Locking</h4>
         <p>
-        Defines all of the allowed non conflicting routes from the selected O.S. section in either direction from it.
+        Defines all of the allowed non conflicting routes from the selected O.S. Section in either direction from it.
         This is the beating heart of the CTC system.  As such, it is the most complex part of CTC you will encounter.
         However, if you are methodical and after some experience, you should find that this section is fairly straight
         forward.
         </p>
         <p>
         When you initially select Traffic Locking, the first screen that comes up will allow you to edit one of the
-        directions from this O.S. section to other O.S. section(s).  <strong>Note:</strong> Having no rules <strong>always</strong> allows
+        directions from this O.S. Section to other O.S. Section(s).  <strong>Note:</strong> Having no rules <strong>always</strong> allows
         that direction of travel no matter any other condition, and may be valid in certain situations such as traveling
-        to staging where there is no O.S. section.
+        to staging where there is no O.S. Section.
         </p>
 
         <p>
@@ -750,10 +766,10 @@ do, then define the missing object(s) in JMRI.
         <strong>Specifying a rule:</strong>
         </p>
         <p>
-        Under "--- ROUTE ---", you specify the O.S. section(s) traversed, and the switch alignment associated with each
-        O.S. section for that route.  Order of specified O.S. section(s) is irrelevant.  For a simple route,
+        Under "--- ROUTE ---", you specify the O.S. Section(s) traversed, and the switch alignment associated with each
+        O.S. Section for that route.  Order of specified O.S. Section(s) is irrelevant.  For a simple route,
         such as a passing siding, there will only be one switch.  A complex interlocking will normally have several
-        switches.  An O.S. section that contains a turnout will have at least two routes, a closed route and a thrown route.
+        switches.  An O.S. Section that contains a turnout will have at least two routes, a closed route and a thrown route.
         </p>
         <p>
         Under "Occupancy sensors ... allowed." you specify the sensor(s) that will be locked for that route.  For simple routes, the O.S.
@@ -763,10 +779,10 @@ do, then define the missing object(s) in JMRI.
         Under "--- Optional sensors... valid ---", specify any sensors that must be ACTIVE to allow this rule to be valid.
         You may (for instance) use JMRI Logix to create such a sensor for specific unusual situations.
         <strong>Important:</strong> These optional sensors are <strong>not</strong> allocated as part of the rule.
-        They are just checked at the moment the dispatcher codes the O.S. section.
+        They are just checked at the moment the dispatcher codes the O.S. Section.
         </p>
         <p>
-        <strong>Final result: </strong> When the dispatcher codes this O.S. section,
+        <strong>Final result: </strong> When the dispatcher codes this O.S. Section,
         the <strong>Left</strong> or <strong>Right</strong> rule set is selected based on
         the position of the signal lever.  A specific rule is then selected based on the
         turnout positions.  If all of the occupancy sensors defined in the rule are inactive
@@ -815,10 +831,10 @@ do, then define the missing object(s) in JMRI.
         There are two main situations that need to be considered separately:
         </p>
         <p>
-        Turnout locks in an O.S. section:
+        Turnout locks in an O.S. Section:
         </p>
         <p>
-        This is the typical case, and requires nothing special be done.  In the prototype, the O.S. section <strong>must be</strong> unoccupied
+        This is the typical case, and requires nothing special be done.  In the prototype, the O.S. Section <strong>must be</strong> unoccupied
         in order for a turnout to be unlocked.  Locking a turnout can always occur at any time.  There are two situations to be considered:
         </p>
         <ol>
@@ -840,17 +856,17 @@ do, then define the missing object(s) in JMRI.
         </p>
 
         <p>
-        Turnout locks in a non O.S. section (and how to create them):
+        Turnout locks in a non O.S. Section (and how to create them):
         </p>
         <p>
-        Just create the section that contains the turnout <strong>as if</strong> it was an O.S. section.  Use a switch number
+        Just create the section that contains the turnout <strong>as if</strong> it was an O.S. Section.  Use a switch number
         that is higher than the highest value you will use on the CTC machine, or for safety, use values starting with
-        1001.  For the GUI column #, use the proper number to create both the code button and the lock/unlock toggle
+        1001.  For the GUI column #, use the proper number to create both the Code Button and the lock/unlock toggle
         switch in the proper place.
         </p>
         <p>
         However, <strong>do not</strong> check and features except the Turnout Locking check box for this fake O.S.
-        section.  This is how this is differentiated from the above true O.S. section lock.
+        section.  This is how this is differentiated from the above true O.S. Section lock.
         </p>
         <p>
         When configuring the Code Button, you will be required to enter an occupancy sensor.  Enter the occupancy sensor <Strong>containing</Strong> the turnout to be locked.
@@ -865,7 +881,7 @@ do, then define the missing object(s) in JMRI.
         </p>
         <p>
         Normally, the feedback value matches the commanded value.  JMRI allows for both being backwards, and in order to
-        fix that, you put a check the "Inverted" column in the Turnouts Table in JMRI.  However, in case the feedback value
+        fix that, you put a check the "Inverted" column in the Turnout Table in JMRI.  However, in case the feedback value
         is different than the commanded value, then you put a check in that column.  The following table lists the possibilities:
         </p>
         <table>
@@ -873,7 +889,7 @@ do, then define the missing object(s) in JMRI.
                 <th>Command:</th>
                 <th>Feedback:</th>
                 <th>JMRI Turnout inverted checked:</th>
-                <th>CTCEditor feedbacks different checked:</th>
+                <th>CTC Editor feedbacks different checked:</th>
             </tr>
             <tr>
                 <td>Normal</td>
@@ -904,12 +920,12 @@ do, then define the missing object(s) in JMRI.
         <a name="frmIL" id="frmIL"></a>
         <h4>Indication locking</h4>
         <p>
-        Defines any additional locking  of an O.S. section above and beyond what is normally expected
+        Defines any additional locking  of an O.S. Section above and beyond what is normally expected
         by this system.
         </p>
         <p>
         As indicated on the screen, specify the signal head(s) / signal mast(s) that when any are
-        non-red, the O.S. section is considered indication locked.  When an O.S. section is locked
+        non-red, the O.S. Section is considered indication locked.  When an O.S. Section is locked
         this way, the turnout and turnout lock/unlock functions are disabled so long as any of these are non-red.
         </p>
 
@@ -921,28 +937,28 @@ do, then define the missing object(s) in JMRI.
     "Open User Files Location".  That will open up the file manager at that location.  You should notice
     a "ctc" directory under it.  Navigate to it.  What follows is a discussion of the files located there.
     <h3>CTCSystem.xml and all CTCSystem.xml?.bup files</h3>
-    CTCSystem.xml contains all of your information that you've entered for the CTC system.  The "bup" files
+    CTCSystem.xml contains all of your information that you've entered for the CTC system.  The ".bup" files
     are prior versions made each time you save the CTCSystem.xml file.
     <h3>ProgramProperties.xml and all ProgramProperties.xml.?.bup files</h3>
     ProgramProperties.xml contains all of the configurable parameters of the CTC system.  Primarily it contains
-    the parameters specfied under all of the "Configure" options on the main CTCEditor screen.
+    the parameters specfied under all of the "Configure" options on the main CTC Editor screen.
     The "bup" files are prior versions of this file.
     <h3>AwtWindowProperties.txt</h3>
-    This file contains location and size information for all CTCEditor dialogs, so that when you locate
+    This file contains location and size information for all CTC Editor dialogs, so that when you locate
     a dialog on the screen, the next time you either resize or relocate it, it will be opened at this
     same location and size.  You can freely delete it at any time.
     <h3>Optional files</h3>
     All of the following files may or may not exist.  Once the
-    "Write .xml files for JMRI GUI support" is pressed on the main CTCEditor screen, they are created.  They are created anew
+    "Write .xml files for JMRI GUI support" is pressed on the main CTC Editor screen, they are created.  They are created anew
     each time the "Write .xml files for JMRI GUI support" is pressed.
     <h3>GUIObjects.xml</h3>
     It contains all of the basic GUI JMRI objects necessary for creating a "raw" CTC panel in the Panel
-    Editor.  It can be loaded at any time by pressing (on the main JMRI screen) "Panels / Open Panels..."
+    Editor.  It can be loaded at any time using the Panels &gt; Open Panels... menu (on the main JMRI screen)
     and specifying this location and filename to load.
     <h3>InternalSensors.xml</h3>
-    It contains <strong>all</strong> of the sensors created by the CTCEditor.  These sensors are required
-    for proper operation of the CTC panel.  It can be loaded at any time by pressing (on the main JMRI
-    screen) "Panels / Open Panels..." and specifying this location and filename to load.
+    It contains <strong>all</strong> of the sensors created by the CTC Editor.  These sensors are required
+    for proper operation of the CTC panel.
+
     <h3>VirtualSignals.xml</h3>
     Deprecated and obsolete.  You may freely delete it.
     <h2>CTC integration of sensors and a populated Panel Editor panel</h2>
@@ -957,46 +973,45 @@ do, then define the missing object(s) in JMRI.
     <strong>only</strong> the NEW column(s) <strong>since</strong> the button was last pressed are written
     to the file.
     <p>
-    If you select an existing O.S. section and press "Change Switch and Signal Etc. #'s:", the next screen
+    If you select an existing O.S. Section and press "Change Switch and Signal Etc. #'s:", the next screen
     contains a checkbox "GUI Generated before".  As each entry is written to the GUIObjects.xml file, this
     checkbox is automatically checked.  If you want, you may clear the checkbox and the next time GUIObjects.xml
-    is generated, those O.S. section(s) will appear again in it, and the checkbox will be re-checked again.
+    is generated, those O.S. Section(s) will appear again in it, and the checkbox will be re-checked again.
     </p>
     <p>
     Do not load the GUIObjects.xml file more than once, otherwise you will have many duplicate items on the screen.
+    </p>
     <h2>Proper development cycle</h2>
-    Using the CTCEditor, first define all of your O.S. sections to the <strong>best</strong> of your knowledge,
+    Using the CTC Editor, first define all of your O.S. Sections to the <strong>best</strong> of your knowledge,
     then create and then load the GUIObjects.xml panel in, and review the results.  If you are not happy, then
     <strong>delete</strong> the panel, save the panel file, and re-iterate the process
-    (i.e. CTCEditor, write files, etc.).
+    (i.e. CTC Editor, write files, etc.).
 
     <a name="ctcMain" id="ctcMain"></a>
     <h2>CTCMain</h2>
-    <strong>Remember:</strong> Before you start CTC runtime, you <strong>need</strong> to load the panel.
-    <strong>Ideally:</strong> Before you start CTCEditor, you also should load the panel to get
+    <strong>Remember:</strong> Before you start CTC Runtime, you <strong>need</strong> to load the panel.
+    <strong>Ideally:</strong> Before you start CTC Editor, you also should load the panel to get
     reference checking of your JMRI objects (turnouts, sensors, etc.).
     <h3>Starting it up</h3>
-    After defining the CTC system using the CTCEditor, you'll need to start it up.
+    After defining the CTC system using the CTC Editor, you will need to start it up.
     On the main PanelPro screen, under Tools/CTC, you will see the selection
     "Run CTC Logic".  This will start it up right now (on demand real time).
     <p>
     For ease of access during development: if you want to define button(s) on the main PanelPro screen to do this (or
-    to also invoke the CTCEditor via another button), do the following: From
-    the main PanelPro screen: "Edit/Preferences...", then press "Start Up",
-    at the bottom you will see an "Add", press it and select "Add button
-    to main window...", scroll to "Start CTC Runtime" and select it.  For CTCEditor,
-    do the same but instead scroll to "Open CTC Editor" and select it.
+    to also invoke the CTC Editor via another button), do the following: From the main PanelPro screen,
+    select Edit &gt; Preferences... (PanelPro &gt; Preferences... on macOS) menu, select the Start Up tab,
+    press Add &gt; Add button to main window..., scroll to "Start CTC Runtime" and select it.<br>
+    To ad a button that opens CTC Editor, do the same but instead scroll to "Open CTC Editor" and select it.
     </p>
     <p>
-    To start it up as part of the startup of JMRI: Edit/Preferences...",
-    press Start Up, press Add, select "Perform Action", and select
-    "Start CTC Runtime".
+    To start it up as part of the startup of JMRI: Select Edit &gt; Preferences... (PanelPro &gt; Preferences... on
+    macOS), select the Start Up tab, press Add &gt; Perform Action, and select "Start CTC Runtime".
     </p>
     <h2>Global sensors and the icons associated with them</h2>
     Debug (default: IS:DEBUGCTC), Reload (default: IS:RELOADCTC) and Fleeting (default: IS:FLEETING).
     <p>
-    Debug and Reload can be accessed via CTCEditor Configure/Debugging.  Fleeting
-    can be accessed via CTCEditor Configure/Fleeting.
+    Debug and Reload can be accessed via CTC Editor menu Configure &gt; Debugging.  Fleeting
+    can be accessed via CTC Editor menu Configure &gt; Fleeting.
     </p>
     <p>
     These are convenience functions, and can be removed at any time.
@@ -1006,17 +1021,17 @@ do, then define the missing object(s) in JMRI.
     presently locked routes in the system, and for each route will list the
     resource(s) still allocated to the route onto the JMRI System Console screen.
     <p>
-    While this toggle is on, each time a code button is pressed and a signal direction
-    lever for that code button selects a direction of travel, the program will
+    While this toggle is on, each time a Code Button is pressed and a signal direction
+    lever for that Code Button selects a direction of travel, the program will
     list out the single rule that was satisfied (if any).  If none are listed,
     then none were satisfied.  Note: Even if a rule is valid, the ABS system
     may not clear up a signal in the direction indicated, and the CTC system
-    will re-lock that O.S. section.
+    will re-lock that O.S. Section.
     </p>
     <h3>Reload</h3>
     When this button is pressed, the CTC system will reload the last saved
-    CTCEditor session.  Remember: When you make changes to the CTC system
-    via the CTCEditor, save the results before pressing this button.
+    CTC Editor session.  Remember: When you make changes to the CTC system
+    via the CTC Editor, save the results before pressing this button.
     <p>
     After this button is pressed, the CTC system will be <strong>completely</strong>
     re-initialized to it's starting position(s).  Also, remember to look at
@@ -1044,7 +1059,7 @@ do, then define the missing object(s) in JMRI.
         </p>
         <p style="margin: 10px 0">
           Why? Locomotive engineers always expect a yellow
-          signal of some form before an absolute stop red signal at a Home signal of an O.S. section.  This gives the
+          signal of some form before an absolute stop red signal at a Home signal of an O.S. Section.  This gives the
           engineer time to begin slowing the train upon approaching the yellow approach signal expecting a possible
           red signal at the next home signal.
         </p>
@@ -1095,7 +1110,7 @@ do, then define the missing object(s) in JMRI.
           Same as Signal locking
         </p>
       </dd>
-      <dt>Code button</dt>
+      <dt>Code Button</dt>
       <dd>
         <p style="margin: 10px 0">
           Button to press to being the process of throwing switches / setting signals by sending
@@ -1111,7 +1126,7 @@ do, then define the missing object(s) in JMRI.
           cleared into an occupied section of track.  Example: When an engineer is attempting a
           run around move, and as the last part of the run around attempts to rejoin their train.  The
           CTC system and trackside signals (the vital signal logic) will actively prevent that.  Pressing
-          (or toggling) the Call on feature while pressing the code button bypasses the safety checks of
+          (or toggling) the Call on feature while pressing the Code Button bypasses the safety checks of
           the Vital signal logic and CTC systems, and allows that signal to go to its most restrictive
           aspect.  Now the engineer will get a non-red indication which allows them to rejoin their train.
         </p>
@@ -1152,7 +1167,7 @@ do, then define the missing object(s) in JMRI.
       <dt>Signals Normal</dt>
       <dd>
         <p style="margin: 10px 0">
-          The "normal" state of an O.S. section is "all stop", i.e. all home signals
+          The "normal" state of an O.S. Section is "all stop", i.e. all home signals
           protecting entry in the O.S. Section are at Red.
         </p>
       </dd>
@@ -1161,12 +1176,12 @@ do, then define the missing object(s) in JMRI.
         <p style="margin: 10px 0">
           Lever used to establish a direction of traffic thru an O.S. Section.  Moving
           this lever has no effect on the signal in the field <strong>until</strong> the
-          code button is pressed, and all rules are valid for allowing the change to occur.
+          Code Button is pressed, and all rules are valid for allowing the change to occur.
         </p>
         <p style="margin: 10px 0">
           It is <strong>not valid</strong> to attempt to change from one direction to the other.  The
           CTC system instead will interpret this as a request for "Signals normal" (all
-          stop) first, and then (after probably running time) with <strong>another</strong> code button
+          stop) first, and then (after probably running time) with <strong>another</strong> Code Button
           press to change direction to the requested direction.
         </p>
       </dd>
@@ -1184,7 +1199,7 @@ do, then define the missing object(s) in JMRI.
       <dd>
         <p style="margin: 10px 0">
           Lever used to change the position of the indicated turnout.  Moving this
-          lever has no effect on the switch in the field <strong>until</strong> the code button is
+          lever has no effect on the switch in the field <strong>until</strong> the Code Button is
           pressed and all rules for allowing change in the switch orientation are valid.
         </p>
       </dd>
@@ -1199,7 +1214,7 @@ do, then define the missing object(s) in JMRI.
       <dt>Turnout Locking</dt>
       <dd>
         <p style="margin: 10px 0">
-          When signals are cleared over a specific turnout, or the O.S. section controlling
+          When signals are cleared over a specific turnout, or the O.S. Section controlling
           that turnout is occupied, that turnout is considered locked and its orientation cannot be changed.
         </p>
       </dd>
@@ -1213,20 +1228,22 @@ do, then define the missing object(s) in JMRI.
       <dt>O.S. Section</dt>
       <dd>
         <p style="margin: 10px 0">
-          A single control point on the CTC panel.  Contains at minimum a code button, and other assorted features.
+          A single (On Sheet, hence O.S.) control point on the CTC panel.  Contains at minimum a Code Button, and 
+          other 
+          assorted features.
         </p>
       </dd>
       <dt>Home Signal(s)</dt>
       <dd>
         <p style="margin: 10px 0">
-          All Signals that protect entry into an O.S. section from all possible directions and routes.
+          All Signals that protect entry into an O.S. Section from all possible directions and routes.
         </p>
       </dd>
       <dt>Coding and response time</dt>
       <dd>
         <p style="margin: 10px 0">
           A real CTC machine has a single wire set out to the field installation.  This time
-          delay simulates the delay between when a code button is pressed, and a response
+          delay simulates the delay between when a Code Button is pressed, and a response
           from the field occurs.  During this time, all of the indicators for the changed
           items (switch, signal) are "Out of correspondence".
         </p>
@@ -1235,7 +1252,7 @@ do, then define the missing object(s) in JMRI.
       <dd>
         <p style="margin: 10px 0">
           The state of display indicators (either switch or signal) whereby a command by
-          the CTC operator has been initiated by pressing the code button, and the CTC system
+          the CTC operator has been initiated by pressing the Code Button, and the CTC system
           is awaiting response(s) from the field.  Also may be present for a long time
           if "running time" as relates to a signal change.  This is indicated on the panel
           by all indicators for the changed system (switch, signal) being out until the

@@ -69,6 +69,7 @@ public class NceConsistManagerTest extends jmri.implementation.AbstractConsistMa
     @Override
     public void tearDown() {
         cm = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

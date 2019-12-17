@@ -381,6 +381,7 @@ public class ThrottleFrameTest {
         panel = null;
         frame = null;
         to = null;
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 }

@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ProvidingManager;
+import jmri.SignalSystem;
 import jmri.managers.AbstractManager;
 
 /**
@@ -38,7 +39,7 @@ public class OBlockManager extends AbstractManager<OBlock>
     }
 
     /**
-     * Method to create a new OBlock if it does not exist Returns null if a
+     * Create a new OBlock if it does not exist Returns null if a
      * OBlock with the same systemName or userName already exists, or if there
      * is trouble creating a new OBlock.
      *
@@ -55,26 +56,25 @@ public class OBlockManager extends AbstractManager<OBlock>
                 return null;
             }
         }
-        String sName = systemName;
-        if (!sName.startsWith("OB")) {
+        if (!systemName.startsWith("OB")) {
             return null;
         }
-        if (sName.length() < 3) {
+        if (systemName.length() < 3) {
             return null;
         }
-        r = getBySystemName(sName);
+        r = getBySystemName(systemName);
         if (r != null) {
             return null;
         }
         // OBlock does not exist, create a new OBlock
-        r = new OBlock(sName, userName);
+        r = new OBlock(systemName, userName);
         // save in the maps
         register(r);
         return r;
     }
 
     /**
-     * Method to get an existing OBlock. First looks up assuming that name is a
+     * Get an existing OBlock. First looks up assuming that name is a
      * User Name. If this fails looks up assuming that name is a System Name. If
      * both fail, returns null.
      *
@@ -124,4 +124,13 @@ public class OBlockManager extends AbstractManager<OBlock>
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameOBlocks" : "BeanNameOBlock");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<OBlock> getNamedBeanClass() {
+        return OBlock.class;
+    }
+
 }

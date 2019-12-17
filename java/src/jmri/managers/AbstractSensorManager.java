@@ -5,9 +5,11 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import javax.annotation.Nonnull;
 
 /**
  * Abstract base implementation of the SensorManager interface.
@@ -39,7 +41,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public Sensor provideSensor(String name) {
+    @Nonnull
+    public Sensor provideSensor(@Nonnull String name) {
         Sensor t = getSensor(name);
         if (t == null) {
             t = newSensor(makeSystemName(name), null);
@@ -49,7 +52,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public Sensor getSensor(String name) {
+    public Sensor getSensor(@Nonnull String name) {
         Sensor t = getByUserName(name);
         if (t != null) {
             return t;
@@ -67,13 +70,13 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public Sensor getBeanBySystemName(String key) {
+    public Sensor getBeanBySystemName(@Nonnull String key) {
         return this.getBySystemName(key);
     }
     
     /** {@inheritDoc} */
     @Override
-    public Sensor getBySystemName(String key) {
+    public Sensor getBySystemName(@Nonnull String key) {
         if (isNumber(key)) {
             key = makeSystemName(key);
         }
@@ -82,13 +85,14 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public Sensor getByUserName(String key) {
+    public Sensor getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
     /** {@inheritDoc} */
     @Override
-    public Sensor newSensor(String sysName, String userName) throws IllegalArgumentException {
+    @Nonnull
+    public Sensor newSensor(@Nonnull String sysName, String userName) throws IllegalArgumentException {
         log.debug(" newSensor(\"{}\", \"{}\")", sysName, userName);
 
         java.util.Objects.requireNonNull(sysName, "Generated systemName may not be null, started with "+sysName);
@@ -128,8 +132,17 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Sensor> getNamedBeanClass() {
+        return Sensor.class;
     }
 
     /**
@@ -154,13 +167,14 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     /** {@inheritDoc} */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         try {
             Integer.parseInt(curAddress);
         } catch (java.lang.NumberFormatException ex) {
@@ -172,7 +186,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // If the hardware address passed does not already exist then this can
         // be considered the next valid address.
         String tmpSName;

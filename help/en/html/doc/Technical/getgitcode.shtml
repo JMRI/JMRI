@@ -7,7 +7,7 @@
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
   <title>JMRI: Getting the Code</title>
-    <meta name="author" content="Bob Jacobsen">
+  <meta name="author" content="Bob Jacobsen">
   <meta name="keywords" content="JMRI technical code Git download">
   <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
   <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -15,15 +15,15 @@
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+  <!--#include virtual="Sidebar.shtml" -->
+  <div id="mainContent">
 
-    <div id="mainContent">
-
-      <h1>JMRI Code: Getting the Code</h1>
+  <h1>JMRI Code: Getting the Code</h1>
 
       <h2>Background</h2>
 

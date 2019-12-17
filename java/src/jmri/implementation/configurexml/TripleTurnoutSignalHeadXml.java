@@ -87,4 +87,5 @@ public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
     }
 
     private final static Logger log = LoggerFactory.getLogger(TripleTurnoutSignalHeadXml.class);
+
 }

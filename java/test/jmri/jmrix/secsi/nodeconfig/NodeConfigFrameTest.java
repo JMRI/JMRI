@@ -33,13 +33,14 @@ public class NodeConfigFrameTest extends jmri.util.JmriJFrameTestBase {
         memo.setTrafficController(new SerialTrafficControlScaffold(memo));
         if(!GraphicsEnvironment.isHeadless()){
            frame = new NodeConfigFrame(memo);
-	}
+	    }
     }
 
     @After
     @Override
     public void tearDown() {
-	memo = null;
+	    memo = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
     	super.tearDown();
     }
 }

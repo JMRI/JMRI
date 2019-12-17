@@ -22,7 +22,6 @@ import java.util.function.Predicate;
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -141,6 +140,80 @@ public class PositionablePoint extends LayoutTrack {
      */
     public int getType() {
         return type;
+    }
+
+    public void setType(int newType) {
+        if (type != newType) {
+            switch (newType) {
+                default:
+                case ANCHOR: {
+                    setTypeAnchor();
+                    break;
+                }
+                case END_BUMPER: {
+                    setTypeEndBumper();
+                    break;
+                }
+                case EDGE_CONNECTOR: {
+                    setTypeEdgeConnector();
+                    break;
+                }
+            }
+            layoutEditor.repaint();
+        }
+    }
+
+    private void setTypeAnchor() {
+        ident = layoutEditor.getFinder().uniqueName("A", 1);
+        type = ANCHOR;
+        if (connect1 != null) {
+            if (connect1.getConnect1() == PositionablePoint.this) {
+                connect1.setArrowEndStart(false);
+                connect1.setBumperEndStart(false);
+            }
+            if (connect1.getConnect2() == PositionablePoint.this) {
+                connect1.setArrowEndStop(false);
+                connect1.setBumperEndStop(false);
+            }
+        }
+        if (connect2 != null) {
+            if (connect2.getConnect1() == PositionablePoint.this) {
+                connect2.setArrowEndStart(false);
+                connect2.setBumperEndStart(false);
+            }
+            if (connect2.getConnect2() == PositionablePoint.this) {
+                connect2.setArrowEndStop(false);
+                connect2.setBumperEndStop(false);
+            }
+        }
+    }
+
+    private void setTypeEndBumper() {
+        ident = layoutEditor.getFinder().uniqueName("EB", 1);
+        type = END_BUMPER;
+        if (connect1 != null) {
+            if (connect1.getConnect1() == PositionablePoint.this) {
+                connect1.setArrowEndStart(false);
+                connect1.setBumperEndStart(true);
+            }
+            if (connect1.getConnect2() == PositionablePoint.this) {
+                connect1.setArrowEndStop(false);
+                connect1.setBumperEndStop(true);
+            }
+        }
+    }
+
+    private void setTypeEdgeConnector() {
+        ident = layoutEditor.getFinder().uniqueName("EC", 1);
+        type = EDGE_CONNECTOR;
+        if (connect1 != null) {
+            if (connect1.getConnect1() == PositionablePoint.this) {
+                connect1.setBumperEndStart(false);
+            }
+            if (connect1.getConnect2() == PositionablePoint.this) {
+                connect1.setBumperEndStop(false);
+            }
+        }
     }
 
     public TrackSegment getConnect1() {
@@ -1125,7 +1198,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                     //prompt for width
-                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                             connect1.getBumperLineWidth(), new Predicate<Integer>() {
@@ -1146,7 +1219,7 @@ public class PositionablePoint extends LayoutTrack {
                 jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
                 jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                     //prompt for length
-                    int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                    int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             Bundle.getMessage("DecorationLengthMenuItemTitle"),
                             connect1.getBumperLength(), new Predicate<Integer>() {
@@ -1284,17 +1357,7 @@ public class PositionablePoint extends LayoutTrack {
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("Anchor")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ident = layoutEditor.getFinder().uniqueName("A", 1);
-                type = ANCHOR;
-                if (connect1.getConnect1() == PositionablePoint.this) {
-                    connect1.setArrowEndStart(false);
-                    connect1.setBumperEndStart(false);
-                }
-                if (connect1.getConnect2() == PositionablePoint.this) {
-                    connect1.setArrowEndStop(false);
-                    connect1.setBumperEndStop(false);
-                }
-                layoutEditor.repaint();
+                setTypeAnchor();
             }
         }));
 
@@ -1309,17 +1372,7 @@ public class PositionablePoint extends LayoutTrack {
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EndBumper")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ident = layoutEditor.getFinder().uniqueName("EB", 1);
-                type = END_BUMPER;
-                if (connect1.getConnect1() == PositionablePoint.this) {
-                    connect1.setArrowEndStart(false);
-                    connect1.setBumperEndStart(true);
-                }
-                if (connect1.getConnect2() == PositionablePoint.this) {
-                    connect1.setArrowEndStop(false);
-                    connect1.setBumperEndStop(true);
-                }
-                layoutEditor.repaint();
+                setTypeEndBumper();
             }
         }));
 
@@ -1328,15 +1381,7 @@ public class PositionablePoint extends LayoutTrack {
         jmi = lineType.add(new JCheckBoxMenuItem(new AbstractAction(Bundle.getMessage("EdgeConnector")) {
             @Override
             public void actionPerformed(ActionEvent e) {
-                ident = layoutEditor.getFinder().uniqueName("EC", 1);
-                type = EDGE_CONNECTOR;
-                if (connect1.getConnect1() == PositionablePoint.this) {
-                    connect1.setBumperEndStart(false);
-                }
-                if (connect1.getConnect2() == PositionablePoint.this) {
-                    connect1.setBumperEndStop(false);
-                }
-                layoutEditor.repaint();
+                setTypeEdgeConnector();
             }
         }));
 
@@ -1461,7 +1506,9 @@ public class PositionablePoint extends LayoutTrack {
     }
 
     /**
-     * Build a list of sensors, signal heads, and signal masts attached to a connection point.
+     * Build a list of sensors, signal heads, and signal masts attached to a
+     * connection point.
+     *
      * @param ts The track segment to be checked.
      * @return a list of bean reference names.
      */
@@ -1559,18 +1606,15 @@ public class PositionablePoint extends LayoutTrack {
             updateLink();
         });
 
-        // make this button the default button (return or enter activates)
-        // Note: We have to invoke this later because we don't currently have a root pane
-        SwingUtilities.invokeLater(() -> {
-            JRootPane rootPane = SwingUtilities.getRootPane(done);
-            rootPane.setDefaultButton(done);
-        });
-
         container.add(getLinkPanel(), BorderLayout.NORTH);
         container.add(done, BorderLayout.SOUTH);
         container.revalidate();
 
         editLink.add(container);
+
+        // make this button the default button (return or enter activates)
+        JRootPane rootPane = SwingUtilities.getRootPane(done);
+        rootPane.setDefaultButton(done);
 
         editLink.pack();
         editLink.setModal(false);
@@ -1761,7 +1805,7 @@ public class PositionablePoint extends LayoutTrack {
     /**
      * return true if this connection type is disconnected
      *
-     * @param connectionType  the connection type to test
+     * @param connectionType the connection type to test
      * @return true if the connection for this connection type is free
      */
     @Override
@@ -2005,7 +2049,7 @@ public class PositionablePoint extends LayoutTrack {
         * <p>
         *     Basically, we're maintaining contiguous track sets for each block found
         *     (in blockNamesToTrackNameSetMap)
-        */
+         */
         //check the 1st connection points block
         TrackSegment ts1 = getConnect1();
         String blk1 = null;

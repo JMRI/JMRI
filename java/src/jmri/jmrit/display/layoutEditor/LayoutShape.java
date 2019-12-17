@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -536,11 +536,10 @@ public class LayoutShape {
             jmi.setToolTipText(Bundle.getMessage("ShapeLevelMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                 //prompt for level
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
                         Bundle.getMessage("ShapeLevelMenuItemTitle"),
-                        level, QuickPromptUtil.checkIntRange(1, null, 
-                            Bundle.getMessage("ShapeLevelValueTitle")));
+                        level, QuickPromptUtil.checkIntRange(1, 10, null));
                 setLevel(newValue);
                 layoutEditor.repaint();
             });
@@ -577,7 +576,7 @@ public class LayoutShape {
             jmi.setToolTipText(Bundle.getMessage("ShapeLineWidthMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                 //prompt for lineWidth
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
                         Bundle.getMessage("ShapeLineWidthMenuItemTitle"),
                         lineWidth, QuickPromptUtil.checkIntRange(1, MAX_LINEWIDTH, null));
@@ -677,7 +676,7 @@ public class LayoutShape {
             if (getType() == LayoutShapeType.eOpen) {
                 // and this is first or last point...
                 if ((idx == 0) || (idxR == 0)) {
-                    // then force straightt shape point type
+                    // then force straight shape point type
                     lspt = LayoutShapePointType.eStraight;
                 }
             }
