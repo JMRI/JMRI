@@ -1,4 +1,4 @@
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
@@ -99,7 +99,7 @@ public class EnterReporterDialogTest {
         reporterNameTextFieldOperator.setText("ClarkKent");
         addNewLabelButtonOperator.doClick();
         JUnitAppender.assertErrorMessage("Invalid system name for Reporter: System name must start with \"IR\".");
-        //TODO: any way to verify that the dialog is closed?
+        jFrameOperator.waitClosed();    // make sure the dialog actually closed
 
         enterReporterDialog.enterReporter(150, 200);
         jFrameOperator = new JFrameOperator(Bundle.getMessage("AddReporter"));
