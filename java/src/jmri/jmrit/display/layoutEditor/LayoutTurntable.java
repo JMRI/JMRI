@@ -12,25 +12,13 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.beans.*;
+import java.util.*;
 import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.NamedBeanHandle;
-import jmri.Turnout;
+import javax.swing.*;
+import jmri.*;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LayoutTurntable is a representation used by LayoutEditor to display a
@@ -135,8 +123,8 @@ public class LayoutTurntable extends LayoutTrack {
      * @param angleDEG the angle
      * @return the RayTrack
      */
-    public RayTrack addRay(double angle) {
-        RayTrack rt = new RayTrack(angle, getNewIndex());
+    public RayTrack addRay(double angleDEG) {
+        RayTrack rt = new RayTrack(angleDEG, getNewIndex());
         rayList.add(rt);
         return rt;
     }
@@ -161,8 +149,8 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     // the following method is only for use in loading layout turntables
-    public void addRayTrack(double angle, int index, String name) {
-        RayTrack rt = new RayTrack(angle, index);
+    public void addRayTrack(double angleDEG, int index, String name) {
+        RayTrack rt = new RayTrack(angleDEG, index);
         //if (ray!=null) {
         rayList.add(rt);
         rt.connectName = name;
@@ -252,7 +240,7 @@ public class LayoutTurntable extends LayoutTrack {
      * Get the angle for the ray at this position in the rayList.
      *
      * @param i the position in the rayList
-     * @return the angle
+     * @return the angle (in degrees)
      */
     public double getRayAngle(int i) {
         double result = 0.0;
@@ -396,11 +384,11 @@ public class LayoutTurntable extends LayoutTrack {
         double rayRadius = radius + LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
         for (RayTrack rt : rayList) {
             if (rt.getConnectionIndex() == index) {
-                double angle = Math.toRadians(rt.getAngle());
+                double angleRAD = Math.toRadians(rt.getAngle());
                 // calculate coordinates
                 result = new Point2D.Double(
-                        (center.getX() + (rayRadius * Math.sin(angle))),
-                        (center.getY() - (rayRadius * Math.cos(angle))));
+                        (center.getX() + (rayRadius * Math.sin(angleRAD))),
+                        (center.getY() - (rayRadius * Math.cos(angleRAD))));
                 break;
             }
         }
@@ -418,12 +406,12 @@ public class LayoutTurntable extends LayoutTrack {
         if (i < rayList.size()) {
             RayTrack rt = rayList.get(i);
             if (rt != null) {
-                double angle = Math.toRadians(rt.getAngle());
+                double angleRAD = Math.toRadians(rt.getAngle());
                 double rayRadius = radius + LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
                 // calculate coordinates
                 result = new Point2D.Double(
-                        (center.getX() + (rayRadius * Math.sin(angle))),
-                        (center.getY() - (rayRadius * Math.cos(angle))));
+                        (center.getX() + (rayRadius * Math.sin(angleRAD))),
+                        (center.getY() - (rayRadius * Math.cos(angleRAD))));
             }
         }
         return result;
@@ -952,7 +940,7 @@ public class LayoutTurntable extends LayoutTrack {
         /**
          * get the angle for this ray
          *
-         * @return the angle for this ray
+         * @return the angle for this ray (in degrees)
          */
         public double getAngle() {
             return rayAngle;
@@ -961,10 +949,10 @@ public class LayoutTurntable extends LayoutTrack {
         /**
          * set the angle for this ray
          *
-         * @param an the angle for this ray
+         * @param angleDEG the angle for this ray
          */
-        public void setAngle(double an) {
-            rayAngle = MathUtil.wrapPM360(an);
+        public void setAngle(double angleDEG) {
+            rayAngle = MathUtil.wrapPM360(angleDEG);
         }
 
         /**

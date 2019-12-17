@@ -11,33 +11,14 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.Path;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.Turnout;
+import java.util.*;
+import javax.annotation.*;
+import javax.swing.*;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LayoutTurnout corresponds to a turnout on the layout. A LayoutTurnout is an
