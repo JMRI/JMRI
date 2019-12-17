@@ -123,7 +123,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param angle the angle
      * @return the RayTrack
      */
-    protected RayTrack addRay(double angle) {
+    public RayTrack addRay(double angle) {
         RayTrack rt = new RayTrack(angle, getNewIndex());
         rayList.add(rt);
         return rt;
@@ -208,7 +208,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     // should only be used by xml save code
-    protected ArrayList<RayTrack> getRayList() {
+    public ArrayList<RayTrack> getRayList() {
         return rayList;
     }
 
@@ -807,7 +807,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param rayTrack the ray track
      */
-    protected void deleteRay(RayTrack rayTrack) {
+    public void deleteRay(RayTrack rayTrack) {
         TrackSegment t = null;
         if (rayTrack == null) {
             log.error("rayTrack is null!");
@@ -829,7 +829,7 @@ public class LayoutTurntable extends LayoutTrack {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove().
      */
-    void dispose() {
+    public void dispose() {
         if (popup != null) {
             popup.removeAll();
         }
@@ -842,7 +842,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Remove this object from display and persistance.
      */
-    void remove() {
+    public void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }
@@ -856,7 +856,7 @@ public class LayoutTurntable extends LayoutTrack {
         return active;
     }
 
-    protected class RayTrack {
+    public class RayTrack {
 
         /**
          * constructor for RayTracks

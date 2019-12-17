@@ -41,6 +41,7 @@ import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.*;
 import jmri.jmrit.display.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;
@@ -68,7 +69,7 @@ import org.slf4j.*;
  * as some of the control design.
  *
  * @author Dave Duchamp Copyright: (c) 2004-2007
- * @author George Warner Copyright: (c) 2017
+ * @author George Warner Copyright: (c) 2017-2019
  */
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditor extends PanelEditor implements MouseWheelListener {
@@ -215,7 +216,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient int toolbarHeight = 100;
     private transient int toolbarWidth = 100;
 
-    //private transient int numTurnouts = 0;
     private transient TrackSegment newTrack = null;
     private transient boolean panelChanged = false;
 
@@ -3475,7 +3475,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     }
 
-    boolean translateTrack(float xDel, float yDel) {
+    public boolean translateTrack(float xDel, float yDel) {
         Point2D delta = new Point2D.Double(xDel, yDel);
         layoutTrackList.forEach((lt) -> {
             lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta));
@@ -3490,7 +3490,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    boolean scaleTrack(float xFactor, float yFactor) {
+    public boolean scaleTrack(float xFactor, float yFactor) {
         layoutTrackList.forEach((lt) -> {
             lt.scaleCoords(xFactor, yFactor);
         });
@@ -5143,7 +5143,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         redrawPanel();
     }
 
-    protected void clearSelectionGroups() {
+    public void clearSelectionGroups() {
         selectionActive = false;
         _positionableSelection.clear();
         _layoutTrackSelection.clear();
@@ -7473,7 +7473,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Add a Reporter Icon to the panel
      */
-    void addReporter(@Nonnull Reporter reporter, int xx, int yy) {
+    public void addReporter(@Nonnull Reporter reporter, int xx, int yy) {
         ReporterIcon l = new ReporterIcon(this);
         l.setReporter(reporter);
         l.setLocation(xx, yy);
@@ -8917,11 +8917,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (shapeButton.isSelected()) {
             //log.warn("drawShapeInProgress: selectedObject: " + selectedObject);
             if ((selectedObject != null)) {
-//                    && (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType))) {
-//                log.warn("drawShapeInProgress: selectedHitPointType: " + selectedHitPointType);
-//                log.warn("beginLocation: " + beginLocation);
-//                log.warn("currentLocation: " + currentLocation);
-
                 g2.setColor(Color.DARK_GRAY);
                 g2.setStroke(new BasicStroke(3.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
                 g2.draw(new Line2D.Double(beginLocation, currentLocation));

@@ -16,32 +16,15 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
+import java.util.*;
+import java.util.function.*;
+import javax.annotation.*;
+import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.util.ColorUtil;
-import jmri.util.FileUtil;
-import jmri.util.MathUtil;
-import jmri.util.QuickPromptUtil;
+import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -608,7 +591,7 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
-    protected void updateBlockInfo() {
+    public void updateBlockInfo() {
         LayoutBlock layoutBlock = getLayoutBlock();
         if (layoutBlock != null) {
             layoutBlock.updatePaths();
@@ -1868,7 +1851,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @see #remove()
      */
-    void dispose() {
+    public void dispose() {
         if (popupMenu != null) {
             popupMenu.removeAll();
         }
@@ -1878,12 +1861,12 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Remove this object from display and persistance.
      */
-    void remove() {
+    public void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }
 
-    boolean active = true;
+    private boolean active = true;
 
     /**
      * Get state. "active" means that the object is still displayed, and should
