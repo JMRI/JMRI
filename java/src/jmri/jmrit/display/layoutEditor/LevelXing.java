@@ -795,7 +795,7 @@ public class LevelXing extends LayoutTrack {
 
     }
 
-    protected void updateBlockInfo() {
+    public void updateBlockInfo() {
         LayoutBlock blockAC = getLayoutBlockAC();
         LayoutBlock blockBD = getLayoutBlockBD();
         LayoutBlock b1 = null;
@@ -1359,7 +1359,7 @@ public class LevelXing extends LayoutTrack {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove().
      */
-    void dispose() {
+    public void dispose() {
         if (popup != null) {
             popup.removeAll();
         }
@@ -1369,7 +1369,7 @@ public class LevelXing extends LayoutTrack {
     /**
      * Remove this object from display and persistance.
      */
-    void remove() {
+    public void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }

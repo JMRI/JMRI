@@ -22,6 +22,6 @@ import org.junit.runner.RunWith;
         features = "java/acceptancetest/features/apps",
         tags = {"not @webtest", "not @Ignore", "not @ignore"},
         glue = {"apps"})
-public class RunCucumberTest {
+public class RunCucumberIT {
 
 }
