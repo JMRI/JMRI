@@ -1,7 +1,9 @@
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import org.junit.*;
 import java.awt.GraphicsEnvironment;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
+import jmri.jmrit.display.layoutEditor.LayoutTrackDrawingOptions;
+import org.junit.*;
 
 /**
  *

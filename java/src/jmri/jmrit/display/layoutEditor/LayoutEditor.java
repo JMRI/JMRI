@@ -41,12 +41,14 @@ import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.*;
 import jmri.jmrit.display.*;
+import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
 import jmri.util.swing.JComboBoxUtil;
 import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.*;
 import org.slf4j.*;
 
 /**
@@ -69,7 +71,7 @@ import org.slf4j.*;
  * as some of the control design.
  *
  * @author Dave Duchamp Copyright: (c) 2004-2007
- * @author George Warner Copyright: (c) 2017
+ * @author George Warner Copyright: (c) 2017-2019
  */
 @SuppressWarnings("serial")
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
@@ -217,7 +219,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient int toolbarHeight = 100;
     private transient int toolbarWidth = 100;
 
-    //private transient int numTurnouts = 0;
     private transient TrackSegment newTrack = null;
     private transient boolean panelChanged = false;
 
@@ -2693,6 +2694,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
         undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
 
+        //rotate entire layout
+        jmi = new JMenuItem(Bundle.getMessage("RotateLayout90MenuItemTitle") + "...");
+        jmi.setToolTipText(Bundle.getMessage("RotateLayout90MenuItemToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            rotate90();
+        });
+
         //reset turnout size to program defaults
         jmi = new JMenuItem(Bundle.getMessage("ResetTurnoutSize"));
         jmi.setToolTipText(Bundle.getMessage("ResetTurnoutSizeToolTip"));
@@ -2783,6 +2792,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
             addEntryExitPairAction.actionPerformed(event);
         });
+//        if (true) {   //TODO: disable for production
+//            jmi = new JMenuItem("GEORGE");
+//            toolsMenu.add(jmi);
+//            jmi.addActionListener((ActionEvent event) -> {
+//                //do GEORGE stuff here!
+//            });
+//        }
     }   // setupToolsMenu
 
     private void setToolBarSide(ToolBarSide newToolBarSide) {
@@ -3138,7 +3154,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                                 ancestor,
                                 event.getID(),
                                 event.getWhen(),
-                                event.getModifiers(),
+                                event.getModifiersEx(),
                                 event.getX(),
                                 event.getY(),
                                 event.getXOnScreen(),
@@ -3449,7 +3465,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     }
 
-    boolean translateTrack(float xDel, float yDel) {
+    public boolean translateTrack(float xDel, float yDel) {
         Point2D delta = new Point2D.Double(xDel, yDel);
         layoutTrackList.forEach((lt) -> {
             lt.setCoordsCenter(MathUtil.add(lt.getCoordsCenter(), delta));
@@ -3464,7 +3480,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    boolean scaleTrack(float xFactor, float yFactor) {
+    public boolean scaleTrack(float xFactor, float yFactor) {
         layoutTrackList.forEach((lt) -> {
             lt.scaleCoords(xFactor, yFactor);
         });
@@ -3481,6 +3497,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private boolean canUndoMoveSelection = false;
     private Point2D undoDelta = MathUtil.zeroPoint2D;
 
+    /**
+     * translate entire layout by x and y amounts
+     * @param xTranslation
+     * @param yTranslation 
+     */
     public void translate(float xTranslation, float yTranslation) {
         //here when all numbers read in - translation if entered
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
@@ -3517,6 +3538,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
+    /**
+     * undo the move selection
+     */
     void undoMoveSelection() {
         if (canUndoMoveSelection) {
             _positionableSelection.forEach((c) -> {
@@ -3544,6 +3568,40 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             canUndoMoveSelection = false;
             undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
         }
+    }
+
+    /**
+     * rotate the entire layout by 90 degrees clockwise
+     */
+    public void rotate90() {
+        Rectangle2D bounds = getPanelBounds();
+        Point2D lowerLeft = new Point2D.Double(bounds.getMinX(), bounds.getMaxY());
+
+        for (Positionable c : _contents) {
+            Rectangle2D cBounds = c.getBounds(new Rectangle());
+            Point2D newTopLeft = MathUtil.subtract(MathUtil.rotateDEG(c.getLocation(), lowerLeft, 90), lowerLeft);
+            c.setLocation((int) (newTopLeft.getX() - cBounds.getHeight()), (int) newTopLeft.getY());
+            if ((c instanceof PositionableLabel) && ((PositionableLabel) c).isRotated()) {
+                c.rotate(0);
+            } else {
+                c.rotate(90);
+            }
+        }
+
+        for (LayoutTrack lt : layoutTrackList) {
+            Point2D newPoint = MathUtil.subtract(MathUtil.rotateDEG(lt.getCoordsCenter(), lowerLeft, 90), lowerLeft);
+            lt.setCoordsCenter(newPoint);
+            lt.rotateCoords(90);
+        }
+
+        for (LayoutShape ls : layoutShapes) {
+            Point2D newPoint = MathUtil.subtract(MathUtil.rotateDEG(ls.getCoordsCenter(), lowerLeft, 90), lowerLeft);
+            ls.setCoordsCenter(newPoint);
+        }
+
+        resizePanelBounds(true);
+        setDirty();
+        redrawPanel();
     }
 
     public void setCurrentPositionAndSize() {
@@ -5075,7 +5133,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         redrawPanel();
     }
 
-    protected void clearSelectionGroups() {
+    public void clearSelectionGroups() {
         selectionActive = false;
         _positionableSelection.clear();
         _layoutTrackSelection.clear();
@@ -7405,7 +7463,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * Add a Reporter Icon to the panel
      */
-    void addReporter(@Nonnull Reporter reporter, int xx, int yy) {
+    public void addReporter(@Nonnull Reporter reporter, int xx, int yy) {
         ReporterIcon l = new ReporterIcon(this);
         l.setReporter(reporter);
         l.setLocation(xx, yy);
@@ -8849,11 +8907,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (shapeButton.isSelected()) {
             //log.warn("drawShapeInProgress: selectedObject: " + selectedObject);
             if ((selectedObject != null)) {
-//                    && (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType))) {
-//                log.warn("drawShapeInProgress: selectedHitPointType: " + selectedHitPointType);
-//                log.warn("beginLocation: " + beginLocation);
-//                log.warn("currentLocation: " + currentLocation);
-
                 g2.setColor(Color.DARK_GRAY);
                 g2.setStroke(new BasicStroke(3.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
                 g2.draw(new Line2D.Double(beginLocation, currentLocation));

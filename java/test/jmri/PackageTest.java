@@ -72,9 +72,7 @@ import org.junit.runners.Suite;
     TurnoutOperationManagerTest.class,
     EntryPointTest.class,
     NamedBeanPropertyDescriptorTest.class,
-    BooleanPropertyDescriptorTest.class,
-    RunCucumberTest.class,
-    })
+    BooleanPropertyDescriptorTest.class})
 
 /**
  * Invoke complete set of tests for the Jmri package
