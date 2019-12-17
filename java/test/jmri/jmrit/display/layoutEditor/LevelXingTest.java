@@ -231,8 +231,7 @@ public class LevelXingTest {
         Assert.assertNotNull("layoutEditor is null", layoutEditor);
         Assert.assertNotNull("levelXing is null", levelXing);
 
-        //these should all return null
-        try {
+        try {   //these should all return null and NOT throw an exception
             Assert.assertNull("levelXing.getConnection(POINTA)",
                     levelXing.getConnection(LevelXing.LEVEL_XING_A));
             Assert.assertNull("levelXing.getConnection(POINTB)",
@@ -241,10 +240,13 @@ public class LevelXingTest {
                     levelXing.getConnection(LevelXing.LEVEL_XING_C));
             Assert.assertNull("levelXing.getConnection(POINTD)",
                     levelXing.getConnection(LevelXing.LEVEL_XING_D));
+        } catch (JmriException ex) {
+            Assert.fail("levelXing.getConnection threw exception: " + ex);
+        }
 
-            //this should output a warning and throw a JmriException
+        try {   //this should output a warning and throw a JmriException
             levelXing.getConnection(LayoutTrack.NONE);
-            Assert.fail("levelXing.getConnection didn't throw exception");
+            Assert.fail("levelXing.getConnection didn't throw an exception");
         } catch (JmriException ex) {
             JUnitAppender.assertWarnMessage("Invalid Point Type 0");
         }
