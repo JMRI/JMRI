@@ -486,6 +486,9 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_DDRS, Bundle.getMessage("CBUS_DDRS") + " " + 
         Bundle.getMessage("OPC_DN") + ":,%2, " + Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1, ,%1, ,%1"); // NOI18N
         
+        result.put(CbusConstants.CBUS_DDWS, Bundle.getMessage("CBUS_DDWS") + " " + 
+        Bundle.getMessage("OPC_DN") + ":,%2, " + Bundle.getMessage("OPC_AD") + ":,^2, ,%1, ,%1"); // NOI18N
+        
         result.put(CbusConstants.CBUS_ARSON3, Bundle.getMessage("CBUS_ARSON3") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
         
@@ -669,6 +672,7 @@ public class CbusOpCodes {
         result.put(CbusConstants.CBUS_ASOF3, "ASOF3"); // NOI18N
         result.put(CbusConstants.CBUS_DDES, "DDES"); // NOI18N
         result.put(CbusConstants.CBUS_DDRS, "DDRS"); // NOI18N
+        result.put(CbusConstants.CBUS_DDWS, "DDWS"); // NOI18N
         result.put(CbusConstants.CBUS_ARSON3, "ARSON3"); // NOI18N
         result.put(CbusConstants.CBUS_ARSOF3, "ARSOF3"); // NOI18N
         result.put(CbusConstants.CBUS_EXTC6, "EXTC6"); // NOI18N
