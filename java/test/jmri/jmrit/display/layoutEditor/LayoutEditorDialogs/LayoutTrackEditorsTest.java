@@ -1,18 +1,12 @@
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JTextField;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.Turnout;
-import jmri.TurnoutManager;
-import jmri.util.JUnitUtil;
-import jmri.util.MathUtil;
+import javax.swing.*;
+import jmri.*;
+import jmri.jmrit.display.layoutEditor.*;
+import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
@@ -23,7 +17,6 @@ import org.netbeans.jemmy.operators.Operator.StringComparator;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
- *
  * @author Paul Bender Copyright (C) 2017
  * @author George Warner Copyright (C) 2019
  */

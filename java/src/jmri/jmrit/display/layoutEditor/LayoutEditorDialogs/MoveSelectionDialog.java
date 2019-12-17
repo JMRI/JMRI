@@ -1,4 +1,4 @@
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.Component;
 import java.awt.Container;
@@ -7,15 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.annotation.Nonnull;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import jmri.InvokeOnGuiThread;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
 
 /**
@@ -46,7 +40,7 @@ public class MoveSelectionDialog {
 
     //display dialog for translation a selection
     @InvokeOnGuiThread
-    protected void moveSelection() {
+    public void moveSelection() {
         if (moveSelectionOpen) {
             moveSelectionFrame.setVisible(true);
             return;
@@ -66,6 +60,7 @@ public class MoveSelectionDialog {
             JLabel xMoveLabel = new JLabel(Bundle.getMessage("XTranslateLabel"));
             panel31.add(xMoveLabel);
             xMoveLabel.setLabelFor(xMoveField);
+            panel31.add(xMoveField);
             xMoveField.setName("XTranslateLabel");
             xMoveField.setToolTipText(Bundle.getMessage("XTranslateHint"));
             theContentPane.add(panel31);

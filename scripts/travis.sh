@@ -33,7 +33,7 @@ if [[ "${HEADLESS}" == "true" ]] ; then
         mvn exec:exec -P travis-scanhelp
     else
         # run headless tests
-        mvn test -U -P travis-headless --batch-mode \
+        mvn test integration-test failsafe:verify -U -P travis-headless --batch-mode \
             -Dsurefire.printSummary=${PRINT_SUMMARY} \
             -Dsurefire.runOrder=${RUN_ORDER} \
             -Dant.jvm.args="-Djava.awt.headless=${HEADLESS}" \
