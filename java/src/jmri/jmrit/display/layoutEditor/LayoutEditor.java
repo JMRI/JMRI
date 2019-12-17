@@ -3509,8 +3509,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * translate entire layout by x and y amounts
+     *
      * @param xTranslation
-     * @param yTranslation 
+     * @param yTranslation
      */
     public void translate(float xTranslation, float yTranslation) {
         //here when all numbers read in - translation if entered
@@ -3587,14 +3588,34 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Rectangle2D bounds = getPanelBounds();
         Point2D lowerLeft = new Point2D.Double(bounds.getMinX(), bounds.getMaxY());
 
-        for (Positionable c : _contents) {
-            Rectangle2D cBounds = c.getBounds(new Rectangle());
-            Point2D newTopLeft = MathUtil.subtract(MathUtil.rotateDEG(c.getLocation(), lowerLeft, 90), lowerLeft);
-            c.setLocation((int) (newTopLeft.getX() - cBounds.getHeight()), (int) newTopLeft.getY());
-            if ((c instanceof PositionableLabel) && ((PositionableLabel) c).isRotated()) {
-                c.rotate(0);
-            } else {
-                c.rotate(90);
+        List<Positionable> positionables = new ArrayList<Positionable>(_contents);
+        positionables.addAll(backgroundImage);
+        positionables.addAll(blockContentsLabelList);
+        positionables.addAll(labelImage);
+        positionables.addAll(memoryLabelList);
+        positionables.addAll(sensorImage);
+        positionables.addAll(sensorList);
+        positionables.addAll(signalHeadImage);
+        positionables.addAll(signalList);
+        positionables.addAll(signalMastList);
+
+        //do this to remove duplicates that may be in more than one list
+        positionables = positionables.stream().distinct().collect(Collectors.toList());
+
+        for (Positionable positionable : positionables) {
+            Rectangle2D cBounds = positionable.getBounds(new Rectangle());
+            Point2D newTopLeft = MathUtil.subtract(MathUtil.rotateDEG(positionable.getLocation(), lowerLeft, 90), lowerLeft);
+            boolean reLocateFlag = true;
+            if (positionable instanceof PositionableLabel) {
+                PositionableLabel positionableLabel = (PositionableLabel) positionable;
+                if (positionableLabel.isBackground()) {
+                    log.info("cool!");
+                    reLocateFlag = false;
+                }
+                positionableLabel.rotate(positionableLabel.getDegrees() + 90);
+            }
+            if (reLocateFlag) {
+                positionable.setLocation((int) (newTopLeft.getX() - cBounds.getHeight()), (int) newTopLeft.getY());
             }
         }
 
@@ -6337,8 +6358,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public LayoutBlock getLayoutBlock(@Nonnull String blockID) {
         //check if this Layout Block already exists
-        LayoutBlock blk = InstanceManager.getDefault(LayoutBlockManager.class
-        ).getByUserName(blockID);
+        LayoutBlock blk = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(blockID);
         if (blk == null) {
             log.error("LayoutBlock '{}' not found when panel loaded", blockID);
             return null;
@@ -6439,12 +6459,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (sm instanceof SignalMast) {
             beanKey = "BeanNameSignalMast";  // NOI18N
 
-            if (InstanceManager.getDefault(SignalMastLogicManager.class
-            )
+            if (InstanceManager.getDefault(SignalMastLogicManager.class)
                     .isSignalMastUsed((SignalMast) sm)) {
                 SignalMastLogic sml
-                        = InstanceManager.getDefault(SignalMastLogicManager.class
-                        ).getSignalMastLogic((SignalMast) sm);
+                        = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic((SignalMast) sm);
                 if ((sml != null) && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
                     msgKey = "DeleteSmlReference";  // NOI18N
                 }
@@ -7253,12 +7271,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     SignalHead getSignalHead(@Nonnull String name) {
-        SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class
-        ).getBySystemName(name);
+        SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class).getBySystemName(name);
 
         if (sh == null) {
-            sh = InstanceManager.getDefault(SignalHeadManager.class
-            ).getByUserName(name);
+            sh = InstanceManager.getDefault(SignalHeadManager.class).getByUserName(name);
         }
 
         if (sh == null) {
@@ -7332,12 +7348,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     SignalMast getSignalMast(@Nonnull String name) {
-        SignalMast sh = InstanceManager.getDefault(SignalMastManager.class
-        ).getBySystemName(name);
+        SignalMast sh = InstanceManager.getDefault(SignalMastManager.class).getBySystemName(name);
 
         if (sh == null) {
-            sh = InstanceManager.getDefault(SignalMastManager.class
-            ).getByUserName(name);
+            sh = InstanceManager.getDefault(SignalMastManager.class).getByUserName(name);
         }
 
         if (sh == null) {
@@ -8191,8 +8205,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                 }
             }
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".showHelpBar", showHelpBar);
             });
         }
@@ -8244,8 +8257,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 antialiasingOnCheckBoxMenuItem.setSelected(antialiasingOn);
 
             }
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".antialiasingOn", antialiasingOn);
             });
         }
@@ -8262,8 +8274,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             }
 
-            InstanceManager.getOptionalDefault(UserPreferencesManager.class
-            ).ifPresent((prefsMgr) -> {
+            InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setSimplePreferenceState(getWindowFrameRef() + ".highlightSelectedBlock", highlightSelectedBlockFlag);
             });
 
