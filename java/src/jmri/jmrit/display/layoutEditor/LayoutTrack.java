@@ -323,7 +323,7 @@ public abstract class LayoutTrack {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    public abstract void scaleCoords(float xFactor, float yFactor);
+    public abstract void scaleCoords(double xFactor, double yFactor);
 
     /**
      * translate this LayoutTrack's coordinates by the x and y factors
@@ -331,7 +331,14 @@ public abstract class LayoutTrack {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-    public abstract void translateCoords(float xFactor, float yFactor);
+    public abstract void translateCoords(double xFactor, double yFactor);
+
+    /**
+     * rotate this LayoutTrack's coordinates by angleDEG's
+     *
+     * @param angleDEG the amount to rotate in degrees
+     */
+    public abstract void rotateCoords(double angleDEG);
 
     protected Point2D rotatePoint(@Nonnull Point2D p, double sineRot, double cosineRot) {
         double cX = center.getX();
