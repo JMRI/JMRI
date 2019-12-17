@@ -719,7 +719,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean implements Th
         if (!ThreadingUtil.isLayoutThread()) {
             log.error("invoked on wrong thread", new Exception("traceback"));
         }
-
         new Tracker(getCurrentBlockOrder().getBlock(), _trainName, 
                 null, InstanceManager.getDefault(TrackerTableAction.class));
     }
