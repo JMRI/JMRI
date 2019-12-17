@@ -1,8 +1,9 @@
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.*;
