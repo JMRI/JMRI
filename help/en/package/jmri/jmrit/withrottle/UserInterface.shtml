@@ -77,11 +77,11 @@
 					<th>Web</th>
 				</tr>
 				<tr>
-					<td><a target=_new href="https://withrottle.com">WiThrottle</a></td>
+					<td><a target=_blank href="https://withrottle.com">WiThrottle</a></td>
 					<td>An easy-to-use interface to allow iPhone, iPad, and iPod
 						touch users to link to their model railroad with the popular JMRI
 						software</td>
-					<td><a target=_new href="https://withrottle.com"><img
+					<td><a target=_blank href="https://withrottle.com"><img
 							src="images/WiT150x250.png" height="125" width="75"
 							alt="WiThrottle for Apple devices"
 							title="WiThrottle for Apple devices"></a></td>
@@ -90,7 +90,7 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td><a target=_new href="https://enginedriver.mstevetodd.com">EngineDriver</a></td>
+					<td><a target=_blank href="https://enginedriver.mstevetodd.com">EngineDriver</a></td>
 					<td>This free application can control your locomotives and
 						your entire model railroad. Speed, direction, and up to 29 DCC
 						functions are supported for one to six locomotives or consists.
@@ -98,7 +98,7 @@
 						control layout power, turnouts, routes, and access JMRI web panels
 						and windows.</td>
 					<td></td>
-					<td><a target=_new href="https://enginedriver.mstevetodd.com"><img
+					<td><a target=_blank href="https://enginedriver.mstevetodd.com"><img
 							src="images/EngineDriverScreen.png" height="125" width="60"
 							alt="EngineDriver for Android devices"
 							title="EngineDriver for Android devices"></a></td>
@@ -106,7 +106,7 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td><a target=_new href="https://digitrainspro.hu">DigiTrainsPro</a></td>
+					<td><a target=_blank href="https://digitrainspro.hu">DigiTrainsPro</a></td>
 					<td>You can control your model railroad layout from your
 						phone, tablet, or computer with WIFI. From the locomotive library
 						you can easily and quickly select the locomotive you want to
@@ -115,22 +115,22 @@
 						single touch while you are free to move around your layout.
 						Finally, you do not have to remember the addresses, you can play
 						very simply, even with multiple trains.</td>
-					<td><a target=_new href="https://digitrainspro.hu"> <img
+					<td><a target=_blank href="https://digitrainspro.hu"> <img
 							src="https://lh3.googleusercontent.com/GImAaAj7eFkLrMk2e8obXFW465F-C07FNlwXmzvP6HOQkPQ2rCg0d2BnTFy34Y-HYQ=s180"
 							height="100" width="100" alt="DigiTrainsPro for Apple devices"
 							title="DigiTrainsPro for Apple devices"></a></td>
-					<td><a target=_new href="https://digitrainspro.hu"> <img
+					<td><a target=_blank href="https://digitrainspro.hu"> <img
 							src="https://lh3.googleusercontent.com/GImAaAj7eFkLrMk2e8obXFW465F-C07FNlwXmzvP6HOQkPQ2rCg0d2BnTFy34Y-HYQ=s180"
 							height="100" width="100" alt="DigiTrainsPro for Android devices"
 							title="DigiTrainsPro for Android devices"></a></td>
-					<td><a target=_new href="https://digitrainspro.hu"> <img
+					<td><a target=_blank href="https://digitrainspro.hu"> <img
 							src="https://lh3.googleusercontent.com/GImAaAj7eFkLrMk2e8obXFW465F-C07FNlwXmzvP6HOQkPQ2rCg0d2BnTFy34Y-HYQ=s180"
 							height="100" width="100" alt="DigiTrainsPro for Windows"
 							title="DigiTrainsPro for Windows"></a></td>
 					<td></td>
 				</tr>
 				<tr>
-					<td><a target=_new
+					<td><a target=_blank
 						href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j">Train
 							Throttle</a></td>
 					<td>Train Throttle is a client for the JMRI WiThrottle server,
@@ -140,7 +140,7 @@
 						throttle, on the fly.</td>
 					<td></td>
 					<td></td>
-					<td><a target=_new
+					<td><a target=_blank
 						href="https://www.microsoft.com/en-us/p/train-throttle/9nblggh4vf5j">
 							<img src="images/TrainThrottleLogo.png" height="100" width="100"
 							alt="Train Throttle App for Windows devices"
@@ -149,14 +149,14 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td><a target=_new
+					<td><a target=_blank
 						href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">WebThrottle</a></td>
 					<td>Web control for locos, panels, turnouts and routes.
 						Included in JMRI, nothing to install!</td>
 					<td></td>
 					<td></td>
 					<td></td>
-					<td><a target=_new
+					<td><a target=_blank
 						href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">
 							<img src="/resources/logo.gif" height="100" width="100"
 							alt="WebThrottle for browsers" title="WebThrottle for browsers">
