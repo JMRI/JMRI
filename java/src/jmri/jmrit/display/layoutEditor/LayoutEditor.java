@@ -46,24 +46,26 @@ import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
+import jmri.util.swing.JComboBoxUtil;
+import jmri.util.swing.JmriColorChooser;
 import jmri.util.swing.*;
 import org.slf4j.*;
 
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
- * <p>
+ * <P>
  * This module serves as a manager for the LayoutTurnout, Layout Block,
  * PositionablePoint, Track Segment, LayoutSlip and LevelXing objects which are
  * integral subparts of the LayoutEditor class.
- * <p>
+ * <P>
  * All created objects are put on specific levels depending on their type
  * (higher levels are in front): Note that higher numbers appear behind lower
  * numbers.
- * <p>
+ * <P>
  * The "contents" List keeps track of all text and icon label objects added to
  * the target frame for later manipulation. Other Lists keep track of drawn
  * items.
- * <p>
+ * <P>
  * Based in part on PanelEditor.java (Bob Jacobsen (c) 2002, 2003). In
  * particular, text and icon label items are copied from Panel editor, as well
  * as some of the control design.
@@ -71,6 +73,7 @@ import org.slf4j.*;
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
  */
+@SuppressWarnings("serial")
 @SuppressFBWarnings(value = "SE_TRANSIENT_FIELD_NOT_RESTORED") //no Serializable support at present
 public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
@@ -479,24 +482,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
         fileMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuFileMnemonic")));
         menuBar.add(fileMenu);
-
-        // changed this to Performed the StoreXmlUserAction indirectly 
-        // so we would get a chance to set the default file
-        // before it's Performed.
-        JMenuItem storeItem = new JMenuItem(Bundle.getMessage("MenuItemStore"));
-        fileMenu.add(storeItem);
-        storeItem.addActionListener((ActionEvent event) -> {
-            StoreXmlUserAction store = new StoreXmlUserAction();
-            store.setDefaultFile(new File(layoutName + ".xml"));
-            store.actionPerformed(event);
-        });
-
-        storeItem.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")));
+        StoreXmlUserAction store = new StoreXmlUserAction(Bundle.getMessage("MenuItemStore"));
         int primary_modifier = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
-        storeItem.setAccelerator(KeyStroke.getKeyStroke(
+        store.putValue(Action.ACCELERATOR_KEY, KeyStroke.getKeyStroke(
                 stringsToVTCodes.get(Bundle.getMessage("MenuItemStoreAccelerator")), primary_modifier));
-
-        fileMenu.add(storeItem);
+        fileMenu.add(store);
         fileMenu.addSeparator();
 
         JMenuItem deleteItem = new JMenuItem(Bundle.getMessage("DeletePanel"));
