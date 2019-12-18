@@ -98,7 +98,7 @@ public class LayoutEditorChecksTest {
     }
 
     @Test
-    public void checkToolsCheckMenuExists() {
+    public void testToolsCheckMenuExists() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
