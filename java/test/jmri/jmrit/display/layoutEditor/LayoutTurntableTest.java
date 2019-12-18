@@ -446,16 +446,16 @@ public class LayoutTurntableTest {
                 new Point2D.Double(600, 400), layoutTurntable.getCoordsCenter());
 
         Assert.assertEquals("layoutTurntable.getRayCoordsIndexed(0)",
-                new Point2D.Double(618.5, 367.9570600599758),
+                new Point2D.Double(668.5, 281.3545196815319),
                 layoutTurntable.getRayCoordsIndexed(0));
         Assert.assertEquals("layoutTurntable.getRayCoordsIndexed(1)",
-                new Point2D.Double(632.0429399400242, 381.5),
+                new Point2D.Double(718.6454803184681, 331.5),
                 layoutTurntable.getRayCoordsIndexed(1));
         Assert.assertEquals("layoutTurntable.getRayCoordsIndexed(2)",
-                new Point2D.Double(637.0, 400.0),
+                new Point2D.Double(737.0, 400.0),
                 layoutTurntable.getRayCoordsIndexed(2));
         Assert.assertEquals("layoutTurntable.getRayCoordsIndexed(3)",
-                new Point2D.Double(632.0429399400242, 418.5),
+                new Point2D.Double(718.6454803184681, 468.5),
                 layoutTurntable.getRayCoordsIndexed(3));
     }
 
