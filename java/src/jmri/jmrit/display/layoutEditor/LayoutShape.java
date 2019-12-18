@@ -9,24 +9,13 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.util.ColorUtil;
-import jmri.util.MathUtil;
-import jmri.util.QuickPromptUtil;
+import javax.annotation.*;
+import javax.swing.*;
+import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LayoutShape is a set of LayoutShapePoint used to draw a shape. Each point
@@ -269,6 +258,19 @@ public class LayoutShape {
         }
     }
 
+    /**
+     * get point
+     *
+     * @param idx the index of the point to add
+     */
+    public Point2D getPoint(int idx) {
+        Point2D result = MathUtil.zeroPoint2D;
+        if (idx < shapePoints.size()) {
+            result = shapePoints.get(idx).getPoint();
+        }
+        return result;
+    }
+
     // should only be used by xml save code
     public ArrayList<LayoutShapePoint> getPoints() {
         return shapePoints;
@@ -393,7 +395,6 @@ public class LayoutShape {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-//    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         shapePoints.forEach((lsp) -> {
@@ -407,11 +408,22 @@ public class LayoutShape {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-//    @Override
     public void translateCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         shapePoints.forEach((lsp) -> {
             lsp.setPoint(MathUtil.add(factor, lsp.getPoint()));
+        });
+    }
+
+    /**
+     * rotate this LayoutTrack's coordinates by angleDEG's
+     *
+     * @param angleDEG the amount to rotate in degrees
+     */
+    public void rotateCoords(double angleDEG) {
+        Point2D center = getCoordsCenter();
+        shapePoints.forEach((lsp) -> {
+            lsp.setPoint(MathUtil.rotateDEG(lsp.getPoint(), center, angleDEG));
         });
     }
 
