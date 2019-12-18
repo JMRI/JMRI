@@ -372,6 +372,11 @@ public class XmlTest extends OperationsTestCase {
         Assert.assertEquals("car c3 weight tons", "1798", c3.getWeightTons());
     }
 
+    @Test
+    public void checkConstants(){
+       Assert.assertEquals(Xml.NAME,"name");
+    }
+
     // TODO: Add tests for location
     // TODO: Add tests for track location
     // TODO: Add tests for destination
