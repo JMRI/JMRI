@@ -1,4 +1,4 @@
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
 import java.awt.BasicStroke;
 import java.awt.BorderLayout;
@@ -11,36 +11,16 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Label;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowEvent;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
+import java.awt.event.*;
+import java.awt.geom.*;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import javax.annotation.Nonnull;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-import javax.swing.KeyStroke;
-import javax.swing.border.EtchedBorder;
-import javax.swing.border.TitledBorder;
+import java.util.*;
+import javax.annotation.*;
+import javax.swing.*;
+import javax.swing.border.*;
 import jmri.*;
 import jmri.NamedBean.DisplayOptions;
+import jmri.jmrit.display.layoutEditor.*;
 import jmri.jmrit.display.layoutEditor.LayoutTurntable.RayTrack;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.JmriJFrame;
@@ -69,7 +49,7 @@ public class LayoutTrackEditors {
     | Edit Layout Track |
     \*=================*/
     @InvokeOnGuiThread
-    protected void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
+    public void editLayoutTrack(@Nonnull LayoutTrack layoutTrack) {
         sensorList.clear();
         if (layoutTrack instanceof PositionablePoint) {
             // PositionablePoint's don't have an editor...
@@ -192,7 +172,7 @@ public class LayoutTrackEditors {
      * Edit a Track Segment.
      */
     @InvokeOnGuiThread
-    protected void editTrackSegment(@Nonnull TrackSegment trackSegment) {
+    public void editTrackSegment(@Nonnull TrackSegment trackSegment) {
         this.trackSegment = trackSegment;
         sensorList.clear();
 
@@ -445,7 +425,7 @@ public class LayoutTrackEditors {
     /**
      * Edit a Layout Turnout.
      */
-    protected void editLayoutTurnout(@Nonnull LayoutTurnout layoutTurnout) {
+    public void editLayoutTurnout(@Nonnull LayoutTurnout layoutTurnout) {
         this.layoutTurnout = layoutTurnout;
         sensorList.clear();
 
@@ -920,7 +900,7 @@ public class LayoutTrackEditors {
     /**
      * Edit a Slip.
      */
-    protected void editLayoutSlip(LayoutSlip layoutSlip) {
+    public void editLayoutSlip(LayoutSlip layoutSlip) {
         sensorList.clear();
 
         this.layoutSlip = layoutSlip;
@@ -1346,7 +1326,7 @@ public class LayoutTrackEditors {
     /**
      * Edit a Level Crossing.
      */
-    protected void editLevelXing(LevelXing levelXing) {
+    public void editLevelXing(LevelXing levelXing) {
         sensorList.clear();
 
         this.levelXing = levelXing;
@@ -1569,7 +1549,7 @@ public class LayoutTrackEditors {
     /**
      * Edit a Turntable.
      */
-    protected void editLayoutTurntable(LayoutTurntable layoutTurntable) {
+    public void editLayoutTurntable(LayoutTurntable layoutTurntable) {
         this.layoutTurntable = layoutTurntable;
         if (editLayoutTurntableOpen) {
             editLayoutTurntableFrame.setVisible(true);
