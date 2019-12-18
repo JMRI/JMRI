@@ -1101,10 +1101,16 @@ public class AutoActiveTrain implements ThrottleListener {
                 _stoppingBySensor = true;
             }
         } else if (_currentAllocatedSection.getLength() < _maxTrainLength || _stopBySpeedProfile) {
+            log.debug("{}: train will not fit in [{}] ({}<{}), stop.", _activeTrain.getTrainName(), 
+                    _currentAllocatedSection.getSectionName(), _currentAllocatedSection.getLength(), _maxTrainLength);
             // train will not fit comfortably in the Section, stop it immediately
             // stopping by speed profile uses block length to stop
-            setStopNow();
+            setTargetSpeedValue(0.01f);
+            _activeTrain.setStatus(ActiveTrain.WAITING);
+//            setStopNow();
         } else if (_resistanceWheels) {
+            log.debug("{}: train will fit in [{}] ({}>={}), stop when prev block clears.", _activeTrain.getTrainName(), 
+                    _currentAllocatedSection.getSectionName(), _currentAllocatedSection.getLength(), _maxTrainLength);
             // train will fit in current allocated Section and has resistance wheels
             // try to stop by watching Section Block occupancy
             if (_currentAllocatedSection.getSection().getNumBlocks() == 1) {
@@ -1386,8 +1392,8 @@ public class AutoActiveTrain implements ThrottleListener {
      * @param speedState  Index value
      */
     private synchronized void setTargetSpeedState(int speedState) {
+        log.trace("{}: setTargetSpeedState:({})",_activeTrain.getTrainName(),speedState);
         _autoEngineer.slowToStop(false);
-        log.trace("Speed[{}]",speedState);
         if (speedState > STOP_SPEED) {
             _targetSpeed = applyMaxThrottleAndFactor(_speedRatio[speedState]);
         } else if (useSpeedProfile && _stopBySpeedProfile) {
@@ -1437,7 +1443,12 @@ public class AutoActiveTrain implements ThrottleListener {
             return;
         }
         _autoEngineer.slowToStop(false);
-        float mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
+        float mls;
+        if (_controllingSignalMast != null) {
+            mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
+        } else {
+            mls = InstanceManager.getDefault(DispatcherFrame.class).getMaximumLineSpeed();
+        }
         float decSpeed = (speed / mls);
         if (decSpeed > 0.0f) {
             _targetSpeed = applyMaxThrottleAndFactor(decSpeed);
@@ -1790,6 +1801,7 @@ public class AutoActiveTrain implements ThrottleListener {
                                     }
                                 }
                                 _throttle.setSpeedSetting(_currentSpeed);
+                                log.trace("_currentSpeed:{}", _currentSpeed);                                
                             } //ramping
                         } //if currentSpeed != targetSpeed
                     }
