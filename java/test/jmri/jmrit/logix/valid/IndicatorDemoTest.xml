@@ -250,7 +250,7 @@
       <systemName>IM4</systemName>
       <userName>TrainName</userName>
     </memory>
-    <memory value="5:20 PM">
+    <memory value="2:50 PM">
       <systemName>IMCURRENTTIME</systemName>
     </memory>
     <memory value="1.0">
@@ -298,10 +298,10 @@
     </virtualsignalmast>
   </signalmasts>
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml">
-    <oblock systemName="OB1" userName="West" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB1" userName="West" length="1000.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>West</userName>
-      <sensor systemName="IS1" />
-      <errorSensor systemName="IS11" />
+      <sensor systemName="block1" />
+      <errorSensor systemName="err1" />
       <path pathName="westSiding" blockName="OB1" fromPortal="West-FarWest" toPortal="westSiding" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT2" set="4" />
       </path>
@@ -309,13 +309,9 @@
         <setting turnout="IT2" set="2" />
         <setting turnout="IT4" set="2" />
       </path>
-      <path pathName="westYard" blockName="OB1" fromPortal="WestYard-West" toPortal="westMain" fromDirection="0" toDirection="0" length="0.0">
-        <setting turnout="IT4" set="4" />
-      </path>
       <portal portalName="westMain">
         <fromBlock blockName="OB1">
           <path pathName="westMain" blockName="OB1" />
-          <path pathName="westYard" blockName="OB1" />
         </fromBlock>
         <fromSignal signalName="IH1" signalDelay="0.0" />
         <toBlock blockName="OB2">
@@ -332,14 +328,6 @@
           <path pathName="yard" blockName="OB4" />
         </toBlock>
       </portal>
-      <portal portalName="WestYard-West">
-        <fromBlock blockName="OB1">
-          <path pathName="westYard" blockName="OB1" />
-        </fromBlock>
-        <toBlock blockName="OB1Y">
-          <path pathName="yard" blockName="OB1Y" />
-        </toBlock>
-      </portal>
       <portal portalName="West-FarWest">
         <fromBlock blockName="OB22">
           <path pathName="Main" blockName="OB22" />
@@ -350,13 +338,13 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB1Y" userName="WestYard" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB1Y" userName="WestYard" length="1000.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>WestYard</userName>
       <comment>Dark</comment>
       <path pathName="yard" blockName="OB1Y" fromPortal="WestYard-FarWest" toPortal="WestYard-West" fromDirection="0" toDirection="0" length="0.0" />
       <portal portalName="WestYard-West">
-        <fromBlock blockName="OB1">
-          <path pathName="westYard" blockName="OB1" />
+        <fromBlock blockName="OB2">
+          <path pathName="MainToYard" blockName="OB2" />
         </fromBlock>
         <toBlock blockName="OB1Y">
           <path pathName="yard" blockName="OB1Y" />
@@ -371,15 +359,19 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB2" userName="Main" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB2" userName="Main" length="1100.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>Main</userName>
-      <sensor systemName="IS2" />
-      <errorSensor systemName="IS12" />
-      <path pathName="main" blockName="OB2" fromPortal="westMain" toPortal="eastMain" fromDirection="0" toDirection="0" length="0.0" />
+      <sensor systemName="block2" />
+      <errorSensor systemName="err2" />
+      <path pathName="main" blockName="OB2" fromPortal="eastMain" toPortal="westMain" fromDirection="0" toDirection="0" length="1100.0">
+        <setting turnout="IT4" set="2" />
+      </path>
+      <path pathName="MainToYard" blockName="OB2" fromPortal="eastMain" toPortal="WestYard-West" fromDirection="0" toDirection="0" length="1100.0">
+        <setting turnout="IT4" set="4" />
+      </path>
       <portal portalName="westMain">
         <fromBlock blockName="OB1">
           <path pathName="westMain" blockName="OB1" />
-          <path pathName="westYard" blockName="OB1" />
         </fromBlock>
         <fromSignal signalName="IH1" signalDelay="0.0" />
         <toBlock blockName="OB2">
@@ -387,9 +379,18 @@
         </toBlock>
         <toSignal signalName="IF$vsm:CSX-1998:CLS-3-3-2A-hi($0002)" signalDelay="0.0" />
       </portal>
+      <portal portalName="WestYard-West">
+        <fromBlock blockName="OB2">
+          <path pathName="MainToYard" blockName="OB2" />
+        </fromBlock>
+        <toBlock blockName="OB1Y">
+          <path pathName="yard" blockName="OB1Y" />
+        </toBlock>
+      </portal>
       <portal portalName="eastMain">
         <fromBlock blockName="OB2">
           <path pathName="main" blockName="OB2" />
+          <path pathName="MainToYard" blockName="OB2" />
         </fromBlock>
         <fromSignal signalName="IH2" signalDelay="0.0" />
         <toBlock blockName="OB3">
@@ -399,7 +400,7 @@
         <toSignal signalName="IF$vsm:CSX-1998:CLS-3-3-2-hi($0001)" signalDelay="0.0" />
       </portal>
     </oblock>
-    <oblock systemName="OB3" userName="East" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB3" userName="East" length="2286.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>East</userName>
       <sensor systemName="block3" />
       <errorSensor systemName="err3" />
@@ -422,6 +423,7 @@
       <portal portalName="eastMain">
         <fromBlock blockName="OB2">
           <path pathName="main" blockName="OB2" />
+          <path pathName="MainToYard" blockName="OB2" />
         </fromBlock>
         <fromSignal signalName="IH2" signalDelay="0.0" />
         <toBlock blockName="OB3">
@@ -459,10 +461,10 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB4" userName="Siding" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB4" userName="Siding" length="900.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>Siding</userName>
-      <sensor systemName="IS4" />
-      <errorSensor systemName="IS14" />
+      <sensor systemName="block4" />
+      <errorSensor systemName="err4" />
       <path pathName="siding" blockName="OB4" fromPortal="westSiding" toPortal="eastSiding" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT3" set="2" />
       </path>
@@ -497,7 +499,7 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB4Y" userName="SidingYard" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB4Y" userName="SidingYard" length="1000.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>SidingYard</userName>
       <comment>Dark</comment>
       <path pathName="Spur1" blockName="OB4Y" toPortal="sidingYard" fromDirection="0" toDirection="0" length="0.0">
@@ -516,7 +518,7 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB20" userName="Infinity&amp;Beyond" length="139.7" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB20" userName="Infinity&amp;Beyond" length="5000.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>Infinity&amp;Beyond</userName>
       <sensor systemName="Infinity&amp;Beyond" />
       <path pathName="Main" blockName="OB20" fromPortal="Middle-Infinity" toPortal="FarWest-Infinity" fromDirection="0" toDirection="0" length="139.7">
@@ -567,7 +569,7 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB21" userName="FarEast" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB21" userName="FarEast" length="1200.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>FarEast</userName>
       <sensor systemName="FarEast" />
       <path pathName="Main" blockName="OB21" fromPortal="FarEast-Middle" toPortal="East-FarEast" fromDirection="0" toDirection="0" length="0.0">
@@ -603,7 +605,7 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB22" userName="FarWest" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB22" userName="FarWest" length="1200.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>FarWest</userName>
       <sensor systemName="FarWest" />
       <path pathName="Main" blockName="OB22" fromPortal="West-FarWest" toPortal="FarWest-Infinity" fromDirection="0" toDirection="0" length="0.0">
@@ -641,7 +643,7 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB23" userName="EastYard" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB23" userName="EastYard" length="500.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>EastYard</userName>
       <sensor systemName="EastYard" />
       <path pathName="eastYardLead" blockName="OB23" toPortal="EastYard" fromDirection="0" toDirection="0" length="0.0" />
@@ -655,7 +657,7 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB24" userName="Middle" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB24" userName="Middle" length="1300.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>Middle</userName>
       <sensor systemName="sMiddle" />
       <path pathName="Main" blockName="OB24" fromPortal="FarEast-Middle" toPortal="Middle-Infinity" fromDirection="0" toDirection="0" length="0.0" />
@@ -676,7 +678,7 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB30" userName="FarAway" length="0.0" units="false" curve="0" permissive="true" speedNotch="Normal">
+    <oblock systemName="OB30" userName="FarAway" length="1300.0" units="false" curve="0" permissive="true" speedNotch="Normal">
       <userName>FarAway</userName>
       <sensor systemName="sFarAway" />
       <path pathName="Main" blockName="OB30" fromPortal="FarAway-FarMiddle" toPortal="WayFarAwaySouth" fromDirection="0" toDirection="0" length="0.0">
@@ -712,7 +714,7 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB31" userName="WayFarAway" length="0.0" units="false" curve="0" permissive="true" speedNotch="Normal">
+    <oblock systemName="OB31" userName="WayFarAway" length="2000.0" units="false" curve="0" permissive="true" speedNotch="Normal">
       <userName>WayFarAway</userName>
       <path pathName="ToFarAway" blockName="OB31" fromPortal="WayFarAwayWest" toPortal="WayFarAwaySouth" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT8" set="4" />
@@ -720,14 +722,6 @@
       <path pathName="Main" blockName="OB31" toPortal="WayFarAwayWest" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT8" set="2" />
       </path>
-      <portal portalName="WayFarAwaySouth">
-        <fromBlock blockName="OB30">
-          <path pathName="Main" blockName="OB30" />
-        </fromBlock>
-        <toBlock blockName="OB31">
-          <path pathName="ToFarAway" blockName="OB31" />
-        </toBlock>
-      </portal>
       <portal portalName="WayFarAwayWest">
         <fromBlock blockName="OB31">
           <path pathName="ToFarAway" blockName="OB31" />
@@ -737,8 +731,16 @@
           <path pathName="OutOfInfinity" blockName="OB20" />
         </toBlock>
       </portal>
+      <portal portalName="WayFarAwaySouth">
+        <fromBlock blockName="OB30">
+          <path pathName="Main" blockName="OB30" />
+        </fromBlock>
+        <toBlock blockName="OB31">
+          <path pathName="ToFarAway" blockName="OB31" />
+        </toBlock>
+      </portal>
     </oblock>
-    <oblock systemName="OB32" userName="ReallyFarAway" length="0.0" units="false" curve="0" permissive="true" speedNotch="Normal">
+    <oblock systemName="OB32" userName="ReallyFarAway" length="1500.0" units="false" curve="0" permissive="true" speedNotch="Normal">
       <userName>ReallyFarAway</userName>
       <path pathName="Main" blockName="OB32" toPortal="FarMiddle-ReallyFar" fromDirection="0" toDirection="0" length="0.0" />
       <portal portalName="FarMiddle-ReallyFar">
@@ -750,7 +752,7 @@
         </toBlock>
       </portal>
     </oblock>
-    <oblock systemName="OB34" userName="FarMiddle" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
+    <oblock systemName="OB34" userName="FarMiddle" length="1200.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>FarMiddle</userName>
       <sensor systemName="sFarMiddle" />
       <path pathName="Main" blockName="OB34" fromPortal="FarMiddle-ReallyFar" toPortal="FarAway-FarMiddle" fromDirection="0" toDirection="0" length="0.0">
@@ -811,7 +813,7 @@
       <throttleCommand time="1203" command="Speed" value="0.103174604" block="OB3" />
       <throttleCommand time="1219" command="Speed" value="0.03968254" block="OB3" />
       <throttleCommand time="1594" command="Speed" value="0.0" block="OB3" />
-      <train trainId="" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="PDQX" />
+      <train trainId="Hudson" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="PDQX" />
     </warrant>
     <warrant systemName="IW2" userName="WestToEastOnSiding" wtype="normal">
       <blockOrder pathName="westSiding" entryName="" exitName="westSiding">
@@ -836,33 +838,7 @@
       <throttleCommand time="7625" command="NoOp" value="Enter Block" block="OB3" />
       <throttleCommand time="7578" command="Speed" value="0.0" block="OB3" />
       <throttleCommand time="1313" command="F0" value="false" block="OB3" />
-      <train trainId="" dccAddress="4882" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="EZX1" />
-    </warrant>
-    <warrant systemName="IW3" userName="ThroughWestYard" wtype="normal">
-      <blockOrder pathName="main" entryName="" exitName="westMain">
-        <block systemName="OB2" userName="Main" />
-      </blockOrder>
-      <blockOrder pathName="westYard" entryName="westMain" exitName="WestYard-West">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <blockOrder pathName="yard" entryName="WestYard-West" exitName="WestYard-FarWest">
-        <block systemName="OB1Y" userName="WestYard" />
-      </blockOrder>
-      <blockOrder pathName="siding" entryName="WestYard-FarWest" exitName="FarWest-Infinity">
-        <block systemName="OB22" userName="FarWest" />
-      </blockOrder>
-      <blockOrder pathName="Main" entryName="FarWest-Infinity" exitName="Middle-Infinity">
-        <block systemName="OB20" userName="Infinity&amp;Beyond" />
-      </blockOrder>
-      <throttleCommand time="32" command="Speed" value="0.0" block="OB2" />
-      <throttleCommand time="2625" command="Speed" value="0.023809524" block="OB2" />
-      <throttleCommand time="312" command="Speed" value="0.25396827" block="OB2" />
-      <throttleCommand time="5672" command="NoOp" value="Enter Block" block="OB1" />
-      <throttleCommand time="10766" command="NoOp" value="Enter Block" block="OB1Y" />
-      <throttleCommand time="10328" command="NoOp" value="Enter Block" block="OB22" />
-      <throttleCommand time="9609" command="NoOp" value="Enter Block" block="OB20" />
-      <throttleCommand time="6266" command="Speed" value="0.0" block="OB20" />
-      <train trainId="" dccAddress="62" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="YWE" />
+      <train trainId="SantaFe" dccAddress="4882" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="EZX1" />
     </warrant>
     <warrant systemName="IW4" userName="EastToReallyFarAway" wtype="normal">
       <blockOrder pathName="eastMain" entryName="" exitName="East-FarEast">
@@ -888,7 +864,7 @@
       <throttleCommand time="6812" command="NoOp" value="Enter Block" block="OB34" />
       <throttleCommand time="6813" command="NoOp" value="Enter Block" block="OB32" />
       <throttleCommand time="3797" command="Speed" value="0.0" block="OB32" />
-      <train trainId="" dccAddress="1110" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="1110" />
+      <train trainId="Decapod" dccAddress="1110" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="1110" />
     </warrant>
     <warrant systemName="IW6" userName="FarEastToFarWestOnMain" wtype="normal">
       <blockOrder pathName="Main" entryName="" exitName="East-FarEast">
@@ -924,7 +900,7 @@
       <throttleCommand time="5469" command="Speed" value="0.03968254" block="OB22" />
       <throttleCommand time="0" command="Sensor" value="inactive" block="" />
       <throttleCommand time="859" command="Speed" value="0.015873017" block="OB22" />
-      <train trainId="" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="PDQX" />
+      <train trainId="Hudson" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="PDQX" />
     </warrant>
     <warrant systemName="IW7" userName="WayFarToWest" wtype="normal">
       <blockOrder pathName="ToFarAway" entryName="" exitName="WayFarAwaySouth">
@@ -961,7 +937,7 @@
       <throttleCommand time="8078" command="NoOp" value="Enter Block" block="OB22" />
       <throttleCommand time="5844" command="NoOp" value="Enter Block" block="OB1" />
       <throttleCommand time="6859" command="Speed" value="0.0" block="OB1" />
-      <train trainId="" dccAddress="1110" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="XYZ" />
+      <train trainId="Decapod" dccAddress="1110" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="XYZ" />
     </warrant>
     <warrant systemName="IW8" userName="Spur1ToEast" wtype="normal">
       <blockOrder pathName="Spur1" entryName="" exitName="sidingYard">
@@ -999,33 +975,7 @@
       <throttleCommand time="4344" command="NoOp" value="Enter Block" block="OB3" />
       <throttleCommand time="5437" command="Speed" value="0.07936508" block="OB3" />
       <throttleCommand time="282" command="Speed" value="0.0" block="OB3" />
-      <train trainId="" dccAddress="4882" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="4882" />
-    </warrant>
-    <warrant systemName="IW10" userName="EastYardToWestYard" wtype="normal">
-      <blockOrder pathName="eastYardLead" entryName="" exitName="EastYard">
-        <block systemName="OB23" userName="EastYard" />
-      </blockOrder>
-      <blockOrder pathName="EastYard2Main" entryName="EastYard" exitName="eastMain">
-        <block systemName="OB3" userName="East" />
-      </blockOrder>
-      <blockOrder pathName="main" entryName="eastMain" exitName="westMain">
-        <block systemName="OB2" userName="Main" />
-      </blockOrder>
-      <blockOrder pathName="westYard" entryName="westMain" exitName="westYard">
-        <block systemName="OB1" userName="West" />
-      </blockOrder>
-      <blockOrder pathName="yard" entryName="westYard" exitName="">
-        <block systemName="OB1Y" userName="WestYard" />
-      </blockOrder>
-      <throttleCommand time="15" command="Speed" value="0.0" block="OB23" />
-      <throttleCommand time="3735" command="Speed" value="0.031746034" block="OB23" />
-      <throttleCommand time="718" command="Speed" value="0.3015873" block="OB23" />
-      <throttleCommand time="10000" command="NoOp" value="Enter Block" block="OB3" />
-      <throttleCommand time="10000" command="NoOp" value="Enter Block" block="OB2" />
-      <throttleCommand time="15828" command="NoOp" value="Enter Block" block="OB1" />
-      <throttleCommand time="10000" command="NoOp" value="Enter Block" block="OB1Y" />
-      <throttleCommand time="5891" command="Speed" value="0.0" block="OB1Y" />
-      <train trainId="" dccAddress="62" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="62" />
+      <train trainId="SantaFe" dccAddress="4882" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="4882" />
     </warrant>
     <warrant systemName="IW11" userName="Spur2 toMain" wtype="normal">
       <blockOrder pathName="Spur2" entryName="" exitName="sidingYard">
@@ -1066,7 +1016,7 @@
       <throttleCommand time="9531" command="Speed" value="0.30952382" block="OB3" />
       <throttleCommand time="2422" command="NoOp" value="Enter Block" block="OB2" />
       <throttleCommand time="7250" command="Speed" value="0.0" block="OB2" />
-      <train trainId="" dccAddress="153" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="153" />
+      <train trainId="Consolidation153" dccAddress="153" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="153" />
     </warrant>
     <warrant systemName="IW12" userName="FarAway" wtype="normal">
       <blockOrder pathName="Main" entryName="" exitName="FarMiddle-ReallyFar">
@@ -1094,7 +1044,7 @@
       <throttleCommand time="2047" command="F2" value="true" block="OB31" />
       <throttleCommand time="859" command="F2" value="false" block="OB31" />
       <throttleCommand time="1953" command="Speed" value="0.0" block="OB31" />
-      <train trainId="" dccAddress="101" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="ZEP" />
+      <train trainId="Zephr" dccAddress="101" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="ZEP" />
     </warrant>
     <warrant systemName="IW!W7" userName="EastToWest" wtype="normal">
       <blockOrder pathName="eastMain" entryName="" exitName="East-FarEast">
@@ -1131,7 +1081,7 @@
       <throttleCommand time="1687" command="NoOp" value="Enter Block" block="OB22" />
       <throttleCommand time="5782" command="NoOp" value="Enter Block" block="OB1" />
       <throttleCommand time="2390" command="Speed" value="0.0" block="OB1" />
-      <train trainId="" dccAddress="153" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="153" />
+      <train trainId="Consolidation153" dccAddress="153" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="153" />
     </warrant>
     <warrant systemName="IWIM9" userName="LoopEastToEast" wtype="normal">
       <blockOrder pathName="Siding2Main" entryName="" exitName="eastSiding">
@@ -1164,7 +1114,7 @@
       <viaOrder pathName="siding" entryName="" exitName="">
         <block systemName="OB4" userName="Siding" />
       </viaOrder>
-      <train trainId="" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="FOO" />
+      <train trainId="Hudson" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="FOO" />
     </warrant>
     <warrant systemName="IWLOOP" userName="LoopWestToEast" wtype="normal">
       <blockOrder pathName="Main" entryName="" exitName="FarWest-Infinity">
@@ -1207,7 +1157,7 @@
       <throttleCommand time="1000" command="Set Sensor" value="Inactive" block="IS51" />
       <throttleCommand time="0" command="Set Sensor" value="Inactive" block="IS52" />
       <throttleCommand time="3000" command="Speed" value="0.0" block="OB20" />
-      <train trainId="" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="502" />
+      <train trainId="Hudson" dccAddress="502" dccType="L" runBlind="false" shareRoute="false" noRamp="false" trainName="502" />
     </warrant>
   </warrants>
   <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
@@ -1426,7 +1376,7 @@
     </conditional>
   </conditionals>
   <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Tue Dec 28 12:04:15 PST 2010" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
-  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Indicator Demo 1" x="1966" y="27" height="458" width="1249" editable="no" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="horizontal" redBackground="238" greenBackground="238" blueBackground="238" state="0" shapeSelect="yes">
+  <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Indicator Demo 1" x="1966" y="27" height="458" width="1249" editable="yes" positionable="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="horizontal" redBackground="238" greenBackground="238" blueBackground="238" state="0" shapeSelect="yes">
     <icons>
       <visible>
         <url>program:resources/icons/throttles/RoundRedCircle20.png</url>
@@ -1444,9 +1394,9 @@
         <url>program:resources/icons/track/fromArrow.gif</url>
       </from_arrow>
     </icons>
-    <indicatortrackicon x="265" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="266" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "West"</tooltip>
-      <occupancyblock>West</occupancyblock>
+      <occupancyblock>OB1</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -1473,8 +1423,8 @@
         <path>westMain</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="414" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
-      <tooltip>ITrack</tooltip>
+    <indicatortrackicon x="414" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Main"</tooltip>
       <occupancyblock>OB2</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
@@ -1499,10 +1449,11 @@
       </iconmap>
       <paths>
         <path>main</path>
+        <path>MainToYard</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="451" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
-      <tooltip>ITrack</tooltip>
+    <indicatortrackicon x="451" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Main"</tooltip>
       <occupancyblock>OB2</occupancyblock>
       <showTrainName>yes</showTrainName>
       <iconmap family="BlockSegment">
@@ -1527,10 +1478,11 @@
       </iconmap>
       <paths>
         <path>main</path>
+        <path>MainToYard</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="489" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
-      <tooltip>ITrack</tooltip>
+    <indicatortrackicon x="489" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Main"</tooltip>
       <occupancyblock>OB2</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
@@ -1555,9 +1507,10 @@
       </iconmap>
       <paths>
         <path>main</path>
+        <path>MainToYard</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="415" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="415" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "Siding"</tooltip>
       <occupancyblock>OB4</occupancyblock>
       <showTrainName>yes</showTrainName>
@@ -1586,7 +1539,7 @@
         <path>yard</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="489" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="489" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "Siding"</tooltip>
       <occupancyblock>OB4</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -1614,10 +1567,10 @@
         <path>siding</path>
       </paths>
     </indicatortrackicon>
-    <indicatorturnouticon x="302" y="142" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="303" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "West"</tooltip>
       <turnout>IT2</turnout>
-      <occupancyblock>West</occupancyblock>
+      <occupancyblock>OB1</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmaps family="LeftTurnout">
         <OccupiedTrack>
@@ -1710,7 +1663,7 @@
         <path>westMain</path>
       </paths>
     </indicatorturnouticon>
-    <indicatorturnouticon x="452" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="452" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "Siding"</tooltip>
       <turnout>IT3</turnout>
       <occupancyblock>OB4</occupancyblock>
@@ -1806,7 +1759,7 @@
         <path>yard</path>
       </paths>
     </indicatorturnouticon>
-    <sensoricon sensor="block1" x="290" y="127" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="block1" x="291" y="127" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>block1</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1822,7 +1775,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="block2" x="433" y="197" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="block2" x="433" y="197" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>block2</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1838,7 +1791,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="block3" x="583" y="200" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="block3" x="583" y="200" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>block3</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1854,7 +1807,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="block4" x="413" y="103" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="block4" x="413" y="103" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>block4</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1870,7 +1823,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <indicatorturnouticon x="527" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="527" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "East"</tooltip>
       <turnout>IT1</turnout>
       <occupancyblock>OB3</occupancyblock>
@@ -1971,19 +1924,19 @@
         <path>Siding2EastYard</path>
       </paths>
     </indicatorturnouticon>
-    <positionablelabel x="238" y="149" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="OB1 (West)" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="239" y="149" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="OB1 (West)" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="427" y="179" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="OB2 (Main)" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="427" y="179" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="OB2 (Main)" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="578" y="180" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="OB3 (East)" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="578" y="180" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="OB3 (East)" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="371" y="126" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="OB4 (Siding)" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="371" y="126" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="OB4 (Siding)" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="err1" x="290" y="140" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="err1" x="291" y="140" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>err1</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -1999,7 +1952,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="err2" x="434" y="212" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="err2" x="434" y="212" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>err2</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2015,7 +1968,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="err3" x="584" y="213" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="err3" x="584" y="213" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>err3</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2031,7 +1984,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="err4" x="412" y="116" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="err4" x="412" y="116" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>err4</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-error.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2047,9 +2000,9 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <indicatortrackicon x="228" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="229" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "West"</tooltip>
-      <occupancyblock>West</occupancyblock>
+      <occupancyblock>OB1</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -2076,7 +2029,7 @@
         <path>westMain</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="601" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="601" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "East"</tooltip>
       <occupancyblock>OB3</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -2107,14 +2060,14 @@
         <path>Siding2Main</path>
       </paths>
     </indicatortrackicon>
-    <positionablelabel x="494" y="74" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="OB4Y(SidingYard) - Dark" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="494" y="74" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="OB4Y(SidingYard) - Dark" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <indicatorturnouticon x="340" y="166" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
-      <tooltip>OBlock "West"</tooltip>
+    <indicatorturnouticon x="340" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+      <tooltip>OBlock "Main"</tooltip>
       <turnout>IT4</turnout>
-      <occupancyblock>West</occupancyblock>
-      <showTrainName>yes</showTrainName>
+      <occupancyblock>Main</occupancyblock>
+      <showTrainName>no</showTrainName>
       <iconmaps family="LeftTurnout">
         <OccupiedTrack>
           <BeanStateUnknown url="program:resources/icons/track/line/LeftTO/os-lefthand-west-unknown-yellow.gif" degrees="0" scale="1.0">
@@ -2202,11 +2155,11 @@
         </ErrorTrack>
       </iconmaps>
       <paths>
-        <path>westMain</path>
-        <path>westYard</path>
+        <path>MainToYard</path>
+        <path>main</path>
       </paths>
     </indicatorturnouticon>
-    <indicatortrackicon x="301" y="189" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="303" y="189" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "WestYard"</tooltip>
       <occupancyblock>OB1Y</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -2234,7 +2187,7 @@
         <path>yard</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="266" y="189" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="266" y="189" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "WestYard"</tooltip>
       <occupancyblock>OB1Y</occupancyblock>
       <showTrainName>yes</showTrainName>
@@ -2262,7 +2215,7 @@
         <path>yard</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="340" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="340" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "West"</tooltip>
       <occupancyblock>OB1</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -2290,40 +2243,40 @@
         <path>westSiding</path>
       </paths>
     </indicatortrackicon>
-    <positionablelabel x="596" y="196" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="596" y="196" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="446" y="195" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="446" y="195" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="238" y="124" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="239" y="124" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="363" y="100" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="363" y="100" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="448" y="210" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Error" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="448" y="210" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Error" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="596" y="210" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Error" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="596" y="210" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Error" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="261" y="137" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Error" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="262" y="137" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Error" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="384" y="114" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Error" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="384" y="114" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Error" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="199" y="202" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="OB1Y(WestYard) - Dark" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="199" y="202" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="OB1Y(WestYard) - Dark" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="577" y="264" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Set Not In Service" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="577" y="264" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Set Not In Service" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="155" y="267" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Auto Run" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="155" y="267" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Auto Run" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS103" x="561" y="268" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS103" x="561" y="268" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>ManualAllocate</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2339,7 +2292,7 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <sensoricon sensor="Allocate AutoRun" x="140" y="239" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="Allocate AutoRun" x="140" y="239" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Allocate AutoRun</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2355,7 +2308,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="Run AutoRun" x="140" y="270" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="Run AutoRun" x="140" y="270" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Run AutoRun</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2371,10 +2324,10 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <positionablelabel x="155" y="236" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Allocate" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="155" y="236" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Allocate" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS106" x="561" y="252" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS106" x="561" y="252" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>EnableManual</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2390,10 +2343,10 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <positionablelabel x="577" y="248" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Set Block Error" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="577" y="248" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Set Block Error" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS100" x="140" y="286" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS100" x="140" y="286" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Run Manual</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2409,10 +2362,10 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <positionablelabel x="155" y="283" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Manual Run" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="155" y="283" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Manual Run" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="SetPath AutoRun" x="140" y="255" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="SetPath AutoRun" x="140" y="255" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>SetPath AutoRun</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2428,10 +2381,10 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <positionablelabel x="155" y="252" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="SetPath" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="155" y="252" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="SetPath" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <indicatortrackicon x="377" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="377" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "Siding"</tooltip>
       <occupancyblock>OB4</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -2460,8 +2413,8 @@
         <path>yard</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="377" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
-      <tooltip>ITrack</tooltip>
+    <indicatortrackicon x="377" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+      <tooltip>OBlock "Main"</tooltip>
       <occupancyblock>OB2</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
@@ -2486,27 +2439,28 @@
       </iconmap>
       <paths>
         <path>main</path>
+        <path>MainToYard</path>
       </paths>
     </indicatortrackicon>
-    <positionablelabel x="353" y="223" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Warrants" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="353" y="223" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Warrants" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <memoryInputIcon colWidth="12" memory="Warrant" x="151" y="346" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" fontname="Tahoma" size="11" style="0" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+    <memoryInputIcon colWidth="12" memory="Warrant" x="151" y="346" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" fontname="Tahoma" size="11" style="0" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
       <tooltip>Warrant (IM1)</tooltip>
     </memoryInputIcon>
-    <positionablelabel x="339" y="239" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="WestToEastOnMain" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="339" y="239" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="WestToEastOnMain" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="339" y="257" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="WestToEastOnSiding" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="339" y="257" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="WestToEastOnSiding" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="339" y="273" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="WestYardToEast" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="339" y="273" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="WestYardToEast" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="339" y="288" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="WestToSidingYard" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="339" y="288" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="WestToSidingYard" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="Warrant1" x="324" y="241" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="Warrant1" x="324" y="241" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Warrant1</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2522,7 +2476,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="Warrant2" x="324" y="257" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="Warrant2" x="324" y="257" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Warrant2</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2538,7 +2492,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="Warrant3" x="324" y="274" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="Warrant3" x="324" y="274" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Warrant3</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2554,7 +2508,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <sensoricon sensor="Warrant4" x="324" y="288" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="Warrant4" x="324" y="288" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Warrant4</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2570,37 +2524,37 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <memoryicon memory="Warrant" x="199" y="236" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" fontname="Tahoma" size="10" style="0" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+    <memoryicon memory="Warrant" x="199" y="236" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" fontname="Tahoma" size="10" style="0" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
       <tooltip>Warrant (IM1)</tooltip>
     </memoryicon>
-    <memoryicon memory="Warrant" x="199" y="252" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" fontname="Tahoma" size="10" style="0" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+    <memoryicon memory="Warrant" x="199" y="252" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" fontname="Tahoma" size="10" style="0" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
       <tooltip>Warrant (IM1)</tooltip>
     </memoryicon>
-    <memoryicon memory="Warrant" x="201" y="267" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" fontname="Tahoma" size="10" style="0" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+    <memoryicon memory="Warrant" x="201" y="267" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" fontname="Tahoma" size="10" style="0" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
       <tooltip>Warrant (IM1)</tooltip>
     </memoryicon>
-    <memoryicon memory="Warrant" x="216" y="283" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" fontname="Tahoma" size="10" style="0" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
+    <memoryicon memory="Warrant" x="216" y="283" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" fontname="Tahoma" size="10" style="0" red="51" green="51" blue="51" hasBackground="no" justification="left" selectable="no" updateBlockValue="yes" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif">
       <tooltip>Warrant (IM1)</tooltip>
     </memoryicon>
-    <memoryInputIcon colWidth="6" memory="TrainName" x="544" y="346" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" fontname="Tahoma" size="11" style="0" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+    <memoryInputIcon colWidth="6" memory="TrainName" x="544" y="346" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" fontname="Tahoma" size="11" style="0" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
       <tooltip>TrainName (IM4)</tooltip>
     </memoryInputIcon>
-    <positionablelabel x="185" y="331" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Warrant" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="185" y="331" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Warrant" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="365" y="331" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Train ID/Address" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="365" y="331" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Train ID/Address" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="549" y="331" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Train Name" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="549" y="331" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Train Name" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <memoryInputIcon colWidth="12" memory="TrainId" x="333" y="346" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" fontname="Tahoma" size="11" style="0" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
+    <memoryInputIcon colWidth="12" memory="TrainId" x="333" y="346" level="5" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" fontname="Tahoma" size="11" style="0" red="51" green="51" blue="51" hasBackground="yes" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml">
       <tooltip>TrainId (IM3)</tooltip>
     </memoryInputIcon>
-    <positionablelabel x="340" y="304" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="EastToWestOnSiding" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="340" y="304" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="EastToWestOnSiding" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS205" x="325" y="305" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS205" x="325" y="305" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Warrant4</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2616,7 +2570,7 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <signalheadicon signalhead="IH2" x="509" y="179" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="180" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="IH2" x="509" y="179" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="180" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>SigEBMain2(IH2)</tooltip>
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="180" scale="1.0">
@@ -2646,9 +2600,9 @@
       </icons>
       <iconmaps family="TallMast" />
     </signalheadicon>
-    <indicatortrackicon x="191" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="192" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "FarWest"</tooltip>
-      <occupancyblock>FarWest</occupancyblock>
+      <occupancyblock>OB22</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -2674,9 +2628,9 @@
         <path>Main</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="787" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="787" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "FarEast"</tooltip>
-      <occupancyblock>FarEast</occupancyblock>
+      <occupancyblock>OB21</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -2702,9 +2656,9 @@
         <path>Main</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="676" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="676" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "FarEast"</tooltip>
-      <occupancyblock>FarEast</occupancyblock>
+      <occupancyblock>OB21</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -2731,7 +2685,7 @@
         <path>T0FarAway</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="117" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="118" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "Infinity&amp;Beyond"</tooltip>
       <occupancyblock>OB20</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -2761,19 +2715,19 @@
         <path>IntoInfinity</path>
       </paths>
     </indicatortrackicon>
-    <positionablelabel x="711" y="179" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="FarEast" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="711" y="179" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="FarEast" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="140" y="147" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="FarWest" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="141" y="147" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="FarWest" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="56" y="174" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Infinity&amp;Beyond" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="56" y="174" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Infinity&amp;Beyond" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="913" y="177" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Infinity&amp;Beyond" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="913" y="177" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Infinity&amp;Beyond" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS21" x="182" y="134" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS21" x="183" y="134" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>block1</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2789,10 +2743,10 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <positionablelabel x="130" y="131" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="131" y="131" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="Infinity&amp;Beyond" x="108" y="191" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="Infinity&amp;Beyond" x="108" y="191" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>block1</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2808,10 +2762,10 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <positionablelabel x="56" y="189" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="56" y="189" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="FarEast" x="727" y="199" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="FarEast" x="727" y="199" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>block3</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2827,10 +2781,10 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <positionablelabel x="676" y="128" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="676" y="128" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="Infinity&amp;Beyond" x="925" y="198" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="Infinity&amp;Beyond" x="925" y="198" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>block3</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -2846,10 +2800,10 @@
       </inconsistent>
       <iconmaps />
     </sensoricon>
-    <positionablelabel x="938" y="194" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="938" y="194" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <indicatortrackicon x="80" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="81" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "Infinity&amp;Beyond"</tooltip>
       <occupancyblock>OB20</occupancyblock>
       <showTrainName>yes</showTrainName>
@@ -2879,9 +2833,9 @@
         <path>IntoInfinity</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="713" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="713" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "FarEast"</tooltip>
-      <occupancyblock>FarEast</occupancyblock>
+      <occupancyblock>OB21</occupancyblock>
       <showTrainName>yes</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -2908,7 +2862,7 @@
         <path>T0FarAway</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="638" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="638" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "East"</tooltip>
       <occupancyblock>OB3</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -2938,7 +2892,7 @@
         <path>eastMain</path>
       </paths>
     </indicatortrackicon>
-    <indicatorturnouticon x="564" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="564" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "East"</tooltip>
       <turnout>IT5</turnout>
       <occupancyblock>OB3</occupancyblock>
@@ -3036,9 +2990,9 @@
         <path>Siding2EastYard</path>
       </paths>
     </indicatorturnouticon>
-    <indicatortrackicon x="603" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="603" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "EastYard"</tooltip>
-      <occupancyblock>EastYard</occupancyblock>
+      <occupancyblock>OB23</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -3064,9 +3018,9 @@
         <path>eastYardLead</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="639" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="639" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "EastYard"</tooltip>
-      <occupancyblock>EastYard</occupancyblock>
+      <occupancyblock>OB23</occupancyblock>
       <showTrainName>yes</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -3092,9 +3046,9 @@
         <path>eastYardLead</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="675" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="675" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "EastYard"</tooltip>
-      <occupancyblock>EastYard</occupancyblock>
+      <occupancyblock>OB23</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -3120,7 +3074,7 @@
         <path>eastYardLead</path>
       </paths>
     </indicatortrackicon>
-    <sensoricon sensor="EastYard" x="660" y="130" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="EastYard" x="660" y="130" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>EastYard (IS23)</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -3136,10 +3090,10 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <positionablelabel x="635" y="112" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="East Yard" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="635" y="112" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="East Yard" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <sensoricon sensor="IS50" x="474" y="240" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS50" x="474" y="240" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>IS50</tooltip>
       <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -3155,7 +3109,7 @@
       </inconsistent>
       <iconmaps family="GreenJewel" />
     </sensoricon>
-    <sensoricon sensor="IS104" x="561" y="285" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS104" x="561" y="285" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Set Manual Deallocate (IS104)</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -3171,13 +3125,13 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <positionablelabel x="577" y="282" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Set Deallocate" fontname="Tahoma" size="11" style="0" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="577" y="282" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Set Deallocate" fontname="Tahoma" size="11" style="0" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <indicatorturnouticon x="154" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="155" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "FarWest"</tooltip>
       <turnout>IT6</turnout>
-      <occupancyblock>FarWest</occupancyblock>
+      <occupancyblock>OB22</occupancyblock>
       <showTrainName>yes</showTrainName>
       <iconmaps family="RightTurnout">
         <OccupiedTrack>
@@ -3270,7 +3224,7 @@
         <path>siding</path>
       </paths>
     </indicatorturnouticon>
-    <indicatortrackicon x="229" y="188" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="229" y="189" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "WestYard"</tooltip>
       <occupancyblock>OB1Y</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -3298,7 +3252,7 @@
         <path>yard</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="193" y="188" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="192" y="189" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "WestYard"</tooltip>
       <occupancyblock>OB1Y</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -3326,10 +3280,10 @@
         <path>yard</path>
       </paths>
     </indicatortrackicon>
-    <positionablelabel x="709" y="212" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="709" y="212" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <signalheadicon signalhead="SigEBMain1" x="375" y="174" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="180" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
+    <signalheadicon signalhead="SigEBMain1" x="375" y="174" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="180" clickmode="3" litmode="false" class="jmri.jmrit.display.configurexml.SignalHeadIconXml">
       <tooltip>SigEBMain1(IH1)</tooltip>
       <icons>
         <held url="program:resources/icons/smallschematics/searchlights/left-held-marker.gif" degrees="180" scale="1.0">
@@ -3359,7 +3313,7 @@
       </icons>
       <iconmaps family="TallMast" />
     </signalheadicon>
-    <indicatortrackicon x="526" y="94" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="526" y="94" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "SidingYard"</tooltip>
       <occupancyblock>OB4Y</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -3387,7 +3341,7 @@
         <path>Spur2</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="526" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="526" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "SidingYard"</tooltip>
       <occupancyblock>OB4Y</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -3415,7 +3369,7 @@
         <path>Spur1</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="563" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="563" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "SidingYard"</tooltip>
       <occupancyblock>OB4Y</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -3443,7 +3397,7 @@
         <path>Spur1</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="564" y="94" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="564" y="94" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "SidingYard"</tooltip>
       <occupancyblock>OB4Y</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -3471,13 +3425,13 @@
         <path>Spur2</path>
       </paths>
     </indicatortrackicon>
-    <positionablelabel x="557" y="124" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Spur1" fontname="Tahoma Bold" size="11" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="557" y="124" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Spur1" fontname="Tahoma Bold" size="11" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="557" y="100" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Spur2" fontname="Tahoma Bold" size="11" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="557" y="100" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Spur2" fontname="Tahoma Bold" size="11" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <indicatorturnouticon x="489" y="93" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="489" y="93" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "SidingYard"</tooltip>
       <turnout>ITYARD1</turnout>
       <occupancyblock>OB4Y</occupancyblock>
@@ -3573,7 +3527,7 @@
         <path>Spur2</path>
       </paths>
     </indicatorturnouticon>
-    <sensoricon sensor="IS51" x="727" y="264" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS51" x="727" y="264" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>StopTrain (IS51)</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -3589,7 +3543,7 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <sensoricon sensor="IS52" x="727" y="292" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="IS52" x="727" y="292" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>StartTrain (IS52)</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -3605,13 +3559,13 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <positionablelabel x="709" y="249" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="StopTrain" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="709" y="249" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="StopTrain" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="709" y="275" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="StartTrain" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="709" y="275" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="StartTrain" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <indicatortrackicon x="714" y="80" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="30" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="714" y="80" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="30" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "FarAway"</tooltip>
       <occupancyblock>OB30</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -3640,7 +3594,7 @@
         <path>CrossOverToInfinity</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="746" y="99" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="30" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="746" y="99" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="30" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "FarAway"</tooltip>
       <occupancyblock>OB30</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -3669,7 +3623,7 @@
         <path>CrossOverToInfinity</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="966" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="966" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "ReallyFarAway"</tooltip>
       <occupancyblock>OB32</occupancyblock>
       <showTrainName>yes</showTrainName>
@@ -3697,9 +3651,9 @@
         <path>Main</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="928" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="928" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "FarMiddle"</tooltip>
-      <occupancyblock>FarMiddle</occupancyblock>
+      <occupancyblock>OB34</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -3725,7 +3679,7 @@
         <path>Main</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="882" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="882" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "Infinity&amp;Beyond"</tooltip>
       <occupancyblock>OB20</occupancyblock>
       <showTrainName>yes</showTrainName>
@@ -3753,10 +3707,10 @@
         <path>Main</path>
       </paths>
     </indicatortrackicon>
-    <indicatorturnouticon x="750" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="750" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "FarEast"</tooltip>
       <turnout>IT7</turnout>
-      <occupancyblock>FarEast</occupancyblock>
+      <occupancyblock>OB21</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmaps family="LeftTurnout">
         <OccupiedTrack>
@@ -3849,10 +3803,10 @@
         <path>T0FarAway</path>
       </paths>
     </indicatorturnouticon>
-    <indicatorturnouticon x="779" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="779" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "FarAway"</tooltip>
       <turnout>IT7</turnout>
-      <occupancyblock>FarAway</occupancyblock>
+      <occupancyblock>OB30</occupancyblock>
       <showTrainName>yes</showTrainName>
       <iconmaps family="LeftTurnout">
         <OccupiedTrack>
@@ -3945,7 +3899,7 @@
         <path>CrossOverToFarEast</path>
       </paths>
     </indicatorturnouticon>
-    <indicatortrackicon x="1003" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="1003" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "ReallyFarAway"</tooltip>
       <occupancyblock>OB32</occupancyblock>
       <showTrainName>yes</showTrainName>
@@ -3973,9 +3927,9 @@
         <path>Main</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="609" y="37" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="609" y="37" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "WayFarAway"</tooltip>
-      <occupancyblock>WayFarAway</occupancyblock>
+      <occupancyblock>OB31</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -4002,9 +3956,9 @@
         <path>ToFarAway</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="573" y="37" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="573" y="37" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "WayFarAway"</tooltip>
-      <occupancyblock>WayFarAway</occupancyblock>
+      <occupancyblock>OB31</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -4033,9 +3987,9 @@
         <path>ToFarAway</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="683" y="37" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="683" y="37" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "WayFarAway"</tooltip>
-      <occupancyblock>WayFarAway</occupancyblock>
+      <occupancyblock>OB31</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -4063,9 +4017,9 @@
         <path>Main</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="681" y="61" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="30" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="681" y="61" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="30" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "WayFarAway"</tooltip>
-      <occupancyblock>WayFarAway</occupancyblock>
+      <occupancyblock>OB31</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="30" scale="1.0">
@@ -4091,7 +4045,7 @@
         <path>ToFarAway</path>
       </paths>
     </indicatortrackicon>
-    <sensoricon sensor="sFarAway" x="768" y="97" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="sFarAway" x="768" y="97" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>Transfer (IS30)</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -4107,25 +4061,25 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <positionablelabel x="938" y="194" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="938" y="194" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="781" y="96" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="781" y="96" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="767" y="75" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Far Away" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="767" y="75" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Far Away" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="661" y="13" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Way Far Away" fontname="Tahoma Bold" size="11" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" fixedWidth="100" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="661" y="13" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Way Far Away" fontname="Tahoma Bold" size="11" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" fixedWidth="100" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="994" y="101" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Really Far Away" fontname="Tahoma Bold" size="11" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="994" y="101" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Really Far Away" fontname="Tahoma Bold" size="11" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <indicatorturnouticon x="646" y="37" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="646" y="37" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "WayFarAway"</tooltip>
       <turnout>IT8</turnout>
-      <occupancyblock>WayFarAway</occupancyblock>
+      <occupancyblock>OB31</occupancyblock>
       <showTrainName>yes</showTrainName>
       <iconmaps family="RightTurnout">
         <OccupiedTrack>
@@ -4218,7 +4172,7 @@
         <path>ToFarAway</path>
       </paths>
     </indicatorturnouticon>
-    <indicatorturnouticon x="919" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="919" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "Infinity&amp;Beyond"</tooltip>
       <turnout>toCrossover2</turnout>
       <occupancyblock>OB20</occupancyblock>
@@ -4314,10 +4268,10 @@
         <path>IntoInfinity</path>
       </paths>
     </indicatorturnouticon>
-    <indicatorturnouticon x="890" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="890" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "FarMiddle"</tooltip>
       <turnout>IT9</turnout>
-      <occupancyblock>FarMiddle</occupancyblock>
+      <occupancyblock>OB34</occupancyblock>
       <showTrainName>yes</showTrainName>
       <iconmaps family="RightTurnout">
         <OccupiedTrack>
@@ -4410,7 +4364,7 @@
         <path>MiddleCrosstoInfinity</path>
       </paths>
     </indicatorturnouticon>
-    <indicatortrackicon x="956" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="956" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "Infinity&amp;Beyond"</tooltip>
       <occupancyblock>OB20</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -4439,7 +4393,7 @@
         <path>IntoInfinity</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="816" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="816" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "FarAway"</tooltip>
       <occupancyblock>OB30</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -4469,9 +4423,9 @@
         <path>CrossOverToInfinity</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="823" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="823" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "Middle"</tooltip>
-      <occupancyblock>Middle</occupancyblock>
+      <occupancyblock>OB24</occupancyblock>
       <showTrainName>no</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -4497,7 +4451,7 @@
         <path>Main</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="853" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="853" y="117" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "FarMiddle"</tooltip>
       <occupancyblock>OB34</occupancyblock>
       <showTrainName>no</showTrainName>
@@ -4526,9 +4480,9 @@
         <path>MiddleCrosstoInfinity</path>
       </paths>
     </indicatortrackicon>
-    <indicatortrackicon x="846" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
+    <indicatortrackicon x="846" y="165" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" class="jmri.jmrit.display.configurexml.IndicatorTrackIconXml">
       <tooltip>OBlock "Middle"</tooltip>
-      <occupancyblock>Middle</occupancyblock>
+      <occupancyblock>OB24</occupancyblock>
       <showTrainName>yes</showTrainName>
       <iconmap family="BlockSegment">
         <OccupiedTrack url="program:resources/icons/track/line/TrackSeg/block-yellow.gif" degrees="0" scale="1.0">
@@ -4554,7 +4508,7 @@
         <path>Main</path>
       </paths>
     </indicatortrackicon>
-    <sensoricon sensor="sMiddle" x="850" y="199" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="sMiddle" x="850" y="199" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>sMiddle (IS24)</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -4570,7 +4524,7 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <sensoricon sensor="sFarMiddle" x="875" y="99" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
+    <sensoricon sensor="sFarMiddle" x="875" y="99" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" momentary="false" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <tooltip>sFarMiddle (IS34)</tooltip>
       <active url="program:resources/icons/smallschematics/tracksegments/circuit-occupied.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -4586,102 +4540,102 @@
       </inconsistent>
       <iconmaps family="SmallJewel" />
     </sensoricon>
-    <positionablelabel x="875" y="78" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Far Middle" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="875" y="78" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Far Middle" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="838" y="181" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Middle" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="838" y="181" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Middle" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="yes" redBack="238" greenBack="238" blueBack="238" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="889" y="97" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="889" y="97" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <positionablelabel x="832" y="211" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="832" y="211" level="4" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" text="Occupied" fontname="Tahoma Bold" size="10" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <tooltip>Text Label</tooltip>
     </positionablelabel>
-    <locoicon x="1038" y="226" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="Loco with a very long name" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" icon="yes" dockX="1038" dockY="226" class="jmri.jmrit.display.configurexml.LocoIconXml">
+    <locoicon x="1038" y="226" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" text="Loco with a very long name" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" icon="yes" dockX="1038" dockY="226" class="jmri.jmrit.display.configurexml.LocoIconXml">
       <icon url="program:resources/icons/markers/loco-white.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </locoicon>
-    <locoicon x="1085" y="189" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="2526" fontname="Tahoma Bold" size="12" style="1" red="255" green="255" blue="255" hasBackground="no" justification="centre" icon="yes" dockX="1085" dockY="189" class="jmri.jmrit.display.configurexml.LocoIconXml">
+    <locoicon x="1085" y="189" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" text="2526" fontname="Tahoma Bold" size="12" style="1" red="255" green="255" blue="255" hasBackground="no" justification="centre" icon="yes" dockX="1085" dockY="189" class="jmri.jmrit.display.configurexml.LocoIconXml">
       <icon url="program:resources/icons/markers/loco-blue.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </locoicon>
-    <locoicon x="1064" y="143" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" text="POOT" fontname="Tahoma Bold" size="36" style="1" red="0" green="0" blue="255" hasBackground="no" justification="centre" icon="yes" dockX="1064" dockY="143" class="jmri.jmrit.display.configurexml.LocoIconXml">
+    <locoicon x="1064" y="143" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" text="POOT" fontname="Tahoma Bold" size="36" style="1" red="0" green="0" blue="255" hasBackground="no" justification="centre" icon="yes" dockX="1064" dockY="143" class="jmri.jmrit.display.configurexml.LocoIconXml">
       <icon url="program:resources/icons/markers/loco-red.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </locoicon>
-    <locoicon x="1091" y="73" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="false" degrees="60" text="MOW 10" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" icon="yes" dockX="1091" dockY="73" class="jmri.jmrit.display.configurexml.LocoIconXml">
+    <locoicon x="1091" y="73" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" editable="true" degrees="60" text="MOW 10" fontname="Tahoma Bold" size="12" style="1" red="51" green="51" blue="51" hasBackground="no" justification="centre" icon="yes" dockX="1091" dockY="73" class="jmri.jmrit.display.configurexml.LocoIconXml">
       <icon url="program:resources/icons/markers/loco-yellow.gif" degrees="60" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </locoicon>
-    <signalmasticon signalmast="Triple Head Approach" x="632" y="152" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+    <signalmasticon signalmast="Triple Head Approach" x="632" y="152" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
       <tooltip>Triple Head Approach (IF$vsm:CSX-1998:CLS-3-3-2A-hi($0002))</tooltip>
     </signalmasticon>
-    <signalmasticon signalmast="Triple Head Color" x="468" y="152" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
+    <signalmasticon signalmast="Triple Head Color" x="468" y="152" level="9" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="270" clickmode="0" litmode="false" scale="1.0" imageset="default" class="jmri.jmrit.display.configurexml.SignalMastIconXml">
       <tooltip>Triple Head Color (IF$vsm:CSX-1998:CLS-3-3-2-hi($0001))</tooltip>
     </signalmasticon>
-    <PortalIcon x="366" y="133" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="westSiding" toBlockName="Siding" fromBlockName="West" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="366" y="133" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="westSiding" toBlockName="Siding" fromBlockName="West" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"westSiding" between OBlocks "West" and "Siding"</tooltip>
     </PortalIcon>
-    <PortalIcon x="513" y="133" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="eastSiding" toBlockName="East" fromBlockName="Siding" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="513" y="133" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="eastSiding" toBlockName="East" fromBlockName="Siding" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"eastSiding" between OBlocks "Siding" and "East"</tooltip>
     </PortalIcon>
-    <PortalIcon x="366" y="157" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="westMain" toBlockName="Main" fromBlockName="West" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="329" y="157" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="westMain" toBlockName="Main" fromBlockName="West" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"westMain" between OBlocks "West" and "Main"</tooltip>
     </PortalIcon>
-    <PortalIcon x="327" y="181" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="WestYard-West" toBlockName="WestYard" fromBlockName="West" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="325" y="181" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="WestYard-West" toBlockName="WestYard" fromBlockName="Main" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"westYard" between OBlocks "West" and "WestYard"</tooltip>
     </PortalIcon>
-    <PortalIcon x="515" y="158" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="eastMain" toBlockName="East" fromBlockName="Main" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="515" y="158" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="eastMain" toBlockName="East" fromBlockName="Main" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"eastMain" between OBlocks "Main" and "East"</tooltip>
     </PortalIcon>
-    <PortalIcon x="477" y="109" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="sidingYard" toBlockName="SidingYard" fromBlockName="Siding" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="477" y="109" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="sidingYard" toBlockName="SidingYard" fromBlockName="Siding" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"sidingYard" between OBlocks "Siding" and "SidingYard"</tooltip>
     </PortalIcon>
-    <PortalIcon x="664" y="158" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="East-FarEast" toBlockName="East" fromBlockName="FarEast" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="664" y="158" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="East-FarEast" toBlockName="East" fromBlockName="FarEast" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"East-FarEast" between OBlocks "FarEast" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="216" y="157" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="West-FarWest" toBlockName="West" fromBlockName="FarWest" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="217" y="157" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="West-FarWest" toBlockName="West" fromBlockName="FarWest" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"West-FarWest" between OBlocks "FarWest" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="141" y="156" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="FarWest-Infinity" toBlockName="Infinity&amp;Beyond" fromBlockName="FarWest" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="142" y="156" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="FarWest-Infinity" toBlockName="Infinity&amp;Beyond" fromBlockName="FarWest" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"FarWest-Infinity" between OBlocks "FarWest" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="591" y="133" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="EastYard" toBlockName="East" fromBlockName="EastYard" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="591" y="133" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="EastYard" toBlockName="East" fromBlockName="EastYard" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"EastYard" between OBlocks "EastYard" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="180" y="183" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="WestYard-FarWest" toBlockName="WestYard" fromBlockName="FarWest" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="179" y="181" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="WestYard-FarWest" toBlockName="WestYard" fromBlockName="FarWest" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"WestYard-FarWest" between OBlocks "FarWest" and "WestYard"</tooltip>
     </PortalIcon>
-    <PortalIcon x="700" y="67" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="30" scale="1.0" rotate="30" portalName="WayFarAwaySouth" toBlockName="WayFarAway" fromBlockName="FarAway" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="700" y="67" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="30" scale="1.0" rotate="30" portalName="WayFarAwaySouth" toBlockName="WayFarAway" fromBlockName="FarAway" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"WayFarAway" between OBlocks "Transfer" and "WayFarAway"</tooltip>
     </PortalIcon>
-    <PortalIcon x="559" y="30" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="WayFarAwayWest" toBlockName="Infinity&amp;Beyond" fromBlockName="WayFarAway" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="559" y="30" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="WayFarAwayWest" toBlockName="Infinity&amp;Beyond" fromBlockName="WayFarAway" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"WayFarAwayWest" between OBlocks "WayFarAway" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="768" y="129" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" degrees="315" scale="1.0" rotate="315" portalName="FarEast-FarAway" toBlockName="FarAway" fromBlockName="FarEast" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="768" y="129" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="315" scale="1.0" rotate="315" portalName="FarEast-FarAway" toBlockName="FarAway" fromBlockName="FarEast" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"East-FarAway" between OBlocks "FarEast" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="811" y="158" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="FarEast-Middle" toBlockName="Middle" fromBlockName="FarEast" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="811" y="158" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="FarEast-Middle" toBlockName="Middle" fromBlockName="FarEast" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"FarEast-Middle" between OBlocks "FarEast" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="870" y="158" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="Middle-Infinity" toBlockName="Middle" fromBlockName="Infinity&amp;Beyond" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="870" y="158" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="Middle-Infinity" toBlockName="Middle" fromBlockName="Infinity&amp;Beyond" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"Middle-Infinity" between OBlocks "Infinity&amp;Beyond" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="844" y="110" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="FarAway-FarMiddle" toBlockName="FarMiddle" fromBlockName="FarAway" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="844" y="110" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="FarAway-FarMiddle" toBlockName="FarMiddle" fromBlockName="FarAway" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"FarAway-FarMiddle" between OBlocks "FarAway" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="953" y="108" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="FarMiddle-ReallyFar" toBlockName="ReallyFarAway" fromBlockName="FarMiddle" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="953" y="108" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="FarMiddle-ReallyFar" toBlockName="ReallyFarAway" fromBlockName="FarMiddle" arrowSwitch="no" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"FarMiddle-ReallyFar" between OBlocks "FarMiddle" and "null"</tooltip>
     </PortalIcon>
-    <PortalIcon x="908" y="129" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" degrees="45" scale="1.0" rotate="45" portalName="FarMiddle-Infinity" toBlockName="FarMiddle" fromBlockName="Infinity&amp;Beyond" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="908" y="129" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="45" scale="1.0" rotate="45" portalName="FarMiddle-Infinity" toBlockName="FarMiddle" fromBlockName="Infinity&amp;Beyond" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>"FarMiddle=Infinity" between OBlocks "Infinity&amp;Beyond" and "null"</tooltip>
     </PortalIcon>
-    <indicatorturnouticon x="43" y="141" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
+    <indicatorturnouticon x="44" y="141" level="7" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" degrees="180" class="jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml">
       <tooltip>OBlock "Infinity&amp;Beyond"</tooltip>
       <turnout>IT10</turnout>
       <occupancyblock>OB20</occupancyblock>
@@ -4778,27 +4732,78 @@
         <path>OutOfInfinity</path>
       </paths>
     </indicatorturnouticon>
-    <PortalIcon x="30" y="132" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="false" scale="1.0" rotate="0" portalName="WayFarAwayWest" toBlockName="Infinity&amp;Beyond" fromBlockName="WayFarAway" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
+    <PortalIcon x="31" y="132" level="10" forcecontroloff="false" hidden="no" positionable="false" showtooltip="true" editable="true" scale="1.0" rotate="0" portalName="WayFarAwayWest" toBlockName="Infinity&amp;Beyond" fromBlockName="WayFarAway" arrowSwitch="yes" arrowHide="no" class="jmri.jmrit.display.controlPanelEditor.configurexml.PortalIconXml">
       <tooltip>Portal "WayFarAwayWest" between OBlocks "WayFarAway" and "null"</tooltip>
     </PortalIcon>
   </paneleditor>
   <filehistory>
     <operation>
       <type>app</type>
-      <date>Tue Dec 17 17:08:25 PST 2019</date>
+      <date>Wed Dec 18 14:45:03 PST 2019</date>
       <filename>JMRI program</filename>
     </operation>
     <operation>
       <type>Load OK</type>
-      <date>Tue Dec 17 17:08:55 PST 2019</date>
-      <filename>/C:/Git/jmri/java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml</filename>
-      <filehistory />
+      <date>Wed Dec 18 14:45:14 PST 2019</date>
+      <filename>/C:/jmriPanels/IndicatorDemoTest.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Wed Dec 18 14:23:11 PST 2019</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Load OK</type>
+          <date>Wed Dec 18 14:23:22 PST 2019</date>
+          <filename>/C:/jmriPanels/IndicatorDemoTest.xml</filename>
+          <filehistory>
+            <operation>
+              <type>app</type>
+              <date>Wed Dec 18 11:28:52 PST 2019</date>
+              <filename>JMRI program</filename>
+            </operation>
+            <operation>
+              <type>Load OK</type>
+              <date>Wed Dec 18 11:29:03 PST 2019</date>
+              <filename>/C:/jmriPanels/IndicatorDemoTest.xml</filename>
+              <filehistory>
+                <operation>
+                  <type>app</type>
+                  <date>Tue Dec 17 17:08:25 PST 2019</date>
+                  <filename>JMRI program</filename>
+                </operation>
+                <operation>
+                  <type>Load OK</type>
+                  <date>Tue Dec 17 17:08:55 PST 2019</date>
+                  <filename>/C:/Git/jmri/java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml</filename>
+                  <filehistory />
+                </operation>
+                <operation>
+                  <type>Store</type>
+                  <date>Tue Dec 17 17:20:55 PST 2019</date>
+                  <filename />
+                </operation>
+              </filehistory>
+            </operation>
+            <operation>
+              <type>Store</type>
+              <date>Wed Dec 18 11:44:10 PST 2019</date>
+              <filename />
+            </operation>
+          </filehistory>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Wed Dec 18 14:44:46 PST 2019</date>
+          <filename />
+        </operation>
+      </filehistory>
     </operation>
     <operation>
       <type>Store</type>
-      <date>Tue Dec 17 17:20:55 PST 2019</date>
+      <date>Wed Dec 18 14:50:47 PST 2019</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.19.1ish+pete_+2019-12-18T01:08:18Z+R3b762e67d1 on Tue Dec 17 17:20:55 PST 2019-->
+  <!--Written by JMRI version 4.19.1ish+pete_+2019-12-18T22:44:56Z+Rb4ee00879e on Wed Dec 18 14:50:47 PST 2019-->
 </layout-config>
