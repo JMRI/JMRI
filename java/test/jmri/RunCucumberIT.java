@@ -27,7 +27,7 @@ import org.junit.BeforeClass;
                  features="java/acceptancetest/features/web",
                  tags = {"not @webtest", "not @Ignore", "not @ignore"},
                  glue = {"jmri"} )
-public class RunCucumberTest {
+public class RunCucumberIT {
    
    @BeforeClass
    public static void beforeTests(){
