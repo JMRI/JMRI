@@ -561,9 +561,10 @@ public class LayoutTurntable extends LayoutTrack {
      * @param yFactor the amount to scale Y coordinates
      */
     @Override
-    public void scaleCoords(float xFactor, float yFactor) {
+    public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        radius *= Math.hypot(xFactor, yFactor);
     }
 
     /**
@@ -573,9 +574,20 @@ public class LayoutTurntable extends LayoutTrack {
      * @param yFactor the amount to translate Y coordinates
      */
     @Override
-    public void translateCoords(float xFactor, float yFactor) {
+    public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.add(center, factor);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void rotateCoords(double angleDEG) {
+        // rotate all rayTracks
+        for (RayTrack rayTrack : rayList) {
+            rayTrack.setAngle(rayTrack.getAngle() + angleDEG);
+        }
     }
 
     /**
