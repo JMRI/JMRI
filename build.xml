@@ -299,6 +299,7 @@
         <include name="**/*.class" />
         <!-- Exclude classes necessary for testing only from the code coverage report-->
         <exclude name="**/*Test*.class" />
+        <exclude name="**/*IT*.class" />
         <!-- Exclude testing infrastructure classes -->
         <exclude name="**/*Scaffold.class" />
         <exclude name="**/*JUnit*.class" />
@@ -455,6 +456,7 @@
             <fileset file="jacoco.exec"/>
             <fileset file="jmri-fb.html"/>
             <fileset file="coveragereport"/>
+            <fileset file="testreport"/>
             <fileset file="tests.log"/>
             <fileset file="cucumber-results.xml"/>
             <!-- .gitignore runtime artifacts -->
@@ -1390,6 +1392,8 @@
     </target>
 
     <target name="logheadlesstest" depends="tests, runtime-library-selection" description="run headlesstest test suite with jacoco output">
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
 
@@ -1415,9 +1419,15 @@
             <!-- use different log4j settings to pick up additional coverage -->
             <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
 
-            <test name="jmri.HeadLessTest" outfile="junit-results">
+            <test name="jmri.HeadLessTest" todir="${testreport}" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
+            <batchtest todir="${testreport}">
+                <formatter type="xml"/>
+                <fileset dir="${test}">
+                    <include name="**/*IT*.java"/>
+                </fileset>
+            </batchtest>
 
         </junit>
         </jacoco:coverage>
@@ -1479,6 +1489,8 @@
     </target>
 
     <target name="ci-test" depends="tests, runtime-library-selection" description="run AllTest CI tests">
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
 
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
@@ -1497,6 +1509,13 @@
             <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
             </test>
+            <batchtest todir="${testreport}"> 
+                <formatter usefile="no" type="brief"/>
+                <fileset dir="${test}">
+                    <include name="**/*IT*.java"/>
+                </fileset>
+                <formatter usefile="no" type="brief"/>
+            </batchtest>
         </junit>
         <fail>
             <condition>
@@ -1507,6 +1526,8 @@
 
     <target name="ci-test-appveyor" depends="tests, runtime-library-selection" description="run ci-test using Appveyor">
         <!-- identical to ci-test target except test output is different -->
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" printsummary="yes" showoutput="yes" fork="yes" maxmemory="2048m" dir="." errorProperty="test.failed" failureProperty="test.failed">
 
@@ -1530,9 +1551,15 @@
 
             <classpath refid="test.class.path"/>
             
-            <test name="apps.tests.AllTest" outfile="junit-results">
+            <test name="apps.tests.AllTest" outfile="junit-results" todir="${testreport}">
                 <formatter type="xml"/>
             </test>
+            <batchtest todir="${testreport}"> 
+                <formatter type="xml"/>
+                <fileset dir="${test}">
+                    <include name="**/*IT*.java"/>
+                </fileset>
+            </batchtest>
         </junit>
         </jacoco:coverage>
         <fail>
@@ -1569,6 +1596,8 @@
     </target>
 
     <target name="logalltest" depends="tests, runtime-library-selection" description="run AllTest test suite with jacoco output">
+        <mkdir dir="${tempdir}"/>
+        <mkdir dir="${testreport}"/>
         <jacoco:coverage destfile="${jacocoexec}" excludes="org.slf4j.*">
         <junit haltonerror="false" haltonfailure="false" showoutput="yes" printsummary="withOutAndErr" fork="yes" dir="." timeout="3600000">
 
@@ -1591,9 +1620,15 @@
             <!-- use different log4j settings to pick up additional coverage -->
             <sysproperty key="jmri.log4jconfigfilename" value="tests_jacoco.lcf"/>
 
-            <test name="apps.tests.AllTest" outfile="junit-results">
+            <test name="apps.tests.AllTest" todir="${testreport}" outfile="junit-results">
                 <formatter type="xml"/>
             </test>
+            <batchtest todir="${testreport}"> 
+                <formatter type="xml"/>
+                <fileset dir="${test}">
+                    <include name="**/*IT*.java"/>
+                </fileset>
+            </batchtest>
         </junit>
 
         </jacoco:coverage>
@@ -1616,10 +1651,10 @@
 
             <classpath refid="test.class.path"/>
 
-            <test name="jmri.RunCucumberTest">
+            <test name="jmri.RunCucumberIT">
                 <formatter usefile="no" type="brief"/>
             </test>
-            <test name="apps.RunCucumberTest">
+            <test name="apps.RunCucumberIT">
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
