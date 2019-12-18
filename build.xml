@@ -1707,7 +1707,7 @@
                  <limit counter="CLASS" value="COVEREDCOUNT" minimum="1"/>
               </rule>
               <rule element="SOURCEFILE">
-                 <limit counter="LINE" value="COVEREDCOUNT" minimum="1"/>
+                 <limit counter="LINE" value="COVEREDRATIO" minimum="0.00001"/>
               </rule>
           </check>
        </jacoco:report>
