@@ -77,11 +77,11 @@
 					<th>Web</th>
 				</tr>
 				<tr>
-					<td><a target=""_blank"" href="https://withrottle.com">WiThrottle</a></td>
+					<td><a target="_blank" href="https://withrottle.com">WiThrottle</a></td>
 					<td>An easy-to-use interface to allow iPhone, iPad, and iPod
 						touch users to link to their model railroad with the popular JMRI
 						software</td>
-					<td><a target=""_blank"" href="https://withrottle.com"><img
+					<td><a target="_blank" href="https://withrottle.com"><img
 							src="images/WiT150x250.png" height="125" width="75"
 							alt="WiThrottle for Apple devices"
 							title="WiThrottle for Apple devices"></a></td>
@@ -90,7 +90,7 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td><a target=""_blank"" href="https://enginedriver.mstevetodd.com">EngineDriver</a></td>
+					<td><a target="_blank" href="https://enginedriver.mstevetodd.com">EngineDriver</a></td>
 					<td>This free application can control your locomotives and
 						your entire model railroad. Speed, direction, and up to 29 DCC
 						functions are supported for one to six locomotives or consists.
@@ -98,7 +98,7 @@
 						control layout power, turnouts, routes, and access JMRI web panels
 						and windows.</td>
 					<td></td>
-					<td><a target=""_blank"" href="https://enginedriver.mstevetodd.com"><img
+					<td><a target="_blank" href="https://enginedriver.mstevetodd.com"><img
 							src="images/EngineDriverScreen.png" height="125" width="60"
 							alt="EngineDriver for Android devices"
 							title="EngineDriver for Android devices"></a></td>
@@ -106,7 +106,7 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td><a target=""_blank"" href="https://digitrainspro.hu">DigiTrainsPro</a></td>
+					<td><a target="_blank" href="https://digitrainspro.hu">DigiTrainsPro</a></td>
 					<td>You can control your model railroad layout from your
 						phone, tablet, or computer with WIFI. From the locomotive library
 						you can easily and quickly select the locomotive you want to
