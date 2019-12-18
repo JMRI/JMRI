@@ -490,15 +490,13 @@ public class TrackSegment extends LayoutTrack {
     /*
      * non-accessor methods
      */
+
     /**
-     * Scale this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
+     * {@inheritDoc}
      */
-    @Override
-    public void scaleCoords(float xFactor, float yFactor) {
-        Point2D factor = new Point2D.Float(xFactor, yFactor);
+     @Override
+    public void scaleCoords(double xFactor, double yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.multiply(center, factor);
         if (isBezier()) {
             for (Point2D p : bezierControlPoints) {
@@ -508,14 +506,21 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Translate (2D Move) this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to translate X coordinates
-     * @param yFactor the amount to translate Y coordinates
+     * {@inheritDoc}
+     */
+     @Override
+    public void translateCoords(double xFactor, double yFactor) {
+        setCoordsCenter(MathUtil.add(center, new Point2D.Double(xFactor, yFactor)));
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public void translateCoords(float xFactor, float yFactor) {
-        setCoordsCenter(MathUtil.add(center, new Point2D.Float(xFactor, yFactor)));
+    public void rotateCoords(double angleDEG) {
+        //can't really rotate a tracksegment... 
+        //(it gets its end points from the connected anchors) so...
+        //nothing to see here... move along...
     }
 
     /**
