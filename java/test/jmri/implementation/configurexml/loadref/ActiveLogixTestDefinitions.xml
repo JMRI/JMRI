@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+  <jmriversion>
+    <major>4</major>
+    <minor>17</minor>
+    <test>4</test>
+    <modifier>ish</modifier>
+  </jmriversion>
+  <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
+    <defaultInitialState>unknown</defaultInitialState>
+    <sensor inverted="false">
+      <systemName>IS101</systemName>
+      <userName>Turrnout Drives Sensor 1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS201</systemName>
+      <userName>Sensor Logic Drives Turnout 1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS202</systemName>
+      <userName>Sensor Logic Drives Turnout 2</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS203</systemName>
+      <userName>Sensor Logic Drives Turnout 3</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS204</systemName>
+      <userName>Sensor Logic Drives Turnout 4</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS205</systemName>
+      <userName>Sensor Logic Drives Turnout 5</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS206</systemName>
+      <userName>Sensor Logic Drives Turnout 6</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>IS301</systemName>
+      <userName>Check Fast Clock 1</userName>
+    </sensor>
+    <sensor inverted="false">
+      <systemName>ISCLOCKRUNNING</systemName>
+    </sensor>
+  </sensors>
+  <turnouts class="jmri.jmrix.internal.configurexml.InternalTurnoutManagerXml">
+    <operations automate="false">
+      <operation name="NoFeedback" class="jmri.configurexml.turnoutoperations.NoFeedbackTurnoutOperationXml" interval="300" maxtries="2" />
+    </operations>
+    <defaultclosedspeed>Normal</defaultclosedspeed>
+    <defaultthrownspeed>Restricted</defaultthrownspeed>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT101</systemName>
+      <userName>Turrnout Drives Sensor 1</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT201</systemName>
+      <userName>Sensor Logic Drives Turnout 1</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT301</systemName>
+      <userName>Check Fast Clock 1</userName>
+    </turnout>
+    <turnout feedback="DIRECT" inverted="false" automate="Off">
+      <systemName>IT302</systemName>
+      <userName>Check Fast Clock 2</userName>
+    </turnout>
+  </turnouts>
+  <lights class="jmri.jmrix.internal.configurexml.InternalLightManagerXml">
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>IL501</systemName>
+    </light>
+    <light minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+      <systemName>IL502</systemName>
+    </light>
+  </lights>
+  <memories class="jmri.managers.configurexml.DefaultMemoryManagerXml">
+    <memory>
+      <systemName>IM401</systemName>
+      <userName>Test Memory Access 1</userName>
+    </memory>
+    <memory>
+      <systemName>IM402</systemName>
+      <userName>Test Memory Access 2</userName>
+    </memory>
+    <memory>
+      <systemName>IM403</systemName>
+      <userName>Test Memory Access 3</userName>
+    </memory>
+    <memory value="OK">
+      <systemName>IM404</systemName>
+      <userName>Test Memory Access 4</userName>
+    </memory>
+    <memory value="2:31 PM">
+      <systemName>IMCURRENTTIME</systemName>
+    </memory>
+    <memory value="1.0">
+      <systemName>IMRATEFACTOR</systemName>
+    </memory>
+  </memories>
+  <signalmastlogics class="jmri.managers.configurexml.DefaultSignalMastLogicManagerXml">
+    <logicDelay>500</logicDelay>
+  </signalmastlogics>
+  <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
+    <logix userName="Turrnout Drives Sensor 1" enabled="yes">
+      <systemName>IX:AUTO:0001</systemName>
+      <userName>Turrnout Drives Sensor 1</userName>
+      <logixConditional systemName="IX:AUTO:0001C1" order="0" />
+    </logix>
+    <logix userName="Sensor Logic Drives Turnout 1" enabled="yes">
+      <systemName>IX:AUTO:0002</systemName>
+      <userName>Sensor Logic Drives Turnout 1</userName>
+      <logixConditional systemName="IX:AUTO:0002C1" order="0" />
+    </logix>
+    <logix userName="Check Fast Clock" enabled="yes">
+      <systemName>IX:AUTO:0003</systemName>
+      <userName>Check Fast Clock</userName>
+      <logixConditional systemName="IX:AUTO:0003C1" order="0" />
+      <logixConditional systemName="IX:AUTO:0003C2" order="1" />
+      <logixConditional systemName="IX:AUTO:0003C3" order="2" />
+    </logix>
+    <logix userName="Test Memory Access 1" enabled="yes">
+      <systemName>IX:AUTO:0004</systemName>
+      <userName>Test Memory Access 1</userName>
+      <logixConditional systemName="IX:AUTO:0004C1" order="0" />
+      <logixConditional systemName="IX:AUTO:0004C2" order="1" />
+    </logix>
+    <logix userName="Light sets Light" enabled="yes">
+      <systemName>IX:AUTO:0005</systemName>
+      <userName>Light sets Light</userName>
+      <logixConditional systemName="IX:AUTO:0005C1" order="0" />
+    </logix>
+  </logixs>
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
+    <conditional systemName="IX:AUTO:0001C1" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0001C1</systemName>
+      <conditionalStateVariable operator="4" negated="no" type="3" systemName="IT101" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="IS101" data="2" delay="0" string="" />
+      <conditionalAction option="2" type="9" systemName="IS101" data="4" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0002C1" antecedent="(R1 and R2) or (R3 and R4) or (R5 and R6)" logicType="3" triggerOnChange="yes">
+      <systemName>IX:AUTO:0002C1</systemName>
+      <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS201" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="IS202" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="IS203" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="IS204" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="IS205" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="1" negated="no" type="1" systemName="IS206" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="2" systemName="IT201" data="4" delay="0" string="" />
+      <conditionalAction option="2" type="2" systemName="IT201" data="2" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0003C1" userName="IS301 ACTIVE if 03:30 to 04:30" antecedent="R1R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0003C1</systemName>
+      <userName>IS301 ACTIVE if 03:30 to 04:30</userName>
+      <conditionalStateVariable operator="4" negated="no" type="10" systemName="Clock" dataString="" num1="210" num2="270" triggersCalc="yes" />
+      <conditionalAction option="1" type="9" systemName="IS301" data="2" delay="0" string="" />
+      <conditionalAction option="2" type="9" systemName="IS301" data="4" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0003C2" userName="IT301 sets 04:01" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0003C2</systemName>
+      <userName>IT301 sets 04:01</userName>
+      <conditionalStateVariable operator="4" negated="no" type="3" systemName="IT301" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="23" systemName=" " data="241" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0003C3" userName="IT302 sets 14:02" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0003C3</systemName>
+      <userName>IT302 sets 14:02</userName>
+      <conditionalStateVariable operator="4" negated="no" type="3" systemName="IT302" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="23" systemName=" " data="842" delay="0" string="" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0004C1" userName="IM401 case-insensitive aaa copies to IM402" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0004C1</systemName>
+      <userName>IM401 case-insensitive aaa copies to IM402</userName>
+      <conditionalStateVariable operator="4" negated="no" type="23" systemName="IM401" dataString="aaa" num1="3" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="26" systemName="IM401" data="-1" delay="0" string="IM402" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0004C2" userName="IM403 less than IM402 case insensitive sets IM404" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0004C2</systemName>
+      <userName>IM403 less than IM402 case insensitive sets IM404</userName>
+      <conditionalStateVariable operator="4" negated="no" type="24" systemName="IM403" dataString="IM402" num1="1" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="12" systemName="IM404" data="-1" delay="0" string="OK" />
+    </conditional>
+    <conditional systemName="IX:AUTO:0005C1" userName="IL501 sets IL502 opposite" antecedent="R1" logicType="1" triggerOnChange="yes">
+      <systemName>IX:AUTO:0005C1</systemName>
+      <userName>IL501 sets IL502 opposite</userName>
+      <conditionalStateVariable operator="4" negated="no" type="7" systemName="IL501" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalAction option="1" type="11" systemName="IL502" data="4" delay="0" string="" />
+      <conditionalAction option="2" type="11" systemName="IL502" data="2" delay="0" string="" />
+    </conditional>
+  </conditionals>
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Sat Nov 24 03:09:00 CET 2018" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <filehistory>
+    <operation>
+      <type>app</type>
+      <date>Mon Sep 09 20:25:45 CEST 2019</date>
+      <filename>JMRI program</filename>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Mon Sep 09 20:28:19 CEST 2019</date>
+      <filename>/Users/egbertbroerse/Documents/Egbert/Computers/IntelliJ%20local/JMRI/java/test/jmri/implementation/configurexml/load/ActiveLogixTestDefinitions.xml</filename>
+      <filehistory>
+        <operation>
+          <type>app</type>
+          <date>Fri Nov 23 15:27:07 PST 2018</date>
+          <filename>JMRI program</filename>
+        </operation>
+        <operation>
+          <type>Store</type>
+          <date>Fri Nov 23 20:29:00 PST 2018</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Store</type>
+      <date>Mon Sep 09 20:28:30 CEST 2019</date>
+      <filename />
+    </operation>
+  </filehistory>
+  <!--Written by JMRI version 4.17.4ish+egbertbroerse+20190909T1825Z+R25fa767d4c on Mon Sep 09 20:28:30 CEST 2019-->
+</layout-config>

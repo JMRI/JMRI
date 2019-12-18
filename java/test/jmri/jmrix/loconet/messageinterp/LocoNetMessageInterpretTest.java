@@ -1,12 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.loconet.messageinterp;
 
 import jmri.util.JUnitUtil;
-import jmri.util.StringUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -14,10 +8,10 @@ import org.junit.Test;
 
 import jmri.jmrix.loconet.LnReporter;
 import jmri.jmrix.loconet.LnReporterManager;
-import jmri.jmrix.loconet.LnSensorManager;
 import jmri.jmrix.loconet.LnTurnout;
 import jmri.jmrix.loconet.LnTurnoutManager;
 import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  *
@@ -28,8 +22,9 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testTransponding() {
         LocoNetMessage l;
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        LnReporterManager lnrm = new LnReporterManager(lnis, "L");
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        LnReporterManager lnrm = new LnReporterManager(lnis.getSystemConnectionMemo());
 
         jmri.InstanceManager.setReporterManager(lnrm);
 
@@ -1051,6 +1046,11 @@ public class LocoNetMessageInterpretTest {
                 "IPL Identity report.\n\tHost: Digitrax DCS51 host, S/N=159, S/W Version=1.0\n\tSlave: None.\n",
                 LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
 
+        l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x34, 0x00, 0x00, 0x08, 0x00, 0x05, 0x59, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
+        Assert.assertEquals("IPL test 8b",
+                "IPL Identity report.\n\tHost: Digitrax DCS52 host, S/N=159, S/W Version=1.0\n\tSlave: None.\n",
+                LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+
         l = new LocoNetMessage(new int[] {0xE5, 0x14, 0x0F, 0x10, 0x00, 0x32, 0x00, 0x00, 0x08, 0x00, 0x05, 0x59, 0x01, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x77});
         Assert.assertEquals("IPL test 9",
                 "IPL Identity report.\n\tHost: Digitrax DT500(x) host, S/N=159, S/W Version=1.0\n\tSlave: None.\n",
@@ -1570,6 +1570,9 @@ public class LocoNetMessageInterpretTest {
                     break;
                 case 0x33:
                     s = "Digitrax DCS51 host";
+                    break;
+                case 0x34:
+                    s = "Digitrax DCS52 host";
                     break;
                 case 0x58:
                     s = "Digitrax BXP88 host";
@@ -3350,8 +3353,9 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testBasicTurnoutControlMessages() {
         LocoNetMessage l;
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, "L", false);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        LnTurnoutManager lntm = new LnTurnoutManager(memo, lnis, false);
 
         jmri.InstanceManager.setTurnoutManager(lntm);
 
@@ -5748,8 +5752,9 @@ public class LocoNetMessageInterpretTest {
     @Test
     public void testSwichMessages() {
         LocoNetMessage l;
-        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold();
-        LnTurnoutManager lntm = new LnTurnoutManager(lnis, lnis, "L", false);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo("L", "LocoNet");
+        jmri.jmrix.loconet.LocoNetInterfaceScaffold lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        LnTurnoutManager lntm = new LnTurnoutManager(memo, lnis, false);
 
         jmri.InstanceManager.setTurnoutManager(lntm);
 
@@ -6656,6 +6661,12 @@ public class LocoNetMessageInterpretTest {
 "	OpSw105=Thrown, OpSw106=Thrown, OpSw107=Thrown, OpSw108=Thrown, OpSw109=Thrown, OpSw110=Thrown, OpSw111=Thrown, OpSw112=Thrown,\n" +
 "	OpSw113=Thrown, OpSw114=Thrown, OpSw115=Closed, OpSw116=Thrown, OpSw117=Thrown, OpSw118=Thrown, OpSw119=Closed, OpSw120=Thrown,\n" +
 "	OpSw121=Thrown, OpSw122=Thrown, OpSw123=Thrown, OpSw124=Thrown, OpSw125=Thrown, OpSw126=Thrown, OpSw127=Thrown, OpSw128=Thrown.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
+    }
+
+    @Test
+    public void testLocoReset() {
+        LocoNetMessage l = new LocoNetMessage(new int[] {0x8a, 0x75});
+        Assert.assertEquals("check LocoReset", "Loco Reset mechanism triggered.\n", LocoNetMessageInterpret.interpretMessage(l, "LT", "LS", "LR"));
     }
 
     @Before

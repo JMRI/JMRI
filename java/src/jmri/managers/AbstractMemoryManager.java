@@ -1,14 +1,14 @@
 package jmri.managers;
 
 import java.text.DecimalFormat;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Objects;
-
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.SignalHead;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,6 +19,15 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         implements MemoryManager {
+
+    /**
+     * Create a new MemoryManager instance.
+     * 
+     * @param memo the system connection
+     */
+    public AbstractMemoryManager(SystemConnectionMemo memo) {
+        super(memo);
+    }
 
     /** {@inheritDoc} */
     @Override
@@ -39,7 +48,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         if (t != null) {
             return t;
         }
-        if (sName.startsWith("" + getSystemPrefix() + typeLetter())) {
+        if (sName.startsWith(getSystemNamePrefix())) {
             return newMemory(sName, null);
         } else {
             return newMemory(makeSystemName(sName), null);
@@ -71,7 +80,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     /** {@inheritDoc} */
     @Override
-    public @Nonnull Memory newMemory(@Nonnull String systemName, @Nullable String userName) {
+    public @Nonnull Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
         log.debug("new Memory: {}; {}", systemName, userName); // NOI18N
         Objects.requireNonNull(systemName, "Value of requested systemName cannot be null");
 
@@ -100,7 +109,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         // doesn't exist, make a new one
         s = createNewMemory(systemName, userName);
 
-        // if that failed, blame it on the input arguements
+        // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException();
         }
@@ -108,35 +117,17 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         // save in the maps
         register(s);
 
-        /*The following keeps trace of the last created auto system name.  
-         currently we do not reuse numbers, although there is nothing to stop the 
-         user from manually recreating them*/
-        if (systemName.startsWith("IM:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoMemoryRef) {
-                    lastAutoMemoryRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
-            }
-        }
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return s;
     }
 
     /** {@inheritDoc} */
     @Override
     public @Nonnull Memory newMemory(@Nonnull String userName) {
-        int nextAutoMemoryRef = lastAutoMemoryRef + 1;
-        StringBuilder b = new StringBuilder("IM:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoMemoryRef);
-        b.append(nextNumber);
-        return newMemory(b.toString(), userName);
+        return newMemory(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoMemoryRef = 0;
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
@@ -147,14 +138,29 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
      * @return a new Memory
      */
     @Nonnull
-    abstract protected Memory createNewMemory(@Nonnull String systemName, @Nullable String userName);
+    abstract protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName);
 
     /** {@inheritDoc} */
     @Override
     @Nonnull 
-    public String getBeanTypeHandled() {
-        return Bundle.getMessage("BeanNameMemory");
+    public String getBeanTypeHandled(boolean plural) {
+        return Bundle.getMessage(plural ? "BeanNameMemories" : "BeanNameMemory");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Memory> getNamedBeanClass() {
+        return Memory.class;
+    }
+
+    @Override
+    @Nonnull
+    public Memory provide(String name) throws IllegalArgumentException {
+        return provideMemory(name);
     }
 
     private final static Logger log = LoggerFactory.getLogger(AbstractMemoryManager.class);
+
 }

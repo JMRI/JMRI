@@ -17,19 +17,20 @@
 
 <body>
 <!--#include virtual="/Header" -->
+<div id="mBody">
+	<!--#include virtual="Sidebar" -->
+	<div id="mainContent">
+		<!-- Page Body -->
 
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
-
-	<H1>Structure Mat&#233;rielle: Cr&#233;ation d'un Fichier Journal</H1>
-	<P>
- 	D&#233;marrer Decoder Pro (ou la d&#233;mo JMRI)
-	<p>  Ouvrez le <strong>Moniteur XpressNet</strong> ( qui est dans le sous-menu du menu "Syst&#232;me" de XPressNet)
-	<P>
- 	Le volet suivant va s'ouvrir:<br
+	<h1>Structure Mat&#233;rielle: Cr&#233;ation d'un Fichier Journal</h1>
+	<p>
+ 	D&#233;marrer DecoderPro (ou la d&#233;mo JMRI)
+	<p>Ouvrez le <strong>Moniteur XpressNet</strong> ( qui est dans le sous-menu du menu "Syst&#232;me" de XPressNet)
+	<p>
+ 	Le volet suivant va s'ouvrir:<br>
   	<img src="images/XPressNetTrafficMonitor.jpg" alt="XPressNet Traffic Monitor Image">
 
-		h4>Boutons</h4>
+		<h4>Boutons</h4>
 				<ul>
 				<li>"Clear Screen" enl&#232;ve tout l'historique du panneau
 				<li>"Freeze Screen" Arr&#234;te le chargement de nouvelle donn&#233;e pour vous aider &#224; &#233;tudier le contenu actuel de l'affichage

@@ -23,15 +23,14 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2009
  */
@@ -48,6 +47,8 @@ public class AudioListenerFrame extends AbstractAudioFrame {
     JPanelSliderf gain = new JPanelSliderf(Bundle.getMessage("LabelGain"), 0.0f, 1.0f, 5, 4);
     JSpinner metersPerUnit = new JSpinner();
     JLabel metersPerUnitLabel = new JLabel(Bundle.getMessage("UnitM/U"));
+
+    private final static String PREFIX = "IAL";
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioListenerFrame(String title, AudioTableDataModel model) {
@@ -116,7 +117,7 @@ public class AudioListenerFrame extends AbstractAudioFrame {
     }
 
     /**
-     * Method to populate the Edit Listener frame with current values
+     * Populate the Edit Listener frame with current values.
      */
     @Override
     public void populateFrame(Audio a) {
@@ -133,12 +134,15 @@ public class AudioListenerFrame extends AbstractAudioFrame {
         metersPerUnit.setValue(l.getMetersPerUnit());
     }
 
-    void applyPressed(ActionEvent e) {
+    private void applyPressed(ActionEvent e) {
+        String sName = sysName.getText();
+        if (entryError(sName, PREFIX, "$")) { // no index for AudioListener
+            return;
+        }
         String user = userName.getText();
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().toUpperCase();
         AudioListener l;
         try {
             l = (AudioListener) InstanceManager.getDefault(jmri.AudioManager.class).provideAudio(sName);
@@ -157,4 +161,5 @@ public class AudioListenerFrame extends AbstractAudioFrame {
     }
 
     //private static final Logger log = LoggerFactory.getLogger(AudioListenerFrame.class);
+
 }

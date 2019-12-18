@@ -1,7 +1,10 @@
 package jmri.jmrix.srcp;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -17,8 +20,9 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public SRCPSystemConnectionMemo(String prefix, String name, SRCPTrafficController et) {
         super(prefix, name);
-        this.et = et;
-        this.et.setSystemConnectionMemo(this);
+        if (et != null) {
+            setTrafficController(et);
+        }
         register();
         InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
         InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
@@ -26,21 +30,11 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public SRCPSystemConnectionMemo(SRCPTrafficController et) {
-        super("D", "SRCP");
-        this.et = et;
-        this.et.setSystemConnectionMemo(this);
-        register();
-        InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);
+        this("D", "SRCP", et);
     }
 
     public SRCPSystemConnectionMemo() {
-        super("D", "SRCP");
-        register(); // registers general type
-        InstanceManager.store(this, SRCPSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.srcp.swing.SRCPComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);
+        this("D", "SRCP", null);
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -109,6 +103,11 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.srcp.SrcpActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

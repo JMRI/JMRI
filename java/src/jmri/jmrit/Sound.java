@@ -7,28 +7,28 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.Nonnull;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
+import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide simple way to load and play sounds in JMRI.
- * <P>
+ * <p>
  * This is placed in the jmri.jmrit package by process of elimination. It
  * doesn't belong in the base jmri package, as it's not a basic interface. Nor
  * is it a specific implementation of a basic interface, which would put it in
  * jmri.jmrix. It seems most like a "tool using JMRI", or perhaps a tool for use
  * with JMRI, so it was placed in jmri.jmrit.
- * <P>
+ *
  * @see jmri.jmrit.sound
  *
  * @author Bob Jacobsen Copyright (C) 2004, 2006
@@ -41,8 +41,8 @@ public class Sound {
     private final URL url;
     private boolean streaming = false;
     private boolean streamingStop = false;
-    private Clip clip = null;
-    private final static Logger log = LoggerFactory.getLogger(Sound.class);
+    private AtomicReference<Clip> clipRef = new AtomicReference<>();
+    private boolean autoClose = true;
 
     /**
      * Create a Sound object using the media file at path
@@ -78,13 +78,36 @@ public class Sound {
         }
         this.url = url;
         try {
-            this.clip = AudioSystem.getClip();
             streaming = this.needStreaming();
             if (!streaming) {
-                this.clip.open(AudioSystem.getAudioInputStream(this.url));
+                clipRef.updateAndGet(clip -> {
+                    return openClip();
+                });
             }
         } catch (URISyntaxException ex) {
             streaming = false;
+        } catch (IOException ex) {
+            log.error("Unable to open {}", url);
+        }
+    }
+    
+    private Clip openClip() {
+        Clip newClip = null;
+        try {
+            newClip = AudioSystem.getClip(null);
+            newClip.addLineListener(event -> {
+                if (LineEvent.Type.STOP.equals(event.getType())) {
+                    if (autoClose) {
+                        clipRef.updateAndGet(clip -> {
+                            if (clip != null) {
+                                clip.close();
+                            }
+                            return null;
+                        });
+                    }
+                }
+            });
+            newClip.open(AudioSystem.getAudioInputStream(url));
         } catch (IOException ex) {
             log.error("Unable to open {}", url);
         } catch (LineUnavailableException ex) {
@@ -92,8 +115,60 @@ public class Sound {
         } catch (UnsupportedAudioFileException ex) {
             log.error("{} is not a recognised audio format", url);
         }
+        
+        return newClip;
     }
-
+    
+    /**
+     * Set if the clip be closed automatically.
+     * @param autoClose true if closed automatically
+     */
+    public void setAutoClose(boolean autoClose) {
+        this.autoClose = autoClose;
+    }
+    
+    /**
+     * Get if the clip is closed automatically.
+     * @return true if closed automatically
+     */
+    public boolean getAutoClose() {
+        return autoClose;
+    }
+    
+    /**
+     * Closes the sound.
+     */
+    public void close() {
+        if (streaming) {
+            streamingStop = true;
+        } else {
+            clipRef.updateAndGet(clip -> {
+                if (clip != null) {
+                    clip.close();
+                }
+                return null;
+            });
+        }
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    @SuppressWarnings("deprecation") // finalize deprecated in Java 9, but not yet removed
+    public void finalize() throws Throwable {
+        try {
+            if (!streaming) {
+                clipRef.updateAndGet(clip -> {
+                    if (clip != null) {
+                        clip.close();
+                    }
+                    return null;
+                });
+            }
+        } finally {
+            super.finalize();
+        }
+    }
+    
     /**
      * Play the sound once.
      */
@@ -103,7 +178,15 @@ public class Sound {
             Thread tStream = new Thread(streamSound);
             tStream.start();
         } else {
-            this.clip.start();
+            clipRef.updateAndGet(clip -> {
+                if (clip == null) {
+                    clip = openClip();
+                }
+                if (clip != null) {
+                    clip.start();
+                }
+                return clip;
+            });
         }
     }
 
@@ -125,7 +208,15 @@ public class Sound {
         if (streaming) {
             log.warn("Streaming this audio file, loop() not allowed");
         } else {
-            this.clip.loop(count);
+            clipRef.updateAndGet(clip -> {
+                if (clip == null) {
+                    clip = openClip();
+                }
+                if (clip != null) {
+                    clip.loop(count);
+                }
+                return clip;
+            });
         }
     }
 
@@ -136,7 +227,12 @@ public class Sound {
         if (streaming) {
             streamingStop = true;
         } else {
-            this.clip.stop();
+            clipRef.updateAndGet(clip -> {
+                if (clip != null) {
+                    clip.stop();
+                }
+                return clip;
+            });
         }
     }
 
@@ -211,7 +307,7 @@ public class Sound {
                             + buffer[index + 5] * 256
                             + buffer[index + 6] * 256 * 256
                             + buffer[index + 7] * 256 * 256 * 256;
-                    System.out.println("index now " + index);
+                    log.debug("index now {}", index);
                 }
             }
             log.error("Didn't find fmt chunk");
@@ -264,6 +360,7 @@ public class Sound {
             this.url = url;
         }
 
+        /** {@inheritDoc} */
         @Override
         public void run() {
             // Note: some of the following is based on code from 
@@ -286,7 +383,7 @@ public class Sound {
                                     format.getFrameRate(), true);  // big endian
                     // update stream and format details
                     stream = AudioSystem.getAudioInputStream(newFormat, stream);
-                    System.out.println("Converted Audio format: " + newFormat);
+                    log.info("Converted Audio format: {}", newFormat);
                     format = newFormat;
                     log.debug("new converted Audio format: " + format);
                 }
@@ -363,4 +460,6 @@ public class Sound {
         }
 
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Sound.class);
 }

@@ -57,10 +57,10 @@ import org.slf4j.LoggerFactory;
  * and throttle semaphore message was provided by B. Milhaupt, used with
  * permission.
  *
- * @author Bob Jacobsen Copyright 2001, 2002, 2003
+ * @author Bob Jacobsen Copyright 2001, 2002, 2003, 2018
  * @author B. Milhaupt Copyright 2015, 2016, 2018
  * @author Randall Wood Copyright 2016
- * <p>
+ *
  * @deprecated since 4.13.5; use the 
  * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
  * {@link LocoNetMessage#toMonitorString()}
@@ -86,30 +86,12 @@ public class Llnmon {
 
 
     /**
-     * Create a LocoNet Message Formatter.
-     * <p>
-     * When using this constructor, {@link #setLocoNetReporterManager(jmri.ReporterManager)
-     * }, {@link #setLocoNetSensorManager(jmri.SensorManager) }, and {@link #setLocoNetTurnoutManager(jmri.TurnoutManager)
-     * } may need to be called manually to set the correct device managers.
-     * <p>
-     * @deprecated since 4.5.6; use
-     * {@link #Llnmon(jmri.jmrix.loconet.LocoNetSystemConnectionMemo)} or
-     * {@link #Llnmon(jmri.TurnoutManager, jmri.SensorManager, jmri.ReporterManager)}
-     * instead.
-     */
-    @Deprecated
-    public Llnmon() {
-        this("L");
-    }
-
-    /**
      * Create a LocoNet Message Formatter. Use the system connection memo to get
      * the correct managers to allow the user names of managed devices to be
      * included in messages with the system names.
      *
      * @param memo the system connection memo
-     * <p>
-     * @deprecated since 4.13.5; use the 
+     * @deprecated since 4.13.5; use the
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
      * {@link LocoNetMessage#toMonitorString()}
      * for each individual LocoNet message instead of creating a formatter.
@@ -122,11 +104,11 @@ public class Llnmon {
     /**
      * Create a LocoNet Message Formatter. The managers allow the user names of
      * managed devices to be included in messages with the system names.
-     * <p>
+     *
      * @param turnoutManager  turnout manager
      * @param sensorManager   sensor manager
      * @param reporterManager reporter manager
-     * <p>
+     *
      * @deprecated since 4.13.5; use the 
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
      * {@link LocoNetMessage#toMonitorString()}
@@ -137,6 +119,7 @@ public class Llnmon {
             @Nonnull SensorManager sensorManager, 
             @Nonnull ReporterManager reporterManager) {
         this(turnoutManager.getSystemPrefix());
+        jmri.util.Log4JUtil.deprecationWarning(log, "Llnmon");        
         this.setLocoNetSensorManager(sensorManager); // a hack to set the sensor prefix
         this.setLocoNetReporterManager(reporterManager);  // a hack to set the reporter prefix
     }
@@ -144,9 +127,9 @@ public class Llnmon {
     /**
      * Create a LocoNet Message Formatter. The managers allow the user names of
      * managed devices to be included in messages with the system names.
-     * <p>
-     * @param prefix - system connection prefix (i.e. "L")
-     * <p>
+     *
+     * @param prefix  system connection prefix (i.e. "L")
+     *
      * @deprecated since 4.13.5; use the 
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
      * {@link LocoNetMessage#toMonitorString()}
@@ -154,6 +137,7 @@ public class Llnmon {
      */
     @Deprecated
     public Llnmon(@Nonnull String prefix) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "Llnmon");        
         turnoutPrefix = prefix+"T";
         sensorPrefix = prefix+"S";
         reporterPrefix = prefix+"R";
@@ -357,8 +341,8 @@ public class Llnmon {
     /**
      * Return a string which is formatted by a bundle Resource Name.
      *
-     * @param hour   - fast-clock hour
-     * @param minute - fast-clock minute
+     * @param hour    fast-clock hour
+     * @param minute  fast-clock minute
      * @return a formatted string containing the time
      */
     private String fcTimeToString(int hour, int minute) {
@@ -1196,7 +1180,7 @@ public class Llnmon {
     /**
      * Create a string representation of a LocoNet buffer. The
      * string may be more than one line, and is terminated with a newline.
-     *<p>
+     *
      * @param l the message
      * @return The created string representation.
      */
@@ -1218,7 +1202,7 @@ public class Llnmon {
     /**
      * Set the LocoNet turnout manager used to find turnout "user names" from
      * turnout "system names"
-     *<p>
+     *
      * @param turnoutManager the manager
      * @deprecated since 4.13.5; use the {@link LocoNetMessage#toMonitorString(String)} (preferred) 
      * or {@link LocoNetMessage#toMonitorString()}
@@ -1227,13 +1211,14 @@ public class Llnmon {
      */
     @Deprecated
     public final void setLocoNetTurnoutManager(@Nonnull TurnoutManager turnoutManager) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "setLocoNetTurnoutManager");        
         turnoutPrefix = turnoutManager.getSystemPrefix()+"T";
     }
 
     /**
      * Set the LocoNet sensor manager used to find sensor "user names" from
      * sensor "system names".
-     *<p>
+     *
      * @param sensorManager the manager
      * @deprecated since 4.13.5; use the 
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
@@ -1243,13 +1228,14 @@ public class Llnmon {
      */
     @Deprecated
     public final void setLocoNetSensorManager(@Nonnull SensorManager sensorManager) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "setLocoNetSensorManager");        
         sensorPrefix = sensorManager.getSystemPrefix()+"S";
     }
 
     /**
      * Set the LocoNet reporter manager used to find reported "user names" from
      * reporter "system names".
-     *<p>
+     *
      * @param reporterManager the manager
      * @deprecated since 4.13.5; use the 
      * {@link LocoNetMessage#toMonitorString(String)} (preferred) or
@@ -1259,6 +1245,7 @@ public class Llnmon {
      */
     @Deprecated
     public final void setLocoNetReporterManager(@Nonnull ReporterManager reporterManager) {
+        jmri.util.Log4JUtil.deprecationWarning(log, "setLocoNetReporterManager");        
         reporterPrefix = reporterManager.getSystemPrefix()+"R";
     }
 
@@ -1759,7 +1746,7 @@ public class Llnmon {
          * <DI_Ss1> <DI_Ss2> <DI_Ss3> <CHK> * where:
          * <p>
          * <DI_Hmf> DigiIPL-capable Host device manufacturer number. This is not
-         * * the same as an NMRA Manufacturer ID. * 0x00 Digitrax * Others No
+         * the same as an NMRA Manufacturer ID. * 0x00 Digitrax * Others No
          * other Host device manufacturer * numbers have been reverse- *
          * engineered
          * <p>
@@ -1775,7 +1762,7 @@ public class Llnmon {
          * <DI_Slv> encodes the DigiIPL-capable Slave device type as follows: *
          * When
          * <DI_Smf> = 0x00 * 0x00 (0 decimal) Report for all Slave device types
-         * * 0x18 (24 decimal) RF24 * Others No other Slave device types have
+         * 0x18 (24 decimal) RF24 * Others No other Slave device types have
          * been * reverse-engineered
          * <p>
          * <DI_Smf> DigiIPL-capable Slave device manufacturer number. This is
@@ -1825,7 +1812,7 @@ public class Llnmon {
          * <p>
          * <DI_Ss3> encodes 7 bits of the 32 bit Slave device serial number: *
          * bit 7 always 0 * bits 6-3 Bits 30-24 of Slave device serial number *
-         * * Information reverse-engineered by B. Milhaupt and used with
+         * Information reverse-engineered by B. Milhaupt and used with
          * permission *
          * **********************************************************************************
          */
@@ -2156,7 +2143,7 @@ public class Llnmon {
                  * address.
                  * <p>
                  * <AD_L> contains the least significant 7 bits of the 14 or 7
-                 * bit address. * * Information reverse-engineered by B.
+                 * bit address. * Information reverse-engineered by B.
                  * Milhaupt and used with permission *
                  * **********************************************************************************
                  */
@@ -2193,7 +2180,7 @@ public class Llnmon {
                  * the Detection Section * bits 3-1 encode the Transponding Zone
                  * as shown below * 000b Zone A * 001b Zone B * 010b Zone C *
                  * 011b Zone D * 100b Zone E * 101b Zone F * 110b Zone G * 111b
-                 * Zone H * bit 0 always 0 * * Information reverse-engineered by
+                 * Zone H * bit 0 always 0 * Information reverse-engineered by
                  * B. Milhaupt and used with permission *
                  * **********************************************************************************
                  */
@@ -2575,17 +2562,17 @@ public class Llnmon {
              * Device type report * The message bytes as assigned as follows:
              * <p>
              * <0xD0> <DQT_REQ> <DQT_BRD> <DQT_B3> <DQT_B4>
-             * <CHK> * * where:
+             * <CHK> * where:
              * <p>
              * <DQT_REQ> contains the device query request, * encoded as: * bits
              * 7-4 always 0110b * bits 3-1 always 001b * bit 0 (BoardID-1)<7>
              * <p>
              * <DQT_BRD> contains most the device board ID number, * encoded as:
-             * * bit 7 always 0b * bits 6-0 (BoardID-1)<6:0>
+             * bit 7 always 0b * bits 6-0 (BoardID-1)<6:0>
              * <p>
              * <DQT_B3> contains the board type identification, * encoded as: *
              * bits 7-4 always 0000b * bits 3-0 contain the encoded device type,
-             * * encoded as: * 0000b PM4x device * 0001b BDL16x device * 0010b
+             * encoded as: * 0000b PM4x device * 0001b BDL16x device * 0010b
              * SE8C device * 0011b DS64 device * others Unknown device type
              * <p>
              * <DQT_B4> contains device version number: * bit 7 always 0b * bits
@@ -4105,10 +4092,11 @@ public class Llnmon {
             int[] packetInt = new int[len];
             packet[0] = (byte) (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
             packetInt[0] = (im1 + ((dhi & 0x01) != 0 ? 0x80 : 0));
-            if (len >= 2) {
-                packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-                packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
-            }
+
+            // len >= 2 always true at this point
+            packet[1] = (byte) (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+            packetInt[1] = (im2 + ((dhi & 0x02) != 0 ? 0x80 : 0));
+
             if (len >= 3) {
                 packet[2] = (byte) (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));
                 packetInt[2] = (im3 + ((dhi & 0x04) != 0 ? 0x80 : 0));

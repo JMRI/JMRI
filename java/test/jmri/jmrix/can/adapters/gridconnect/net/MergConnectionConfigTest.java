@@ -10,7 +10,7 @@ import org.junit.Test;
  *
  * @author Paul Bender Copyright (C) 2017	
  */
-public class MergConnectionConfigTest {
+public class MergConnectionConfigTest extends jmri.jmrix.AbstractConnectionConfigTestBase {
 
     @Test
     public void testCTor() {
@@ -20,13 +20,17 @@ public class MergConnectionConfigTest {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initDefaultUserMessagePreferences();
+        cc = new ConnectionConfig();
     }
 
     @After
+    @Override
     public void tearDown() {
+        cc = null;
         JUnitUtil.tearDown();
     }
 

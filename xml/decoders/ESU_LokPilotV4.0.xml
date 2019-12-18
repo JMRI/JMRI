@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- Copyright (C) JMRI 2005, 2019 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -11,7 +11,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <!-- based on the ESU software LokProgrammer V4.1.5 and the ESU manuals: -->
     <!-- 51981 LokPilot_V40 Betriebsanleitung_Auflage_3 -->
     <!-- 51982 LokPilot_V40 User-manual_Edition_2 -->
@@ -28,13 +30,13 @@
     <version author="Dave Heap" version="2" lastUpdated="20130105"/>
     <!-- ver3 fixed range and default values CVs 5 and 6 -->
     <version author="Dave Heap" version="3" lastUpdated="20130127"/>
-    <!-- ver4 created new xi:include /xml/decoders/esu/v4standardCVs.xml 
-    moved all non-indexed CVs to v4standardCVs.xml 
-    created new xi:include /xml/decoders/esu/v4cv21.22.xml 
-    created new pane xi:include /xml/decoders/esu/v4extraPane.xml 
-    added new items to /xml/programmers/parts/AnalogControlsPane.xml 
-    corrected minor problem in /xml/programmers/parts/ConsistPane.xml 
-    moved many items to more appropriate panes 
+    <!-- ver4 created new xi:include /xml/decoders/esu/v4standardCVs.xml
+    moved all non-indexed CVs to v4standardCVs.xml
+    created new xi:include /xml/decoders/esu/v4cv21.22.xml
+    created new pane xi:include /xml/decoders/esu/v4extraPane.xml
+    added new items to /xml/programmers/parts/AnalogControlsPane.xml
+    corrected minor problem in /xml/programmers/parts/ConsistPane.xml
+    moved many items to more appropriate panes
     updated all non-indexed CVs to match LokProgrammer V4.4.3 definitions -->
     <version author="Dave Heap" version="4" lastUpdated="20130429"/>
     <!-- ver5 indexed CV fixes -->
@@ -55,19 +57,11 @@
     <version author="Dave Heap" version="12" lastUpdated="20150427"/>
     <!-- ver13 added LokPilot V4.0 M4,LokPilot V4.0 M4 MKL,LokPilot Micro SlideIn V4.0 DCC -->
     <version author="Dave Heap" version="13" lastUpdated="20161101"/>
+    <!-- ver 14 refactor -->
+    <version author="Dave Heap" version="14" lastUpdated="20190507"/>
     <decoder>
         <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-            <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554495,33554564">
-                <output name="57" label="Drive Hold"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model model="LokPilot V4.0" numOuts="12" numFns="32" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554495,33554564">
                 <size length="21.3" width="15.5" height="5.5" units="mm"/>
                 <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
                 <protocols>
@@ -76,45 +70,15 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model model="LokPilot V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554498,33554565">
-                <output name="57" label="Drive Hold"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model model="LokPilot V4.0 DCC" numOuts="12" numFns="32" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554498,33554565">
                 <size length="21.3" width="15.5" height="5.5" units="mm"/>
                 <!-- connector="NEM651, NEM 652, 21MTC" -->
             </model>
-            <model model="LokPilot V4.0 DCC PX" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554523">
-                <output name="57" label="Drive Hold"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model model="LokPilot V4.0 DCC PX" numOuts="12" numFns="32" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554523">
                 <size length="21.3" width="15.5" height="5.5" units="mm"/>
                 <!-- connector="NEM651, NEM 652, 21MTC" -->
             </model>
-            <model model="LokPilot V4.0 M4" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554499,33554566">
-                <output name="57" label="Drive Hold"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model model="LokPilot V4.0 M4" numOuts="12" numFns="32" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554499,33554566">
                 <size length="21.3" width="15.5" height="5.5" units="mm"/>
                 <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
                 <protocols>
@@ -123,17 +87,7 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model model="LokPilot V4.0 M4 MKL" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554571">
-                <output name="57" label="Drive Hold"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model model="LokPilot V4.0 M4 MKL" numOuts="12" numFns="32" maxMotorCurrent="1.1A" extFnsESU="V4" productID="33554571">
                 <size length="21.3" width="15.5" height="5.5" units="mm"/>
                 <!-- connector="NEM651, NEM 652, 21MTC, Plux12, wires" -->
                 <protocols>
@@ -142,17 +96,7 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model model="LokPilot Micro V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554496">
-                <output name="57" label="Drive Hold"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model model="LokPilot Micro V4.0" numOuts="12" numFns="32" maxMotorCurrent="0.75A" extFnsESU="V4" productID="33554496">
                 <size length="10.5" width="5.8" height="2.8" units="mm"/>
                 <!-- connector="NEM651, NEM 652, Next18" -->
                 <protocols>
@@ -161,52 +105,27 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model model="LokPilot Micro V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554502">
-                <output name="57" label="Drive Hold"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model model="LokPilot Micro V4.0 DCC" numOuts="12" numFns="32" maxMotorCurrent="0.75A" extFnsESU="V4" productID="33554502">
                 <size length="10.5" width="5.8" height="2.8" units="mm"/>
                 <!-- connector="NEM651, Next18" -->
             </model>
-            <model model="LokPilot Micro SlideIn V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554574">
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model model="LokPilot Micro SlideIn V4.0 DCC" numOuts="12" numFns="32" maxMotorCurrent="0.75A" extFnsESU="V4" productID="33554574">
                 <size length="10.5" width="5.8" height="2.8" units="mm"/>
                 <!-- connector="NEM651, Next18" -->
             </model>
-            <model model="LokPilot Fx V4.0" numOuts="69" numFns="32" extFnsESU="yes" productID="33554518">
-                <output name="57" label="Drive Hold"/>
-                <output name="29" label="|"/>
-                <output name="30" label="|"/>
-                <output name="31" label="|"/>
-                <output name="32" label="|"/>
-                <output name="33" label="|"/>
-                <output name="34" label="|"/>
-                <output name="35" label="|"/>
-                <output name="36" label="|"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model model="LokPilot Fx V4.0" numOuts="12" numFns="32" extFnsESU="V4" productID="33554518">
+                <output name="1,32" label="|"/>
+                <output name="1,33" label="|"/>
+                <output name="1,34" label="|"/>
+                <output name="1,35" label="|"/>
+                <output name="1,36" label="|"/>
+                <output name="2,7" label="|"/>
+                <output name="2,8" label="|"/>
+                <output name="2,9" label="|"/>
+                <output name="2,10" label="|"/>
+                <output name="2,11" label="|"/>
+                <output name="2,12" label="|"/>
+                <output name="3,4" label="|"/>
                 <size length="17.5" width="15.5" height="5.5" units="mm"/>
                 <!-- connector="NEM651, 21MTC" -->
                 <protocols>
@@ -215,17 +134,7 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model model="LokPilot XL V4.0" numOuts="69" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="33554517">
-                <output name="57" label="Drive Hold"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model model="LokPilot XL V4.0" numOuts="12" numFns="32" maxMotorCurrent="4A" extFnsESU="V4" productID="33554517">
                 <size length="55" width="25" height="10" units="mm"/>
                 <!-- connector="screw terminals" -->
                 <protocols>
@@ -234,34 +143,15 @@
                     <protocol>motorola</protocol>
                 </protocols>
             </model>
-            <model show="no" model="LokPilot DCC V4.0" replacementModel="LokPilot V4.0 DCC" replacementFamily="ESU LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LokPilot V4.0 DCC">
-                <output name="57" label="Drive Hold"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model show="no" model="LokPilot DCC V4.0" replacementModel="LokPilot V4.0 DCC" replacementFamily="ESU LokPilot V4.0" numOuts="12" numFns="32" maxMotorCurrent="1.1A" extFnsESU="V4" productID="LokPilot V4.0 DCC">
                 <size length="21.3" width="15.5" height="5.5" units="mm"/>
                 <!-- connector="NEM651, NEM 652, 21MTC" -->
             </model>
-            <model show="no" model="LokPilot Micro DCC V4.0" replacementModel="LokPilot Micro V4.0 DCC" replacementFamily="ESU LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokPilot Micro V4.0 DCC">
-                <output name="57" label="Drive Hold"/>
-                <output name="61" label="|"/>
-                <output name="62" label="|"/>
-                <output name="63" label="|"/>
-                <output name="64" label="|"/>
-                <output name="65" label="|"/>
-                <output name="66" label="|"/>
-                <output name="67" label="|"/>
-                <output name="68" label="|"/>
-                <output name="69" label="Virtual drive sound"/>
+            <model show="no" model="LokPilot Micro DCC V4.0" replacementModel="LokPilot Micro V4.0 DCC" replacementFamily="ESU LokPilot V4.0" numOuts="12" numFns="32" maxMotorCurrent="0.75A" extFnsESU="V4" productID="LokPilot Micro V4.0 DCC">
                 <size length="10.5" width="5.8" height="2.8" units="mm"/>
                 <!-- connector="NEM651, Next18" -->
             </model>
+            <xi:include href="http://jmri.org/xml/decoders/esu/v4lpOutputLabels.xml"/>
         </family>
         <programming direct="yes" paged="yes" register="yes" ops="yes">
             <capability>
@@ -288,7 +178,6 @@
             </factReset>
         </resets>
     </decoder>
-    <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
     <xi:include href="http://jmri.org/xml/decoders/esu/v4basicSpeedControlPane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/esu/v4advancedPane.xml"/>

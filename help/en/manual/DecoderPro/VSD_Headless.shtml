@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>DecoderPro&reg; Main Window</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+
+      <h1>DecoderPro&reg; Debug Menu</h1>
+
+      <h2>Virtual Sound Decoder</h2>
+
+      <div align="right">
+        <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
+      </div>
+      <hr>
+
+      <h4>VSD headless mode</h4>
+
+      <p><span id="product-desc">
+       Since JMRI 4.15.2 you can run VSD in a so called "headless" mode,
+       i.e. running JMRI (and VSD) without a graphical user interface.<br>
+       VSD headless is tested to work with
+        <a href="http://jmri.org/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">
+       JMRI webThrottle</a>.
+       </span>
+      </p>
+
+      <p>Please follow these setup steps for the "headless" mode:</p>
+
+      <ul>
+        <li>Consider the creation of a new JMRI Profile</li>
+
+        <li>Configure a throttle key for every one of the VSD files to start/stop the engine or activate the "Auto Start Engine" option
+          <p>See <a href="http://jmri.org/help/en/manual/DecoderPro/VSD_File_and_Config.shtml#engine-startstop">
+           the details</a> how to do this configuration.<br>
+           Alternatively or additionally you can activate the VSD 
+           Preference option "Auto Start Engine". Though, I recommend
+           to use the "engine-startstop" option.<br>
+           The number of VSDecoders is limited to 4.</p>
+        </li>
+
+        <li>Create a Roster Entry for every one of the VSDecoders
+          <p>Launch PanelPro &gt;&gt; Roster &gt;&gt; Roster to add the Roster Entries.</p>
+        </li>
+
+        <li>Create a Roster Group named <strong>VSD</strong> and assign every one of the Roster Entries to the new Roster Group
+          <p>You can use Settings &gt;&gt; Roster Group Table Association to achieve this.</p>
+          <p>Then close the "Roster: All Entries" window to get back to PanelPro.</p>
+        </li>
+
+        <li>Save the path and the profile name of every one of the VSDecoders to their Roster
+          <p>Please check the path to the folder of your VSD files in
+           VSDecoder Preferences, before you start!</p>
+          <p>Navigate to Debug &gt;&gt; Virtual Sound Decoder &gt;&gt; VSDecoder Manager</p>
+           <ol>
+            <li>Add Decoder</li>
+            <li>Select a Roster Entry</li>
+            <li>Load a VSD File</li>
+            <li>Select the Profile</li>
+            <li>Click the "Save to Roster" button and confirm with "Yes"</li>
+            <li>Click the "OK" button</li>
+           </ol>
+          Repeat the above steps for every one of the VSDecoders (up to 4).
+          <p>It's recommended to check the path and the profile name and
+           (as may be the case) label the function key for Start/Stop.<br>
+           To do this navigate to Roster &gt;&gt; Roster &gt;&gt; select a
+           Roster entry &gt;&gt; click the "Labels &amp; Media" button.<br>
+           Make your changes in the "Function Labels" tab and check the
+           data in the "Roster Media" tab.</p>
+        </li>
+
+        <li>Set the Actions at JMRI Start Up
+          <p>In PanelPro navigate to Edit &gt;&gt; Preferences &gt;&gt; Start Up</p>
+          <p>Add &gt;&gt; Perform Action &gt;&gt; select "Start Virtual Sound Decoder Manager"<br>
+           Add &gt;&gt; Perform Action &gt;&gt; select "Start Web Server"<br>
+           Add &gt;&gt; Perform Action &gt;&gt; select "Start WiThrottle Server"</p>
+        </li>
+      </ul>
+
+      <p>For further explanations how to use web access please see
+       <a href="http://jmri.org/help/en/html/web/index.shtml"> JMRI Web Access</a>.</p>
+
+      <div align="right">
+        <p><a href="Main_Debug.shtml#vsdecoder">Back</a></p>
+      </div><!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

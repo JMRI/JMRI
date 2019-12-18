@@ -21,8 +21,14 @@
     <revision>
         <revnumber>1</revnumber>
         <date>2016-12-27</date>
-        <authorinitials>PS</authorinitials>
+        <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-02-20</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Aspect 25 Unlit</revremark>
     </revision>    
   </revhistory>
 
@@ -57,12 +63,20 @@
       <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/304_o60_ab.gif</imagelink>
     </appearance>
 
+    <appearance>
+      <aspectname>Zhasnuto</aspectname>
+      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/SZDC-2015/325_zhasnuto_ab.gif</imagelink>
+    </appearance>
+
   </appearances>
   
   <specificappearances>
       <permissive>
           <aspect>Stůj</aspect>
       </permissive>
+      <dark>
+          <aspect>Zhasnuto</aspect>
+      </dark>
   </specificappearances>  
   
   <aspectMappings>
@@ -75,11 +89,11 @@
       <ourAspect>Výstraha</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>40 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 40 a výstraha</advancedAspect>
       <ourAspect>Očekávej 40</ourAspect>
     </aspectMapping>
     <aspectMapping>
-      <advancedAspect>60 a výstraha</advancedAspect>
+      <advancedAspect>Rychlost 60 a výstraha</advancedAspect>
       <ourAspect>Očekávej 60</ourAspect>
     </aspectMapping>
   </aspectMappings>

@@ -19,20 +19,20 @@
   <authorgroup xmlns="http://docbook.org/ns/docbook">
     <author>
       <personname>
-        <firstname>Alain</firstname>
-        <surname>Le Marchand</surname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
       </personname>
     </author>
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2018-10-11</date>
+      <date>2018-10-18</date>
       <authorinitials>EB</authorinitials>
-      <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
+      <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml by ALM</revremark>
     </revision>
       <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3/4 Module,
-           such as 32300, 36320, 36360 (IS3), 32500, 32504, 36520, 36560 (IS4) (non exhaustive list) -->
+           such as 32300, 36320, 36360 (IntelliSound3), 32500, 32504, 36520, 36560 (IntelliSound4) (non exhaustive list) -->
   </revhistory>
     <variable item="SUSI-range" CV="897.0" default="1" tooltip="Will not read/write properly if multiple SUSI modules attached">
         <!-- Note: this is a normal CV, with no need to specify the index. However, setting the index allows resetting it to zero -->
@@ -332,8 +332,8 @@
         <tooltip>50-255, Time between two chuffs at min speed</tooltip>
         <tooltip xml:lang="de">50-255, Zeit zwischen zwei Auspuffschlägen bei minimaler Lokgeschwindigkeit ohne Kontakt</tooltip>
     </variable>
-    <!-- Bank A CVs (Index CV 1021 = 1) -->
-    <!-- TODO group hide/show with CV 1021 choice = 1 -->
+    <!-- Bank A CVs (Index CV 1021 = 1)            -->
+    <!-- group hides/shows with CV 1021 choice = 1 -->
     <variable item="Range I Hardware Version" CV="900.1" readOnly="yes" default="0">
         <decVal/>
         <label>Hardware Version</label>
@@ -1494,20 +1494,153 @@
         <tooltip>only steam locos</tooltip>
         <tooltip xml:lang="de">nur Dampflok</tooltip>
     </variable>
+    <!-- Bank B Range I sounds 1 - 7 -->
     <variable item="Bank B Range I Volume sound number 1" CV="901.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Volume for sound #1</label>
         <label xml:lang="de">Lautstärke für Sound 1</label>
     </variable>
-    <!-- TODO add Bank B Range I sounds 2 - 7 -->
+    <variable item="Bank B Range I Volume sound number 2" CV="902.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #2</label>
+        <label xml:lang="de">Lautstärke für Sound 2</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 3" CV="903.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #3</label>
+        <label xml:lang="de">Lautstärke für Sound 3</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 4" CV="904.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #4</label>
+        <label xml:lang="de">Lautstärke für Sound 4</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 5" CV="905.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #5</label>
+        <label xml:lang="de">Lautstärke für Sound 5</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 6" CV="906.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #6</label>
+        <label xml:lang="de">Lautstärke für Sound 6</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 7" CV="907.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #7</label>
+        <label xml:lang="de">Lautstärke für Sound 7</label>
+    </variable>
+    <!-- Alternative Volume -->
     <variable item="Bank B Range I Alternative Volume" CV="908.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Alternative Volume</label>
         <label xml:lang="de">Alternative Lautstärke</label>
-        <tooltip>Switchable by function in CV 914A</tooltip>
+        <tooltip>Switchable by function in CV 914A (on Bank A)</tooltip>
         <tooltip xml:lang="de">Schaltbar per Funktion aus CV 914A</tooltip>
     </variable>
-    <!-- TODO add Bank B Range I sounds 9 - 25 -->
+    <!-- Bank B Range I sounds 9 - 25 -->
+    <variable item="Bank B Range I Volume sound number 9" CV="909.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #9</label>
+        <label xml:lang="de">Lautstärke für Sound 9</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 10" CV="910.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #10</label>
+        <label xml:lang="de">Lautstärke für Sound 10</label>
+    </variable>
+    <!-- no Sound 11 -->
+    <variable item="Bank B Range I Volume sound number 12" CV="912.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #12</label>
+        <label xml:lang="de">Lautstärke für Sound 12</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 13" CV="913.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #13</label>
+        <label xml:lang="de">Lautstärke für Sound 13</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 14" CV="914.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #14</label>
+        <label xml:lang="de">Lautstärke für Sound 14</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 15" CV="915.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #15</label>
+        <label xml:lang="de">Lautstärke für Sound 15</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 16" CV="916.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #16</label>
+        <label xml:lang="de">Lautstärke für Sound 16</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 17" CV="917.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #17</label>
+        <label xml:lang="de">Lautstärke für Sound 17</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 18" CV="918.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #18</label>
+        <label xml:lang="de">Lautstärke für Sound 18</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 19" CV="919.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #19</label>
+        <label xml:lang="de">Lautstärke für Sound 19</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 20" CV="920.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #20</label>
+        <label xml:lang="de">Lautstärke für Sound 20</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 21" CV="921.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #21</label>
+        <label xml:lang="de">Lautstärke für Sound 21</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 22" CV="922.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #22</label>
+        <label xml:lang="de">Lautstärke für Sound 22</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 23" CV="923.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #23</label>
+        <label xml:lang="de">Lautstärke für Sound 23</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 24" CV="924.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #24</label>
+        <label xml:lang="de">Lautstärke für Sound 24</label>
+    </variable>
+    <variable item="Bank B Range I Volume sound number 25" CV="925.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #25</label>
+        <label xml:lang="de">Lautstärke für Sound 25</label>
+    </variable>
+    <!-- end of Range I sound volume CVs -->
+    <variable item="Bank B Range I Volume of curve squealing" CV="933.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume of curve squealing</label>
+        <label xml:lang="de">Lautstärke für Schalten</label>
+    </variable>
+    <variable item="Bank B Range I Volume for switching" CV="936.2" default="128" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for switching</label>
+        <label xml:lang="de">Lautstärke für Kurvenquietschen</label>
+    </variable>
+    <variable item="Bank B Range I Volume for brake squealing" CV="937.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for brake squealing</label>
+        <label xml:lang="de">Lautstärke für Bremsenquietschen</label>
+    </variable>
+    <variable item="Bank B Range I Volume for direction change" CV="938.2" default="128" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for direction change</label>
+        <label xml:lang="de">Lautstärke für Richtungswechsel</label>
+    </variable>
     <!-- IntelliSound4 Bank B Range II CV 900B - 938B, hides/shows with CV 1061 choice = 2 -->
     <variable item="Bank B Range II Volume for chuffs" CV="940.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
@@ -1516,20 +1649,153 @@
         <tooltip>only steam locos</tooltip>
         <tooltip xml:lang="de">nur Dampflok</tooltip>
     </variable>
+    <!-- Bank B Range II sounds 1 - 7 -->
     <variable item="Bank B Range II Volume sound number 1" CV="941.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Volume for sound #1</label>
         <label xml:lang="de">Lautstärke für Sound 1</label>
     </variable>
-    <!-- TODO add Bank B Range II sounds 2 - 7 -->
+    <variable item="Bank B Range II Volume sound number 2" CV="942.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #2</label>
+        <label xml:lang="de">Lautstärke für Sound 2</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 3" CV="943.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #3</label>
+        <label xml:lang="de">Lautstärke für Sound 3</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 4" CV="944.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #4</label>
+        <label xml:lang="de">Lautstärke für Sound 4</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 5" CV="945.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #5</label>
+        <label xml:lang="de">Lautstärke für Sound 5</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 6" CV="946.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #6</label>
+        <label xml:lang="de">Lautstärke für Sound 6</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 7" CV="947.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #7</label>
+        <label xml:lang="de">Lautstärke für Sound 7</label>
+    </variable>
+    <!-- Alternative Volume -->
     <variable item="Bank B Range II Alternative Volume" CV="948.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Alternative Volume</label>
         <label xml:lang="de">Alternative Lautstärke</label>
-        <tooltip>Switchable by function in CV 954A</tooltip>
+        <tooltip>Switchable by function in CV 954A (on Bank A)</tooltip>
         <tooltip xml:lang="de">Schaltbar per Funktion aus CV 954A</tooltip>
     </variable>
-    <!-- TODO add Bank B Range II sounds 9 - 25 -->
+    <!-- Bank B Range II sounds 9 - 25 -->
+    <variable item="Bank B Range II Volume sound number 9" CV="949.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #9</label>
+        <label xml:lang="de">Lautstärke für Sound 9</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 10" CV="950.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #10</label>
+        <label xml:lang="de">Lautstärke für Sound 10</label>
+    </variable>
+    <!-- no Sound 11 -->
+    <variable item="Bank B Range II Volume sound number 12" CV="952.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #12</label>
+        <label xml:lang="de">Lautstärke für Sound 12</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 13" CV="953.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #13</label>
+        <label xml:lang="de">Lautstärke für Sound 13</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 14" CV="954.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #14</label>
+        <label xml:lang="de">Lautstärke für Sound 14</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 15" CV="955.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #15</label>
+        <label xml:lang="de">Lautstärke für Sound 15</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 16" CV="956.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #16</label>
+        <label xml:lang="de">Lautstärke für Sound 16</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 17" CV="957.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #17</label>
+        <label xml:lang="de">Lautstärke für Sound 17</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 18" CV="958.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #18</label>
+        <label xml:lang="de">Lautstärke für Sound 18</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 19" CV="959.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #19</label>
+        <label xml:lang="de">Lautstärke für Sound 19</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 20" CV="960.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #20</label>
+        <label xml:lang="de">Lautstärke für Sound 20</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 21" CV="961.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #21</label>
+        <label xml:lang="de">Lautstärke für Sound 21</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 22" CV="962.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #22</label>
+        <label xml:lang="de">Lautstärke für Sound 22</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 23" CV="963.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #23</label>
+        <label xml:lang="de">Lautstärke für Sound 23</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 24" CV="964.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #24</label>
+        <label xml:lang="de">Lautstärke für Sound 24</label>
+    </variable>
+    <variable item="Bank B Range II Volume sound number 25" CV="965.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #25</label>
+        <label xml:lang="de">Lautstärke für Sound 25</label>
+    </variable>
+    <!-- end of Range II sound volume CVs -->
+    <variable item="Bank B Range II Volume of curve squealing" CV="973.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume of curve squealing</label>
+        <label xml:lang="de">Lautstärke für Schalten</label>
+    </variable>
+    <variable item="Bank B Range II Volume for switching" CV="976.2" default="128" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for switching</label>
+        <label xml:lang="de">Lautstärke für Kurvenquietschen</label>
+    </variable>
+    <variable item="Bank B Range II Volume for brake squealing" CV="977.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for brake squealing</label>
+        <label xml:lang="de">Lautstärke für Bremsenquietschen</label>
+    </variable>
+    <variable item="Bank B Range II Volume for direction change" CV="978.2" default="128" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for direction change</label>
+        <label xml:lang="de">Lautstärke für Richtungswechsel</label>
+    </variable>
     <!-- IntelliSound4 Bank B Range III CV 900B - 938B, hides/shows with CV 1101 choice = 2 -->
     <variable item="Bank B Range III Volume for chuffs" CV="980.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
@@ -1538,20 +1804,153 @@
         <tooltip>only steam locos</tooltip>
         <tooltip xml:lang="de">nur Dampflok</tooltip>
     </variable>
+    <!-- Bank B Range III sounds 1 - 7 -->
     <variable item="Bank B Range III Volume sound number 1" CV="981.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Volume for sound #1</label>
         <label xml:lang="de">Lautstärke für Sound 1</label>
     </variable>
-    <!-- TODO add Bank B Range III sounds 2 - 7 -->
+    <variable item="Bank B Range III Volume sound number 2" CV="982.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #2</label>
+        <label xml:lang="de">Lautstärke für Sound 2</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 3" CV="983.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #3</label>
+        <label xml:lang="de">Lautstärke für Sound 3</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 4" CV="984.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #4</label>
+        <label xml:lang="de">Lautstärke für Sound 4</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 5" CV="985.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #5</label>
+        <label xml:lang="de">Lautstärke für Sound 5</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 6" CV="986.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #6</label>
+        <label xml:lang="de">Lautstärke für Sound 6</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 7" CV="987.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #7</label>
+        <label xml:lang="de">Lautstärke für Sound 7</label>
+    </variable>
+    <!-- Alternative Volume -->
     <variable item="Bank B Range III Alternative Volume" CV="988.2" default="255" include="32500,32504,36520,36560">
         <decVal min="0" max="255"/>
         <label>Alternative Volume</label>
         <label xml:lang="de">Alternative Lautstärke</label>
-        <tooltip>Switchable by function in CV 994A</tooltip>
+        <tooltip>Switchable by function in CV 994A (on Bank A)</tooltip>
         <tooltip xml:lang="de">Schaltbar per Funktion aus CV 994A</tooltip>
     </variable>
-    <!-- TODO add Bank B Range III sounds 9 - 25 -->
+    <!-- Bank B Range III sounds 9 - 25 -->
+    <variable item="Bank B Range III Volume sound number 9" CV="989.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #9</label>
+        <label xml:lang="de">Lautstärke für Sound 9</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 10" CV="990.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #10</label>
+        <label xml:lang="de">Lautstärke für Sound 10</label>
+    </variable>
+    <!-- no Sound 11 -->
+    <variable item="Bank B Range III Volume sound number 12" CV="992.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #12</label>
+        <label xml:lang="de">Lautstärke für Sound 12</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 13" CV="993.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #13</label>
+        <label xml:lang="de">Lautstärke für Sound 13</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 14" CV="994.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #14</label>
+        <label xml:lang="de">Lautstärke für Sound 14</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 15" CV="995.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #15</label>
+        <label xml:lang="de">Lautstärke für Sound 15</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 16" CV="996.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #16</label>
+        <label xml:lang="de">Lautstärke für Sound 16</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 17" CV="997.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #17</label>
+        <label xml:lang="de">Lautstärke für Sound 17</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 18" CV="998.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #18</label>
+        <label xml:lang="de">Lautstärke für Sound 18</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 19" CV="999.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #19</label>
+        <label xml:lang="de">Lautstärke für Sound 19</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 20" CV="1000.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #20</label>
+        <label xml:lang="de">Lautstärke für Sound 20</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 21" CV="1001.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #21</label>
+        <label xml:lang="de">Lautstärke für Sound 21</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 22" CV="1002.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #22</label>
+        <label xml:lang="de">Lautstärke für Sound 22</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 23" CV="1003.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #23</label>
+        <label xml:lang="de">Lautstärke für Sound 23</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 24" CV="1004.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #24</label>
+        <label xml:lang="de">Lautstärke für Sound 24</label>
+    </variable>
+    <variable item="Bank B Range III Volume sound number 25" CV="1005.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for sound #25</label>
+        <label xml:lang="de">Lautstärke für Sound 25</label>
+    </variable>
+    <!-- end of Range III sound volume CVs -->
+    <variable item="Bank B Range III Volume of curve squealing" CV="1013.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume of curve squealing</label>
+        <label xml:lang="de">Lautstärke für Schalten</label>
+    </variable>
+    <variable item="Bank B Range III Volume for switching" CV="1016.2" default="128" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for switching</label>
+        <label xml:lang="de">Lautstärke für Kurvenquietschen</label>
+    </variable>
+    <variable item="Bank B Range III Volume for brake squealing" CV="1017.2" default="255" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for brake squealing</label>
+        <label xml:lang="de">Lautstärke für Bremsenquietschen</label>
+    </variable>
+    <variable item="Bank B Range III Volume for direction change" CV="1018.2" default="128" include="32500,32504,36520,36560">
+        <decVal min="0" max="255"/>
+        <label>Volume for direction change</label>
+        <label xml:lang="de">Lautstärke für Richtungswechsel</label>
+    </variable>
     <!-- IntelliSound4 Range I Bank C CV 900C - 913C, hides/shows with CV 1021 choice = 3 -->
     <variable item="Bank C Range I Diesel notch after idle" CV="900.3" default="40" include="32500,32504,36520,36560">
         <decVal min="20" max="127"/>
@@ -1562,12 +1961,79 @@
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[1]</tooltip>
     </variable>
-    <!-- TODO add Range 1 Bank C next gear 2 - 12 -->
+    <variable item="Bank C Range I Speed step next gear 2" CV="902.3" default="60" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[2]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 3" CV="903.3" default="90" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[3]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 4" CV="904.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[4]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 5" CV="905.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[5]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 6" CV="906.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[6]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 7" CV="907.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[7]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 8" CV="908.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[8]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 9" CV="909.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[9]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 10" CV="910.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[10]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 11" CV="911.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[11]</tooltip>
+    </variable>
+    <variable item="Bank C Range I Speed step next gear 12" CV="912.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[12]</tooltip>
+    </variable>
     <variable item="Bank C Range I Speed step next gear 13" CV="913.3" default="127" include="32500,32504,36520,36560">
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[13]</tooltip>
     </variable>
     <!-- IntelliSound4 Range II Bank C CV 900C - 913C, hides/shows with CV 1061 choice = 3 -->
     <variable item="Bank C Range II Diesel notch after idle" CV="940.3" default="40" include="32500,32504,36520,36560">
@@ -1579,12 +2045,79 @@
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[1]</tooltip>
     </variable>
-    <!-- TODO add next gear 2 - 12 -->
+    <variable item="Bank C Range II Speed step next gear 2" CV="942.3" default="60" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[2]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 3" CV="943.3" default="90" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[3]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 4" CV="944.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[4]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 5" CV="945.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[5]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 6" CV="946.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[6]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 7" CV="947.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[7]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 8" CV="948.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[8]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 9" CV="949.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[9]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 10" CV="950.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[10]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 11" CV="951.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[11]</tooltip>
+    </variable>
+    <variable item="Bank C Range II Speed step next gear 12" CV="952.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[12]</tooltip>
+    </variable>
     <variable item="Bank C Range II Speed step next gear 13" CV="953.3" default="127" include="32500,32504,36520,36560">
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[13]</tooltip>
     </variable>
     <!-- IntelliSound4 Range III Bank C CV 900C - 913C, hides/shows with CV 1101 choice = 3 -->
     <variable item="Bank C Range III Diesel notch after idle" CV="980.3" default="40" include="32500,32504,36520,36560">
@@ -1596,12 +2129,79 @@
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[1]</tooltip>
     </variable>
-    <!-- TODO add next gear 2 - 12 -->
+    <variable item="Bank C Range III Speed step next gear 2" CV="982.3" default="60" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[2]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 3" CV="983.3" default="90" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[3]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 4" CV="984.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[4]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 5" CV="985.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[5]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 6" CV="986.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[6]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 7" CV="987.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[7]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 8" CV="988.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[8]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 9" CV="989.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[9]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 10" CV="990.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[10]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 11" CV="991.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[11]</tooltip>
+    </variable>
+    <variable item="Bank C Range III Speed step next gear 12" CV="992.3" default="127" include="32500,32504,36520,36560">
+        <decVal min="20" max="127"/>
+        <label>Speed step for next highest gear</label>
+        <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[12]</tooltip>
+    </variable>
     <variable item="Bank C Range III Speed step next gear 13" CV="993.3" default="127" include="32500,32504,36520,36560">
         <decVal min="20" max="127"/>
         <label>Speed step for next highest gear</label>
         <label xml:lang="de">Fahrstufe für den nächst höheren Gang</label>
+        <tooltip>[13]</tooltip>
     </variable>
     <!-- Declaration of the "switch" CV, not for direct use but for checking value -->
     <variable item="Range I Bank switch" CV="1021" default="0">

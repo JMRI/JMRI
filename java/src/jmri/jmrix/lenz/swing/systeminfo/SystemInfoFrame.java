@@ -20,11 +20,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame displaying Version information for XpressNet hardware.
- * <P>
+ * <p>
  * This is a utility for reading the software version and type of the command
  * station, and, the Hardware and software versions of your XpressNet Computer
  * Interface.
- * <P>
+ * <p>
  * Some of this code may be moved to facilitate automatic enabling of features
  * that are not available on all XpressNet Command Stations (as an example, the
  * fact that you can't program using the computer on a Commander or Compact)
@@ -224,6 +224,8 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
             CSType.setText(Bundle.getMessage("CSTypeMultiMaus"));
         } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_Z21) {
             CSType.setText(Bundle.getMessage("CSTypeZ21"));
+        } else if (cs_type == jmri.jmrix.lenz.XNetConstants.CS_TYPE_LOKMAUSII) {
+            CSType.setText(Bundle.getMessage("CSTypeLokMaus"));
         } else {
             CSType.setText(Bundle.getMessage("StateUnknown")); // use shared key
         }

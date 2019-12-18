@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder.swing;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,22 +28,20 @@ import org.slf4j.LoggerFactory;
 /**
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under 
  * the terms of version 2 of the GNU General Public License as published 
  * by the Free Software Foundation. See the "COPYING" file for a copy
  * of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT 
  * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
- * <P>
  *
  * @author Mark Underwood Copyright (C) 2011
  * @author Klaus Killinger Copyright (C) 2018
  */
-@SuppressWarnings("serial")
 public class DieselPane extends EnginePane {
 
     static final int THROTTLE_MIN = 1;
@@ -97,6 +96,7 @@ public class DieselPane extends EnginePane {
         if (dtime > 1) {
             start_button.setEnabled(false);
             timer = newTimer(dtime, false, new ActionListener() {
+                @Override
                 public void actionPerformed(ActionEvent e) {
                     start_button.setEnabled(true);
                 }
@@ -165,7 +165,11 @@ public class DieselPane extends EnginePane {
             buttonModel.setArmed(false);
             buttonModel.setPressed(false);
             buttonModel.setSelected(false);
-            JOptionPane.showMessageDialog(null, Bundle.getMessage("EngineStartSpeedMessage"));
+            if (GraphicsEnvironment.isHeadless()) {
+                log.info(Bundle.getMessage("EngineStartSpeedMessage"));
+            } else {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("EngineStartSpeedMessage"));
+            }
         }
     }
 
@@ -226,6 +230,6 @@ public class DieselPane extends EnginePane {
         lastSpeed = s;
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(DieselPane.class);
+    private static final Logger log = LoggerFactory.getLogger(DieselPane.class);
 
 }

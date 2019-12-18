@@ -6,7 +6,7 @@ import jmri.util.JmriJFrameAction;
  * Create a JInput control window.
  *
  * @author Bob Jacobsen Copyright 2008
-  */
+ */
 public class TreeAction extends JmriJFrameAction {
 
     public TreeAction(String s) {
@@ -14,7 +14,7 @@ public class TreeAction extends JmriJFrameAction {
     }
 
     public TreeAction() {
-        this("USB Input Control");
+        this(Bundle.getMessage("USBInputControl"));
     }
 
     @Override

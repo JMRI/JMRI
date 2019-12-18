@@ -46,11 +46,11 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
             systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
             jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
             systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
-            systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+            systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo));
             jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
-            systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+            systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo));
             jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
-            systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+            systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo));
             jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
         } else if (CSSoftwareVersion < 3.0) {
             log.error("Command Station does not support XpressNet Version 3 Command Set");
@@ -62,11 +62,11 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
              apropriate managers */
             if (CSType == 0x02) {
                 if (log.isDebugEnabled()) {
-                    log.debug("Command Station is Commpact/Commander/Other");
+                    log.debug("Command Station is Compact/Commander/Other");
                 }
-                systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo));
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
-                systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo));
                 jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
                 systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
             } else if (CSType == 0x01) {
@@ -92,21 +92,41 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                         .getCommandStation()
                         .setTrafficController(systemMemo.getXNetTrafficController());
                 systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
-                systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo));
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
-                systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo));
                 jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
-                systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo));
                 jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
-            } else if (CSType == 0x10) {
+            } else if (CSType == 0x04) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Command Station is LokMaus II");
+                }
+                systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo));
+                jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
+                systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo));
+                jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
+                systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo));
+                jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
+                systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
+                if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), jmri.AddressedProgrammerManager.class);
+                }
+                if (systemMemo.getProgrammerManager().isGlobalProgrammerAvailable()) {
+                    jmri.InstanceManager.store(systemMemo.getProgrammerManager(), GlobalProgrammerManager.class);
+                }
+                systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
+                jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
+                // LokMaus does not support XpressNET consist commands. Let's the default consist manager be loaded.
+            } else if (CSType == 0x10 ) {
                 if (log.isDebugEnabled()) {
                     log.debug("Command Station is multiMaus");
                 }
-                systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo));
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
-                systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo));
                 jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
-                systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo));
                 jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
                 systemMemo.setProgrammerManager(new XNetProgrammerManager(new XNetProgrammer(systemMemo.getXNetTrafficController()), systemMemo));
                 if (systemMemo.getProgrammerManager().isAddressedModePossible()) {
@@ -135,11 +155,11 @@ public class XNetInitializationManager extends AbstractXNetInitializationManager
                 systemMemo.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
                 jmri.InstanceManager.store(systemMemo.getCommandStation(), jmri.CommandStation.class);
                 systemMemo.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
-                systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager(systemMemo));
                 jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
-                systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo));
                 jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
-                systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo.getXNetTrafficController(), systemMemo.getSystemPrefix()));
+                systemMemo.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager(systemMemo));
                 jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
             }
         }

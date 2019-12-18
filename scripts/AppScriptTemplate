@@ -122,24 +122,23 @@ function parse_args() {
 
 # Get the default heap size for JMRI in MB.
 # Based on total memory size, this is:
-# - 1/4 total memory size on systems with more than 4GB RAM
-# - 1/2 total memory size on systems with 1-4GB RAM
+# - 1/4 total memory size on systems with more than 4GB RAM with minimum of 2GB
+# - 1/2 total memory size on systems with 1-4GB RAM with minimum of 768MB
 # - 3/4 total memory size on systems with less than 1GB RAM
 # - with an absolute minimum of 192MB
+# - note that minimums are maximum allocation for immediately smaller RAM size
+#   (i.e. as 2GB = 1/2 4GB, do not use 1.5GB on 6GB system (1.5GB = 1/4 6GB))
 function heap_size() {
     # get Java heap size
-    heap=$( "${JAVACMD}" -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | awk '{print $4}' )
-    heap=$( expr ${heap} / 1048576 ) # bytes to MB
+    heap=$( "${JAVACMD}" -XX:+PrintFlagsFinal -version 2>/dev/null | grep MaxHeapSize | grep -v SoftMaxHeapSize | awk '{print $4}' )
+    heap=$( expr ${heap} / 1048576 2>/dev/null ) # bytes to MB
     # Java heap defaults to 1/4 total memory size
     # if <= 768MB (1/4 of 3GB), set it ourselves
-    if [ ${heap} -le 768 ] ; then
+    if [ -z "${heap}" ] || [ ${heap} -le 768 ] ; then
         case "$( uname )" in
             Linux*)
                 mem=$( cat /proc/meminfo | grep MemTotal | tr -d [:space:][:alpha:]: )
                 mem=$( expr $mem / 1024 )
-                ;;
-            SunOS*)
-                mem=$( /usr/sbin/prtconf | grep Memory | /usr/bin/tr -dc '[0-9]' )
                 ;;
             Darwin*)
                 mem=$( /usr/sbin/sysctl hw.memsize | tr -d [:alpha:][:space:].: )
@@ -152,9 +151,13 @@ function heap_size() {
             mem=640
         fi
         if [ $mem -le 1024 ] ; then
-          heap=$( expr $mem \* 3 / 4 )
+            heap=$( expr $mem \* 3 / 4 )
+        elif [ $mem -le 4096 ] ; then
+            heap=$( expr $mem \* 1 / 2 )
+            [ $heap -le 768 ] && heap=768 # 3/4 of 1024
         else
-          heap=$( expr $mem \* 1 / 2 )
+            heap=$( expr $mem \* 1 / 4 )
+            [ $heap -le 2048 ] && heap=2048 # 1/2 of 4096
         fi
         if [ $heap -lt 192 ] ; then
             heap=192 # 3/4 of 256MB
@@ -298,19 +301,21 @@ if [ -z "${JAVA_HOME}" ] ; then
         # Otherwise, use java_home if it's present
         # Otherwise, prompt the user to install Java
         #
-        # Default JRE location
+        # Oracle JRE location; note that Oracle only shipped JREs for Java 8, 9, and 10
+        # and now only ships the JRE for Java 8.
         JAVA_HOME="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home"
         if [ -x "${JAVA_HOME}/bin/java" ] ; then
             JAVACMD="${JAVA_HOME}/bin/java"
-            # Test if java is present and version 1.8 or 9
+            # Test if java is present and version 1.8, 9, or 10
             java_version="$( "${JAVACMD}" -version 2>&1 | grep version )"
-            if [[ ! "${java_version}" =~ \"1.8 && ! "${java_version}" =~ \"9 ]] ; then
+            if [[ ! "${java_version}" =~ \"1.8|\"9|\"10 ]] ; then
                 JAVA_HOME=""
             fi
         else
             # Reset JAVA_HOME since there is no java executable in it
             JAVA_HOME=""
         fi
+        # Find an installed JRE/JDK location
         if [[ -z "${JAVA_HOME}" && -x /usr/libexec/java_home ]] ; then
             # Test for any JDKs of version 1.8 or newer
             JAVA_HOME=$( /usr/libexec/java_home --version 1.8+ --failfast 2>/dev/null )

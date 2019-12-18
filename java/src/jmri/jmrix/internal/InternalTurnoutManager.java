@@ -1,9 +1,9 @@
 package jmri.jmrix.internal;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
+import jmri.util.PreferNumericComparator;
 import jmri.implementation.AbstractTurnout;
 
 /**
@@ -13,16 +13,16 @@ import jmri.implementation.AbstractTurnout;
  */
 public class InternalTurnoutManager extends AbstractTurnoutManager {
 
-    public InternalTurnoutManager(String prefix) {
-        super();
-        this.prefix = prefix;
+    public InternalTurnoutManager(InternalSystemConnectionMemo memo) {
+        super(memo);
     }
 
-    protected String prefix = "I";
-
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return prefix;
+    public InternalSystemConnectionMemo getMemo() {
+        return (InternalSystemConnectionMemo) memo;
     }
 
     /**
@@ -34,10 +34,17 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
 
             @Override
             protected void forwardCommandChangeToLayout(int s) {
+                // nothing to do
             }
 
             @Override
             protected void turnoutPushbuttonLockout(boolean b) {
+                // nothing to do
+            }
+
+            @Override
+            public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
+                return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
         };
     }
@@ -52,18 +59,12 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
         return prefix + typeLetter() + curAddress;
     }
 
-    @Override
-    public NameValidity validSystemNameFormat(String systemName) {
-        return NameValidity.VALID;
-    }
-
     /**
-     * Provide a manager-specific tooltip for the Add new item beantable pane.
+     * {@inheritDoc}
      */
     @Override
     public String getEntryToolTip() {
-        String entryToolTip = Bundle.getMessage("AddOutputEntryToolTip");
-        return entryToolTip;
+        return Bundle.getMessage("AddOutputEntryToolTip");
     }
 
     /**
@@ -73,4 +74,5 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     public String[] getValidOperationTypes() {
         return new String[]{"NoFeedback"};
     }
+
 }

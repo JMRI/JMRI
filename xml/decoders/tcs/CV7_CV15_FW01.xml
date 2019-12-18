@@ -69,24 +69,9 @@
     <label xml:lang="it">Codice ID Blocco Decoder</label>
     <tooltip xml:lang="it">Progr. ID di questo decoder, valori 1-6, default 1</tooltip>
   </variable>
-  <variable CV="19" mask="XVVVVVVV" item="Consist Address">
-    <decVal/>
-    <label>Consist Address</label>
-    <label xml:lang="it">Indirizzo Consist</label>
-  </variable>
-  <variable item="Consist Direction" CV="19" mask="VXXXXXXX" tooltip="This loco runs Normal(default) or Reversed(address+128) when in the consist">
-    <enumVal>
-      <enumChoice choice="Normal">
-      <choice xml:lang="it">Normale</choice>
-      </enumChoice>
-      <enumChoice choice="Reversed">
-      <choice xml:lang="it">Invertita</choice>
-      </enumChoice>
-    </enumVal>
-    <label>Consist Direction</label>
-    <label xml:lang="it">Direzione Consist</label>
-    <tooltip xml:lang="it">Direzione loco nel Consist - Normale(default) o all'indietro(indirizzo+128)</tooltip>
-  </variable>
+
+  <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
   <variable CV="21" mask="XXXXXXXV" minOut="3" default="1" item="Consist Address Active For F1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
     <label>Consist Address Active For Green</label>
@@ -872,11 +857,7 @@
     <label xml:lang="it">Regolazione fine in Avanti</label>
     <comment xml:lang="it">Valori 0-256</comment>
   </variable>
-  <variable item="Speed Table" CV="67">
-    <speedTableVal/>
-    <label>Speed Table</label>
-    <label xml:lang="it">Tabella Velocità</label>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
   <variable CV="95" item="Reverse Motor Trim" default="128" comment="Range 0-256">
     <decVal max="256"/>
     <label>Reverse Motor Trim</label>

@@ -1,0 +1,10 @@
+[
+    {
+        "publicURL": "http://json-schema.org/draft-04/schema#",
+        "localURL": "resource:/jmri/server/json/schema/json-schema.draftv4.json"
+    },
+    {
+        "publicURL": "http://json-schema.org/draft-04/schema",
+        "localURL": "resource:/jmri/server/json/schema/json-schema.draftv4.json"
+    }
+]

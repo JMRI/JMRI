@@ -22,25 +22,25 @@ public class JsonSchemaSocketService extends JsonSocketService<JsonSchemaHttpSer
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale) throws IOException, JmriException, JsonException {
+    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
         switch (method) {
             case JSON.DELETE:
-                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "DeleteNotAllowed"));
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "DeleteNotAllowed", type), id);
             case JSON.POST:
-                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PostNotAllowed"));
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PostNotAllowed", type), id);
             case JSON.PUT:
-                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed"));
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "PutNotAllowed", type), id);
             case JSON.GET:
-                this.connection.sendMessage(this.service.doPost(type, data.path(JSON.NAME).asText(JSON.JSON), data, locale));
+                this.connection.sendMessage(this.service.doGet(type, data.path(JSON.NAME).asText(JSON.JSON), data, locale, id), id);
                 break;
             default:
-                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "MethodNotImplemented"));
+                throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED, Bundle.getMessage(locale, "MethodNotImplemented", method, type), id);
         }
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale) throws IOException, JmriException, JsonException {
-        this.connection.sendMessage(this.service.doGetList(type, locale));
+    public void onList(String type, JsonNode data, Locale locale, int id) throws IOException, JmriException, JsonException {
+        this.connection.sendMessage(this.service.doGetList(type, data, locale, id), id);
     }
 
     @Override

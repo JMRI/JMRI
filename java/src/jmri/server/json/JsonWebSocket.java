@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 @WebSocket
 public class JsonWebSocket {
 
-    private final static Logger log = LoggerFactory.getLogger(JsonWebSocket.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonWebSocket.class);
     private JsonConnection connection;
     private JsonClientHandler handler;
     private QuietShutDownTask shutDownTask;
@@ -39,7 +39,7 @@ public class JsonWebSocket {
                 @Override
                 public boolean execute() {
                     try {
-                        JsonWebSocket.this.getConnection().sendMessage(JsonWebSocket.this.getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE));
+                        JsonWebSocket.this.getConnection().sendMessage(JsonWebSocket.this.getConnection().getObjectMapper().createObjectNode().put(JSON.TYPE, JSON.GOODBYE), 0);
                     } catch (IOException e) {
                         log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
                     }

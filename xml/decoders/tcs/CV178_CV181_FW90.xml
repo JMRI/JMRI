@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <variable item="EMF Option 3" CV="177" default="3">
+    <qualifier>
+      <variableref>Version ID</variableref>
+      <relation>ge</relation>
+      <value>90</value>
+    </qualifier>
+    <decVal min="2"/>
+    <label>Motor Power Stroke</label>
+    <tooltip>Limits the response time of the BEMF algorithm. If the locomotive is overshooting its target speed and a bit jerky try decreasing the value. To enable this feature set bit 4 and 0 in CV182.</tooltip>
+  </variable>
+  <variable CV="178" item="EMF Option 4" default="19">
+    <qualifier>
+      <variableref>Version ID</variableref>
+      <relation>ge</relation>
+      <value>90</value>
+    </qualifier>
+    <decVal/>
+    <label>BEMF Sample Rate High</label>
+    <tooltip>sets the BEMF sample rate above the critical speed step</tooltip>
+  </variable>
+  <variable CV="179" item="EMF Option 5" default="15">
+    <qualifier>
+      <variableref>Version ID</variableref>
+      <relation>ge</relation>
+      <value>90</value>
+    </qualifier>
+    <decVal/>
+    <label>BEMF Sample Rate Low</label>
+    <tooltip>sets the BEMF sample rate below the critical speed step</tooltip>
+  </variable>
+  <variable CV="181" item="EMF Option 6" default="4">
+    <qualifier>
+      <variableref>Version ID</variableref>
+      <relation>ge</relation>
+      <value>90</value>
+    </qualifier>
+    <decVal max="126"/>
+    <label>Critical Speed Step</label>
+    <tooltip>This is the last speed step at which CV179 will affect the sample rate. Above this step, CV178 sets the sample rate.</tooltip>
+  </variable>
+  <variable item="EMF Option 2" CV="182" mask="XXXVXXXX" default="0">
+    <qualifier>
+      <variableref>Version ID</variableref>
+      <relation>ge</relation>
+      <value>90</value>
+    </qualifier>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+    <label>Allows forced delays</label>
+    <tooltip>Allows forced delays in Power Stroke mode below Speed Step 32</tooltip>
+  </variable>
+</variables>

@@ -6,7 +6,12 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.AbstractAction;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -14,12 +19,10 @@ import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.HardcopyWriter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action to print a summary of car loads ordered by car type.
- * <P>
+ * <p>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
@@ -31,8 +34,8 @@ public class PrintCarLoadsAction extends AbstractAction {
 
     CarManager manager = InstanceManager.getDefault(CarManager.class);
 
-    public PrintCarLoadsAction(String actionName, boolean preview, Component pWho) {
-        super(actionName);
+    public PrintCarLoadsAction(boolean preview, Component pWho) {
+        super(preview? Bundle.getMessage("MenuItemCarLoadsPreview") : Bundle.getMessage("MenuItemCarLoadsPrint"));
         isPreview = preview;
     }
 

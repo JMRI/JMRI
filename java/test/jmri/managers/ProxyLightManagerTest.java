@@ -5,18 +5,20 @@ import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.jmrix.internal.InternalLightManager;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import org.junit.Test;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Before;
 
 /**
- * Test the ProxyLightManager
+ * Test the ProxyLightManager.
  *
  * @author	Bob Jacobsen 2003, 2006, 2008
-  */
-public class ProxyLightManagerTest extends TestCase {
+ */
+public class ProxyLightManagerTest {
 
     public String getSystemName(int i) {
         return "JL" + i;
@@ -34,10 +36,12 @@ public class ProxyLightManagerTest extends TestCase {
         }
     }
 
+    @Test
     public void testDispose() {
         l.dispose();  // all we're really doing here is making sure the method exists
     }
 
+    @Test
     public void testLightPutGet() {
         // create
         Light t = l.newLight(getSystemName(getNumToTest1()), "mine");
@@ -47,6 +51,7 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
+    @Test
     public void testDefaultSystemName() {
         // create
         Light t = l.provideLight("" + getNumToTest1());
@@ -55,25 +60,18 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertTrue("system name correct ", t == l.getBySystemName(getSystemName(getNumToTest1())));
     }
 
-    public void testNormalizeName() {
-        // create
-        String name = l.provideLight("" + getNumToTest1()).getSystemName();
-        // check
-        Assert.assertEquals(name, l.normalizeSystemName(name));
-    }
-
+    @Test(expected=IllegalArgumentException.class)
     public void testProvideFailure() {
-        boolean correct = false;
         try {
             l.provideLight("");
             Assert.fail("didn't throw");
         } catch (IllegalArgumentException ex) {
-            correct = true;
+            JUnitAppender.assertErrorMessage("Invalid system name for Light: System name must start with \"" + l.getSystemNamePrefix() + "\".");
+            throw ex;
         }
-        Assert.assertTrue("Exception thrown properly", correct);
-
     }
 
+    @Test
     public void testSingleObject() {
         // test that you always get the same representation
         Light t1 = l.newLight(getSystemName(getNumToTest1()), "mine");
@@ -87,18 +85,21 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertTrue("same new ", t1 == t2);
     }
 
+    @Test
     public void testMisses() {
         // try to get nonexistant lights
         Assert.assertTrue(null == l.getByUserName("foo"));
         Assert.assertTrue(null == l.getBySystemName("bar"));
     }
 
+    @Test
     public void testUpperLower() {
         Light t = l.provideLight("" + getNumToTest2());
         String name = t.getSystemName();
         Assert.assertNull(l.getLight(name.toLowerCase()));
     }
 
+    @Test
     public void testRename() {
         // get light
         Light t1 = l.newLight(getSystemName(getNumToTest1()), "before");
@@ -109,6 +110,7 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertEquals("no old object", null, l.getByUserName("before"));
     }
 
+    @Test
     public void testTwoNames() {
         Light il211 = l.provideLight("IL211");
         Light jl211 = l.provideLight("JL211");
@@ -118,6 +120,7 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertTrue(il211 != jl211);
     }
 
+    @Test
     public void testDefaultNotInternal() {
         Light lut = l.provideLight("211");
 
@@ -125,6 +128,7 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertEquals("JL211", lut.getSystemName());
     }
 
+    @Test
     public void testProvideUser() {
         Light l1 = l.provideLight("211");
         l1.setUserName("user 1");
@@ -142,6 +146,7 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertNull(l4);
     }
 
+    @Test
     public void testInstanceManagerIntegration() {
         jmri.util.JUnitUtil.resetInstanceManager();
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
@@ -153,13 +158,7 @@ public class ProxyLightManagerTest extends TestCase {
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class));
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("IL1"));
 
-        InternalLightManager m = new InternalLightManager() {
-
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        InternalLightManager m = new InternalLightManager(new InternalSystemConnectionMemo("J", "Juliet"));
         InstanceManager.setLightManager(m);
 
         Assert.assertNotNull(InstanceManager.getDefault(LightManager.class).provideLight("JL1"));
@@ -168,7 +167,9 @@ public class ProxyLightManagerTest extends TestCase {
 
     /**
      * Number of light to test. Made a separate method so it can be overridden
-     * in subclasses that do or don't support various numbers
+     * in subclasses that do or don't support various numbers.
+     * 
+     * @return the number to test
      */
     protected int getNumToTest1() {
         return 9;
@@ -178,39 +179,16 @@ public class ProxyLightManagerTest extends TestCase {
         return 7;
     }
 
-    // from here down is testing infrastructure
-    public ProxyLightManagerTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", ProxyLightManagerTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(ProxyLightManagerTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalLightManager() {
-            @Override
-            public String getSystemPrefix() {
-                return "J";
-            }
-        };
+        l = new InternalLightManager(new InternalSystemConnectionMemo("J", "Juliet"));
         jmri.InstanceManager.setLightManager(l);
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

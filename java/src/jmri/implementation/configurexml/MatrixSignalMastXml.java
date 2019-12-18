@@ -2,6 +2,7 @@ package jmri.implementation.configurexml;
 
 import java.util.List;
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.SignalAppearanceMap;
 import jmri.implementation.MatrixSignalMast;
 import org.jdom2.Element;
@@ -9,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML configuration for DefaultSignalMastManager objects.
+ * Handle XML configuration for MatrixSignalMast objects.
  *
  * @author Bob Jacobsen Copyright: (C) 2009
  * @author Egbert Broerse Copyright: (C) 2016, 2017
@@ -22,7 +23,7 @@ public class MatrixSignalMastXml
 
     /**
      * Default implementation for storing the contents of a
-     * MatrixSignalMastManager
+     * MatrixSignalMastManager.
      *
      * @param o Object to store, of type MatrixSignalMast
      * @return e Element containing the complete info
@@ -48,6 +49,15 @@ public class MatrixSignalMastXml
             unlit.setAttribute("allowed", "no");
         }
         e.addContent(unlit);
+
+        // store mast-specific delay, since 4.15.7
+        Element delay = new Element("delay");
+        if (p.getMatrixMastCommandDelay() > 0) {
+            delay.setAttribute("duration", Integer.toString(p.getMatrixMastCommandDelay()));
+        } else {
+            delay.setAttribute("duration", "0");
+        }
+        e.addContent(delay);
 
         List<String> outputs = p.getOutputs();
         // convert char[] to xml-storable simple String
@@ -103,11 +113,13 @@ public class MatrixSignalMastXml
         MatrixSignalMast m;
         String sys = getSystemName(shared);
         try {
-        m = new jmri.implementation.MatrixSignalMast(sys);
-        } catch (Exception e) {
-            log.error("An error occurred while trying to create the signal '" + sys + "' " + e.toString());
+            m = (MatrixSignalMast) InstanceManager.getDefault(jmri.SignalMastManager.class)
+                    .provideCustomSignalMast(sys, MatrixSignalMast.class);
+        } catch (JmriException e) {
+            log.error("Failed to load MatrixSignalMast {}: {}", sys, e);
             return false;
         }
+
         if (getUserName(shared) != null) {
             m.setUserName(getUserName(shared));
         }
@@ -124,6 +136,13 @@ public class MatrixSignalMastXml
                     String bits = unlit.getChild("bitString").getText();
                     m.setUnLitBits(bits);
                 }
+            }
+        }
+
+        if (shared.getChild("delay") != null) { // load mast-specific delay, since 4.15.7
+            Element delay = shared.getChild("delay");
+            if (delay.getAttribute("duration") != null) {
+                m.setMatrixMastCommandDelay(Integer.parseInt(delay.getAttribute("duration").getValue()));
             }
         }
 
@@ -153,7 +172,6 @@ public class MatrixSignalMastXml
                 m.setAspectDisabled(asp.getText());
             }
         }
-        InstanceManager.getDefault(jmri.SignalMastManager.class).register(m);
         return true;
     }
 
@@ -163,4 +181,5 @@ public class MatrixSignalMastXml
     }
 
     private final static Logger log = LoggerFactory.getLogger(MatrixSignalMastXml.class);
+
 }

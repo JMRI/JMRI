@@ -60,16 +60,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         super(name);
     }
 
-    /**
-     * @return the managed ImageIndexEditor instance
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
-     */
-    @Deprecated
-    public static ImageIndexEditor instance() {
-        return InstanceManager.getDefault(ImageIndexEditor.class);
-    }
-
     private void init() {
         JMenuBar menuBar = new JMenuBar();
         JMenu findIcon = new JMenu(Bundle.getMessage("MenuFile"));
@@ -135,6 +125,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         setVisible(true);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private JPanel makeCatalogPanel() {
         _catalog = new CatalogPanel("defaultCatalog", "selectNode", true); // make sure both these properties keys exist
         // log.debug("init the new CatalogPanel for ImageIndexEditor.makeCatalogPanel()");
@@ -142,8 +133,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
 
-        for (int i = 0; i < sysNames.size(); i++) {
-            String systemName = sysNames.get(i);
+        for (String systemName : sysNames) {
             if (systemName.startsWith("IF")) {
                 _catalog.addTree(manager.getBySystemName(systemName));
                 // log.debug("added item to tree");
@@ -157,8 +147,9 @@ public final class ImageIndexEditor extends JmriJFrame {
     }
 
     /*
-     * Provide node editing
-     * @param evt
+     * Provide node editing.
+     *
+     * @param evt mouse event providing x and y position in frame
      */
     private void showTreePopUp(MouseEvent evt) {
         int row = _indexTree.getRowForLocation(evt.getX(), evt.getY());
@@ -167,9 +158,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         }
         TreePath path = _indexTree.getPathForLocation(evt.getX(), evt.getY());
         String nodeName = path.getLastPathComponent().toString();
-        if (log.isDebugEnabled()) {
-            log.debug("showTreePopUp node= {}", nodeName);
-        }
+        log.debug("showTreePopUp node= {}", nodeName);
         JPopupMenu popup = new JPopupMenu();
         popup.add(new JMenuItem(nodeName));
         popup.add(new javax.swing.JPopupMenu.Separator());
@@ -205,6 +194,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         editMenu.add(deleteItem);
     }
 
+    @SuppressWarnings("deprecation") // needs careful unwinding for Set operations, generics
     private JPanel makeIndexPanel() {
         _index = new CatalogPanel("ImageIndex", "selectIndexNode", true); // make sure both these properties keys exist
         // log.debug("init the new CatalogPanel for ImageIndexEditor.makeIndexPanel()");
@@ -215,8 +205,7 @@ public final class ImageIndexEditor extends JmriJFrame {
         CatalogTreeManager manager = InstanceManager.getDefault(jmri.CatalogTreeManager.class);
         List<String> sysNames = manager.getSystemNameList();
 
-        for (int i = 0; i < sysNames.size(); i++) {
-            String systemName = sysNames.get(i);
+        for (String systemName : sysNames) {
             if (systemName.startsWith("IX")) {
                 _index.addTree(manager.getBySystemName(systemName));
                 found = true;

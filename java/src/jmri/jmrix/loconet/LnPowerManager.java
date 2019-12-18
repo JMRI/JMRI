@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * PowerManager implementation for controlling layout power
+ * PowerManager implementation for controlling layout power.
  * <p>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
  * and used with permission as part of the JMRI project. That permission does
@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
  */
 public class LnPowerManager
         extends jmri.managers.AbstractPowerManager
-        implements PowerManager, LocoNetListener {
+        implements LocoNetListener {
 
     public LnPowerManager(LocoNetSystemConnectionMemo memo) {
         super(memo);
         // standard LocoNet - connect
         if (memo.getLnTrafficController() == null) {
-            log.error("Power Manager Created, yet there is no Traffic Controller");
+            log.error("PowerManager Created, yet there is no Traffic Controller");
             return;
         }
         this.tc = memo.getLnTrafficController();
@@ -205,28 +205,15 @@ public class LnPowerManager
             msg.setOpCode(LnConstants.OPC_RQ_SL_DATA);
             msg.setElement(1, 0);
             msg.setElement(2, 0);
-            while (true) {
-                try {
-                    tc.sendLocoNetMessage(msg);
-                    break;
-                } catch (NullPointerException npe) {
-                    // sleep(500) or (750) mSec infrequently causes NPE upon sending first msg via tc, so repeat
-                    log.debug("init of LnPowerManager delayed");
-                    try {
-                        Thread.sleep(10); // wait 1 cycle for tc to init
-                    } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt(); // retain if needed later
-                        return; // and stop work
-                    }
-                }
-            }
+
+            tc.sendLocoNetMessage(msg);
             log.debug("LnTrackStatusUpdate sent");
         }
     }
 
     /**
      * Returns whether command station supports IDLE funcitonality
-     * <p>
+     *
      * @return true if connection's command station supports IDLE state, else false
      */
     @Override

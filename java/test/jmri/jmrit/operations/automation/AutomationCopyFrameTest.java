@@ -6,10 +6,8 @@ import jmri.jmrit.operations.OperationsTestCase;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
-import org.junit.Before;
 import org.junit.Test;
 
 public class AutomationCopyFrameTest extends OperationsTestCase {
@@ -27,13 +25,13 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(f.copyButton);
         // dialog window requesting name for automation should appear
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
 
         // enter a name for the automation
         f.automationNameTextField.setText("Name of new automation");
         JemmyUtil.enterClickAndLeave(f.copyButton);
         // dialog window requesting automation to copy should appear
-        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), "OK");
+        JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
 
         JUnitUtil.dispose(f);
     }
@@ -58,14 +56,14 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
 
         JemmyUtil.enterClickAndLeave(copyFrame.copyButton);
         // dialog window requesting name for automation should appear
-        JemmyUtil.pressDialogButton(copyFrame, Bundle.getMessage("CanNotCopyAutomation"), "OK");
+        JemmyUtil.pressDialogButton(copyFrame, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
 
         // enter a name for the automation
         copyFrame.automationNameTextField.setText("Name of new automation 2");
         JemmyUtil.enterClickAndLeave(copyFrame.copyButton);
 
         // dialog window requesting automation to copy should appear
-        JemmyUtil.pressDialogButton(copyFrame, Bundle.getMessage("CanNotCopyAutomation"), "OK");
+        JemmyUtil.pressDialogButton(copyFrame, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
 
         // still only one automation
         Assert.assertEquals("Number of automations", 1, manager.getSize());
@@ -88,19 +86,5 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
 
         JUnitUtil.dispose(editAutomationFrame);
         JUnitUtil.dispose(copyFrame);
-    }
-
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    // The minimal setup for log4J
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

@@ -4,9 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 /**
- * PackageTest.java
- * <p>
- * Description:	Tests for the jmrit.display.configurexml package
+ * Tests for the jmrit.display.configurexml package
  *
  * @author	Bob Jacobsen Copyright 2009, 2014
  */
@@ -15,11 +13,9 @@ import org.junit.runners.Suite;
     SchemaTest.class,
     LoadAndStoreTest.class,
     AnalogClock2DisplayXmlTest.class,
+    BundleTest.class,
     BlockContentsIconXmlTest.class,
     IndicatorTrackIconXmlTest.class,
-    LayoutBlockManagerXmlTest.class,
-    LayoutTurnoutXmlTest.class,
-    LayoutTurntableXmlTest.class,
     LevelXingXmlTest.class,
     LightIconXmlTest.class,
     MemoryComboIconXmlTest.class,
@@ -28,14 +24,12 @@ import org.junit.runners.Suite;
     MemorySpinnerIconXmlTest.class,
     MultiSensorIconXmlTest.class,
     PositionableLabelXmlTest.class,
-    PositionablePointXmlTest.class,
     ReporterIconXmlTest.class,
     RpsPositionIconXmlTest.class,
     SensorIconXmlTest.class,
     SignalHeadIconXmlTest.class,
     SignalMastIconXmlTest.class,
     SlipTurnoutIconXmlTest.class,
-    TrackSegmentXmlTest.class,
     TurnoutIconXmlTest.class,
     IndicatorTurnoutIconXmlTest.class,
     LinkingLabelXmlTest.class,

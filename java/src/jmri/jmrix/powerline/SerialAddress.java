@@ -1,14 +1,16 @@
 package jmri.jmrix.powerline;
 
+import java.util.Locale;
 import jmri.Manager.NameValidity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Utility Class supporting parsing and testing of addresses.
- * <P>
+ * <p>
  * Two address formats are supported: For X10: Ptnxx where: t is the type code,
  * 'S' for sensors, and 'L' for lights n is the house code of the input or
  * output bit (A - P) xx is a bit number of the input or output bit (1-16)
@@ -25,17 +27,68 @@ public class SerialAddress {
     private Matcher hCodes = null;
     private Matcher aCodes = null;
     private Matcher iCodes = null;
-    private static char minHouseCode = 'A';
-    private static char maxHouseCode = 'P';
+    private static final char MIN_HOUSE_CODE = 'A';
+    private static final char MAX_HOUSE_CODE = 'P';
 
     public SerialAddress(SerialSystemConnectionMemo m) {
         this.memo = m;
-        hCodes = Pattern.compile("^(" + memo.getSystemPrefix() + ")([LTS])([A-P])(\\d++)$").matcher("");
+        hCodes = Pattern.compile("^(" + memo.getSystemPrefix() + ")([LTS])([" + MIN_HOUSE_CODE + "-" + MAX_HOUSE_CODE + "])(\\d++)$").matcher("");
         aCodes = Pattern.compile("^(" + memo.getSystemPrefix() + ")([LTS]).*$").matcher("");
         iCodes = Pattern.compile("^(" + memo.getSystemPrefix() + ")([LTS])(\\p{XDigit}\\p{XDigit})[.](\\p{XDigit}\\p{XDigit})[.](\\p{XDigit}\\p{XDigit})$").matcher("");
     }
 
     SerialSystemConnectionMemo memo = null;
+
+    /**
+     * Validate the format for a system name.
+     *
+     * @param name   the name to validate
+     * @param type   the type letter for the name
+     * @param locale the locale for messages to the user
+     * @return the name, unchanged
+     */
+    String validateSystemNameFormat(String name, char type, Locale locale) {
+        boolean aTest = aCodes.reset(name).matches();
+        boolean hTest = hCodes.reset(name).matches();
+        boolean iTest = iCodes.reset(name).matches();
+        if (!aTest || aCodes.group(2).charAt(0) != type) {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidPrefix", memo.getSystemPrefix() + type),
+                    Bundle.getMessage(locale, "InvalidSystemNameInvalidPrefix", memo.getSystemPrefix() + type));
+        } else if (hTest && hCodes.groupCount() == 4) {
+            // This is a PLaxx address - validate the house code and unit address fields
+            if (hCodes.group(3).charAt(0) < MIN_HOUSE_CODE || hCodes.group(3).charAt(0) > MAX_HOUSE_CODE) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidHouseCode", name),
+                        Bundle.getMessage(locale, "InvalidSystemNameInvalidHouseCode", name));
+            }
+            try {
+                int num;
+                num = Integer.parseInt(hCodes.group(4));
+                if ((num < 1) || (num > 16)) {
+                    throw new NamedBean.BadSystemNameException(
+                            Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidDevice", name),
+                            Bundle.getMessage(locale, "InvalidSystemNameInvalidDevice", name));
+                }
+            } catch (NumberFormatException e) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidDevice", name),
+                        Bundle.getMessage(locale, "InvalidSystemNameInvalidDevice", name));
+            }
+        } else if (iTest) {
+            // This is a PLaa.bb.cc address - validate the Insteon address fields
+            if (iCodes.groupCount() != 5) {
+                throw new NamedBean.BadSystemNameException(
+                        Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidInsteon", name),
+                        Bundle.getMessage(locale, "InvalidSystemNameInvalidInsteon", name));
+            }
+        } else {
+            throw new NamedBean.BadSystemNameException(
+                    Bundle.getMessage(Locale.ENGLISH, "InvalidSystemNameInvalidFormat", name),
+                    Bundle.getMessage(locale, "InvalidSystemNameInvalidFormat", name));
+        }
+        return name;
+    }
 
     /**
      * Public static method to validate system name format.
@@ -45,53 +98,13 @@ public class SerialAddress {
      * @return VALID if system name has a valid format, else return INVALID
      */
     public NameValidity validSystemNameFormat(String systemName, char type) {
-        // validate the System Name leader characters
-        boolean aTest = aCodes.reset(systemName).matches();
-        boolean hTest = hCodes.reset(systemName).matches();
-        boolean iTest = iCodes.reset(systemName).matches();
-        if ((!aTest) || (aCodes.group(2).charAt(0) != type)) { // TODO multichar prefix
-            // here if an illegal format 
-            log.error("invalid character in header field system name: {}", systemName);
+        try {
+            validateSystemNameFormat(systemName, type, Locale.getDefault());
+        } catch (IllegalArgumentException ex) {
+            // TODO: match possible prefixes as VALID_AS_PREFIX
             return NameValidity.INVALID;
         }
-        if (hTest && hCodes.groupCount() == 4) {
-            // This is a PLaxx address - validate the house code and unit address fields
-            if (hCodes.group(3).charAt(0) < minHouseCode || hCodes.group(3).charAt(0) > maxHouseCode) {
-                log.warn("house code field out of range in system name: {}", systemName);
-                return NameValidity.INVALID;
-            }
-            int num;
-            try {
-                num = Integer.parseInt(hCodes.group(4));
-            } catch (Exception e) {
-                log.warn("invalid character in unit address field of system name: "
-                        + systemName);
-                return NameValidity.INVALID;
-            }
-            if ((num < 1) || (num > 16)) {
-                log.warn("unit address field out of range in system name: "
-                        + systemName);
-                return NameValidity.INVALID;
-            }
-            return NameValidity.VALID;
-        }
-        
-        assert aTest;
-        
-        // This is a PLaa.bb.cc address - validate the Insteon address fields
-        if (!iTest) {
-            // here if an invalid format
-            log.warn("address did not match any valid forms: {}", systemName);
-            return NameValidity.INVALID;
-        } else {
-            if (iCodes.groupCount() != 5) {
-                // here if an invalid format
-                log.warn("invalid format - {}", systemName);
-                return NameValidity.INVALID;
-            } else {
-                return NameValidity.VALID;
-            }
-        }
+        return NameValidity.VALID;
     }
 
     /**
@@ -104,13 +117,7 @@ public class SerialAddress {
      * @return  true for valid names
      */
     public boolean validSystemNameConfig(String systemName, char type) {
-        if (validSystemNameFormat(systemName, type) != NameValidity.VALID) {
-            // No point in trying if a valid system name format is not present
-            log.warn("{} invalid; bad format", systemName);
-            return false;
-        }
-        // System name has passed all tests
-        return true;
+        return validSystemNameFormat(systemName, type) == NameValidity.VALID;
     }
 
     /**
@@ -141,10 +148,10 @@ public class SerialAddress {
 
     /**
      * Public static method to normalize a system name.
-     * <P>
+     * <p>
      * This routine is used to ensure that each system name is uniquely linked
      * to one bit, by removing extra zeros inserted by the user.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned. Otherwise a normalized name is returned in the same format
      * as the input name.
@@ -188,7 +195,7 @@ public class SerialAddress {
 
     /**
      * Extract housecode from system name, as a letter A-P.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
      *
@@ -251,7 +258,7 @@ public class SerialAddress {
 
     /**
      * Extract housecode from system name, as a value 1-16.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an -1 is
      * returned.
      *
@@ -279,7 +286,7 @@ public class SerialAddress {
 
     /**
      * Extract devicecode from system name, as a value 1-16.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an -1 is
      * returned.
      *
@@ -296,7 +303,7 @@ public class SerialAddress {
                 // This is a PLaxx address
                 try {
                     dCode = Integer.parseInt(hCodes.group(4));
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     log.error("illegal character in number field system name: " + systemName);
                     return -1;
                 }
@@ -307,7 +314,7 @@ public class SerialAddress {
 
     /**
      * Extract Insteon high device id from system name.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
      *
@@ -324,7 +331,7 @@ public class SerialAddress {
                 // This is a PLhh.mm.ll address
                 try {
                     dCode = Integer.parseInt(iCodes.group(3), 16);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     log.error("illegal character in high id system name: " + systemName);
                     return -1;
                 }
@@ -335,7 +342,7 @@ public class SerialAddress {
 
     /**
      * Extract Insteon middle device id from system name.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
      *
@@ -352,7 +359,7 @@ public class SerialAddress {
                 // This is a PLhh.mm.ll address
                 try {
                     dCode = Integer.parseInt(iCodes.group(4), 16);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     log.error("illegal character in high id system name: " + systemName);
                     return -1;
                 }
@@ -363,7 +370,7 @@ public class SerialAddress {
 
     /**
      * Extract Insteon low device id from system name.
-     * <P>
+     * <p>
      * If the supplied system name does not have a valid format, an empty string
      * is returned.
      *
@@ -380,7 +387,7 @@ public class SerialAddress {
                 // This is a PLhh.mm.ll address
                 try {
                     dCode = Integer.parseInt(iCodes.group(5), 16);
-                } catch (Exception e) {
+                } catch (NumberFormatException e) {
                     log.error("illegal character in high id system name: " + systemName);
                     return -1;
                 }

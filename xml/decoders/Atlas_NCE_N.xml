@@ -413,10 +413,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F12 controls output 9</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="95" mask="XVVVVVVV" item="Forward Trim" tooltip="Adjustment amount used to equalize the speed in each direction">
         <decVal max="127"/>
         <label>Reverse Trim Adjustment</label>

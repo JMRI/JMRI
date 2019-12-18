@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.EntryPoint;
 import jmri.InstanceManager;
@@ -24,23 +25,23 @@ import org.slf4j.LoggerFactory;
  * This class holds information and options for an ActiveTrain when it is
  * running in AUTOMATIC mode. It is an extension to Active Train for automatic
  * running.
- * <P>
+ * <p>
  * This class implements logic that follows a train around a layout. Train
  * follows signals, provided the next Section is allocated to it, and its
  * ActiveTrain's status is RUNNING.
- * <P>
- * This class is linked via it's parent ActiveTrain object.
- * <P>
+ * <p>
+ * This class is linked via its parent ActiveTrain object.
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is open source software; you can redistribute it and/or modify it under
  * the terms of version 2 of the GNU General Public License as published by the
  * Free Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ * <p>
  * The AutoEngineer sub class is based in part on code by Pete Cressman
  * contained in Warrants.java
  *
@@ -273,23 +274,22 @@ public class AutoActiveTrain implements ThrottleListener {
         log.debug("{}: requesting throttle address={}", _activeTrain.getTrainName(), _address);
         useSpeedProfile = false;
         boolean ok;
+        DccLocoAddress addressForRequest = new DccLocoAddress(
+            _address,!InstanceManager.throttleManagerInstance().canBeShortAddress(_address));
         if (_activeTrain.getTrainSource() == ActiveTrain.ROSTER) {
             if (_activeTrain.getRosterEntry() != null) {
                 re = _activeTrain.getRosterEntry();
-                //ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(_activeTrain.getRosterEntry(), this);
-                ok = InstanceManager.throttleManagerInstance().requestThrottle(_activeTrain.getRosterEntry(), this);
+                ok = InstanceManager.throttleManagerInstance().requestThrottle(re, this, false);
                 if (_useSpeedProfile) {
                     if (re.getSpeedProfile() != null && re.getSpeedProfile().getProfileSize() > 0) {
                         useSpeedProfile = true;
                     }
                 }
             } else {
-                //ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(_address, this);
-                ok = InstanceManager.throttleManagerInstance().requestThrottle(_address, this);
+                ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this, false);
             }
         } else {
-            //ok = InstanceManager.getDefault(ThrottleManager.class).requestThrottle(_address, this);
-            ok = InstanceManager.throttleManagerInstance().requestThrottle(_address, this);
+            ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this, false);
         }
         if (!ok) {
             log.warn("Throttle for locomotive address {} could not be setup.", _address);
@@ -338,14 +338,24 @@ public class AutoActiveTrain implements ThrottleListener {
     public void notifyFailedThrottleRequest(jmri.LocoAddress address, String reason) {
         log.error("Throttle request failed for {} because {}", address, reason);
     }
-
+    
+    /**
+     * {@inheritDoc}
+     * @deprecated since 4.15.7; use #notifyDecisionRequired
+     */
     @Override
+    @Deprecated
     public void notifyStealThrottleRequired(jmri.LocoAddress address) {
-        // this is an automatically stealing impelementation.
-        log.warn("Stealing");
-        //InstanceManager.getDefault(ThrottleManager.class).stealThrottleRequest(address, this, true);
-        //
-        InstanceManager.throttleManagerInstance().stealThrottleRequest(address, this, true);
+        InstanceManager.throttleManagerInstance().responseThrottleDecision(address, this, DecisionType.STEAL );
+    }
+
+    /**
+     * No steal or share decisions made locally
+     * <p>
+     * {@inheritDoc}
+     */
+    @Override
+    public void notifyDecisionRequired(jmri.LocoAddress address, DecisionType question) {
     }
 
     // more operational variables
@@ -788,6 +798,13 @@ public class AutoActiveTrain implements ThrottleListener {
                 stopInCurrentSection(NO_TASK);
                 _needSetSpeed = false;
             }
+            // see if we need to rescan as entering safe section.
+            if (ts != null &&
+                    ts.isSafe() &&
+                    _activeTrain.getAllocateMethod() == ActiveTrain.ALLOCATE_BY_SAFE_SECTIONS) {
+                InstanceManager.getDefault(DispatcherFrame.class).forceScanOfAllocation();
+            }
+
         }
     }
 
@@ -1074,7 +1091,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _stoppingUsingSpeedProfile = true;
                 } else {
                     // sensor is not active
-                    setTargetSpeedState(RESTRICTED_SPEED);
+                    setToAMaximumThrottle(_speedRatio[RESTRICTED_SPEED]);
                 }
                 _stopSensor.addPropertyChangeListener(_stopSensorListener = (java.beans.PropertyChangeEvent e) -> {
                     if (e.getPropertyName().equals("KnownState")) {
@@ -1299,22 +1316,80 @@ public class AutoActiveTrain implements ThrottleListener {
         // note: _stoppingBlock must be set before invoking this method
         //  verify that _stoppingBlock is actually occupied, if not stop immed
         if (_stoppingBlock.getState() == Block.OCCUPIED) {
-            setTargetSpeedState(RESTRICTED_SPEED);
+            float signalSpeed = 25;
+            try {
+                signalSpeed = jmri.InstanceManager.getDefault(SignalSpeedMap.class).getSpeed(InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+            } catch (IllegalArgumentException ex) {
+                log.error("Missing [{}] from Speed table - defaulting to 25",InstanceManager.getDefault(DispatcherFrame.class).getStoppingSpeedName());
+            }
+            setToAMaximumThrottle(getThrottleSettingFromSpeed(signalSpeed));
             _stoppingByBlockOccupancy = true;
         } else {
             setStopNow();
         }
     }
 
+    /**
+     * Sets the throttle percent unless it is already less than the new setting
+     * @param throttleSetting  Max ThrottleSetting required.
+     */
+    private synchronized void setToAMaximumThrottle(float throttleSetting) {
+        if (throttleSetting < _targetSpeed) {
+            _targetSpeed = throttleSetting;
+        }
+    }
+
+    /**
+     * Calculates the throttle setting for a given speed.
+     * @param speed  the unadjusted speed.
+     * @return - throttle setting (a percentage)
+     */
+    private synchronized float getThrottleSettingFromSpeed(float speed) {
+        if (useSpeedProfile) {
+            float throttleSetting = _activeTrain.getRosterEntry().getSpeedProfile()
+                    .getThrottleSettingFromSignalMapSpeed(speed, _forward);
+            return applyMaxThrottleAndFactor(throttleSetting);
+        }
+        if (InstanceManager.getDefault(DispatcherFrame.class).getSignalType() == DispatcherFrame.SIGNALMAST) {
+            float mls = 100.0F;
+            if (_controllingSignalMast != null) {
+                mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
+            } else {
+                //plan B
+                mls = InstanceManager.getDefault(DispatcherFrame.class).getMaximumLineSpeed();
+            }
+            float throttleSetting = (speed / mls);
+            return applyMaxThrottleAndFactor(throttleSetting);
+        } else {
+            return applyMaxThrottleAndFactor(speed);
+        }
+    }
+
+    /**
+     *
+     * @param throttleSetting the throttle setting that would normally be set
+     * @return the adjusted throttle setting after applying Max Throttle and Percentage throttle settings
+     */
+    private synchronized float applyMaxThrottleAndFactor(float throttleSetting) {
+        if (throttleSetting > 0.0f) {
+            if (throttleSetting > _maxSpeed) {
+                return _maxSpeed * _speedFactor;
+            }
+            return (throttleSetting * _speedFactor); //adjust for train's Speed Factor
+        } else {
+            return throttleSetting;
+        }
+    }
+
+    /**
+     * sets the throttle based on an index number into _speedRatio array
+     * @param speedState  Index value
+     */
     private synchronized void setTargetSpeedState(int speedState) {
         _autoEngineer.slowToStop(false);
         log.debug("Speed[{}]",speedState);
         if (speedState > STOP_SPEED) {
-            float speed = _speedRatio[speedState];
-            if (speed > _maxSpeed) {
-                speed = _maxSpeed;
-            }
-            _targetSpeed = speed * _speedFactor;
+            _targetSpeed = applyMaxThrottleAndFactor(_speedRatio[speedState]);
         } else if (useSpeedProfile && _stopBySpeedProfile) {
             // we are going to stop by profile
             _stoppingUsingSpeedProfile = true;
@@ -1332,7 +1407,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (throttleSetting > 0.009) {
                     _autoEngineer.setHalt(false);
                     _autoEngineer.slowToStop(false);
-                    _targetSpeed = throttleSetting * _speedFactor;
+                    //TODO is this next bit correct do we need to apply max speed?
+                    _targetSpeed = throttleSetting * _speedFactor;  // only apply speed factor not max
                  } else if (useSpeedProfile && _stopBySpeedProfile) {
                     _targetSpeed = 0.0f;
                     _stoppingUsingSpeedProfile = true;
@@ -1343,8 +1419,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _autoEngineer.setHalt(true);
                 }
             } catch (Exception ex) {
-                log.error("setTargetSpeedByProfile crashed - Emergency Stop: " );
-                ex.printStackTrace();
+                log.error("setTargetSpeedByProfile crashed - Emergency Stop: ", ex );
                 _autoEngineer.slowToStop(false);
                 _targetSpeed = -1.0f;
                 _autoEngineer.setHalt(true);
@@ -1365,10 +1440,7 @@ public class AutoActiveTrain implements ThrottleListener {
         float mls = _controllingSignalMast.getSignalSystem().getMaximumLineSpeed();
         float decSpeed = (speed / mls);
         if (decSpeed > 0.0f) {
-            if (decSpeed > _maxSpeed) {
-                decSpeed = _maxSpeed;
-            }
-            _targetSpeed = decSpeed * _speedFactor; //adjust for train's Speed Factor
+            _targetSpeed = applyMaxThrottleAndFactor(decSpeed);
         } else {
             _targetSpeed = 0.0f;
             _autoEngineer.setHalt(true);
@@ -1379,7 +1451,7 @@ public class AutoActiveTrain implements ThrottleListener {
         if (b == null) {
             return (0);
         }
-        float fLength = b.getLengthMm() / (float) (jmri.Scale.getScaleFactor(InstanceManager.getDefault(DispatcherFrame.class).getScale()));
+        float fLength = b.getLengthMm() / (float) InstanceManager.getDefault(DispatcherFrame.class).getScale().getScaleFactor();
         if (InstanceManager.getDefault(DispatcherFrame.class).getUseScaleMeters()) {
             return (int) (fLength * 0.001f);
         }
@@ -1519,7 +1591,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 log.debug("executing task[{}]",_task);
                 executeStopTasks(_task);
             } catch (InterruptedException e) {
-                log.warn("Waiting for train to stop interupted - stop tasks not executing");
+                log.warn("Waiting for train to stop interrupted - stop tasks not executing");
             } catch (Exception e) {
                 log.error("Waiting for train to stop crashed - stop tasks not executing.", e);
             }
@@ -1890,7 +1962,7 @@ public class AutoActiveTrain implements ThrottleListener {
      * Convert ramp rate name, stored as a string into the constant value
      * assigned.
      *
-     * @param rampRate - name of ramp rate, such as "RAMP_FAST"
+     * @param rampRate  name of ramp rate, such as "RAMP_FAST"
      * @return integer representing a ramprate constant value
      */
     public static int getRampRateFromName(String rampRate) {

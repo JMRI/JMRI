@@ -10,7 +10,7 @@ import org.junit.Test;
  * Tests for the jmri.jmrix.nce.NceTurnout class
  *
  * @author	Bob Jacobsen
-  */
+ */
 public class NceTurnoutTest extends AbstractTurnoutTestBase {
 
     private NceTrafficControlScaffold tcis = null;
@@ -43,6 +43,7 @@ public class NceTurnoutTest extends AbstractTurnoutTestBase {
     public void testCanLockModes() {
         // prepare an interface
         tcis = new NceTrafficControlScaffold() {
+            @Override
             public int getUsbSystem() { return NceTrafficController.USB_SYSTEM_NONE; }
         };
 

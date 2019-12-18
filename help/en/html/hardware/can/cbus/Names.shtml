@@ -15,19 +15,22 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+      <!--#include virtual="Sidebar" -->
     <div id="mainContent">
+
       <h1>JMRI Hardware Support: MERG CBUS - Naming</h1>
 
         <ul class="snav">
         <li><a href="#events">Event Name and Numbering</a></li>
-        <li><a href="#sysname">System Names</a></li>        
+        <li><a href="#reporters">Reporters</a></li>
+        <li><a href="#sysname">System Names</a></li>
         <li><a href="#summary">Summary of MERG CBUS Events</a></li>
         <li><a href="#namingspec">Event Naming Specification</a></li>
         <li><a href="#hex">Sending hex strings</a></li>
@@ -47,7 +50,7 @@
       
         <h3>Event Conventions</h3>
           <div>
-<h4>Short Event Suggestions</h4>
+        <h4>Short Event Suggestions</h4>
             <p>Suggestion from Mike Bolton :</p>
             
             <p>His club has adopted the convention of 1 to 9999 for turnouts 
@@ -117,12 +120,11 @@
         <p>JMRI can store cross-session information such as Memory Variables and 
         Block Values ( Train Describer value )</p>      
         
-        <p>When JMRI loads a panel, and the Track Power is sent On, block values from 
+        <p>When JMRI loads a panel, and the Track Power is on, block values from 
         the previous session are loaded if the block is active.</p>
         
         <p>It may make sense to set Track Power to Off on JMRI Startup and when a panel loads, 
         switching the track power on after the panel has fully loaded.</p>
-        
       
       <h4><a name="automatic" id="automatic">Sensors - JMRI Automatic Creation</a></h4>
 
@@ -134,16 +136,74 @@
         not a sensor generator.
         Events are not intrinsically associated with
         specific hardware objects, people can use events in many ways.</p>
+        
+        <p>You can request the status of a sensor by clicking Query in the sensor table. </p>
+      
+       <h4><a name="turnout" id="turnout">Turnout Operation</a></h4>
+      
+      <p>MERG CBUS is setup in JMRI for 4 types of turnout ( output ) feedback.</p>
+      <p>Turnouts have 2 states, the commanded state, and the Feedback state 
+      which is used on panel displays and elsewhere.</p>
+      
+      <ul>
+      <li>Direct - When the commanded state is changed, 
+      the feedback state will reflect the commanded state.</li>
+      <li>Delayed - When the commanded state is changed, 
+      the feedback state will reflect the commanded state following a brief delay.</li>
+      <li>1 Sensor - When the commanded state is changed, the feedback state will not change.
+      <br>The feedback state will change when the sensor attached changes state ( eg. Single microswitch events )</li>
+      <li>2 Sensor - When the commanded state is changed, the feedback state will not change.
+      <br>Feedback state will change when the 2 sensors agree on state ( eg. servo end travel events )</li>
+      </ul>
+      
+      <p>You can request the status of a turnout by clicking Query in the turnout table. </p>
+      <p>If a turnout uses 1 or 2 sensor feedback, these sensor statuses will also be requested.</p>
+      
+      <p>See <a href="../../../doc/Technical/TurnoutFeedback.shtml">JMRI : Turnout Feedback</a> for more info.</p>
       
       
+      <h4><a name="reporters" id="reporters">Reporter ( incl. RFID ) data from CBUS</a></h4>
+      <p><a href="../../../tools/Reporters.shtml">JMRI Reporters</a> do not have Off or On events,
+        they just use a device ( short event ) or node number.</p>
+        
+        <p>Reporters are created by clicking the New button within the 
+        <a href="../../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>.</p>
+        <p>You can create multiple reporters by checking the Add Sequential Range option.</p>
+        
+        <p>Like Turnouts Sensors and Lights, these are not created automatically in CBUS.</p>
+        
+      <p>A typical system name for a reporter would be 
+        <code>MR123</code> or <code>MR1234</code> ( no event On or Off ) .</p>
+      <p>The DDES and ACDAT OPC's are used for reporter data.</p>
+      <p>When an incoming DDES or ACDAT OPC is heard on the network, 
+        JMRI will look for a reporter matching the device or node number in the Reporter Table.</p>
+      
+      <p>If a reporter exists, the <a href="../../../tools/IdTags.shtml">ID tag</a> 
+        within the 5 data bytes will be looked up from the 
+      <a href="../../../../package/jmri/jmrit/beantable/IdTagTable.shtml">ID Tag table</a>.</p>
+      
+      <p>If there's no matching ID Tag on the table, one will be created and updated.</p>
+      
+      <p>If the ID tag was previously active for another reporter, 
+        the previous reporter will have the tag removed from its report.</p>
+      
+      <p>Valid reporter numbers are minimum 0, to maximum 65535.</p>
+      <p>The DDES ( device number data ) and ACDAT ( node data ) messages are 
+        currently handled in exactly the same way, ie the first 2 bytes are used as the Reporter identifier.</p>
+      <p>This means that a reporter created via a number of 77 will respond to 
+        both DDES device 77 and ACDAT of node 77.</p>
+      
+      <p>Reporters are saved in your main panel file, along with turnouts and sensors etc.</p>
+      <p>ID Tags cross-session automatically, no saving is necessary.</p>
       </div>
       
       <h2><a name="sysname" id="sysname">System Names</a></h2>
        <div>
         <p>When adding an item to your JMRI
-        <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table</a>,
-        <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table</a> or
-        <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml">Lights Table</a>,
+        <a href="../../../../package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>,
+        <a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>,
+        <a href="../../../../package/jmri/jmrit/beantable/LightTable.shtml">Light Table</a> or
+        <a href="../../../../package/jmri/jmrit/beantable/ReporterTable.shtml">Reporter Table</a>,
 
         a JMRI system name is automatically created from the hardware address you input.
         </p>
@@ -171,10 +231,12 @@
         e.g. <code>MT+123;-345</code>  </li>
         <li><a href="../../../tools/Lights.shtml">JMRI Lights</a> use the type letter "L", e.g.
         <code>ML+123;-345</code></li>
+        <li><a href="../../../tools/Reporters.shtml">JMRI Reporters</a> use the type letter "R", e.g.
+        <code>MR123</code></li>
         </ul>         
       
       
-      <h3><a name="summary" id="summary">Summary of MERG CBUS events</a></h3>
+      <h3><a name="summary" id="summary">Summary of MERG CBUS events ( Sensors, Turnouts and Lights )</a></h3>
       
       <table border="1">
         <tbody><tr>
@@ -235,17 +297,6 @@
           <td>MT+18;-21</td>
           <td>idem signed</td>
           <td>+18;-21</td>
-          <td> </td>
-          <td> </td>
-          <td> </td>
-        </tr>
-        <tr>
-          <td>in</td>
-          <td>200018M07</td>
-          <td>listen to Events 18 .. 1F</td>
-          <td>MS200018M07</td>
-          <td>+ M + hex mask</td>
-          <td>N/A</td>
           <td> </td>
           <td> </td>
           <td> </td>
@@ -418,8 +469,8 @@
       
       <p>These particular event Opscodes use a Hex string 4 digits long, split into High then Low :</p>
       
-      <img src="../images/merg-add-turnout-hex-620x173.jpg" align="right" 
-      alt="merg cbus add new turnout hexadecimal hex" width="620" height="173">
+      <img src="images/web/merg-add-turnout-hex-620x147.png" align="right" 
+      alt="merg cbus add new turnout hexadecimal hex" width="620" height="147">
       
       <table border="1">
       <tr>
@@ -487,9 +538,6 @@
       </tr>
       </table>
       
-      <img src="../images/merg-cbus-server-649x416.jpg"
-      width="400" height="256" alt="merg cbus server" align="right">
-      
       <p>Ensure you use the right opscode, eg if you include Nodes for a FiLM address, use ACON instead of ASON.</p>
       
       <p>Sensors, Turnouts and Lights stored as Hex response events using the long and short 
@@ -535,15 +583,25 @@
       while future uses of this may also be for local media streaming ( eg. transferring 
       pictures of trains or sound files between modules. )
       <br>The extended frames do not interfere with the standard frames, 
-      hence modules can be targetted for boatloading by module number, without affecting Standard CAN event frames.
-      </p>
+      hence modules can be targetted for boatloading by module number, 
+      without affecting normal layout messaging.</p>
+      
+      <p>Extended CAN frames ( which are not CBUS messages ) can be monitored in the 
+      <a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml"
+        >CBUS console</a>,
+        and are filtered from all other JMRI objects ( Sensors, Turnouts etc. ).</p>
       
       <p>Although module firmware updates are not currently available within JMRI, 
       full support for this is available via 3rd party software ( FCU - FLiM Configuration Utility ), 
       available free for MERG members to download.
       </p>
       
-      <p>For system development, you may prefer to view the actual full packet across various applications, eg MERG CBUS SERVER.</p>
+      <img src="images/web/merg-cbus-server-400x256.png"
+      width="400" height="256" alt="merg cbus server" align="right">
+      
+      
+      <p>For advanced system development and packet proving, you may prefer to view the 
+      full packet across various applications, eg MERG CBUS SERVER.</p>
       
         <p>The <a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml"
         >JMRI MERG CBUS Console Tool</a> can be very useful in seeing what is being sent 
@@ -607,8 +665,15 @@
         >Event Table</a> - Mainly event OPCs</li>
        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/nodeconfig/NodeConfigToolPane.shtml#opc"
         >Node Config</a> - Node Management OPCs</li>
-       <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#opc"
+       <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/cbusslotmonitor/CbusSlotMonitorPane.shtml#opc"
+        >Command Station Monitor</a> - Command Station Monitor OPCs</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml#opc"
         >Console</a> - All OPCs</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/simulator/SimulatorPane.shtml#opc"
+        >Simulator</a> - Most OPCs</li>
+        <li><a href="../../../../package/jmri/jmrix/can/cbus/swing/eventrequestmonitor/CbusEventRequestTablePane.shtml#opc"
+        >Event Request Monitor</a> - Mainly event OPCs</li>
+
        </ul>        
         
         <h4>Sensor, Turnout and Light OPCs</h4>
@@ -635,7 +700,7 @@
         <p>The flexibility in the hex form of creating Sensors, Turnouts and Lights 
         allows any OPC to be sent, or received as an input.</p>
         
-        <p>When used as a short form address, eg "N123E456" : </p>
+        <p>When used as a short form address, eg "+N123E456" : </p>
       
         <ul>
         <li>ASON / ASOF Sent when status changed, node number = 0</li>
@@ -659,15 +724,12 @@
         <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusReporterManager.java"
         >CbusReporterManager.java</a>
         </p>
-        Messages sent from JMRI
+        <p>Messages sent from, and received by JMRI are handled the same by MERG CBUS Reporters.</p>
         <ul>
         <li>DDES - Constant Listener</li>
-        </ul>
-        
-        <p>Messages received by JMRI</p>
-        <ul>
-        <li>DDES - Constant Listener</li>
+        <li>DDRS - Constant Listener</li>
         <li>ACDAT - Constant Listener</li>
+        <li>ARDAT - Constant Listener</li>
         </ul>        
         
         
@@ -735,18 +797,18 @@
         <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/can/cbus/CbusThrottleManager.java"
         >CbusThrottleManager.java</a>
         </p>
-        
+        <p>Messages sent by JMRI</p>
         <ul>
         <li>RLOC - Sent by JMRI</li>
         </ul>
         
-        <p>Messages sent by JMRI</p>
+        <p>Listeners for messages sent by JMRI</p>
         <ul>
         <li>ESTOP - Constant Listener</li>
         <li>RESTP - Constant Listener</li>
         <li>KLOC - Constant Listener</li>
         </ul>
-        
+        <p>Listeners for messages received by JMRI</p>
         <ul>
         <li>PLOC - Constant Listener</li>
         <li>ERR - Constant Listener + Errors translated from error codes</li>

@@ -6,12 +6,12 @@ import javax.swing.JPanel;
  * Definition of objects to handle configuring a layout connection via a Tams
  * SerialDriverAdapter object.
  *
- * @author Bob Jacobsen Copyright (C) 2001, 2003 Copies from NCE
+ * @author Bob Jacobsen Copyright (C) 2001, 2003 Copied from NCE
  * @author kcameron Copyright (C) 2014
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
-    public final static String NAME = "Simulator";
+    public final static String NAME = "Simulator"; // TODO I18N using Bundle.getMessage("key")
 
     /**
      * Create a connection configuration with a preexisting adapter. This is
@@ -25,7 +25,8 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
     }
 
     /**
-     * Create a connection configuration without a preexisting adapter.
+     * Ctor for a connection configuration with no preexisting adapter.
+     * {@link #setInstance()} will fill the adapter member.
      */
     public ConnectionConfig() {
         super();
@@ -36,15 +37,22 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSimulatorConnectionConf
         return NAME;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new SimulatorAdapter();
         }
     }
+
 }

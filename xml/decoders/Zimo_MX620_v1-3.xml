@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.02" lastUpdated="20090626"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20090222"/>
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20080119"/>
@@ -156,15 +157,9 @@
         <label>Analog Mode Function Status - F0</label>
         <label xml:lang="it">Funzione di Stato in Analogico : Luci (in avanti)</label>
       </variable>
-      <variable CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
-        <decVal/>
-        <label>Consist Address</label>
-        <label xml:lang="it">Indirizzo Consist</label>
-        <label xml:lang="fr">Addresse UM</label>
-        <label xml:lang="de">Verbundadresse</label>
-        <comment>Allows permanent storage of consist address. Range 0-127</comment>
-        <comment xml:lang="it">Valori ammessi 0-127</comment>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
          <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
@@ -1085,12 +1080,7 @@
         <label xml:lang="it">Tempo di Off luci Ditch</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="fr">Speed Table(fr)</label>
-        <label xml:lang="it">Tabella Velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable item="Loco Number Recognition" CV="112" mask="XXXXXVXX" default="1">
@@ -1352,7 +1342,7 @@
           <enumChoice choice="F4">
             <choice>F4</choice>
           </enumChoice>
-          <enumChoice choice="F3">
+          <enumChoice choice="F3" value="16">
             <choice>F3</choice>
           </enumChoice>
         </enumVal>

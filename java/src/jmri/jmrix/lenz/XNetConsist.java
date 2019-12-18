@@ -74,7 +74,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     /**
      * Set the Consist Type.
      *
-     * @param consistType, an integer, should be either
+     * @param consistType An integer, should be either
      *                     jmri.Consist.ADVANCED_CONSIST or
      *                     jmri.Consist.CS_CONSIST.
      */
@@ -241,7 +241,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
                     // The only way it is valid for us to do something
                     // here is if the locomotive we're adding is
                     // already in the consist and we want to change
-                    // it's direction
+                    // its direction
                     if (consistList.size() == 2
                             && consistList.contains(locoAddress)) {
                         addToCSConsist(locoAddress, directionNormal);
@@ -443,7 +443,15 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
             if (l.isOkMessage()) {
                 if (_state == ADDREQUESTSENTSTATE) {
                     addToConsistList(_locoAddress, _directionNormal);
+                    if (consistType == ADVANCED_CONSIST) {
+                       //set the value in the roster entry for CV19
+                       setRosterEntryCVValue(_locoAddress);
+                    }
                 } else if (_state == REMOVEREQUESTSENTSTATE) {
+                    if (consistType == ADVANCED_CONSIST) {
+                       //reset the value in the roster entry for CV19
+                       resetRosterEntryCVValue(_locoAddress);
+                    }
                     removeFromConsistList(_locoAddress);
                 }
                 _state = IDLESTATE;
@@ -553,7 +561,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      */
     private void sendDirection(DccLocoAddress address, boolean isForward) {
         XNetMessage msg = XNetMessage.getSpeedAndDirectionMsg(address.getNumber(),
-                jmri.DccThrottle.SpeedStepMode28,
+                jmri.SpeedStepMode.NMRA_DCC_28,
                 (float) 0.0,
                 isForward);
         // now, we send the message to the command station

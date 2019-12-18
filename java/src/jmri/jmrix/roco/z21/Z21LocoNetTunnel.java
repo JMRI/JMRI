@@ -181,7 +181,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
         }
         // check parity
         if (!msg.checkParity()) {
-           log.warn("Ignore Loconet packet with bad checksum: {}", msg);
+           log.warn("Ignore LocoNet packet with bad checksum: {}", msg);
            throw new LocoNetMessageException();
         }
         // message is complete, dispatch it !!
@@ -190,7 +190,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
 
     /**
      * Read a single byte, protecting against various timeouts, etc.
-     * <P>
+     * <p>
      * When a port is set to have a receive timeout (via the
      * enableReceiveTimeout() method), some will return zero bytes or an
      * EOFException at the end of the timeout. In that case, the read should be
@@ -289,6 +289,7 @@ public class Z21LocoNetTunnel implements Z21Listener, LocoNetListener , Runnable
 
     }
 
+    @SuppressWarnings("deprecation") // Thread.stop not likely to be removed
     public void dispose(){
        if(lsc != null){
           lsc.dispose();

@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22--> 
+<!-- Updated by Herv&#233; Blorec <bzh56420@yahoo.fr> 2013-10-22-->
 <html LANG="fr">
 <head>
 <title>JMRI: Item Palette Help</title>
@@ -22,7 +22,7 @@
 
 <h1>G&#233;n&#233;rateur de Circuit</h1>
 <p>
-<b>Le G&#233;n&#233;rateur Circuit</b> est une vue d'un <b>&#201;diteur de Panneau de Configuration</b> Panneau utilis&#233; pour cr&#233;er des circuits de voie qui sont mis en œuvre dans JMRI par
+<b>Le G&#233;n&#233;rateur Circuit</b> est une vue d'un <b>&#201;diteur de Panneau de Configuration</b> Panneau utilis&#233; pour cr&#233;er des circuits de voie qui sont mis en &oelig;uvre dans JMRI par
 OCantonss, Portails et OChemins. Le nom d'une voie ayant un appareil qui peut d&#233;tecter l'occupation est le
 <b>Circuit de Voie</b>. Dans JMRI nous avons abus&#233; du terme <i>"canton"</i> et
 <i>"OCanton"</i> pour se r&#233;f&#233;rer &#224; ce qui est un circuit de voie.
@@ -41,7 +41,7 @@ affiche les &#233;tats des cantons et des chemins par la couleur sans alt&#233;r
 Les fichiers de panneaux pr&#233;alablement faits avec l'&#201;diteur de Panneau
 peuvent &#234;tre utilis&#233;s avec le G&#233;n&#233;rateur de circuits tant qu'ils peuvent &#234;tre charg&#233;s dans cette
 version de JMRI. Le G&#233;n&#233;rateur de Circuit va moderniser les ic&#244;nes de voie en
-ic&#244;nes Indicateur de Voie. Voir <A HREF="ItemPalette.shtml"> L'article Palette</A>
+ic&#244;nes Indicateur de Voie. Voir <a href="ItemPalette.shtml"> L'article Palette</a>
 pour plus d'informations sur les ic&#244;nes indicateurs de voie.
 </p>
 
@@ -89,19 +89,21 @@ Vous pouvez facilement aller et venir entre les &#233;diteurs et les modes d'&#2
   <li><b>Circuits sans ic&#244;nes</b> - A un sous-menu pour chaque circuit de voie OCanton  qui ne poss&#232;de pas d'ic&#244;ne.
          Un circuit de voie n&#233;cessite au moins une ic&#244;ne indicatrice de voie pour afficher son &#233;tat.</li>
   <li><b>Circuits  dont les ic&#244;nes ont besoin de conversion</b> - A un sous-menu pour chaque circuit de voie OCanton dont les  ic&#244;nes de voies ne sont pas des ic&#244;nes indicatrices de voie.
-         <ul> <b>Remarque:</b> Si des <i>ic&#244;nes de voies ne sont pas converties en ic&#244;nes indicatrices de voies
-         les informations n&#233;cessaires pour afficher les &#233;tats du circuit ne peuvent pas &#234;tre sauv&#233;es.</i>
-         </Ul></li>
+         <ul><li><b>Remarque:</b> Si des <i>ic&#244;nes de voies ne sont pas converties en ic&#244;nes indicatrices de
+         voies
+         les informations n&#233;cessaires pour afficher les &#233;tats du circuit ne peuvent pas &#234;tre
+          sauv&#233;es.</i></li>
+         </ul></li>
   <li><b>Ic&#244;nes de voie en Surbrillance ont besoin de conversion</b> - Surlignage de toutes les ic&#244;nes de voies qui ne sont pas des
          Ic&#244;nes indicatrices de voie. Si toutes les ic&#244;nes de voie sont des ic&#244;nes indicatrices de voie, cet &#233;l&#233;ment de menu est
           &#233;tiquet&#233; <b>Toutes les ic&#244;nes de voie sont des ic&#244;nes indicatrices</b></li>
   <li><b>Surlignage des Ic&#244;nes indicatrices de voie sans circuits</b> - Surlignage de  toutes les ic&#244;nes de voies qui ne sont pas associ&#233;es &#224; un circuit de voie. Si chaque ic&#244;ne de la voie est associ&#233;e &#224; un circuit, cet &#233;l&#233;ment de menu est &#233;tiquet&#233; <b>Toutes les ic&#244;nes de voie appartiennent aux Circuits</b></li>
   <li><b>Circuits avec ic&#244;nes Portail mal plaac&#233;ess</b> - A un sous-menu pour chaque circuit de voie OCanton qui
          a un avertissement de positionnement de l'ic&#244;ne Portail. Les posibilit&#233;s sont:
-         <ul> Une ic&#244;ne portail est mal plac&#233;e. Par exempler: ne pas placer les deux cantons couvrant
+         <ul><li>Une ic&#244;ne portail est mal plac&#233;e. Par exempler: ne pas placer les deux cantons couvrant
          celle du portail.
-         <br>Une ic&#244;ne portail couvre un circuit voisin sans ic&#244;nes indicatrice.
-         </Ul>
+          <br>Une ic&#244;ne portail couvre un circuit voisin sans ic&#244;nes indicatrice.</li>
+         </ul>
          Remarque: Lorsque les ic&#244;nes d'un circuit ne sont pas converties &#224; des ic&#244;nes indicatrices, apr&#232;s avoir sauv&#233; et recharg&#233;
         les ic&#244;nes portail ne seront pas en mesure de d&#233;tecter si elles s'&#233;tendent sur ce circuit.</li>
   <li><b>V&#233;rifiez les erreurs de Portail et de Chemin</b> - examiner les d&#233;finitions du Portail et de OChemin &#224; la recherche
@@ -122,7 +124,8 @@ Vous pouvez facilement aller et venir entre les &#233;diteurs et les modes d'&#2
 <h4>Modification OCantons</h4>
 <p>
  1. Dans le  menu <b>Ajouter/Modifier Circuits</b>, s&#233;lectionnez l'&#233;l&#233;ment de menu <b>Modifier Circuit Canton</b>.
- Ceci ouvre une liste de choix pour vous permettre de s&#233;lectionner un circuit de OCanton &#224; modifier. S&#233;lection d'une ligne et en appuyant sur le bouton <Ouvrer Circuit> ouvre <b>Modifier Circuit</b>
+ Ceci ouvre une liste de choix pour vous permettre de s&#233;lectionner un circuit de OCanton &#224; modifier.
+ S&#233;lection d'une ligne et en appuyant sur le bouton [Ouvrer Circuit] ouvre <b>Modifier Circuit</b>
 </p>
 
 <h4>Mode d'&#201;dition Circuit</h4>
@@ -132,7 +135,7 @@ toutes les ic&#244;nes de voie qui sont utilis&#233;es pour afficher le circuit 
 supprim&#233;. Enfin, les ic&#244;nes de voie du circuit peuvent &#234;tre am&#233;lior&#233;es pour les ic&#244;nes indicatrice de Voie.
 <p>
  1. Dans ce mode, les clics de souris sur une ic&#244;ne de la voie dans le cadre de la fen&#234;tre de base permet de basculer la s&#233;lection de la voie.
- S&#233;lectionnez les ic&#244;nes que vous voulez utiliser pour afficher le circuit de voie (&#224; savoir OCanton). Les ic&#244;nes pour un circuit de voie doivent &#234;tre contiguës.
+ S&#233;lectionnez les ic&#244;nes que vous voulez utiliser pour afficher le circuit de voie (&#224; savoir OCanton). Les ic&#244;nes pour un circuit de voie doivent &#234;tre contigu�s.
  Les ic&#244;nes qui affichent le circuit sont surlign&#233;s en bleu. La s&#233;lection des autres types d'ic&#244;nes
  n'a aucun effet. En outre, des &#233;l&#233;ments du panneau ne peuvent pas &#234;tre tir&#233;s et repositionn&#233;s.
 </p>
@@ -156,7 +159,7 @@ supprim&#233;. Enfin, les ic&#244;nes de voie du circuit peuvent &#234;tre am&#2
  6. Le bouton <b>convertir des Ic&#244;nes</b> permet de convertir les ic&#244;nes dans le circuit en ic&#244;nes Indicatrice de voie
  si elles ne sont pas d&#233;j&#224; des ic&#244;nes de ce type. Cela peut &#234;tre fait plus tard. Les ic&#244;nes Converties ont
  peut-&#234;tre besoin d'&#234;tre repositionn&#233;es. Cela peut &#234;tre fait apr&#232;s avoir quitt&#233; le mode &#201;dition de Circuit (en appuyant sur
- le bouton <Termin&#233;>).
+ le bouton [Termin&#233;]).
 <p>
  7.Le bouton <b>Termin&#233;</b> termine la cr&#233;ation et l'&#233;dition du circuit de voie.
 <p>
@@ -170,7 +173,8 @@ Il y a un compromis ici sur l'apparence.
 <p>
  1. Depuis le menu <b>Ajouter/Modifier Circuits</b>, s&#233;lectionnez l'&#233;l&#233;ment de menu <b>Modifier Circuit Portails</b>.
  Ceci ouvre une liste de choix pour vous permettre de s&#233;lectionner un circuit de OCanton &#224; modifier.
- S&#233;lectionnez une ligne et en appuyant sur le bouton <Ouvrir Circuit> ouvre la fen&#234;tre <b>Ajouter/&#201;diter Portail</b>.
+ S&#233;lectionnez une ligne et en appuyant sur le bouton [Ouvrir Circuit] ouvre la fen&#234;tre
+ <b>Ajouter/&#201;diter Portail</b>.
  Le circuit de voie sera surlign&#233; en bleu et le cas &#233;ch&#233;ant si des portails ont &#233;t&#233; d&#233;finis, ils
  seront repr&#233;sent&#233;s avec un cercle rouge.
 </p>
@@ -213,7 +217,8 @@ Il y a un compromis ici sur l'apparence.
 <h3>Chemins</h3>
 <p>
  1. Depuis le menu <b>Ajouter/Modifier Circuits</b> s&#233;lectionner l'&#233;l&#233;ment de menu <b>Modifier Circuit Chemins</b>.
- Ceci ouvre une liste de choix pour vous permettre de s&#233;lectionner un circuit de OCanton &#224; modifier. S&#233;lectionnez une ligne et en appuyant sur le bouton <Ouvrir Circuit> ouvre la fen&#234;tre <b>Ajouter/Editer Chemin</b>.
+ Ceci ouvre une liste de choix pour vous permettre de s&#233;lectionner un circuit de OCanton &#224; modifier.
+ S&#233;lectionnez une ligne et en appuyant sur le bouton [Ouvrir Circuit] ouvre la fen&#234;tre <b>Ajouter/Editer Chemin</b>.
  Le circuit de voie sera surlign&#233; en bleu et le cas &#233;ch&#233;ant les Portails ont &#233;t&#233; d&#233;finis, ils
  seront repr&#233;sent&#233; avec un cercle rouge.
 </p>

@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <!-- Copyright Bob Jacobsen 2008, 2019 -->
+
+  <title>JMRI: PanelPro, an application for making Control
+  Panels</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+    <!--#include virtual="/Header" -->
+    <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+
+      <h1>JMRI: PanelPro</h1>
+            <p>The JMRI libraries contain the PanelPro
+            application for creating panels to control or follow your
+            (virtual) model railroad. This page introduces the
+            application, and how to use it.</p>
+
+            <p>PanelPro provides four separate ways to create Panels:</p>
+
+            <ul>
+                <li>The <a href="#pe">Panel Editor</a> lets you graphically
+                draw a Panel exactly the way you want it, and then animate
+                parts of it to show the status of your layout and let you
+                click to control it.</li>
+
+                <li>The <a href="#cpe">Control Panel Editor</a> works like
+                Panel Editor but provides an alternative interface.</li>
+
+                <li>The <a href="#le">Layout Editor</a> provides tools to
+                make a smart schematic of your layout while constructing
+                the logic for signals, etc. This constrains how the panel
+                appears a little, but it can save significant time when
+                first bringing your layout up.</li>
+
+                <li>The <a href="#swb">Switchboard Editor</a> is a graphic,
+                straightforward control interface, showing a range of switch
+                keys to watch and control items.</li>
+            </ul>
+
+            <h2>Which Editor to use?</h2>
+
+            <p>All Panel Editors use the same information about your layout
+            stored in JMRI but each serves a different goal and approach.
+
+            <p>The <strong><a href="#pe">Panel Editor</a></strong> and the
+            <strong><a href="#cpe">Control Panel Editor</a></strong> let
+            you build purely <i>graphical</i> (image based) Panels.<br>
+            You can have as many Panels as you like, covering as
+            much or as little of your railway as you like, with overlaps
+            in area or functionality if required. Panels might be
+            diagrams showing the state of the track and signals, or they
+            might be prototypical signaling and dispatcher panels. Or
+            anything else you find useful to control your railroad; you
+            have total flexibility over their appearance. There are
+            several standard graphics sets distributed with JMRI, but it
+            is often necessary to make some of the elements in an
+            external graphics package to be imported as PNG files.
+            These might include the Panel Background, or the icons to attach
+            to active elements (switches, levers, track state, signals,
+            etc.) which are then placed on the Panel.</p>
+
+            <p>The <strong><a href="#le">Layout Editor</a></strong> builds
+            a "Layout" which is a <i>logical description</i> of your
+            entire layout. A Layout, built with the Layout Editor, can
+            be used for directly controlling elements such as Turnouts
+            and Signals; indeed many users find it very suitable for this
+            task. But, it is primarily designed for automation and
+            semi-automation within JMRI. For example, you can use the
+            Layout Editor to construct a description of your track and
+            its blocks and signals. The software can automatically work
+            out how to set your signals based on the position of turnouts
+            and whether blocks are occupied, and the rules appropriate to
+            your railroad (ie. select the signal rules based on different
+            company practices!, and no need to know how to create the
+            rules to link your signals to the state of turnouts, blocks
+            and other signals !). Layout Editor Panels may also be used to
+            set up automatic running of trains on your layout using <a href=
+            "../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>.
+            In addition, the Layout description of your railway can be
+            used by scripts such as the included
+            <a href="../../tools/scripting/Examples.shtml">AutoDispatcher2</a>
+            to automatically control your trains. There are many other
+            tools within JMRI which require a description of your
+            railroad and the description comes from the Layout built in
+            the Layout Editor. The Layout Editor has many rules built
+            into it about how track is connected, the naming of blocks,
+            etc. In order to function, there are constraints on the
+            appearance of track elements and how they are used.<br>
+            You can have multiple Layout panels, but you have to tell
+            the software how to connect track elements across the
+            boundaries between multiple Layouts.</p>
+
+            <p>The <strong><a href="#swb">Switchboard Editor</a></strong>
+            is easier to set up, using a simple grid of pre-defined buttons
+            or indicators. It is limited to the basic inputs (Sensors) and
+            Outputs (Turnouts and Lights) and has a couple of ready-made
+            graphic display styles.</p>
+
+            <h3>Panel Examples</h3>
+            <p><a href=
+            "http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif">
+            <img src="http://quaker-valley.com/CTC/JMRI%20Panel%20Tutorial.gif"
+            align="right" height="216" width="313"></a> Many people use
+            a combination of panel types, with the Layout Editor creating
+            schematic panels to handle the actual configuration for
+            signals and Panel Editor providing exactly the appearance
+            desired.</p>
+            <ul>
+                <li>Bob Bucklew has prepared a three part <a href=
+            "http://www.quaker-valley.com/CTC/JMRI_Panel_Tutorial.html">tutorial</a>
+            that describes how he used Panel Editor and Layout Editor
+            together.</li>
+            <li>Our <a href=
+            "http://jmri.org/community/examples/Gallery.shtml">Gallery
+            page</a> shows examples of how model railroaders have used
+            panels on their own layouts, including using PanelPro for <a href=
+            "http://jmri.org/community/examples/Modules.shtml">Modular
+            layouts</a>.</li>
+            <li>Rodney Black's <a href="http://cats4ctc.org/">CATS</a>
+            (Computer Automated Traffic System) application is another
+            tool for creating modern-style Control Panels.</li>
+            <li>Our <a href=
+            "../../tools/signaling/index.shtml">Signaling help page</a>
+            explains how to add logic to operate the signals on your
+            layout under the control of or shown on your panel.</li>
+            </ul>
+
+            <h3>Panel operation basics</h3>
+            <p>Clicking on a Turnout symbol on any of the Panels flips it
+            from Closed to Thrown and vice-versa (unless operation is
+            disabled in the Configuration). A Turnout also has
+            "Unknown" and "Inconsistent" states, represented by an icon
+            with a "?" and "X" respectively. These represent a
+            state where no information has been received, and where the
+            information is internally inconsistent (e.g. both Closed and
+            Thrown at the same time).<br>
+            Control of items like Turnouts from a Panel can be done
+            in various ways. For example in Panel Editor, you
+            could have a turnout icon covering a turnout on a schematic
+            diagram. When you click on it, the turnout on the layout
+            would be commanded to change, and the track diagram would
+            show which way a train would be routed. Or you could use
+            icons that show a lever to the right or left, and create a
+            panel that looks like a traditional US&amp;S panel.</p>
+
+            <p>"Sensors" can be used to represent occupancy indicators or
+            other inputs. The default icon is a small circle, with color
+            used to represent the state of the sensor. These respond to
+            changes on the layout automatically. Clicking on a sensor
+            causes the sensor to alternate between "Active" and
+            "Inactive" states. With the default icons, Active is a green
+            circle and Inactive is an empty circle. These are meant to
+            represent a lit/dark panel indicator. A red circle represents
+            the "unknown" state, used when no information has yet been
+            received from the layout.</p>
+
+            <h3>Creating a panel</h3>
+            <p>JMRI Panels are made using one of the Editors.
+            Start the Editor by selecting "New Panel..." then "Xxx
+            Editor" from the "Panels" menu on the main window.</p>
+
+            <p>After getting the Panel the way you want, you use the
+            "Store Panels..." entry in the "Panels" menu to write it to an
+            .xml file on disk, allowing to reload it the next time you run JMRI
+            and see all your turnouts, sensors etc as you configured them.<br>
+            A Panel xml file contains ALL of the tables and panels.
+            It is recommended to start with just one panel/configuration file
+            for your layout. Except for some specific use cases, multiple xml
+            files create confusion and errors.<br>
+            Think of the xml file as a book. There are chapters for turnouts,
+            sensors, signals, blocks, Logix, etc. Each panel is also a chapter.
+            As the layout design is progressing, various chapters are created
+            and modified. It is a good idea to periodically save the changes.
+            Some people use an incrementing file naming approach. Others rely
+            on the <i>backupPanels</i> directory where you can find older
+            versions of the configuration file (see the <a href=
+            "../../setup/Files.shtml">JMRI Configuration Files</a>)</p>
+
+            <h3>(Re)opening a panel file</h3>
+            <p>When starting your next PanelPro session, either load the latest
+            xml file via the Panels &gt; Open Panel... menu item or add an
+            "Open file..." entry to <a
+            href="../../../package/apps/TabbedPreferences.shtml#Startup">"Preferences
+            &gt; Start Up"</a> to do it for you.</p>
+
+            <a name="pe" id="pe"></a>
+            <h2>The Panel Editor</h2>
+            <a href="../../../images/CornwallPanelLit.gif"><img src=
+            "../../../images/CornwallPanelLit.gif" align="right" alt=
+            "screen shot of Cornwall panel" width="333" height="200"></a>
+
+            <p>With the Panel Editor, you can make a control panel
+            look and operate any way you want because they are icon-based.
+            For example, instead of using track-schematic icons for
+            turnouts, you could use small images of the levers and plates
+            on CTC machine. This would give you "mechanical" levers you
+            can flip back and forth with a click. This can be made
+            absolutely prototypical, or can be simplified for easier and
+            faster operation, as you prefer.</p>
+
+            <p>A panel is one or more background pictures, on which are
+            drawn icons to represent Turnouts, Sensors and Signals on the
+            layout. You can build the background from small icons (as in
+            the image above left), or provide a detailed drawing that you
+            created in a drawing program (image above right).</p>
+
+            <p>You can use these tools to configure quite complicated
+            panels for even large layouts. The example above is from <a href=
+            "http://kc.pennsyrr.com/layouts/kulp/index.html">Nick Kulp's
+            Cornwall Railroad</a>. There's a <a href=
+            "http://jmri.org/community/examples/Panels-Cornwall/Cornwall.html">
+            page on the main web site</a> that describes this in detail.
+            There's also a <a href=
+            "http://ownry.squarespace.com/blog/2011/4/7/ctc-dispatcher-panel-on-the-ownry.html?SSScrollPosition=0">
+            page describing the panel</a> for Kent Williams's <a href=
+            "http://ownry.squarespace.com/modelrailroad/">Oregon
+            Washington Navigation &amp; Railway</a>. Robert Bucklew's
+            Quaker Valley Lines is also building a <a href=
+            "http://www.quaker-valley.com/CTC/QV_CTCnew.html">CTC
+            panel</a> using PanelPro.</p>
+
+            <p>For more information about Panels created using Panel
+            Editor see the <a href=
+            "../../../package/jmri/jmrit/display/PanelEditor.shtml">Panel
+                Editor help page</a>.</p>
+
+            <a name="cpe" id="cpe"></a>
+            <h2>The Control Panel Editor</h2>
+
+            <p><b>Control Panel Editor</b> is simply an alternative view
+            and controller with the same content data as <b>Panel
+            Editor</b>. Control Panel Editor allows you to edit a Panel
+            using menus instead of a separate editing window.</p>
+            <p>It's also possible to create a Control Panel where the "track"
+            lines change color to indicate whether the block is occupied.
+            Control Panel Editor supports using
+            <a href="../../../package/jmri/jmrit/logix/Warrant.shtml">
+            Warrants</a> and automatic running of trains.</p>
+
+            <p>For more information, see the <a href=
+            "../../../package/jmri/jmrit/display/ControlPanelEditor.shtml">
+            Control Panel Editor help page</a>.</p>
+
+            <a name="le" id="le"></a>
+            <h2>The Layout Editor</h2>
+            <p><a href=
+            "../../../package/jmri/jmrit/display/images/EnhancedPanel.gif"><img
+            src="../../../package/jmri/jmrit/display/images/EnhancedPanel.gif"
+            align="right" alt="screen shot of layout editor panel" width=
+            "296" height="86" hspace="0" vspace="0"></a> The <a href=
+            "../../../package/jmri/jmrit/display/LayoutEditor.shtml">Layout
+            Editor</a> helps you create simple schematic panels, while
+            simultaneously setting up the block and signal logic needed
+            to operate the layout. Its strength is its ability to capture
+            how the tracks are connected, where each block is located and
+            how each signal is related to blocks. On the other hand, it
+            limits by design the ability to customize how the panel
+            appears. For example, you can only place one Turnout symbol
+            with the same User Name.</p>
+
+            <p><a href=
+            "../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif">
+            <img src=
+            "../../../package/jmri/jmrit/display/images/OvalLayoutEditMode.gif"
+            align="right" alt="screen shot of layout editor panel" width=
+            "271" height="85" hspace="0" vspace="0"></a>In Layout Editor
+            you edit your Panel by activating the "Edit Mode", which makes
+            the connections between elements and the layout visible (See
+            figure to the right, notice the small circles). For example,
+            you can click on the circle in the middle of a track segment
+            and select the associated occupancy detector (Sensor) on the
+            layout. Once you've done that, the color of the track segment
+            on the screen will change when the track is occupied. You can
+            configure the colors used, the width of the track lines, and
+            other details of the presentation.</p>
+
+            <a href="../../../package/jmri/jmrit/display/images/Switchboard.png">
+            <img src="../../../package/jmri/jmrit/display/images/Switchboard.png"
+            width="198" height="154" align="right" hspace="0" vspace="0"></a>
+
+            <h2><a name="swb" id="swb">The Switchboard Editor</a></h2>
+            <p>Switchboards provide a visual control grid for your JMRI layout "out of the box".<br>
+            To create a new Switchboard, from the Panels menu, choose New Panel &gt;
+            Switchboard Editor.</p>
+            <p>For more information, please see the
+            <a href="../../../package/jmri/jmrit/display/SwitchboardEditor.shtml">
+            Switchboard Editor help page</a>.</p>
+
+            <h2>Communicating with Multiple Systems</h2>
+
+            <p>PanelPro can communicate with more than one layout control
+            system. For example, the Cornwall Railroad mentioned above
+            uses C/MRI hardware for sensing the status of blocks and
+            turnouts on the layout, but drives turnout positions through
+            a Digitrax DCC system.</p>
+
+            <p>To configure the program to talk to multiple systems, add
+            both in JMRI Preferences using the + tab on the Connections
+            pane. For more information, see the <a href=
+            "../../../package/apps/TabbedPreferences.shtml">Preferences
+            panel Help page</a>.</p>
+
+            <p>If you add a Turnout, Sensor or Signal Mast to a Panel
+            using just a number, e.g. "23" in the Add... pane of a table,
+            its System Name will be created using the System Connection
+            Prefix as set in the Preferences panel -&gt; Connections tab
+            (e.g. LT1 for a turnout on the L LocoNet connection).
+            As a second system connection is required to use a different
+            prefix, it is simple to use more than one hardware
+            system at the same time. See the page on <a href=
+            "../../doc/Technical/Names.shtml">Names &amp; Naming</a> for
+            more information.</p>
+            <!--#include virtual="/Footer" -->
+        </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+</body>
+</html>

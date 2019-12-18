@@ -8,10 +8,11 @@ import java.util.List;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import jmri.util.CvUtil;
 import jmri.util.jdom.LocaleSelector;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
+
+import org.jdom2.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  * <p>
  * Uses data from the "model" element from the decoder definition file to
  * configure the number of rows and columns and set up any custom column
- * names:</p>
+ * names:
  * <dl>
  * <dt>numOuts</dt>
  * <dd>Number of physical outputs.</dd>
@@ -215,7 +216,7 @@ public class FnMapPanel extends JPanel {
                                     displayFormat = "";
                                 }
                                 JComponent j = (JComponent) (_varModel.getRep(iVar, displayFormat));
-                                j.setToolTipText(PaneProgPane.addCvDescription((fnNameString + " "
+                                j.setToolTipText(CvUtil.addCvDescription((fnNameString + " "
                                         + Bundle.getMessage("FnMapControlsOutput") + " "
                                         + outName[iOut] + " " + outLabel[iOut]), var.getCvDescription(), var.getMask()));
                                 int column = firstOutCol + iOut;
@@ -307,7 +308,7 @@ public class FnMapPanel extends JPanel {
     }
 
     /**
-     * Use the "model" element from the decoder definition file to configure the
+     * Use the "family" and "model" element from the decoder definition file to configure the
      * number of outputs and set up any that are named instead of numbered.
      */
     protected void configOutputs(Element model) {
@@ -315,6 +316,15 @@ public class FnMapPanel extends JPanel {
             log.debug("configOutputs was given a null model");
             return;
         }
+        Element family = null;
+        Parent parent = model.getParent();
+        if (parent != null && parent instanceof Element) {
+            family = (Element) parent;
+        } else {
+            log.debug("configOutputs found an invalid parent family");
+            return;
+        }
+        
         // get numOuts, numFns or leave the defaults
         Attribute a = model.getAttribute("numOuts");
         try {
@@ -335,14 +345,18 @@ public class FnMapPanel extends JPanel {
         if (log.isDebugEnabled()) {
             log.debug("numFns, numOuts " + numFn + "," + numOut);
         }
+        
         // take all "output" children
-        List<Element> elemList = model.getChildren("output");
-        if (log.isDebugEnabled()) {
-            log.debug("output scan starting with " + elemList.size() + " elements");
-        }
+        List<Element> elemList = new ArrayList<>();
+        addOutputElements(family.getChildren(), elemList);
+        addOutputElements(model.getChildren(), elemList);
+                
+        log.debug("output scan starting with {} elements", elemList.size());
+
         for (int i = 0; i < elemList.size(); i++) {
             Element e = elemList.get(i);
             String name = e.getAttribute("name").getValue();
+            log.debug("output element name: {} value: {}", e.getAttributeValue("name"), e.getAttributeValue("label"));
             // if this a number, or a character name?
             try {
                 int outputNum = Integer.parseInt(name);
@@ -369,6 +383,18 @@ public class FnMapPanel extends JPanel {
         }
     }
 
+    void addOutputElements(List<Element> input, List<Element> accumulate) {
+      for (Element elem : input) {
+        if (elem.getName().equals("outputs")) {
+          log.debug(" found outputs element of size {}", elem.getChildren().size());
+          addOutputElements(elem.getChildren(), accumulate);
+        } else if (elem.getName().equals("output")) {
+          log.debug("adding output element name: {} value: {}", elem.getAttributeValue("name"), elem.getAttributeValue("label"));
+          accumulate.add(elem);
+        }
+      }
+    }
+    
     // split and load two-line labels
     void loadSplitLabel(int iOut, String theLabel) {
         if (iOut < maxOut) {

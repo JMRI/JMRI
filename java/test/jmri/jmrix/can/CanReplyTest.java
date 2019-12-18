@@ -27,6 +27,13 @@ public class CanReplyTest extends CanMRCommonTestBase {
     }
 
     @Test
+    public void testCreateArrayHeader() {
+        CanReply m1 = new CanReply( new int[]{0x98, 0xDE, 0xFF, 0x23, 0x01},0x12 );
+        Assert.assertNotNull("exists",m1);
+    }
+
+    @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsOp() {
         CanReply m1 = new CanReply();
         m1.setExtended(true);
@@ -40,13 +47,21 @@ public class CanReplyTest extends CanMRCommonTestBase {
         m3.setExtended(false);
         m3.setHeader(0x12);
 
+        CanReply m4 = new CanReply(0x12);
+        m4.setNumDataElements(1);
+        m4.setElement(0, 0x07);
+        
         Assert.assertTrue("equals self", m1.equals(m1));
         Assert.assertTrue("equals copy", m1.equals(new CanReply(m1)));
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
+        Assert.assertTrue("not equals null", !m1.equals(null));
+        Assert.assertTrue("not equals string value", !m1.equals("[12] 81 12"));
+        Assert.assertTrue("not equals diff ele length", !m1.equals(m4));
     }
 
     @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
     public void testEqualsMessage() {
         CanReply m1 = new CanReply();
         m1.setExtended(true);
@@ -86,6 +101,21 @@ public class CanReplyTest extends CanMRCommonTestBase {
         Assert.assertTrue("equals copy", m1.equals(new CanReply(m1)));
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
+    }
+
+    @Test
+    @SuppressWarnings("unlikely-arg-type") // Both CanReply and CanMessage are CanFrame with custom equals
+    public void testReplyFromMessage() {
+        CanMessage m = new CanMessage(0x555);
+        m.setNumDataElements(2);
+        m.setElement(0, 0x01);
+        m.setElement(1, 0x82);
+        Assert.assertEquals("2 Elements", 2,m.getNumDataElements());
+        
+        CanReply r = new CanReply(m);
+        Assert.assertTrue("Header 0x555", r.getHeader() == 0x555);
+        Assert.assertTrue("2 Elements", r.getNumDataElements() == 2);
+        Assert.assertTrue("equals same", r.equals(m));
     }
 
     @Test
@@ -133,28 +163,45 @@ public class CanReplyTest extends CanMRCommonTestBase {
         Assert.assertTrue("3 Element 0", msg.getElement(0) == 0x81);
         Assert.assertTrue("3 Element 1", msg.getElement(1) == 0x02);
         Assert.assertTrue("3 Element 2", msg.getElement(2) == 0x83);
+        
+        msg.setNumDataElements(20);
+        Assert.assertTrue("max 8 Elements", msg.getNumDataElements() == 8);
     }
 
     @Test
     @Override
     public void testToString() {
-        CanMessage m = new CanMessage(0x12);
-        m.setNumDataElements(3);
-        m.setElement(0, 0x81);
-        m.setElement(1, 0x02);
-        m.setElement(2, 0x83);
-        Assert.assertEquals("string representation", "[12] 81 02 83",m.toString());
+        msg.setHeader(0x12);
+        msg.setNumDataElements(3);
+        msg.setElement(0, 0x81);
+        msg.setElement(1, 0x02);
+        msg.setElement(2, 0x83);
+        Assert.assertEquals("string representation", "[12] 81 02 83",msg.toString());
     }
 
     @Test
     @Override
     public void testToMonitorString() {
-        CanMessage m = new CanMessage(0x12);
-        m.setNumDataElements(3);
-        m.setElement(0, 0x81);
-        m.setElement(1, 0x02);
-        m.setElement(2, 0x83);
-        Assert.assertEquals("string representation", "(12) 81 02 83",m.toMonitorString());
+        msg.setHeader(0x12);
+        msg.setNumDataElements(3);
+        msg.setElement(0, 0x81);
+        msg.setElement(1, 0x02);
+        msg.setElement(2, 0x83);
+        Assert.assertEquals("string representation", "(12) 81 02 83",msg.toMonitorString());
+    }
+    
+    @Test
+    public void testSkipPrefix() {
+        Assert.assertTrue("skip prefix returns same", msg.skipPrefix(77) == 77);
+    }
+    
+    @Test
+    public void testCtorOverlength() {
+        msg = new CanReply(new int[]{1,2,3,4,5,6,7,8,9});
+        Assert.assertEquals("string representation", "(0) 01 02 03 04 05 06 07 08",msg.toMonitorString());
+        
+        msg = new CanReply(new int[]{1,2,3,4,5,6,7,8,9},7);
+        Assert.assertEquals("string representation", "(7) 01 02 03 04 05 06 07 08",msg.toMonitorString());
     }
 
 

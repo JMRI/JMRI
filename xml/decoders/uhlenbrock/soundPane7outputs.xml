@@ -15,9 +15,9 @@
     <revhistory xmlns="http://docbook.org/ns/docbook">
         <revision>
             <revnumber>1</revnumber>
-            <date>2018-10-12</date>
+            <date>2018-10-18</date>
             <authorinitials>EB</authorinitials>
-            <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml</revremark>
+            <revremark>Initial version as separate file, taken from Uhlenbrock_32300.xml by ALM</revremark>
         </revision>
         <!-- Valid only for certain Uhlenbrock decoders with IntelliSound3/4 Module,
              such as 32300, 36320, 36360 (IS3), 32500, 32504, 36520, 36560 (IS4) (non exhaustive list) -->
@@ -192,8 +192,42 @@
                     <display item="Bank B Range I Volume for chuffs"/>
                     <display item="Bank B Range I Alternative Volume"/>
                     <label><text> </text></label>
+                    <display item="Bank B Range I Volume of curve squealing"/>
+                    <display item="Bank B Range I Volume for switching"/>
+                    <display item="Bank B Range I Volume for brake squealing"/>
+                    <display item="Bank B Range I Volume for direction change"/>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
                     <display item="Bank B Range I Volume sound number 1"/>
-                    <!-- TODO add Bank B Range I sounds 2 - 7 and 9 - 25 here -->
+                    <display item="Bank B Range I Volume sound number 2"/>
+                    <display item="Bank B Range I Volume sound number 3"/>
+                    <display item="Bank B Range I Volume sound number 4"/>
+                    <display item="Bank B Range I Volume sound number 5"/>
+                    <display item="Bank B Range I Volume sound number 6"/>
+                    <display item="Bank B Range I Volume sound number 7"/>
+                    <!-- no sound #8 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range I Volume sound number 9"/>
+                    <display item="Bank B Range I Volume sound number 10"/>
+                    <!-- no sound #11 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range I Volume sound number 12"/>
+                    <display item="Bank B Range I Volume sound number 13"/>
+                </column>
+                <column>
+                    <display item="Bank B Range I Volume sound number 14"/>
+                    <display item="Bank B Range I Volume sound number 15"/>
+                    <display item="Bank B Range I Volume sound number 16"/>
+                    <display item="Bank B Range I Volume sound number 17"/>
+                    <display item="Bank B Range I Volume sound number 18"/>
+                    <display item="Bank B Range I Volume sound number 19"/>
+                    <display item="Bank B Range I Volume sound number 20"/>
+                    <display item="Bank B Range I Volume sound number 21"/>
+                    <display item="Bank B Range I Volume sound number 22"/>
+                    <display item="Bank B Range I Volume sound number 23"/>
+                    <display item="Bank B Range I Volume sound number 24"/>
+                    <display item="Bank B Range I Volume sound number 25"/>
                 </column>
             </group>
             <group>
@@ -211,8 +245,20 @@
                     <label><text> </text></label>
                     <display item="Bank C Range I Diesel notch after idle"/>
                     <label><text> </text></label>
+                    <!-- Bank C Range I Speed step next gear 1 - 13 -->
                     <display item="Bank C Range I Speed step next gear 1"/>
-                    <!-- TODO add Bank C Range I Speed step next gear 2 - 12 here -->
+                    <display item="Bank C Range I Speed step next gear 2"/>
+                    <display item="Bank C Range I Speed step next gear 3"/>
+                    <display item="Bank C Range I Speed step next gear 4"/>
+                    <display item="Bank C Range I Speed step next gear 5"/>
+                    <display item="Bank C Range I Speed step next gear 6"/>
+                    <display item="Bank C Range I Speed step next gear 7"/>
+                    <display item="Bank C Range I Speed step next gear 8"/>
+                    <display item="Bank C Range I Speed step next gear 9"/>
+                    <display item="Bank C Range I Speed step next gear 10"/>
+                    <display item="Bank C Range I Speed step next gear 11"/>
+                    <display item="Bank C Range I Speed step next gear 12"/>
+                    <display item="Bank C Range I Speed step next gear 13"/>
                 </column>
             </group>
             <group>
@@ -264,8 +310,42 @@
                     <display item="Bank B Range II Volume for chuffs"/>
                     <display item="Bank B Range II Alternative Volume"/>
                     <label><text> </text></label>
+                    <display item="Bank B Range II Volume of curve squealing"/>
+                    <display item="Bank B Range II Volume for switching"/>
+                    <display item="Bank B Range II Volume for brake squealing"/>
+                    <display item="Bank B Range II Volume for direction change"/>
+                </column>
+                <column><label><text>      </text></label></column>
+                <column>
                     <display item="Bank B Range II Volume sound number 1"/>
-                    <!-- TODO add Bank B Range II sounds 2 - 7 and 9 - 25 here -->
+                    <display item="Bank B Range II Volume sound number 2"/>
+                    <display item="Bank B Range II Volume sound number 3"/>
+                    <display item="Bank B Range II Volume sound number 4"/>
+                    <display item="Bank B Range II Volume sound number 5"/>
+                    <display item="Bank B Range II Volume sound number 6"/>
+                    <display item="Bank B Range II Volume sound number 7"/>
+                    <!-- no sound #8 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range II Volume sound number 9"/>
+                    <display item="Bank B Range II Volume sound number 10"/>
+                    <!-- no sound #11 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range II Volume sound number 12"/>
+                    <display item="Bank B Range II Volume sound number 13"/>
+                </column>
+                <column>
+                    <display item="Bank B Range II Volume sound number 14"/>
+                    <display item="Bank B Range II Volume sound number 15"/>
+                    <display item="Bank B Range II Volume sound number 16"/>
+                    <display item="Bank B Range II Volume sound number 17"/>
+                    <display item="Bank B Range II Volume sound number 18"/>
+                    <display item="Bank B Range II Volume sound number 19"/>
+                    <display item="Bank B Range II Volume sound number 20"/>
+                    <display item="Bank B Range II Volume sound number 21"/>
+                    <display item="Bank B Range II Volume sound number 22"/>
+                    <display item="Bank B Range II Volume sound number 23"/>
+                    <display item="Bank B Range II Volume sound number 24"/>
+                    <display item="Bank B Range II Volume sound number 25"/>
                 </column>
             </group>
             <group>
@@ -283,8 +363,20 @@
                     <label><text> </text></label>
                     <display item="Bank C Range II Diesel notch after idle"/>
                     <label><text> </text></label>
+                    <!-- Bank C Range II Speed step next gear 1 - 13 -->
                     <display item="Bank C Range II Speed step next gear 1"/>
-                    <!-- TODO add Bank C Range II Speed step next gear 2 - 12 here -->
+                    <display item="Bank C Range II Speed step next gear 2"/>
+                    <display item="Bank C Range II Speed step next gear 3"/>
+                    <display item="Bank C Range II Speed step next gear 4"/>
+                    <display item="Bank C Range II Speed step next gear 5"/>
+                    <display item="Bank C Range II Speed step next gear 6"/>
+                    <display item="Bank C Range II Speed step next gear 7"/>
+                    <display item="Bank C Range II Speed step next gear 8"/>
+                    <display item="Bank C Range II Speed step next gear 9"/>
+                    <display item="Bank C Range II Speed step next gear 10"/>
+                    <display item="Bank C Range II Speed step next gear 11"/>
+                    <display item="Bank C Range II Speed step next gear 12"/>
+                    <display item="Bank C Range II Speed step next gear 13"/>
                 </column>
             </group>
             <group>
@@ -335,9 +427,40 @@
                     <label><text> </text></label>
                     <display item="Bank B Range III Volume for chuffs"/>
                     <display item="Bank B Range III Alternative Volume"/>
+                    <display item="Bank B Range III Volume of curve squealing"/>
+                    <display item="Bank B Range III Volume for switching"/>
+                    <display item="Bank B Range III Volume for brake squealing"/>
+                    <display item="Bank B Range III Volume for direction change"/>
                     <label><text> </text></label>
                     <display item="Bank B Range III Volume sound number 1"/>
-                    <!-- TODO add Bank B Range III sounds 2 - 7 and 9 - 25 here -->
+                    <display item="Bank B Range III Volume sound number 2"/>
+                    <display item="Bank B Range III Volume sound number 3"/>
+                    <display item="Bank B Range III Volume sound number 4"/>
+                    <display item="Bank B Range III Volume sound number 5"/>
+                    <display item="Bank B Range III Volume sound number 6"/>
+                    <display item="Bank B Range III Volume sound number 7"/>
+                    <!-- no sound #8 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range III Volume sound number 9"/>
+                    <display item="Bank B Range III Volume sound number 10"/>
+                    <!-- no sound #11 -->
+                    <label><text> </text></label>
+                    <display item="Bank B Range III Volume sound number 12"/>
+                    <display item="Bank B Range III Volume sound number 13"/>
+                </column>
+                <column>
+                    <display item="Bank B Range III Volume sound number 14"/>
+                    <display item="Bank B Range III Volume sound number 15"/>
+                    <display item="Bank B Range III Volume sound number 16"/>
+                    <display item="Bank B Range III Volume sound number 17"/>
+                    <display item="Bank B Range III Volume sound number 18"/>
+                    <display item="Bank B Range III Volume sound number 19"/>
+                    <display item="Bank B Range III Volume sound number 20"/>
+                    <display item="Bank B Range III Volume sound number 21"/>
+                    <display item="Bank B Range III Volume sound number 22"/>
+                    <display item="Bank B Range III Volume sound number 23"/>
+                    <display item="Bank B Range III Volume sound number 24"/>
+                    <display item="Bank B Range III Volume sound number 25"/>
                 </column>
             </group>
             <group>
@@ -355,8 +478,20 @@
                     <label><text> </text></label>
                     <display item="Bank C Range III Diesel notch after idle"/>
                     <label><text> </text></label>
+                    <!-- Bank C Range III Speed step next gear 1 - 13 -->
                     <display item="Bank C Range III Speed step next gear 1"/>
-                    <!-- TODO add Bank C Range III Speed step next gear 2 - 12 here -->
+                    <display item="Bank C Range III Speed step next gear 2"/>
+                    <display item="Bank C Range III Speed step next gear 3"/>
+                    <display item="Bank C Range III Speed step next gear 4"/>
+                    <display item="Bank C Range III Speed step next gear 5"/>
+                    <display item="Bank C Range III Speed step next gear 6"/>
+                    <display item="Bank C Range III Speed step next gear 7"/>
+                    <display item="Bank C Range III Speed step next gear 8"/>
+                    <display item="Bank C Range III Speed step next gear 9"/>
+                    <display item="Bank C Range III Speed step next gear 10"/>
+                    <display item="Bank C Range III Speed step next gear 11"/>
+                    <display item="Bank C Range III Speed step next gear 12"/>
+                    <display item="Bank C Range III Speed step next gear 13"/>
                 </column>
             </group>
         </row>

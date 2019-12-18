@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/modals/modal-overlay/modal-overlay.component.js</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../../../prettify.css">
+    <link rel="stylesheet" href="../../../base.css">
+    <style type='text/css'>
+        div.coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class="header high">
+    <h1>Code coverage report for <span class="entity">src/modals/modal-overlay/modal-overlay.component.js</span></h1>
+    <h2>
+        Statements: <span class="metric">86.79% <small>(46 / 53)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Branches: <span class="metric">59.38% <small>(19 / 32)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Functions: <span class="metric">100% <small>(20 / 20)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Lines: <span class="metric">86.79% <small>(46 / 53)</small></span> &nbsp;&nbsp;&nbsp;&nbsp;
+        Ignored: <span class="metric"><span class="ignore-none">none</span></span> &nbsp;&nbsp;&nbsp;&nbsp;
+    </h2>
+    <div class="path"><a href="../../../index.html">All files</a> &#187; <a href="index.html">src/modals/modal-overlay/</a> &#187; modal-overlay.component.js</div>
+</div>
+<div class="body">
+<pre><table class="coverage">
+<tr><td class="line-count">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141</td><td class="line-coverage"><span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">32</span>
+<span class="cline-any cline-yes">77</span>
+<span class="cline-any cline-yes">77</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">61</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-yes">16</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">angular.module('patternfly.modals')
+  .component('pfModalOverlay', {
+    bindings: {
+      showModal: '&lt;',
+      close: "&amp;onClose",
+      modalId: '=',
+      modalTitle: "=",
+      titleId: "=?",
+      hideCloseIcon: "&lt;?",
+      backgroundClose: "&lt;?",
+      onBackgroundClick: "=?",
+      isForm: "&lt;?",
+      modalBodyTemplate: "=",
+      modalBodyScope: "=?",
+      actionButtons: "&lt;"
+    },
+    templateUrl: 'modals/modal-overlay/modal-overlay.html',
+    controller: function ( $uibModal ) {
+      'use strict';
+&nbsp;
+      var ctrl = this;
+      var modalInstance;
+&nbsp;
+      ctrl.open = function () {
+        modalInstance = $uibModal.open({
+          component: 'pfModalOverlayContent',
+          backdrop: ctrl.backgroundClose ? <span class="branch-0 cbranch-no" title="branch not covered" >true </span>: 'static',
+          resolve: {
+            modalId: function () {
+              return ctrl.modalId;
+            },
+            titleId: function () {
+              return ctrl.titleId || "modalTitle";
+            },
+            modalTitle: function () {
+              return ctrl.modalTitle;
+            },
+            hideCloseIcon: function () {
+              return ctrl.hideCloseIcon;
+            },
+            onBackgroundClick: function() {
+              return ctrl.onBackgroundClick;
+            },
+            isForm: function() {
+              return ctrl.isForm;
+            },
+            modalBodyTemplate: function() {
+              return ctrl.modalBodyTemplate;
+            },
+            modalBodyScope: function() {
+              return ctrl.modalBodyScope;
+            },
+            actionButtons: function () {
+              return ctrl.actionButtons;
+            }
+          }
+        });
+&nbsp;
+        modalInstance.result.then(
+          function (dismissCause) {
+            ctrl.close({'dismissCause': dismissCause}); // closed
+          },
+          function (dismissCause) {
+            ctrl.close({'dismissCause': dismissCause}); // dismissed
+          }
+        );
+      };
+&nbsp;
+      ctrl.$onInit = function () {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (ctrl.showModal === undefined) {
+          ctrl.showModal = false;
+        }
+      };
+&nbsp;
+      ctrl.$onChanges = function (changesObj) {
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (changesObj.showModal) {
+          if (changesObj.showModal.currentValue === true) {
+            ctrl.open();
+          } else if (changesObj.showModal.currentValue === false &amp;&amp; modalInstance) {
+            modalInstance.dismiss('showModal set to false');
+          }
+        }
+      };
+    }
+  });
+&nbsp;
+&nbsp;
+angular.module('patternfly.modals').component('pfModalOverlayContent', {
+  templateUrl: 'modal-overlay-template.html',
+  bindings: {
+    resolve: '&lt;',
+    close: '&amp;',
+    dismiss: '&amp;'
+  },
+  controller: function ($scope) {
+    'use strict';
+    var ctrl = this;
+&nbsp;
+    ctrl.$onInit = function () {
+      ctrl.modalId = ctrl.resolve.modalId;
+      ctrl.titleId = ctrl.resolve.titleId || <span class="branch-1 cbranch-no" title="branch not covered" >"modalTitle";</span>
+      ctrl.modalTitle = ctrl.resolve.modalTitle;
+      ctrl.hideCloseIcon = ctrl.resolve.hideCloseIcon || false;
+      ctrl.modalBodyTemplate = ctrl.resolve.modalBodyTemplate;
+      ctrl.modalBodyScope = ctrl.resolve.modalBodyScope;
+      ctrl.actionButtons = ctrl.resolve.actionButtons;
+      ctrl.isForm = ctrl.resolve.isForm;
+      ctrl.onBackgroundClick = ctrl.resolve.onBackgroundClick;
+&nbsp;
+      ctrl.ok = function (label, actionFn) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof actionFn === "function") {
+<span class="cstat-no" title="statement not covered" >          if (actionFn() !== false) {</span>
+<span class="cstat-no" title="statement not covered" >            ctrl.close({$value: label});</span>
+          }
+        } else {
+          ctrl.close({$value: label});
+        }
+      };
+&nbsp;
+      ctrl.cancel = function (actionFn) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof actionFn === "function") {
+<span class="cstat-no" title="statement not covered" >          actionFn();</span>
+        }
+        ctrl.dismiss({$value: 'cancel'});
+      };
+&nbsp;
+      $scope.$on('modal.closing', function(event, reason, closed) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (reason === "backdrop click" || reason === "escape key press") {
+<span class="cstat-no" title="statement not covered" >          event.preventDefault();</span>
+<span class="cstat-no" title="statement not covered" >          if ( typeof ctrl.onBackgroundClick === "function" &amp;&amp; ctrl.onBackgroundClick()) {</span>
+<span class="cstat-no" title="statement not covered" >            ctrl.dismiss({$value: 'backdropClick'});</span>
+          } else {
+            // onBackgroundClick' returned false, may have changed ctrl vars; execute $digest to refresh view
+<span class="cstat-no" title="statement not covered" >            $scope.$digest();</span>
+          }
+        }
+      });
+    };
+  }
+});
+&nbsp;</pre></td></tr>
+</table></pre>
+
+</div>
+<div class="footer">
+    <div class="meta">Generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Sep 05 2019 13:34:22 GMT-0400 (EDT)</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

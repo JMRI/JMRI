@@ -8,25 +8,29 @@
 		<dt><h3><a href="index.shtml">Basic Use</a></h3></dt>
 		<dd>JMRI supports working with your layout from a web browser.
 		    <ul>
-		    <li><dfn><a href="index.shtml#Start">Getting Started</a></dfn></li>
-		    <li><dfn><a href="index.shtml#Configure">Configure</a></dfn></li>
-		    <li><dfn><a href="index.shtml#files">URLs</a></dfn></li>
+		    <li><a href="index.shtml#Start">Getting Started</a></li>
+		    <li><a href="index.shtml#Configure">Configure</a></li>
+		    <li><a href="index.shtml#files">URLs</a></li>
 		    </ul>
 		</dd>
 
-		<dt><h3>Servlets</h3></dt>
-		<dd>Details of the JMRI web components.
+		<dt><h3>Services</h3></dt>
+		<dd>Details of the JMRI web services.
 		    <ul>
-		    <li><dfn><a href="FrameServlet.shtml">Frame servlet</a></dfn></li>
-		    <li><dfn><a href="RosterServlet.shtml">Roster servlet</a></dfn></li>
-		    <li><dfn><a href="PanelServlet.shtml">Panel servlet</a></dfn></li>
-		    <li><dfn><a href="XMLIO.shtml">XMLIO servlet</a></dfn></li>
-		    <li><dfn><a href="JsonServlet.shtml">Json servlet</a></dfn></li>
+		    <li><a href="FrameServlet.shtml">Frames</a></li>
+		    <li><a href="JsonServlet.shtml">JSON</a></li>
+		    <li><a href="PanelServlet.shtml">Panels</a></li>
+		    <li><a href="RosterServlet.shtml">Roster</a></li>
 		    </ul>
 		</dd>
 
 	    </dl>
 
 	</div> <!-- closes #side -->
+
+    <!-- Sidebar-Tail -->
+    <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="/web/js/here.js"></script>
+    <!-- /Sidebar-Tail -->
 
 <!-- /Sidebar -->

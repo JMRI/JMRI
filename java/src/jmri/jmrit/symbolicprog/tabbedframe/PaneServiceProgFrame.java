@@ -15,8 +15,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2002, 2008
  */
-public class PaneServiceProgFrame extends PaneProgFrame
-        implements java.beans.PropertyChangeListener {
+public class PaneServiceProgFrame extends PaneProgFrame {
 
     jmri.jmrit.progsupport.ProgModeSelector modePane;
 

@@ -8,25 +8,29 @@
 
   <title>JMRI: Adding Signal Groups</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20170124">
+  <meta name="Date.Modified" content="20181104">
   <!--#include virtual="/Style" -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Adding/Editing a Signal Group</h1>
 
       <p>After clicking on the "Add..." button below the <a href=
       "../beantable/SignalGroupTable.shtml">Signal Group Table</a>,
       the following pane appears:</p><a href=
       "images/SignalGroupAdd.png"><img src="images/SignalGroupAdd.png"
-      width="310" height="269"></a>
+      alt="Signal Group Add new pane" width="292" height="226"></a>
 
       <h3>Enter Signal Group elements</h3>
-
+      <a href=
+      "images/SingleSignalHead.png"><img src="images/SingleSignalHead.png"
+      height="185" width="127" alt="Signal Head create pane showing
+      Single Output choice" align="right"></a>
+      
       <p>Signal Groups are built from one or more Signal Heads and
       comprise the following:</p>
 
@@ -43,10 +47,7 @@
         Signal Heads included in a Signal Group are picked from the
         Signal Head Table, but only Signal Heads that were created
         using the <em>Single Output</em> connection type (pictured
-        to the right) show up in the list.
-        <a href=
-        "images/SingleSignalHead.png"><img src="images/SingleSignalHead.png"
-        height="185" width="127" align="right"></a></li>
+        to the right) show up in the list.</li>
       </ul>
 
       <p>In the Add/Edit Signal Group window, after entering a User
@@ -71,8 +72,8 @@
 
       <a href=
       "images/SignalGroupAddEditHead.png"><img src=
-      "images/SignalGroupAddEditHead.png" height="234" width="297" align=
-      "right"></a>
+      "images/SignalGroupAddEditHead.png" alt="Signal Group Head
+      Edit pane" height="234" width="297" align="right"></a>
 
       <p>Choose two <i>different</i> values in the pop up menus at
       the top of the pane to define the states of the Indicator
@@ -98,6 +99,7 @@
 
       <p>Back to the <a href="SignalGroupTable.shtml">Signal Group
       Table help page</a>.</p>
+
         <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

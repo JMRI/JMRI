@@ -2,7 +2,7 @@ package jmri.jmrit.catalog;
 
 /**
  * Leaf of a CatalogTree.
- * <P>
+ * <p>
  * Name for the leaf Path to lead.
  *
  * @author Pete Cressman Copyright 2009
@@ -10,7 +10,7 @@ package jmri.jmrit.catalog;
  */
 public class CatalogTreeLeaf {
 
-    private String _name;
+    private String _name; // non-localized
     private String _path;
     private int _size;
 

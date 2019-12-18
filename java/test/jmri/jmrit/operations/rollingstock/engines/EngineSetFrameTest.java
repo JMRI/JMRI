@@ -9,7 +9,6 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.util.JUnitUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -75,7 +74,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
 
         EngineManager eManager = InstanceManager.getDefault(EngineManager.class);
         // add 5 Engines to table
-        Engine e1 = eManager.newEngine("NH", "1");
+        Engine e1 = eManager.newRS("NH", "1");
         e1.setModel("RS1");
         e1.setBuilt("2009");
         e1.setMoves(55);
@@ -87,7 +86,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Assert.assertEquals("e1 location", Track.OKAY, e1.setLocation(westford, westfordYard));
         Assert.assertEquals("e1 destination", Track.OKAY, e1.setDestination(boxford, boxfordJacobson));
 
-        Engine e2 = eManager.newEngine("UP", "2");
+        Engine e2 = eManager.newRS("UP", "2");
         e2.setModel("FT");
         e2.setBuilt("2004");
         e2.setMoves(50);
@@ -95,7 +94,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
         e2.setRfid("RFID 2");
 
-        Engine e3 = eManager.newEngine("AA", "3");
+        Engine e3 = eManager.newRS("AA", "3");
         e3.setModel("SW8");
         e3.setBuilt("2006");
         e3.setMoves(40);
@@ -105,7 +104,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Assert.assertEquals("e3 location", Track.OKAY, e3.setLocation(boxford, boxfordHood));
         Assert.assertEquals("e3 destination", Track.OKAY, e3.setDestination(boxford, boxfordYard));
 
-        Engine e4 = eManager.newEngine("SP", "2");
+        Engine e4 = eManager.newRS("SP", "2");
         e4.setModel("GP35");
         e4.setBuilt("1990");
         e4.setMoves(30);
@@ -115,7 +114,7 @@ public class EngineSetFrameTest extends OperationsTestCase {
         Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSiding));
         Assert.assertEquals("e4 destination", Track.OKAY, e4.setDestination(boxford, boxfordHood));
 
-        Engine e5 = eManager.newEngine("NH", "5");
+        Engine e5 = eManager.newRS("NH", "5");
         e5.setModel("SW1200");
         e5.setBuilt("1956");
         e5.setMoves(25);
@@ -124,11 +123,5 @@ public class EngineSetFrameTest extends OperationsTestCase {
         e5.setRfid("RFID 1");
         Assert.assertEquals("e5 location", Track.OKAY, e5.setLocation(westford, westfordAble));
         Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

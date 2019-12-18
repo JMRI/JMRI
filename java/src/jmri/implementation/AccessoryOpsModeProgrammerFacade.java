@@ -27,7 +27,7 @@ import org.slf4j.LoggerFactory;
  * <li>OPSACCEXTBYTEMODE
  * <li>OPSACCEXTBITMODE
  * </ul>
- * <P>
+ * <p>
  * Used through the String write/read/confirm interface. Accepts integers as
  * addresses, but then emits NMRA DCC packets through the default CommandStation
  * interface (which must be present)
@@ -75,6 +75,7 @@ public class AccessoryOpsModeProgrammerFacade extends AbstractProgrammerFacade i
     ProgrammingMode mode;
 
     @Override
+    @Nonnull
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<>();
         ret.add(ProgrammingMode.OPSACCBYTEMODE);

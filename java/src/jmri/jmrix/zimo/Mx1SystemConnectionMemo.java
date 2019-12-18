@@ -1,9 +1,12 @@
 package jmri.jmrix.zimo;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -14,7 +17,6 @@ import jmri.managers.DefaultProgrammerManager;
  *
  * @author	Kevin Dickerson Copyright (C) 2012
  * @author	Bob Jacobsen Copyright (C) 2010
- *
  */
 public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -56,7 +58,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
-     * Provides access to the TrafficController for this particular connection.
+     * Provide access to the TrafficController for this particular connection.
      *
      * @return the associated traffic controller
      */
@@ -153,7 +155,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         throttleManager = new jmri.jmrix.zimo.Mx1ThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
         if (getProtocol() == Mx1Packetizer.BINARY) {
-            turnoutManager = new Mx1TurnoutManager(getMx1TrafficController(), getSystemPrefix());
+            turnoutManager = new Mx1TurnoutManager(this);
             InstanceManager.setTurnoutManager(turnoutManager);
         }
     }
@@ -208,6 +210,11 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
+    }
+
+    @Override
     public void dispose() {
         st = null;
         InstanceManager.deregister(this, Mx1SystemConnectionMemo.class);
@@ -219,4 +226,5 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
         super.dispose();
     }
+
 }

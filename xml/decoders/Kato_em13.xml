@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Dale A Tripp" version="1" lastUpdated="20090625"/>
   <version author="Marc Fournier" version="1.1" lastUpdated="20091018"/>
   <!-- Created from Digitrax_01x3 file -->
@@ -57,7 +58,6 @@
         <label xml:lang="it">Periodo PWM (Frequenza pilotaggio Motore)</label>
       </variable>
           <!-- CV=29 : Consist seems not managed at all from Kato manual
-          <variable CV="19" item="Consist Direction" mask="VXXXXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
         <label>Advanced Consist direction</label>
       </variable>
@@ -130,10 +130,7 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="8" default="8">

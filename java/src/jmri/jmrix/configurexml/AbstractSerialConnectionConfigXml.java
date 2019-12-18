@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
  * Abstract base (and partial implementation) for classes persisting the status
  * of serial port adapters.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @author Bob Jacobsen Copyright (c) 2003
  */
 abstract public class AbstractSerialConnectionConfigXml extends AbstractConnectionConfigXml {
 
@@ -24,7 +24,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
 
     /**
      * Default implementation for storing the static contents of the serial port
-     * implementation
+     * implementation.
      *
      * @param object Object to store, of type AbstractSerialConnectionConfig
      * @return Element containing the complete info
@@ -51,7 +51,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         }
 
         if (adapter.getCurrentBaudRate() != null) {
-            e.setAttribute("speed", adapter.getCurrentBaudRate());
+            e.setAttribute("speed", adapter.getCurrentBaudNumber()); // store by baud number, not by i18n combo display string
         } else {
             e.setAttribute("speed", Bundle.getMessage("noneSelected"));
         }
@@ -64,7 +64,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     }
 
     /**
-     * Customizable method if you need to add anything more
+     * Customizable method if you need to add anything more.
      *
      * @param e Element being created, update as needed
      */
@@ -81,9 +81,8 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
         // configure port name
         String portName = perNode.getAttribute("port").getValue();
         adapter.setPort(portName);
-        String baudRate = perNode.getAttribute("speed").getValue();
-        adapter.configureBaudRate(baudRate);
-
+        String baudNumber = perNode.getAttribute("speed").getValue(); // updated number string format since JMRI 4.16
+        adapter.configureBaudRateFromNumber(baudNumber);
         loadCommon(shared, perNode, adapter);
         // register, so can be picked up next time
         register();
@@ -112,7 +111,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     }
 
     /**
-     * Update static data from XML file
+     * Update static data from XML file.
      *
      * @param element Top level Element to unpack.
      */

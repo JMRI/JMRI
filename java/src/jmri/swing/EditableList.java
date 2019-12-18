@@ -1,6 +1,5 @@
 package jmri.swing;
 
-import java.applet.Applet;
 import java.awt.Component;
 import java.awt.KeyboardFocusManager;
 import java.awt.Point;
@@ -73,6 +72,8 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
         return editingIndex;
     }
 
+     //This uses the deprecated {@link JComponent#setNextFocusableComponent} method.
+    @SuppressWarnings( "deprecation" )
     public Component prepareEditor(int index) {
         E value = getModel().getElementAt(index);
         boolean isSelected = isSelectedIndex(index);
@@ -174,8 +175,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
                 if (c == EditableList.this) {
                     // focus remains inside the table
                     return;
-                } else if ((c instanceof Window)
-                        || (c instanceof Applet && c.getParent() == null)) {
+                } else if (c instanceof Window) {
                     if (c == SwingUtilities.getRoot(EditableList.this)) {
                         if (!getListCellEditor().stopCellEditing()) {
                             getListCellEditor().cancelCellEditing();

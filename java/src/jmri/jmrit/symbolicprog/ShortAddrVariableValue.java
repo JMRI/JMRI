@@ -7,11 +7,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Representation of a short address (CV1).
- * <P>
+ * <p>
  * This is a decimal value, extended to modify the other CVs when written. The
  * CVs to be modified and their new values are stored in two arrays for
  * simplicity.
- * <P>
+ * <p>
  *
  * The NMRA has decided that writing CV1 causes other CVs to update within the
  * decoder (CV19 for consisting, CV29 for short/long address). We want DP to

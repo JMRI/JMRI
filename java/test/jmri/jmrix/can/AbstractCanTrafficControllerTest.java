@@ -44,6 +44,8 @@ public class AbstractCanTrafficControllerTest extends jmri.jmrix.AbstractMRTraff
            public AbstractMRMessage encodeForHardware(CanMessage m) { return null; }
 
            @Override
+           public void sendCanReply(CanReply r, CanListener l) {}
+           @Override
            public void sendCanMessage(CanMessage m, CanListener l) {}
            @Override
            public void addCanListener(CanListener l) {}
@@ -57,7 +59,9 @@ public class AbstractCanTrafficControllerTest extends jmri.jmrix.AbstractMRTraff
     @After
     public void tearDown(){
        tc = null;
-        JUnitUtil.tearDown(); 
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
+ 
     }
 
 }

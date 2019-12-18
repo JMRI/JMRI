@@ -31,7 +31,7 @@ import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Simple GUI for access to an NCE monitor card
- * <P>
+ * <p>
  * When opened, the user must first select a serial port and click "Start". The
  * rest of the GUI then appears.
  *
@@ -433,7 +433,7 @@ public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements
     /**
      * Sends stream of bytes to the command station
      *
-     * @param bytes - array of bytes to send
+     * @param bytes  array of bytes to send
      */
     synchronized void sendBytes(byte[] bytes) {
         try {

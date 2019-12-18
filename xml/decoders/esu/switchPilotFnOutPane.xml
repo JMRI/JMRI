@@ -1,160 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
     <name>Function Outputs</name>
-    <grid gridx="NEXT" gridy="0" ipadx="50" anchor="PAGE_START">
-        <griditem>
+    <name xml:lang="de">Funktionsausgänge</name>
+    <column>
+        <group include="SwitchPilot V2.0,SwitchPilot Servo V2.0">
+            <separator/>
+            <label>
+            <text>&lt;html&gt;&lt;strong&gt;Bounce Effects work with SwitchPilot firmware Version 2.1.1172 or later.&lt;/strong&gt;&lt;/html&gt;</text>
+            </label>
+            <label>
+                <text> </text>
+            </label>
+            <label>
+                <text>(If your SwitchPilot needs a firmware upgrade, LokProgrammer is required.)</text>
+            </label>
+            <separator/>
+        </group>
+        <grid gridx="NEXT" gridy="0" ipadx="50" anchor="PAGE_START">
             <group include="SwitchPilot,SwitchPilot V2.0">
-                <column>
-                    <separator/>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <label>
-                        <text>Output 1</text>
-                    </label>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <display item="SwitchPilot Function Output 1 Option 1" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 1 Option 2" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 1 Option 3" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 1 Choices 1" label=""/>
-                    <display item="SwitchPilot Function Output 1 Option 4" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 1 Choices 2" label=""/>
-                    <display item="SwitchPilot Function Output 1 Option 5" format="onradiobutton"/>
-                    <row>
+                <griditem>
+                    <column>
+                        <separator/>
                         <label>
-                            <text>(</text>
+                            <text> </text>
                         </label>
-                        <display item="SwitchPilot Function Output 1 effect generated" label="Mode CV Value is"/>
                         <label>
-                            <text>)</text>
+                            <text>Output 1</text>
+                            <text xml:lang="de">Ausgang 1</text>
                         </label>
-                    </row>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <row>
-                        <display item="SwitchPilot Function Output 1 Slider 3" layout="above" label=""/>
-                        <display item="SwitchPilot Function Output 1 Slider 3" format="hslider" layout="above"/>
-                    </row>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <separator/>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <label>
-                        <text>Output 2</text>
-                    </label>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <display item="SwitchPilot Function Output 2 Option 1" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 2 Option 2" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 2 Option 3" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 2 Choices 1" label=""/>
-                    <display item="SwitchPilot Function Output 2 Option 4" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 2 Choices 2" label=""/>
-                    <display item="SwitchPilot Function Output 2 Option 5" format="onradiobutton"/>
-                    <row>
                         <label>
-                            <text>(</text>
+                            <text> </text>
                         </label>
-                        <display item="SwitchPilot Function Output 2 effect generated" label="Mode CV Value is"/>
+                        <display item="SwitchPilot Function Output 1 Option 1" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 1 Option 2" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 1 Option 3" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 1 Choices 1" label=""/>
+                        <display item="SwitchPilot Function Output 1 Option 4" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 1 Choices 2" label=""/>
+                        <display item="SwitchPilot Function Output 1 Option 5" format="onradiobutton"/>
+                        <row>
+                            <label>
+                                <text>(</text>
+                            </label>
+                            <display item="SwitchPilot Function Output 1 effect generated">
+                                <label>Mode CV Value is</label>
+                                <label xml:lang="de">Eigenschaften CV Wert ist</label>
+                            </display>
+                            <label>
+                                <text>)</text>
+                            </label>
+                        </row>
                         <label>
-                            <text>)</text>
+                            <text> </text>
                         </label>
-                    </row>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <row>
-                        <display item="SwitchPilot Function Output 2 Slider 3" layout="above" label=""/>
-                        <display item="SwitchPilot Function Output 2 Slider 3" format="hslider" layout="above"/>
-                    </row>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <separator/>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <label>
-                        <text>Output 3</text>
-                    </label>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <display item="SwitchPilot Function Output 3 Option 1" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 3 Option 2" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 3 Option 3" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 3 Choices 1" label=""/>
-                    <display item="SwitchPilot Function Output 3 Option 4" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 3 Choices 2" label=""/>
-                    <display item="SwitchPilot Function Output 3 Option 5" format="onradiobutton"/>
-                    <row>
+                        <row>
+                            <display item="SwitchPilot Function Output 1 Slider 3" layout="above" label=""/>
+                            <display item="SwitchPilot Function Output 1 Slider 3" format="hslider" layout="above"/>
+                        </row>
                         <label>
-                            <text>(</text>
+                            <text> </text>
                         </label>
-                        <display item="SwitchPilot Function Output 3 effect generated" label="Mode CV Value is"/>
+                        <separator/>
                         <label>
-                            <text>)</text>
+                            <text> </text>
                         </label>
-                    </row>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <row>
-                        <display item="SwitchPilot Function Output 3 Slider 3" layout="above" label=""/>
-                        <display item="SwitchPilot Function Output 3 Slider 3" format="hslider" layout="above"/>
-                    </row>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <separator/>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <label>
-                        <text>Output 4</text>
-                    </label>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <display item="SwitchPilot Function Output 4 Option 1" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 4 Option 2" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 4 Option 3" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 4 Choices 1" label=""/>
-                    <display item="SwitchPilot Function Output 4 Option 4" format="onradiobutton"/>
-                    <display item="SwitchPilot Function Output 4 Choices 2" label=""/>
-                    <display item="SwitchPilot Function Output 4 Option 5" format="onradiobutton"/>
-                    <row>
                         <label>
-                            <text>(</text>
+                            <text>Output 2</text>
+                            <text xml:lang="de">Ausgang 2</text>
                         </label>
-                        <display item="SwitchPilot Function Output 4 effect generated" label="Mode CV Value is"/>
                         <label>
-                            <text>)</text>
+                            <text> </text>
                         </label>
-                    </row>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <row>
-                        <display item="SwitchPilot Function Output 4 Slider 3" layout="above" label=""/>
-                        <display item="SwitchPilot Function Output 4 Slider 3" format="hslider" layout="above"/>
-                    </row>
-                    <label>
-                        <text> </text>
-                    </label>
-                </column>
+                        <display item="SwitchPilot Function Output 2 Option 1" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 2 Option 2" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 2 Option 3" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 2 Choices 1" label=""/>
+                        <display item="SwitchPilot Function Output 2 Option 4" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 2 Choices 2" label=""/>
+                        <display item="SwitchPilot Function Output 2 Option 5" format="onradiobutton"/>
+                        <row>
+                            <label>
+                                <text>(</text>
+                            </label>
+                            <display item="SwitchPilot Function Output 2 effect generated">
+                                <label>Mode CV Value is</label>
+                                <label xml:lang="de">Eigenschaften CV Wert ist</label>
+                            </display>
+                            <label>
+                                <text>)</text>
+                            </label>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <row>
+                            <display item="SwitchPilot Function Output 2 Slider 3" layout="above" label=""/>
+                            <display item="SwitchPilot Function Output 2 Slider 3" format="hslider" layout="above"/>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <separator/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <label>
+                            <text>Output 3</text>
+                            <text xml:lang="de">Ausgang 3</text>
+                        </label>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <display item="SwitchPilot Function Output 3 Option 1" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 3 Option 2" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 3 Option 3" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 3 Choices 1" label=""/>
+                        <display item="SwitchPilot Function Output 3 Option 4" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 3 Choices 2" label=""/>
+                        <display item="SwitchPilot Function Output 3 Option 5" format="onradiobutton"/>
+                        <row>
+                            <label>
+                                <text>(</text>
+                            </label>
+                            <display item="SwitchPilot Function Output 3 effect generated">
+                                <label>Mode CV Value is</label>
+                                <label xml:lang="de">Eigenschaften CV Wert ist</label>
+                            </display>
+                            <label>
+                                <text>)</text>
+                            </label>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <row>
+                            <display item="SwitchPilot Function Output 3 Slider 3" layout="above" label=""/>
+                            <display item="SwitchPilot Function Output 3 Slider 3" format="hslider" layout="above"/>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <separator/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <label>
+                            <text>Output 4</text>
+                            <text xml:lang="de">Ausgang 4</text>
+                        </label>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <display item="SwitchPilot Function Output 4 Option 1" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 4 Option 2" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 4 Option 3" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 4 Choices 1" label=""/>
+                        <display item="SwitchPilot Function Output 4 Option 4" format="onradiobutton"/>
+                        <display item="SwitchPilot Function Output 4 Choices 2" label=""/>
+                        <display item="SwitchPilot Function Output 4 Option 5" format="onradiobutton"/>
+                        <row>
+                            <label>
+                                <text>(</text>
+                            </label>
+                            <display item="SwitchPilot Function Output 4 effect generated">
+                                <label>Mode CV Value is</label>
+                                <label xml:lang="de">Eigenschaften CV Wert ist</label>
+                            </display>
+                            <label>
+                                <text>)</text>
+                            </label>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <row>
+                            <display item="SwitchPilot Function Output 4 Slider 3" layout="above" label=""/>
+                            <display item="SwitchPilot Function Output 4 Slider 3" format="hslider" layout="above"/>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                    </column>
+                </griditem>
             </group>
-        </griditem>
-        <griditem>
-            <column>
-                <group>
+            <griditem>
+                <column>
                     <separator/>
                     <label>
                         <text> </text>
@@ -166,25 +196,56 @@
                         <text> </text>
                     </label>
                     <row>
-                        <display item="SwitchPilot Servo 1 Slider 1" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 1 Slider 1" format="hslider" layout="above"/>
+                        <display item="SwitchPilot Servo 1 Transit Time to A" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Transit Time to A" format="hslider" layout="above"/>
                     </row>
                     <row>
-                        <display item="SwitchPilot Servo 1 Slider 2" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 1 Slider 2" format="hslider" layout="above"/>
+                        <display item="SwitchPilot Servo 1 Transit Time to A, C" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Transit Time to A, C" format="hslider" layout="above"/>
                     </row>
                     <row>
-                        <display item="SwitchPilot Servo 1 Slider 3" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 1 Slider 3" format="hslider" layout="above"/>
+                        <display item="SwitchPilot Servo 1 Transit Time" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Transit Time" format="hslider" layout="above"/>
                     </row>
                     <row>
-                        <display item="SwitchPilot Servo 1 Slider 4" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 1 Slider 4" format="hslider" layout="above"/>
+                        <display item="SwitchPilot Servo 1 Transit Time to B" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Transit Time to B" format="hslider" layout="above"/>
                     </row>
                     <row>
-                        <display item="SwitchPilot Servo 1 Slider 5" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 1 Slider 5" format="hslider" layout="above"/>
+                        <display item="SwitchPilot Servo 1 Transit Time to B, D" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Transit Time to B, D" format="hslider" layout="above"/>
                     </row>
+                    <row>
+                        <display item="SwitchPilot Servo 1 Position A" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Position A" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 1 Position B" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Position B" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 1 Position C" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Position C" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 1 Position D" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Position D" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 1 Number of Bounces" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Number of Bounces" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 1 Max Bouncing Strength" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 1 Max Bouncing Strength" format="hslider" layout="above"/>
+                    </row>
+                    <label>
+                        <text> </text>
+                    </label>
+                    <display item="SwitchPilot Servo 1 Bouncing at Position A" format="checkbox" layout="right"/>
+                    <display item="SwitchPilot Servo 1 Bouncing at Position B" format="checkbox" layout="right"/>
+                    <display item="SwitchPilot Servo 1 Bouncing at Position C" format="checkbox" layout="right"/>
+                    <display item="SwitchPilot Servo 1 Bouncing at Position D" format="checkbox" layout="right"/>
                     <label>
                         <text> </text>
                     </label>
@@ -199,98 +260,195 @@
                         <text> </text>
                     </label>
                     <row>
-                        <display item="SwitchPilot Servo 2 Slider 1" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 2 Slider 1" format="hslider" layout="above"/>
+                        <display item="SwitchPilot Servo 2 Transit Time to A" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Transit Time to A" format="hslider" layout="above"/>
                     </row>
                     <row>
-                        <display item="SwitchPilot Servo 2 Slider 2" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 2 Slider 2" format="hslider" layout="above"/>
+                        <display item="SwitchPilot Servo 2 Transit Time to A, C" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Transit Time to A, C" format="hslider" layout="above"/>
                     </row>
                     <row>
-                        <display item="SwitchPilot Servo 2 Slider 3" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 2 Slider 3" format="hslider" layout="above"/>
+                        <display item="SwitchPilot Servo 2 Transit Time" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Transit Time" format="hslider" layout="above"/>
                     </row>
                     <row>
-                        <display item="SwitchPilot Servo 2 Slider 4" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 2 Slider 4" format="hslider" layout="above"/>
+                        <display item="SwitchPilot Servo 2 Transit Time to B" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Transit Time to B" format="hslider" layout="above"/>
                     </row>
                     <row>
-                        <display item="SwitchPilot Servo 2 Slider 5" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 2 Slider 5" format="hslider" layout="above"/>
+                        <display item="SwitchPilot Servo 2 Transit Time to B, D" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Transit Time to B, D" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 2 Position A" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Position A" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 2 Position B" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Position B" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 2 Position C" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Position C" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 2 Position D" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Position D" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 2 Number of Bounces" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Number of Bounces" format="hslider" layout="above"/>
+                    </row>
+                    <row>
+                        <display item="SwitchPilot Servo 2 Max Bouncing Strength" layout="above" label=""/>
+                        <display item="SwitchPilot Servo 2 Max Bouncing Strength" format="hslider" layout="above"/>
                     </row>
                     <label>
                         <text> </text>
                     </label>
-                </group>
-                <group exclude="SwitchPilot,SwitchPilot V2.0">
-                    <separator/>
+                    <display item="SwitchPilot Servo 2 Bouncing at Position A" format="checkbox" layout="right"/>
+                    <display item="SwitchPilot Servo 2 Bouncing at Position B" format="checkbox" layout="right"/>
+                    <display item="SwitchPilot Servo 2 Bouncing at Position C" format="checkbox" layout="right"/>
+                    <display item="SwitchPilot Servo 2 Bouncing at Position D" format="checkbox" layout="right"/>
                     <label>
                         <text> </text>
                     </label>
-                    <label>
-                        <text>Servo 3</text>
-                    </label>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <row>
-                        <display item="SwitchPilot Servo 3 Slider 1" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 3 Slider 1" format="hslider" layout="above"/>
-                    </row>
-                    <row>
-                        <display item="SwitchPilot Servo 3 Slider 2" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 3 Slider 2" format="hslider" layout="above"/>
-                    </row>
-                    <row>
-                        <display item="SwitchPilot Servo 3 Slider 3" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 3 Slider 3" format="hslider" layout="above"/>
-                    </row>
-                    <row>
-                        <display item="SwitchPilot Servo 3 Slider 4" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 3 Slider 4" format="hslider" layout="above"/>
-                    </row>
-                    <row>
-                        <display item="SwitchPilot Servo 3 Slider 5" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 3 Slider 5" format="hslider" layout="above"/>
-                    </row>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <separator/>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <label>
-                        <text>Servo 4</text>
-                    </label>
-                    <label>
-                        <text> </text>
-                    </label>
-                    <row>
-                        <display item="SwitchPilot Servo 4 Slider 1" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 4 Slider 1" format="hslider" layout="above"/>
-                    </row>
-                    <row>
-                        <display item="SwitchPilot Servo 4 Slider 2" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 4 Slider 2" format="hslider" layout="above"/>
-                    </row>
-                    <row>
-                        <display item="SwitchPilot Servo 4 Slider 3" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 4 Slider 3" format="hslider" layout="above"/>
-                    </row>
-                    <row>
-                        <display item="SwitchPilot Servo 4 Slider 4" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 4 Slider 4" format="hslider" layout="above"/>
-                    </row>
-                    <row>
-                        <display item="SwitchPilot Servo 4 Slider 5" layout="above" label=""/>
-                        <display item="SwitchPilot Servo 4 Slider 5" format="hslider" layout="above"/>
-                    </row>
-                    <label>
-                        <text> </text>
-                    </label>
-                </group>
-            </column>
-        </griditem>
-    </grid>
+                </column>
+            </griditem>
+            <group exclude="SwitchPilot,SwitchPilot V2.0">
+                <griditem>
+                    <column>
+                        <separator/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <label>
+                            <text>Servo 3</text>
+                        </label>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Transit Time to A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Transit Time to A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Transit Time to A, C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Transit Time to A, C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Transit Time" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Transit Time" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Transit Time to B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Transit Time to B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Transit Time to B, D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Transit Time to B, D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Position A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Position A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Position B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Position B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Position C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Position C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Position D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Position D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Number of Bounces" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Number of Bounces" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 3 Max Bouncing Strength" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 3 Max Bouncing Strength" format="hslider" layout="above"/>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <display item="SwitchPilot Servo 3 Bouncing at Position A" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 3 Bouncing at Position B" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 3 Bouncing at Position C" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 3 Bouncing at Position D" format="checkbox" layout="right"/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <separator/>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <label>
+                            <text>Servo 4</text>
+                        </label>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Transit Time to A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Transit Time to A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Transit Time to A, C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Transit Time to A, C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Transit Time" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Transit Time" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Transit Time to B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Transit Time to B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Transit Time to B, D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Transit Time to B, D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Position A" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Position A" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Position B" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Position B" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Position C" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Position C" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Position D" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Position D" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Number of Bounces" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Number of Bounces" format="hslider" layout="above"/>
+                        </row>
+                        <row>
+                            <display item="SwitchPilot Servo 4 Max Bouncing Strength" layout="above" label=""/>
+                            <display item="SwitchPilot Servo 4 Max Bouncing Strength" format="hslider" layout="above"/>
+                        </row>
+                        <label>
+                            <text> </text>
+                        </label>
+                        <display item="SwitchPilot Servo 4 Bouncing at Position A" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 4 Bouncing at Position B" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 4 Bouncing at Position C" format="checkbox" layout="right"/>
+                        <display item="SwitchPilot Servo 4 Bouncing at Position D" format="checkbox" layout="right"/>
+                        <label>
+                            <text> </text>
+                        </label>
+                    </column>
+                </griditem>
+            </group>
+        </grid>
+    </column>
 </pane>

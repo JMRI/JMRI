@@ -5,7 +5,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.Disposable;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
@@ -16,9 +22,6 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.ColorUtil;
 import jmri.util.swing.JmriColorChooser;
 import jmri.web.server.WebServerPreferences;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Operations settings.
@@ -130,7 +133,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String TYPE = Bundle.getMessage("Type");
     public static final String MODEL = Bundle.getMessage("Model");
     public static final String LENGTH = Bundle.getMessage("Length");
+    public static final String WEIGHT = Bundle.getMessage("Weight");
     public static final String LOAD = Bundle.getMessage("Load");
+    public static final String LOAD_TYPE = Bundle.getMessage("Load_Type");
     public static final String COLOR = Bundle.getMessage("Color");
     public static final String TRACK = Bundle.getMessage("Track");
     public static final String DESTINATION = Bundle.getMessage("Destination");
@@ -169,15 +174,15 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String METER = Bundle.getMessage("Meter");
 
     private static final String[] CAR_ATTRIBUTES
-            = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
+            = {ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
                 TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
                 PICKUP_COMMENT, RWE};
-    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
+    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, CONSIST, OWNER, TRACK,
         LOCATION, DESTINATION, COMMENT};
     /*
      * The print Manifest and switch list user selectable options are stored in the xml file using the English translation.
      */
-    private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Load", "Color", // NOI18N
+    private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type", "Color", // NOI18N
         "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", // NOI18N
         "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab", "Tab2", "Tab3"}; // NOI18N
 
@@ -308,7 +313,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     private boolean printLocationComments = false; // when true print location comments on the manifest
     private boolean printRouteComments = false; // when true print route comments on the manifest
     private boolean printLoadsAndEmpties = false; // when true print Loads and Empties on the manifest
-    private boolean printTimetableName = false; // when true print timetable name on manifests and switch lists
+    private boolean printTrainScheduleName = false; // when true print train schedule name on manifests and switch lists
     private boolean use12hrFormat = false; // when true use 12hr rather than 24hr format
     private boolean printValid = true; // when true print out the valid time and date
     private boolean sortByTrack = false; // when true manifest work is sorted by track names
@@ -324,6 +329,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
     public static final String SHOW_TRACK_MOVES_PROPERTY_CHANGE = "setupShowTrackMoves"; //  NOI18N
     public static final String SAVE_TRAIN_MANIFEST_PROPERTY_CHANGE = "saveTrainManifestChange"; //  NOI18N
+    public static final String ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE = "allowCarsToReturnChange"; //  NOI18N
 
     public static boolean isMainMenuEnabled() {
         InstanceManager.getDefault(OperationsSetupXml.class); // load file
@@ -522,7 +528,8 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     /**
-     * allow cars to return to the same staging location if no other options (tracks) are available
+     * allow cars to return to the same staging location if no other options (tracks) are available.
+     * Also available on a per train basis.
      * @return true if cars are allowed to depart and return to same staging location
      */
     public static boolean isAllowReturnToStagingEnabled() {
@@ -530,7 +537,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     }
 
     public static void setAllowReturnToStagingEnabled(boolean enabled) {
+        boolean old = getDefault().allowCarsReturnStaging;
         getDefault().allowCarsReturnStaging = enabled;
+        setDirtyAndFirePropertyChange(ALLOW_CARS_TO_RETURN_PROPERTY_CHANGE, old, enabled);
     }
 
     public static boolean isPromptFromStagingEnabled() {
@@ -868,12 +877,12 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return getDefault().printLoadsAndEmpties;
     }
 
-    public static void setPrintTimetableNameEnabled(boolean enable) {
-        getDefault().printTimetableName = enable;
+    public static void setPrintTrainScheduleNameEnabled(boolean enable) {
+        getDefault().printTrainScheduleName = enable;
     }
 
-    public static boolean isPrintTimetableNameEnabled() {
-        return getDefault().printTimetableName;
+    public static boolean isPrintTrainScheduleNameEnabled() {
+        return getDefault().printTrainScheduleName;
     }
 
     public static void set12hrFormatEnabled(boolean enable) {
@@ -1653,24 +1662,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         return box;
     }
 
-    /**
-     *
-     * @return the available text colors used for printing
-     * @deprecated since 4.9.6 use a {@link javax.swing.JColorChooser } instead.
-     */
-    @Deprecated
-    public static JComboBox<String> getPrintColorComboBox() {
-        JComboBox<String> box = new JComboBox<>();
-        box.addItem(ColorUtil.ColorBlack);
-        box.addItem(ColorUtil.ColorRed);
-        box.addItem(ColorUtil.ColorOrange);
-        box.addItem(ColorUtil.ColorYellow);
-        box.addItem(ColorUtil.ColorGreen);
-        box.addItem(ColorUtil.ColorBlue);
-        box.addItem(ColorUtil.ColorGray);
-        return box;
-    }
-
     public static JComboBox<String> getEngineMessageComboBox() {
         JComboBox<String> box = new JComboBox<>();
         box.addItem(BLANK);
@@ -1832,20 +1823,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         values.setAttribute(Xml.RFID_LABEL, getRfidLabel());
         values.setAttribute(Xml.LENGTH_UNIT, getLengthUnit());
         values.setAttribute(Xml.YEAR_MODELED, getYearModeled());
-        // next 7 manifest attributes for backward compatibility TODO remove in future release 2014
-        //        values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_ROUTE_COMMENTS, isPrintRouteCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_LOADS_EMPTIES, isPrintLoadsAndEmptiesEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
-        // This one was left out, wait until 2016
-        values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
-        // next three logger attributes for backward compatibility TODO remove in future release 2014
-        //        values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
-        //        values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.PICKUP_ENG_FORMAT));
         storeXmlMessageFormat(values, getPickupEnginePrefix(), getPickupEngineMessageFormat());
@@ -1922,7 +1899,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_ROUTE_COMMENTS, isPrintRouteCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_LOADS_EMPTIES, isPrintLoadsAndEmptiesEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_TRAIN_SCHEDULE, isPrintTrainScheduleNameEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackNameEnabled() ? Xml.TRUE : Xml.FALSE);
@@ -1934,9 +1911,6 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
         values.setAttribute(Xml.PRINT_PASSENGER_LOAD, isPrintPassengerLoadEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
 
-        // backward compatible, remove in 2015
-        //        e.addContent(values = new Element(Xml.COLUMN_FORMAT));
-        //        values.setAttribute(Xml.TWO_COLUMNS, getManifestFormat() == TWO_COLUMN_FORMAT ? Xml.TRUE : Xml.FALSE);
         // new format June 2014
         e.addContent(values = new Element(Xml.MANIFEST_FORMAT));
 
@@ -2189,10 +2163,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
                 log.debug("printLoadsEmpties: {}", enable);
                 setPrintLoadsAndEmptiesEnabled(enable.equals(Xml.TRUE));
             }
-            if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_TIMETABLE)) != null) {
+            if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.PRINT_TRAIN_SCHEDULE)) != null) {
                 String enable = a.getValue();
-                log.debug("printTimetable: {}", enable);
-                setPrintTimetableNameEnabled(enable.equals(Xml.TRUE));
+                log.debug("printTrainSchedule: {}", enable);
+                setPrintTrainScheduleNameEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.USE12HR_FORMAT)) != null) {
                 String enable = a.getValue();
@@ -2493,10 +2467,10 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
                 log.debug("manifest printLoadsEmpties: {}", enable);
                 setPrintLoadsAndEmptiesEnabled(enable.equals(Xml.TRUE));
             }
-            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_TIMETABLE)) != null) {
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_TRAIN_SCHEDULE)) != null) {
                 String enable = a.getValue();
-                log.debug("manifest printTimetable: {}", enable);
-                setPrintTimetableNameEnabled(enable.equals(Xml.TRUE));
+                log.debug("manifest printTrainSchedule: {}", enable);
+                setPrintTrainScheduleNameEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.USE12HR_FORMAT)) != null) {
                 String enable = a.getValue();
@@ -2631,7 +2605,7 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.ALLOW_RETURN_STAGING)) != null) {
                 String enable = a.getValue();
                 log.debug("allowReturnStaging: {}", enable);
-                setAllowReturnToStagingEnabled(enable.equals(Xml.TRUE));
+                getDefault().allowCarsReturnStaging = enable.equals(Xml.TRUE);
             }
             if ((a = operations.getChild(Xml.BUILD_OPTIONS).getAttribute(Xml.PROMPT_STAGING_ENABLED)) != null) {
                 String enable = a.getValue();

@@ -14,6 +14,7 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="4" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Alain Le Marchand" version="3" lastUpdated="20150427"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20131030"/>
   <version author="Peter Ulvestad" version="1" lastUpdated="20131013"/>
@@ -79,10 +80,9 @@
         </enumVal>
         <label>Select Speed Curve</label>
       </variable>
-      <variable CV="19" item="Consist Address" mask="XVVVVVVV" tooltip="set the Advanced Consist address, range 0-127" default="0">
-        <decVal max="127"/>
-        <label>Advanced Consist address</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <variable CV="21" item="Functions Respond To" mask="XXXXXXXV" tooltip="selects the address that functions will respond to, 0=own address, 1=consist address" default="0">
         <enumVal>
           <enumChoice choice="Functions respond to Locomotive Address Only">
@@ -165,10 +165,7 @@
         <label xml:lang="fr">Impuls. de démarrage (kick start)</label>
         <label xml:lang="de">Kick Start</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="112" item="Sound Setting 15" tooltip="sets the Sand Dropping Volume [range 0-15]" default="12">
         <decVal max="15"/>
         <label>Sand dropping volume</label>

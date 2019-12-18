@@ -17,6 +17,7 @@ public class ConcentratorReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         tc = new ConcentratorTrafficController(new ConcentratorSystemConnectionMemo(),"A-H"){
@@ -37,7 +38,9 @@ public class ConcentratorReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     public void tearDown() {
         tc = null;
 	m = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

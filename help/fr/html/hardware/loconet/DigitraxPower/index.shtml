@@ -1,8 +1,6 @@
 <!doctype html public "-//w3c//dtd html 4.0 transitional//en">
-<!-- $Id$ -->
-<!-- Translated  by Blorec Hervé le 2011-09-22-->
+<!-- Translated  by Blorec Herv&#233; le 2011-09-22-->
 <html lang="fr">
-<html>
 <head>
    <title>Measurements on power leads of Digitrax components</title>
 <!-- Style -->
@@ -14,14 +12,15 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
     <div id="mainContent">
 
-<H1>Mesures de la puissance sur les fils des composants Digitrax</H1>
+<h1>Mesures de la puissance sur les fils des composants Digitrax</h1>
 
 J'ai voulu comprendre les raisons des recommandations de Digitrax à propos de la séparation des
 sources d'énergie pour les cartes PM4 et DS54 . Cette page décrit quelques-unes des
@@ -37,13 +36,13 @@ Ces deux types nécessitent différents décalages entre la masse et le système
 
 Dans cette section, je décris les mesures menant à mes conclusions.
 
-<P>Les mesures suivantes ont été faites sur un réseau en exploitation. Il est alimenté
+<p>Les mesures suivantes ont été faites sur un réseau en exploitation. Il est alimenté
 par une seul centrale DCS100 (Chief), avec unités de puissance PM4 pour alimenter des sous-districts et des unités
 DS54 pour divers contrôles. L'alimentation de la voie était sur On, et le DCS100 était en mode «RUN», c'est à dire envoi de paquets sur les rails.
 A propos  1.2A  était tirée de la sortie de  DCS100. Pendant les mesures,
 aucune commande LocoNet n'a été envoyés, ni de sections inversées n'ont été traversées.
 
-<P>Malheureusement, les photos prises par l'oscilloscope ne sont pas assez sensibles, donc elles montrent beaucoup de flou. Dans tous les tableaux, la référence de masse a été centrée et l'échelle verticale est 5V/division. La portée a été déclenchée en ligne.
+<p>Malheureusement, les photos prises par l'oscilloscope ne sont pas assez sensibles, donc elles montrent beaucoup de flou. Dans tous les tableaux, la référence de masse a été centrée et l'échelle verticale est 5V/division. La portée a été déclenchée en ligne.
 Seule une trace est montrée
 
 <h3>Mesures du Booster</h3>
@@ -53,41 +52,41 @@ donc à la terre. Je l'ai temporairement déconnectée  pour voir ce qui se pass
 flottant. J'ai trouvé une tension d'environ 60Hz compensé 9V. Une résistance de 100K reliant la masse et la terre supprime cela, alors l'impédance de source est très grande. La photo a été faite avec une limite de bande passante 10MHz; les pointes visibles sont environ 6V sans limite de bande passante (500MHz portée).
 Le réseau non relié à la masse à probablement générer beaucoup de bruit RF....
 
-<P>
-<A HREF="./images/DiscGround.jpg"><IMG SRC="./images/DiscGround-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
+<p>
+<a href="./images/DiscGround.jpg"><IMG SRC="./images/DiscGround-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></a>
 
-<P>
+<p>
 Pour le reste des mesures, j'ai rebranché la terre DCS100 à la terre de l'alimentation
 . Le bruit et l'offset ont été inférieur à 20 mV.
 
-<P>
+<p>
 En respectant le système de masse, les rail A et rail B alternent entre 12V et environ 0,8 :
-<BR>
-<A HREF="./images/RailA.jpg"><IMG SRC="./images/RailA-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
-<A HREF="./images/RailB.jpg"><IMG SRC="./images/RailB-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
-<BR>
+<br>
+<a href="./images/RailA.jpg"><IMG SRC="./images/RailA-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></a>
+<a href="./images/RailB.jpg"><IMG SRC="./images/RailB-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></a>
+<br>
 Il semble que la haute puissance d'alimentation interne de DCS100  soit seulement positive. Pour obtenir une meilleure compréhension
 de cela, j'ai regardé le courant des deux lignes du transformateur:
-<BR>
-<A HREF="./images/BoosterPower1.jpg"><IMG SRC="./images/BoosterPower1-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
-<A HREF="./images/BoosterPower2.jpg"><IMG SRC="./images/BoosterPower2-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
-<BR>
+<br>
+<a href="./images/BoosterPower1.jpg"><IMG SRC="./images/BoosterPower1-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></a>
+<a href="./images/BoosterPower2.jpg"><IMG SRC="./images/BoosterPower2-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></a>
+<br>
 Notez qu'ils sont tous deux positifs à tout moment,et n'est pas centré sur la masse . La tension la plus basse est d'environ 1.3V-dessous
 de la masse. Ceci est caractéristique d'une alimentation redresseur double alternance avec un côté de la sortie à la terre.
 Le petit décalage est dû à la chute de tension dans la diode côté bas, tandis que le plat en haut sur la
 forme d'onde se produit par la charge  du condensateur de filtrage .
-<BR>
+<br>
 <IMG SRC="./images/Fullwave.jpg">
 <h3>Mesures PM4</h3>
 Mon alimentation PM4  est un transformateur d'isolement.
 Je n'ai pas fait de mesures avec une alimentation auxiliaire cc.
 La LocoNet était connectée, offrant une mise à la terre commune.
-<P>
+<p>
 les tensions sur les connexions électriques PM4 connexions électriques ressemblent à:
-<BR>
-<A HREF="./images/PM4Power1.jpg"><IMG SRC="./images/PM4Power1-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
-<A HREF="./images/PM4Power2.jpg"><IMG SRC="./images/PM4Power2-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
-<BR>
+<br>
+<a href="./images/PM4Power1.jpg"><IMG SRC="./images/PM4Power1-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></a>
+<a href="./images/PM4Power2.jpg"><IMG SRC="./images/PM4Power2-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></a>
+<br>
 Comme le booster, ceci est le signe d'une alimentation de puissance redressée simple alternance. Le profil de charge est
 très différent de ce qui est vu sur l'alimentation booster. Les formes d'ondes dégradées
 sont peut être du au transformateur Radio Shack 450mA de mon PM4, il semble clairement saturer. 
@@ -96,26 +95,26 @@ sont peut être du au transformateur Radio Shack 450mA de mon PM4, il semble cla
 Mon alimentation DS54  est un transformateur d'isolement.
 Je n'ai pas fait de mesures avec une alimentation auxiliaire cc.
 Le LocoNet était connecté, offrant une mise à la terre commune.
-<P>
+<p>
 Les tensions sur le DS54 les connexions d'alimentation «noir» et «rouge» ressembleraient à ceci::
-<BR>
-<A HREF="./images/DS54PowerBlack.jpg"><IMG SRC="./images/DS54PowerBlack-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
-<A HREF="./images/DS54PowerRed.jpg"><IMG SRC="./images/DS54PowerRed-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></A>
-<BR>
+<br>
+<a href="./images/DS54PowerBlack.jpg"><IMG SRC="./images/DS54PowerBlack-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></a>
+<a href="./images/DS54PowerRed.jpg"><IMG SRC="./images/DS54PowerRed-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75"></a>
+<br>
 Ceci est révélateur d'une alimentation de puissance simple alternance corrigée. Notez ce qui est différent
 de la PM4 et DCS100 
-<BR>
+<br>
 <IMG SRC="./images/Halfwave.jpg">
-<BR>
+<br>
 Notez l'ondulation dans la terre (noir).
-Digitrax ne vous recommande <gras> pas </gras>
+Digitrax ne vous recommande <em> pas </em>
  de connectez le fil de masse DS54 à un système de terre, Cet offset montre pourquoi 
 c'est une bonne idée d'écouter cette recommandation. La masse dans le dessin schématique est le fil noir "terre" de la DS54,
-mais ce n'est <gras> pas </ gras> le même que le système de masse (LocoNet)
+mais ce n'est <em>pas</em> le même que le système de masse (LocoNet)
 . . Ceci est révélateur d'une offre d'alimentation de simple alternance de puissance corrigée. Notez ce qui est différent
 de la PM4 et DCS100 ..  
 . 
-<P>
+<p>
 Don Crano a souligné que la DS54 est dérivant
 d'une terre locale à partir des connexions ferroviaires afin que le détecteur BD1 bloc courant
 puisse utiliser la connexion terre de la DS54.
@@ -123,37 +122,35 @@ Les photos suivantes montrent
 que le décalage par rapport à la masse du système change légèrement le pouls d'étirement
 pour un fonctionnement analogue se déplace d'un extrême à l'autre. (Notez que
 ces photos sont à 1V/division, avec la masse du système au centre.
-<BR>
+<br>
 <CENTER>
 <TABLE BORDER="0">
-<TR>
-<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="./images/DS54ConnAna-99.jpg"><IMG SRC="./images/DS54ConnAna-99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet connected, analog at -99</A></TD>
+<tr>
+<td WIDTH="120" HEIGHT="120" ALIGN="CENTER"><a href="./images/DS54ConnAna-99.jpg"><IMG SRC="./images/DS54ConnAna-99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet connected, analog at -99</a></td>
 
-<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="./images/DS54ConnAna0.jpg"><IMG SRC="./images/DS54ConnAna0-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet connected, analog at 0</A></TD>
+<td WIDTH="120" HEIGHT="120" ALIGN="CENTER"><a href="./images/DS54ConnAna0.jpg"><IMG SRC="./images/DS54ConnAna0-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet connected, analog at 0</a></td>
 
-<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="./images/DS54ConnAna+99.jpg"><IMG SRC="./images/DS54ConnAna+99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet connected, analog at +99</A></TD>
+<td WIDTH="120" HEIGHT="120" ALIGN="CENTER"><a href="./images/DS54ConnAna+99.jpg"><IMG SRC="./images/DS54ConnAna+99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet connected, analog at +99</a></td>
 
-</TR>
-<TR>
+</tr>
+<tr>
 
-<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="./images/DS54DiscAna+99.jpg"><IMG SRC="./images/DS54DiscAna+99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet disconnected, analog at -99</A></TD>
+<td WIDTH="120" HEIGHT="120" ALIGN="CENTER"><a href="./images/DS54DiscAna+99.jpg"><IMG SRC="./images/DS54DiscAna+99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet disconnected, analog at -99</a></td>
 
-<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="./images/DS54DiscAna-99.jpg"><IMG SRC="./images/DS54DiscAna-99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet disconnected, analog at 0</A></TD>
+<td WIDTH="120" HEIGHT="120" ALIGN="CENTER"><a href="./images/DS54DiscAna-99.jpg"><IMG SRC="./images/DS54DiscAna-99-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet disconnected, analog at 0</a></td>
 
-<TD WIDTH="120" HEIGHT="120" ALIGN="CENTER"><A HREF="./images/DS54DiscAna0.jpg"><IMG SRC="./images/DS54DiscAna0-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet disconnected, analog at +99</A></TD>
-</TR>
+<td WIDTH="120" HEIGHT="120" ALIGN="CENTER"><a href="./images/DS54DiscAna0.jpg"><IMG SRC="./images/DS54DiscAna0-thumb.jpg" BORDER="2" WIDTH="100" HEIGHT="75">LocoNet disconnected, analog at +99</a></td>
+</tr>
 </TABLE>
 </CENTER>
-<BR>
+<br>
 
 Les gens sur la liste de diffusion Digitrax ont recommandé que toutes les unités DS54 sur un réseau doivent être câblés sur les rails et l'alimentation électrique commune avec
 la même polarité. (Les miens sont aussi.) Les décalages visibles ci-dessus montrent pourquoi vous avez besoin de faire cela; si deux unités DS54
-ont été connectée de façon opposée , elles seraient incapables de créer une référence de masse cohérente..
-
-<BR>
-
-Bob Jacobsen
+ont été connectée de fa&ccedil;on opposée , elles seraient incapables de créer une référence de masse cohérente..
 
 <!--#include virtual="/Footer" -->
+    </div>
+  </div>
 </body>
 </html>

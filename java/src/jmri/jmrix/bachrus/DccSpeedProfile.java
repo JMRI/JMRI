@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Andrew Crosland Copyright (C) 2010
  * @author Dennis Miller Copyright (C) 2015
-  */
+ */
 public class DccSpeedProfile {
 
     protected int _length;
@@ -183,21 +183,21 @@ public class DccSpeedProfile {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
             fileName = fileChooser.getSelectedFile().getPath();
-        }
-        try {
-            // Create a print writer based on the file, so we can print to it.
-            out = new FileOutputStream(fileName);
-            p = new PrintWriter(out, true);
-        } catch (IOException ex) {
-            if (log.isDebugEnabled()) {
-                log.debug("Problem creating output stream " + ex);
+            try {
+                // Create a print writer based on the file, so we can print to it.
+                out = new FileOutputStream(fileName);
+                p = new PrintWriter(out, true);
+            } catch (IOException ex) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Problem creating output stream " + ex);
+                }
             }
-        }
-        if (out == null) {
-            log.error("Null File Output Stream");
-        }
-        if (p == null) {
-            log.error("Null Print Writer");
+            if (out == null) {
+                log.error("Null File Output Stream");
+            }
+            if (p == null) {
+                log.error("Null Print Writer");
+            }
         }
     }
 

@@ -91,8 +91,6 @@ public class LocoIOTableModel
             int v = i.intValue();
             // log.debug("{} ROW = {}", i, v);
             fireTableRowsUpdated(v, v);
-        } else {
-            // System.out.println(s);
         }
     }
 

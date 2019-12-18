@@ -10,17 +10,17 @@ import jmri.NamedBeanHandle;
 /**
  * A service base class for monitoring a bound property in one of the JMRI Named
  * beans (Turnout, Sensor, etc).
- * <P>
+ * <p>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
+ *
  * @author Pete Cressman Copyright (C) 2009
  * @since 2.5.1
  */
@@ -28,13 +28,13 @@ public class JmriSimplePropertyListener implements PropertyChangeListener {
 
     int _type;
     String _varName;
-    int _varType;
+    Conditional.Type _varType;
     String _propertyName;
     ArrayList<Conditional> _clients;
     boolean _enabled;
     NamedBeanHandle<?> _namedBean;
 
-    JmriSimplePropertyListener(String propName, int type, String varName, int varType, Conditional client) {
+    JmriSimplePropertyListener(String propName, int type, String varName, Conditional.Type varType, Conditional client) {
         _propertyName = propName;
         _type = type;
         _varName = varName;
@@ -44,7 +44,7 @@ public class JmriSimplePropertyListener implements PropertyChangeListener {
         _enabled = true;
     }
 
-    JmriSimplePropertyListener(String propName, int type, NamedBeanHandle<?> namedBean, int varType, Conditional client) {
+    JmriSimplePropertyListener(String propName, int type, NamedBeanHandle<?> namedBean, Conditional.Type varType, Conditional client) {
         _propertyName = propName;
         _type = type;
         _namedBean = namedBean;
@@ -73,7 +73,7 @@ public class JmriSimplePropertyListener implements PropertyChangeListener {
         return _propertyName;
     }
 
-    public int getVarType() {
+    public Conditional.Type getVarType() {
         return _varType;
     }
 

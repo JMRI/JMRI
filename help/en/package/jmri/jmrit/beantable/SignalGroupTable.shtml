@@ -1,6 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-"http://www.w3.org/TR/html4/loose.dtd">
-
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -8,9 +6,8 @@
 
   <title>JMRI: Signal Group Table Help</title>
   <meta name="author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20170124">
-  <meta http-equiv="Content-Type" content=
-  "text/html; charset=us-ascii">
+  <meta name="Date.Modified" content="20181104">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
   <meta name="keywords" content=
   "model railroad JMRI decoderpro panelpro signal">
   <!--#include virtual="/Style" -->
@@ -18,15 +15,15 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Signal Group Table</h1>
 
       <p>The Signal Group Table displays a list of your Signal
       Groups.</p><a href="images/SignalGroupTable.png"><img src=
-      "images/SignalGroupTable.png" align="right" width="386" height=
-      "168"></a>
+      "images/SignalGroupTable.png" alt="Tools &gt; Signal Group Table"
+      align="right" width="386" height="168"></a>
 
       <p>There are six columns in the Signal Group Table:</p>
 
@@ -65,8 +62,9 @@
       the
       <a href="SignalGroupAddEdit.shtml">Edit Signal
       Group</a> window for the corresponding Signal Group. <a href=
-      "images/SignalGroup.png"><img src="images/SignalGroup.png" align="right"
-      height="223" width="309"></a></p>
+      "images/SignalGroup.png"><img src="images/SignalGroup.png"
+      alt="Signal Goup Edit pane" align="right" height="225"
+      width="257"></a></p>
 
       <h2><a name="example" id="example">Signal Group Example -
       Junction Indicator</a></h2>
@@ -74,8 +72,9 @@
       <p>Consider the following track diagram, with 6 possible
       junctions off the main running line.<br>
       <a href="images/SignalGroupTrackDiagram.png"><img src=
-      "images/SignalGroupTrackDiagram.png" height="90" width=
-      "233"></a></p>
+      "images/SignalGroupTrackDiagram.png" alt="Signal Group
+      application example track plan" height="90"
+      width="233"></a></p>
 
       <p>The Signal facing this junction will have a Junction
       Indicator attached, with each possible route through the
@@ -86,8 +85,8 @@
       <p>If the route is set for position 1, then the position 1
       indicator will be shown (pictured below).<br>
       <a href="images/SignalGroupTrackDiagram1.png"><img src=
-      "images/SignalGroupTrackDiagram1.png" height="90" width=
-      "262"></a></p>
+      "images/SignalGroupTrackDiagram1.png" alt="Position
+      indicator on signal" height="90" width="262"></a></p>
 
       <p>With this configuration, you would create a single Turnout
       Signal Head for each position, configured with both a Dark
@@ -173,6 +172,7 @@
       <p>Back to the <a href=
       "../../../../html/tools/signaling/SignalGroups.shtml">Signal
         Groups help page</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

@@ -13,8 +13,8 @@
 <body>
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI Code: GitHub Administration</h1>
 
       <h2>Background</h2>
@@ -38,11 +38,11 @@
       <ul>
         <li><a href="ContinuousIntegration.shtml">Continuous Integration</a>
             - doesn't really talk about how GitHub is configured for this, now how the services
-                are configured
-        <li><a href="gitdeveloper.shtml">Labels on Issues/PRs</a>
+                are configured</li>
+        <li><a href="gitdeveloper.shtml">Labels on Issues/PRs</a></li>
         <li>The
             <a href="https://github.com/JMRI/JMRI/blob/master/scripts/HOWTO-distribution.md">release process</a>
-            works with GitHub repositories, Issues and releases.
+            works with GitHub repositories, Issues and releases.</li>
       </ul>
       
       <h2>Merging a PR</h2>
@@ -50,11 +50,11 @@
       Except in exceptional circumstances (which should probably be discussed in the PR itself),
       PRs should only be merged when:
       <ul>
-        <li>They have passed all the CI tests
-        <li>They have no outstanding reviews
+        <li>They have passed all the CI tests</li>
+        <li>They have no outstanding reviews</li>
         <li>If in a new area, large or from a new contributor, 
-            they have been in-cue for at least a day or so to allow people to take a look at them
-        <li>Don't appear to have any un-resolved controversies in the comments
+            they have been in-queue for at least a day or so to allow people to take a look at them</li>
+        <li>Don't appear to have any un-resolved controversies in the comments</li>
       </ul>
       
       If you want a bit more time before somebody merges a PR, either start a review saying that
@@ -72,8 +72,8 @@
             Developers and maintainers can be assigned to any PR, but 
             other people who create PRs can only be assigned to their own.
             By assigning the PR, we make it easy to find what non-developers 
-            have contributed.
-        <li>Set the current milestone on the PR.  
+            have contributed.</li>
+        <li>Set the current milestone on the PR.</li>
       </ul>
       
       <h2>How we use "Teams"</h2>
@@ -82,9 +82,9 @@
       
       <p>Terms for adding people to developer status
         <ul>
-        <li>Have to have a real name on their GitHub account?
-        <li>Have to subscribe (and stay subscribed) to jmri-developers?
-        <li>Have to have worked on something other than their own projects?
+        <li>Have to have a real name on their GitHub account?</li>
+        <li>Have to subscribe (and stay subscribed) to jmri-developers?</li>
+        <li>Have to have worked on something other than their own projects?</li>
       </ul>
       
       <h2>Branches</h2>
@@ -93,7 +93,6 @@
       <a href="https://github.com/JMRI/JMRI/branches">main repository branches</a>
       (as opposed to in user repositories, which is not our problem)?
       When do we clean them out?
-      
     
       <!--#include virtual="/Footer.shtml" -->
     </div><!-- closes #mainContent-->

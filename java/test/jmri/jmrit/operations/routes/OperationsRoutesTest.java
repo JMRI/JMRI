@@ -2,26 +2,27 @@ package jmri.jmrit.operations.routes;
 
 import java.io.IOException;
 import java.util.List;
+
 import javax.swing.JComboBox;
+
+import org.jdom2.JDOMException;
+import org.junit.Assert;
+import org.junit.Test;
+
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import org.jdom2.JDOMException;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
 /**
- * Tests for the Operations Route class Last manually cross-checked on 20090131
+ * Tests for the Operations Route class. Last manually cross-checked on 20090131.
  * <p>
  * Still to do: Route: Route Location <-- Need to verify Route: XML read/write
  * RouteLocation: get/set Staging Track RouteLocation: location <--Need to
  * verify RouteLocation: XML read/write
- * <p>
+ *
  * @author Bob Coleman Copyright (C) 2008, 2009
  */
 public class OperationsRoutesTest extends OperationsTestCase {
@@ -723,17 +724,5 @@ public class OperationsRoutesTest extends OperationsTestCase {
     // TODO: Add tests for Route location track location
     // TODO: Add test to create xml file
     // TODO: Add test to read xml file
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
 
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
-    }
 }

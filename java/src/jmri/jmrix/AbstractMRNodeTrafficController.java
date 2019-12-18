@@ -43,7 +43,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     /**
      * Total number of SerialNodes registered with this TrafficController.
      * Incremented as Serial Nodes are created and registered.
-     * Corresponds to the next available address in {@link nodeArray}.
+     * Corresponds to the next available address in {@link #nodeArray}.
      */
     protected volatile int numNodes = 0;
     protected AbstractNode[] nodeArray;

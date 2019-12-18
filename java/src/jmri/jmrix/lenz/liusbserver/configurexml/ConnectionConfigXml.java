@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
  * Handle XML persistance of layout connections by persistening the LIUSB Server
  * (and connections). Note this is named as the XML version of a
  * ConnectionConfig object, but it's actually persisting the LIUSB Server.
- * <P>
+ * <p>
  * NOTE: The LIUSB Server currently has no options, so this class does not store
  * any.
  * <p>
@@ -37,6 +37,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     public Element store(Object o) {
         getInstance(o);
         Element e = new Element("connection");
+        storeCommon(e, adapter);
         e.setAttribute("class", this.getClass().getName());
         return e;
     }

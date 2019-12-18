@@ -1,31 +1,32 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import java.awt.GraphicsEnvironment;
+import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.junit.After;
 import org.junit.Assert;
+import org.junit.Assume;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
- * Test PaneProgFrame
+ * Tests for PaneProgFrame.
  *
  * @author	Bob Jacobsen
-  */
-public class PaneProgFrameTest extends TestCase {
+ */
+public class PaneProgFrameTest {
 
     // test creating a pane in config file
+    @Test
     public void testPane() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();
 
         // create test object
@@ -34,12 +35,12 @@ public class PaneProgFrameTest extends TestCase {
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
-                    // dummy implementations
-                    @Override
-                    protected JPanel getModePane() {
-                        return new JPanel();
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return new JPanel();
+            }
+        };
 
         // invoke
         result = null;
@@ -49,27 +50,26 @@ public class PaneProgFrameTest extends TestCase {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
-        JUnitUtil.dispose(f);
+        p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
     // show me the specially-created frame
+    @Test
     public void testFrame() {
-        if (GraphicsEnvironment.isHeadless()) {
-            return;
-        }
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         setupDoc();
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
                 "test frame", "programmers/Basic.xml",
                 new jmri.progdebugger.ProgDebugger(), false) {
-                    // dummy implementations
-                    @Override
-                    protected JPanel getModePane() {
-                        return null;
-                    }
-                };
+            // dummy implementations
+            @Override
+            protected JPanel getModePane() {
+                return null;
+            }
+        };
 
         // ugly, temporary way to load the decoder info
-        jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest("");
+        jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest();
         t.setupDecoder();
         DecoderFile df = new DecoderFile();  // used as a temporary
         df.loadVariableModel(t.decoder, p.variableModel);
@@ -80,7 +80,7 @@ public class PaneProgFrameTest extends TestCase {
 
         JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
         Assert.assertTrue("found frame", f != null);
-        JUnitUtil.dispose(f);
+        p.dispatchEvent(new WindowEvent(p, WindowEvent.WINDOW_CLOSING));
     }
 
     // static variables for internal classes to report their interpretations
@@ -151,36 +151,17 @@ public class PaneProgFrameTest extends TestCase {
                         )
                 )
         ); // end of adding contents
-
-        return;
     }
 
-    // from here down is testing infrastructure
-    public PaneProgFrameTest(String s) {
-        super(s);
-    }
-
-    // Main entry point
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", PaneProgFrameTest.class.getName()};
-        junit.textui.TestRunner.main(testCaseName);
-    }
-
-    // test suite from all defined tests
-    public static Test suite() {
-        TestSuite suite = new TestSuite(PaneProgFrameTest.class);
-        return suite;
-    }
-
-    // The minimal setup for log4J
-    @Override
-    protected void setUp() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+        JUnitUtil.resetProfileManager();
+        JUnitUtil.initRosterConfigManager();
     }
 
-    @Override
-    protected void tearDown() {
+    @After
+    public void tearDown() {
         JUnitUtil.tearDown();
     }
 

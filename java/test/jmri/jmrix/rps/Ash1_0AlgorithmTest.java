@@ -1,11 +1,7 @@
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * JUnit tests for the rps.Ash1_0Algorithm class.

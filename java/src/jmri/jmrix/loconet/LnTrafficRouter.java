@@ -24,9 +24,8 @@ public class LnTrafficRouter extends LnTrafficController implements LocoNetListe
      * @deprecated since 4.11.6, use LnTrafficRouter(LocoNetSystemConnectionMemo) instead
      */
     @Deprecated
-    @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification = "Only used during system initialization") // NOI18N
     public LnTrafficRouter() {
+        jmri.util.Log4JUtil.deprecationWarning(log, "LnTrafficRouter"); 
     }
 
     /**

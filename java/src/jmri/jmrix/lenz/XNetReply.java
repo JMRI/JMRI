@@ -539,6 +539,16 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
 
     /**
      * In the interest of code reuse, the following function checks to see
+     * if an XpressNet Message is the not supported Error
+     * message (61 82 e3).
+     */
+    public boolean isUnsupportedError() {
+        return (this.getElement(0) == XNetConstants.CS_INFO
+                && this.getElement(1) == XNetConstants.CS_NOT_SUPPORTED);
+    }
+
+    /**
+     * In the interest of code reuse, the following function checks to see
      * if an XpressNet Message is a communications error message.
      * The errors handled are:
      *  01 01 00  -- Error between interface and the PC
@@ -668,6 +678,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @return a string representation of the reply suitable for display in the
      * XpressNet monitor.
      */
+    @Override
     public String toMonitorString(){
         String text;
         // First, Decode anything that is sent by the LI10x, and
@@ -1120,7 +1131,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @param element2 contains the data byte including the step mode and
      * availability information 
      */
-    private String parseSpeedAndDirection(int element1, int element2) {
+    protected String parseSpeedAndDirection(int element1, int element2) {
         String text = "";
         int speedVal = 0;
         if ((element2 & 0x80) == 0x80) {
@@ -1193,7 +1204,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @param element3 contains the data byte including F0,F1,F2,F3,F4
      * @param element4 contains F12,F11,F10,F9,F8,F7,F6,F5
      */
-    private String parseFunctionStatus(int element3, int element4) {
+    protected String parseFunctionStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x10) != 0) {
             text += "F0 " + Bundle.getMessage("PowerStateOn") + "; ";
@@ -1269,7 +1280,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @param element3 contains F20,F19,F18,F17,F16,F15,F14,F13
      * @param element4 contains F28,F27,F26,F25,F24,F23,F22,F21
      */
-    private String parseFunctionHighStatus(int element3, int element4) {
+    protected String parseFunctionHighStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x01) != 0) {
             text += "F13 " + Bundle.getMessage("PowerStateOn") + "; ";
@@ -1359,7 +1370,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @param element3 contains the data byte including F0,F1,F2,F3,F4
      * @param element4 contains F12,F11,F10,F9,F8,F7,F6,F5
      */
-    private String parseFunctionMomentaryStatus(int element3, int element4) {
+    protected String parseFunctionMomentaryStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x10) != 0) {
             text += "F0 " + Bundle.getMessage("FunctionMomentary") + "; ";
@@ -1435,7 +1446,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * @param element3 contains F20,F19,F18,F17,F16,F15,F14,F13
      * @param element4 contains F28,F27,F26,F25,F24,F23,F22,F21
      */
-    private String parseFunctionHighMomentaryStatus(int element3, int element4) {
+    protected String parseFunctionHighMomentaryStatus(int element3, int element4) {
         String text = "";
         if ((element3 & 0x01) != 0) {
             text += "F13 " + Bundle.getMessage("FunctionMomentary") + "; ";

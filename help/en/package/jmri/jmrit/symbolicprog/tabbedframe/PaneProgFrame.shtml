@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: DecoderPro Service Mode Programmer</h1><a name=
       "contents" id="contents"></a>
 
@@ -48,22 +48,51 @@
       <h3>Roster tab</h3>
 
       <p>A roster is a database of all locomotives that your
-      installation of Decoder Pro has programmed. It includes the
+      installation of DecoderPro has programmed. It includes the
       information seen in the screen below:</p>
 
       <p><img src="RosterTab.png" alt="DecoderPro Roster Tab"></p>
 
-      <p>The first field "ID" becomes the file name in the Roster
-      for the locomotive you are programming.</p>
+      <ul>
+      <li>
+      The top field is labelled "ID".
+      Each roster entry has an identifier (also called Roster ID) by 
+      which it's known. This is your name for it.
+      When the program wants you to select a Roster
+      entry, it will ask you to pick from a selection box or menu containing 
+      Roster IDs. You can use anything you want for this:
+      Road number, type, even "That crummy old model I need to
+      repaint" or "My beautiful Shay".
+      <p>
+      When the entry is first created, this ID
+      field will contain &quot;&lt;new entry&gt;&quot;.
+      The program will insist you change that before you first
+      save the entry.</p>
+      <p>
+      You can change this at any time later,
+      just remember to save the entry to make the new ID permanent.</p>
 
-      <p>The DCC Address Field is the active DCC address for this
-      loco, see the <a href="#Basic">Basic Pane</a>.</p>
+      <li>Road Name, Road Number, Manufacturer, Owner, Model, 
+      Comment and Decoder Comment are for you to use as you see fit.
+      Some people put information in all of these, some in none of them.
+      See the 
+      <a href="../../../../apps/gui3/dp3/DecoderPro3.shtml">help on the main DecoderPro window</a>
+      for what appears there when you fill them out.
+      
+      <li>The Throttle Speed Limit sets the Maximum throttle
+      percentage allowed when using various JMRI throttle tools.
+      
+      <li>The DCC Address field is the active DCC address for this
+      loco. It comes from the locomotive settings, and you can't change it
+      here. See the <a href="#Basic">Basic Pane</a>.
 
-      <p>The Throttle Speed Limit sets the Maximum throttle
-      percentage allowed.</p>
-
-      <p>You can put any thing you want in the other fields.</p>
-
+      <li>The Decoder Family and Decoder Model values were defined
+      when you created this entry earlier.  They can't be changed.
+      The Date Modified value is updated automatically when you 
+      save the entry to the roster.  After the first time you 
+      do that, the filename entry will appear.
+      </ul>
+        
       <p>The Save button stores the current decoder information to
       your Roster folder. The default storage is in the same
       directory the Preferences are stored in.</p>

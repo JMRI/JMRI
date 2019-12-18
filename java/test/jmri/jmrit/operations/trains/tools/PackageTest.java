@@ -6,8 +6,9 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
         BundleTest.class,
-        OperationsTrainsGuiTest.class,
         ChangeDepartureTimesFrameTest.class,
+        ExportTimetableActionTest.class,
+        ExportTimetableTest.class,
         ExportTrainRosterActionTest.class,
         ExportTrainsTest.class,
         ShowCarsInTrainFrameTest.class,

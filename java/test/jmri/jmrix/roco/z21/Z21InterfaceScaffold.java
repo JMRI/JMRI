@@ -5,13 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Z21InterfaceScaffold.java
- *
- * Description:	Test scaffold implementation of Z21Interface
+ * Test scaffold implementation of Z21Interface.
+ * <p>
+ * Use an object of this type as a Z21TrafficController in tests
  *
  * @author	Bob Jacobsen Copyright (C) 2002, 2006
- *
- * Use an object of this type as a Z21TrafficController in tests
  */
 public class Z21InterfaceScaffold extends Z21TrafficController {
 
@@ -41,7 +39,8 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
 
     // test control member functions
     /**
-     * forward a message to the listeners, e.g. test receipt
+     * forward a message to the listeners, e.g.test receipt
+     * @param m the message to test
      */
     public void sendTestMessage(Z21Reply m) {
         // forward a test message to Z21Listeners
@@ -49,7 +48,6 @@ public class Z21InterfaceScaffold extends Z21TrafficController {
             log.debug("sendTestMessage    [" + m + "]");
         }
         notifyReply(m, null);
-        return;
     }
 
     /*

@@ -13,14 +13,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - for Unified Software -->
+<!-- version 1.1 - 3-Feb-17 WestAust55 -Motor Pane Restructured - refer CV61 entries, CV7 tool tip corrected -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV1-6.xml"/>
-  <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="=41-46 for all TCS with Back EMF models, Read Only">
+  <variable CV="7" readOnly="yes" item="Decoder Version" tooltip="=86-90 for all TCS with Back EMF models, Read Only">
     <decVal/>
     <label>Version ID</label>
     <label xml:lang="it">ID Versione</label>
-    <tooltip xml:lang="it">=41-46 per tutti i modelli TCS con Back EMF, Sola Lettura</tooltip>
+    <tooltip xml:lang="it">=86-90 per tutti i modelli TCS con Back EMF, Sola Lettura</tooltip>
   </variable>
   <variable CV="8" readOnly="yes" item="Manufacturer" default="153" tooltip="=153 for TCS, Read Only">
     <decVal/>
@@ -133,6 +134,36 @@
     <label>Consist Deceleration Adjustment</label>
     <label xml:lang="it">Correzione Decellazione Consist</label>
     <tooltip xml:lang="it">Valori oltre 128 incrementano correzzione, minori di 128 decrementano</tooltip>
+  </variable>
+  <variable item="Advanced Group 2 Option 12" CV="28" default="1" mask="XXXXXXXV">
+    <qualifier>
+      <variableref>Decoder ID</variableref>
+      <relation>ge</relation>
+      <value>89</value>
+    </qualifier>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>RailCom Channel 1 Address</label>
+    <tooltip>If enabled, Channel 1 will broadcast the address</tooltip>
+  </variable>
+  <variable item="Advanced Group 2 Option 13" CV="28" default="1" mask="XXXXXXVX">
+    <qualifier>
+      <variableref>Decoder ID</variableref>
+      <relation>ge</relation>
+      <value>89</value>
+    </qualifier>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>RailCom Channel 2</label>
+    <tooltip>If enabled, Channel 2 will send and receive data and provide acknowledgements. </tooltip>
+  </variable>
+  <variable item="Advanced Group 2 Option 14" CV="28" default="1" mask="XXXVXXXX">
+    <qualifier>
+      <variableref>Decoder ID</variableref>
+      <relation>ge</relation>
+      <value>89</value>
+    </qualifier>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>RailCom Programming Address 253</label>
+    <tooltip>Serves as a programming lock. If this setting is disabled, programming address 253 will be locked. </tooltip>
   </variable>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV29.xml"/>
   <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1">
@@ -965,16 +996,16 @@
     <label xml:lang="it">Abilitazione BEMF</label>
     <tooltip xml:lang="it">Abilita (default=on) BEMF, abilitando la BEMF si disabilitano le Fluttuazioni</tooltip>
   </variable>
-  <variable CV="61" mask="XXXXXXVX" default="0" item="EMF Option 1" tooltip="Disable(default)/Enable button control of BEMF">
+  <variable CV="61" mask="XXXXXXVX" default="0" item="EMF Static Config" tooltip="Disable(default)/Enable button control of BEMF">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Enable BEMF Button Control</label>
     <label xml:lang="it">Abilita pulsante controllo BEMF</label>
     <tooltip xml:lang="it">Disabilita(default)/Abilita controllo BEMF da pulsante</tooltip>
   </variable>
-  <variable CV="61" mask="XXXXVXXX" item="Function 5 effect generated" tooltip="Disable(default)/Enable button control of Brake">
+  <variable CV="61" mask="XXXXVXXX" item="Motor Option 4" tooltip="Disable(default)/Enable button control of Brake">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Enable Brake Button Control</label>
-    <label xml:lang="it">Abilita pulsante controllo Freni</label>
+    <label xml:lang="it">Abilita pulsante controllo Freni</label> 
     <tooltip xml:lang="it">Disabilita(default)/Abilita controllo Freni da pulsante</tooltip>
   </variable>
   <variable CV="61" mask="XXXVXXXX" item="Directional Headlights">
@@ -982,12 +1013,18 @@
     <label>Headlight Dim When Stopped</label>
     <label xml:lang="it">Luce frontale smorzata da fermo</label>
   </variable>
+  <variable CV="61" mask="VXXXXXXX" default="0" item="Function 5 effect generated" tooltip="Disable(default)/Enable button control of Brake Light (Trolley)">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+    <label>Button Control of Brake Light</label>
+	    <label xml:lang="it">Abilita pulsante di controllo della luce Freno</label>
+    <tooltip xml:lang="it">Disabilitare (default) / Abilita controllo pulsante di luce Freno (Trolley)</tooltip>
+  </variable>
   <variable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
     <label>Opposite Headlight Dim</label>
     <label xml:lang="it">Smorzamento luci opposte</label>
   </variable>
-  <variable CV="61" mask="XVXXXXXX" item="EMF Static Config" tooltip="Motor controlled by Function button">
+  <variable CV="61" mask="XVXXXXXX" item="Motor Option 1" tooltip="Motor controlled by Function button">
     <enumVal>
       <enumChoice choice="Disabled">
          <choice xml:lang="fr">Désactivé</choice>
@@ -1002,7 +1039,7 @@
     <label xml:lang="it">Pulsante controllo Motore</label>
     <tooltip xml:lang="it">Motore controllato da Pulsante Funzione</tooltip>
   </variable>
-  <variable CV="61" mask="XXXXXVXX" item="EMF Dynamic Config" tooltip="If motor button control is active">
+  <variable CV="61" mask="XXXXXVXX" item="Motor Option 3" tooltip="If motor button control is active">
     <enumVal>
       <enumChoice choice="Manual F2 for, F3 rev">
         <choice xml:lang="it">Manuale: F2-avanti, F3-retro</choice>
@@ -1033,23 +1070,7 @@
     <label xml:lang="it">Luminosità costante di smorzamento</label>
     <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
   </variable>
-  <variable CV="66" item="Forward Trim" default="128" comment="Range 0-256">
-    <decVal max="256"/>
-    <label>Forward Motor Trim</label>
-    <comment>Range 0-256</comment>
-    <label xml:lang="it">Regolazione fine in Avanti</label>
-    <comment xml:lang="it">Valori 0-256</comment>
-  </variable>
-  <variable item="Speed Table" CV="67">
-    <speedTableVal/>
-    <label>Speed Table</label>
-    <label xml:lang="it">Tabella Velocità</label>
-  </variable>
-  <variable CV="95" item="Reverse Trim" default="128" comment="Range 0-256">
-    <decVal max="256"/>
-    <label>Reverse Motor Trim</label>
-    <comment>Range 0-256</comment>
-    <label xml:lang="it">Regolazione fine indietro</label>
-    <comment xml:lang="it">Valori 0-256</comment>
-  </variable>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim128.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim128.xml"/>
 </variables>

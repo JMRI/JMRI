@@ -30,13 +30,13 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Frame providing access to a speedometer.
- * <P>
+ * <p>
  * This contains very simple debouncing logic:
- * <UL>
- * <LI>The clock starts when the "start" sensor makes the correct transition.
- * <LI>When a "stop" sensor makes the correct transition, the speed is computed
+ * <ul>
+ * <li>The clock starts when the "start" sensor makes the correct transition.
+ * <li>When a "stop" sensor makes the correct transition, the speed is computed
  * and displayed.
- * </UL>
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2004, 2007
  * @author Adapted for metric system - S.K. Bosch
@@ -45,17 +45,17 @@ import org.slf4j.LoggerFactory;
 public class SpeedometerFrame extends jmri.util.JmriJFrame {
 
     final String blank = "       ";
-    JTextField startSensor = new JTextField(5); // N11N
+    JTextField startSensor = new JTextField(5);
     javax.swing.ButtonGroup startGroup = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton startOnEntry = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton startOnExit = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    JTextField stopSensor1 = new JTextField(5);  // N11N
+    JTextField stopSensor1 = new JTextField(5);
     javax.swing.ButtonGroup stopGroup1 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit1 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));
 
-    public JTextField stopSensor2 = new JTextField(5);  // N11N
+    public JTextField stopSensor2 = new JTextField(5);
     javax.swing.ButtonGroup stopGroup2 = new javax.swing.ButtonGroup();
     javax.swing.JRadioButton stopOnEntry2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonEntry"));
     javax.swing.JRadioButton stopOnExit2 = new javax.swing.JRadioButton(Bundle.getMessage("RadioButtonExit"));

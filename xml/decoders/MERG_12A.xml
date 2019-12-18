@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<!-- Copyright (C) JMRI 2005, 2019 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -14,6 +14,8 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Len Royles len@len-royles.co.uk" version="2" lastUpdated="20050204"/>
+  <version author="Alain Le Marchand" version="3" lastUpdated="20190109"/>  
+  <!-- Version 3: Fix error on bit mapping for CV51 RO and FO -->
   <!-- This is for the MERG Decod12A decoder with the new MERG(165) mfg. -->
   <decoder>
     <family name="MERG HF PWM decoders" mfg="MERG" lowVersionID="133">
@@ -307,11 +309,11 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 ML</label>
       </variable>
-      <variable item="F1 RO" CV="51" mask="XXXXXXXX">
+      <variable item="F1 RO" CV="51" mask="XXXXVXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 RO</label>
       </variable>
-      <variable item="F1 FO" CV="51" mask="XXXXVXXX">
+      <variable item="F1 FO" CV="51" mask="XXXVXXXX">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
         <label>F1 FO</label>
       </variable>
@@ -450,10 +452,7 @@
         <label>Feedback Filter Kfr</label>
         <comment>Range 255-0 lower values increase filter</comment>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
     </variables>
   </decoder>
   <pane>

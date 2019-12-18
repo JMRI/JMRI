@@ -1,9 +1,11 @@
 package jmri.jmrix.jmriclient;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -11,6 +13,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active and provide general
@@ -91,34 +94,22 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
      */
     public void requestAllStatus() {
 
-        getTurnoutManager().getSystemNameList().forEach((t) -> {
-            Turnout turn = getTurnoutManager().getTurnout(t);
-            if (turn != null) {
-               ((JMRIClientTurnout)(turn)).requestUpdateFromLayout();
-            }
+        getTurnoutManager().getNamedBeanSet().forEach((turn) -> {
+            ((JMRIClientTurnout)(turn)).requestUpdateFromLayout();
         }); 
-        getSensorManager().getSystemNameList().forEach((s) -> {
-            Sensor sen = getSensorManager().getSensor(s);
-            if (sen != null) {
-                ((JMRIClientSensor)(sen)).requestUpdateFromLayout();
-            }
+        getSensorManager().getNamedBeanSet().forEach((sen) -> {
+            ((JMRIClientSensor)(sen)).requestUpdateFromLayout();
         }); 
-        getLightManager().getSystemNameList().forEach((l) -> {
-            Light o = getLightManager().getLight(l);
-            if (o != null) {
-                ((JMRIClientLight)o).requestUpdateFromLayout();
-            }
+        getLightManager().getNamedBeanSet().forEach((light) -> {
+            ((JMRIClientLight)light).requestUpdateFromLayout();
         }); 
-        getReporterManager().getSystemNameList().forEach((r) -> {
-            Reporter rep = getReporterManager().getReporter(r);
-            if (rep != null) {
-                ((JMRIClientReporter)(rep)).requestUpdateFromLayout();
-            }
+        getReporterManager().getNamedBeanSet().forEach((rep) -> {
+            ((JMRIClientReporter)(rep)).requestUpdateFromLayout();
         }); 
     }
 
     /*
-     * Provides access to the Power Manager for this particular connection.
+     * Provides access to the PowerManager for this particular connection.
      */
     public PowerManager getPowerManager() {
         return powerManager;
@@ -131,7 +122,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     private PowerManager powerManager;
 
     /*
-     * Provides access to the Sensor Manager for this particular connection.
+     * Provides access to the SensorManager for this particular connection.
      */
     public SensorManager getSensorManager() {
         return sensorManager;
@@ -145,8 +136,8 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     private SensorManager sensorManager = null;
 
     /*
-     * Provides access to the Turnout Manager for this particular connection.
-     * NOTE: Turnout manager defaults to NULL
+     * Provides access to the TurnoutManager for this particular connection.
+     * NOTE: TurnoutManager defaults to NULL
      */
     public TurnoutManager getTurnoutManager() {
         return turnoutManager;
@@ -160,8 +151,8 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     private TurnoutManager turnoutManager = null;
 
     /*
-     * Provides access to the Light Manager for this particular connection.
-     * NOTE: Light manager defaults to NULL
+     * Provides access to the LightManager for this particular connection.
+     * NOTE: LightManager defaults to NULL
      */
     public LightManager getLightManager() {
         return lightManager;
@@ -187,7 +178,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     private ReporterManager reporterManager = null;
 
     public void setTransmitPrefix(String tPrefix) {
-        transmitPrefix = tPrefix.toUpperCase();
+        transmitPrefix = tPrefix;
     }
 
     public String getTransmitPrefix() {
@@ -203,6 +194,11 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions that can be loaded at startup
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

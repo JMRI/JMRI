@@ -1,9 +1,9 @@
 package jmri.jmrix.loconet.pr3;
 
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 
 /**
  *
@@ -11,14 +11,13 @@ import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
  */
 public class PR3SystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMemoTestBase {
 
-
     // The minimal setup for log4J
     @Override
     @Before
     public void setUp() {
        JUnitUtil.setUp();
-       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
        PR3SystemConnectionMemo memo = new PR3SystemConnectionMemo();
+       LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold(memo);
        memo.setLnTrafficController(lnis);
        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100,false,false,false);
        memo.configureManagers();

@@ -4,9 +4,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 /**
@@ -143,12 +141,12 @@ public class CarsTest extends OperationsTestCase {
     public void testSetLocation() {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
-        Car c1 = manager.newCar("CP", "1");
-        Car c2 = manager.newCar("ACL", "3");
-        Car c3 = manager.newCar("CP", "3");
-        Car c4 = manager.newCar("CP", "3-1");
-        Car c5 = manager.newCar("PC", "2");
-        Car c6 = manager.newCar("AA", "1");
+        Car c1 = manager.newRS("CP", "1");
+        Car c2 = manager.newRS("ACL", "3");
+        Car c3 = manager.newRS("CP", "3");
+        Car c4 = manager.newRS("CP", "3-1");
+        Car c5 = manager.newRS("PC", "2");
+        Car c6 = manager.newRS("AA", "1");
 
         //setup the cars
         c1.setTypeName("Boxcar");
@@ -210,12 +208,12 @@ public class CarsTest extends OperationsTestCase {
     public void testSetDestination() {
         CarManager manager = InstanceManager.getDefault(CarManager.class);
 
-        Car c1 = manager.newCar("CP", "1");
-        Car c2 = manager.newCar("ACL", "3");
-        Car c3 = manager.newCar("CP", "3");
-        Car c4 = manager.newCar("CP", "3-1");
-        Car c5 = manager.newCar("PC", "2");
-        Car c6 = manager.newCar("AA", "1");
+        Car c1 = manager.newRS("CP", "1");
+        Car c2 = manager.newRS("ACL", "3");
+        Car c3 = manager.newRS("CP", "3");
+        Car c4 = manager.newRS("CP", "3-1");
+        Car c5 = manager.newRS("PC", "2");
+        Car c6 = manager.newRS("AA", "1");
 
         //setup the cars
         c1.setTypeName("Boxcar");
@@ -277,19 +275,5 @@ public class CarsTest extends OperationsTestCase {
         Assert.assertEquals("destination c4", Track.OKAY, c4.setDestination(l2, l2t1));
         Assert.assertEquals("destination c5", Track.OKAY, c5.setDestination(l1, l1t1));
         Assert.assertEquals("destination c6", Track.OKAY, c6.setDestination(l1, l1t2));
-    }
-
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

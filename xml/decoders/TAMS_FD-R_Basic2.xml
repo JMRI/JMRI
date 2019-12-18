@@ -12,6 +12,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20150604"/>
   <!-- 1 Creation 
 		First definition, based on original FD-R Basic firmware (2015/02)
@@ -42,13 +43,9 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>
       <!-- Consist address (consist direction bit 7 not supported) -->
-      <variable item="Consist Address" CV="19" mask="XVVVVVVV">
-        <decVal max="127"/>
-        <label>Consist Address</label>
-        <label xml:lang="it">Indirizzo Consist</label>
-        <label xml:lang="fr">Adresse UM</label>
-        <label xml:lang="de">Verbundadresse</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <!-- Definitions for Railcom/Motorola Panel -->
       <variable item="Feedback on canal 1" CV="28" mask="XXXXXXXV" default="1">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -1168,7 +1165,7 @@
         <text> </text>
       </label>
       <label>
-        <text>Important! This decoder has 2 parallels CVs tables. One</text>
+        <text>Important! This decoder has 2 parallel CVs tables. One</text>
         <text xml:lang="fr">Important! Ce décodeur possède deux tables de CVs.</text>
         <text xml:lang="de">Wichtig! Zum Programmieren des Funktionsdecoder-Bereichs   </text>
       </label>

@@ -1,15 +1,17 @@
 package jmri.jmrix.debugthrottle;
 
+import java.util.EnumSet;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
+import jmri.SpeedStepMode;
 import jmri.jmrix.AbstractThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of a ThrottleManager for debugging.
- * <P>
+ *
  * @author Bob Jacobsen Copyright (C) 2003, 2005
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
@@ -27,10 +29,15 @@ public class DebugThrottleManager extends AbstractThrottleManager {
 
     @Override
     public void requestThrottleSetup(LocoAddress a, boolean control) {
-        // Immediately trigger the callback.
-        DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new debug throttle for " + address);
-        notifyThrottleKnown(new DebugThrottle(address, adapterMemo), a);
+        if (a instanceof DccLocoAddress) {
+            // Immediately trigger the callback.
+            DccLocoAddress address = (DccLocoAddress) a;
+            log.debug("new debug throttle for " + address);
+            notifyThrottleKnown(new DebugThrottle(address, adapterMemo), a);
+        }
+        else {
+            log.error("LocoAddress {} is not a DccLocoAddress",a);
+        }
     }
 
     /**
@@ -63,23 +70,28 @@ public class DebugThrottleManager extends AbstractThrottleManager {
     public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l) {
         log.debug("disposeThrottle called for " + t);
         if (super.disposeThrottle(t, l)) {
-            DebugThrottle lnt = (DebugThrottle) t;
-            lnt.throttleDispose();
-            return true;
+            if (t instanceof DebugThrottle) {
+                DebugThrottle lnt = (DebugThrottle) t;
+                lnt.throttleDispose();
+                return true;
+            }
+            else {
+                log.error("DccThrottle {} is not a DebugThrottle",t);
+            }
         }
         return false;
     }
 
     /**
      * What speed modes are supported by this system? value should be xor of
-     * possible modes specifed by the DccThrottle interface
+     * possible modes specified by the DccThrottle interface
      */
     @Override
-    public int supportedSpeedModes() {
-        return (DccThrottle.SpeedStepMode128
-                | DccThrottle.SpeedStepMode28
-                | DccThrottle.SpeedStepMode27
-                | DccThrottle.SpeedStepMode14);
+    public EnumSet<SpeedStepMode> supportedSpeedModes() {
+        return EnumSet.of(SpeedStepMode.NMRA_DCC_128
+                , SpeedStepMode.NMRA_DCC_28
+                , SpeedStepMode.NMRA_DCC_27
+                , SpeedStepMode.NMRA_DCC_14);
     }
 
     private final static Logger log = LoggerFactory.getLogger(DebugThrottleManager.class);

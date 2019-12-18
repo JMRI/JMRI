@@ -5,7 +5,8 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-        jmri.util.junit.rules.PackageTest.class
+        jmri.util.junit.rules.PackageTest.class,
+        jmri.util.junit.annotations.PackageTest.class
 })
 
 /**

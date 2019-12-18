@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Provides load and store functionality for configuring SRCPSensorManagers.
- * <P>
+ * <p>
  * Uses the store method from the abstract base class, but provides a load
  * method here.
  *
@@ -32,8 +32,6 @@ public class SRCPSensorManagerXml extends jmri.managers.configurexml.AbstractSen
 
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
-        // create the master object
-        SRCPSensorManager.instance();
         // load individual sensors
         return loadSensors(shared);
     }

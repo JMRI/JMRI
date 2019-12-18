@@ -10,22 +10,21 @@ import org.junit.*;
  *
  * @author	Bob Jacobsen
  */
-public class EasyDccPacketGenFrameTest {
-
-    @Test
-    public void testFrameCreate() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        EasyDccPacketGenFrame easyDccPacketGenFrame = new EasyDccPacketGenFrame(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
-        Assert.assertNotNull(easyDccPacketGenFrame);
-    }
+public class EasyDccPacketGenFrameTest extends jmri.util.JmriJFrameTestBase {
 
     @Before
+    @Override
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
+        if(!GraphicsEnvironment.isHeadless()){
+           frame = new EasyDccPacketGenFrame(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
+        } 
     }
 
     @After
+    @Override
     public void tearDown() {
-        jmri.util.JUnitUtil.tearDown();
+        jmri.util.JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        super.tearDown();
     }
 }

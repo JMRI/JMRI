@@ -1,23 +1,23 @@
 package jmri.jmrix.can.cbus;
 
 import java.util.ResourceBundle;
+import jmri.CabSignalManager;
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
+import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
+import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.ThrottleManager;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
 /**
- * Does configuration for various CAN-based communications implementations.
- * <p>
- * It would be good to replace this with properties-based method for redirecting
- * to classes in particular subpackages.
+ * Does configuration for MERG CBUS CAN-based communications implementations.
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
@@ -31,13 +31,15 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         super(memo);
         InstanceManager.store(this, CbusConfigurationManager.class);
         InstanceManager.store(cf = new jmri.jmrix.can.cbus.swing.CbusComponentFactory(adapterMemo),
-                jmri.jmrix.swing.ComponentFactory.class);
+            jmri.jmrix.swing.ComponentFactory.class);
     }
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
     @Override
     public void configureManagers() {
+        
+        InstanceManager.store(getCbusPreferences(), CbusPreferences.class);
 
         InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
 
@@ -56,12 +58,19 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (getProgrammerManager().isGlobalProgrammerAvailable()) {
             InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
         }
+        
+        InstanceManager.store(getCbusNodeTableDataModel(), CbusNodeTableDataModel.class);
 
-        jmri.InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
+        InstanceManager.store(getCommandStation(), jmri.CommandStation.class);
 
-        jmri.InstanceManager.setReporterManager(getReporterManager());
+        InstanceManager.setReporterManager(getReporterManager());
 
-        jmri.InstanceManager.setLightManager(getLightManager());
+        InstanceManager.setLightManager(getLightManager());
+        
+        InstanceManager.setDefault(CabSignalManager.class,getCabSignalManager());
+        
+        InstanceManager.setDefault(CbusEventTableDataModel.class,getCbusEventTableDataModel());
+        
     }
 
     /**
@@ -92,7 +101,18 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return true;
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
+        } else if (type.equals(jmri.MultiMeter.class)) {
+            return true;
+        } else if (type.equals(CbusPreferences.class)) {
+            return true;
+        } else if (type.equals(CbusNodeTableDataModel.class)) {
+            return true;
+        } else if (type.equals(CabSignalManager.class)) {
+            return true;
+        } else if (type.equals(CbusEventTableDataModel.class)) {
+            return true;
         }
+        
         return false; // nothing, by default
     }
 
@@ -121,8 +141,17 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T) getLightManager();
         } else if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
+        } else if (T.equals(jmri.MultiMeter.class)) {
+            return (T) getMultiMeter();
+        } else if (T.equals(CbusPreferences.class)) {
+            return (T) getCbusPreferences();
+        } else if (T.equals(CbusNodeTableDataModel.class)) {
+            return (T) getCbusNodeTableDataModel();
+        } else if (T.equals(CabSignalManager.class)) {
+            return (T) getCabSignalManager();
+        } else if (T.equals(CbusEventTableDataModel.class)) {
+            return (T) getCbusEventTableDataModel();
         }
-
         return null; // nothing, by default
     }
 
@@ -227,9 +256,88 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         return commandStation;
     }
+    
+    protected CbusMultiMeter multiMeter;
+    
+     public void enableMultiMeter(){
+        jmri.InstanceManager.store( getMultiMeter(), jmri.MultiMeter.class );
+    }
+    
+    // created on demand
+    public CbusMultiMeter getMultiMeter() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (multiMeter == null) {
+            multiMeter = new CbusMultiMeter(adapterMemo);
+        }
+        jmri.InstanceManager.store( multiMeter, jmri.MultiMeter.class );
+        return multiMeter;
+    }
+    
+
+    private CbusPreferences cbusPreferences = null;
+
+    public CbusPreferences getCbusPreferences() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (cbusPreferences == null) {
+            cbusPreferences = new CbusPreferences();
+            jmri.InstanceManager.store( cbusPreferences, CbusPreferences.class );
+        }
+        return cbusPreferences;
+    }
+
+    private CbusNodeTableDataModel cbusNodeTableDataModel = null;
+
+    public CbusNodeTableDataModel getCbusNodeTableDataModel() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (cbusNodeTableDataModel == null) {
+            cbusNodeTableDataModel = new CbusNodeTableDataModel(adapterMemo, 2, CbusNodeTableDataModel.MAX_COLUMN);
+            
+            if ( cbusPreferences == null ){
+                cbusPreferences = getCbusPreferences();
+            }
+            cbusNodeTableDataModel.startup();
+        }
+        return cbusNodeTableDataModel;
+    }
+    
+    private CbusEventTableDataModel cbusEventTable = null;
+    
+    public CbusEventTableDataModel getCbusEventTableDataModel(){
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (cbusEventTable == null) {
+            cbusEventTable = new CbusEventTableDataModel(adapterMemo, 5, CbusEventTableDataModel.MAX_COLUMN);
+            InstanceManager.store(cbusEventTable, CbusEventTableDataModel.class);
+        }
+        return cbusEventTable;
+    }
+    
+    protected CbusCabSignalManager cabSignalManager;
+
+    public CbusCabSignalManager getCabSignalManager() {
+        if ( adapterMemo.getDisabled() ) {
+            return null;
+        }
+        if (cabSignalManager == null) {
+            cabSignalManager = new CbusCabSignalManager(adapterMemo);
+        }
+        return cabSignalManager;
+    }
+
 
     @Override
     public void dispose() {
+        
+        if ( cbusEventTable != null ){
+            InstanceManager.deregister(cbusEventTable, CbusEventTableDataModel.class);
+        }
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         }
@@ -251,7 +359,19 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (throttleManager != null) {
             InstanceManager.deregister((CbusThrottleManager) throttleManager, jmri.jmrix.can.cbus.CbusThrottleManager.class);
         }
-        InstanceManager.deregister(this, CbusConfigurationManager.class);
+        if (commandStation != null) {
+            InstanceManager.deregister(commandStation, jmri.CommandStation.class);
+        }
+        if (multiMeter != null) {
+            InstanceManager.deregister(multiMeter, jmri.MultiMeter.class);
+        }
+        if (cbusPreferences != null) {
+            InstanceManager.deregister(cbusPreferences, jmri.jmrix.can.cbus.CbusPreferences.class);
+        }
+        if (cbusNodeTableDataModel != null) {
+            InstanceManager.deregister(cbusNodeTableDataModel, CbusNodeTableDataModel.class);
+        }
+       InstanceManager.deregister(this, CbusConfigurationManager.class);
     }
 
     @Override

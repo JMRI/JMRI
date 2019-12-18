@@ -6,10 +6,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Distributes Readings and the Measurements calculated from them.
- * <P>
- * @author	Bob Jacobsen Copyright (C) 2006, 2008
  *
-  */
+ * @author	Bob Jacobsen Copyright (C) 2006, 2008
+ */
 public class Distributor {
 
     /**
@@ -32,7 +31,7 @@ public class Distributor {
     }
 
     /**
-     * Invoked when a new Reading is created
+     * Invoked when a new Reading is created.
      */
     @SuppressWarnings("unchecked")
     public void submitReading(Reading s) {
@@ -41,10 +40,7 @@ public class Distributor {
         synchronized (this) {
             v = (Vector<ReadingListener>) readingListeners.clone();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size()
-                    + " ReadingListeners about item ");
-        }
+        log.debug("notify {} ReadingListeners about item", v.size());
         // forward to all listeners
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
@@ -73,7 +69,7 @@ public class Distributor {
     }
 
     /**
-     * Invoked when a new Measurement is created
+     * Invoked when a new Measurement is created.
      */
     @SuppressWarnings("unchecked")
     public void submitMeasurement(Measurement s) {
@@ -82,10 +78,7 @@ public class Distributor {
         synchronized (this) {
             v = (Vector<MeasurementListener>) measurementListeners.clone();
         }
-        if (log.isDebugEnabled()) {
-            log.debug("notify " + v.size()
-                    + " MeasurementListeners about item ");
-        }
+        log.debug("notify {} MeasurementListeners about item", v.size());
         // forward to all listeners
         int cnt = v.size();
         for (int i = 0; i < cnt; i++) {
@@ -109,10 +102,8 @@ public class Distributor {
     final private Vector<ReadingListener> readingListeners = new Vector<ReadingListener>();
     final private Vector<MeasurementListener> measurementListeners = new Vector<MeasurementListener>();
 
-    private final static Logger log = LoggerFactory.getLogger(Distributor.class);
-
     /**
-     * Forward the Reading from the Swing thread
+     * Forward the Reading from the Swing thread.
      */
     static class ForwardReading implements Runnable {
 
@@ -131,7 +122,7 @@ public class Distributor {
     }
 
     /**
-     * Forward the Measurement from the Swing thread
+     * Forward the Measurement from the Swing thread.
      */
     static class ForwardMeasurement implements Runnable {
 
@@ -149,6 +140,6 @@ public class Distributor {
         }
     }
 
+    private final static Logger log = LoggerFactory.getLogger(Distributor.class);
+
 }
-
-

@@ -1,0 +1,291 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: "What...Where" of Jython Scripting with JMRI</title>
+    <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+    <!-- /Style -->
+</head>
+
+<body id="WhatWhereTopOfPage">
+  <!--#include virtual="/Header" -->
+  <div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+      <!-- Page Body -->
+
+      <h1>JMRI: "What...Where" of Jython Scripting with JMRI</h1>
+ 	  <!-- Page reorganized by Jerry Grochow 2018-11-29 -->
+
+
+      <p class="subtitle">Other interesting tidbits about
+      scripting in JMRI with Jython</p>
+	  
+      <ul>
+      <li><a href="#storescripts">Where should I store my JMRI Jython scripts?</a></li>
+      <li><a href="#classes">Where can I find more information on the JMRI classes?</a></li>
+      <li><a href="#names">What is the difference between System names and User names?</a></li>     
+	  <li><a href="#import">What do the words "<code>import</code>" and "<code>class</code>" mean?</a></li>
+      <li><a href="#threads">Why should I based my script on "Siglet" and "AbstractAutomaton" classes?</a></li>
+      <li><a href="#siglet-automaton">What's the difference between the "Siglet" and
+      "AbstractAutomaton" classes?</a></li>
+	  </ul>
+      
+	  <p>See the <a href="Examples.shtml">examples page</a> for many sample scripts. Also,
+        the <a href="Start.shtml">introductory page</a> shows some
+        of the basic commands.</p>
+	  <p>See also <a href="HowTo.shtml">JMRI Scripting "How To..."</a></p>
+      <p>See also <a href="Python.shtml">Jython/Python Language</a> for general info about the language.</p>
+	  
+	  
+ <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+           
+	  <h2><a id="storescripts">Where should I store my JMRI Jython scripts?</a></h2>
+      
+      <div class="para">
+      
+      <p>You CAN use any location for your own
+      scripts, including locations within a Dropbox (or other file
+      sharing system) folder where they will be available across multiple computers. [Instructions on using
+      Dropbox with various JMRI files can be found at <a href="http://jmri.org/help/en/html/setup/Dropbox.shtml" target="_blank">
+      JMRI Setup: Sharing Files with Dropbox</a>.]</p>
+      
+      <p>However, you should NEVER store your own scripts (or any other user-created files) anywhere within your
+      Program Location as they will be lost in a JMRI upgrade. Unfortunately, JMRI currently defaults the
+      Scripts Location to the Jython sample scripts folder located within your JMRI Program
+      Location. To resolve this, change the Scripts Location in Preferences (Preferences->Locations)
+      so that your location will be displayed automatically.</p>
+
+      <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a></p>
+      </div>
+      
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+      
+      <h2><a id="classes">Where can I find more information on the JMRI classes?</a></h2>
+
+      <div class="para">
+        The <a href="http://jmri.org/JavaDoc/doc/" target="_blank">class
+        documentation pages</a> include automatically-built summary
+        information on every class.
+
+        <p>There are a lot of classes! To help you find things, it
+        might be useful to look at the <a href=
+        "../../doc/Technical/Patterns.shtml">page on JMRI
+        structure</a>, which is part of the <a href=
+        "../../doc/Technical/index.shtml">JMRI technical
+        documentation</a>. Note the references on the left-hand
+        side.</p>
+        
+        <p>Additional information can be found in the JavaDocs for specific types of classes, for example:
+   
+       <p><a href="http://jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html" target="_blank">
+        http://jmri.org/JavaDoc/doc/index.html?jmri/SensorManager.html</a><br>
+        <a href="http://jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html" target="_blank">
+        http://jmri.org/JavaDoc/doc/index.html?jmri/TurnoutManager.html</a><br>
+        <a href="http://jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html" target="_blank">
+        http://jmri.org/JavaDoc/doc/index.html?jmri/LightManager.html</a><br>
+        <a href="http://jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html" target="_blank">
+        http://jmri.org/JavaDoc/doc/index.html?jmri/BlockManager.html</a>
+        </p>
+        
+      <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a></p>
+
+        </div>
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  	
+     <h2><a id="names">What is the difference between System Names and User Names?</a></h2>
+
+      <p>Click for more information on <a href="../../../../../help/en/html/doc/Technical/Names.shtml"> Names and Naming</a>.</p>
+		
+		<p>System names for sensors, turnouts, lights and others, are connection specific. A LocoNet sensor
+		name begins with "LS" while a CMRI sensor begins with "CS" and an internal sensor with "IS". 
+		"provide" methods check the prefix of the passed string to determine if it matches a defined connection
+		or internal. If so, and the rest of the name is valid, the sensor is created. If a match does not 
+		exist, it assigns the prefix for the first connection in the currently open connection list.</p>
+		
+		<p>Example: If your connections are LocoNet and CMRI, a provideSensor request without a prefix of LS, 
+		CS or IS, will be assigned LS. If the name value is not one to four numeric digits (a LocoNet 
+		requirement), you get a bad format error. Memories are only internal, so provideMemory uses "IM" as 
+		the default prefix.</p>
+        
+        <p>Since System names follow a prescribed format, there is a procedure for checking whether a name
+        is valid.  Use this code to create a sensor with a valid name:</p>
+        
+        <!-- Example adapted from Randall Wood post to jmriusers@groups.io 2019-09-06 -->
+        <pre>
+        try:
+           sensors.validateSystemNameFormat(MySensorSystemName)
+        except jmri.NamedBean.BadSystemNameException:
+           print 'Invalid name: ', MySensorSystemName 
+        </pre>    
+		
+		<p>User names are set after input and outputs are created. They can be any character string you want. 
+		You can use user name or system name in scripts and Logix. The use of user names is recommended for 
+		these purposes if there is the possibility that you will be changing your control system in which case 
+		system names will be changing as well.</p>
+        
+     <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a></p>        
+
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  	    
+	   <h2><a id="import">What do the words "<code>import</code>", "<code>class</code>" mean?</a></h2>
+
+      <div class="para">
+        They're part of the jython language used for the scripting.
+
+        <p>"import" allow you to refer to things by shorter
+        names, essentially telling jython "search the imported packages (e.g. jarray and jmri)
+        packages and recognize all the names there". For somebody
+        trying to understand this script, you can just treat them
+        as "ensuring the program can find parts we want".</p>
+
+        <p>"class" means "start the definition of a group of things
+        that go together" (all you other experts, please don't jump
+        on me about this; I understand both intrinsic/extrinsic
+        polymorphism, I'm just trying to get the general idea
+        across).</p>
+
+        <p>For example, in the SigletExample.py file is a
+        description of a "class" called SigletExample, which
+        contains two routines/functions/members: A subroutine
+        called "defineIO", and one called "setOutput"</p>
+
+        <p>This "class" is associated with another called "Siglet"
+        (actually jmri.jmrit.automat.Siglet; that's that long
+        naming thing again), which knows when to invoke routines by
+        those two names to get done what you want.</p>
+
+        <p>Essentially, you're defining two parts ("defineIO" &amp;
+        "setOutput") that plug into a pre-existing structure to
+        drive signals. That pre-existing structure is very
+        powerful, and lets you do all sorts of things, but also
+        provides this method to try to keep it simpler.</p>
+
+        <p>OK, at this point most people's eyes are fully glazed
+        over. Your best bet when starting with this stuff is to use
+        the "copy and modify" approach to software development.
+        It's good to try to understand the entire content of the
+        file, but don't worry about understanding it well enough to
+        be able to recreate it from scratch. Instead, just modify
+        little bits and play with it.</p>
+
+      <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a></p>
+
+        </div>
+	  
+    <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+      <h2><a id="threads">Why should I base my scripts on "Siglet" and "AbstractAutomaton" classes?</a></h2>
+ 	  <!-- Section created by Jerry Grochow 2019-10-14 based on post to jmriusers@groups.io by Bob Jacobson 2018-11-01 -->
+
+      
+      <div class="para">
+      
+      <p>Scripts are part of the main JMRI program. This creates a bit of a problem:  when something goes wrong
+      in a script, it may crash JMRI.  When a script goes to sleep, the whole program sleeps. However, if you want
+      to run independent of JMRI, you can via a separate "thread."  The Siglet and AbstractAutomaton classes have
+      created to allow you to base your scripts on a class that will run as an independent thread but with the 
+      ability to communicate with the rest of JMRI.  For more information, see 
+      <a href="../../../../../help/en/html/doc/Technical/Threads.shtml">the section on threads.</a></p>      
+      
+      <p>Effectively, each Automat or Siglet is a separate program running when it needs to.  Since they run in 
+      separate threads, they can wait for something to happen while the rest of the JMRI program proceeds - a
+      very useful capability indeed. </p>    
+      
+      </div>
+  
+  
+    <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+	  <h2><a id="siglet-automaton">What's the difference between the "Siglet" and
+      "AbstractAutomaton" classes?</a></h2>
+
+      <div class="para">
+ 
+        <p>Some examples use the <a href=
+        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html" target="_blank">
+        AbstractAutomaton</a> class as a base, while others use the
+        <a href=
+        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/Siglet.html" target="_blank">
+        Siglet</a> class. This is because those are intended for
+        two different purposes.</p>
+
+        <p>"Siglet" is meant to be used for driving signals. You
+        provide two pieces of code:</p>
+
+        <dl>
+          <dt><b>defineIO</b></dt>
+
+          <dd>which defines the various sensors, turnouts and
+          signals that the output signal depends on as input when
+          calculating the appearance of the signal.</dd>
+
+          <dt><b>setOutout</b></dt>
+
+          <dd>which recalculates the signal appearance from the
+          defined inputs.</dd>
+        </dl>
+
+        <p>The Siglet base class then handles all of the listening
+        for changes, setting up for parallel execution, etc. Your
+        defineIO routine will be called once at the beginning, and
+        after than any time one or more of the inputs changes, your
+        setOutput routine will be called to recalculate the signal
+        appearance.</p>
+
+        <p>Of course, you can use this class to calculate other
+        things than signal appearances. But the key element is that
+        the calculation is redone when the inputs change, and only
+        when the inputs change.</p>
+
+        <p>AbstractAutomaton is a more general class that's
+        intended to allow more powerful operations (and Siglet
+        actually uses that more powerful base). You define two
+        functions:</p>
+
+        <dl>
+          <dt><b>init</b></dt>
+
+          <dd>which is called exactly once to do any one-time setup
+          you need</dd>
+
+          <dt><b>handle</b></dt>
+
+          <dd>which is called over and over and over again until it
+          returns FALSE.</dd>
+        </dl>Using AbstractAutomoton provides you with a number of
+        tools: you can wait for a particular sensor to go active,
+        do something, then wait for a different sensor to go
+        inactive, etc. This allows you much more freedom to create
+        complicated and powerful sequences than the Siglet class,
+        because Siglets are limited to doing just one thing (they
+        aren't intended to do sequences of operations).
+
+        <p>For more info on the routines that AbstractAutomaton
+        provides to help you, see the <a href=
+        "http://jmri.org/JavaDoc/doc/jmri/jmrit/automat/AbstractAutomaton.html#method_summary" target="_blank">
+        Javadocs</a> for the class. (Scroll down to the section
+        called "Method Summary")</p>
+
+      <p><a href="#WhatWhereTopOfPage">[Go to top of page]</a></p>
+
+        </div>
+
+  <!-- = = = = = = = = = = = = = = = = = = = = = = = = = = = = = -->	  
+	  
+
+        <!--#include virtual="/Footer" -->
+      </div><!-- closes #mainContent-->
+    </div><!-- closes #mBody-->
+</body>
+</html>

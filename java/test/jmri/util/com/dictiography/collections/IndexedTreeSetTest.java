@@ -30,6 +30,7 @@ public class IndexedTreeSetTest {
     @Test
     public void testQuickComparator() {
         IndexedNavigableSet<String> s = new IndexedTreeSet<String>(new java.util.Comparator<String>(){
+            @Override
             public int compare(String e1, String e2) { return - e1.toString().compareTo(e2.toString()); } // note minus sign
         });
         s.add("Z");
@@ -89,7 +90,7 @@ public class IndexedTreeSetTest {
 
             while (set.size() < 100000) {
                 Integer next = random.nextInt();
-                if (!set.contains(next)) {
+                if (!set.contains(String.valueOf(next))) {
                     set.add(String.valueOf(next));
                     m.add(String.valueOf(next));
 //                    ((IndexedTreeSet) m).debug();

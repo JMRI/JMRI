@@ -17,16 +17,16 @@ import org.slf4j.LoggerFactory;
 
 /**
  * TreeModel represents the USB controllers and components
- * <P>
+ * <p>
  * Accessed via the instance() member, as we expect to have only one of these
  * models talking to the USB subsystem.
- * <P>
+ * <p>
  * The tree has three levels below the uninteresting root:
  * <ol>
  * <li>USB controller
  * <li>Components (input, axis)
  * </ol>
- * <P>
+ * <p>
  * jinput requires that there be only one of these for a given USB system in a
  * given JVM so we use a pseudo-singlet "instance" approach
  * <p>
@@ -101,7 +101,7 @@ public final class TreeModel extends DefaultTreeModel {
     }
 
     // intended for test routines only
-    void terminateThreads() throws InterruptedException {
+    public void terminateThreads() throws InterruptedException {
         if (runner == null) {
             return;
         }

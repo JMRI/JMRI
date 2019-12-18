@@ -14,7 +14,7 @@ import org.junit.Test;
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010 Converted to multiple
  * connection
  * @author kcameron Copyright (C) 2011
-  */
+ */
 public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     SerialTrafficController t = null;
@@ -42,10 +42,11 @@ public class SpecificReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 
     @After
     public void tearDown() {
-	memo = null;
-	t = null;
-	m = msg = null;
-	JUnitUtil.tearDown();
+        memo = null;
+        t = null;
+        m = msg = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 
 }

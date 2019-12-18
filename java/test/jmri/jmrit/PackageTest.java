@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
+
 @Suite.SuiteClasses({
         jmri.jmrit.AbstractIdentifyTest.class,
         BundleTest.class,
@@ -16,6 +17,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.blockboss.PackageTest.class,
         jmri.jmrit.catalog.PackageTest.class,
         jmri.jmrit.conditional.PackageTest.class,
+        jmri.jmrit.ctc.PackageTest.class,
         jmri.jmrit.decoderdefn.PackageTest.class,
         jmri.jmrit.dispatcher.PackageTest.class,
         jmri.jmrit.display.PackageTest.class,
@@ -55,6 +57,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.vsdecoder.PackageTest.class,
         jmri.jmrit.simplelightctrl.PackageTest.class,
         jmri.jmrit.simpleturnoutctrl.PackageTest.class,
+        jmri.jmrit.timetable.PackageTest.class,
         MemoryFrameActionTest.class,
         ToolsMenuTest.class,
         XmlFileLocationActionTest.class,
@@ -63,6 +66,7 @@ import org.junit.runners.Suite;
         DebugMenuTest.class,
         LogixLoadActionTest.class,
         XmlFileCheckActionTest.class,
+        jmri.jmrit.cabsignals.PackageTest.class
 })
 
 /**

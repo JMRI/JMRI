@@ -20,7 +20,7 @@ public class RfidSensorManagerTest {
 
     @Test
     public void testCtor() {
-        RfidSensorManager c = new RfidSensorManager("R"){
+        RfidSensorManager c = new RfidSensorManager(new RfidSystemConnectionMemo()){
             @Override
             protected Sensor createNewSensor(String systemName, String userName){
                return null;
@@ -49,7 +49,9 @@ public class RfidSensorManagerTest {
     @After
     public void tearDown() {
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

@@ -1,11 +1,9 @@
 package jmri.managers;
 
+import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.implementation.DefaultMemory;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckReturnValue;
-import javax.annotation.Nonnull;
+import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 /**
  * Provide the concrete implementation for the Internal Memory Manager.
@@ -14,33 +12,14 @@ import javax.annotation.Nonnull;
  */
 public class DefaultMemoryManager extends AbstractMemoryManager {
 
-    @Override
-    public String getSystemPrefix() {
-        return "I";
+    public DefaultMemoryManager(InternalSystemConnectionMemo memo) {
+        super(memo);
     }
 
     @Override
     protected Memory createNewMemory(String systemName, String userName) {
-        // we've decided to enforce that memory system
-        // names start with IM by prepending if not present
-        if (!systemName.startsWith("IM")) {
-            systemName = "IM" + systemName;
-        }
-        return new DefaultMemory(systemName, userName);
-    }
-
-    /**
-     * {@inheritDoc}
-     * 
-     * Forces upper case and trims leading and trailing whitespace.
-     * Does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException.
-     */
-    @CheckReturnValue
-    @Override
-    public @Nonnull
-    String normalizeSystemName(@Nonnull String inputName) {
-        // does not check for valid prefix, hence doesn't throw NamedBean.BadSystemNameException
-        return inputName.toUpperCase().trim();
+        // makeSystemName validates that systemName is correct
+        return new DefaultMemory(makeSystemName(systemName), userName);
     }
 
 }

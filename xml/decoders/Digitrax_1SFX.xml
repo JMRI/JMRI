@@ -12,7 +12,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
   <version author="Alain Le Marchand" version="2" lastUpdated="20140427"/>
   <version author="Steve Lowens" version="1" lastUpdated="20120703"/>
   <!--    Added Con-cor Zephyr & MP54 decoders                                    -->
@@ -29,21 +29,11 @@
   <decoder>
     <family name="Digitrax/Con-cor Sound" mfg="Digitrax">
       <model model="Con-cor Aero-Train - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6004" comment="SDH164D Con-Cor #0001-006004">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Violet" connection="wire"/>
         <output name="5" label="Brown" connection="wire"/>
         <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
       </model>
       <model model="Con-cor ElectroLiner - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6005" comment="SDH164D Con-Cor #0001-006005">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Violet" connection="wire"/>
-        <output name="5" label="Brown" connection="wire"/>
-        <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
           <functionlabel num="3" lockable="true">Open Door/Close - Track Squeals</functionlabel>
@@ -58,12 +48,6 @@
         </functionlabels>
       </model>
       <model model="Con-cor Galloping Goose - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6008" comment="SDH164D Con-Cor #0001-006008">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Violet" connection="wire"/>
-        <output name="5" label="Brown" connection="wire"/>
-        <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
           <functionlabel num="5" lockable="true"/>
@@ -72,12 +56,6 @@
         </functionlabels>
       </model>
       <model model="Con-cor MP54" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6009" comment="SDH164D Con-Cor #0001-006009">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Violet" connection="wire"/>
-        <output name="5" label="Brown" connection="wire"/>
-        <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
           <functionlabel num="3" lockable="false">Track Squeals</functionlabel>
@@ -92,12 +70,6 @@
         </functionlabels>
       </model>
       <model model="Con-cor New Haven Comet - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6001" comment="SDH164D Con-Cor #0001-006001">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Violet" connection="wire"/>
-        <output name="5" label="Brown" connection="wire"/>
-        <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
           <functionlabel num="3" lockable="true"/>
@@ -105,12 +77,6 @@
         </functionlabels>
       </model>
       <model model="Con-cor UP M-10000 - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6003" comment="SDH164D Con-Cor #0001-006003">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Violet" connection="wire"/>
-        <output name="5" label="Brown" connection="wire"/>
-        <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
           <functionlabel num="3" lockable="true"/>
@@ -118,41 +84,24 @@
         </functionlabels>
       </model>
       <model model="Con-cor Zephyr - HO" numOuts="6" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="NMRAmedium" productID="6002" comment="SDH164D Con-Cor #0001-006002">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Violet" connection="wire"/>
-        <output name="5" label="Brown" connection="wire"/>
-        <output name="6" label="White-Yellow" connection="wire"/>
         <size length="1.273" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
           <functionlabel num="3" lockable="true">Mars Light</functionlabel>
         </functionlabels>
       </model>
       <model model="Con-cor Aero-Train - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="6019" comment="SDN144PS Con-Cor #0001-006019">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Violet" connection="wire"/>
         <size length="1.22" width="0.4" height="0.164" units="inches"/>
       </model>
       <model model="Con-cor UP M-10000 - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="6011" comment="SDN144PS Con-Cor #0001-006011">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Violet" connection="wire"/>
         <size length="1.22" width="0.4" height="0.164" units="inches"/>
       </model>
       <model model="Con-cor Zephyr - N" numOuts="4" numFns="10" lowVersionID="16" highVersionID="16" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="6014" comment="SDN144PS Con-Cor #0001-006014">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Violet" connection="wire"/>
         <size length="1.22" width="0.4" height="0.164" units="inches"/>
         <functionlabels>
           <functionlabel num="3" lockable="true">Mars Light</functionlabel>
         </functionlabels>
       </model>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/outputs1-4.xml"/>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
         <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -202,7 +151,7 @@
         <label xml:lang="it">Durata Suono</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/decoderLockId16.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/digitrax/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv21.22.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv29NDOT.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -276,11 +225,7 @@
       <xi:include href="http://jmri.org/xml/decoders/digitrax/cv62.63LightingOptions.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella Velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="105" item="User Id #1" default="252" include="6009">

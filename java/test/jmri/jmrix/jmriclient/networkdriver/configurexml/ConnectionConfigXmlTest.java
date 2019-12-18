@@ -1,10 +1,8 @@
 package jmri.jmrix.jmriclient.networkdriver.configurexml;
 
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
+import jmri.jmrix.jmriclient.networkdriver.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -17,14 +15,19 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractNet
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         xmlAdapter = new ConnectionConfigXml();
+        cc = new ConnectionConfig();
     }
 
     @After
+    @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
         xmlAdapter = null;
+        cc = null;
     }
 }

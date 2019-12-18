@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import javax.annotation.CheckForNull;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -101,12 +101,12 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private boolean dirty = false;
     private boolean loading = false;
     private boolean allowSave;
-    private ArrayList<String> simplePreferenceList = new ArrayList<>();
+    private final ArrayList<String> simplePreferenceList = new ArrayList<>();
     //sessionList is used for messages to be suppressed for the current JMRI session only
-    private ArrayList<String> sessionPreferenceList = new ArrayList<>();
+    private final ArrayList<String> sessionPreferenceList = new ArrayList<>();
     protected final HashMap<String, String> comboBoxLastSelection = new HashMap<>();
     private final HashMap<String, WindowLocations> windowDetails = new HashMap<>();
-    private HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
+    private final HashMap<String, ClassPreferences> classPreferenceList = new HashMap<>();
     private File file;
 
     public JmriUserPreferencesManager() {
@@ -616,8 +616,8 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
             Class<?> cl = Class.forName(strClass);
             Object t;
             try {
-                t = cl.newInstance();
-            } catch (IllegalArgumentException | NullPointerException | ExceptionInInitializerError ex) {
+                t = cl.getDeclaredConstructor().newInstance();
+            } catch (IllegalArgumentException | NullPointerException | ExceptionInInitializerError | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex) {
                 log.error("setClassDescription({}) failed in newInstance", strClass, ex);
                 return;
             }
@@ -846,7 +846,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
         this.loading = true;
         File perNodeConfig = null;
         try {
-            perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.identity() + "/" + Profile.UI_CONFIG); // NOI18N
+            perNodeConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.PROFILE + "/" + NodeIdentity.storageIdentity() + "/" + Profile.UI_CONFIG); // NOI18N
             if (!perNodeConfig.canRead()) {
                 perNodeConfig = null;
                 log.trace("    sharedConfig can't be read");
@@ -1105,7 +1105,7 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
      *
      * @return an Element or null if the requested element does not exist
      */
-    @Nullable
+    @CheckForNull
     private Element readElement(@Nonnull String elementName, @Nonnull String namespace) {
         org.w3c.dom.Element element = ProfileUtils.getUserInterfaceConfiguration(ProfileManager.getDefault().getActiveProfile()).getConfigurationFragment(elementName, namespace, false);
         if (element != null) {

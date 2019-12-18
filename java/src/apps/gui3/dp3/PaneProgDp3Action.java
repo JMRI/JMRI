@@ -74,7 +74,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Swing action to create and register a frame for selecting the information
  * needed to open a PaneProgFrame in service mode.
- * <P>
+ * <p>
  * The class name is a historical accident, and probably should have included
  * "ServiceMode" or something.
  *
@@ -324,7 +324,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
 
     synchronized void findDecoderAddress() {
         teststatus = 1;
-        readCV(29);
+        readCV("29");
     }
 
     DecoderFile decoderFile;
@@ -343,22 +343,22 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
             case 1:
                 teststatus = 2;
                 cv29 = value;
-                readCV(1);
+                readCV("1");
                 break;
             case 2:
                 teststatus = 3;
                 cv1 = value;
-                readCV(17);
+                readCV("17");
                 break;
             case 3:
                 teststatus = 4;
                 cv17 = value;
-                readCV(18);
+                readCV("18");
                 break;
             case 4:
                 teststatus = 5;
                 cv18 = value;
-                readCV(19);
+                readCV("19");
                 break;
             case 5:
                 cv19 = value;
@@ -387,7 +387,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
         }
     }
 
-    protected void readCV(int cv) {
+    protected void readCV(String cv) {
         Programmer p = InstanceManager.getDefault(GlobalProgrammerManager.class).getGlobalProgrammer();
         if (p == null) {
             //statusUpdate("No programmer connected");
@@ -647,7 +647,7 @@ public class PaneProgDp3Action extends JmriAbstractAction implements ProgListene
     /**
      * Enable the read/write buttons.
      * <p>
-     * In addition, if a programming mode pane is present, it's "set" button is
+     * In addition, if a programming mode pane is present, its "set" button is
      * enabled.
      *
      * @param enable Are reads possible? If false, so not enable the read

@@ -23,9 +23,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>JMRI: DecoderPro Operations Mode Programmer</h1><a name=
       "contents" id="contents"></a>
 
@@ -48,7 +48,7 @@
       <h3>Roster tab</h3>
 
       <p>A roster is a database of all locomotives that your
-      installation of Decoder Pro has programmed. It includes the
+      installation of DecoderPro has programmed. It includes the
       information seen in the screen below:</p>
 
       <img src="RosterTab.png" alt="DecoderPro Roster Tab">

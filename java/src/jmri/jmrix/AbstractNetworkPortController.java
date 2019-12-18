@@ -52,7 +52,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             socketConn.setSoTimeout(getConnectionTimeout());
             opened = true;
         } catch (IOException e) {
-            log.error("error opening network connection: ", e);
+            log.error("Error opening network connection: {}", e.getMessage()); // nothing to help user in full exception
             if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
                         getUserName(), m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
@@ -191,7 +191,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     /*
      * Set the server's host name and port
-     * using mdns autoconfiguration.
+     * using MDNS autoconfiguration.
      * Default implementation does nothing.
      */
     @Override
@@ -295,7 +295,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     }
 
     /**
-     * Attempts to reconnect to a failed Server
+     * Attempts to reconnect to a failed Server.
      */
     public void reconnect() {
 
@@ -304,7 +304,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             return;
         }
         ReconnectWait thread = new ReconnectWait();
-        thread.setName("Connection Recovery " + getHostName());
+        thread.setName("Connection Recovery " + getCurrentPortName() );
         thread.start();
         try {
             thread.join();
@@ -359,8 +359,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
                     }
                     connect();
                 } catch (IOException ex) {
-                    log.error("restart failed", ex);
-                    return;
+                    log.trace("restart failed", ex); // main warning to log.error done within connect();
+                    // if returned on exception stops thread and connection attempts
                 }
                 
                 reply = !opened;
@@ -383,7 +383,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      * Set the connection timeout to the specified value.
      * If the socket is not null, set the SO_TIMEOUT option on the
      * socket as well.
-     * @param t timeout value in milliseconds.
+     *
+     * @param t timeout value in milliseconds
      */
     protected void setConnectionTimeout(int t) {
         connTimeout = t;
@@ -398,7 +399,8 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
 
     /*
      * Get the connection timeout value.
-     * @return timeout value in milliseconds.
+     *
+     * @return timeout value in milliseconds
      */
     protected int getConnectionTimeout() {
         return connTimeout;

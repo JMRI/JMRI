@@ -4,10 +4,10 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * JUnit tests for the NceMessage class
+ * JUnit tests for the NceMessage class.
  *
  * @author	Bob Jacobsen Copyright 2002-2004
-  */
+ */
 public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
 
     // ensure that the static useBinary value is left OK
@@ -32,6 +32,7 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
         Assert.assertTrue("Command has been set", tc.commandOptionSet);
         tc.commandOptionSet = false;	// kill warning message
         tc = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 
@@ -99,7 +100,7 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testReadPagedCVBinToMonitorString() {
         tc.setCommandOptions(NceTrafficController.OPTION_2006);
         msg = NceMessage.getReadPagedCV(tc, 12);
-        Assert.assertEquals("monitor string compare ", "Read CV 12 in paged mode\n", msg.toMonitorString());
+        Assert.assertEquals("monitor string compare ", "Read CV 12 in paged mode", msg.toMonitorString());
     }
 
     @Test
@@ -113,7 +114,7 @@ public class NceMessageTest extends jmri.jmrix.AbstractMessageTestBase {
     public void testWritePagedCVAsciiToMonitorString() {
         tc.setCommandOptions(NceTrafficController.OPTION_2004);
         msg = NceMessage.getWritePagedCV(tc, 12, 251);
-        Assert.assertEquals("monitor string compare ", "binary cmd: P012 251\n", msg.toMonitorString());
+        Assert.assertEquals("monitor string compare ", "binary cmd: P012 251", msg.toMonitorString());
     }
 
     @Test

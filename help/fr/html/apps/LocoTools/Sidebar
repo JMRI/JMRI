@@ -6,13 +6,18 @@
  <div id="side">
     <h2>Outils LocoNet</h2>
 	<ul>
-	<li><a href="index.shtml#locomon">Moniteur LocoNet</a>
-	<li><a href="index.shtml#slotmon">Moniteur de Slot</a>
-	<li><a href="index.shtml#sendpkt">Source de Paquet</a>
-	<li><a href="index.shtml#pm4">Programmateurs BDL16, BDL162, BDL168 et PM4</a>
+	<li><a href="index.shtml#locomon">Moniteur LocoNet</a></li>
+	<li><a href="index.shtml#slotmon">Moniteur de Slot</a></li>
+	<li><a href="index.shtml#sendpkt">Source de Paquet</a></li>
+	<li><a href="index.shtml#pm4">Programmateurs BDL16, BDL162, BDL168 et PM4</a></li>
 	</ul>
 
  </div> <!-- closes #side -->
- 
+
+     <!-- Sidebar-Tail -->
+     <script type="text/javascript" src="/web/js/jquery-2.0.3.min.js"></script>
+     <script type="text/javascript" src="/web/js/here.js"></script>
+     <!-- /Sidebar-Tail -->
+
  <!--/Sidebar -->
  

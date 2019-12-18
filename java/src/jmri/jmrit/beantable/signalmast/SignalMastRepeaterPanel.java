@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,13 +23,17 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableRowSorter;
-import jmri.NamedBean;
+
+import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.SignalMast;
+import jmri.SignalMastManager;
 import jmri.implementation.SignalMastRepeater;
 import jmri.managers.DefaultSignalMastManager;
+import jmri.swing.NamedBeanComboBox;
 import jmri.swing.RowSorterUtil;
 import jmri.util.JmriJFrame;
-import jmri.util.swing.JmriBeanComboBox;
+import jmri.util.swing.JmriPanel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
@@ -37,19 +44,19 @@ import org.slf4j.LoggerFactory;
  *
  * @author Kevin Dickerson Copyright (C) 2011
  */
-public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implements PropertyChangeListener {
+public class SignalMastRepeaterPanel extends JmriPanel implements PropertyChangeListener {
 
     DefaultSignalMastManager dsmm;
 
     SignalMastRepeaterModel _RepeaterModel;
     JScrollPane _SignalAppearanceScrollPane;
-    JmriBeanComboBox _MasterBox;
-    JmriBeanComboBox _SlaveBox;
+    NamedBeanComboBox<SignalMast> _MasterBox;
+    NamedBeanComboBox<SignalMast> _SlaveBox;
     JButton _addRepeater;
 
     public SignalMastRepeaterPanel() {
         super();
-        dsmm = (DefaultSignalMastManager) jmri.InstanceManager.getDefault(jmri.SignalMastManager.class);
+        dsmm = (DefaultSignalMastManager) InstanceManager.getDefault(SignalMastManager.class);
         dsmm.addPropertyChangeListener(this);
 
         setLayout(new BorderLayout());
@@ -79,7 +86,7 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
         JPanel footer = new JPanel();
         updateDetails();
 
-        _MasterBox = new JmriBeanComboBox(dsmm);
+        _MasterBox = new NamedBeanComboBox<>(dsmm);
         _MasterBox.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -87,25 +94,25 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
             }
         });
 
-        _SlaveBox = new JmriBeanComboBox(dsmm);
+        _SlaveBox = new NamedBeanComboBox<>(dsmm);
         _SlaveBox.setEnabled(false);
         footer.add(new JLabel(Bundle.getMessage("Master") + " : "));
         footer.add(_MasterBox);
         footer.add(new JLabel(Bundle.getMessage("Slave") + " : "));
         footer.add(_SlaveBox);
-        _addRepeater = new JButton(Bundle.getMessage("AddButtonText"));
+        _addRepeater = new JButton(Bundle.getMessage("ButtonAddText"));
         _addRepeater.setEnabled(false);
         _addRepeater.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                SignalMastRepeater rp = new SignalMastRepeater((SignalMast) _MasterBox.getSelectedBean(), (SignalMast) _SlaveBox.getSelectedBean());
+                SignalMastRepeater rp = new SignalMastRepeater(_MasterBox.getSelectedItem(), _SlaveBox.getSelectedItem());
                 try {
                     dsmm.addRepeater(rp);
-                } catch (jmri.JmriException ex) {
+                } catch (JmriException ex) {
                     log.error(ex.toString());
                     /**/
                     JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(Bundle.getMessage("MessageAddFailed"),
-                            new Object[]{_MasterBox.getSelectedDisplayName(), _SlaveBox.getSelectedDisplayName()}),
+                            new Object[]{_MasterBox.getSelectedItemDisplayName(), _SlaveBox.getSelectedItemDisplayName()}),
                             Bundle.getMessage("TitleAddFailed"), JOptionPane.ERROR_MESSAGE);
                 }
             }
@@ -120,33 +127,30 @@ public class SignalMastRepeaterPanel extends jmri.util.swing.JmriPanel implement
     }
 
     void setSlaveBoxLists() {
-        SignalMast masterMast = (SignalMast) _MasterBox.getSelectedBean();
+        SignalMast masterMast = _MasterBox.getSelectedItem();
         if (masterMast == null) {
             _SlaveBox.setEnabled(false);
             _addRepeater.setEnabled(false);
             return;
         }
-        java.util.Iterator<String> iter
-                = dsmm.getSystemNameList().iterator();
+        java.util.Iterator<SignalMast> iter
+                = dsmm.getNamedBeanSet().iterator();
 
         // don't return an element if there are not sensors to include
         if (!iter.hasNext()) {
             return;
         }
-        ArrayList<NamedBean> excludeList = new ArrayList<>();
+        Set<SignalMast> excludedSignalMasts = new HashSet<>();
         while (iter.hasNext()) {
-            String mname = iter.next();
-            if (mname != null) {
-                SignalMast s = dsmm.getBySystemName(mname);
-                if (s.getAppearanceMap() != masterMast.getAppearanceMap()) {
-                    excludeList.add(s);
-                } else if (s == masterMast) {
-                    excludeList.add(s);
-                }
+            SignalMast s = iter.next();
+            if (s.getAppearanceMap() != masterMast.getAppearanceMap()) {
+                excludedSignalMasts.add(s);
+            } else if (s == masterMast) {
+                excludedSignalMasts.add(s);
             }
         }
-        _SlaveBox.excludeItems(excludeList);
-        if (excludeList.size() == dsmm.getSystemNameList().size()) {
+        _SlaveBox.setExcludedItems(excludedSignalMasts);
+        if (excludedSignalMasts.size() == dsmm.getNamedBeanSet().size()) {
             _SlaveBox.setEnabled(false);
             _addRepeater.setEnabled(false);
         } else {

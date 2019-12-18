@@ -8,7 +8,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: DecoderPro User Guide - Creating A Custom Decoder
-  File</title><!-- Style -->
+  File</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -16,17 +17,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar" -->
-
     <div id="mainContent">
-      <h1>JMRI: DecoderPro User Guide</h1>
+
+    <h1>JMRI: DecoderPro User Guide</h1>
 
       <h2>Creating A Custom Decoder File</h2>
 
@@ -101,7 +102,6 @@
           href="../XSLT/decoder.xsl"?&gt;<br>
           &lt;!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010
           All rights reserved --&gt;<br>
-          &lt;!-- $Id$ --&gt;<br>
           ...<br>
           &lt;decoder-config
           xmlns:xi="http://www.w3.org/2001/XInclude"
@@ -323,7 +323,25 @@
             that are not to be included. It's best to have eight
             characters, as that makes it clearer what's going on.
             If the variable is a full byte, this attribute can be
-            omitted.</li>
+            omitted.
+            <p>
+            Generally, the V characters should be a contiguous block 
+            of bits as specified in the manufacturer's documentation
+            for the decoder.  In certain rare cases, the
+            layout of the decoder might
+            require a different pattern like XXVVXXVV, but 
+            in those cases please check the operation of the 
+            resulting decoder definition carefully to make sure it 
+            does what you want.
+            
+            <p>
+            As another special case, this can also be used (along with 
+            some other attributes) to handle CVs that are coded in
+            bases other than binary:  Ones that store their 
+            parts as decimal digits, or even base 3 or 5.
+            That's a bit more technical, it's rarely needed, but 
+            if you do need it see the 
+            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/symbolicprog/VariableValue.html">javadoc for more details</a>.
 
             <li><dfn>default</dfn> - The default value for this
             variable. This is used for a new decoder, or when you
@@ -427,10 +445,49 @@
 
               <p class="example">    &lt;enumChoice choice="Blue"
               value="32"/&gt;</p>
+              
             </li>
           </ul>
         </dd>
 
+        <dt class="left">Including fragment files</dt>
+        <dd>
+          <p>Decoder definitions can include "fragment files"
+          which provide common definitions of some CVs.
+          This has the advantage that they're already created and 
+          tested, and often include tooltip text, translations 
+          and other nice features.  See the existing 
+          decoder definitions for 
+          <a href="http://jmri.org/xml/decoders/nmra">examples</a>.  
+          Some key ones:</p>
+
+              <ul>
+                <li>CV1, the primary or short address, 
+                    CV17 and 18, the extended or long address,
+                    and the corresponding CV29 bits can 
+                    be handled by one of these, depending
+                    on what the decode supports:
+                    <ul>
+                    <li>xml/decoders/nmra/shortAddressOnly.xml
+                    <li>xml/decoders/nmra/shortAndLongAddress.xml
+                    </ul>
+                <li>CV19, the consist address and direction, 
+                    can be handled by one of these:
+                    <ul>
+                    <li>xml/decoders/nmra/consistAddr.xml	
+                    <li>xml/decoders/nmra/consistAddrDirection.xml
+                    </ul>
+                 <li>The CV16/CV15 decoder lock feature can be 
+                    handled by the xml/decoders/nmra/decoderLockId16.xml
+                    fragment file. Note that only CV16 is included;
+                    CV15 should not be included in the definition
+                    to prevent it from being changed after decoder
+                    installation.   
+                </ul>
+         
+         <p>You can also use fragment files to include (hence simplify)
+         <a href="http://jmri.org/xml/decoders/parts">common sets of enum choices</a>.</p> 
+        </dd>
         <dt class="left">Checking for syntax errors</dt>
 
         <dd>

@@ -3,33 +3,36 @@ package jmri.jmrit.operations.rollingstock.cars.tools;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.util.List;
-import java.util.regex.Pattern;
 import jmri.InstanceManager;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.util.JUnitOperationsUtil;
+import jmri.util.junit.rules.*;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.operators.JFileChooserOperator;
+
+import org.junit.*;
+import org.junit.rules.*;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class ImportCarsTest extends OperationsTestCase {
+
+    @Rule
+    public Timeout globalTimeout = Timeout.seconds(60); // 60 second timeout for methods in this test class.
+
+    @Rule
+    public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
     @Test
     public void testCTor() {
         ImportCars t = new ImportCars();
-        Assert.assertNotNull("exists",t);
+        Assert.assertNotNull("exists", t);
     }
-    
+
     @Test
     public void testReadFile() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -59,7 +62,13 @@ public class ImportCarsTest extends OperationsTestCase {
             return export.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), "OK");
+        JemmyUtil.pressDialogButton(Bundle.getMessage("ExportComplete"), Bundle.getMessage("ButtonOK"));
+        
+        try {
+            export.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
 
         java.io.File file = new java.io.File(ExportCars.defaultOperationsFilename());
         Assert.assertTrue("Confirm file creation", file.exists());
@@ -67,39 +76,30 @@ public class ImportCarsTest extends OperationsTestCase {
         // delete all cars
         emanager.deleteAll();
         Assert.assertEquals("cars", 0, emanager.getNumEntries());
-        
+
         // do import
-        
-        Thread mb = new ImportCars();
+
+        Thread mb = new ImportCars(){
+            @Override
+            protected File getFile() {
+                // replace JFileChooser with fixed file to avoid threading issues
+                return new File(OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName() + File.separator + ExportCars.getOperationsFileName());
+            }
+        };
         mb.setName("Test Import Cars"); // NOI18N
         mb.start();
-        
-        // opens file chooser path "operations" "JUnitTest"
-        JFileChooserOperator fco = new JFileChooserOperator();
-        String[] path = OperationsXml.getOperationsDirectoryName().split(Pattern.quote(File.separator));  
-        fco.chooseFile(path[0]);
-        fco.chooseFile(path[1]);
-        fco.chooseFile(ExportCars.getOperationsFileName());
-        
-        // import complete 
-        JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), "OK");
-        
+
+        // wait for import complete and acknowledge
+        JemmyUtil.pressDialogButton(Bundle.getMessage("SuccessfulImport"), Bundle.getMessage("ButtonOK"));
+
+        try {
+            mb.join();
+        } catch (InterruptedException e) {
+            // do nothing
+        }
+
         // confirm import successful
-        Assert.assertEquals("cars", 9, emanager.getNumEntries());    
-    }
-
-
-    // The minimal setup for log4J
-    @Override
-    @Before
-    public void setUp() {
-        super.setUp();
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
+        Assert.assertEquals("cars", 9, emanager.getNumEntries());
     }
 
     // private final static Logger log = LoggerFactory.getLogger(ImportCarsTest.class);

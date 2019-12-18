@@ -11,7 +11,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 import jmri.util.swing.JemmyUtil;
-import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
@@ -284,7 +283,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         c1.setCaboose(true);
         c1.setComment("Test Car NH 1 Comment");
 
-        Car c2 = cManager.newCar("UP", "22");
+        Car c2 = cManager.newRS("UP", "22");
         c2.setBuilt("2004");
         c2.setColor("Blue");
         c2.setLength("50");
@@ -297,7 +296,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         c2.setRfid("RFID 2");
         c2.setTypeName("Boxcar");
 
-        Car c3 = cManager.newCar("AA", "3");
+        Car c3 = cManager.newRS("AA", "3");
         c3.setBuilt("2006");
         c3.setColor("White");
         c3.setLength("30");
@@ -310,7 +309,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         c3.setRfid("RFID 5");
         c3.setTypeName("Gondola");
 
-        Car c4 = cManager.newCar("SP", "2");
+        Car c4 = cManager.newRS("SP", "2");
         c4.setBuilt("1990");
         c4.setColor("Black");
         c4.setLength("45");
@@ -323,7 +322,7 @@ public class CarsTableFrameTest extends OperationsTestCase {
         c4.setRfid("RFID 4");
         c4.setTypeName("Tank Food");
 
-        Car c5 = cManager.newCar("NH", "5");
+        Car c5 = cManager.newRS("NH", "5");
         c5.setBuilt("1956");
         c5.setColor("Brown");
         c5.setLength("25");
@@ -349,11 +348,5 @@ public class CarsTableFrameTest extends OperationsTestCase {
         ct.addName(Bundle.getMessage("Caboose"));
         ct.addName("Tank Food");
         ct.addName("Coilcar");
-    }
-
-    @Override
-    @After
-    public void tearDown() {
-        super.tearDown();
     }
 }

@@ -1,11 +1,14 @@
 package jmri.jmrix.internal;
 
+import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.util.JUnitUtil;
+import jmri.util.junit.annotations.ToDo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,7 +29,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     @Test
     public void testAsAbstractFactory() {
         // create and register the manager object
-        InternalLightManager alm = new InternalLightManager();
+        InternalLightManager alm = new InternalLightManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         jmri.InstanceManager.setLightManager(alm);
 
         // ask for a Light, and check type
@@ -66,7 +69,7 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     public void setUp() {
         jmri.util.JUnitUtil.setUp();
         // create and register the manager object
-        l = new InternalLightManager();
+        l = new InternalLightManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
         jmri.InstanceManager.setLightManager(l);
     }
 
@@ -76,5 +79,4 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
     }
 
     private final static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class);
-
 }

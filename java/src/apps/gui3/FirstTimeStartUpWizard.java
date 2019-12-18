@@ -128,7 +128,7 @@ public class FirstTimeStartUpWizard {
         initalLocale = Locale.getDefault();
         p.add(doLocale());
 
-        p.add(formatText("<br>Enter in the default owner for all your loco roster entries<p>If you are part of group or club, where different people will be accessing Decoder Pro, then you can leave this blank</p>"));
+        p.add(formatText("<br>Enter in the default owner for all your loco roster entries<p>If you are part of group or club, where different people will be accessing DecoderPro, then you can leave this blank</p>"));
         JPanel p2 = new JPanel();
         p2.setLayout(new FlowLayout());
         p2.add(new JLabel(/*rb.getString("LabelDefaultOwner")*/"Default Owner"));
@@ -286,7 +286,7 @@ public class FirstTimeStartUpWizard {
                 }
             }
             Profile project = ProfileManager.getDefault().getActiveProfile();
-            InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
+            InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(project, owner.getText());
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
             InstanceManager.getDefault(RosterConfigManager.class).savePreferences(project);
             InstanceManager.getDefault(GuiLafPreferencesManager.class).savePreferences(project);

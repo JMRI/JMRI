@@ -13,17 +13,19 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Bob Jacobsen" version="2" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1.02" lastUpdated="20090626"/>
   <version author="Nigel Cliffe ncliffe@btinternet.com and Mark Waters mark16w-jmri@yahoo.co.uk" version="1.01" lastUpdated="20090222"/>
-  <!-- 
+  <version author="Alain Le Marchand" version="1.01" lastUpdated="20190110"/>
+  <!--
      This decoder configuration file is based the Zimo_MX620_v6.xml V 1.01 file, dated 20080328.
      Re-instating CV 116 (bug fixed by Zimo in v7), Modified CV124, Extended CV 161,
-     Extended CVs 125-132 and CVs 181-2.  
+     Extended CVs 125-132 and CVs 181-2.
 
      Based on the "SW-Version 9.1 2008 10 18" English version of the ZIMO MX620
      decoder manual (with thanks to Art Luescher of ZIMO Agency of North America
      for the translations!).
-     
+
      This decoder XML is meant to be used with the "Comprehensive" programmer format.
      Continued the practice of using unrelated "item" names to place Zimo unique
      variables on the proper pane of the Comprehensive programmer.
@@ -31,6 +33,7 @@
   <!-- V 1 new file -->
   <!-- V 1.01 Fixed error in CV161 mask -->
   <!-- V 1.02 added CV's 129 & 130, corrected CV161 masks -->
+  <!-- V 1.03 corrected CV124 mask for bits 2,6 -->
   <decoder>
     <family name="Zimo MX620" mfg="Zimo">
       <model model="MX620 version 7-8" lowVersionID="7" highVersionID="8" maxInputVolts="12-22V" maxMotorCurrent="0.8A, peak=2A for 5 sec." maxTotalCurrent="0.8A" formFactor="N" numOuts="6" numFns="14">
@@ -189,15 +192,9 @@
         <label>Analog operation with accel/decel from CV3/4</label>
         <label xml:lang="it">Operatività in Analogico con accell/decell. da CV 3/4</label>
       </variable>
-      <variable CV="19" default="0" item="Consist Address" comment="Allows permanent storage of consist address. Range 0-127">
-        <decVal/>
-        <label>Consist Address</label>
-        <label xml:lang="it">Indirizzo Consist</label>
-        <label xml:lang="fr">Addresse UM</label>
-        <label xml:lang="de">Verbundadresse</label>
-        <comment>Allows permanent storage of consist address. Range 0-127</comment>
-        <comment xml:lang="it">Valori ammessi 0-127</comment>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddr.xml"/>
+
       <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV">
          <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F1</label>
@@ -1031,12 +1028,7 @@
         <label>Sub-version</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/fwdTrim.xml"/>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="fr">Speed Table(fr)</label>
-        <label xml:lang="it">Tabella Velocità</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/revTrim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable item="Loco Number Recognition" CV="112" mask="XXXXXVXX" default="1">
@@ -1307,7 +1299,7 @@
           <enumChoice choice="F4">
             <choice>F4</choice>
           </enumChoice>
-          <enumChoice choice="F3">
+          <enumChoice choice="F3" value="16">
             <choice>F3</choice>
           </enumChoice>
         </enumVal>

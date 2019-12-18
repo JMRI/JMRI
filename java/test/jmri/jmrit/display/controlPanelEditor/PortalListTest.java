@@ -14,7 +14,7 @@ public class PortalListTest {
 
     @Test
     public void testCTor() {
-        PortalList t = new PortalList( new OBlock("OB1", "Test"));
+        PortalList t = new PortalList( new OBlock("OB1", "Test"), null);
         Assert.assertNotNull("exists",t);
     }
 

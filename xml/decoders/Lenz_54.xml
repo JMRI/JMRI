@@ -13,6 +13,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Carasso" version="8" lastUpdated="20191007"/> <!-- CV3 and 4 range now 0 to 255 -->
+  <version author="Bob Jacobsen" version="7" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
   <version author="Michael Mosher mjmx@comcast.net" version="5" lastUpdated="20030815"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="6" lastUpdated="20090116"/>
   <!-- version 2 - add consist direction - jake -->
@@ -24,6 +26,7 @@
   <!--    change lowVersionID to 51, move Lighting options to Lights pane -->
   <!-- These are the version 5.1 thru 5.4 decoders, with "12 bit BEMF" or "5th gen BEMF " -->
   <!-- and "XF & special" -->
+   <!-- version 8: update decimal range for CV 3 and 4 -->
   <decoder>
     <family name="Lenz 5th gen BEMF decoders" mfg="Lenz" lowVersionID="51" highVersionID="54">
       <model model="LE010XF" numOuts="2" nmraWarrant="yes" nmraWarrantStart="200506">
@@ -81,17 +84,17 @@
         <tooltip xml:lang="de">Sets the starting voltage at throttle speed step 1.  Note: some decoders only accept a max value of 15</tooltip>
       </variable>
       <variable CV="3" item="Accel" default="1" tooltip="Sets the acceleration rate (delay)">
-        <decVal min="1" max="31"/>
-        <label>Acceleration Momentum (1-31)</label>
-        <label xml:lang="it">Accellerazione (0-31)</label>
-        <label xml:lang="fr">Accelération (0-31)</label>
-        <label xml:lang="de">Anfahrverzögerung (0-31)</label>
+        <decVal min="0" max="255"/>
+        <label>Acceleration Momentum (0-255)</label>
+        <label xml:lang="it">Accellerazione (0-255)</label>
+        <label xml:lang="fr">Accelération (0-255)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-255)</label>
         <tooltip xml:lang="de">Sets the acceleration rate (delay)</tooltip>
       </variable>
       <variable CV="4" item="Decel" default="1" tooltip="Sets the deceleration rate (delay)">
-        <decVal min="1" max="31"/>
-        <label>Deceleration (Brake) Momentum (1-31)</label>
-        <label xml:lang="it">Inerzia decellerazione (frenata)  (1-31)</label>
+        <decVal min="0" max="255"/>
+        <label>Deceleration (Brake) Momentum (0-255)</label>
+        <label xml:lang="it">Inerzia decellerazione (frenata)  (0-255)</label>
         <label xml:lang="de">Decel</label>
         <tooltip xml:lang="de">Sets the deceleration rate (delay)</tooltip>
       </variable>
@@ -123,35 +126,9 @@
         <label xml:lang="de">Motor PWM Frequency</label>
         <tooltip xml:lang="de">Adjust EMF pulse rate frequency for finer motor control</tooltip>
       </variable>
-      <variable CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
-        <decVal max="127"/>
-        <label>Consist Address (0-127)</label>
-        <label xml:lang="it">Indirizzo Consist (0-127)</label>
-        <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-        <comment xml:lang="it">Memoria Indirizzo Consist. Valori 0-127 (bit di direzione in bit 7)</comment>
-        <label xml:lang="de">Consist Address</label>
-        <comment xml:lang="de">Stores consist address. Range 0-127 (direction set in bit 7)</comment>
-      </variable>
-      <variable CV="19" mask="VXXXXXXX" item="Consist Direction" comment="A consist address over 127 will also set this bit">
-        <enumVal>
-          <enumChoice choice="Normal">
-            <choice>Normal</choice>
-            <choice xml:lang="it">Normale</choice>
-            <choice xml:lang="de">Normal</choice>
-          </enumChoice>
-          <enumChoice choice="Reversed">
-            <choice>Reversed</choice>
-            <choice xml:lang="it">Invertita</choice>
-            <choice xml:lang="de">Reversed</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Loco Direction In Consist</label>
-        <label xml:lang="it">Direzione Loco nel Consist</label>
-        <comment>A consist address over 127 will also set this bit</comment>
-        <comment xml:lang="it">Questo bit è settato anche per gli indirizzi Consist oltre il 127</comment>
-        <label xml:lang="de">Consist Direction</label>
-        <comment xml:lang="de">A consist address over 127 will also set this bit</comment>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -480,12 +457,7 @@
         <label xml:lang="it">F8 controlla Uscita D</label>
         <label xml:lang="de">F8 controls output 4</label>
       </variable>
-      <variable item="Speed Table" CV="67">
-        <speedTableVal/>
-        <label>Speed Table</label>
-        <label xml:lang="it">Tabella velocità</label>
-        <label xml:lang="de">Speed Table</label>
-      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv67speedTableBasic.xml"/>
       <variable CV="105" item="User Id #1">
         <decVal/>
         <label>User Private ID #1 (0-255)</label>

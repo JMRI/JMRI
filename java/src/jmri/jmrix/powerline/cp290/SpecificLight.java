@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the Light Object for X10 for CP290 interfaces.
- * <P>
+ * <p>
  * Uses X10 dimming commands to set intensity unless the value is 0.0 or 1.0, in
  * which case it uses on/off commands only.
  * <p>
@@ -31,7 +31,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
     /**
      * Create a Light object, with only system name.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialLightManager
      * @param systemName systemName for light
      * @param tc         traffic controller for connection
@@ -44,7 +44,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
     /**
      * Create a Light object, with both system and user names.
-     * <P>
+     * <p>
      * 'systemName' was previously validated in SerialLightManager
      * @param systemName systemName for light
      * @param tc         tc for connection

@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
  * Implement a feedback message cache for XpressNet sensors and turnouts.
  *
  * @author Paul Bender Copyright (C) 2012
-  */
+ */
 public class XNetFeedbackMessageCache implements XNetListener {
 
     protected XNetTrafficController tc = null;
@@ -35,7 +35,7 @@ public class XNetFeedbackMessageCache implements XNetListener {
     // requestCachedStateFromLayout
     // provide any cached state to the turnout.  Otherwise, call the turnout's 
     // requestUpdateFromLayout() method.
-    // @param turnout - the XNetTurnout object we are requesting data for.
+    // @param turnout  the XNetTurnout object we are requesting data for.
     synchronized public void requestCachedStateFromLayout(XNetTurnout turnout) {
         int pNumber = turnout.getNumber();
         if (messagePending[(pNumber - 1) / 4][((pNumber - 1) % 4) < 2 ? 0 : 1]) {

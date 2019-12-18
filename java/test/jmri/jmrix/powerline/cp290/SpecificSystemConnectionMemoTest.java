@@ -31,7 +31,7 @@ public class SpecificSystemConnectionMemoTest extends jmri.jmrix.SystemConnectio
        SpecificSystemConnectionMemo memo = new SpecificSystemConnectionMemo();
        memo.setTrafficController(new SpecificTrafficController(memo){
           @Override
-          public void sendSerialMessage(SerialMessage m,SerialListener reply) {
+          public void sendSerialMessage(SerialMessage m, SerialListener reply) {
           }
           @Override
           public void transmitLoop(){
@@ -47,7 +47,9 @@ public class SpecificSystemConnectionMemoTest extends jmri.jmrix.SystemConnectio
    @Override
    @After
    public void tearDown(){
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
    }
 
 }

@@ -28,6 +28,18 @@
         <authorinitials>PŠ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2018-09-22</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Panel indicators</revremark>
+    </revision>    
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2019-02-20</date>
+        <authorinitials>PŠ</authorinitials>
+        <revremark>Test set</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
@@ -113,12 +125,12 @@
     </aspect>
 
     <aspect>
-      <name>40 a výstraha</name>
+      <name>Rychlost 40 a výstraha</name>
       <title>Slowly 40 km/h proceed preparing to stop at next signal</title>
       <indication>Proceed slowly 40 km/h and preparing to stop at next signal</indication>
       <description>Lower light yellow, upper light yellow</description>
       <reference>Aspect 23</reference>
-      <comment>Rychost 40 km/h a výstraha</comment>
+      <comment>Rychlost 40 km/h a výstraha</comment>
       <speed>40 km/h</speed>
       <speed2>Stop</speed2>
       <route>Diverging</route>
@@ -324,10 +336,15 @@
 
   <imagetypes>
 	<imagetype type="prototype"/>
-	<!--
-	<imagetype type="medium panel"/>
-	<imagetype type="small panel"/>
-	-->
+	
+	<imagetype type="AŽD žzčb"/>
+        <imagetype type="AŽD z"/>
+        <imagetype type="AŽD b"/>
+	
+	<imagetype type="ESP žzčb"/>
+        <imagetype type="ESP z"/>
+        <imagetype type="ESP b"/>
+	
   </imagetypes>
 
   <appearancefiles>
@@ -344,6 +361,8 @@
     <appearancefile href="appearance-shunting_repeater.xml"/>
     <appearancefile href="appearance-hump.xml"/>
     <appearancefile href="appearance-hump_repeater.xml"/>
+
+    <appearancefile href="appearance-test.xml"/>
 
   </appearancefiles>
 

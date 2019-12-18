@@ -5,18 +5,14 @@ import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetThrottle;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
- * Tests for the jmri.jmrix.lenz.z21XNetThrottle class
+ * Tests for the jmri.jmrix.roco.z21.z21XNetThrottle class
  *
  * @author	Paul Bender
  */
-public class Z21XNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
+public class Z21XNetThrottleTest extends jmri.jmrix.roco.RocoXNetThrottleTest {
 
     @Test(timeout=1000)
     @Override
@@ -31,49 +27,6 @@ public class Z21XNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     @Override
     public void testCtorWithArg() throws Exception {
         Assert.assertNotNull(instance);
-    }
-
-    // Test the initilization sequence.
-    @Override
-    @Ignore("parent class method creates a new throttle")
-    @Test(timeout=1000)
-    public void testInitSequenceNormalUnitSpeedStep128() throws Exception {
-    }
-
-    @Override
-    @Ignore("parent class method creates a new throttle")
-    @Test(timeout=1000)
-    public void initSequenceNormalUnitSpeedStep14() throws Exception {
-    }
-
-    @Override
-    @Ignore("parent class method creates a new throttle")
-    @Test(timeout=1000)
-    public void initSequenceMUAddress28SpeedStep() throws Exception {
-    }
-
-    @Override
-    @Ignore("parent class method creates a new throttle")
-    @Test(timeout=1000)
-    public void initSequenceMuedUnitSpeedStep128() throws Exception {
-    }
-
-    @Override
-    @Ignore("parent class method creates a new throttle")
-    @Test(timeout=1000)
-    public void initSequenceDHUnitSpeedStep27() throws Exception {
-    }
-
-    @Override
-    @Ignore("only one software version for Z21")
-    @Test(timeout=1000)
-    public void testSendFunctionGroup5v35() throws Exception {
-    }
-
-    @Override
-    @Ignore("only one software version for Z21")
-    @Test(timeout=1000)
-    public void testSendFunctionGroup4v35() {
     }
 
     // run the throttle through the initilization sequence,
@@ -103,54 +56,6 @@ public class Z21XNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
         // Sending the reply message should make the throttle change
         // state to idle, and then we can test what we really want to.
     }
-
-    @Override
-    @Ignore("not supported by Z21")
-    @Test(timeout=1000)
-    public void testSendMomentaryFunctionGroup1() {
-    } 
-
-    @Override
-    @Ignore("not supported by Z21")
-    @Test(timeout=1000)
-    public void testSendMomentaryFunctionGroup2() {
-    } 
-
-    @Override
-    @Ignore("not supported by Z21")
-    @Test(timeout=1000)
-    public void testSendMomentaryFunctionGroup3() {
-    } 
-
-    @Override
-    @Ignore("not supported by Z21")
-    @Test(timeout=1000)
-    public void testSendMomentaryFunctionGroup4() {
-    } 
-
-    @Override
-    @Ignore("not supported by Z21")
-    @Test(timeout=1000)
-    public void testSendMomentaryFunctionGroup5() {
-    } 
-
-    @Override
-    @Ignore("not supported by Z21")
-    @Test(timeout=1000)
-    public void testSendFunctionHighMomentaryStatusRequest() throws Exception {
-    } 
-
-    @Override
-    @Ignore("never sent by Z21 throttle support")
-    @Test(timeout=1000)
-    public void testSendFunctionStatusInformationRequest() {
-    } 
-
-    @Override
-    @Ignore("never sent by Z21 throttle support")
-    @Test(timeout=1000)
-    public void testSendFunctionHighStatusInformationRequest() {
-    } 
 
     @Test(timeout=1000)
     @Override
@@ -372,9 +277,12 @@ public class Z21XNetThrottleTest extends jmri.jmrix.lenz.XNetThrottleTest {
     }
 
     @After
+    @Override
     public void tearDown() throws Exception {
         ((Z21XNetThrottle)instance).throttleDispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
 }

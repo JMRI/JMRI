@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
  * Implement sensor manager for Marklin systems. The Manager handles all the
  * state changes.
  * <p>
- * System names are "USnnn:yy", where nnn is the Marklin Object Number for a
- * given s88 Bus Module and yy is the port on that module.
+ * System names are "USnnn:yy", where U is the user configurable system prefix,
+ * nnn is the Marklin Object Number for a given s88 Bus Module and
+ * yy is the port on that module.
  *
  * @author Kevin Dickerson Copyright (C) 2009
  */
@@ -20,20 +21,22 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         implements MarklinListener {
 
     public MarklinSensorManager(MarklinSystemConnectionMemo memo) {
-        this.memo = memo;
+        super(memo);
         tc = memo.getTrafficController();
         // connect to the TrafficManager
         tc.addMarklinListener(this);
     }
 
-    MarklinSystemConnectionMemo memo;
     MarklinTrafficController tc;
     //The hash table simply holds the object number against the MarklinSensor ref.
     private Hashtable<Integer, Hashtable<Integer, MarklinSensor>> _tmarklin = new Hashtable<Integer, Hashtable<Integer, MarklinSensor>>();   // stores known Marklin Obj
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public String getSystemPrefix() {
-        return memo.getSystemPrefix();
+    public MarklinSystemConnectionMemo getMemo() {
+        return (MarklinSystemConnectionMemo) memo;
     }
 
     @Override
@@ -119,7 +122,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     @Override
     public String getNextValidAddress(String curAddress, String prefix) {
 
-        String tmpSName = "";
+        String tmpSName;
 
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -128,7 +131,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertNumberX", curAddress), "" + ex, "", true, false);
             return null;
         }
-        if (tmpSName == null) { return null;}
+
         // Check to determine if the System Name is in use, return null if it is,
         // otherwise return the next valid address.
         Sensor s = getBySystemName(tmpSName);

@@ -16,9 +16,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Block Table</h1>
 
       <p>Blocks may be set up manually in the Block Table, using a
@@ -137,9 +137,15 @@
         </li>
 
         <li>
-          <p><b>State</b> Shows the current state of the block,
-          Occupied or UnOccupied.<br>
-          Choose between textual and graphic display in the <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
+          <p><b>State</b> Shows the current state of the block,</p>
+          <ul>
+          <li>Occupied</li>
+          <li>UnOccupied</li>          
+          <li>Unknown</li>          
+          <li>Inconsistent</li>          
+          </ul>
+          <p>Choose between textual and graphic display in the 
+          <a href="../../../apps/TabbedPreferences.shtml#Display">Display preferences</a>.
           </p>
         </li>
 
@@ -217,6 +223,23 @@
           menu.</p>
         </li>
       </ul>
+
+      <h2>Block Table Controls</h2>
+      <p>Along the bottom of the Block Table pane are buttons
+      that control its operation.</p>
+
+      <dl>
+        <dt>Add...</dt>
+
+        <dd>Push this button to <a href="BlockAddEdit.shtml">create
+          a new Block</a>.</dd>
+
+        <dt>Block Length Units</dt>
+
+        <dd>Choose between showing the Block Length (measured in real world
+        units on the layout) in either inches or centimeters.<br>
+        Existing values will be converted.</dd>
+      </dl>
 
       <a name="addBlock" id="addBlock"></a>
       <h2>Adding a new Block</h2>

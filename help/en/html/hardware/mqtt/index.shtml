@@ -1,0 +1,172 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI Hardware Support - MQTT</title>
+  <!--#include virtual="/Style.shtml" -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp" -->
+    <div id="mainContent">
+
+      <h1>Hardware Support: MQTT</h1>
+      <img src="http://mqtt.org/new/wp-content/uploads/2012/02/mqtt-inside.png" align="right">
+      JMRI can
+      connect to 
+      <a href="https://en.wikipedia.org/wiki/Internet_of_things">IOT devices</a>
+      via the
+      <a href="https://en.wikipedia.org/wiki/MQTT">MQTT protocol</a>.
+      
+
+      <h3>Naming</h3>
+
+      <p>The default system letter is "M", so we'll use that in examples.</p>
+
+      <a name= "limitations" id="limitations"></a>
+      <h2>Limitations</h2>
+      
+      Older code (i.e. JMRI 4.12 and later) only 
+      supports Turnouts. 
+      We hope to add Sensor, Light and Reporter support soon.
+      
+      <a name="connecting" id="connecting"></a>
+
+      <h2>Connecting</h2>
+      
+      You tell JMRI about how to connect to your MQTT
+      hardware via the Connections pane in the Preferences window.
+      Select "MQTT" as the manufacturer name.
+      
+      <p>
+      Currently, JMRI can handle only one MQTT connection at a time.
+      You can combine that MQTT connection with other connection types,
+      but two MQTT connections won't work properly. This 
+      may be improved at some later point if people find a 
+      reason to need two MQTT connections.
+      
+        <h3>Topics</h3>
+        
+        JMRI MQTT Turnouts are specified with JMRI system names like "MTabcd".
+        The "M" is the system connection letter, "T" specifies 
+        Turnout, and all after that is a suffix that is used to generate
+        the specific topic which JMRI publishes and subscribes to when
+        communicating with the layout.
+        <p>
+        By default, the MQTT topic for a Turnout is constructed by prepending
+        "/trains/track/turnout/" to the suffix.  For example, a JMRI Turnout with
+        system name MTabcd will publish and subscribe to the topic /trains/track/turnout/abcd.
+        There are two parts to that: A base topic common
+        to everything JMRI does on that connection, and 
+        a type-specific topic specific to each type.
+        <p>
+        By default the base topic is "/trains/";
+        the turnout-specific part is "track/turnout/",
+        leading to a complete prefix of "/trains/track/turnout/".
+        When e.g. Sensors become available, they might have
+        e.g. a type-specific part of "track/sensor/".
+        <p>
+        <a href="images/MQTT_Preferences.png"><img
+        src="images/MQTT_Preferences.png" align="right" height="211"
+        width="345"></a>
+        You can change the base topic by 
+        going to the JMRI Connection preferences,
+        selecting your MQTT connection's preference
+        pane, checking the "Additional Connection Settings" box,
+        and then entering the desired value in the "MQTT channel"
+        selection box.  Depending on which kind of computer you
+        have, you might have to click once or twice in that box
+        before you can enter your new prefix text.  Then
+        save your changes and restart the program.
+        
+        <p>
+        You can change the type-specific part of the prepended string using
+        a script at startup time.  See the
+        <a href="/jython/SetMqttPrefix.py">jython/SetMqttPrefix.py</a>
+        sample script for an example.  
+        Note that any changes should be made at startup time
+        before creating any Turnout objects, i.e. 
+        the script must be run as the 
+        first startup action before any panel files are loaded.
+        Changing the prefix only affects Turnouts that are
+        created after the change.
+        
+      <a id="payload" name="payload"></a>
+      <h2>Message Content</h2>
+        <h3>Turnouts</h3>
+            By default, the message content for turnouts is
+            "CLOSED" and "THROWN".
+        <h3>Changing the Coding</h3>
+        <span class="since">Since JMRI 4.15.5</span>
+            You can use
+            <a href="../../tools/scripting/index.shtml">scripting</a>
+            to install a new 
+            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttContentParser.html">jmri.jmrix.mqtt.MqttContentParser</a>
+            object to code and decode the content of messages.
+            See the 
+            <a href="/jython/SetMqttParser.py">jython/SetMqttParser.py</a>
+            sample script for how to do that.
+            For a Java example, see the
+            <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrix/mqtt/MqttTurnout.java#L24">inner
+            class implementation in MqttTurnout</a>.
+            <p>
+            Note that you can call
+            <code>setParser(...)</code>
+            on the
+            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnoutManager.html">jmri.jmrix.mqtt.MqttTurnoutManager</a>
+            or on an individual
+            <a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/mqtt/MqttTurnout.html">jmri.jmrix.mqtt.MqttTurnout</a>
+            object.  If you call it on an individual 
+            MqttTurnout, that's the only one that's affected.
+            If you call it on the MqttTurnoutManager
+            all <u>later created</u> 
+            MqttTurnout objects will use the new parser; earlier-created ones
+            will not be changed.  This means you should 
+            call a script to change this before loading any panel files
+            if you want all MqttTurnouts to be modified.
+        
+    <h2>Debugging</h2>
+
+      <a id="testserver" name="testserver"></a>
+      <a href="http://test.mosquitto.org">
+        <img src="https://mosquitto.org/stickers/mosquitto-mono.png" height="80" width="80" align="right"></a>
+      If you don't have an MQTT system, and want to play with this connection type, 
+      you can enter "test.mosquitto.org" for the host name
+      to use a publicly-available (non-JMRI) test server. 
+      For more information on this server, see the 
+      <a href="http://test.mosquitto.org">test.mosquitto.org</a>
+      web page.
+      <p>
+      If you install the 
+      <a href="https://mosquitto.org/download/">mosquitto tools</a>
+      on your machine,
+      you can use a command like
+<pre>
+    mosquitto_sub -h test.mosquitto.org -v -t '/trains/#'
+</pre>
+
+    to subscribe and print JMRI turnout info as it's published. 
+    To publish a change for JMRI to pick up:
+
+<pre>
+    mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "CLOSED"
+    mosquitto_pub -h test.mosquitto.org -t /trains/track/turnout/123 -r -m "THROWN"
+</pre>
+
+These commands can be run on the same machine as JMRI, or on a separate machine.
+<p>
+There are also MQTT tools available for 
+<a href="https://www.google.com/search?q=apple+app+store+mqtt&amp;oq=apple+app+store+mqtt">iOS devices</a> and 
+<a href="https://play.google.com/store/search?q=mqtt&amp;c=apps&amp;authuser">Android devices</a>
+that can be useful for monitoring, testing and operating your layout.
+
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

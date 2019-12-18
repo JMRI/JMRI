@@ -9,6 +9,7 @@ import org.junit.runners.Suite;
         AddressPanelTest.class,
         BackgroundPanelTest.class,
         ControlPanelTest.class,
+        ControlPanelCustomSliderUITest.class,
         ControlPanelPropertyEditorTest.class,
         FunctionButtonTest.class,
         FunctionButtonPropertyEditorTest.class,
@@ -34,6 +35,9 @@ import org.junit.runners.Suite;
         KeyListenerInstallerTest.class,
         WindowPreferencesTest.class,
         SpeedPanelTest.class,
+        StealingThrottleTest.class,
+        SharingThrottleTest.class,
+        StealingOrSharingThrottleTest.class
 })
 
 /**

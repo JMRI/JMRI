@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
+<!-- version 2 - separate assymetrical and DC polarity -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <name>ABC</name>
+  <name>Braking</name>
+  <name xml:lang="fr">Freinage</name>
+  <name xml:lang="de">Bremsen</name>
+  <name xml:lang="cs">Brždění</name>
   <column>
     <display item="MAN Key Extension (Disable HLU or ABC signal control)" label="Set Function Key to Disable ABC Signal Control">
        <label>Set Function Key to Disable ABC Signal Control</label>
        <label xml:lang="it">Tasto funzione per disabilitare controllo segnale ABC</label>
        <label xml:lang="cs">Nastavení funkční klávesy pro znepřístupnění řízení signálem ABC</label>
     </display>
-    <display item="Direction Dependent stops with asymmetrical DCC"/>
+    <display item="Direction Dependent stop with asymmetrical DCC"/>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Direction Dependent stop with DC polarity"/>
     <label>
       <text> </text>
     </label>

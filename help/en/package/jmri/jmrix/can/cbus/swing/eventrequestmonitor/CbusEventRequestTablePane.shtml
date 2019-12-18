@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+  <meta name="keywords" content="JMRI MERG CBUS help support event request feedback monitor monitoring tool">
+  <title>JMRI: MERG CBUS Event Request Table</title>
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <h1>JMRI: MERG CBUS Event Request Monitor Table</h1>
+      
+        <ul class="snav">
+        <li><a href="#stats">Columns</a></li>
+        <li><a href="#status">Requesting Event Status</a></li>
+        <li><a href="#opc">OPCs</a></li>
+        </ul>
+      
+      <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/ev-table-630x210.png"
+      width="630" height="210" alt="MERG CBUS Event Request Table" align="right">
+
+      <p>The MERG CBUS Event Table displays event information on your <a href=
+      "../../../../../../../html/hardware/can/cbus/index.shtml">CBUS</a>
+      connection.</p>
+      
+      <p>Both incoming to JMRI and outgoing messages are logged to the table.</p>
+
+      <p>While the window is open, it will maintain a list of short on / off events, 
+      long on / off events, extended OPC on / off events, on / off accessory response events.</p>
+
+      
+      <p>Each event and node combination is unique, the maximum event number is 65,535.</p>
+      <p>The maximum node number is also 65,535.</p>
+      
+      <p>The table will always start with no entries, data is not maintained between sessions.</p>
+      
+      <p>You can open the table automatically by adding it to your JMRI startup action list.
+      <br>PanelPro > Edit Preferences > Start Up > Add > Perform Action > Open CBUS Event Table.
+      </p>
+
+      <p>Short event codes will be stripped of any node number contained within the event CAN message.</p>
+      <p>All numeric values decimal.</p>
+      
+
+    <h2><a name="stats" id="stats">Columns</a></h2>
+
+      <p>Columns can be selected for display via the top menu bar,
+      these are split into 2 categories.</p>
+      
+        <ul>
+        <li>Event Columns</li>
+        <li>Feedback Columns</li>
+        </ul>
+      
+        <p>The column order can be rearranged by dragging the column header. </p>
+        <p>Change the column sort order by left clicking on the column header.</p>
+      
+    <h3>Event Columns</h3>
+    
+        <ul>
+        <li>Event : Event ( or device ) number reported within an event CAN message.</li>
+        <li>Node : Node number reported by an event CAN message.</li>
+        <li>Event Name .</li>  
+        <li>Send Request : Sends a request event. If the the event has a node number, this will be a long event otherwise short.</li>
+        <li>Delete : ( The request event will be re-added to the table if re-heard on the network. )</li>
+        </ul>
+        
+    
+    <h3>Feedback Columns</h3>  
+    
+    <ul>
+      <li>FB Status - Status of the very last feedback request.  OK, Waiting or NO Feedback.</li>
+      
+      <li>FB reqiured - Number of response events required to prove.</li>
+
+      <li>FB Outstanding - Number of feedback events are currently outstanding.</li> 
+      
+      <li>FB Timeout - ms before alerts set in.</li>
+      
+      <li>FB Event - If another event is feedback for this event, add the other event number.</li>
+      
+      <li>FB Node - If another event is feedback for this event, add the other event node number.</li>
+     </ul>
+
+
+      <p>When an event is sent by JMRI which has a number in the feedback response column,
+      the event request table will listen for its response and warn if this is not received.
+      </p>
+      
+      <p>The system will listen for a feedback event in the 
+      form of a response event, or a normal on off event.
+      The response events do not have to status ( on or off ) match, 
+      and can be any of the data lengths.</p>
+   
+      <img src="../../../../../../../html/hardware/can/cbus/images/swing/event-table/merg-cbus-ev-table-feedback-792x221.png"
+      width="792" height="221" alt="MERG CBUS Event Table Feedback" >      
+      
+    <h3><a name="status" id="status">Requesting Event Status</a></h3>
+        <div>
+      <p>On clicking Status, JMRI sends an event accessory status request message 
+      to the network, long if the event has a node, short if without.</p>
+      <p>This triggers a JMRI event listener which awaits a response 
+      from the event, either a request response or a normal event 
+      is accepted as a response.</p>
+      <p>If nothing is set in event feedback, the default timeout is 
+      4 seconds from the same event and node combination.</p>
+      <p>Some users may want to create a new JMRI turnout, sensor or light 
+      to represent the get status button and send the event request status message.
+      
+      <br>The hardware addresses for these request events would look something like:</p>
+      
+        <table border="1">
+        <tbody>
+        <tr>
+        <th>Hardware Address</th>
+        <th>Ops Code Hex</th>
+        <th>Ops Code Translated</th>
+        <th>Node Dec</th>
+        <th>Event Dec</th>
+        </tr>
+        <tr>
+        <td>X9A0000007B</td>
+        <td>9A</td>
+        <td>Accessory Request Short</td>
+        <td>0</td>
+        <td>123</td>
+        </tr>      
+        <tr>
+        <td>X92007B01C8</td>
+        <td>92</td>
+        <td>Accessory Request Long</td>
+        <td>123</td>
+        <td>456</td>
+        </tr>  
+        </tbody>
+        </table>
+      
+      <p>There are a few methods within JMRI of sending this event to ping every few seconds, 
+      one being to create a jython script to ping 1 sensor every few seconds, 
+      and use logix on this 1 sensor to create other ping event status requests outputs.</p>
+
+      <p>When an event response request message is heard on the network, 
+      the event table will listen for event feedback.</p>
+      </div>
+        
+      
+      
+    <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
+      
+        <ul>
+        <li>ASRQ - Sent when user clicks status button, node number 0</li>      
+        <li>AREQ - Sent when user clicks status button, node number > 0</li>
+        </ul>
+      
+        <p>Received OPC's can be from other JMRI components,
+        or from an external CBUS connection.</p>
+        
+        <p>All opscodes defined as an accessory event ( with the exception of Fast Clock ) 
+        are constant listeners, ie </p>
+        
+        <ul>
+        <li>ASRQ / AREQ - Autostarts feedback timer for the associated event.</li>
+        <li>ACON / ACOF</li>
+        <li>ARON / AROF</li>
+        <li>ASON / ASOF</li>
+        <li>ARSON / ARSOF</li>
+        <li>ACON1 / ACOF1</li>
+        <li>ARON1 / AROF1</li>
+        <li>ASON1 / ASOF1</li>
+        <li>ARSON1 / ARSOF1</li>
+        <li>ACON2 / ACOF2</li>
+        <li>ARON2 / AROF2</li>
+        <li>ASON2 / ASOF2</li>
+        <li>ARSON2 / ARSOF2</li>
+        <li>ACON3 / ACOF3</li>
+        <li>ARON3 / AROF3</li>
+        <li>ACDAT</li>
+        <li>ARDAT</li>
+        <li>ASON3 / ASOF3</li>
+        <li>DDES</li>
+        <li>DDRS</li>
+        <li>ARSON3 / ARSOF3</li>
+        </ul>
+      
+
+      <h4>Variance to MERG CBUS Developers Guide 6b</h4>
+        <p>In this data model, it is assumed that event and node combinations are the unique factor.</p>      
+        <p>Any event OPCs sent with extra data bytes will be logged according to its core event and node combination, 
+        irrelevant of extra data bytes.</p>
+       
+      
+    <h3>JMRI Help</h3>
+      
+        <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the MERG Event Table window.</p>
+        
+        <p>The <a href="../console/CbusConsoleFrame.shtml">CBUS
+        Console</a> can help you figure out what events are happening
+        on your layout.</p>
+      
+      
+      <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Help page</a>.</p>
+        
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

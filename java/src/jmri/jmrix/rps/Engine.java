@@ -48,8 +48,8 @@ public class Engine implements ReadingListener {
     public void setVSound(double v) {
         double oldVal = vsound;
         vsound = v;
-        log.info("change vsound from " + oldVal + " to " + v);
-        prop.firePropertyChange("vSound", new Double(oldVal), new Double(v));
+        log.info("change vsound from {} to {}", oldVal, v);
+        prop.firePropertyChange("vSound", Double.valueOf(oldVal), Double.valueOf(v));
     }
 
     public double getVSound() {
@@ -73,10 +73,9 @@ public class Engine implements ReadingListener {
     /**
      * Set the maximum receiver number expected. If the highest value in the
      * hardware is 5, that's what's needed here.
-     *
      */
     public void setMaxReceiverNumber(int n) {
-        log.debug("setReceiverCount to " + n);
+        log.debug("setReceiverCount to {}", n);
         if ((receivers != null) && (n == receivers.length + 1)) {
             return;
         }
@@ -103,7 +102,7 @@ public class Engine implements ReadingListener {
     }
 
     /**
-     * Get a particular receiver by address (starting at 1)
+     * Get a particular receiver by address (starting at 1).
      */
     public void setReceiver(int address, Receiver receiver) {
         if (receivers == null) {
@@ -112,7 +111,7 @@ public class Engine implements ReadingListener {
         if (address >= receivers.length) {
             throw new IllegalArgumentException("Index " + address + " is larger than expected " + receivers.length);
         }
-        log.debug("store receiver " + address + " in " + this);
+        log.debug("store receiver {} in {}", address, this);
         receivers[address] = receiver;
     }
 
@@ -126,7 +125,7 @@ public class Engine implements ReadingListener {
 
     public Point3d getReceiverPosition(int i) {
         if (receivers[i] == null) {
-            log.debug("getReceiverPosition of null receiver index i=" + i);
+            log.debug("getReceiverPosition of null receiver index i={}", i);
             return null;
         }
         return receivers[i].getPosition();
@@ -151,7 +150,7 @@ public class Engine implements ReadingListener {
         // to reduce the work done.
 
         // ok to send next poll
-        log.debug("po false " + r.getId());
+        log.debug("po false {}", r.getId());
         pollOutstanding = false;
 
         // make a list of receiver positions to provide
@@ -168,9 +167,8 @@ public class Engine implements ReadingListener {
             Point3d p = getReceiverPosition(i);
             if (p != null) {
                 receivers[i].setLastTime((int) r.getValue(i));  // receivers numbered from 1
-                log.debug("    " + i + "th value min " + receivers[i].getMinTime() + " < time "
-                        + r.getValue(i) + " < max "
-                        + receivers[i].getMaxTime() + " at " + p);
+                log.debug("    {}th value min {} < time {} < max {} at {}",
+                        i, receivers[i].getMinTime(), r.getValue(i), receivers[i].getMaxTime(), p);
                 if (receivers[i].isActive() && (receivers[i].getMinTime() <= r.getValue(i))
                         && (r.getValue(i) <= receivers[i].getMaxTime())) {
                     list[i] = p;
@@ -179,7 +177,7 @@ public class Engine implements ReadingListener {
                 }
             } else {
                 list[i] = null;
-                log.error("Unexpected null position from receiver " + i);
+                log.error("Unexpected null position from receiver {}", i);
             }
         }
 
@@ -249,7 +247,7 @@ public class Engine implements ReadingListener {
             min = pf.getReceiverMin(i);
             max = pf.getReceiverMax(i);
 
-            log.debug("load " + i + " with " + p);
+            log.debug("load {} with {}", i, p);
             Receiver r = new Receiver(p);
             r.setActive(a);
             r.setMinTime(min);
@@ -264,7 +262,7 @@ public class Engine implements ReadingListener {
         try {
             loadAlignment(defaultFile);
         } catch (Exception e) {
-            log.debug("load exception" + e);
+            log.debug("load exception ", e);
             // load dummy values
             setDefaultAlignment();
         }
@@ -309,7 +307,7 @@ public class Engine implements ReadingListener {
         transmitters = new java.util.ArrayList<Transmitter>();
         // load transmitters from the JMRI roster
         java.util.List<RosterEntry> l = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
-        log.debug("Got " + l.size() + " roster entries");
+        log.debug("Got {} roster entries", l.size());
         for (int i = 0; i < l.size(); i++) {
             RosterEntry r = null;
             try {
@@ -321,7 +319,7 @@ public class Engine implements ReadingListener {
             } catch (NumberFormatException e) {
                 // just skip this entry
                 if (r != null) {
-                    log.warn("Skip roster entry: " + r.getId());
+                    log.warn("Skip roster entry: {}", r.getId());
                 } else {
                     log.warn("Failed roster entry skipped");
                 }
@@ -470,9 +468,9 @@ public class Engine implements ReadingListener {
                 while (true) {
                     try {
                         int i = selectNextPoll();
-                        log.debug("Poll " + i);
+                        log.debug("Poll {}", i);
                         setOn(i);
-                        log.debug("po true " + i);
+                        log.debug("po true {}", i);
                         pollOutstanding = true;
                         synchronized (this) {
                             wait(20);
@@ -498,7 +496,7 @@ public class Engine implements ReadingListener {
 
     /**
      * Wait before sending next poll.
-     * <P>
+     * <p>
      * Waits specified time, and then checks to see if response has been
      * returned. If not, it waits again (twice) by 1/2 the interval, then
      * finally polls anyway.
@@ -612,4 +610,5 @@ public class Engine implements ReadingListener {
     }
 
     private final static Logger log = LoggerFactory.getLogger(Engine.class);
+
 }

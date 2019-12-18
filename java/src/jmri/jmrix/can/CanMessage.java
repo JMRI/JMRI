@@ -1,17 +1,15 @@
 package jmri.jmrix.can;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 import jmri.jmrix.AbstractMRMessage;
-import jmri.util.StringUtil;
 
 /**
  * Base class for messages in a CANbus based message/reply protocol.
- * <P>
+ * <p>
  * It is expected that any CAN based system will be based upon basic CANbus
  * concepts such as ID (standard or extended), Normal and RTR frames and a data
  * field.
- * <P>
+ * <p>
  * The _dataChars[] and _nDataChars members refer to the data field, not the
  * entire message.
  * <p>
@@ -26,76 +24,95 @@ import jmri.util.StringUtil;
  * @author Bob Jacobsen Copyright (C) 2008, 2009, 2010
  */
 public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
+    
+    private boolean _translated = false;
 
-    // tag whether translation is needed.
-    // a "native" message has been converted already
-    boolean _translated = false;
-
-    public void setTranslated(boolean translated) {
-        _translated = translated;
-    }
-
-    public boolean isTranslated() {
-        return _translated;
-    }
-
+    /**
+     * Create a new CanMessage with 8 data bytes
+     * @param header The CAN Frame header value
+     */
     public CanMessage(int header) {
         _header = header;
         _isExtended = false;
         _isRtr = false;
         _nDataChars = 8;
-        setBinary(true);
+        super.setBinary(true);
         _dataChars = new int[8];
     }
-
-    // create a new one of given length
+    
+    /**
+     * Create a new CanMessage of given length
+     * @param i number of CAN Frame data bytes, max 8
+     * @param header The CAN Frame header value
+     */
     public CanMessage(int i, int header) {
         this(header);
         _nDataChars = (i <= 8) ? i : 8;
     }
-
-    // create a new one from an array
+    
+    /**
+     * Create a new CanMessage from an int array
+     * @param d array of CAN Frame data bytes, max 8
+     * @param header The CAN Frame header value
+     */
     public CanMessage(int[] d, int header) {
         this(header);
-        _nDataChars = (d.length <= 8) ? d.length : 8;
-        for (int i = 0; i < _nDataChars; i++) {
-            _dataChars[i] = d[i];
-        }
+        setData(d);
+        setNumDataElements((d.length <= 8) ? d.length : 8);
     }
 
-    // create a new one from a byte array, as a service
+    /**
+     * Create a new CanMessage from a byte array
+     * @param d array of CAN Frame data bytes, max 8
+     * @param header The CAN Frame header value
+     */
     public CanMessage(byte[] d, int header) {
         this(header);
-        _nDataChars = (d.length <= 8) ? d.length : 8;
-        for (int i = 0; i < _nDataChars; i++) {
-            _dataChars[i] = d[i] & 0xFF;
-        }
+        setData(d);
+        setNumDataElements((d.length <= 8) ? d.length : 8);
     }
 
-    // copy one
+    /**
+     * Create a new CanMessage from an existing CanMessage
+     * @param m The existing CanMessage
+     */
     public CanMessage(@Nonnull CanMessage m) {
-        _header = m._header;
-        _isExtended = m._isExtended;
-        _isRtr = m._isRtr;
-        setBinary(true);
-        _nDataChars = m._nDataChars;
-        _dataChars = new int[_nDataChars];
-        for (int i = 0; i < _nDataChars; i++) {
-            _dataChars[i] = m._dataChars[i];
-        }
+        this(m.getHeader());
+        _isExtended = m.isExtended();
+        _isRtr = m.isRtr();
+        super.setBinary(true);
+        setData(java.util.Arrays.copyOf(m.getData(),m.getNumDataElements()));
+        setNumDataElements(m.getNumDataElements());
     }
 
-    // copy type
+    /**
+     * Create a new CanMessage from an existing CanReply
+     * @param m The existing CanReply
+     */
     public CanMessage(@Nonnull CanReply m) {
-        _header = m._header;
-        _isExtended = m._isExtended;
-        _isRtr = m._isRtr;
-        setBinary(true);
-        _nDataChars = m.getNumDataElements();
-        _dataChars = new int[_nDataChars];
-        for (int i = 0; i < _nDataChars; i++) {
-            _dataChars[i] = m.getElement(i);
-        }
+        this(m.getHeader());
+        _isExtended = m.isExtended();
+        _isRtr = m.isRtr();
+        super.setBinary(true);
+        setData(m.getData());
+        setNumDataElements(m.getNumDataElements());
+    }
+    
+    /**
+     * Tag whether translation is needed.
+     * a "native" message has been converted already.
+     * @param translated true or false to set flag as required
+     */
+    public void setTranslated(boolean translated) {
+        _translated = translated;
+    }
+    
+    /**
+     * Check if translation flag has been set.
+     * @return false by default
+     */
+    public boolean isTranslated() {
+        return _translated;
     }
 
     /**
@@ -107,121 +124,126 @@ public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     }
 
     /**
-     * Note that a CanMessage and a CanReply can be tested for equality
+     * Note that a CanMessage and a CanReply can be tested for equality.
+     * @param a CanMessage or CanReply to test against
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "EQ_UNUSUAL",
+        justification = "Equality test done in CanFrame")
     public boolean equals(Object a) {
-        if (a == null) {
-            return false;
-        }
-        // check for CanFrame equality, that's sufficient
-        if (a instanceof CanFrame) {
-            CanFrame m = (CanFrame) a;
-            if ((_header != m.getHeader()) || (_isRtr != m.isRtr()) || (_isExtended != m.isExtended())) {
-                return false;
-            }
-            if (_nDataChars != m.getNumDataElements()) {
-                return false;
-            }
-            for (int i = 0; i < _nDataChars; i++) {
-                if (_dataChars[i] != m.getElement(i)) {
-                    return false;
-                }
-            }
-            return true;
-        } else {
-            return false;
-        }
+        return isEqual(this,a);
     }
 
+    /**
+     * {@inheritDoc}
+     * This format matches {@link CanReply}
+     */
     @Override
     public String toString() {
-        String s = String.format("[%x] ", _header);
-        for (int i = 0; i < _nDataChars; i++) {
-            if (i != 0) {
-                s += " ";
-            }
-            s = StringUtil.appendTwoHexFromInt(_dataChars[i] & 255, s);
-        }
-        return s;
+        return getToString();
     }
 
+    /**
+     * {@inheritDoc}
+     * This format matches @CanReply
+     */
     @Override
     public String toMonitorString() {
-        StringBuffer buf = new StringBuffer();
-        buf.append("(" + Integer.toHexString(getHeader())
-                + (isExtended() ? " ext)" : ")"));
-        for (int i = 0; i < getNumDataElements(); i++)
-        {
-            buf.append(" " + jmri.util.StringUtil.twoHexFromInt(getElement(i)));
-        }
-	return buf.toString();
+        return monString();
     }
 
+    /**
+     * {@inheritDoc}
+     * @return always false
+     */
     @Override
     public boolean replyExpected() {
         return false;
     }
-
-    // accessors to the bulk data
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getNumDataElements() {
         return _nDataChars;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public void setNumDataElements(int n) {
+    public final void setNumDataElements(int n) {
         _nDataChars = n;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getElement(int n) {
         return _dataChars[n];
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setElement(int n, int v) {
         _dataChars[n] = v;
     }
 
-    public void setData(int[] d) {
-        int len = (d.length <= 8) ? d.length : 8;
-        for (int i = 0; i < len; i++) {
-            _dataChars[i] = d[i];
-        }
-    }
-
-    @SuppressFBWarnings(value = "EI_EXPOSE_REP") // OK to expose array, can be directly manipulated
+    /**
+     * Get the data bytes in array form.
+     * @return the actual int array
+     */
     public int[] getData() {
         return _dataChars;
     }
 
-    // CAN header
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getHeader() {
         return _header;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setHeader(int h) {
         _header = h;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isExtended() {
         return _isExtended;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setExtended(boolean b) {
         _isExtended = b;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean isRtr() {
         return _isRtr;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setRtr(boolean b) {
         _isRtr = b;

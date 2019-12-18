@@ -6,32 +6,31 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Null audio system implementation of the Audio Source sub-class.
- * <P>
+ * <p>
  * For now, no system-specific implementations are forseen - this will remain
  * internal-only
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2009
  */
 public class NullAudioSource extends AbstractAudioSource {
 
     /**
-     * True if we've been initialised
+     * True if we've been initialised.
      */
     private boolean initialised = false;
 
     /**
-     * Constructor for new NullAudioSource with system name
+     * Constructor for new NullAudioSource with system name.
      *
      * @param systemName AudioSource object system name (e.g. IAS1)
      */
@@ -40,7 +39,7 @@ public class NullAudioSource extends AbstractAudioSource {
     }
 
     /**
-     * Constructor for new NullAudioSource with system name and user name
+     * Constructor for new NullAudioSource with system name and user name.
      *
      * @param systemName AudioSource object system name (e.g. IAS1)
      * @param userName   AudioSource object user name
@@ -59,7 +58,7 @@ public class NullAudioSource extends AbstractAudioSource {
     }
 
     /**
-     * Initialise this AudioSource
+     * Initialise this AudioSource.
      *
      * @return True if initialised
      */

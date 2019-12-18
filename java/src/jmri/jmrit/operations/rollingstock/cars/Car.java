@@ -6,8 +6,10 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.trains.timetable.TrainSchedule;
-import jmri.jmrit.operations.trains.timetable.TrainScheduleManager;
+import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.jmrit.operations.trains.schedules.TrainSchedule;
+import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -511,6 +513,48 @@ public class Car extends RollingStock {
     public boolean isUtility() {
         return _utility;
     }
+    
+    public boolean isLocalMove() {
+        if (getRouteLocation() == null || getRouteDestination() == null) {
+            return false;
+        }
+        if (getRouteLocation().equals(getRouteDestination()) && getTrack() != null) {
+            return true;
+        }
+        if (getTrain() == null) {
+            return false;
+        }
+        if (getTrain().isLocalSwitcher() &&
+                TrainCommon.splitString(getRouteLocation().getName())
+                        .equals(TrainCommon.splitString(getRouteDestination().getName())) &&
+                getTrack() != null) {
+            return true;
+        }
+        // look for sequential locations with the "same" name
+        if (TrainCommon.splitString(getRouteLocation().getName()).equals(TrainCommon.splitString(getRouteDestination().getName())) &&
+                getTrain().getRoute() != null) {
+            boolean foundRl = false;
+            for (RouteLocation rl : getTrain().getRoute().getLocationsBySequenceList()) {
+                if (foundRl) {
+                    if (TrainCommon.splitString(getRouteDestination().getName()).equals(TrainCommon.splitString(rl.getName()))) {
+                        // user can specify the "same" location two more more
+                        // times in a row
+                        if (getRouteDestination() != rl) {
+                            continue;
+                        } else {
+                            return true;
+                        }
+                    } else {
+                        return false;
+                    }
+                }
+                if (getRouteLocation().equals(rl)) {
+                    foundRl = true;
+                }
+            }
+        }
+        return false;
+    }
 
     /**
      * A kernel is a group of cars that are switched as a unit.
@@ -548,13 +592,24 @@ public class Car extends RollingStock {
         }
         return NONE;
     }
+    
+    /**
+     * Used to determine if car is lead car in a kernel
+     * @return true if lead car in a kernel
+     */
+    public boolean isLead() {
+        if (getKernel() != null) {
+           return getKernel().isLead(this);
+        }
+        return false;
+    }
 
     /**
      * Updates all cars in a kernel. After the update, the cars will all have
      * the same final destination, load, and next load.
      */
     public void updateKernel() {
-        if (getKernel() != null && getKernel().isLead(this)) {
+        if (isLead()) {
             for (Car car : getKernel().getCars()) {
                 car.setFinalDestination(getFinalDestination());
                 car.setFinalDestinationTrack(getFinalDestinationTrack());
@@ -908,7 +963,7 @@ public class Car extends RollingStock {
         }
         if (getKernel() != null) {
             e.setAttribute(Xml.KERNEL, getKernelName());
-            if (getKernel().isLead(this)) {
+            if (isLead()) {
                 e.setAttribute(Xml.LEAD_KERNEL, Xml.TRUE);
             }
         }

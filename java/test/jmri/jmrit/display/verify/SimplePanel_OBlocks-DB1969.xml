@@ -111,7 +111,7 @@
       <comment />
       <sensor systemName="IS101" />
       <path pathName="4P2" blockName="OB101" fromPortal="4-1" toPortal="1-2" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP1" portalName="1-2">
+      <portal portalName="1-2">
         <fromBlock blockName="OB101">
           <path pathName="4P2" blockName="OB101" />
         </fromBlock>
@@ -121,7 +121,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0010)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP2" portalName="4-1">
+      <portal portalName="4-1">
         <fromBlock blockName="OB104">
           <path pathName="3P1" blockName="OB104" />
         </fromBlock>
@@ -135,7 +135,7 @@
     <oblock systemName="OB102" length="3000.0" units="true" curve="0" permissive="true" speedNotch="">
       <sensor systemName="IS102" />
       <path pathName="1P3" blockName="OB102" fromPortal="1-2" toPortal="2-3" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP1" portalName="1-2">
+      <portal portalName="1-2">
         <fromBlock blockName="OB101">
           <path pathName="4P2" blockName="OB101" />
         </fromBlock>
@@ -145,7 +145,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0010)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP3" portalName="2-3">
+      <portal portalName="2-3">
         <fromBlock blockName="OB102">
           <path pathName="1P3" blockName="OB102" />
         </fromBlock>
@@ -159,7 +159,7 @@
     <oblock systemName="OB103" length="2000.0" units="true" curve="0" permissive="true" speedNotch="">
       <sensor systemName="IS103" />
       <path pathName="2P4" blockName="OB103" fromPortal="2-3" toPortal="3-4" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP3" portalName="2-3">
+      <portal portalName="2-3">
         <fromBlock blockName="OB102">
           <path pathName="1P3" blockName="OB102" />
         </fromBlock>
@@ -169,7 +169,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:DB-HV-1969:block_distant($0009)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP4" portalName="3-4">
+      <portal portalName="3-4">
         <fromBlock blockName="OB103">
           <path pathName="2P4" blockName="OB103" />
         </fromBlock>
@@ -189,7 +189,7 @@
       <path pathName="3P5" blockName="OB104" fromPortal="3-4" toPortal="4-5" fromDirection="0" toDirection="0" length="1000.0">
         <setting turnout="IT201" set="4" />
       </path>
-      <portal systemName="IP2" portalName="4-1">
+      <portal portalName="4-1">
         <fromBlock blockName="OB104">
           <path pathName="3P1" blockName="OB104" />
         </fromBlock>
@@ -199,7 +199,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:DB-HV-1969:entry_distant($0007)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP4" portalName="3-4">
+      <portal portalName="3-4">
         <fromBlock blockName="OB103">
           <path pathName="2P4" blockName="OB103" />
         </fromBlock>
@@ -210,7 +210,7 @@
         </toBlock>
         <toSignal signalName="IF$vsm:DB-HV-1969:exit_distant($0008)" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP5" portalName="4-5">
+      <portal portalName="4-5">
         <fromBlock blockName="OB104">
           <path pathName="3P5" blockName="OB104" />
         </fromBlock>
@@ -224,7 +224,7 @@
     <oblock systemName="OB105" length="1000.0" units="true" curve="0" permissive="true" speedNotch="">
       <sensor systemName="IS105" />
       <path pathName="4P" blockName="OB105" fromPortal="4-5" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP5" portalName="4-5">
+      <portal portalName="4-5">
         <fromBlock blockName="OB104">
           <path pathName="3P5" blockName="OB104" />
         </fromBlock>

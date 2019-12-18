@@ -10,49 +10,43 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2003-2010
  * @author Mark Underwood Copyright (C) 2015
-  *
+ * @author Harald Barth Copyright (C) 2019
+ *
  * Based on AbstractXNetInitializationManager
  */
-abstract public class AbstractDCCppInitializationManager {
+public abstract class AbstractDCCppInitializationManager {
 
     protected Thread initThread = null;
 
     protected DCCppSystemConnectionMemo systemMemo = null;
 
-    /**
-     * Define timeout used during initialization
-     */
+    // If there is no answer from an Arduino after 10 sec it's not there
+    // Normal answer time is ~2 sec
+    protected static int INITIALTIMEOUT = 10000;
+
     protected int getInitTimeout() {
-        return 30000;
+        return INITIALTIMEOUT;  // this method is overriden for tests.
     }
 
     public AbstractDCCppInitializationManager(DCCppSystemConnectionMemo memo) {
-        /* spawn a thread to request version information and wait for the 
-           command station to respond */
-        if (log.isDebugEnabled()) {
-            log.debug("Starting DCC++ Initialization Process");
-        }
+
+        // spawn a thread to request version information 
+        // and wait for the command station to respond
+	log.debug("Starting DCC++ Initialization Process");
         systemMemo = memo;
-        initThread = new Thread(new DCCppInitializer(this));
-        
-        // Since we can't currently reconfigure the user interface after  
-        // initilization, We need to wait for the initilization thread 
-        // to finish before we can continue.  The wait  can be removed IF 
-        // we revisit the GUI initilization process.
+	initThread = new Thread(new DCCppInitializer(this));
+
+        // We need to wait for the initilization thread 
+        // to finish before we can continue. 
+
         synchronized (this) {
-            if (log.isDebugEnabled()) {
-                log.debug("start wait");
-            }
             new jmri.util.WaitHandler(this);
-            if (log.isDebugEnabled()) {
-                log.debug("end wait");
-            }
         }
-        
+	// Continue with the non-abstract init
         init();
     }
     
-    abstract protected void init();
+    protected abstract void init();
     
     /* Interal class to configure the DCC++ implementation */
     protected class DCCppInitializer implements Runnable, DCCppListener {
@@ -60,49 +54,66 @@ abstract public class AbstractDCCppInitializationManager {
         private javax.swing.Timer initTimer; // Timer used to let he 
         // command station response time 
         // out, and configure the defaults.
+
+	// Flags to check if data has arrived
+	private boolean gotVersion = false;
+	private boolean gotMaxNumSlots= false;
         
         private Object parent = null;
         
         public DCCppInitializer(Object Parent) {
             
+	    DCCppMessage msg;
             parent = Parent;
+	    initTimer = setupInitTimer();
             
-            initTimer = setupInitTimer();
-            
-            // Register as an XPressNet Listener
+            // Register as an DCCppListener Listener
             systemMemo.getDCCppTrafficController().addDCCppListener(DCCppInterface.CS_INFO, this);
             
             //Send Information request to the Base Station
-            //First, we need to send a request for the Command Station
-            // hardware and software version 
-            DCCppMessage msg = DCCppMessage.makeCSStatusMsg();
+
+	    //If DCC++ just has started, it sends the
+	    //the status message anyway,
+	    //no matter what we send as the first request
+            //(we could ask for current or whatever)
+	    //
+            // msg = new DCCppMessage(DCCppConstants.READ_TRACK_CURRENT, DCCppConstants.READ_TRACK_CURRENT_REGEX);
+            // systemMemo.getDCCppTrafficController().sendDCCppMessage(msg, this);
+	    //
+            //Request hardware and software version 
+            msg = DCCppMessage.makeCSStatusMsg();
             //Then Send the version request to the controller
             systemMemo.getDCCppTrafficController().sendDCCppMessage(msg, this);
+            //Request number of available slots
+            msg = DCCppMessage.makeCSMaxNumSlotsMsg();
+            //Then Send the version request to the controller
+            systemMemo.getDCCppTrafficController().sendDCCppMessage(msg, this);
+
+	    log.debug("DCCppInitializer: MaxNumSlots and Status message sent");
         }
         
         protected javax.swing.Timer setupInitTimer() {
             // Initialize and start initilization timeout timer.
-            javax.swing.Timer retVal = new javax.swing.Timer(getInitTimeout(),
-                                                             new java.awt.event.ActionListener() {
-                                                                 @Override
-                                                                 public void actionPerformed(
-                                                                                             java.awt.event.ActionEvent e) {
-                                                                     /* If the timer times out, notify any 
-                                                                        waiting objects, and dispose of
-                                                                        this thread */
-                                                                     if (log.isDebugEnabled()) {
-                                                                         log.debug("Timeout waiting for Command Station Response");
-                                                                     }
-                                                                     finish();
-                                                                 }
-                                                             });
-            retVal.setInitialDelay(getInitTimeout());
+            javax.swing.Timer retVal = 
+		new javax.swing.Timer(INITIALTIMEOUT,
+				      (java.awt.event.ActionEvent e) -> {
+					  /* If the timer times out, notify any
+					     waiting objects, and dispose of
+					     this thread */
+					  log.debug("Timeout waiting for Command Station Response");
+					  // This means that there was no answer on the MaxNumSlots question
+					  systemMemo.getDCCppTrafficController().getCommandStation().setCommandStationMaxNumSlots(DCCppConstants.MAX_MAIN_REGISTERS);
+					  finish();
+				      }
+		    );
+            retVal.setInitialDelay(INITIALTIMEOUT);
             retVal.start();
             return retVal;
         }
         
         @Override
         public void run() {
+            // we may not need a thread here...
         }
         
         private void finish() {
@@ -110,14 +121,12 @@ abstract public class AbstractDCCppInitializationManager {
             // Notify the parent
             try {
                 synchronized (parent) {
-                    parent.notify();
+                    parent.notifyAll();
                 }
             } catch (Exception e) {
-                log.error("Exception " + e + "while notifying initilization thread.");
+                log.error("Exception {} while notifying initilization thread.",e);
             }
-            if (log.isDebugEnabled()) {
-                log.debug("Notification Sent");
-            }
+	    log.debug("Notification Sent");
             // Then dispose of this object
             dispose();
         }
@@ -125,28 +134,42 @@ abstract public class AbstractDCCppInitializationManager {
         // listen for the responses from the Base Station
         @Override
         public void message(DCCppReply l) {
+	    log.debug("Received DCCppReply: {}",l);
+            // Check to see if this is a response with the number of slots
+            if (l.getElement(0) == DCCppConstants.MAXNUMSLOTS_REPLY) {
+                log.debug("MaxNumSlots Info Received: {}", l);
+                systemMemo.getDCCppTrafficController()
+                    .getCommandStation()
+                    .setCommandStationMaxNumSlots(l);
+		gotMaxNumSlots = true;
+            }
             // Check to see if this is a response with the Command Station 
             // Version Info
             if (l.getElement(0) == DCCppConstants.STATUS_REPLY) {
                 // This is the Command Station Software Version Response
-                log.debug("Version Info Received: {}", l.toString());
+                log.debug("Version Info Received: {}", l);
                 systemMemo.getDCCppTrafficController()
                     .getCommandStation()
                     .setCommandStationInfo(l);
-                finish();
+		gotVersion = true;
             }
+            //If number of slots is not supported, by the DCC++ version
+            //we'll have to wait for the timeout instead, sorry.
+	    if (gotVersion && gotMaxNumSlots) {
+		finish();
+	    }
         }
         
-        // listen for the messages to the LI100/LI101
         @Override
         public void message(DCCppMessage l) {
+            // no need to process outgoing messages
         }
         
         // Handle a timeout notification
         @Override
         public void notifyTimeout(DCCppMessage msg) {
             if (log.isDebugEnabled()) {
-                log.debug("Notified of timeout on message" + msg.toString());
+                log.debug("Notified of timeout on message {}",msg);
             }
         }
         
@@ -155,6 +178,6 @@ abstract public class AbstractDCCppInitializationManager {
         }
     }
     
-    private final static Logger log = LoggerFactory.getLogger(AbstractDCCppInitializationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(AbstractDCCppInitializationManager.class);
     
 }

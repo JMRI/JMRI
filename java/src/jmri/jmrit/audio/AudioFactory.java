@@ -18,15 +18,14 @@ package jmri.jmrit.audio;
  * </ul>
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2009
  */
@@ -43,6 +42,12 @@ public interface AudioFactory {
      * Perform any implementation specific clean-up operations.
      */
     public void cleanup();
+
+    /**
+     * Determine if this AudioFactory is initialised
+     * @return true if initialised
+     */
+    public boolean isInitialised();
 
     /**
      * Provide a specific new AudioBuffer object.
@@ -63,7 +68,7 @@ public interface AudioFactory {
     public AudioListener createNewListener(String systemName, String userName);
 
     /**
-     * Return the currently active Listener object
+     * Get the currently active Listener object.
      *
      * @return active AudioListener
      */
@@ -81,7 +86,7 @@ public interface AudioFactory {
     /**
      * Queues a new AudioCommand for subsequent execution.
      * <p>
-     * If newAudioCommand is null the current queue is executed and cleaned
+     * If newAudioCommand is null the current queue is executed and cleaned.
      *
      * @param newAudioCommand AudioCommand to queue or null to execute queue
      * @return true, if further commands exist; false, if empty
@@ -89,15 +94,15 @@ public interface AudioFactory {
     public boolean audioCommandQueue(AudioCommand newAudioCommand);
 
     /**
-     * Return the currently active Command thread
+     * Get the currently active Command thread.
      *
      * @return active CommandThread
      */
     public Thread getCommandThread();
 
     /**
-     * Sets if this AudioFactory should attenuate sources based on their
-     * distance from the listener
+     * Set if this AudioFactory should attenuate sources based on their
+     * distance from the listener.
      * <p>
      * Default = true
      *
@@ -106,8 +111,8 @@ public interface AudioFactory {
     public void setDistanceAttenuated(boolean attenuated);
 
     /**
-     * Determines if this AudioFactory attenuates sources based on their
-     * distance from the Listener
+     * Determine if this AudioFactory attenuates sources based on their
+     * distance from the Listener.
      *
      * @return true if distance attenuation used
      */

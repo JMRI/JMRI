@@ -120,6 +120,10 @@ public abstract class Mx1TrafficController implements Mx1Interface {
         return mCommandStation;
     }
 
+    public Mx1SystemConnectionMemo getAdapterMemo() {
+        return adaptermemo;
+    }
+
     public void setAdapterMemo(Mx1SystemConnectionMemo memo) {
         adaptermemo = memo;
     }
@@ -135,10 +139,11 @@ public abstract class Mx1TrafficController implements Mx1Interface {
 
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "Z"; //IN18N
+            return "Z"; // NOI18N
         }
         return adaptermemo.getSystemPrefix();
     }
 
     private final static Logger log = LoggerFactory.getLogger(Mx1TrafficController.class);
+
 }

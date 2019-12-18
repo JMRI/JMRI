@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2018</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Egbert</firstname>
+        <surname>Broerse</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2018-10-18</date>
+      <revremark>Initial version as include, 2012 - 2016 76560 and 363x/365x decoders</revremark>
+    </revision>
+      <revision>
+          <revnumber>2</revnumber>
+          <date>2019-02-15</date>
+          <revremark>Added includes for IntelliDrive2 73xx5, 74120, PIKO41RH2400 decoders</revremark>
+      </revision>
+  <!-- Uhlenbrock Decoder Configuration CV 130 - 134 smoke generator -->
+  <!-- CV130 drop down, A1-A7 for IntelliDrive2, A1-A2 for 363x-->
+  </revhistory>
+    <variable item="Smoke generator option 1" CV="130" mask="VVXXXXXX" default="0" exclude="73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <enumVal>
+            <enumChoice choice="None" value="0">
+                <choice>None</choice>
+                <choice xml:lang="de">Kein</choice>
+            </enumChoice>
+            <enumChoice choice="A1" value="2">
+                <choice>A1</choice>
+                <choice xml:lang="de">A1</choice>
+            </enumChoice>
+            <enumChoice choice="A2" value="1">
+                <choice>A2</choice>
+                <choice xml:lang="de">A2</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Smoke generator operation</label>
+        <label xml:lang="de">Rauchgeneratorbetrieb</label>
+        <label xml:lang="nl">Aansl. rookgenerator</label>
+    </variable>
+    <variable item="Smoke generator option 1" CV="130" mask="XXXXVVVV" default="0" include="73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <enumVal>
+            <enumChoice choice="None">
+                <choice>None</choice>
+                <choice xml:lang="de">Kein</choice>
+            </enumChoice>
+            <enumChoice choice="A1">
+                <choice>A1</choice>
+                <choice xml:lang="de">A1</choice>
+            </enumChoice>
+            <enumChoice choice="A2">
+                <choice>A2</choice>
+                <choice xml:lang="de">A2</choice>
+            </enumChoice>
+            <enumChoice choice="A1+A2" exclude="73235,PIKO41RH2400">
+                <choice>A1 + A2</choice>
+                <choice xml:lang="de">A1 + A2</choice>
+            </enumChoice>
+            <enumChoice choice="A3" include="73235,PIKO41RH2400">
+                <choice>A3</choice>
+                <choice xml:lang="de">A3</choice>
+            </enumChoice>
+            <enumChoice choice="A4" include="73235,PIKO41RH2400">
+                <choice>A4</choice>
+                <choice xml:lang="de">A4</choice>
+            </enumChoice>
+            <enumChoice choice="A5" include="73235,PIKO41RH2400">
+                <choice>A5</choice>
+                <choice xml:lang="de">A5</choice>
+            </enumChoice>
+            <enumChoice choice="A6" include="73235,PIKO41RH2400">
+                <choice>A6</choice>
+                <choice xml:lang="de">A6</choice>
+            </enumChoice>
+            <enumChoice choice="A7" include="73235,PIKO41RH2400">
+                <choice>A7</choice>
+                <choice xml:lang="de">A7</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Smoke generator operation</label>
+        <label xml:lang="de">Rauchgeneratorbetrieb</label>
+        <label xml:lang="nl">Aansl. rookgenerator</label>
+    </variable>
+    <variable item="Smoke generator option 3" CV="130" mask="XXVVVVVV" default="0" exclude="73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <decVal max="63"/>
+        <label>Smoke gen. duration</label>
+        <label xml:lang="de">Rauchzeit (T2)</label>
+        <label xml:lang="nl">Rookduur (T2)</label>
+        <tooltip>Value * 0.2s + Start delay (T1)</tooltip>
+        <tooltip xml:lang="de">Wert * 0.2s + Anfahrwartezeit (T1)</tooltip>
+        <tooltip xml:lang="nl">Waarde * 0.2s + Wegrijvertraging (T1)</tooltip>
+    </variable>
+    <variable item="Smoke generator option 3" CV="130" mask="VVVVXXXX" default="0" include="73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <decVal max="16"/>
+        <label>Smoke gen. duration</label>
+        <label xml:lang="de">Rauchzeit (T2)</label>
+        <label xml:lang="nl">Rookduur (T2)</label>
+        <tooltip>Value * 3.2s</tooltip>
+        <tooltip xml:lang="de">Wert * 3.2s</tooltip>
+        <tooltip xml:lang="nl">Waarde * 3.2s</tooltip>
+    </variable>
+    <variable item="Smoke generator option 4" CV="131" default="31" include="76560">
+        <decVal max="32"/>
+        <label>Smoke gen. control PWM - Start</label>
+        <label xml:lang="de">Rauchgen. PWM - Anfahren</label>
+    </variable>
+    <variable item="Smoke generator option 4" CV="131" default="5" include="73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400"><!--IntelliDrive2-->
+        <decVal/>
+        <label>Smoke gen. control PWM - Load</label>
+        <label xml:lang="de">Rauchgen. PWM - Lastschwelle</label>
+    </variable>
+    <!-- specific 363x values for CV 131 PWM-Anfahren -->
+    <variable item="Smoke generator option 4" CV="131" mask="XXXVVVVV" default="31" exclude="76560,73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <decVal max="31"/>
+        <label>Smoke gen. control PWM - Start</label>
+        <label xml:lang="de">Rauchgen. PWM - Anfahren</label>
+        <label xml:lang="nl">Rookgen. PWM - Wegrijden</label>
+    </variable>
+    <variable item="Smoke generator option 5" CV="132" default="16">
+        <decVal max="32"/>
+        <label>Smoke gen. control PWM - Normal</label>
+        <label xml:lang="de">Rauchgen. PWM - Normalbetrieb</label>
+        <label xml:lang="nl">Rookgen. PWM - Normaalbedrijf</label>
+    </variable>
+    <variable item="Smoke generator option 6" CV="133" default="8">
+        <decVal max="32"/>
+        <label>Smoke gen. control PWM - Idle</label>
+        <label xml:lang="de">Rauchgen. PWM - Leerlauf</label>
+        <label xml:lang="nl">Rookgen. PWM - Vrijloop</label>
+    </variable>
+    <variable item="Smoke generator option 7" CV="131" mask="VVVXXXXX" default="4" exclude="76560,73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <enumVal>
+            <enumChoice choice="0s">
+                <choice>0 sec.</choice>
+                <choice xml:lang="de">0 Sek.</choice>
+            </enumChoice>
+            <enumChoice choice="1s">
+                <choice>1 sec.</choice>
+                <choice xml:lang="de">1 Sek.</choice>
+            </enumChoice>
+            <enumChoice choice="2s">
+                <choice>2 sec.</choice>
+                <choice xml:lang="de">2 Sek.</choice>
+            </enumChoice>
+            <enumChoice choice="3s" value="3">
+                <choice>3 sec.</choice>
+                <choice xml:lang="de">3 Sek.</choice>
+            </enumChoice>
+            <enumChoice choice="4s">
+                <choice>4 sec.</choice>
+                <choice xml:lang="de">4 Sek.</choice>
+            </enumChoice>
+            <enumChoice choice="5s">
+                <choice>5 sec.</choice>
+                <choice xml:lang="de">5 Sek.</choice>
+            </enumChoice>
+            <enumChoice choice="6s">
+                <choice>6 sec.</choice>
+                <choice xml:lang="de">6 Sek.</choice>
+            </enumChoice>
+            <enumChoice choice="7s">
+                <choice>7 sec.</choice>
+                <choice xml:lang="de">7 Sek.</choice>
+            </enumChoice>
+        </enumVal>
+        <label>Smoke generator - Start delay (T1)</label>
+        <label xml:lang="de">Rauchgen. - Anfahrwartezeit (T1)</label>
+        <label xml:lang="nl">Rookgen. - Startvertraging (T1)</label>
+    </variable>
+    <variable item="Smoke generator option 7" CV="134" default="30" include="73105,73115,73145,73405,73415,73235,74120,PIKO41RH2400">
+        <decVal/>
+        <label>Smoke generator - Start delay (T1)</label>
+        <label xml:lang="de">Rauchgen. - Anfahrwartezeit (T1)</label>
+        <label xml:lang="nl">Rookgen. - Startvertraging (T1)</label>
+        <tooltip>Value * 0.1s</tooltip>
+        <tooltip xml:lang="de">Wert * 0.1s</tooltip>
+        <tooltip xml:lang="nl">Waarde * 0.1s</tooltip>
+    </variable>
+</variables>

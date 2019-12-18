@@ -27,15 +27,14 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  *
  * <hr>
  * This file is part of JMRI.
- * <P>
+ * <p>
  * JMRI is free software; you can redistribute it and/or modify it under the
  * terms of version 2 of the GNU General Public License as published by the Free
  * Software Foundation. See the "COPYING" file for a copy of this license.
- * <P>
+ * <p>
  * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
  * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
- * <P>
  *
  * @author Matthew Harris copyright (c) 2009
  */
@@ -48,17 +47,17 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     private final Object lock = new Object();
 
     // UI components for Add/Edit Source
-    JLabel assignedBufferLabel = new JLabel(Bundle.getMessage("LabelAssignedBuffer") + ":");
+    JLabel assignedBufferLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("LabelAssignedBuffer")));
     JComboBox<String> assignedBuffer = new JComboBox<>();
     JLabel loopMinLabel = new JLabel(Bundle.getMessage("LabelLoopMin"));
     JSpinner loopMin = new JSpinner();
     JLabel loopMaxLabel = new JLabel(Bundle.getMessage("LabelLoopMax"));
     JSpinner loopMax = new JSpinner();
-//    JLabel loopMinDelayLabel = new JLabel(Bundle.getMessage("LabelLoopMin"));
-//    JSpinner loopMinDelay = new JSpinner();
-//    JLabel loopMaxDelayLabel = new JLabel(Bundle.getMessage("LabelLoopMax"));
-//    JSpinner loopMaxDelay = new JSpinner();
-//    JLabel loopDelayUnitsLabel = new JLabel(Bundle.getMessage("UnitMS"));
+    //    JLabel loopMinDelayLabel = new JLabel(Bundle.getMessage("LabelLoopMin"));
+    //    JSpinner loopMinDelay = new JSpinner();
+    //    JLabel loopMaxDelayLabel = new JLabel(Bundle.getMessage("LabelLoopMax"));
+    //    JSpinner loopMaxDelay = new JSpinner();
+    //    JLabel loopDelayUnitsLabel = new JLabel(Bundle.getMessage("UnitMS"));
     JCheckBox loopInfinite = new JCheckBox(Bundle.getMessage("LabelLoopInfinite"));
     JPanelVector3f position = new JPanelVector3f("",
             Bundle.getMessage("UnitUnits"));
@@ -79,6 +78,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     JLabel fadeOutTimeLabel = new JLabel(Bundle.getMessage("LabelFadeOut"));
     JSpinner fadeOutTime = new JSpinner();
     JLabel fadeTimeUnitsLabel = new JLabel(Bundle.getMessage("UnitMS"));
+
+    private final static String PREFIX = "IAS";
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioSourceFrame(String title, AudioTableDataModel model) {
@@ -268,12 +269,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     }
 
     /**
-     * Method to populate the Edit Source frame with default values
+     * Populate the Edit Source frame with default values.
      */
     @Override
     public void resetFrame() {
         synchronized (lock) {
-            sysName.setText("IAS" + counter++);
+            sysName.setText(PREFIX + nextCounter());
         }
         userName.setText(null);
         assignedBuffer.setSelectedIndex(0);
@@ -297,7 +298,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     }
 
     /**
-     * Method to populate the Edit Source frame with current values
+     * Populate the Edit Source frame with current values.
      */
     @Override
     public void populateFrame(Audio a) {
@@ -315,8 +316,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         loopInfinite.setSelected((s.getMinLoops() == AudioSource.LOOP_CONTINUOUS));
         loopMin.setValue(loopInfinite.isSelected() ? 0 : s.getMinLoops());
         loopMax.setValue(loopInfinite.isSelected() ? 0 : s.getMaxLoops());
-//        loopMinDelay.setValue(s.getMinLoopDelay());
-//        loopMaxDelay.setValue(s.getMaxLoopDelay());
+        //        loopMinDelay.setValue(s.getMinLoopDelay());
+        //        loopMaxDelay.setValue(s.getMaxLoopDelay());
         position.setValue(s.getPosition());
         positionRelative.setSelected(s.isPositionRelative());
         velocity.setValue(s.getVelocity());
@@ -335,22 +336,30 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
         assignedBuffer.removeAllItems();
         assignedBuffer.addItem("Select buffer from list");
-        am.getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
-            String u = am.getAudio(s).getUserName();
-            if (u != null) {
-                assignedBuffer.addItem(u);
+        am.getNamedBeanSet(Audio.BUFFER).stream().forEach((s) -> {
+            Audio a = am.getAudio(s.getSystemName());
+            if (a != null) {
+                String u = a.getUserName();
+                if (u != null) {
+                    assignedBuffer.addItem(u);
+                } else {
+                    assignedBuffer.addItem(s.getSystemName());
+                }
             } else {
-                assignedBuffer.addItem(s);
+                assignedBuffer.addItem(s.getSystemName());
             }
         });
     }
 
-    void applyPressed(ActionEvent e) {
+    private void applyPressed(ActionEvent e) {
+        String sName = sysName.getText();
+        if (entryError(sName, PREFIX, "" + counter)) {
+            return;
+        }
         String user = userName.getText();
         if (user.equals("")) {
             user = null;
         }
-        String sName = sysName.getText().toUpperCase();
         AudioSource s;
         try {
             AudioManager am = InstanceManager.getDefault(jmri.AudioManager.class);
@@ -359,22 +368,27 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             } catch (IllegalArgumentException ex) {
                 throw new AudioException("Problem creating source");
             }
-            if (newSource && am.getByUserName(user) != null) {
+            if ((user != null) && (newSource) && (am.getByUserName(user) != null)) {
                 am.deregister(s);
                 synchronized (lock) {
-                    counter--;
+                    prevCounter();
                 }
                 throw new AudioException("Duplicate user name - please modify");
             }
             s.setUserName(user);
             if (assignedBuffer.getSelectedIndex() > 0) {
-                Audio a = am.getAudio((String) assignedBuffer.getSelectedItem());
-                s.setAssignedBuffer(a.getSystemName());
+                String sel = (String) assignedBuffer.getSelectedItem();
+                if (sel != null) {
+                    Audio a = am.getAudio(sel);
+                    if (a != null) {
+                        s.setAssignedBuffer(a.getSystemName());
+                    }
+                }
             }
             s.setMinLoops(loopInfinite.isSelected() ? AudioSource.LOOP_CONTINUOUS : (Integer) loopMin.getValue());
             s.setMaxLoops(loopInfinite.isSelected() ? AudioSource.LOOP_CONTINUOUS : (Integer) loopMax.getValue());
-//            s.setMinLoopDelay((Integer) loopMinDelay.getValue());
-//            s.setMaxLoopDelay((Integer) loopMaxDelay.getValue());
+            // s.setMinLoopDelay((Integer) loopMinDelay.getValue());
+            // s.setMaxLoopDelay((Integer) loopMaxDelay.getValue());
             s.setPosition(position.getValue());
             s.setPositionRelative(positionRelative.isSelected());
             s.setVelocity(velocity.getValue());
@@ -393,5 +407,14 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         }
     }
 
+    private static int nextCounter() {
+        return counter++;
+    }
+
+    private static void prevCounter() {
+        counter--;
+    }
+
     //private static final Logger log = LoggerFactory.getLogger(AudioSourceFrame.class);
+
 }

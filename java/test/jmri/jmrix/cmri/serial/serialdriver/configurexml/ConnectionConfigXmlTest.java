@@ -6,11 +6,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * ConnectionConfigXmlTest.java
@@ -23,40 +19,21 @@ public class ConnectionConfigXmlTest extends jmri.jmrix.configurexml.AbstractSer
 
     // The minimal setup for log4J
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
         xmlAdapter = new ConnectionConfigXml();
+        cc = new ConnectionConfig();
     }
 
     @After
+    @Override
     public void tearDown() {
-        JUnitUtil.tearDown();
         xmlAdapter = null;
-    }
-
-    @Test
-    @Ignore("causes errors")
-    public void testStore(){
-      // tests that store produces an XML element from a new ConnectionConfig object.
-      ConnectionConfigXml c = new ConnectionConfigXml();
-      SerialDriverAdapter p = new SerialDriverAdapter(){
-              /**
-               * set up all of the other objects to operate connected to this port
-               */
-              @Override
-              public void configure() {
-                // connect to the traffic controller
-                SerialTrafficController tc = new SerialTrafficControlScaffold();
-                tc.connectPort(this);
-                ((CMRISystemConnectionMemo)getSystemConnectionMemo()).setTrafficController(tc);
-                ((CMRISystemConnectionMemo)getSystemConnectionMemo()).configureManagers();
-              }
-      };
-      ConnectionConfig cc = new ConnectionConfig(p);
-      p.configure();
-      c.getInstance(cc);
-      Assert.assertNotNull("ConnectionConfigXml store()",c.store(cc));
+        cc = null;
+	    JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
+        JUnitUtil.tearDown();
     }
 }
 

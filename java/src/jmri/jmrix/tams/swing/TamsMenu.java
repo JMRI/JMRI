@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Create a "Systems" menu containing the Tams-specific tools
+ * Create a "Systems" menu containing the Tams-specific tools.
  *
  * Based on work by Bob Jacobsen
  * @author	Kevin Dickerson Copyright (C) 2012
@@ -17,12 +17,10 @@ public class TamsMenu extends JMenu {
     public TamsMenu(TamsSystemConnectionMemo memo) {
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.tams.TamsBundle");
-
         if (memo != null) {
             setText(memo.getUserName());
         } else {
-            setText(rb.getString("MenuTams"));
+            setText(Bundle.getMessage("MenuTams"));
         }
 
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
@@ -31,7 +29,7 @@ public class TamsMenu extends JMenu {
             if (item == null) {
                 add(new javax.swing.JSeparator());
             } else {
-                add(new TamsNamedPaneAction(rb.getString(item.name), wi, item.load, memo));
+                add(new TamsNamedPaneAction(Bundle.getMessage(item.name), wi, item.load, memo));
             }
         }
 

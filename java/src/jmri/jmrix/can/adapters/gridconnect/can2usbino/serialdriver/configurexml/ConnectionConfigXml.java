@@ -1,5 +1,8 @@
 package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.configurexml;
 
+import org.jdom2.Element;
+
+import jmri.jmrix.PortAdapter;
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.ConnectionConfig;
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
@@ -38,4 +41,17 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         this.register(new ConnectionConfig(adapter));
     }
 
+    @Override
+    protected void loadOptions(Element shared, Element perNode, PortAdapter adapter) {
+        super.loadOptions(shared, perNode, adapter);
+
+        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeLoadOlcbProfileSettings(
+                shared.getParentElement(), perNode.getParentElement(), adapter);
+    }
+
+    @Override
+    protected void extendElement(Element e) {
+        jmri.jmrix.openlcb.configurexml.ConnectionConfigXml.maybeSaveOlcbProfileSettings(
+                e, adapter);
+    }
 }

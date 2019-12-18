@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+
+<html lang="en">
+<head>
+  <meta name="generator" content=
+  "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
+
+  <title>JMRI: MERG CBUS Console Tool</title>
+  <meta name="author" content="Steve Young">
+  <meta name="keywords" content="JMRI MERG CBUS Command station throttle session monitor cancmd">
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
+  "text/html; charset=us-ascii">
+  <link rel="stylesheet" type="text/css" href="/css/default.css"
+  media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css"
+  media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
+
+<body>
+  <!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+     <h1>JMRI : MERG CBUS Command Station Monitor</h1>
+        <p>Main Table - Monitoring train sessions.</p>
+
+    <h3>Top Menu Items</h3>    
+        <p>Stop All Button - This is different to the JMRI throttle stop all in that this sends 
+        a system-wide stop, not just to JMRI throttles.</p>
+        <p>Track Power Button - On / Off / Unknown</p>
+        <p>Signal data Button - On / Off - Experimental</p>
+        <p>Session Columns Dropdown - Choose which columns to display in table</p>
+        
+    <h2>Main Table - Train List</h2>
+        <p> Every train heard on the network will be added to the table, 
+        there is one row per loco.</p>
+        <p>Train speed and direction, function status etc. are updated in real time 
+        according to the latest instruction by 
+        a JMRI throttle, MERG CANCAB throttle controller, 
+        or MERG CBUS connected Command Station.</p>
+        
+        <h3>Train Session columns : </h3>
+        <img src="../../../../../../../html/hardware/can/cbus/images/swing/command-station/cs-session-626x179.png"
+        width="626" height="179" alt="MERG CBUS Command Station Monitor Session Columns">
+        <ul>
+        <li>Session Number as determined by command station</li>
+        <li>Loco address ID</li>
+        <li>E-Stop Button - Stops individual loco</li>
+        <li>Long Address true / false flag</li>
+        <li>Speed (Commanded)</li>
+        <li>Direction ( loco )</li>
+        <li>Functions - If a loco function is on, the function number will display.</li>
+        <li>Speed Steps ( System defaults to 128 )</li>
+        <li>Consist ID</li>
+        <li>Flags</li>
+        
+        </ul>
+        
+    <h3><a name="opc" id="opc">Supported Operation Codes</a></h3>
+
+    <p>Sent by the Command Station Monitor</p>
+    
+        <ul>
+        <li>QLOC </li>
+        <li>RSTAT </li>
+        <li>ESTOP</li>
+        <li>RTON</li>
+        <li>RTOF</li>
+        </ul>
+
+
+      <p>Listeners for message sent, either by JMRI itself or external to JMRI</p>
+    
+        <ul>
+        <li>PLOC </li>
+        <li>RLOC </li>
+        <li>DSPD </li>
+        <li>KLOC </li>
+        <li>DKEEP ( if session not on table sends a QLOC ) </li>
+        <li>STAT ( Used to determine if command station is capable of CBUS protocol 8a ) </li>
+        <li>GLOC </li>
+        <li>ERR </li>
+        <li>STMOD </li>
+        <li>DFUN</li>
+        <li>DFNON</li>
+        <li>DFNOF</li>
+        <li>PCON</li>
+        <li>KCON</li>
+        <li>DFLG</li>
+        <li>ESTOP</li>
+        <li>RTON</li>
+        <li>RTOF</li>
+        <li>TON</li>
+        <li>TOF</li>
+        </ul>
+
+    <h3>JMRI Help</h3>
+        
+        <p>The Cab Signalling tool <a name="cabdata" id="cabdata"></a>previously within this monitor
+        has been relocated to the dedicated
+        JMRI Cab Signal.</p>
+        
+        <p>You can view this help page within JMRI by selecting Help > Window Help in the top bar of the 
+        MERG CBUS Command Station Monitor.</p>
+      
+        <p><a href="../../../../../../../html/hardware/can/cbus/index.shtml">Main JMRI MERG CBUS Help page</a>.</p>
+        
+        <p>View debug information for the Command station Monitor by adding 
+        log4j.category.jmri.jmrix.can.cbus.swing.cbusslotmonitor=DEBUG 
+        to your default.lcf file.</p>
+        
+        
+      <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div><!-- closes #mBody-->
+</body>
+</html>

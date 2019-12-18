@@ -1,4 +1,4 @@
-package jmri.jmrix.jmriclient.swing.mon;
+    package jmri.jmrix.jmriclient.swing.mon;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
@@ -25,6 +25,7 @@ public class JMRIClientMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @Before
+    @Override
     public void setUp() {
         JUnitUtil.setUp();
         memo = new JMRIClientSystemConnectionMemo();
@@ -36,11 +37,13 @@ public class JMRIClientMonPaneTest extends jmri.jmrix.AbstractMonPaneTestBase {
     }
 
     @After
+    @Override
     public void tearDown() {
-	memo = null;
-	panel = pane = null;
-	helpTarget = null;
-	title = null;
+	    memo = null;
+	    panel = pane = null;
+	    helpTarget = null;
+	    title = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
     	JUnitUtil.tearDown();
     }
 }

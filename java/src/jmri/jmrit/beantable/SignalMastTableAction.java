@@ -19,7 +19,7 @@ public class SignalMastTableAction extends AbstractTableAction<SignalMast> {
 
     /**
      * Create an action with a specific title.
-     * <P>
+     * <p>
      * Note that the argument is the Action title, not the title of the
      * resulting frame. Perhaps this should be changed?
      *
@@ -35,7 +35,7 @@ public class SignalMastTableAction extends AbstractTableAction<SignalMast> {
 
     /**
      * Create the JTable DataModel, along with the changes for the specific case
-     * of Signal Masts
+     * of Signal Masts.
      */
     @Override
     protected void createModel() {
@@ -81,7 +81,7 @@ public class SignalMastTableAction extends AbstractTableAction<SignalMast> {
         JMenuBar menuBar = f.getJMenuBar();
         int pos = menuBar.getMenuCount() -1; // count the number of menus to insert the TableMenu before 'Window' and 'Help'
         int offset = 1;
-        log.debug("setMenuBar number of menu items = " + pos);
+        log.debug("setMenuBar number of menu items = {}", pos);
         for (int i = 0; i <= pos; i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
                 if (((JMenu) menuBar.getComponent(i)).getText().equals(Bundle.getMessage("MenuHelp"))) {

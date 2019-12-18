@@ -3,10 +3,9 @@ package jmri.jmrix;
 import java.util.List;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Manager for SystemConnectionMemos. Manages SystemConnectionMemos and
@@ -17,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood Copyright 2017
  */
-public class SystemConnectionMemoManager extends Bean {
+public class SystemConnectionMemoManager extends Bean implements InstanceManagerAutoDefault {
 
     /**
      * Property name change fired when a connection is registered. The fired
@@ -29,7 +28,6 @@ public class SystemConnectionMemoManager extends Bean {
      * event has the removed connection as the old value and a null new value.
      */
     public final static String CONNECTION_REMOVED = "ConnectionRemoved";
-    private final static Logger log = LoggerFactory.getLogger(SystemConnectionMemoManager.class);
 
     /**
      * Register a SystemConnectionMemo in the InstanceManager.
@@ -53,12 +51,13 @@ public class SystemConnectionMemoManager extends Bean {
             // just add on end
             InstanceManager.store(memo, SystemConnectionMemo.class);
         }
+        log.trace("fire CONNECTION_ADDED for {}", memo);
         this.firePropertyChange(CONNECTION_ADDED, null, memo);
     }
 
     public void deregister(SystemConnectionMemo memo) {
-        // removeFromActionList();
         InstanceManager.deregister(memo, SystemConnectionMemo.class);
+        log.trace("fire CONNECTION_REMOVED for {}", memo);
         firePropertyChange(CONNECTION_REMOVED, memo, null);
     }
 
@@ -116,9 +115,8 @@ public class SystemConnectionMemoManager extends Bean {
      * @return the default instance, created if needed
      */
     public static SystemConnectionMemoManager getDefault() {
-        return InstanceManager.getOptionalDefault(SystemConnectionMemoManager.class).orElseGet(() -> {
-            return InstanceManager.setDefault(SystemConnectionMemoManager.class, new SystemConnectionMemoManager());
-        });
+        return InstanceManager.getDefault(SystemConnectionMemoManager.class);
     }
 
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(SystemConnectionMemoManager.class);
 }
