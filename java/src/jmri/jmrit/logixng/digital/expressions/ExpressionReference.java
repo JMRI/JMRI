@@ -204,7 +204,8 @@ public class ExpressionReference extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_reference != null)) {
+        if (!_listenersAreRegistered
+                && (_reference != null)) {
 //            _reference.getBean().addPropertyChangeListener("KnownState", this);
             _listenersAreRegistered = true;
         }

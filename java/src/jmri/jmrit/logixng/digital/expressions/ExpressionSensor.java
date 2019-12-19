@@ -175,7 +175,8 @@ public class ExpressionSensor extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_sensorHandle != null)) {
+        if (!_listenersAreRegistered
+                && (_sensorHandle != null)) {
             _sensorHandle.getBean().addPropertyChangeListener("KnownState", this);
             _listenersAreRegistered = true;
         }

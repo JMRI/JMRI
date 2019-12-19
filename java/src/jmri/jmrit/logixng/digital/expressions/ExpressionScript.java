@@ -155,7 +155,8 @@ public class ExpressionScript extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_scriptClass != null)) {
+        if (!_listenersAreRegistered
+                && (_scriptClass != null)) {
             _scriptClass.registerListeners();
             _listenersAreRegistered = true;
         }

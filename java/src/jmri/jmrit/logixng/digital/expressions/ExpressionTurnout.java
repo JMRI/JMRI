@@ -174,7 +174,8 @@ public class ExpressionTurnout extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered && (_turnoutHandle != null)) {
+        if (!_listenersAreRegistered
+                && (_turnoutHandle != null)) {
             _turnoutHandle.getBean().addPropertyChangeListener("KnownState", this);
             _listenersAreRegistered = true;
         }
