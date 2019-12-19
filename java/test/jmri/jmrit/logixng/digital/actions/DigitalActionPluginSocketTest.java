@@ -92,6 +92,7 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
+        conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         actionDigitalActionPluginSocket = new DigitalActionPluginSocket("IQDA1", null, new MyDigitalActionPlugin("IQDA2"));
         MaleSocket maleSocket =

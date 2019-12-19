@@ -148,6 +148,8 @@ public class ActionMemory extends AbstractDigitalAction implements VetoableChang
     /** {@inheritDoc} */
     @Override
     public void execute() {
+        if (_memoryHandle == null) return;
+        
         final Memory memory = _memoryHandle.getBean();
         
         ThreadingUtil.runOnLayout(() -> {

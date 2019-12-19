@@ -297,11 +297,13 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     }
     
     @Test
+    @Override
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
     }
     
     @Test
+    @Override
     public void testIsExternal() {
         Assert.assertTrue("is external", _base.isExternal());
     }

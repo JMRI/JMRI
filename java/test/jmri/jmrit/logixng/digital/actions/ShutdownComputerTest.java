@@ -10,10 +10,12 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -75,6 +77,24 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
+    @Ignore
+    @Test
+    @Override
+    // The only purpose of override this method is to catch the error message
+    public void testMaleSocketIsActive() {
+        super.testMaleSocketIsActive();
+        JUnitAppender.assertErrorMessageStartsWith("Shutdown failed");
+    }
+    
+    @Ignore
+    @Test
+    @Override
+    // The only purpose of override this method is to catch the error message
+    public void testIsActive() {
+        super.testIsActive();
+        JUnitAppender.assertErrorMessageStartsWith("Shutdown failed");
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
@@ -83,6 +103,10 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         
+        // Set a secority manager since we don't want this test to shut down
+        // the computer!
+        System.setSecurityManager(new MySecurityManager());
+        
         _category = Category.EXRAVAGANZA;
         _isExternal = true;
         
@@ -90,6 +114,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
+        conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         actionShutdownComputer = new ShutdownComputer("IQDA321", null, 0);
         MaleSocket maleSocket =
@@ -105,7 +130,24 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
 
     @After
     public void tearDown() {
+        // Clear security mananger
+        System.setSecurityManager(null);
         JUnitUtil.tearDown();
+    }
+    
+    
+    private static class MySecurityManager extends SecurityManager {
+        
+        @Override
+        public void checkExec(String cmd) {
+            throw new SecurityException("exec is not allowed during test of ShutdownComputer");
+        }
+        
+        @Override
+        public void checkPermission(java.security.Permission perm) {
+            // We don't want any checks, except checkExec()
+        }
+        
     }
     
 }

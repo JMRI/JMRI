@@ -104,6 +104,7 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
+        conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         actionDoStringAction = new DoStringAction("IQDA321", null);
         MaleSocket maleSocket =

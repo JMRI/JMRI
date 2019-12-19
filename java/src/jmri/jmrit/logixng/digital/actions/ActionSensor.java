@@ -101,11 +101,11 @@ public class ActionSensor extends AbstractDigitalAction implements VetoableChang
     /** {@inheritDoc} */
     @Override
     public void execute() {
+        if (_sensorHandle == null) return;
+        
         final Sensor t = _sensorHandle.getBean();
-//        final int newState = _sensorState.getID();
         ThreadingUtil.runOnLayout(() -> {
             if (_sensorState == SensorState.TOGGLE) {
-//                t.setCommandedState(newState);
                 if (t.getCommandedState() == Sensor.INACTIVE) {
                     t.setCommandedState(Sensor.ACTIVE);
                 } else {

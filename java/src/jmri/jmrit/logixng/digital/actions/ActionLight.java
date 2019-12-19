@@ -101,6 +101,8 @@ public class ActionLight extends AbstractDigitalAction implements VetoableChange
     /** {@inheritDoc} */
     @Override
     public void execute() {
+        if (_lightHandle == null) return;
+        
         final Light t = _lightHandle.getBean();
         ThreadingUtil.runOnLayout(() -> {
             if (_lightState == LightState.TOGGLE) {

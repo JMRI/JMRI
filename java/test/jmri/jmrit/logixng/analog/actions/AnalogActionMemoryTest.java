@@ -242,6 +242,7 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
+        conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         
         DoAnalogAction doAnalogAction = new DoAnalogAction("IQDA321", null);

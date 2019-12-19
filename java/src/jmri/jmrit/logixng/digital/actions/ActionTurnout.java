@@ -101,11 +101,11 @@ public class ActionTurnout extends AbstractDigitalAction implements VetoableChan
     /** {@inheritDoc} */
     @Override
     public void execute() {
+        if (_turnoutHandle == null) return;
+        
         final Turnout t = _turnoutHandle.getBean();
-//        final int newState = _turnoutState.getID();
         ThreadingUtil.runOnLayout(() -> {
             if (_turnoutState == TurnoutState.TOGGLE) {
-//                t.setCommandedState(newState);
                 if (t.getCommandedState() == Turnout.CLOSED) {
                     t.setCommandedState(Turnout.THROWN);
                 } else {

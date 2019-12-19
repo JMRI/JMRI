@@ -241,6 +241,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setEnabled(true);
+        conditionalNG.setRunOnGUIDelayed(false);
         logixNG.addConditionalNG(conditionalNG);
         DoStringAction doStringAction = new DoStringAction("IQDA321", null);
         MaleSocket maleSocketDoStringAction =

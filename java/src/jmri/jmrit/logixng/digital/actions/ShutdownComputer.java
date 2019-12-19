@@ -49,7 +49,6 @@ public class ShutdownComputer extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void execute() {
-        if (1==1) throw new RuntimeException("Hej");
         try {
             String shutdownCommand;
             if (SystemType.isLinux() || SystemType.isUnix() || SystemType.isMacOSX()) {
@@ -60,10 +59,14 @@ public class ShutdownComputer extends AbstractDigitalAction {
             } else {
                 throw new UnsupportedOperationException("Unknown OS: "+SystemType.getOSName());
             }
-            
-            Runtime runtime = Runtime.getRuntime();
-            runtime.exec(shutdownCommand);
-//            Process proc = runtime.exec("shutdown -s -t " + time);
+//            try {
+                Runtime runtime = Runtime.getRuntime();
+                runtime.exec(shutdownCommand);
+//            } catch (IllegalThreadStateException e) {
+                // If we get here, it only means that the shutDownCommand has
+                // not finished yet. Since that's no problem for us, we just
+                // ignore it.
+//            }
             InstanceManager.getDefault(ShutDownManager.class).shutdown();
             
             // If we are here, shutdown has failed

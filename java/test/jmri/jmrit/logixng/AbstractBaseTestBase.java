@@ -233,10 +233,6 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testIsActive() {
-//        if (!_base.isActive()) {
-//            System.out.println("jmri.jmrit.logixng.AbstractBaseTestBase.testMaleSocketIsActive: _base must be active for this test: "+_base.getClass().getName());
-//            return;
-//        }
         Assert.assertTrue(_base.isActive());
         if (_base instanceof MaleSocket) {
             ((MaleSocket)_base).setEnabled(false);
@@ -277,10 +273,6 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testMaleSocketIsActive() {
-//        if (!_baseMaleSocket.isActive()) {
-//            System.out.println("jmri.jmrit.logixng.AbstractBaseTestBase.testMaleSocketIsActive: _baseMaleSocket must be active for this test: "+_base.getClass().getName());
-//            return;
-//        }
         Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
         _baseMaleSocket.setEnabled(false);
         Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
@@ -385,6 +377,16 @@ public abstract class AbstractBaseTestBase {
     @Test
     public void testDispose() {
         _base.dispose();
+    }
+    
+    @Test
+    public void testRunOnGUIDelayed() {
+        // Many tests doesn't work if runOnGUIDelayed is true, so this test
+        // is to ensure that all the other tests behave as they should.
+        // If a test want to test with runOnGUIDelayed true, that test can
+        // set runOnGUIDelayed to true.
+        Assert.assertFalse("runOnGUIDelayed is false",
+                _base.getConditionalNG().getRunOnGUIDelayed());
     }
     
     
