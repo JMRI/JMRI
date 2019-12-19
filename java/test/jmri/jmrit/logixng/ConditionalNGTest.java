@@ -209,26 +209,4 @@ public class ConditionalNGTest {
         JUnitUtil.tearDown();
     }
     
-    
-    private class MyConditionalNG extends DefaultConditionalNG {
-
-        private boolean listenersAreRegistered;
-        
-        public MyConditionalNG(String sys, String user) throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException {
-            super(sys, user);
-        }
-        
-        /** {@inheritDoc} */
-        @Override
-        public void registerListenersForThisClass() {
-            listenersAreRegistered = true;
-        }
-
-        /** {@inheritDoc} */
-        @Override
-        public void unregisterListenersForThisClass() {
-            listenersAreRegistered = false;
-        }
-    }
-    
 }

@@ -185,21 +185,21 @@ public class DefaultLogixNG extends AbstractNamedBean
                 entry._conditionalNG.setup();
             }
         }
-        if (1==0) {
-            try {
-                throw new RuntimeException("Daniel");
-            } catch (RuntimeException e) {
-                e.printStackTrace();
-            }
+    }
+    
+    private void execute() {
+        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
+            entry._conditionalNG.execute();
         }
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void setEnabled(boolean enable) {
         _enabled = enable;
-        if (enable) {
+        if (isActive()) {
             registerListeners();
+            execute();
         } else {
             unregisterListeners();
         }
@@ -350,6 +350,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         _isActivated = true;
         
         registerListeners();
+        execute();
 /*        
         if (_enabled) {
             for (ConditionalNG conditionalNG : _conditionalNGMap.values()) {

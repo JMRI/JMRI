@@ -126,6 +126,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
 	logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
+        JUnitAppender.assertErrorMessageStartsWith("Shutdown failed");
     }
 
     @After
