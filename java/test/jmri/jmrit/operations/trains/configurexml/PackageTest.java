@@ -6,7 +6,6 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
    TrainIconXmlTest.class,
-   XmlTest.class
 })
 /**
  * Tests for the jmri.jmrit.operations.trains.configurexml package.
