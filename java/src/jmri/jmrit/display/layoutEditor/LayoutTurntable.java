@@ -444,8 +444,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Set the coordinates for the ray at this index.
      *
-     * @param x     the x coordinates
-     * @param y     the y coordinates
+     * @param point the new coordinates
      * @param index the index
      */
     public void setRayCoordsIndexed(Point2D point, int index) {
