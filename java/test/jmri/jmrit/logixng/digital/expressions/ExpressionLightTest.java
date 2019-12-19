@@ -162,6 +162,9 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testDescription() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         expressionLight.setLight((Light)null);
         Assert.assertTrue("Get light".equals(expressionLight.getShortDescription()));
         Assert.assertTrue("Light '' is On".equals(expressionLight.getLongDescription()));
@@ -177,6 +180,8 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
+        // Disable the conditionalNG
+        conditionalNG.setEnabled(false);
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Turn the light on. This should not execute the conditional.
@@ -238,6 +243,9 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSetLight2() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         Light light11 = InstanceManager.getDefault(LightManager.class).provide("IL11");
         Light light12 = InstanceManager.getDefault(LightManager.class).provide("IL12");
         NamedBeanHandle<Light> lightHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(light12.getDisplayName(), light12);
@@ -309,6 +317,9 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testVetoableChange() throws PropertyVetoException {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         // Get the expression and set the light
         Assert.assertNotNull("Light is not null", light);
         
@@ -361,8 +372,10 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setEnabled(true);
+        
         logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
+        
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket socketIfThenElse =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
@@ -383,6 +396,10 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         
         light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         expressionLight.setLight(light);
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

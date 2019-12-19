@@ -89,9 +89,11 @@ public abstract class AbstractBase
     /** {@inheritDoc} */
     @Override
     public final void registerListeners() {
-        registerListenersForThisClass();
-        for (int i=0; i < getChildCount(); i++) {
-            ((InternalBase)getChild(i)).registerListeners();
+        if (isActive()) {
+            registerListenersForThisClass();
+            for (int i=0; i < getChildCount(); i++) {
+                ((InternalBase)getChild(i)).registerListeners();
+            }
         }
     }
     
@@ -118,7 +120,6 @@ public abstract class AbstractBase
     @Override
     public final boolean isActive() {
         return isEnabled() && ((getParent() == null) || getParent().isActive());
-//        return isEnabled() && ((getParent() == null) || getParent().isEnabled());
     }
     
     protected void printTreeRow(Locale locale, PrintWriter writer, String currentIndent) {

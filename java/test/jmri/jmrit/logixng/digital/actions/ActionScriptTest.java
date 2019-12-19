@@ -222,6 +222,9 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testGetChild() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         // Test without script
         actionScript.setScript(null);
         Assert.assertTrue("getChildCount() returns 0", 0 == actionScript.getChildCount());
@@ -304,10 +307,10 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         Assert.assertEquals("light is off",Light.OFF,light.getState());
         // Inactivate the sensor. This should not execute the conditional.
         sensor2.setCommandedState(Sensor.INACTIVE);
-        // Enable the conditionalNG and all its children.
-        conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertEquals("light is off",Light.OFF,light.getState());
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
         // Activate the sensor. This should execute the conditional.
         sensor2.setCommandedState(Sensor.ACTIVE);
         // The action should now be executed so the atomic boolean should be true
@@ -331,6 +334,9 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testSetup() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         Memory m1 = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         Assert.assertNull("the value of memory is null", m1.getValue());
         
@@ -347,6 +353,9 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testSetScript() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         // Test setScript() when listeners are registered
         Assert.assertNotNull("Script is not null", _scriptText);
         actionScript.setScript(_scriptText);
@@ -364,7 +373,8 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         // Test setScript() when listeners are registered
         Assert.assertNotNull("Script is not null", actionScript.getScriptText());
         actionScript.setScript(_scriptText);    // The actionScript needs a script to register listeners
-        actionScript.registerListeners();
+        // Enable the conditionalNG. This will register the listeners
+        conditionalNG.setEnabled(true);
         boolean hasThrown = false;
         try {
             actionScript.setScript(_scriptText);
@@ -386,6 +396,9 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         // This test calls actionScript.evaluate() to see if the script still has
         // the light registered. Once the light is deleted, actionScript.evaluate()
         // will throw a NullPointerException.
+        
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
         
         // Get the actionScript and set the light
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
@@ -461,7 +474,6 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
-        logixNG.activateLogixNG();
         logixNG.addConditionalNG(conditionalNG);
         conditionalNG.setRunOnGUIDelayed(false);
         conditionalNG.setEnabled(true);
@@ -487,6 +499,10 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
         
         _base = actionScript;
         _baseMaleSocket = socketActionScript;
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

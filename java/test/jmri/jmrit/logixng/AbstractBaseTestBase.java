@@ -51,6 +51,7 @@ public abstract class AbstractBaseTestBase {
         }
         Assert.assertTrue("ConditionalNG is equal", getConditionalNG() == _base.getConditionalNG());
         
+        _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
         Assert.assertNull("ConditionalNG is null", _base.getConditionalNG());
     }
@@ -68,6 +69,7 @@ public abstract class AbstractBaseTestBase {
         }
         Assert.assertTrue("LogixNG is equal", getLogixNG() == _base.getLogixNG());
         
+        _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
         Assert.assertNull("LogixNG is null", _base.getLogixNG());
     }
@@ -76,6 +78,7 @@ public abstract class AbstractBaseTestBase {
     public void testMaleSocketGetConditionalNG() {
         Assert.assertTrue("conditionalNG is equal",
                 _base.getConditionalNG() == _baseMaleSocket.getConditionalNG());
+        _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
         Assert.assertTrue("conditionalNG is equal",
                 _base.getConditionalNG() == _baseMaleSocket.getConditionalNG());
@@ -85,6 +88,7 @@ public abstract class AbstractBaseTestBase {
     public void testMaleSocketGetLogixNG() {
         Assert.assertTrue("logixNG is equal",
                 _base.getLogixNG() == _baseMaleSocket.getLogixNG());
+        _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
         Assert.assertTrue("logixNG is equal",
                 _base.getLogixNG() == _baseMaleSocket.getLogixNG());
@@ -93,6 +97,7 @@ public abstract class AbstractBaseTestBase {
     @Test
     public void testMaleSocketGetRoot() {
         Assert.assertTrue("root is equal", _base.getRoot() == _baseMaleSocket.getRoot());
+        _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
         Assert.assertTrue("root is equal", _base.getRoot() == _baseMaleSocket.getRoot());
     }
@@ -103,6 +108,7 @@ public abstract class AbstractBaseTestBase {
             log.error("Invalid parent for objects: {}, {}", _base, _baseMaleSocket);
         }
         Assert.assertTrue("parent is equal", _base.getParent() == _baseMaleSocket.getParent());
+        _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
         Assert.assertTrue("parent is equal", _base.getParent() == _baseMaleSocket.getParent());
     }
@@ -150,6 +156,7 @@ public abstract class AbstractBaseTestBase {
      */
     @Test
     public void testSetParentForAllChildren_WithConnectedChildren() {
+        _base.getConditionalNG().setEnabled(false);
         clearParent(_base);
         _base.setParentForAllChildren();
         checkParent(_base);
@@ -161,6 +168,7 @@ public abstract class AbstractBaseTestBase {
      */
     @Test
     public void testSetParentForAllChildren_WithoutConnectedChildren() {
+        _base.getConditionalNG().setEnabled(false);
         clearParent(_base);
         for (int i=0; i < _base.getChildCount(); i++) {
             FemaleSocket femaleSocket = _base.getChild(i);
@@ -254,18 +262,19 @@ public abstract class AbstractBaseTestBase {
         LogixNG logixNG = _base.getLogixNG();
         if (logixNG != null) {
             logixNG.setEnabled(false);
-            Assert.assertTrue("_base is active", _base.isActive());
+            Assert.assertFalse("_base is not active", _base.isActive());
             logixNG.setEnabled(true);
+            Assert.assertTrue("_base is active", _base.isActive());
         } else {
             log.error("_base has no LogixNG as ancestor");
         }
         
         Assert.assertTrue("_base is active", _base.isActive());
+        _base.getConditionalNG().setEnabled(false);
         _base.setParent(null);
         Assert.assertTrue("_base is active", _base.isActive());
     }
     
-//    @Ignore
     @Test
     public void testMaleSocketIsActive() {
         if (!_baseMaleSocket.isActive()) {
@@ -304,13 +313,15 @@ public abstract class AbstractBaseTestBase {
         LogixNG logixNG = _baseMaleSocket.getLogixNG();
         if (logixNG != null) {
             logixNG.setEnabled(false);
-            Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+            Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
             logixNG.setEnabled(true);
+            Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
         } else {
             log.error("_base has no LogixNG as ancestor");
         }
         
         Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
+        _base.getConditionalNG().setEnabled(false);
         _baseMaleSocket.setParent(null);
         Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
     }
@@ -356,6 +367,7 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testParent() {
+        _base.getConditionalNG().setEnabled(false);
         MyBase a = new MyBase();
         _base.setParent(null);
         Assert.assertNull("Parent matches", _base.getParent());

@@ -101,6 +101,8 @@ public class ExpressionReference extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
+        if (_reference == null) return false;
+        
         boolean result;
         String ref = ReferenceUtil.getReference(_reference);
         NamedBean t;

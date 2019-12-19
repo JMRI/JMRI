@@ -142,6 +142,8 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     
     @Test
     public void testEvaluate() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
         AnalogExpressionConstant expression = (AnalogExpressionConstant)_base;
         expression.setValue(0.0d);
         Assert.assertTrue("Evaluate matches", 0.0d == expression.evaluate());
@@ -222,9 +224,9 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setEnabled(true);
         
         logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
         
         DigitalActionBean actionDoAnalog =
                 new DoAnalogAction(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
@@ -246,6 +248,10 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         
         _base = expressionConstant;
         _baseMaleSocket = socketExpression;
+        
+        logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

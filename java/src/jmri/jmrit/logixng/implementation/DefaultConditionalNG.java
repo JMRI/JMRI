@@ -296,6 +296,7 @@ public class DefaultConditionalNG extends AbstractBase
             LogixNG logixNG = getLogixNG();
             if ((logixNG != null) && logixNG.isActive()) {
                 registerListeners();
+                execute();
             }
         } else {
             unregisterListeners();

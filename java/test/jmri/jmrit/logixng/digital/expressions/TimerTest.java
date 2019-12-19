@@ -20,6 +20,7 @@ import jmri.util.JUnitAppender;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -29,21 +30,21 @@ import org.junit.Test;
  */
 public class TimerTest extends AbstractDigitalExpressionTestBase {
 
-    private LogixNG logixNG;
-    private ConditionalNG conditionalNG;
-    private Timer expressionTimer;
-    private ActionAtomicBoolean actionAtomicBoolean;
-    private AtomicBoolean atomicBoolean;
+    private LogixNG _logixNG;
+    private ConditionalNG _conditionalNG;
+    private Timer _expressionTimer;
+    private ActionAtomicBoolean _actionAtomicBoolean;
+    private AtomicBoolean _atomicBoolean;
     
     
     @Override
     public ConditionalNG getConditionalNG() {
-        return conditionalNG;
+        return _conditionalNG;
     }
     
     @Override
     public LogixNG getLogixNG() {
-        return logixNG;
+        return _logixNG;
     }
     
     @Override
@@ -106,11 +107,11 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testGetChild() {
-        Assert.assertTrue("getChildCount() returns 0", 0 == expressionTimer.getChildCount());
+        Assert.assertTrue("getChildCount() returns 0", 0 == _expressionTimer.getChildCount());
         
         boolean hasThrown = false;
         try {
-            expressionTimer.getChild(0);
+            _expressionTimer.getChild(0);
         } catch (UnsupportedOperationException ex) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
@@ -135,9 +136,9 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         e1.setTimerDelay(30, 0);
         Assert.assertEquals("Continuous timer: Wait 30 seconds and trigger once.", e1.getLongDescription());
         
-        e1.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
-        e1.setTimerDelay(40, 50);
-        Assert.assertEquals("Continuous timer: Wait 40 seconds and then trigger. Stay on for 50 seconds.", e1.getLongDescription());
+//        e1.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
+//        e1.setTimerDelay(40, 50);
+//        Assert.assertEquals("Continuous timer: Wait 40 seconds and then trigger. Stay on for 50 seconds.", e1.getLongDescription());
     }
     
     @Test
@@ -147,18 +148,23 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void setTimerType() {
-        expressionTimer.setTimerDelay(10,20);
+        // Disable the _conditionalNG. This will unregister the listeners
+        _conditionalNG.setEnabled(false);
         
-        expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
-        Assert.assertEquals("timerType is correct", TimerType.WAIT_ONCE_TRIG_ONCE, expressionTimer.getTimerType());
+        _expressionTimer.setTimerDelay(10,20);
         
-        expressionTimer.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
-        Assert.assertEquals("timerType is correct", TimerType.REPEAT_DOUBLE_DELAY, expressionTimer.getTimerType());
+        _expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
+        Assert.assertEquals("timerType is correct", TimerType.WAIT_ONCE_TRIG_ONCE, _expressionTimer.getTimerType());
         
-        expressionTimer.registerListeners();
+//        _expressionTimer.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
+//        Assert.assertEquals("timerType is correct", TimerType.REPEAT_DOUBLE_DELAY, _expressionTimer.getTimerType());
+        
+        // Enable the conditionalNG. This will register the listeners
+        _expressionTimer.getConditionalNG().setEnabled(true);
+        
         boolean hasThrown = false;
         try {
-            expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
+            _expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
         } catch (RuntimeException ex) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "setTimerType must not be called when listeners are registered", ex.getMessage());
@@ -169,18 +175,23 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSetTimerDelay() {
-        expressionTimer.setTimerDelay(10,20);
-        Assert.assertEquals("delayOff is correct", 10, expressionTimer.getTimerDelayOff());
-        Assert.assertEquals("delayOn is correct", 20, expressionTimer.getTimerDelayOn());
+        // Disable the _conditionalNG. This will unregister the listeners
+        _conditionalNG.setEnabled(false);
         
-        expressionTimer.setTimerDelay(43,28);
-        Assert.assertEquals("delayOff is correct", 43, expressionTimer.getTimerDelayOff());
-        Assert.assertEquals("delayOn is correct", 28, expressionTimer.getTimerDelayOn());
+        _expressionTimer.setTimerDelay(10,20);
+        Assert.assertEquals("delayOff is correct", 10, _expressionTimer.getTimerDelayOff());
+        Assert.assertEquals("delayOn is correct", 20, _expressionTimer.getTimerDelayOn());
         
-        expressionTimer.registerListeners();
+        _expressionTimer.setTimerDelay(43,28);
+        Assert.assertEquals("delayOff is correct", 43, _expressionTimer.getTimerDelayOff());
+        Assert.assertEquals("delayOn is correct", 28, _expressionTimer.getTimerDelayOn());
+        
+        // Enable the conditionalNG. This will register the listeners
+        _expressionTimer.getConditionalNG().setEnabled(true);
+        
         boolean hasThrown = false;
         try {
-            expressionTimer.setTimerDelay(3,2);
+            _expressionTimer.setTimerDelay(3,2);
         } catch (RuntimeException ex) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "setTimerDelay must not be called when listeners are registered", ex.getMessage());
@@ -191,29 +202,16 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExecute() {
-        atomicBoolean.set(false);
-        expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
-        expressionTimer.setTimerDelay(2, 0);
-        expressionTimer.registerListeners();
-//        JUnitUtil.waitFor(()->{return atomicBoolean.get();}, "timer has not triggered");
-        
-        
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException ex) {
-            System.out.println("Interrupted exception");
-        }
+        // Disable the _conditionalNG. This will unregister the listeners
+        _conditionalNG.setEnabled(false);
+        _atomicBoolean.set(false);
+        _expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
+        _expressionTimer.setTimerDelay(2, 0);
+        Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
+        // Enable the _conditionalNG. This will register the listeners
+        _conditionalNG.setEnabled(true);
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
     }
-/*    
-    @Test
-    public void testExecuteAndReset() {
-        Timer e1 = new Timer("IQDE321", null);
-        
-        
-        Assert.assertTrue("Timer".equals(e1.getShortDescription()));
-        Assert.assertTrue("Timer".equals(e1.getLongDescription()));
-    }
-*/    
     
     // The minimal setup for log4J
     @Before
@@ -226,102 +224,41 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         _category = Category.COMMON;
         _isExternal = false;
         
-        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
-        conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
+        _logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        _conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
-        conditionalNG.setRunOnGUIDelayed(false);
-        logixNG.addConditionalNG(conditionalNG);
+        _conditionalNG.setRunOnGUIDelayed(false);
+        _conditionalNG.setEnabled(true);
+        
+        _logixNG.addConditionalNG(_conditionalNG);
+        
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
-        conditionalNG.getChild(0).connect(maleSocket);
+        _conditionalNG.getChild(0).connect(maleSocket);
         
-        expressionTimer = new Timer("IQDE321", null);
-        // We want our own timer class for testing
-//        expressionTimer._timer = new MyTimer(null);
+        _expressionTimer = new Timer("IQDE321", null);
         MaleSocket maleSocket2 =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTimer);
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(_expressionTimer);
         ifThenElse.getChild(0).connect(maleSocket2);
         
-        _base = expressionTimer;
+        _base = _expressionTimer;
         _baseMaleSocket = maleSocket2;
         
-        atomicBoolean = new AtomicBoolean(false);
-        actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
-        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
+        _atomicBoolean = new AtomicBoolean(false);
+        _actionAtomicBoolean = new ActionAtomicBoolean(_atomicBoolean, true);
+        MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(_actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
         
-        logixNG.setParentForAllChildren();
+	_logixNG.setParentForAllChildren();
+        _logixNG.setEnabled(true);
+        _logixNG.activateLogixNG();
     }
 
     @After
     public void tearDown() {
+        _expressionTimer.dispose();
         JUnitUtil.tearDown();
     }
     
-    
-/*    
-    private class MyTimer extends java.util.Timer {
-        
-        private final AtomicBoolean _abTimerTrigged;
-        private final AtomicBoolean _abTimerCancelled;
-        
-        public MyTimer(AtomicBoolean abTimerTrigged, AtomicBoolean abTimerCancelled) {
-            super(true);    // Run timer as daemon
-            _abTimerTrigged = abTimerTrigged;
-            _abTimerCancelled = abTimerCancelled;
-        }
-        
-        @Override
-        public void cancel() {
-            _abTimerCancelled.set(true);
-            // Terminates this timer, discarding any currently scheduled tasks.
-//            throw new UnsupportedOperationException("Not supported.");
-        }
-        
-        @Override
-        public int purge() {
-            // Removes all cancelled tasks from this timer's task queue.
-            throw new UnsupportedOperationException("Not supported.");
-//            return 0;
-        }
-        
-        @Override
-        public void schedule(java.util.TimerTask task, java.util.Date time) {
-            // Schedules the specified task for execution at the specified time.
-            throw new UnsupportedOperationException("Not supported.");
-        }
-        
-        @Override
-        public void schedule(java.util.TimerTask task, java.util.Date firstTime, long period) {
-            // Schedules the specified task for repeated fixed-delay execution, beginning at the specified time.
-            throw new UnsupportedOperationException("Not supported.");
-        }
-        
-        @Override
-        public void schedule(java.util.TimerTask task, long delay) {
-            // Schedules the specified task for execution after the specified delay.
-            throw new UnsupportedOperationException("Not supported.");
-        }
-        
-        @Override
-        public void schedule(java.util.TimerTask task, long delay, long period) {
-            // Schedules the specified task for repeated fixed-delay execution, beginning after the specified delay.
-            throw new UnsupportedOperationException("Not supported.");
-        }
-        
-        @Override
-        public void scheduleAtFixedRate(java.util.TimerTask task, java.util.Date firstTime, long period) {
-            // Schedules the specified task for repeated fixed-rate execution, beginning at the specified time.
-            throw new UnsupportedOperationException("Not supported.");
-        }
-        
-        @Override
-        public void scheduleAtFixedRate(java.util.TimerTask task, long delay, long period) {
-            // Schedules the specified task for repeated fixed-rate execution, beginning after the specified delay.
-            throw new UnsupportedOperationException("Not supported.");
-        }
-        
-    }
-*/    
 }

@@ -162,6 +162,9 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testDescription() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         expressionTurnout.setTurnout((Turnout)null);
         Assert.assertTrue("Get turnout".equals(expressionTurnout.getShortDescription()));
         Assert.assertTrue("Turnout '' is Thrown".equals(expressionTurnout.getLongDescription()));
@@ -177,6 +180,9 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         expressionTurnout.setTurnout(turnout);
         expressionTurnout.set_Is_IsNot(Is_IsNot_Enum.IS);
         expressionTurnout.setTurnoutState(ExpressionTurnout.TurnoutState.THROWN);
@@ -241,6 +247,9 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSetTurnout2() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         Turnout turnout11 = InstanceManager.getDefault(TurnoutManager.class).provide("IT11");
         Turnout turnout12 = InstanceManager.getDefault(TurnoutManager.class).provide("IT12");
         NamedBeanHandle<Turnout> turnoutHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(turnout12.getDisplayName(), turnout12);
@@ -311,6 +320,9 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testVetoableChange() throws PropertyVetoException {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         // Get the expressionTurnout and set the turnout
         Assert.assertNotNull("Turnout is not null", turnout);
         expressionTurnout.setTurnout(turnout);
@@ -364,8 +376,10 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setEnabled(true);
+        
         logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
+        
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
@@ -386,6 +400,10 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         
         turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         expressionTurnout.setTurnout(turnout);
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

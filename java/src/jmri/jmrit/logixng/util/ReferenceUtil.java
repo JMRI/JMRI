@@ -24,6 +24,7 @@ public class ReferenceUtil {
      * @return true if value has a reference. falsw otherwise
      */
     static public boolean isReference(String value) {
+        if (value == null) return false;
         // A reference starts with { and ends with }
         return value.startsWith("{")
                 && value.endsWith("}")

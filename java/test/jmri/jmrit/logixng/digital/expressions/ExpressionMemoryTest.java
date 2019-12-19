@@ -168,6 +168,9 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testDescription() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         expressionMemory.setMemory((Memory)null);
         Assert.assertEquals("Compare memory", expressionMemory.getShortDescription());
         Assert.assertEquals("Memory '' is equal to \"\"", expressionMemory.getLongDescription());
@@ -181,6 +184,9 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
+        // Disable the conditionalNG
+        conditionalNG.setEnabled(false);
+        
         expressionMemory.setCompareTo(ExpressionMemory.CompareTo.VALUE);
         expressionMemory.setMemoryOperation(ExpressionMemory.MemoryOperation.EQUAL);
         expressionMemory.setConstantValue("New value");
@@ -196,10 +202,10 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         // Set the memory. This should not execute the conditional.
         memory.setValue("Other value");
         memory.setValue("New value");
-        // Enable the conditionalNG and all its children.
-        conditionalNG.setEnabled(true);
         // The action is not yet executed so the atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
         // Set the memory. This should execute the conditional.
         memory.setValue("Other value");
         memory.setValue("New value");
@@ -228,6 +234,9 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testSetMemory2() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         Memory memory11 = InstanceManager.getDefault(MemoryManager.class).provide("IM11");
         Memory memory12 = InstanceManager.getDefault(MemoryManager.class).provide("IM12");
         NamedBeanHandle<Memory> memoryHandle12 = InstanceManager.getDefault(NamedBeanHandleManager.class).getNamedBeanHandle(memory12.getDisplayName(), memory12);
@@ -299,6 +308,9 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testVetoableChange() throws PropertyVetoException {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         // Get the expression and set the memory
         Assert.assertNotNull("Memory is not null", memory);
         
@@ -351,8 +363,10 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setEnabled(true);
+        
         logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
+        
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
@@ -373,6 +387,10 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         
         memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         expressionMemory.setMemory(memory);
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

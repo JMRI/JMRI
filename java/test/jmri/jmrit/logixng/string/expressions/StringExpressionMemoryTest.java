@@ -118,6 +118,9 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Test
     public void testEvaluate() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         StringExpressionMemory expression = (StringExpressionMemory)_base;
         _memory.setValue("");
         Assert.assertEquals("Evaluate matches", "", expression.evaluate());
@@ -130,6 +133,8 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Test
     public void testEvaluateAndAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
+        // Disable the conditionalNG
+        conditionalNG.setEnabled(false);
         
         // The action is not yet executed so the double should be 0.0
         Assert.assertEquals("memory is \"\"", "", _memoryOut.getValue());
@@ -142,10 +147,10 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         _memory.setValue("Other test");
         // Enable the logixNG and all its children.
         logixNG.setEnabled(true);
-        // Enable the conditionalNG and all its children.
-        conditionalNG.setEnabled(true);
         // The action is not yet executed so the memory should be 0.0
         Assert.assertEquals("memory is \"\"", "", _memoryOut.getValue());
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
         // Set the value of the memory. This should execute the conditional.
         _memory.setValue("Something else");
         // The action should now be executed so the memory should be 3.0
@@ -175,6 +180,9 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Test
     public void testMemory() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         StringExpressionMemory expression = (StringExpressionMemory)_base;
         expression.setMemory((Memory)null);
         Assert.assertNull("Memory is null", expression.getMemory());
@@ -203,7 +211,8 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         
         // Test setMemory() when listeners are registered
         Assert.assertNotNull("Memory is not null", expression.getMemory());
-        expression.registerListeners();
+        // Enable the conditionalNG. This will register the listeners
+        conditionalNG.setEnabled(true);
         boolean thrown = false;
         try {
             expression.setMemory((String)null);
@@ -234,6 +243,9 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     
     @Test
     public void testVetoableChange() throws PropertyVetoException {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         // Get some other memory for later use
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
         Assert.assertNotNull("Memory is not null", otherMemory);
@@ -320,7 +332,10 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setEnabled(true);
+        
         logixNG.addConditionalNG(conditionalNG);
+        
         DoStringAction doStringAction = new DoStringAction("IQDA321", null);
         MaleSocket maleSocketDoStringAction =
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
@@ -344,6 +359,10 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         actionMemory.setMemory(_memoryOut);
         MaleSocket socketAction = InstanceManager.getDefault(StringActionManager.class).registerAction(actionMemory);
         maleSocketDoStringAction.getChild(1).connect(socketAction);
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

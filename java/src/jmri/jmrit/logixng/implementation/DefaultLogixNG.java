@@ -336,7 +336,7 @@ public class DefaultLogixNG extends AbstractNamedBean
     /** {@inheritDoc} */
     @Override
     public boolean isActive() {
-        return _isActivated;
+        return _isActivated && _enabled;
     }
     
     /** {@inheritDoc} */

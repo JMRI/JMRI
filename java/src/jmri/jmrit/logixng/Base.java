@@ -272,8 +272,6 @@ public interface Base {
      * preventing its garbage collection. But it's formally dead, and shouldn't
      * be keeping any other objects alive. Therefore, this method should null
      * out any references to other objects that this object contained.
-     * <p>
-     * dispose calls Base.unregisterListeners() to unregister all the listeners.
      */
     public void dispose();  // remove _all_ connections!
 

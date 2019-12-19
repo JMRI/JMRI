@@ -123,6 +123,8 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     
     @Test
     public void testEvaluate() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
         AnalogExpressionMemory expression = (AnalogExpressionMemory)_base;
         _memory.setValue(0.0d);
         Assert.assertTrue("Evaluate matches", 0.0d == expression.evaluate());
@@ -135,7 +137,8 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     
     @Test
     public void testEvaluateAndAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
-        
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
         // The action is not yet executed so the double should be 0.0
         Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
@@ -145,10 +148,10 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
         _memory.setValue(2.0);
-        // Enable the conditionalNG and all its children.
-        conditionalNG.setEnabled(true);
         // The action is not yet executed so the memory should be 0.0
         Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
+        // Enable the conditionalNG and all its children.
+        conditionalNG.setEnabled(true);
         // Set the value of the memory. This should execute the conditional.
         _memory.setValue(3.0);
         // The action should now be executed so the memory should be 3.0
@@ -178,6 +181,9 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     
     @Test
     public void testMemory() {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         AnalogExpressionMemory expression = (AnalogExpressionMemory)_base;
         expression.setMemory((Memory)null);
         Assert.assertNull("Memory is null", expression.getMemory());
@@ -206,7 +212,8 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         
         // Test setMemory() when listeners are registered
         Assert.assertNotNull("Memory is not null", expression.getMemory());
-        expression.registerListeners();
+        // Enable the conditionalNG. This will register the listeners
+        conditionalNG.setEnabled(true);
         boolean thrown = false;
         try {
             expression.setMemory((String)null);
@@ -214,6 +221,7 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
+        JUnitAppender.assertWarnMessage("the object is null and the returned number is therefore 0.0");
         JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
         
         thrown = false;
@@ -237,6 +245,9 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     
     @Test
     public void testVetoableChange() throws PropertyVetoException {
+        // Disable the conditionalNG. This will unregister the listeners
+        conditionalNG.setEnabled(false);
+        
         // Get some other memory for later use
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
         Assert.assertNotNull("Memory is not null", otherMemory);
@@ -329,9 +340,9 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setEnabled(true);
         
         logixNG.addConditionalNG(conditionalNG);
-        logixNG.activateLogixNG();
         
         DigitalActionBean actionDoAnalog =
                 new DoAnalogAction(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
@@ -353,6 +364,10 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
         
         _base = expressionMemory;
         _baseMaleSocket = socketExpression;
+        
+        logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After
