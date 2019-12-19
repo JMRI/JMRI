@@ -2854,19 +2854,19 @@ public class LayoutTurnout extends LayoutTrack {
                         LayoutEditorTools tools = layoutEditor.getLETools();
                         if (isTurnoutTypeXover()) {
                             tools.setSignalsAtXoverTurnoutFromMenu(LayoutTurnout.this,
-                                    layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                    layoutEditor.leToolBarPanel.signalIconEditor, layoutEditor.leToolBarPanel.signalFrame);
                         } else if (linkType == NO_LINK) {
                             tools.setSignalsAtTurnoutFromMenu(LayoutTurnout.this,
-                                    layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                    layoutEditor.leToolBarPanel.signalIconEditor, layoutEditor.leToolBarPanel.signalFrame);
                         } else if (linkType == THROAT_TO_THROAT) {
                             tools.setSignalsAtThroatToThroatTurnoutsFromMenu(LayoutTurnout.this, linkedTurnoutName,
-                                    layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                    layoutEditor.leToolBarPanel.signalIconEditor, layoutEditor.leToolBarPanel.signalFrame);
                         } else if (linkType == FIRST_3_WAY) {
                             tools.setSignalsAt3WayTurnoutFromMenu(getTurnoutName(), linkedTurnoutName,
-                                    layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                    layoutEditor.leToolBarPanel.signalIconEditor, layoutEditor.leToolBarPanel.signalFrame);
                         } else if (linkType == SECOND_3_WAY) {
                             tools.setSignalsAt3WayTurnoutFromMenu(linkedTurnoutName, getTurnoutName(),
-                                    layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                    layoutEditor.leToolBarPanel.signalIconEditor, layoutEditor.leToolBarPanel.signalFrame);
                         }
                     }
                 };
@@ -2904,8 +2904,8 @@ public class LayoutTurnout extends LayoutTrack {
                             layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
                                     LayoutTurnout.this,
                                     boundaryBetween,
-                                    layoutEditor.sensorIconEditor,
-                                    layoutEditor.sensorFrame);
+                                    layoutEditor.leToolBarPanel.sensorIconEditor,
+                                    layoutEditor.leToolBarPanel.sensorFrame);
                         }
                     });
 

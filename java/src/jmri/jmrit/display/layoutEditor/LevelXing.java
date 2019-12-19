@@ -1209,8 +1209,8 @@ public class LevelXing extends LayoutTrack {
                         // bring up signals at level crossing tool dialog
                         layoutEditor.getLETools().
                                 setSignalsAtLevelXingFromMenu(LevelXing.this,
-                                        layoutEditor.signalIconEditor,
-                                        layoutEditor.signalFrame);
+                                        layoutEditor.leToolBarPanel.signalIconEditor,
+                                        layoutEditor.leToolBarPanel.signalFrame);
                     }
                 };
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
@@ -1276,7 +1276,7 @@ public class LevelXing extends LayoutTrack {
                         layoutEditor.getLETools().
                                 setSignalMastsAtLevelXingFromMenu(
                                         LevelXing.this, boundaryBetween,
-                                        layoutEditor.signalFrame);
+                                        layoutEditor.leToolBarPanel.signalFrame);
                     }
                 });
                 popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
@@ -1284,8 +1284,8 @@ public class LevelXing extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         layoutEditor.getLETools().setSensorsAtLevelXingFromMenu(
                                 LevelXing.this, boundaryBetween,
-                                layoutEditor.sensorIconEditor,
-                                layoutEditor.sensorFrame);
+                                layoutEditor.leToolBarPanel.sensorIconEditor,
+                                layoutEditor.leToolBarPanel.sensorFrame);
                     }
                 });
             }
