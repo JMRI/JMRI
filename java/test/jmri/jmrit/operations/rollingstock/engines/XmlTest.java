@@ -367,5 +367,10 @@ public class XmlTest extends OperationsTestCase {
 
     }
 
+    @Test
+    public void checkConstants(){
+       Assert.assertEquals(Xml.NAME,"name");
+    }
+
     // TODO: Add test for import
 }
