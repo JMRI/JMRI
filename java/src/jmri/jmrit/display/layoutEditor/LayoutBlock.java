@@ -501,6 +501,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @return name of occupancy sensor
      */
     public String getOccupancySensorName() {
+        if (occupancyNamedSensor == null) {
+            if (block != null) {
+                occupancyNamedSensor = block.getNamedSensor();
+            }
+        }
         if (occupancyNamedSensor != null) {
             return occupancyNamedSensor.getName();
         }
@@ -513,6 +518,11 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @return occ sensor name
      */
     public Sensor getOccupancySensor() {
+        if (occupancyNamedSensor == null) {
+            if (block != null) {
+                occupancyNamedSensor = block.getNamedSensor();
+            }
+        }
         if (occupancyNamedSensor != null) {
             return occupancyNamedSensor.getBean();
         }

@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.annotation.Nonnull;
 import javax.swing.*;
-import javax.swing.border.*;
 import jmri.*;
 import jmri.swing.NamedBeanComboBox;
 import org.slf4j.*;
@@ -21,7 +20,6 @@ import org.slf4j.*;
  * This is the base class for the horizontal, vertical and floating toolbar
  * panels
  *
- * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
  */
 @SuppressWarnings("serial")
@@ -30,14 +28,8 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
     protected LayoutEditor layoutEditor = null;
 
-    //TODO: move all these into LayoutEditorFloatingToolBarPanel subclass of this class
-    protected JPanel floatingEditPanel = new JPanel();
-    protected JPanel floatEditTabsPanel = new JPanel();
-    protected JTabbedPane floatEditTabsPane = new JTabbedPane();
-    protected JPanel blockPropertiesPanel = null;
-
     //top row of radio buttons
-    private transient JLabel turnoutLabel = new JLabel();
+    protected transient JLabel turnoutLabel = new JLabel();
     protected transient JRadioButton turnoutRHButton = new JRadioButton(Bundle.getMessage("RightHandAbbreviation"));
     protected transient JRadioButton turnoutLHButton = new JRadioButton(Bundle.getMessage("LeftHandAbbreviation"));
     protected transient JRadioButton turnoutWYEButton = new JRadioButton(Bundle.getMessage("WYEAbbreviation"));
@@ -49,48 +41,48 @@ public class LayoutEditorToolBarPanel extends JPanel {
     protected transient JRadioButton layoutDoubleSlipButton = new JRadioButton(Bundle.getMessage("LayoutDoubleSlip"));
 
     //Default flow layout definitions for JPanels
-    private transient FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
-    private transient FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
-    private transient FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
+    protected transient FlowLayout leftRowLayout = new FlowLayout(FlowLayout.LEFT, 5, 0);       //5 pixel gap between items, no vertical gap
+    protected transient FlowLayout centerRowLayout = new FlowLayout(FlowLayout.CENTER, 5, 0);   //5 pixel gap between items, no vertical gap
+    protected transient FlowLayout rightRowLayout = new FlowLayout(FlowLayout.RIGHT, 5, 0);     //5 pixel gap between items, no vertical gap
 
     //top row of check boxes
     protected transient NamedBeanComboBox<Turnout> turnoutNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
-    private transient JPanel turnoutNamePanel = new JPanel(leftRowLayout);
-    private transient JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
+    protected transient JPanel turnoutNamePanel = new JPanel(leftRowLayout);
+    protected transient JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
     protected transient NamedBeanComboBox<Turnout> extraTurnoutNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(), null, NamedBean.DisplayOptions.DISPLAYNAME);
     protected transient JComboBox<String> rotationComboBox = null;
-    private transient JPanel rotationPanel = new JPanel(leftRowLayout);
+    protected transient JPanel rotationPanel = new JPanel(leftRowLayout);
 
     //2nd row of radio buttons
-    private transient JLabel trackLabel = new JLabel();
+    protected transient JLabel trackLabel = new JLabel();
     protected transient JRadioButton levelXingButton = new JRadioButton(Bundle.getMessage("LevelCrossing"));
     protected transient JRadioButton trackButton = new JRadioButton(Bundle.getMessage("TrackSegment"));
 
     //2nd row of check boxes
-    private transient JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
+    protected transient JPanel trackSegmentPropertiesPanel = new JPanel(leftRowLayout);
     protected transient JCheckBox mainlineTrack = new JCheckBox(Bundle.getMessage("MainlineBox"));
     protected transient JCheckBox dashedLine = new JCheckBox(Bundle.getMessage("Dashed"));
 
-    private transient JLabel blockNameLabel = new JLabel();
+    protected transient JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));
     protected transient NamedBeanComboBox<Block> blockIDComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
     protected transient JCheckBox highlightBlockCheckBox = new JCheckBox(Bundle.getMessage("HighlightSelectedBlockTitle"));
 
-    private transient JLabel blockSensorNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
-    private transient JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
+    protected transient JLabel blockSensorNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
+    protected transient JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
     protected transient NamedBeanComboBox<Sensor> blockSensorComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SensorManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
     //3rd row of radio buttons (and any associated text fields)
-    private transient JLabel nodesLabel = new JLabel();
+    protected transient JLabel nodesLabel = new JLabel();
     protected transient JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
     protected transient JRadioButton anchorButton = new JRadioButton(Bundle.getMessage("Anchor"));
     protected transient JRadioButton edgeButton = new JRadioButton(Bundle.getMessage("EdgeConnector"));
 
-    private transient JLabel labelsLabel = new JLabel();
+    protected transient JLabel labelsLabel = new JLabel();
     protected transient JRadioButton textLabelButton = new JRadioButton(Bundle.getMessage("TextLabel"));
     protected transient JTextField textLabelTextField = new JTextField(12);
 
@@ -120,7 +112,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
     protected transient JRadioButton iconLabelButton = new JRadioButton(Bundle.getMessage("IconLabel"));
     protected transient JRadioButton shapeButton = new JRadioButton(Bundle.getMessage("LayoutShape"));
 
-    private transient JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
+    protected transient JButton changeIconsButton = new JButton(Bundle.getMessage("ChangeIcons") + "...");
 
     protected transient MultiIconEditor sensorIconEditor = null;
     protected transient JFrame sensorFrame = null;
@@ -136,14 +128,16 @@ public class LayoutEditorToolBarPanel extends JPanel {
     protected transient JLabel xLabel = new JLabel("00");
     protected transient JLabel yLabel = new JLabel("00");
 
-    private transient JPanel zoomPanel = new JPanel();
+    protected transient JPanel zoomPanel = new JPanel();
     protected transient JLabel zoomLabel = new JLabel("x1");
 
-    private transient JPanel locationPanel = new JPanel();
+    protected transient JPanel locationPanel = new JPanel();
+
+    protected transient JPanel blockPropertiesPanel = null;
 
     //non-GUI variables
     protected transient boolean toolBarIsWide = true;
-    private transient ButtonGroup itemGroup = null;
+    protected transient ButtonGroup itemGroup = null;
 
     /**
      * constructor for LayoutEditorToolBarPanel
@@ -155,436 +149,10 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
         setupComponents();
 
-        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-
-        JPanel outerBorderPanel = this;
-        JPanel innerBorderPanel = this;
-
-        Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
-
-        LayoutEditor.ToolBarSide toolBarSide = layoutEditor.getToolBarSide();
-        boolean toolBarIsVertical = (toolBarSide.equals(LayoutEditor.ToolBarSide.eRIGHT)
-                || toolBarSide.equals(LayoutEditor.ToolBarSide.eLEFT));
-
-        if (toolBarIsVertical) {
-            outerBorderPanel = new JPanel();
-            outerBorderPanel.setLayout(new BoxLayout(outerBorderPanel, BoxLayout.PAGE_AXIS));
-            TitledBorder outerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("Track"));
-            outerTitleBorder.setTitleJustification(TitledBorder.CENTER);
-            outerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
-            outerBorderPanel.setBorder(outerTitleBorder);
-
-            innerBorderPanel = new JPanel();
-            innerBorderPanel.setLayout(new BoxLayout(innerBorderPanel, BoxLayout.PAGE_AXIS));
-            TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("BeanNameTurnouts"));
-            innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
-            innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
-            innerBorderPanel.setBorder(innerTitleBorder);
-        }
-
-        String blockNameString = Bundle.getMessage("BlockID");
-
-        if (toolBarIsVertical) {
-            FlowLayout verticalTitleLayout = new FlowLayout(FlowLayout.CENTER, 5, 5); //5 pixel gap between items, 5 vertical gap
-            FlowLayout verticalContentLayout = new FlowLayout(FlowLayout.LEFT, 5, 2); //5 pixel gap between items, 2 vertical gap
-
-            turnoutLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("BeanNameTurnout")));
-
-            if (!toolBarIsVertical) {
-                JPanel vTop1TitlePanel = new JPanel(verticalTitleLayout);
-                vTop1TitlePanel.add(turnoutLabel);
-                vTop1TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop1TitlePanel.getPreferredSize().height));
-                innerBorderPanel.add(vTop1TitlePanel);
-            }
-
-            JPanel vTop1Panel = new JPanel(verticalContentLayout);
-            vTop1Panel.add(turnoutLHButton);
-            vTop1Panel.add(turnoutRHButton);
-            vTop1Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop1Panel.getPreferredSize().height));
-            innerBorderPanel.add(vTop1Panel);
-
-            JPanel vTop2Panel = new JPanel(verticalContentLayout);
-            vTop2Panel.add(turnoutWYEButton);
-            vTop2Panel.add(doubleXoverButton);
-            vTop2Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop2Panel.getPreferredSize().height * 2));
-            innerBorderPanel.add(vTop2Panel);
-
-            JPanel vTop3Panel = new JPanel(verticalContentLayout);
-            vTop3Panel.add(lhXoverButton);
-            vTop3Panel.add(rhXoverButton);
-            vTop3Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop3Panel.getPreferredSize().height));
-            innerBorderPanel.add(vTop3Panel);
-
-            JPanel vTop4Panel = new JPanel(verticalContentLayout);
-            vTop4Panel.add(layoutSingleSlipButton);
-            vTop4Panel.add(layoutDoubleSlipButton);
-            vTop4Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop4Panel.getPreferredSize().height));
-            innerBorderPanel.add(vTop4Panel);
-
-            JPanel vTop5Panel = new JPanel(verticalContentLayout);
-            vTop5Panel.add(turnoutNamePanel);
-            vTop5Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop5Panel.getPreferredSize().height));
-            innerBorderPanel.add(vTop5Panel);
-
-            JPanel vTop6Panel = new JPanel(verticalContentLayout);
-            vTop6Panel.add(extraTurnoutPanel);
-            vTop6Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop6Panel.getPreferredSize().height));
-            innerBorderPanel.add(vTop6Panel);
-
-            JPanel vTop7Panel = new JPanel(verticalContentLayout);
-            vTop7Panel.add(rotationPanel);
-            vTop7Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop7Panel.getPreferredSize().height));
-            innerBorderPanel.add(vTop7Panel);
-
-            if (toolBarIsVertical) {
-                innerBorderPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, innerBorderPanel.getPreferredSize().height));
-                outerBorderPanel.add(innerBorderPanel);
-            }
-            trackLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("Track")));
-
-            if (!toolBarIsVertical) {
-                JPanel vTop8TitlePanel = new JPanel(verticalTitleLayout);
-                vTop8TitlePanel.add(trackLabel);
-                vTop8TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8TitlePanel.getPreferredSize().height));
-                outerBorderPanel.add(vTop8TitlePanel);
-            }
-
-            JPanel vTop8Panel = new JPanel(verticalContentLayout);
-            vTop8Panel.add(levelXingButton);
-            vTop8Panel.add(trackButton);
-            vTop8Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8Panel.getPreferredSize().height));
-            outerBorderPanel.add(vTop8Panel);
-
-            //this would be vTop9Panel
-            trackSegmentPropertiesPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE,
-                    trackSegmentPropertiesPanel.getPreferredSize().height));
-            outerBorderPanel.add(trackSegmentPropertiesPanel);
-
-            JPanel vTop10Panel = new JPanel(verticalContentLayout);
-            blockNameLabel = new JLabel(blockNameString);
-            vTop10Panel.add(blockNameLabel);
-            vTop10Panel.add(blockIDComboBox);
-            vTop10Panel.add(highlightBlockCheckBox);
-            vTop10Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop10Panel.getPreferredSize().height));
-            outerBorderPanel.add(vTop10Panel);
-
-            JPanel vTop11Panel = new JPanel(verticalContentLayout);
-            vTop11Panel.add(blockSensorNameLabel);
-            vTop11Panel.add(blockSensorComboBox);
-            vTop11Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop11Panel.getPreferredSize().height));
-            vTop11Panel.setBorder(new EmptyBorder(0, 10, 0, 0));
-
-            outerBorderPanel.add(vTop11Panel);
-
-            if (toolBarIsVertical) {
-                add(outerBorderPanel);
-            }
-
-            JPanel nodesBorderPanel = this;
-            nodesLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("Nodes")));
-
-            if (toolBarIsVertical) {
-                nodesBorderPanel = new JPanel();
-                nodesBorderPanel.setLayout(new BoxLayout(nodesBorderPanel, BoxLayout.PAGE_AXIS));
-                TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("Nodes"));
-                innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
-                innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
-                nodesBorderPanel.setBorder(innerTitleBorder);
-            } else {
-                JPanel vTop12TitlePanel = new JPanel(verticalTitleLayout);
-                vTop12TitlePanel.add(nodesLabel);
-                vTop12TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12TitlePanel.getPreferredSize().height));
-                add(vTop12TitlePanel);
-            }
-
-            JPanel vTop12Panel = new JPanel(verticalContentLayout);
-            vTop12Panel.add(endBumperButton);
-            vTop12Panel.add(anchorButton);
-            vTop12Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop12Panel.getPreferredSize().height));
-            nodesBorderPanel.add(vTop12Panel);
-
-            JPanel vTop13Panel = new JPanel(verticalContentLayout);
-            vTop13Panel.add(edgeButton);
-            vTop13Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop13Panel.getPreferredSize().height));
-            nodesBorderPanel.add(vTop13Panel);
-
-            if (toolBarIsVertical) {
-                add(nodesBorderPanel);
-            }
-
-            JPanel labelsBorderPanel = this;
-            labelsLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("Labels")));
-
-            if (toolBarIsVertical) {
-                labelsBorderPanel = new JPanel();
-                labelsBorderPanel.setLayout(new BoxLayout(labelsBorderPanel, BoxLayout.PAGE_AXIS));
-                TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("Labels"));
-                innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
-                innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
-                labelsBorderPanel.setBorder(innerTitleBorder);
-            } else {
-                JPanel vTop14TitlePanel = new JPanel(verticalTitleLayout);
-                vTop14TitlePanel.add(labelsLabel);
-                vTop14TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop14TitlePanel.getPreferredSize().height));
-                add(vTop14TitlePanel);
-            }
-
-            JPanel vTop14Panel = new JPanel(verticalContentLayout);
-            vTop14Panel.add(textLabelButton);
-            vTop14Panel.add(textLabelTextField);
-            vTop14Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop14Panel.getPreferredSize().height));
-            labelsBorderPanel.add(vTop14Panel);
-
-            JPanel vTop15Panel = new JPanel(verticalContentLayout);
-            vTop15Panel.add(memoryButton);
-            vTop15Panel.add(textMemoryComboBox);
-            vTop15Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop15Panel.getPreferredSize().height));
-            labelsBorderPanel.add(vTop15Panel);
-
-            JPanel vTop16Panel = new JPanel(verticalContentLayout);
-            vTop16Panel.add(blockContentsButton);
-            vTop16Panel.add(blockContentsComboBox);
-            vTop16Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop16Panel.getPreferredSize().height));
-            labelsBorderPanel.add(vTop16Panel);
-
-            if (toolBarIsVertical) {
-                add(labelsBorderPanel);
-            }
-
-            JPanel iconsBorderPanel = this;
-
-            if (toolBarIsVertical) {
-                iconsBorderPanel = new JPanel();
-                iconsBorderPanel.setLayout(new BoxLayout(iconsBorderPanel, BoxLayout.PAGE_AXIS));
-                TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("IconsTitle"));
-                innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
-                innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
-                iconsBorderPanel.setBorder(innerTitleBorder);
-            } else {
-                JPanel vTop17TitlePanel = new JPanel(verticalTitleLayout);
-                JLabel iconsLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("IconsTitle")));
-                vTop17TitlePanel.add(iconsLabel);
-                vTop17TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop17TitlePanel.getPreferredSize().height));
-                add(vTop17TitlePanel);
-            }
-
-            JPanel vTop18Panel = new JPanel(verticalContentLayout);
-            vTop18Panel.add(multiSensorButton);
-            vTop18Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop18Panel.getPreferredSize().height));
-            iconsBorderPanel.add(vTop18Panel);
-
-            JPanel vTop20Panel = new JPanel(verticalContentLayout);
-            vTop20Panel.add(sensorButton);
-            vTop20Panel.add(sensorComboBox);
-            vTop20Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop20Panel.getPreferredSize().height));
-            iconsBorderPanel.add(vTop20Panel);
-
-            JPanel vTop19Panel = new JPanel(verticalContentLayout);
-            vTop19Panel.add(signalMastButton);
-            vTop19Panel.add(signalMastComboBox);
-            vTop19Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop19Panel.getPreferredSize().height));
-            iconsBorderPanel.add(vTop19Panel);
-
-            JPanel vTop21Panel = new JPanel(verticalContentLayout);
-            vTop21Panel.add(signalButton);
-            vTop21Panel.add(signalHeadComboBox);
-            vTop21Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop21Panel.getPreferredSize().height));
-            iconsBorderPanel.add(vTop21Panel);
-
-            JPanel vTop22Panel = new JPanel(verticalContentLayout);
-            vTop22Panel.add(iconLabelButton);
-            vTop22Panel.add(shapeButton);
-            vTop22Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop22Panel.getPreferredSize().height));
-            vTop22Panel.add(changeIconsButton);
-            iconsBorderPanel.add(vTop22Panel);
-
-            if (toolBarIsVertical) {
-                add(iconsBorderPanel);
-            }
-            add(Box.createVerticalGlue());
-
-            JPanel bottomPanel = new JPanel();
-            zoomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, zoomPanel.getPreferredSize().height));
-            locationPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, locationPanel.getPreferredSize().height));
-            bottomPanel.add(zoomPanel);
-            bottomPanel.add(locationPanel);
-            bottomPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, bottomPanel.getPreferredSize().height));
-            add(bottomPanel, BorderLayout.SOUTH);
-        } else {
-            //Row 1
-            JPanel hTop1Panel = new JPanel();
-            hTop1Panel.setLayout(new BoxLayout(hTop1Panel, BoxLayout.LINE_AXIS));
-
-            //Row 1 : Left Components
-            JPanel hTop1Left = new JPanel(leftRowLayout);
-            turnoutLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
-            if (!toolBarIsVertical) {
-                hTop1Left.add(turnoutLabel);
-            }
-            hTop1Left.add(turnoutRHButton);
-            hTop1Left.add(turnoutLHButton);
-            hTop1Left.add(turnoutWYEButton);
-            hTop1Left.add(doubleXoverButton);
-            hTop1Left.add(rhXoverButton);
-            hTop1Left.add(lhXoverButton);
-            hTop1Left.add(layoutSingleSlipButton);
-            hTop1Left.add(layoutDoubleSlipButton);
-            hTop1Panel.add(hTop1Left);
-
-            if (toolBarIsWide) {
-                hTop1Panel.add(Box.createHorizontalGlue());
-
-                JPanel hTop1Right = new JPanel(rightRowLayout);
-                hTop1Right.add(turnoutNamePanel);
-                hTop1Right.add(extraTurnoutPanel);
-                hTop1Right.add(rotationPanel);
-                hTop1Panel.add(hTop1Right);
-            }
-            innerBorderPanel.add(hTop1Panel);
-
-            //row 2
-            if (!toolBarIsWide) {
-                JPanel hTop2Panel = new JPanel();
-                hTop2Panel.setLayout(new BoxLayout(hTop2Panel, BoxLayout.LINE_AXIS));
-
-                //Row 2 : Left Components
-                JPanel hTop2Center = new JPanel(centerRowLayout);
-                hTop2Center.add(turnoutNamePanel);
-                hTop2Center.add(extraTurnoutPanel);
-                hTop2Center.add(rotationPanel);
-                hTop2Panel.add(hTop2Center);
-
-                innerBorderPanel.add(hTop2Panel);
-            }
-
-            if (toolBarIsVertical) {
-                outerBorderPanel.add(innerBorderPanel);
-            }
-
-            //Row 3 (2 wide)
-            JPanel hTop3Panel = new JPanel();
-            hTop3Panel.setLayout(new BoxLayout(hTop3Panel, BoxLayout.LINE_AXIS));
-
-            //Row 3 : Left Components
-            JPanel hTop3Left = new JPanel(leftRowLayout);
-            trackLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Track")));
-
-            if (!toolBarIsVertical) {
-                hTop3Left.add(trackLabel);
-            }
-            hTop3Left.add(levelXingButton);
-            hTop3Left.add(trackButton);
-            hTop3Left.add(trackSegmentPropertiesPanel);
-
-            hTop3Panel.add(hTop3Left);
-            hTop3Panel.add(Box.createHorizontalGlue());
-
-            //Row 3 : Center Components
-            JPanel hTop3Center = new JPanel(centerRowLayout);
-            blockNameLabel = new JLabel(blockNameString);
-            hTop3Center.add(blockNameLabel);
-            hTop3Center.add(blockIDComboBox);
-            hTop3Center.add(highlightBlockCheckBox);
-
-            JPanel hTop3CenterA = new JPanel(centerRowLayout);
-            hTop3CenterA.add(blockSensorLabel);
-            hTop3CenterA.add(blockSensorComboBox);
-            hTop3CenterA.setBorder(new EmptyBorder(0, 20, 0, 0));
-            hTop3Center.add(hTop3CenterA);
-
-            hTop3Panel.add(hTop3Center);
-            hTop3Panel.add(Box.createHorizontalGlue());
-
-            if (toolBarIsWide) {
-                //row 3 : Right Components
-                JPanel hTop3Right = new JPanel(rightRowLayout);
-                hTop3Right.add(zoomPanel);
-                hTop3Right.add(locationPanel);
-                hTop3Panel.add(hTop3Right);
-            }
-            outerBorderPanel.add(hTop3Panel);
-
-            if (toolBarIsVertical) {
-                add(outerBorderPanel);
-            }
-
-            //Row 4
-            JPanel hTop4Panel = new JPanel();
-            hTop4Panel.setLayout(new BoxLayout(hTop4Panel, BoxLayout.LINE_AXIS));
-
-            //Row 4 : Left Components
-            JPanel hTop4Left = new JPanel(leftRowLayout);
-            nodesLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Nodes")));
-            hTop4Left.add(nodesLabel);
-            hTop4Left.add(endBumperButton);
-            hTop4Left.add(anchorButton);
-            hTop4Left.add(edgeButton);
-            hTop4Panel.add(hTop4Left);
-            hTop4Panel.add(Box.createHorizontalGlue());
-
-            if (!toolBarIsWide) {
-                //Row 4 : Right Components
-                JPanel hTop4Right = new JPanel(rightRowLayout);
-                hTop4Right.add(zoomPanel);
-                hTop4Right.add(locationPanel);
-                hTop4Panel.add(hTop4Right);
-            }
-            add(hTop4Panel);
-
-            //Row 5 Components (wide 4-center)
-            labelsLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Labels")));
-            if (toolBarIsWide) {
-                JPanel hTop4Center = new JPanel(centerRowLayout);
-                hTop4Center.add(labelsLabel);
-                hTop4Center.add(textLabelButton);
-                hTop4Center.add(textLabelTextField);
-                hTop4Center.add(memoryButton);
-                hTop4Center.add(textMemoryComboBox);
-                hTop4Center.add(blockContentsButton);
-                hTop4Center.add(blockContentsComboBox);
-                hTop4Panel.add(hTop4Center);
-                hTop4Panel.add(Box.createHorizontalGlue());
-                add(hTop4Panel);
-            } else {
-                add(hTop4Panel);
-
-                JPanel hTop5Left = new JPanel(leftRowLayout);
-                hTop5Left.add(labelsLabel);
-                hTop5Left.add(textLabelButton);
-                hTop5Left.add(textLabelTextField);
-                hTop5Left.add(memoryButton);
-                hTop5Left.add(textMemoryComboBox);
-                hTop5Left.add(blockContentsButton);
-                hTop5Left.add(blockContentsComboBox);
-                hTop5Left.add(Box.createHorizontalGlue());
-                add(hTop5Left);
-            }
-
-            //Row 6
-            JPanel hTop6Panel = new JPanel();
-            hTop6Panel.setLayout(new BoxLayout(hTop6Panel, BoxLayout.LINE_AXIS));
-
-            //Row 6 : Left Components
-            //JPanel hTop6Left = new JPanel(centerRowLayout);
-            JPanel hTop6Left = new JPanel(leftRowLayout);
-            hTop6Left.add(multiSensorButton);
-            hTop6Left.add(changeIconsButton);
-            hTop6Left.add(sensorButton);
-            hTop6Left.add(sensorComboBox);
-            hTop6Left.add(signalMastButton);
-            hTop6Left.add(signalMastComboBox);
-            hTop6Left.add(signalButton);
-            hTop6Left.add(signalHeadComboBox);
-            hTop6Left.add(new JLabel(" "));
-            hTop6Left.add(iconLabelButton);
-            hTop6Left.add(shapeButton);
-
-            hTop6Panel.add(hTop6Left);
-            add(hTop6Panel);
-        }
+        layoutComponents();
     }   //constructor
 
-    private void setupComponents() {
+    protected void setupComponents() {
         //setup group for radio buttons selecting items to add and line style
         itemGroup = new ButtonGroup();
         itemGroup.add(turnoutRHButton);
@@ -822,14 +390,14 @@ public class LayoutEditorToolBarPanel extends JPanel {
             if (newName == null) {
                 newName = "";
             }
-            LayoutBlock b = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
-            if (b != null) {
+            LayoutBlock lb = InstanceManager.getDefault(LayoutBlockManager.class).getByUserName(newName);
+            if (lb != null) {
                 //if there is an occupancy sensor assigned already
-                String sensorName = b.getOccupancySensorName();
+                String sensorName = lb.getOccupancySensorName();
 
                 if (!sensorName.isEmpty()) {
                     //update the block sensor ComboBox
-                    blockSensorComboBox.setSelectedItem(b.getOccupancySensor());
+                    blockSensorComboBox.setSelectedItem(lb.getOccupancySensor());
                 } else {
                     blockSensorComboBox.setSelectedItem(null);
                 }
@@ -957,170 +525,13 @@ public class LayoutEditorToolBarPanel extends JPanel {
         iconFrame = new JFrame(Bundle.getMessage("EditIcon"));
         iconFrame.getContentPane().add(iconEditor);
         iconFrame.pack();
-    }
+    }   //setupComponents()
 
-    protected void createFloatingEditContent() {
-        /*
-         * JFrame - floatingEditToolBoxFrame
-         *     JScrollPane - floatingEditContent
-         *         JPanel - floatingEditPanel
-         *             JPanel - floatEditTabsPanel
-         *                 JTabbedPane - floatEditTabsPane
-         *                     ...
-         *             JPanel - floatEditLocationPanel
-         *                 ...
-         *             JPanel - floatEditActionPanel  (currently disabled)
-         *                 ...
-         *             JPanel - floatEditHelpPanel
-         *                 ...
-         */
-
-        FlowLayout floatContentLayout = new FlowLayout(FlowLayout.CENTER, 5, 2); //5 pixel gap between items, 2 vertical gap
-
-        //Contains the block and sensor combo boxes.
-        //It is moved to the appropriate detail pane when the tab changes.
-        blockPropertiesPanel = new JPanel(floatContentLayout);
-        blockPropertiesPanel.add(blockNameLabel);
-        blockPropertiesPanel.add(blockIDComboBox);
-        blockPropertiesPanel.add(highlightBlockCheckBox);
-
-        JPanel blockSensorPanel = new JPanel();
-        blockSensorPanel.add(blockSensorLabel);
-        blockSensorPanel.add(blockSensorComboBox);
-        blockSensorPanel.setBorder(new EmptyBorder(0, 20, 0, 0));
-        blockPropertiesPanel.add(blockSensorPanel);
-
-        //Build the window content
-        floatingEditPanel = new JPanel();
-        floatingEditPanel.setLayout(new BoxLayout(floatingEditPanel, BoxLayout.Y_AXIS));
-
-        //Begin the tabs structure
-        //Tab 0 - Turnouts
-        JPanel floatEditTurnout = new JPanel();
-        floatEditTurnout.setLayout(new BoxLayout(floatEditTurnout, BoxLayout.Y_AXIS));
-
-        JPanel turnoutGroup1 = new JPanel(floatContentLayout);
-        turnoutGroup1.add(turnoutRHButton);
-        turnoutGroup1.add(turnoutLHButton);
-        turnoutGroup1.add(turnoutWYEButton);
-        turnoutGroup1.add(layoutSingleSlipButton);
-        turnoutGroup1.add(layoutDoubleSlipButton);
-        floatEditTurnout.add(turnoutGroup1);
-
-        JPanel turnoutGroup2 = new JPanel(floatContentLayout);
-        turnoutGroup2.add(doubleXoverButton);
-        turnoutGroup2.add(rhXoverButton);
-        turnoutGroup2.add(lhXoverButton);
-        floatEditTurnout.add(turnoutGroup2);
-
-        JPanel turnoutGroup3 = new JPanel(floatContentLayout);
-        turnoutGroup3.add(turnoutNamePanel);
-        turnoutGroup3.add(extraTurnoutPanel);
-        floatEditTurnout.add(turnoutGroup3);
-
-        JPanel turnoutGroup4 = new JPanel(floatContentLayout);
-        turnoutGroup4.add(rotationPanel);
-        floatEditTurnout.add(turnoutGroup4);
-
-        floatEditTurnout.add(blockPropertiesPanel);
-        floatEditTabsPane.addTab(Bundle.getMessage("Turnouts"), null, floatEditTurnout, null);
-
-        //Tab 1 - Track
-        JPanel floatEditTrack = new JPanel();
-        floatEditTrack.setLayout(new BoxLayout(floatEditTrack, BoxLayout.Y_AXIS));
-
-        JPanel trackGroup1 = new JPanel(floatContentLayout);
-        trackGroup1.add(endBumperButton);
-        trackGroup1.add(anchorButton);
-        trackGroup1.add(edgeButton);
-        floatEditTrack.add(trackGroup1);
-
-        JPanel trackGroup2 = new JPanel(floatContentLayout);
-        trackGroup2.add(trackButton);
-        trackGroup2.add(levelXingButton);
-        floatEditTrack.add(trackGroup2);
-
-        JPanel trackGroup3 = new JPanel(floatContentLayout);
-        trackGroup3.add(trackSegmentPropertiesPanel);
-        floatEditTrack.add(trackGroup3);
-
-        floatEditTabsPane.addTab(Bundle.getMessage("TabTrack"), null, floatEditTrack, null);
-
-        //Tab 2 - Labels
-        JPanel floatEditLabel = new JPanel();
-        floatEditLabel.setLayout(new BoxLayout(floatEditLabel, BoxLayout.Y_AXIS));
-
-        JPanel labelGroup1 = new JPanel(floatContentLayout);
-        labelGroup1.add(textLabelButton);
-        labelGroup1.add(textLabelTextField);
-        floatEditLabel.add(labelGroup1);
-
-        JPanel labelGroup2 = new JPanel(floatContentLayout);
-        labelGroup2.add(memoryButton);
-        labelGroup2.add(textMemoryComboBox);
-        floatEditLabel.add(labelGroup2);
-
-        JPanel labelGroup3 = new JPanel(floatContentLayout);
-        labelGroup3.add(blockContentsButton);
-        labelGroup3.add(blockContentsComboBox);
-        floatEditLabel.add(labelGroup3);
-
-        floatEditTabsPane.addTab(Bundle.getMessage("TabLabel"), null, floatEditLabel, null);
-
-        //Tab 3 - Icons
-        JPanel floatEditIcon = new JPanel();
-        floatEditIcon.setLayout(new BoxLayout(floatEditIcon, BoxLayout.Y_AXIS));
-
-        JPanel iconGroup1 = new JPanel(floatContentLayout);
-        iconGroup1.add(multiSensorButton);
-        iconGroup1.add(changeIconsButton);
-        floatEditIcon.add(iconGroup1);
-
-        JPanel iconGroup2 = new JPanel(floatContentLayout);
-        iconGroup2.add(sensorButton);
-        iconGroup2.add(sensorComboBox);
-        floatEditIcon.add(iconGroup2);
-
-        JPanel iconGroup3 = new JPanel(floatContentLayout);
-        iconGroup3.add(signalMastButton);
-        iconGroup3.add(signalMastComboBox);
-        floatEditIcon.add(iconGroup3);
-
-        JPanel iconGroup4 = new JPanel(floatContentLayout);
-        iconGroup4.add(signalButton);
-        iconGroup4.add(signalHeadComboBox);
-        floatEditIcon.add(iconGroup4);
-
-        JPanel iconGroup5 = new JPanel(floatContentLayout);
-        iconGroup5.add(iconLabelButton);
-        iconGroup5.add(shapeButton);
-        floatEditIcon.add(iconGroup5);
-
-        floatEditTabsPane.addTab(Bundle.getMessage("TabIcon"), null, floatEditIcon, null);
-        floatEditTabsPanel.add(floatEditTabsPane);
-        floatingEditPanel.add(floatEditTabsPanel);
-
-        //End the tabs structure
-        //The next 3 groups reside under the tab secton
-        JPanel floatEditLocationPanel = new JPanel();
-        floatEditLocationPanel.add(zoomPanel);
-        floatEditLocationPanel.add(locationPanel);
-        floatingEditPanel.add(floatEditLocationPanel);
-
-        floatEditTabsPane.addChangeListener((e) -> {
-            //Move the block group between the turnouts and track tabs
-            int selIndex = floatEditTabsPane.getSelectedIndex();
-
-            if (selIndex == 0) {
-                floatEditTurnout.add(blockPropertiesPanel);
-            } else if (selIndex == 1) {
-                floatEditTrack.add(blockPropertiesPanel);
-            }
-        });
-
-        // JPanel floatEditActionPanel = new JPanel();
-        // floatEditActionPanel.add(new JLabel("floatEditActionPanel", JLabel.CENTER));
-        // floatingEditPanel.add(floatEditActionPanel);
+    /**
+     * layout the components in this panel
+     */
+    protected void layoutComponents() {
+        log.error("layoutComponents called in LayoutEditorToolBarPanel base class");
     }
 
     //initialize logging

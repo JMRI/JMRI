@@ -82,7 +82,7 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtTurnout(le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to appear,
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
@@ -116,7 +116,7 @@ public class LayoutEditorToolsTest {
 
         //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtTurnout(le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
 
         //the JFrameOperator waits for the set signal frame to appear
@@ -275,7 +275,7 @@ public class LayoutEditorToolsTest {
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtTurnout(le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
 
         //define connection
@@ -309,7 +309,7 @@ public class LayoutEditorToolsTest {
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtTurnout(le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
 
         //change anchor to end bumper
@@ -334,7 +334,7 @@ public class LayoutEditorToolsTest {
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtTurnout(le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
 
         //pressing "Done" should throw up a "block XXX doesn''t have an occupancy sensor"  (InfoMessage4)
@@ -355,7 +355,7 @@ public class LayoutEditorToolsTest {
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtTurnout(le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
 
         doneButtonOperator.doClick();
@@ -364,7 +364,7 @@ public class LayoutEditorToolsTest {
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
-            let.setSignalsAtTurnout(le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtTurnout(le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
 
         //the JFrameOperator waits for the set signal frame to (re)appear
@@ -394,7 +394,7 @@ public class LayoutEditorToolsTest {
             le.getLayoutTracks().add(to);
 
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
-            let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtTurnoutFromMenu(to, le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to appear
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
@@ -416,7 +416,7 @@ public class LayoutEditorToolsTest {
             to.setTurnout(turnouts[0].getSystemName());
             le.getLayoutTracks().add(to);
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
-            let.setSignalsAtTurnoutFromMenu(to, le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtTurnoutFromMenu(to, le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to appear,
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
@@ -431,7 +431,7 @@ public class LayoutEditorToolsTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
             //this causes a "set Signal Heads Level Crossing" dialog to be displayed.
-            let.setSignalsAtLevelXing(le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtLevelXing(le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to appear,
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
@@ -450,7 +450,7 @@ public class LayoutEditorToolsTest {
             lx.setLayoutBlockBD(layoutBlocks[1]);
 
             //this causes a "set Signal Heads Level Crossing" dialog to be displayed.
-            let.setSignalsAtLevelXingFromMenu(lx, le.signalIconEditor, le.getTargetFrame());
+            let.setSignalsAtLevelXingFromMenu(lx, le.getLayoutEditorToolBarPanel().signalIconEditor, le.getTargetFrame());
         });
         //the JFrameOperator waits for the set signal frame to appear,
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));

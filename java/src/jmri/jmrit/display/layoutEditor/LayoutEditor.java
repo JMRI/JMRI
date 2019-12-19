@@ -75,14 +75,17 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private transient JmriJFrame floatingEditToolBoxFrame = null;
     private transient JScrollPane floatingEditContentScrollPane = null;
     private transient JPanel floatEditHelpPanel = null;
-    private transient JScrollPane editToolBarScrollPane = null;
+
     private transient JPanel editToolBarContainerPanel = null;
+    private transient JScrollPane editToolBarScrollPane = null;
+
     private transient JPanel helpBarPanel = null;
     private transient JPanel helpBar = new JPanel();
+
     private transient boolean editorUseOldLocSize;
 
-
     private transient LayoutEditorToolBarPanel leToolBarPanel = null;
+
     @Nonnull
     public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
         return leToolBarPanel;
@@ -548,7 +551,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         boolean toolBarIsVertical = (toolBarSide.equals(ToolBarSide.eRIGHT) || toolBarSide.equals(ToolBarSide.eLEFT));
 
-        leToolBarPanel = new LayoutEditorToolBarPanel(this);
+        if (toolBarIsVertical) {
+            leToolBarPanel = new LayoutEditorVerticalToolBarPanel(this);
+        } else {
+            leToolBarPanel = new LayoutEditorHorizontalToolBarPanel(this);
+        }
 
         editToolBarScrollPane = new JScrollPane(leToolBarPanel);
 
@@ -610,25 +617,27 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     private void createfloatingEditToolBoxFrame() {
-        if (floatingEditToolBoxFrame == null) {
-            //if (floatingEditContentScrollPane == null) {
-                // Create the window content if necessary, normally on first load or switching between toolbox and toolbar
-                leToolBarPanel.createFloatingEditContent();
-            //}
-
-            if (isEditable() && floatingEditToolBoxFrame == null) {
-                //Create the window and add the toolbox content
-                floatingEditToolBoxFrame = new JmriJFrame(Bundle.getMessage("ToolBox", getLayoutName()));
-                floatingEditToolBoxFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
-                floatingEditToolBoxFrame.setContentPane(floatingEditContentScrollPane);
-                floatingEditToolBoxFrame.pack();
-                floatingEditToolBoxFrame.setAlwaysOnTop(true);
-                floatingEditToolBoxFrame.setVisible(true);
-            }
+        if (isEditable() && floatingEditToolBoxFrame == null) {
+            //Create a scroll pane to hold the window content.
+            leToolBarPanel = new LayoutEditorFloatingToolBarPanel(this);
+            floatingEditContentScrollPane = new JScrollPane(leToolBarPanel);
+            floatingEditContentScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+            floatingEditContentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            //Create the window and add the toolbox content
+            floatingEditToolBoxFrame = new JmriJFrame(Bundle.getMessage("ToolBox", getLayoutName()));
+            floatingEditToolBoxFrame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+            floatingEditToolBoxFrame.setContentPane(floatingEditContentScrollPane);
+            floatingEditToolBoxFrame.pack();
+            floatingEditToolBoxFrame.setAlwaysOnTop(true);
+            floatingEditToolBoxFrame.setVisible(true);
         }
     }
 
     private void deletefloatingEditToolBoxFrame() {
+        if (floatingEditContentScrollPane != null) {
+            floatingEditContentScrollPane.removeAll();
+            floatingEditContentScrollPane = null;
+        }
         if (floatingEditToolBoxFrame != null) {
             floatingEditToolBoxFrame.dispose();
             floatingEditToolBoxFrame = null;
@@ -637,32 +646,30 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private void createFloatingHelpPanel() {
 
-        floatEditHelpPanel = new JPanel();
-        leToolBarPanel.floatingEditPanel.add(floatEditHelpPanel);
+        if (leToolBarPanel instanceof LayoutEditorFloatingToolBarPanel) {
+            LayoutEditorFloatingToolBarPanel leftbp = (LayoutEditorFloatingToolBarPanel) leToolBarPanel;
+            floatEditHelpPanel = new JPanel();
+            leToolBarPanel.add(floatEditHelpPanel);
 
-        //Notice: End tree structure indenting
-        //Create a scroll pane to hold the window content.
-        floatingEditContentScrollPane = new JScrollPane(leToolBarPanel.floatingEditPanel);
-        floatingEditContentScrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-        floatingEditContentScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            //Notice: End tree structure indenting
+            // Force the help panel width to the same as the tabs section
+            int tabSectionWidth = (int) leftbp.getPreferredSize().getWidth();
 
-        // Force the help panel width to the same as the tabs section
-        int tabSectionWidth = (int) leToolBarPanel.floatEditTabsPanel.getPreferredSize().getWidth();
-
-        //Change the textarea settings
-        for (Component c : helpBar.getComponents()) {
-            if (c instanceof JTextArea) {
-                JTextArea j = (JTextArea) c;
-                j.setSize(new Dimension(tabSectionWidth, j.getSize().height));
-                j.setLineWrap(true);
-                j.setWrapStyleWord(true);
+            //Change the textarea settings
+            for (Component c : helpBar.getComponents()) {
+                if (c instanceof JTextArea) {
+                    JTextArea j = (JTextArea) c;
+                    j.setSize(new Dimension(tabSectionWidth, j.getSize().height));
+                    j.setLineWrap(true);
+                    j.setWrapStyleWord(true);
+                }
             }
-        }
 
-        //Change the width of the help panel section
-        floatEditHelpPanel.setMaximumSize(new Dimension(tabSectionWidth, Integer.MAX_VALUE));
-        floatEditHelpPanel.add(helpBar);
-        floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
+            //Change the width of the help panel section
+            floatEditHelpPanel.setMaximumSize(new Dimension(tabSectionWidth, Integer.MAX_VALUE));
+            floatEditHelpPanel.add(helpBar);
+            floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
+        }
     }
 
     @Override
@@ -1608,39 +1615,33 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName());
             });
-
-            setupToolBar(); //re-layout all the toolbar items
-
-            if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
-                createfloatingEditToolBoxFrame();
-                createFloatingHelpPanel();
-                if (editToolBarContainerPanel != null) {
-                    editToolBarContainerPanel.setVisible(false);
-                }
-            } else {
-                if (floatingEditToolBoxFrame != null) {
-                    deletefloatingEditToolBoxFrame();
-                }
-                floatingEditContentScrollPane = null; // The switch to toolbar will move the toolbox content to the new toolbar
-                editToolBarContainerPanel.setVisible(isEditable());
-            }
             toolBarSideTopButton.setSelected(toolBarSide.equals(ToolBarSide.eTOP));
             toolBarSideLeftButton.setSelected(toolBarSide.equals(ToolBarSide.eLEFT));
             toolBarSideBottomButton.setSelected(toolBarSide.equals(ToolBarSide.eBOTTOM));
             toolBarSideRightButton.setSelected(toolBarSide.equals(ToolBarSide.eRIGHT));
             toolBarSideFloatButton.setSelected(toolBarSide.equals(ToolBarSide.eFLOAT));
 
+            setupToolBar(); //re-layout all the toolbar items
+
             if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
+                if (editToolBarContainerPanel != null) {
+                    editToolBarContainerPanel.setVisible(false);
+                }
                 floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
-            } else if (getShowHelpBar()) {
-                //not sure why... but this is the only way I could
-                //get everything to layout correctly
-                //when the helpbar is visible...
-                boolean editMode = isEditable();
-                setAllEditable(!editMode);
-                setAllEditable(editMode);
             } else {
-                helpBarPanel.setVisible(isEditable() && getShowHelpBar());
+                if (floatingEditToolBoxFrame != null) {
+                    deletefloatingEditToolBoxFrame();
+                }
+                editToolBarContainerPanel.setVisible(isEditable());
+                if (getShowHelpBar()) {
+                    helpBarPanel.setVisible(isEditable());
+                    //not sure why... but this is the only way I could
+                    //get everything to layout correctly
+                    //when the helpbar is visible...
+                    boolean editMode = isEditable();
+                    setAllEditable(!editMode);
+                    setAllEditable(editMode);
+                }
             }
         }
     }   // setToolBarSide
@@ -7079,7 +7080,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     }
                 } else {
                     //undo using the "Extra" color to highlight the selected block
+                    Block block = leToolBarPanel.blockIDComboBox.getSelectedItem();
                     highlightBlock(null);
+                    leToolBarPanel.blockIDComboBox.setSelectedItem(block);
                 }
             }).start();
         }
@@ -7101,7 +7104,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public boolean highlightBlock(@CheckForNull Block inBlock) {
         boolean result = false; //assume failure (pessimist!)
 
-        leToolBarPanel.blockIDComboBox.setSelectedItem(inBlock);
+        if (leToolBarPanel.blockIDComboBox.getSelectedItem() != inBlock) {
+            leToolBarPanel.blockIDComboBox.setSelectedItem(inBlock);
+        }
 
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
         Set<Block> l = leToolBarPanel.blockIDComboBox.getManager().getNamedBeanSet();
