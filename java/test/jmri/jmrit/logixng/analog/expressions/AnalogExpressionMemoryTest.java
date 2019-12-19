@@ -139,7 +139,9 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     public void testEvaluateAndAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
-        // The action is not yet executed so the double should be 0.0
+        // Set the memory
+        _memoryOut.setValue(0.0);
+        // The double should be 0.0
         Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
         _memory.setValue(1.0);

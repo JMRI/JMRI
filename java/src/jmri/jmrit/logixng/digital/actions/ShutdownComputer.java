@@ -59,14 +59,9 @@ public class ShutdownComputer extends AbstractDigitalAction {
             } else {
                 throw new UnsupportedOperationException("Unknown OS: "+SystemType.getOSName());
             }
-//            try {
-                Runtime runtime = Runtime.getRuntime();
-                runtime.exec(shutdownCommand);
-//            } catch (IllegalThreadStateException e) {
-                // If we get here, it only means that the shutDownCommand has
-                // not finished yet. Since that's no problem for us, we just
-                // ignore it.
-//            }
+            Runtime runtime = Runtime.getRuntime();
+            runtime.exec(shutdownCommand);
+            
             InstanceManager.getDefault(ShutDownManager.class).shutdown();
             
             // If we are here, shutdown has failed

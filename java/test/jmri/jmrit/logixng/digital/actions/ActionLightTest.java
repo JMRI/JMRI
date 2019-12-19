@@ -190,7 +190,9 @@ public class ActionLightTest extends AbstractDigitalActionTestBase {
     @Test
     public void testAction() throws SocketAlreadyConnectedException, JmriException {
         
-        // The action is not yet executed so the light should be off
+        // Set the light
+        light.setCommandedState(Light.OFF);
+        // The light should be off
         Assert.assertTrue("light is off",light.getCommandedState() == Light.OFF);
         // Execute the conditional
         conditionalNG.execute();

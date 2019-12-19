@@ -189,7 +189,9 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testAction() throws SocketAlreadyConnectedException, JmriException {
-        // The action is not yet executed so the turnout should be closed
+        // Set the light
+        turnout.setCommandedState(Turnout.CLOSED);
+        // The turnout should be closed
         Assert.assertTrue("turnout is closed",turnout.getCommandedState() == Turnout.CLOSED);
         // Execute the conditional
         conditionalNG.execute();

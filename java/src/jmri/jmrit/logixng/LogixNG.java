@@ -105,10 +105,9 @@ public interface LogixNG extends Base, NamedBean {
     public void deleteConditionalNG(ConditionalNG conditionalNG);
 
     /**
-     * Calculate all ConditionalNGs, triggering action if the user specified
-     * conditions are met, and the LogixNG is enabled.
+     * Execute all ConditionalNGs if the LogixNG is enabled and activated.
      */
-    public void calculateConditionalNGs();
+    public void execute();
 
     /**
      * Is this LogixNG active?

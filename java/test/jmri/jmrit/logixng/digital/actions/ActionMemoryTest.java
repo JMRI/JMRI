@@ -167,7 +167,9 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testAction() throws SocketAlreadyConnectedException, JmriException {
-        // The action is not yet executed so the memory should have the value "Old value"
+        // Set the memory
+        memory.setValue("Old value");
+        // The memory should have the value "Old value"
         Assert.assertEquals("memory has correct value", "Old value", memory.getValue());
         // Execute the conditional
         conditionalNG.execute();

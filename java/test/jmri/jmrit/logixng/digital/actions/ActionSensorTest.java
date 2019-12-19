@@ -189,33 +189,35 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testAction() throws SocketAlreadyConnectedException, JmriException {
-        // The action is not yet executed so the sensor should be closed
-        Assert.assertTrue("sensor is closed",sensor.getCommandedState() == Sensor.INACTIVE);
+        // Set the light
+        sensor.setCommandedState(Sensor.INACTIVE);
+        // The sensor should be inactive
+        Assert.assertTrue("sensor is inactive",sensor.getCommandedState() == Sensor.INACTIVE);
         // Execute the conditional
         conditionalNG.execute();
-        // The action should now be executed so the sensor should be thrown
-        Assert.assertTrue("sensor is thrown",sensor.getCommandedState() == Sensor.ACTIVE);
+        // The action should now be executed so the sensor should be active
+        Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.ACTIVE);
         
-        // Test to set sensor to closed
+        // Test to set sensor to inactive
         actionSensor.setSensorState(ActionSensor.SensorState.INACTIVE);
         // Execute the conditional
         conditionalNG.execute();
-        // The action should now be executed so the sensor should be thrown
-        Assert.assertTrue("sensor is thrown",sensor.getCommandedState() == Sensor.INACTIVE);
+        // The action should now be executed so the sensor should be active
+        Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.INACTIVE);
         
         // Test to set sensor to toggle
         actionSensor.setSensorState(ActionSensor.SensorState.TOGGLE);
         // Execute the conditional
         conditionalNG.execute();
-        // The action should now be executed so the sensor should be thrown
-        Assert.assertTrue("sensor is thrown",sensor.getCommandedState() == Sensor.ACTIVE);
+        // The action should now be executed so the sensor should be active
+        Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.ACTIVE);
         
         // Test to set sensor to toggle
         actionSensor.setSensorState(ActionSensor.SensorState.TOGGLE);
         // Execute the conditional
         conditionalNG.execute();
-        // The action should now be executed so the sensor should be thrown
-        Assert.assertTrue("sensor is thrown",sensor.getCommandedState() == Sensor.INACTIVE);
+        // The action should now be executed so the sensor should be active
+        Assert.assertTrue("sensor is active",sensor.getCommandedState() == Sensor.INACTIVE);
     }
     
     @Test

@@ -31,14 +31,7 @@ public class DefaultLogixNG extends AbstractNamedBean
         implements LogixNG {
     
     private boolean _enabled = false;
-//    private boolean _userEnabled = false;
     private final List<ConditionalNG_Entry> _conditionalNG_Entries = new ArrayList<>();
-    
-    /**
-     * Persistant instance variables (saved between runs)
-     */
-//    List<ConditionalNG> _conditionalNG_List = new ArrayList<>();
-//    ArrayList<JmriSimplePropertyListener> _listeners = new ArrayList<>();
     
     /**
      * Maintain a list of conditional objects.  The key is the conditional system name
@@ -49,6 +42,7 @@ public class DefaultLogixNG extends AbstractNamedBean
      * Operational instance variables (not saved between runs)
      */
     private boolean _isActivated = false;
+    
     
     public DefaultLogixNG(String sys, String user) throws BadUserNameException, BadSystemNameException  {
         super(sys, user);
@@ -184,12 +178,6 @@ public class DefaultLogixNG extends AbstractNamedBean
             } else {
                 entry._conditionalNG.setup();
             }
-        }
-    }
-    
-    private void execute() {
-        for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
-            entry._conditionalNG.execute();
         }
     }
     
@@ -393,7 +381,7 @@ public class DefaultLogixNG extends AbstractNamedBean
 
     /** {@inheritDoc} */
     @Override
-    public void calculateConditionalNGs() {
+    public void execute() {
         for (ConditionalNG_Entry entry : _conditionalNG_Entries) {
             entry._conditionalNG.execute();
         }

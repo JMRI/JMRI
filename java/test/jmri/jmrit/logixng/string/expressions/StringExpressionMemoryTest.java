@@ -136,7 +136,9 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         
-        // The action is not yet executed so the double should be 0.0
+        // Set the memory
+        _memoryOut.setValue("");
+        // The memory should have the value ""
         Assert.assertEquals("memory is \"\"", "", _memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
         _memory.setValue("Test");

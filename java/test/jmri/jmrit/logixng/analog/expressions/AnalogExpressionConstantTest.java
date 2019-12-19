@@ -155,11 +155,12 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     @Test
     public void testEvaluateAndAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         
-        // The action is not yet executed so the double should be 0.0
+        // Set the memory
+        _memoryOut.setValue(0.0);
+        // The double should be 0.0
         Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
         // Execute the logixNG
-        conditionalNG.setEnabled(true);
-        logixNG.calculateConditionalNGs();
+        logixNG.execute();
         conditionalNG.setEnabled(false);
         // The action is not yet executed so the double should be 0.0
         Assert.assertTrue("memory is 10.2", 10.2 == (Double)_memoryOut.getValue());
@@ -168,7 +169,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         expressionConstant.setValue(1.0);
         // Execute the logixNG
         conditionalNG.setEnabled(true);
-        logixNG.calculateConditionalNGs();
+        logixNG.execute();
         conditionalNG.setEnabled(false);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the memory should be 0.0

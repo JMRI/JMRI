@@ -133,7 +133,9 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
         // Set new value to true
         actionAtomicBoolean.setNewValue(true);
         Assert.assertTrue("new value is true", actionAtomicBoolean.getNewValue());
-        // The action is not yet executed so the atomic boolean should be false
+        // Set the atomic boolean
+        atomicBoolean.set(false);
+        // The atomic boolean should be false
         Assert.assertFalse("atomicBoolean is false",atomicBoolean.get());
         // Execute the conditional
         conditionalNG.execute();
