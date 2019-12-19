@@ -2852,21 +2852,22 @@ public class LayoutTurnout extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorTools tools = layoutEditor.getLETools();
+                        LayoutEditorToolBarPanel letbp = layoutEditor.getLayoutEditorToolBarPanel();
                         if (isTurnoutTypeXover()) {
                             tools.setSignalsAtXoverTurnoutFromMenu(LayoutTurnout.this,
-                                    layoutEditor.leToolBarPanel.signalIconEditor, layoutEditor.leToolBarPanel.signalFrame);
+                                    letbp.signalIconEditor, letbp.signalFrame);
                         } else if (linkType == NO_LINK) {
                             tools.setSignalsAtTurnoutFromMenu(LayoutTurnout.this,
-                                    layoutEditor.leToolBarPanel.signalIconEditor, layoutEditor.leToolBarPanel.signalFrame);
+                                    letbp.signalIconEditor, letbp.signalFrame);
                         } else if (linkType == THROAT_TO_THROAT) {
                             tools.setSignalsAtThroatToThroatTurnoutsFromMenu(LayoutTurnout.this, linkedTurnoutName,
-                                    layoutEditor.leToolBarPanel.signalIconEditor, layoutEditor.leToolBarPanel.signalFrame);
+                                    letbp.signalIconEditor, letbp.signalFrame);
                         } else if (linkType == FIRST_3_WAY) {
                             tools.setSignalsAt3WayTurnoutFromMenu(getTurnoutName(), linkedTurnoutName,
-                                    layoutEditor.leToolBarPanel.signalIconEditor, layoutEditor.leToolBarPanel.signalFrame);
+                                    letbp.signalIconEditor, letbp.signalFrame);
                         } else if (linkType == SECOND_3_WAY) {
                             tools.setSignalsAt3WayTurnoutFromMenu(linkedTurnoutName, getTurnoutName(),
-                                    layoutEditor.leToolBarPanel.signalIconEditor, layoutEditor.leToolBarPanel.signalFrame);
+                                    letbp.signalIconEditor, letbp.signalFrame);
                         }
                     }
                 };
@@ -2901,11 +2902,12 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
+                        LayoutEditorToolBarPanel letbp = layoutEditor.getLayoutEditorToolBarPanel();
                             layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
                                     LayoutTurnout.this,
                                     boundaryBetween,
-                                    layoutEditor.leToolBarPanel.sensorIconEditor,
-                                    layoutEditor.leToolBarPanel.sensorFrame);
+                                    letbp.sensorIconEditor,
+                                    letbp.sensorFrame);
                         }
                     });
 

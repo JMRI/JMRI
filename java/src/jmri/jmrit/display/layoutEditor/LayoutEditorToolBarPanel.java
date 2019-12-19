@@ -18,7 +18,8 @@ import jmri.swing.NamedBeanComboBox;
 import org.slf4j.*;
 
 /**
- * Provides a Layout Panel
+ * This is the base class for the horizontal, vertical and floating toolbar
+ * panels
  *
  * @author Dave Duchamp Copyright: (c) 2004-2007
  * @author George Warner Copyright: (c) 2017-2019
@@ -152,6 +153,8 @@ public class LayoutEditorToolBarPanel extends JPanel {
     public LayoutEditorToolBarPanel(@Nonnull LayoutEditor layoutEditor) {
         this.layoutEditor = layoutEditor;
 
+        setupComponents();
+
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
         JPanel outerBorderPanel = this;
@@ -160,12 +163,10 @@ public class LayoutEditorToolBarPanel extends JPanel {
         Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
 
         LayoutEditor.ToolBarSide toolBarSide = layoutEditor.getToolBarSide();
-        boolean useBorders = !(toolBarSide.equals(LayoutEditor.ToolBarSide.eTOP)
-                || toolBarSide.equals(LayoutEditor.ToolBarSide.eBOTTOM));
         boolean toolBarIsVertical = (toolBarSide.equals(LayoutEditor.ToolBarSide.eRIGHT)
                 || toolBarSide.equals(LayoutEditor.ToolBarSide.eLEFT));
 
-        if (useBorders) {
+        if (toolBarIsVertical) {
             outerBorderPanel = new JPanel();
             outerBorderPanel.setLayout(new BoxLayout(outerBorderPanel, BoxLayout.PAGE_AXIS));
             TitledBorder outerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("Track"));
@@ -175,7 +176,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
             innerBorderPanel = new JPanel();
             innerBorderPanel.setLayout(new BoxLayout(innerBorderPanel, BoxLayout.PAGE_AXIS));
-            TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("BeanNameTurnout"));
+            TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("BeanNameTurnouts"));
             innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
             innerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
             innerBorderPanel.setBorder(innerTitleBorder);
@@ -189,7 +190,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
             turnoutLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("BeanNameTurnout")));
 
-            if (!useBorders) {
+            if (!toolBarIsVertical) {
                 JPanel vTop1TitlePanel = new JPanel(verticalTitleLayout);
                 vTop1TitlePanel.add(turnoutLabel);
                 vTop1TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop1TitlePanel.getPreferredSize().height));
@@ -235,12 +236,13 @@ public class LayoutEditorToolBarPanel extends JPanel {
             vTop7Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop7Panel.getPreferredSize().height));
             innerBorderPanel.add(vTop7Panel);
 
-            if (useBorders) {
+            if (toolBarIsVertical) {
+                innerBorderPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, innerBorderPanel.getPreferredSize().height));
                 outerBorderPanel.add(innerBorderPanel);
             }
             trackLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("Track")));
 
-            if (!useBorders) {
+            if (!toolBarIsVertical) {
                 JPanel vTop8TitlePanel = new JPanel(verticalTitleLayout);
                 vTop8TitlePanel.add(trackLabel);
                 vTop8TitlePanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop8TitlePanel.getPreferredSize().height));
@@ -263,31 +265,25 @@ public class LayoutEditorToolBarPanel extends JPanel {
             vTop10Panel.add(blockNameLabel);
             vTop10Panel.add(blockIDComboBox);
             vTop10Panel.add(highlightBlockCheckBox);
-            highlightBlockCheckBox.setToolTipText(Bundle.getMessage("HighlightSelectedBlockToolTip"));
-            highlightBlockCheckBox.addActionListener((ActionEvent event) -> {
-                layoutEditor.setHighlightSelectedBlock(highlightBlockCheckBox.isSelected());
-            });
-            highlightBlockCheckBox.setSelected(layoutEditor.getHighlightSelectedBlock());
             vTop10Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop10Panel.getPreferredSize().height));
             outerBorderPanel.add(vTop10Panel);
 
             JPanel vTop11Panel = new JPanel(verticalContentLayout);
-            //blockSensorNameLabel = new JLabel(blockNameString);
             vTop11Panel.add(blockSensorNameLabel);
-            vTop11Panel.add(blockSensorLabel);
             vTop11Panel.add(blockSensorComboBox);
             vTop11Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop11Panel.getPreferredSize().height));
-            outerBorderPanel.add(vTop11Panel);
             vTop11Panel.setBorder(new EmptyBorder(0, 10, 0, 0));
 
-            if (useBorders) {
+            outerBorderPanel.add(vTop11Panel);
+
+            if (toolBarIsVertical) {
                 add(outerBorderPanel);
             }
 
             JPanel nodesBorderPanel = this;
             nodesLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("Nodes")));
 
-            if (useBorders) {
+            if (toolBarIsVertical) {
                 nodesBorderPanel = new JPanel();
                 nodesBorderPanel.setLayout(new BoxLayout(nodesBorderPanel, BoxLayout.PAGE_AXIS));
                 TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("Nodes"));
@@ -312,14 +308,14 @@ public class LayoutEditorToolBarPanel extends JPanel {
             vTop13Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop13Panel.getPreferredSize().height));
             nodesBorderPanel.add(vTop13Panel);
 
-            if (useBorders) {
+            if (toolBarIsVertical) {
                 add(nodesBorderPanel);
             }
 
             JPanel labelsBorderPanel = this;
             labelsLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("Labels")));
 
-            if (useBorders) {
+            if (toolBarIsVertical) {
                 labelsBorderPanel = new JPanel();
                 labelsBorderPanel.setLayout(new BoxLayout(labelsBorderPanel, BoxLayout.PAGE_AXIS));
                 TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("Labels"));
@@ -351,13 +347,13 @@ public class LayoutEditorToolBarPanel extends JPanel {
             vTop16Panel.setMaximumSize(new Dimension(Integer.MAX_VALUE, vTop16Panel.getPreferredSize().height));
             labelsBorderPanel.add(vTop16Panel);
 
-            if (useBorders) {
+            if (toolBarIsVertical) {
                 add(labelsBorderPanel);
             }
 
             JPanel iconsBorderPanel = this;
 
-            if (useBorders) {
+            if (toolBarIsVertical) {
                 iconsBorderPanel = new JPanel();
                 iconsBorderPanel.setLayout(new BoxLayout(iconsBorderPanel, BoxLayout.PAGE_AXIS));
                 TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("IconsTitle"));
@@ -402,7 +398,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
             vTop22Panel.add(changeIconsButton);
             iconsBorderPanel.add(vTop22Panel);
 
-            if (useBorders) {
+            if (toolBarIsVertical) {
                 add(iconsBorderPanel);
             }
             add(Box.createVerticalGlue());
@@ -422,7 +418,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
             //Row 1 : Left Components
             JPanel hTop1Left = new JPanel(leftRowLayout);
             turnoutLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
-            if (!useBorders) {
+            if (!toolBarIsVertical) {
                 hTop1Left.add(turnoutLabel);
             }
             hTop1Left.add(turnoutRHButton);
@@ -461,7 +457,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
                 innerBorderPanel.add(hTop2Panel);
             }
 
-            if (useBorders) {
+            if (toolBarIsVertical) {
                 outerBorderPanel.add(innerBorderPanel);
             }
 
@@ -473,7 +469,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
             JPanel hTop3Left = new JPanel(leftRowLayout);
             trackLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Track")));
 
-            if (!useBorders) {
+            if (!toolBarIsVertical) {
                 hTop3Left.add(trackLabel);
             }
             hTop3Left.add(levelXingButton);
@@ -489,11 +485,6 @@ public class LayoutEditorToolBarPanel extends JPanel {
             hTop3Center.add(blockNameLabel);
             hTop3Center.add(blockIDComboBox);
             hTop3Center.add(highlightBlockCheckBox);
-            highlightBlockCheckBox.setToolTipText(Bundle.getMessage("HighlightSelectedBlockToolTip"));
-            highlightBlockCheckBox.addActionListener((ActionEvent event) -> {
-                layoutEditor.setHighlightSelectedBlock(highlightBlockCheckBox.isSelected());
-            });
-            highlightBlockCheckBox.setSelected(layoutEditor.getHighlightSelectedBlock());
 
             JPanel hTop3CenterA = new JPanel(centerRowLayout);
             hTop3CenterA.add(blockSensorLabel);
@@ -513,7 +504,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
             }
             outerBorderPanel.add(hTop3Panel);
 
-            if (useBorders) {
+            if (toolBarIsVertical) {
                 add(outerBorderPanel);
             }
 
@@ -591,7 +582,9 @@ public class LayoutEditorToolBarPanel extends JPanel {
             hTop6Panel.add(hTop6Left);
             add(hTop6Panel);
         }
+    }   //constructor
 
+    private void setupComponents() {
         //setup group for radio buttons selecting items to add and line style
         itemGroup = new ButtonGroup();
         itemGroup.add(turnoutRHButton);
@@ -813,6 +806,12 @@ public class LayoutEditorToolBarPanel extends JPanel {
         setupComboBox(blockIDComboBox, false, true, false);
         blockIDComboBox.setToolTipText(Bundle.getMessage("BlockIDToolTip"));
 
+        highlightBlockCheckBox.setToolTipText(Bundle.getMessage("HighlightSelectedBlockToolTip"));
+        highlightBlockCheckBox.addActionListener((ActionEvent event) -> {
+            layoutEditor.setHighlightSelectedBlock(highlightBlockCheckBox.isSelected());
+        });
+        highlightBlockCheckBox.setSelected(layoutEditor.getHighlightSelectedBlock());
+
         //change the block name
         blockIDComboBox.addActionListener((ActionEvent event) -> {
             //use the "Extra" color to highlight the selected block
@@ -858,7 +857,6 @@ public class LayoutEditorToolBarPanel extends JPanel {
 
         setupComboBox(blockContentsComboBox, true, false, false);
         blockContentsComboBox.setToolTipText(Bundle.getMessage("BlockContentsButtonToolTip"));
-
         blockContentsComboBox.addActionListener((ActionEvent event) -> {
             //use the "Extra" color to highlight the selected block
             if (layoutEditor.highlightSelectedBlockFlag) {
@@ -959,11 +957,11 @@ public class LayoutEditorToolBarPanel extends JPanel {
         iconFrame = new JFrame(Bundle.getMessage("EditIcon"));
         iconFrame.getContentPane().add(iconEditor);
         iconFrame.pack();
-    }   //constructor
+    }
 
     protected void createFloatingEditContent() {
         /*
-         * JFrame - floatingEditToolBox
+         * JFrame - floatingEditToolBoxFrame
          *     JScrollPane - floatingEditContent
          *         JPanel - floatingEditPanel
          *             JPanel - floatEditTabsPanel
@@ -985,11 +983,6 @@ public class LayoutEditorToolBarPanel extends JPanel {
         blockPropertiesPanel.add(blockNameLabel);
         blockPropertiesPanel.add(blockIDComboBox);
         blockPropertiesPanel.add(highlightBlockCheckBox);
-        highlightBlockCheckBox.setToolTipText(Bundle.getMessage("HighlightSelectedBlockToolTip"));
-        highlightBlockCheckBox.addActionListener((ActionEvent event) -> {
-            layoutEditor.setHighlightSelectedBlock(highlightBlockCheckBox.isSelected());
-        });
-        highlightBlockCheckBox.setSelected(layoutEditor.highlightSelectedBlockFlag);
 
         JPanel blockSensorPanel = new JPanel();
         blockSensorPanel.add(blockSensorLabel);
@@ -998,7 +991,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
         blockPropertiesPanel.add(blockSensorPanel);
 
         //Build the window content
-        JPanel floatingEditPanel = new JPanel();
+        floatingEditPanel = new JPanel();
         floatingEditPanel.setLayout(new BoxLayout(floatingEditPanel, BoxLayout.Y_AXIS));
 
         //Begin the tabs structure

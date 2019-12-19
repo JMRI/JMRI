@@ -72,15 +72,21 @@ import org.slf4j.*;
 public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //Operational instance variables - not saved to disk
-    protected transient JmriJFrame floatingEditToolBoxFrame = null;
+    private transient JmriJFrame floatingEditToolBoxFrame = null;
     private transient JScrollPane floatingEditContentScrollPane = null;
     private transient JPanel floatEditHelpPanel = null;
-    protected transient LayoutEditorToolBarPanel leToolBarPanel = null;
     private transient JScrollPane editToolBarScrollPane = null;
     private transient JPanel editToolBarContainerPanel = null;
     private transient JPanel helpBarPanel = null;
     private transient JPanel helpBar = new JPanel();
     private transient boolean editorUseOldLocSize;
+
+
+    private transient LayoutEditorToolBarPanel leToolBarPanel = null;
+    @Nonnull
+    public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
+        return leToolBarPanel;
+    }
 
     //end of main panel controls
     private transient boolean delayedPopupTrigger = false;
@@ -533,10 +539,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             contentPane.remove(helpBarPanel);
         }
 
-        deleteFloatingEditToolBox();
+        deletefloatingEditToolBoxFrame();
         if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
+            createfloatingEditToolBoxFrame();
             createFloatingHelpPanel();
-            createFloatingEditToolBox();
             return;
         }
 
@@ -603,12 +609,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         editToolBarContainerPanel.setVisible(isEditable());
     }
 
-    private void createFloatingEditToolBox() {
+    private void createfloatingEditToolBoxFrame() {
         if (floatingEditToolBoxFrame == null) {
-            if (floatingEditContentScrollPane == null) {
+            //if (floatingEditContentScrollPane == null) {
                 // Create the window content if necessary, normally on first load or switching between toolbox and toolbar
                 leToolBarPanel.createFloatingEditContent();
-            }
+            //}
 
             if (isEditable() && floatingEditToolBoxFrame == null) {
                 //Create the window and add the toolbox content
@@ -622,7 +628,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
     }
 
-    private void deleteFloatingEditToolBox() {
+    private void deletefloatingEditToolBoxFrame() {
         if (floatingEditToolBoxFrame != null) {
             floatingEditToolBoxFrame.dispose();
             floatingEditToolBoxFrame = null;
@@ -1033,9 +1039,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
                         if (toolBarSide.equals(ToolBarSide.eFLOAT) && isEditable()) {
                             // Rebuild the toolbox after a name change.
+                            deletefloatingEditToolBoxFrame();
+                            createfloatingEditToolBoxFrame();
                             createFloatingHelpPanel();
-                            deleteFloatingEditToolBox();
-                            createFloatingEditToolBox();
                         }
                     }
                 }
@@ -1606,14 +1612,14 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             setupToolBar(); //re-layout all the toolbar items
 
             if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
+                createfloatingEditToolBoxFrame();
                 createFloatingHelpPanel();
-                createFloatingEditToolBox();
                 if (editToolBarContainerPanel != null) {
                     editToolBarContainerPanel.setVisible(false);
                 }
             } else {
                 if (floatingEditToolBoxFrame != null) {
-                    deleteFloatingEditToolBox();
+                    deletefloatingEditToolBoxFrame();
                 }
                 floatingEditContentScrollPane = null; // The switch to toolbar will move the toolbox content to the new toolbar
                 editToolBarContainerPanel.setVisible(isEditable());
@@ -6531,10 +6537,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
             if (editable) {
+                createfloatingEditToolBoxFrame();
                 createFloatingHelpPanel();
-                createFloatingEditToolBox();
             } else {
-                deleteFloatingEditToolBox();
+                deletefloatingEditToolBoxFrame();
             }
         } else {
             editToolBarContainerPanel.setVisible(editable);
