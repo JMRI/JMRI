@@ -240,6 +240,7 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
         DoStringAction doStringAction = new DoStringAction("IQDA321", null);
         MaleSocket maleSocketDoStringAction =
@@ -253,6 +254,10 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
         stringActionMemory.setMemory(_memory);
         _base = stringActionMemory;
         _baseMaleSocket = maleSocketStringActionMemory;
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

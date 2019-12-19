@@ -117,6 +117,7 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
         Logix action = new Logix("IQDA321", null);
         MaleSocket maleSocket =
@@ -140,6 +141,10 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
         
         _base = actionOnChange;
         _baseMaleSocket = maleSocketActionOnChange;
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

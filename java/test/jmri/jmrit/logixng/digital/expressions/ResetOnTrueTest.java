@@ -189,6 +189,7 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
@@ -207,6 +208,10 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
         actionAtomicBoolean = new ActionAtomicBoolean(atomicBoolean, true);
         MaleSocket socketAtomicBoolean = InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionAtomicBoolean);
         ifThenElse.getChild(1).connect(socketAtomicBoolean);
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

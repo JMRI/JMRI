@@ -159,6 +159,7 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
+        conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
         IfThenElse ifThenElse = new IfThenElse("IQDA321", null, IfThenElse.Type.TRIGGER_ACTION);
         MaleSocket maleSocket =
@@ -172,6 +173,10 @@ public class OrTest extends AbstractDigitalExpressionTestBase {
         
         _base = expressionOr;
         _baseMaleSocket = maleSocket2;
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

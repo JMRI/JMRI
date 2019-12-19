@@ -91,6 +91,7 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
         actionDigitalActionPluginSocket = new DigitalActionPluginSocket("IQDA1", null, new MyDigitalActionPlugin("IQDA2"));
         MaleSocket maleSocket =
@@ -98,6 +99,10 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         conditionalNG.getChild(0).connect(maleSocket);
         _base = actionDigitalActionPluginSocket;
         _baseMaleSocket = maleSocket;
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

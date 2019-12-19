@@ -106,6 +106,10 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
         
         _base = actionListenOnBeans;
         _baseMaleSocket = socket;
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

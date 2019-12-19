@@ -150,6 +150,7 @@ public class ManyTest extends AbstractDigitalActionTestBase {
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
         Many action = new Many("IQDA321", null);
         MaleSocket maleSocket =
@@ -157,6 +158,10 @@ public class ManyTest extends AbstractDigitalActionTestBase {
         conditionalNG.getChild(0).connect(maleSocket);
         _base = action;
         _baseMaleSocket = maleSocket;
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

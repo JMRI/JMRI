@@ -89,6 +89,7 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
         actionShutdownComputer = new ShutdownComputer("IQDA321", null, 0);
         MaleSocket maleSocket =
@@ -96,6 +97,10 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         conditionalNG.getChild(0).connect(maleSocket);
         _base = actionShutdownComputer;
         _baseMaleSocket = maleSocket;
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

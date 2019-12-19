@@ -241,7 +241,9 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
                 .createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
+        conditionalNG.setEnabled(true);
         logixNG.addConditionalNG(conditionalNG);
+        
         DoAnalogAction doAnalogAction = new DoAnalogAction("IQDA321", null);
         MaleSocket maleSocketDoAnalogAction =
                 InstanceManager.getDefault(DigitalActionManager.class)
@@ -257,6 +259,10 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
         analogActionMemory.setMemory(_memory);
         _base = analogActionMemory;
         _baseMaleSocket = maleSocketAnalogActionMemory;
+        
+	logixNG.setParentForAllChildren();
+        logixNG.setEnabled(true);
+        logixNG.activateLogixNG();
     }
 
     @After

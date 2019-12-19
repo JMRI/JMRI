@@ -233,11 +233,11 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testIsActive() {
-        if (!_base.isActive()) {
-            System.out.println("jmri.jmrit.logixng.AbstractBaseTestBase.testMaleSocketIsActive: _base must be active for this test.");
-            return;
-        }
-//        Assert.assertTrue(_base.isActive());
+//        if (!_base.isActive()) {
+//            System.out.println("jmri.jmrit.logixng.AbstractBaseTestBase.testMaleSocketIsActive: _base must be active for this test: "+_base.getClass().getName());
+//            return;
+//        }
+        Assert.assertTrue(_base.isActive());
         if (_base instanceof MaleSocket) {
             ((MaleSocket)_base).setEnabled(false);
             Assert.assertFalse("_base is not active", _base.isActive());
@@ -277,11 +277,10 @@ public abstract class AbstractBaseTestBase {
     
     @Test
     public void testMaleSocketIsActive() {
-        if (!_baseMaleSocket.isActive()) {
-            System.out.println("jmri.jmrit.logixng.AbstractBaseTestBase.testMaleSocketIsActive: _baseMaleSocket must be active for this test.");
-            return;
-        }
-//        _baseMaleSocket.setEnabled(true);
+//        if (!_baseMaleSocket.isActive()) {
+//            System.out.println("jmri.jmrit.logixng.AbstractBaseTestBase.testMaleSocketIsActive: _baseMaleSocket must be active for this test: "+_base.getClass().getName());
+//            return;
+//        }
         Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
         _baseMaleSocket.setEnabled(false);
         Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
