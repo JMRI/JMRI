@@ -5,14 +5,14 @@ import java.awt.Toolkit;
 import java.io.File;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
-import jmri.jmrit.display.AbstractEditorTestBase;
-import jmri.jmrit.display.EditorFrameOperator;
+import jmri.jmrit.display.*;
 import jmri.util.*;
 import jmri.util.junit.rules.*;
+import jmri.util.swing.JemmyUtil;
 import org.junit.*;
-import org.junit.rules.*;
-import org.netbeans.jemmy.EventTool;
-import org.netbeans.jemmy.QueueTool;
+import org.junit.Test;
+import org.junit.rules.Timeout;
+import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.JMenuOperator;
 
 /**
@@ -74,13 +74,13 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
 
-        //delete this file so we won't get the "<xxx> exists... do you want to replace?" dialog
+        //delete this file so we won't get the "<xxx> exists... do you want to replace?" dialog.
         new File("temp/Layout Editor Test Layout.xml").delete();
 
         // test the file -> delete panel menu item
-        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread misc1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("StorePanelTitle"),
-                Bundle.getMessage("ButtonSave"));  // NOI18N
+                Bundle.getMessage("ButtonCancel"));  // NOI18N
         jmo.pushMenu(Bundle.getMessage("MenuFile") + "/"
                 + Bundle.getMessage("MenuItemStore"), "/");
         JUnitUtil.waitFor(() -> {
@@ -100,7 +100,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuFile"));
 
         // test the file -> delete panel menu item
-        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        Thread misc1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("DeleteVerifyTitle"),
                 Bundle.getMessage("ButtonYesDelete"));  // NOI18N
         jmo.pushMenu(Bundle.getMessage("MenuFile") + "/"
