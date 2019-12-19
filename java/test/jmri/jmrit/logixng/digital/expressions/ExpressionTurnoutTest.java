@@ -319,6 +319,14 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testRegisterListeners() {
+        // Test registerListeners() when the ExpressionTurnout has no turnout
+        conditionalNG.setEnabled(false);
+        expressionTurnout.setTurnout((Turnout)null);
+        conditionalNG.setEnabled(true);
+    }
+    
+    @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);

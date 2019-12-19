@@ -341,6 +341,14 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testRegisterListeners() {
+        // Test registerListeners() when the ExpressionScript has no script
+        conditionalNG.setEnabled(false);
+        expressionScript.setScript(null);
+        conditionalNG.setEnabled(true);
+    }
+    
+    @Test
     public void testVetoableChange() throws PropertyVetoException {
         // This test calls expressionScript.evaluate() to see if the script still has
         // the light registered. Once the light is deleted, expressionScript.evaluate()

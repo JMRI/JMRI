@@ -327,6 +327,14 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testRegisterListeners() {
+        // Test registerListeners() when the ExpressionSensor has no sensor
+        conditionalNG.setEnabled(false);
+        expressionSensor.setSensor((Sensor)null);
+        conditionalNG.setEnabled(true);
+    }
+    
+    @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);

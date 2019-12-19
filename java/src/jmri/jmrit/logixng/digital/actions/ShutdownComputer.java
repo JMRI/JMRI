@@ -49,6 +49,7 @@ public class ShutdownComputer extends AbstractDigitalAction {
     /** {@inheritDoc} */
     @Override
     public void execute() {
+        if (1==1) throw new RuntimeException("Hej");
         try {
             String shutdownCommand;
             if (SystemType.isLinux() || SystemType.isUnix() || SystemType.isMacOSX()) {

@@ -174,8 +174,7 @@ public class ExpressionLight extends AbstractDigitalExpression
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-        if (!_listenersAreRegistered
-                && (_lightHandle != null)) {
+        if (!_listenersAreRegistered && (_lightHandle != null)) {
             _lightHandle.getBean().addPropertyChangeListener("KnownState", this);
             _listenersAreRegistered = true;
         }

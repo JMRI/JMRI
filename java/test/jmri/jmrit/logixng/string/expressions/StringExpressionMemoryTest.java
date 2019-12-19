@@ -183,39 +183,39 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
-        StringExpressionMemory expression = (StringExpressionMemory)_base;
-        expression.setMemory((Memory)null);
-        Assert.assertNull("Memory is null", expression.getMemory());
-        expression.setMemory(_memory);
-        Assert.assertTrue("Memory matches", _memory == expression.getMemory().getBean());
+        StringExpressionMemory expressionString = (StringExpressionMemory)_base;
+        expressionString.setMemory((Memory)null);
+        Assert.assertNull("Memory is null", expressionString.getMemory());
+        expressionString.setMemory(_memory);
+        Assert.assertTrue("Memory matches", _memory == expressionString.getMemory().getBean());
         
-        expression.setMemory((NamedBeanHandle<Memory>)null);
-        Assert.assertNull("Memory is null", expression.getMemory());
+        expressionString.setMemory((NamedBeanHandle<Memory>)null);
+        Assert.assertNull("Memory is null", expressionString.getMemory());
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
         Assert.assertNotNull("memory is not null", otherMemory);
         NamedBeanHandle<Memory> memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-        expression.setMemory(memoryHandle);
-        Assert.assertTrue("Memory matches", memoryHandle == expression.getMemory());
-        Assert.assertTrue("Memory matches", otherMemory == expression.getMemory().getBean());
+        expressionString.setMemory(memoryHandle);
+        Assert.assertTrue("Memory matches", memoryHandle == expressionString.getMemory());
+        Assert.assertTrue("Memory matches", otherMemory == expressionString.getMemory().getBean());
         
-        expression.setMemory((String)null);
-        Assert.assertNull("Memory is null", expression.getMemory());
-        expression.setMemory(memoryHandle.getName());
-        Assert.assertTrue("Memory matches", memoryHandle == expression.getMemory());
+        expressionString.setMemory((String)null);
+        Assert.assertNull("Memory is null", expressionString.getMemory());
+        expressionString.setMemory(memoryHandle.getName());
+        Assert.assertTrue("Memory matches", memoryHandle == expressionString.getMemory());
         
         // Test setMemory with a memory name that doesn't exists
-        expression.setMemory("Non existent memory");
-        Assert.assertTrue("Memory matches", memoryHandle == expression.getMemory());
+        expressionString.setMemory("Non existent memory");
+        Assert.assertTrue("Memory matches", memoryHandle == expressionString.getMemory());
         JUnitAppender.assertWarnMessage("memory 'Non existent memory' does not exists");
         
         // Test setMemory() when listeners are registered
-        Assert.assertNotNull("Memory is not null", expression.getMemory());
+        Assert.assertNotNull("Memory is not null", expressionString.getMemory());
         // Enable the conditionalNG. This will register the listeners
         conditionalNG.setEnabled(true);
         boolean thrown = false;
         try {
-            expression.setMemory((String)null);
+            expressionString.setMemory((String)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -224,7 +224,7 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         
         thrown = false;
         try {
-            expression.setMemory((NamedBeanHandle<Memory>)null);
+            expressionString.setMemory((NamedBeanHandle<Memory>)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -233,12 +233,21 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
         
         thrown = false;
         try {
-            expression.setMemory((Memory)null);
+            expressionString.setMemory((Memory)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
+    }
+    
+    @Test
+    public void testRegisterListeners() {
+        StringExpressionMemory expressionString = (StringExpressionMemory)_base;
+        // Test registerListeners() when the ExpressionLight has no light
+        conditionalNG.setEnabled(false);
+        expressionString.setMemory((Memory)null);
+        conditionalNG.setEnabled(true);
     }
     
     @Test

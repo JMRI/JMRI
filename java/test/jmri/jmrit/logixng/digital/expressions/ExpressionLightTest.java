@@ -316,6 +316,14 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testRegisterListeners() {
+        // Test registerListeners() when the ExpressionLight has no light
+        conditionalNG.setEnabled(false);
+        expressionLight.setLight((Light)null);
+        conditionalNG.setEnabled(true);
+    }
+    
+    @Test
     public void testVetoableChange() throws PropertyVetoException {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);

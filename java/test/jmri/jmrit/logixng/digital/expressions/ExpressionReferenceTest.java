@@ -281,7 +281,7 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testSetScriptException() {
+    public void testSetReferenceException() {
         String reference = "{IM1}";
         // Test setScript() when listeners are registered
         Assert.assertNotNull("Reference is not null", reference);
@@ -296,6 +296,14 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
         }
         Assert.assertTrue("Expected exception thrown", thrown);
         JUnitAppender.assertErrorMessage("setReference must not be called when listeners are registered");
+    }
+    
+    @Test
+    public void testRegisterListeners() {
+        // Test registerListeners() when the ExpressionReference has no reference
+        conditionalNG.setEnabled(false);
+        expressionReference.setReference(null);
+        conditionalNG.setEnabled(true);
     }
     
     // The minimal setup for log4J
