@@ -110,20 +110,19 @@ public class Timer extends AbstractDigitalExpression {
                 break;
                 
             case REPEAT_SINGLE_DELAY:
-                if (_timerStatusRef.get() == TimerStatus.NOT_STARTED
-                        || _timerStatusRef.get() == TimerStatus.FINISHED) {
-                    _timerStatusRef.set(TimerStatus.STARTED);
+                if (_timerStatusRef.get() == TimerStatus.NOT_STARTED) {
                     startTimer();
-                } else {
+                } else if (_timerStatusRef.get() == TimerStatus.FINISHED) {
+//                    _timerStatusRef.set(TimerStatus.STARTED);
+                    startTimer();
                     result = true;
                 }
                 break;
                 
             case REPEAT_DOUBLE_DELAY:
-//                _hasTimePassed = false;
                 _onOrOff = ! _onOrOff;
                 startTimer();
-//                return true;
+                result = _onOrOff;
                 break;
                 
             default:
@@ -251,20 +250,26 @@ public class Timer extends AbstractDigitalExpression {
     
     
     public enum TimerType {
-        WAIT_ONCE_TRIG_ONCE(Bundle.getMessage("TimerType_WaitOnceTrigOnce")),
-        WAIT_ONCE_TRIG_UNTIL_RESET(Bundle.getMessage("TimerType_WaitOnceTrigUntilReset")),
-        REPEAT_SINGLE_DELAY(Bundle.getMessage("TimerType_RepeatSingleDelay")),
-        REPEAT_DOUBLE_DELAY(Bundle.getMessage("TimerType_RepeatDoubleDelay"));
+        WAIT_ONCE_TRIG_ONCE(Bundle.getMessage("TimerType_WaitOnceTrigOnce"), Bundle.getMessage("TimerType_Explanation_WaitOnceTrigOnce")),
+        WAIT_ONCE_TRIG_UNTIL_RESET(Bundle.getMessage("TimerType_WaitOnceTrigUntilReset"), Bundle.getMessage("TimerType_Explanation_WaitOnceTrigUntilReset")),
+        REPEAT_SINGLE_DELAY(Bundle.getMessage("TimerType_RepeatSingleDelay"), Bundle.getMessage("TimerType_Explanation_RepeatSingleDelay")),
+        REPEAT_DOUBLE_DELAY(Bundle.getMessage("TimerType_RepeatDoubleDelay"), Bundle.getMessage("TimerType_Explanation_RepeatDoubleDelay"));
         
         private final String _text;
+        private final String _explanation;
         
-        private TimerType(String text) {
+        private TimerType(String text, String explanation) {
             this._text = text;
+            this._explanation = explanation;
         }
         
         @Override
         public String toString() {
             return _text;
+        }
+        
+        public String getExplanation() {
+            return _explanation;
         }
         
     }

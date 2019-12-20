@@ -202,7 +202,6 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExecuteWaitOnceTrigOnce() {
-        System.out.format("testExecuteWaitOnceTrigOnce() start%n");
         // Disable the _conditionalNG. This will unregister the listeners
         _conditionalNG.setEnabled(false);
         _atomicBoolean.set(false);
@@ -231,7 +230,6 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         _conditionalNG.execute();
         // Check that the timer is not running
         JUnitUtil.waitForNotHappening(()->{return _atomicBoolean.get();}, "timer has triggered", 2000);
-        System.out.format("testExecuteWaitOnceTrigOnce() end ------------------------------%n");
     }
     
     @Test
@@ -270,10 +268,8 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         // The flag should now be true since the timer will return 'true' until
         // the timer is reset.
         Assert.assertTrue("atomicBoolean is set", _atomicBoolean.get());
-        System.out.format("testExecuteWaitOnceTrigUntilReset() end ------------------------------%n");
     }
     
-    @Ignore
     @Test
     public void testExecuteSingleDelay() {
         System.out.format("testExecuteSingleDelay() start%n");
@@ -281,28 +277,77 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         _conditionalNG.setEnabled(false);
         _atomicBoolean.set(false);
         _expressionTimer.setTimerType(TimerType.REPEAT_SINGLE_DELAY);
-        _expressionTimer.setTimerDelay(2, 0);
+        _expressionTimer.setTimerDelay(1, 0);
         Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
-        // Enable the _conditionalNG. This will register the listeners
+        // Enable the _conditionalNG. This will register the listeners, reset
+        // the timer and execute the conditionalNG.
         _conditionalNG.setEnabled(true);
+        // The timer should now trig after 1 second
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // The timer should now trig after 1 second
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // The timer should now trig after 1 second
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
         System.out.format("testExecuteSingleDelay() end ------------------------------%n");
     }
     
-    @Ignore
     @Test
     public void testExecuteDoubleDelay() {
         System.out.format("testExecuteDoubleDelay() start%n");
         // Disable the _conditionalNG. This will unregister the listeners
         _conditionalNG.setEnabled(false);
         _atomicBoolean.set(false);
-        _expressionTimer.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
-        _expressionTimer.setTimerDelay(1, 3);
+        _expressionTimer.setTimerType(TimerType.REPEAT_SINGLE_DELAY);
+        _expressionTimer.setTimerDelay(1, 0);
         Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
-        // Enable the _conditionalNG. This will register the listeners
+        // Enable the _conditionalNG. This will register the listeners, reset
+        // the timer and execute the conditionalNG.
         _conditionalNG.setEnabled(true);
-        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        
+        // Check that the timer gets true after 1 second
+        // Check that the timer is false
+        Assert.assertFalse("timer is false", _expressionTimer.evaluate());
+        // The timer should now trig after 1 second
+        JUnitUtil.waitFor(()->{return _expressionTimer.evaluate();}, "timer is still not true");
+        
+        // Check that the timer gets false after 1 second
+        // Check that the timer is still true
+        Assert.assertFalse("timer is true", _expressionTimer.evaluate());
+        // The timer should now trig after 1 second
+        JUnitUtil.waitFor(()->{return !_expressionTimer.evaluate();}, "timer is still true");
+        
+        // Check that the timer gets true after 1 second
+        // Check that the timer is false
+        Assert.assertFalse("timer is false", _expressionTimer.evaluate());
+        // The timer should now trig after 1 second
+        JUnitUtil.waitFor(()->{return _expressionTimer.evaluate();}, "timer is still not true");
+        
+        // Check that the timer gets false after 1 second
+        // Check that the timer is still true
+        Assert.assertFalse("timer is true", _expressionTimer.evaluate());
+        // The timer should now trig after 1 second
+        JUnitUtil.waitFor(()->{return !_expressionTimer.evaluate();}, "timer is still true");
         System.out.format("testExecuteDoubleDelay() end ------------------------------%n");
+    }
+    
+    @Test
+    public void testTimerType() {
+        // The purpose of this test is mostly to get coverage of the methods
+        // in the TimerType enum.
+        
+        Assert.assertEquals("One shot timer: Wait some time and trigger once", TimerType.WAIT_ONCE_TRIG_ONCE.toString());
+        Assert.assertEquals("One shot timer: Wait some time and trigger until reset. Restart timer when reset", TimerType.WAIT_ONCE_TRIG_UNTIL_RESET.toString());
+        Assert.assertEquals("Continuous timer: Wait some time and trigger once", TimerType.REPEAT_SINGLE_DELAY.toString());
+        Assert.assertEquals("Continuous timer: Wait some time and then trigger. Stay on for some time", TimerType.REPEAT_DOUBLE_DELAY.toString());
+        
+        Assert.assertEquals("Can be used to throw a turnout after some time", TimerType.WAIT_ONCE_TRIG_ONCE.getExplanation());
+        Assert.assertEquals("Useful for holding a light lit after some time, until reset", TimerType.WAIT_ONCE_TRIG_UNTIL_RESET.getExplanation());
+        Assert.assertEquals("Useful for logging a message repeatedly at some interval", TimerType.REPEAT_SINGLE_DELAY.getExplanation());
+        Assert.assertEquals("Useful for turning a light on and off repeatedly at some interval", TimerType.REPEAT_DOUBLE_DELAY.getExplanation());
     }
     
     // The minimal setup for log4J
