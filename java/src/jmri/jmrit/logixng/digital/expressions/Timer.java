@@ -173,8 +173,6 @@ public class Timer extends AbstractDigitalExpression {
         System.out.println("timer.startTimer()");
         final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
         
-        if (getConditionalNG() == null) throw new NullPointerException("getConditionalNG() returns null");
-        
         // Ensure timer is not running
         if (_timerTask != null) _timerTask.cancel();
         

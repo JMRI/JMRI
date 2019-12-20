@@ -71,7 +71,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     public NamedBean createNewBean(String systemName) {
         return new Timer(systemName, null);
     }
-/*    
+    
     @Test
     public void testCtor() {
         Timer expression2;
@@ -199,7 +199,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Exception is thrown", hasThrown);
         JUnitAppender.assertErrorMessage("setTimerDelay must not be called when listeners are registered");
     }
-*/    
+    
     @Test
     public void testExecute() {
         System.out.format("testExecute() start%n");
