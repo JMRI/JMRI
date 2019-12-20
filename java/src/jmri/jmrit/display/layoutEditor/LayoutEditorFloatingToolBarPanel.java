@@ -5,7 +5,6 @@ import java.awt.FlowLayout;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.*;
-import org.slf4j.*;
 
 /**
  * This is the base class for the horizontal, vertical and floating toolbar
@@ -29,6 +28,10 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         super(layoutEditor);
     }   //constructor
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
     protected void setupComponents() {
         super.setupComponents();
 
@@ -39,6 +42,7 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected void layoutComponents() {
         /*
          *  JPanel - floatEditTabsPanel
@@ -213,5 +217,5 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
     }
 
     //initialize logging
-    private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorFloatingToolBarPanel.class);
+    //private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorFloatingToolBarPanel.class);
 }

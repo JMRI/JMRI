@@ -8,7 +8,6 @@ import java.awt.FlowLayout;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.*;
-import org.slf4j.*;
 
 /**
  * This is the vertical toolbar panel
@@ -30,6 +29,7 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
     /**
      * {@inheritDoc}
      */
+    @Override
     protected void layoutComponents() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
@@ -461,5 +461,5 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
     }   //layoutComponents
 
     //initialize logging
-    private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorVerticalToolBarPanel.class);
+    //private transient final static Logger log = LoggerFactory.getLogger(LayoutEditorVerticalToolBarPanel.class);
 }
