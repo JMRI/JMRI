@@ -3,19 +3,12 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
+import java.awt.geom.*;
+import java.util.*;
+import javax.annotation.*;
 import javax.swing.JPopupMenu;
-import jmri.JmriException;
-import jmri.Turnout;
-import jmri.util.ColorUtil;
-import jmri.util.MathUtil;
+import jmri.*;
+import jmri.util.*;
 
 /**
  * Abstract base class for all layout track objects (PositionablePoint,
@@ -133,6 +126,15 @@ public abstract class LayoutTrack {
         this.decorations = decorations;
     }
     protected Map<String, String> decorations = null;
+
+    /**
+     * convenience method for accessing...
+     * @return the layout editor's toolbar panel
+     */
+    @Nonnull
+    public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
+        return layoutEditor.getLayoutEditorToolBarPanel();
+    }
 
     protected Color getColorForTrackBlock(
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {

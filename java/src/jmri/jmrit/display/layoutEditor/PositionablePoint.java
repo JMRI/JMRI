@@ -1382,8 +1382,8 @@ public class PositionablePoint extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at edge connector tool dialog
                         layoutEditor.getLETools().setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                                layoutEditor.getLayoutEditorToolBarPanel().signalIconEditor,
-                                layoutEditor.getLayoutEditorToolBarPanel().signalFrame);
+                                getLayoutEditorToolBarPanel().signalIconEditor,
+                                getLayoutEditorToolBarPanel().signalFrame);
                     }
                 });
             } else {
@@ -1392,8 +1392,8 @@ public class PositionablePoint extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at level crossing tool dialog
                         layoutEditor.getLETools().setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                                layoutEditor.getLayoutEditorToolBarPanel().signalIconEditor,
-                                layoutEditor.getLayoutEditorToolBarPanel().signalFrame);
+                                getLayoutEditorToolBarPanel().signalIconEditor,
+                                getLayoutEditorToolBarPanel().signalFrame);
                     }
                 };
 
@@ -1420,8 +1420,8 @@ public class PositionablePoint extends LayoutTrack {
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
                     layoutEditor.getLETools().setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                            layoutEditor.getLayoutEditorToolBarPanel().sensorIconEditor, 
-                            layoutEditor.getLayoutEditorToolBarPanel().sensorFrame);
+                            getLayoutEditorToolBarPanel().sensorIconEditor,
+                            getLayoutEditorToolBarPanel().sensorFrame);
                 }
             });
         }

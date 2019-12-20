@@ -549,24 +549,20 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             return;
         }
 
+        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
         boolean toolBarIsVertical = (toolBarSide.equals(ToolBarSide.eRIGHT) || toolBarSide.equals(ToolBarSide.eLEFT));
-
         if (toolBarIsVertical) {
             leToolBarPanel = new LayoutEditorVerticalToolBarPanel(this);
-        } else {
-            leToolBarPanel = new LayoutEditorHorizontalToolBarPanel(this);
-        }
-
-        editToolBarScrollPane = new JScrollPane(leToolBarPanel);
-
-        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
-        if (toolBarIsVertical) {
+            editToolBarScrollPane = new JScrollPane(leToolBarPanel);
             toolbarWidth = editToolBarScrollPane.getPreferredSize().width;
             toolbarHeight = screenDim.height;
         } else {
+            leToolBarPanel = new LayoutEditorHorizontalToolBarPanel(this);
+            editToolBarScrollPane = new JScrollPane(leToolBarPanel);
             toolbarWidth = screenDim.width;
             toolbarHeight = editToolBarScrollPane.getPreferredSize().height;
         }
+
         editToolBarContainerPanel = new JPanel();
         editToolBarContainerPanel.setLayout(new BoxLayout(editToolBarContainerPanel, BoxLayout.PAGE_AXIS));
         editToolBarContainerPanel.add(editToolBarScrollPane);
@@ -875,10 +871,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //
         toolBarMenu.add(wideToolBarCheckBoxMenuItem);
         wideToolBarCheckBoxMenuItem.addActionListener((ActionEvent event) -> {
-            boolean newToolBarIsWide = wideToolBarCheckBoxMenuItem.isSelected();
-            setToolBarWide(newToolBarIsWide);
+            setToolBarWide(wideToolBarCheckBoxMenuItem.isSelected());
         });
         wideToolBarCheckBoxMenuItem.setSelected(leToolBarPanel.toolBarIsWide);
+        wideToolBarCheckBoxMenuItem.setEnabled(toolBarSide.equals(ToolBarSide.eTOP) || toolBarSide.equals(ToolBarSide.eBOTTOM));
 
         //
         // Scroll Bars
@@ -1610,7 +1606,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      */
     public void setToolBarSide(ToolBarSide newToolBarSide) {
         // null if edit toolbar is not setup yet...
-        if ((editModeCheckBoxMenuItem != null) && !newToolBarSide.equals(toolBarSide)) {
+        if (!newToolBarSide.equals(toolBarSide)) {
             toolBarSide = newToolBarSide;
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
                 prefsMgr.setProperty(getWindowFrameRef(), "toolBarSide", toolBarSide.getName());
@@ -1643,6 +1639,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     setAllEditable(editMode);
                 }
             }
+            wideToolBarCheckBoxMenuItem.setEnabled(
+                    toolBarSide.equals(ToolBarSide.eTOP)
+                    || toolBarSide.equals(ToolBarSide.eBOTTOM));
         }
     }   // setToolBarSide
 
@@ -1651,7 +1650,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     private void setToolBarWide(boolean newToolBarIsWide) {
         //null if edit toolbar not setup yet...
-        if ((editModeCheckBoxMenuItem != null) && (leToolBarPanel.toolBarIsWide != newToolBarIsWide)) {
+        if (leToolBarPanel.toolBarIsWide != newToolBarIsWide) {
             leToolBarPanel.toolBarIsWide = newToolBarIsWide;
 
             wideToolBarCheckBoxMenuItem.setSelected(leToolBarPanel.toolBarIsWide);
@@ -5133,8 +5132,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //check if anything entered
         if (!sensorName.isEmpty()) {
             //get a validated sensor corresponding to this name and assigned to block
-            Sensor s = blk.validateSensor(sensorName, openFrame);
-            result = (s != null); //if sensor returned result is true.
+            if (blk.getOccupancySensorName().equals(sensorName)) {
+                result = true;
+            } else {
+                Sensor s = blk.validateSensor(sensorName, openFrame);
+                result = (s != null); //if sensor returned result is true.
+            }
         }
         return result;
     }

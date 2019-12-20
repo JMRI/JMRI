@@ -908,8 +908,8 @@ public class LayoutSlip extends LayoutTurnout {
                         public void actionPerformed(ActionEvent e) {
                             layoutEditor.getLETools().setSignalsAtSlipFromMenu(
                                     LayoutSlip.this,
-                                    layoutEditor.getLayoutEditorToolBarPanel().signalIconEditor,
-                                    layoutEditor.getLayoutEditorToolBarPanel().signalFrame);
+                                    getLayoutEditorToolBarPanel().signalIconEditor,
+                                    getLayoutEditorToolBarPanel().signalFrame);
                         }
                     };
                     JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
@@ -938,7 +938,7 @@ public class LayoutSlip extends LayoutTurnout {
                             layoutEditor.getLETools().setSignalMastsAtSlipFromMenu(
                                     LayoutSlip.this,
                                     boundaryBetween,
-                                    layoutEditor.getLayoutEditorToolBarPanel().signalFrame);
+                                    getLayoutEditorToolBarPanel().signalFrame);
                         }
                     });
                     popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
@@ -946,8 +946,8 @@ public class LayoutSlip extends LayoutTurnout {
                         public void actionPerformed(ActionEvent e) {
                             layoutEditor.getLETools().setSensorsAtSlipFromMenu(
                                     LayoutSlip.this, boundaryBetween,
-                                    layoutEditor.getLayoutEditorToolBarPanel().sensorIconEditor,
-                                    layoutEditor.getLayoutEditorToolBarPanel().sensorFrame);
+                                    getLayoutEditorToolBarPanel().sensorIconEditor,
+                                    getLayoutEditorToolBarPanel().sensorFrame);
                         }
                     });
                 }
@@ -1677,7 +1677,7 @@ public class LayoutSlip extends LayoutTurnout {
 
         return result;
     }
-        
+
     }   // class TurnoutState
 
     /*

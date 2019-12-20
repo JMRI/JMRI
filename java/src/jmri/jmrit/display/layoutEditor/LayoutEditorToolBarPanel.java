@@ -49,6 +49,7 @@ public class LayoutEditorToolBarPanel extends JPanel {
     protected transient NamedBeanComboBox<Turnout> turnoutNameComboBox = new NamedBeanComboBox<>(
             InstanceManager.turnoutManagerInstance(), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
+    protected transient JLabel turnoutNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("Name")));
     protected transient JPanel turnoutNamePanel = new JPanel(leftRowLayout);
     protected transient JPanel extraTurnoutPanel = new JPanel(leftRowLayout);
     protected transient NamedBeanComboBox<Turnout> extraTurnoutNameComboBox = new NamedBeanComboBox<>(
@@ -66,18 +67,16 @@ public class LayoutEditorToolBarPanel extends JPanel {
     protected transient JCheckBox mainlineTrack = new JCheckBox(Bundle.getMessage("MainlineBox"));
     protected transient JCheckBox dashedLine = new JCheckBox(Bundle.getMessage("Dashed"));
 
-    protected transient JLabel blockNameLabel = new JLabel(Bundle.getMessage("BlockID"));
+    protected transient JLabel blockLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockID")));
     protected transient NamedBeanComboBox<Block> blockIDComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(BlockManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
     protected transient JCheckBox highlightBlockCheckBox = new JCheckBox(Bundle.getMessage("HighlightSelectedBlockTitle"));
 
-    protected transient JLabel blockSensorNameLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
-    protected transient JLabel blockSensorLabel = new JLabel(Bundle.getMessage("BeanNameSensor"));
+    protected transient JLabel blockSensorLabel = new JLabel(Bundle.getMessage("MakeLabel", Bundle.getMessage("BlockSensorName")));
     protected transient NamedBeanComboBox<Sensor> blockSensorComboBox = new NamedBeanComboBox<>(
             InstanceManager.getDefault(SensorManager.class), null, NamedBean.DisplayOptions.DISPLAYNAME);
 
     //3rd row of radio buttons (and any associated text fields)
-    protected transient JLabel nodesLabel = new JLabel();
     protected transient JRadioButton endBumperButton = new JRadioButton(Bundle.getMessage("EndBumper"));
     protected transient JRadioButton anchorButton = new JRadioButton(Bundle.getMessage("Anchor"));
     protected transient JRadioButton edgeButton = new JRadioButton(Bundle.getMessage("EdgeConnector"));
@@ -241,9 +240,9 @@ public class LayoutEditorToolBarPanel extends JPanel {
                     blockPropertiesPanel.setBackground(new Color(238, 238, 238));
                 }
             } else {
-                blockNameLabel.setEnabled(e);
+                blockLabel.setEnabled(e);
                 blockIDComboBox.setEnabled(e);
-                blockSensorNameLabel.setEnabled(e);
+                blockSensorLabel.setEnabled(e);
                 blockSensorLabel.setEnabled(e);
                 blockSensorComboBox.setEnabled(e);
             }
@@ -301,8 +300,6 @@ public class LayoutEditorToolBarPanel extends JPanel {
         layoutSingleSlipButton.setToolTipText(Bundle.getMessage("SingleSlipToolTip"));
         layoutDoubleSlipButton.setToolTipText(Bundle.getMessage("DoubleSlipToolTip"));
 
-        String turnoutNameString = Bundle.getMessage("Name");
-        JLabel turnoutNameLabel = new JLabel(turnoutNameString);
         turnoutNamePanel.add(turnoutNameLabel);
 
         setupComboBox(turnoutNameComboBox, false, true, false);

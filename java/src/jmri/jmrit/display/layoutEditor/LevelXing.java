@@ -1234,7 +1234,7 @@ public class LevelXing extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at level crossing tool dialog
-                        LayoutEditorToolBarPanel letbp = layoutEditor.getLayoutEditorToolBarPanel();
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                         layoutEditor.getLETools().
                                 setSignalsAtLevelXingFromMenu(LevelXing.this,
                                         letbp.signalIconEditor,
@@ -1301,7 +1301,7 @@ public class LevelXing extends LayoutTrack {
                 popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        LayoutEditorToolBarPanel letbp = layoutEditor.getLayoutEditorToolBarPanel();
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                         layoutEditor.getLETools().
                                 setSignalMastsAtLevelXingFromMenu(
                                         LevelXing.this, boundaryBetween,
@@ -1311,7 +1311,7 @@ public class LevelXing extends LayoutTrack {
                 popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        LayoutEditorToolBarPanel letbp = layoutEditor.getLayoutEditorToolBarPanel();
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                         layoutEditor.getLETools().setSensorsAtLevelXingFromMenu(
                                 LevelXing.this, boundaryBetween,
                                 letbp.sensorIconEditor,

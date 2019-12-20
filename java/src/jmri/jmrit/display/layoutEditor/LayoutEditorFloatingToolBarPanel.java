@@ -7,8 +7,7 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 /**
- * This is the base class for the horizontal, vertical and floating toolbar
- * panels
+ * This is the floating toolbar panel
  *
  * @author George Warner Copyright: (c) 2017-2019
  */
@@ -65,7 +64,7 @@ public class LayoutEditorFloatingToolBarPanel extends LayoutEditorToolBarPanel {
         blockPropertiesPanel.setLayout(new BoxLayout(blockPropertiesPanel, BoxLayout.Y_AXIS));
 
         JPanel blockPanel = new JPanel(floatContentLayout);
-        blockPanel.add(blockNameLabel);
+        blockPanel.add(blockLabel);
         blockPanel.add(blockIDComboBox);
         blockPanel.add(highlightBlockCheckBox);
         blockPropertiesPanel.add(blockPanel);

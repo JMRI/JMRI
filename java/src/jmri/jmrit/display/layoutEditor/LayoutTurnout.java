@@ -2852,7 +2852,7 @@ public class LayoutTurnout extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorTools tools = layoutEditor.getLETools();
-                        LayoutEditorToolBarPanel letbp = layoutEditor.getLayoutEditorToolBarPanel();
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                         if (isTurnoutTypeXover()) {
                             tools.setSignalsAtXoverTurnoutFromMenu(LayoutTurnout.this,
                                     letbp.signalIconEditor, letbp.signalFrame);
@@ -2902,7 +2902,7 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                        LayoutEditorToolBarPanel letbp = layoutEditor.getLayoutEditorToolBarPanel();
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                             layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
                                     LayoutTurnout.this,
                                     boundaryBetween,
