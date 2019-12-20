@@ -15,7 +15,11 @@ import org.slf4j.LoggerFactory;
  * * Wait some time and then return 'true' until reset.
  * * Wait some time and then return 'true' once. Once evaluate() is called, the timer is reset and starts again.
  * * Wait some time and then return 'true'. Wait some time and then return 'false'. Once evaluate() is called, the timer is reset and starts again.
- * 
+ * <P>
+ * The timer is reset when listerners are registered, which will happen when
+ * setEnabled(true) is called on the LogixNG, the ConditionalNG or any male
+ * socket, if this timer is enabled and all its parents are enabled and if the
+ * LogixNG is activated.
  * @author Daniel Bergqvist Copyright 2018
  */
 public class Timer extends AbstractDigitalExpression {
@@ -114,59 +118,28 @@ public class Timer extends AbstractDigitalExpression {
                     result = true;
                 }
                 break;
-/*                
+                
             case REPEAT_DOUBLE_DELAY:
-                _hasTimePassed = false;
+//                _hasTimePassed = false;
                 _onOrOff = ! _onOrOff;
                 startTimer();
 //                return true;
                 break;
-*/                
+                
             default:
                 throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
         }
         
         System.out.format("Timer.evaluate(): result: %b%n", result);
         return result;
-        
-/*        
-        if (_hasTimePassed) {
-            switch (_timerType) {
-                case WAIT_ONCE_TRIG_ONCE:
-                    _hasTimePassed = false;
-                    return true;
-                    
-                case WAIT_ONCE_TRIG_UNTIL_RESET:
-                    // Don't clear _hasTimePassed since we want to keep
-                    // returning true until reset()
-                    return true;
-                    
-                case REPEAT_SINGLE_DELAY:
-                    _hasTimePassed = false;
-                    startTimer();
-                    return true;
-                    
-                case REPEAT_DOUBLE_DELAY:
-                    _hasTimePassed = false;
-                    _onOrOff = ! _onOrOff;
-                    startTimer();
-                    return true;
-                    
-                default:
-                    throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
-            }
-        }
-        
-        return false;
-*/        
     }
 
     /** {@inheritDoc} */
     @Override
     public void reset() {
         stopTimer();
-        _timerStatusRef.set(TimerStatus.STARTED);
-        startTimer();
+        _timerStatusRef.set(TimerStatus.NOT_STARTED);
+        getConditionalNG().execute();
     }
     
     private void startTimer() {
@@ -205,46 +178,9 @@ public class Timer extends AbstractDigitalExpression {
                 throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
         }
     }
-/*    
-    private void startTimer() {
-        final Timer t = this;
-        
-        // Ensure timer is not running
-        if (_timerTask != null) _timerTask.cancel();
-//        _timer.cancel();
-        
-        // Clear flag
-        _hasTimePassed = false;
-        
-        _timerTask = new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("timer: Timer has trigged. Run ConditionalNG.execute()");
-                t.getConditionalNG().execute();
-            }
-        };
-        
-        switch (_timerType) {
-            case WAIT_ONCE_TRIG_ONCE:
-                // fall through
-            case WAIT_ONCE_TRIG_UNTIL_RESET:
-                // fall through
-            case REPEAT_SINGLE_DELAY:
-                _timer.schedule(_timerTask, _delayOff);
-                break;
-                
-            case REPEAT_DOUBLE_DELAY:
-                _timer.schedule(_timerTask, _onOrOff ? _delayOn : _delayOff);
-                break;
-                
-            default:
-                throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
-        }
-    }
-*/    
+    
     private void stopTimer() {
         if (_timerTask != null) _timerTask.cancel();
-//        _timer.cancel();
     }
     
     @Override
@@ -292,19 +228,10 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
-//        if (getConditionalNG() == null) throw new NullPointerException("getConditionalNG() returns null");
         if (!_listenersAreRegistered) {
             _listenersAreRegistered = true;
-            
             // We need to reset the timer
             reset();
-            
-            // Trigger execution of the ConditionalNG
-//            getConditionalNG().execute();
-            
-//            if (_timerType == TimerType.REPEAT_SINGLE_DELAY || _timerType == TimerType.REPEAT_DOUBLE_DELAY) {
-//                startTimer();
-//            }
         }
     }
     
@@ -319,17 +246,11 @@ public class Timer extends AbstractDigitalExpression {
     @Override
     public void disposeMe() {
         if (_timerTask != null) _timerTask.cancel();
-//        _timer.cancel();
     }
     
     
     
     public enum TimerType {
-        WAIT_ONCE_TRIG_ONCE,
-        WAIT_ONCE_TRIG_UNTIL_RESET,
-        REPEAT_SINGLE_DELAY,
-        REPEAT_DOUBLE_DELAY;
-/*        
         WAIT_ONCE_TRIG_ONCE(Bundle.getMessage("TimerType_WaitOnceTrigOnce")),
         WAIT_ONCE_TRIG_UNTIL_RESET(Bundle.getMessage("TimerType_WaitOnceTrigUntilReset")),
         REPEAT_SINGLE_DELAY(Bundle.getMessage("TimerType_RepeatSingleDelay")),
@@ -345,7 +266,7 @@ public class Timer extends AbstractDigitalExpression {
         public String toString() {
             return _text;
         }
-*/        
+        
     }
     
     

@@ -136,9 +136,9 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         e1.setTimerDelay(30, 0);
         Assert.assertEquals("Continuous timer: Wait 30 seconds and trigger once.", e1.getLongDescription());
         
-//        e1.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
-//        e1.setTimerDelay(40, 50);
-//        Assert.assertEquals("Continuous timer: Wait 40 seconds and then trigger. Stay on for 50 seconds.", e1.getLongDescription());
+        e1.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
+        e1.setTimerDelay(40, 50);
+        Assert.assertEquals("Continuous timer: Wait 40 seconds and then trigger. Stay on for 50 seconds.", e1.getLongDescription());
     }
     
     @Test
@@ -201,19 +201,108 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testExecute() {
-        System.out.format("testExecute() start%n");
+    public void testExecuteWaitOnceTrigOnce() {
+        System.out.format("testExecuteWaitOnceTrigOnce() start%n");
         // Disable the _conditionalNG. This will unregister the listeners
         _conditionalNG.setEnabled(false);
         _atomicBoolean.set(false);
         _expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
+        _expressionTimer.setTimerDelay(1, 0);
+        Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
+        // Enable the _conditionalNG. This will register the listeners, reset
+        // the timer and execute the conditionalNG.
+        _conditionalNG.setEnabled(true);
+        // The timer should now trig after 1 second
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // Execute the conditionalNG to evaluate the timer
+        _conditionalNG.execute();
+        // Check that the timer is not running
+        JUnitUtil.waitForNotHappening(()->{return _atomicBoolean.get();}, "timer has triggered", 2000);
+        // Reset the timer. This will also execute the conditionalNG which in
+        // turn will restart the timer again.
+        _expressionTimer.reset();
+        // The timer should now trig after 1 second
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // Execute the conditionalNG to evaluate the timer
+        _conditionalNG.execute();
+        // Check that the timer is not running
+        JUnitUtil.waitForNotHappening(()->{return _atomicBoolean.get();}, "timer has triggered", 2000);
+        System.out.format("testExecuteWaitOnceTrigOnce() end ------------------------------%n");
+    }
+    
+    @Test
+    public void testExecuteWaitOnceTrigUntilReset() {
+        // Disable the _conditionalNG. This will unregister the listeners
+        _conditionalNG.setEnabled(false);
+        _atomicBoolean.set(false);
+        _expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_UNTIL_RESET);
+        _expressionTimer.setTimerDelay(1, 0);
+        Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
+        // Enable the _conditionalNG. This will register the listeners, reset
+        // the timer and execute the conditionalNG.
+        _conditionalNG.setEnabled(true);
+        // The timer should now trig after 1 second
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // Execute the conditionalNG to evaluate the timer
+        _conditionalNG.execute();
+        // The flag should now be true since the timer will return 'true' until
+        // the timer is reset.
+        Assert.assertTrue("atomicBoolean is set", _atomicBoolean.get());
+        // Reset the timer. This will also execute the conditionalNG which in
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // turn will restart the timer again.
+        _expressionTimer.reset();
+        // Check that the flag is not set
+        Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
+        // The timer should now trig after 1 second
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // Execute the conditionalNG to evaluate the timer
+        _conditionalNG.execute();
+        // The flag should now be true since the timer will return 'true' until
+        // the timer is reset.
+        Assert.assertTrue("atomicBoolean is set", _atomicBoolean.get());
+        System.out.format("testExecuteWaitOnceTrigUntilReset() end ------------------------------%n");
+    }
+    
+    @Ignore
+    @Test
+    public void testExecuteSingleDelay() {
+        System.out.format("testExecuteSingleDelay() start%n");
+        // Disable the _conditionalNG. This will unregister the listeners
+        _conditionalNG.setEnabled(false);
+        _atomicBoolean.set(false);
+        _expressionTimer.setTimerType(TimerType.REPEAT_SINGLE_DELAY);
         _expressionTimer.setTimerDelay(2, 0);
         Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
         // Enable the _conditionalNG. This will register the listeners
         _conditionalNG.setEnabled(true);
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
-//        _expressionTimer.dispose();
-        System.out.format("testExecute() end ------------------------------%n");
+        System.out.format("testExecuteSingleDelay() end ------------------------------%n");
+    }
+    
+    @Ignore
+    @Test
+    public void testExecuteDoubleDelay() {
+        System.out.format("testExecuteDoubleDelay() start%n");
+        // Disable the _conditionalNG. This will unregister the listeners
+        _conditionalNG.setEnabled(false);
+        _atomicBoolean.set(false);
+        _expressionTimer.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
+        _expressionTimer.setTimerDelay(1, 3);
+        Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
+        // Enable the _conditionalNG. This will register the listeners
+        _conditionalNG.setEnabled(true);
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        System.out.format("testExecuteDoubleDelay() end ------------------------------%n");
     }
     
     // The minimal setup for log4J
