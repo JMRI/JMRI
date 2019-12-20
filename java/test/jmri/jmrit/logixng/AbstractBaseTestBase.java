@@ -31,20 +31,18 @@ public abstract class AbstractBaseTestBase {
      */
     public abstract ConditionalNG getConditionalNG();
     
-    @Ignore
     @Test
     public void testCategory() {
         Assert.assertNotNull("category is not null", _category);
         Assert.assertEquals("getCategory() returns correct value", _category, _base.getCategory());
     }
     
-    @Ignore
     @Test
     public void testIsExternal() {
         Assert.assertNotNull("isExternal is not null", _isExternal);
         Assert.assertEquals("isExternal() returns correct value", _isExternal, _base.isExternal());
     }
-/*    
+    
     @Test
     public void testGetConditionalNG() {
         if (getConditionalNG() == null) {
@@ -63,7 +61,7 @@ public abstract class AbstractBaseTestBase {
      * @return the LogixNG for _base or null if _base doesn't have any LogixNG
      */
     public abstract LogixNG getLogixNG();
-/*    
+    
     @Test
     public void testGetLogixNG() {
         if (getLogixNG() == null) {
@@ -155,7 +153,7 @@ public abstract class AbstractBaseTestBase {
     /**
      * Test that the method setParentForAllChildren() works when there are
      * connected children.
-     *./
+     */
     @Test
     public void testSetParentForAllChildren_WithConnectedChildren() {
         _base.getConditionalNG().setEnabled(false);
@@ -167,7 +165,7 @@ public abstract class AbstractBaseTestBase {
     /**
      * Test that the method setParentForAllChildren() works when there are
      * no connected children.
-     *./
+     */
     @Test
     public void testSetParentForAllChildren_WithoutConnectedChildren() {
         _base.getConditionalNG().setEnabled(false);
@@ -185,7 +183,7 @@ public abstract class AbstractBaseTestBase {
      * @return the expected printed tree
      */
     public abstract String getExpectedPrintedTree();
-/*    
+    
     @Test
     public void testGetPrintTree() {
         StringWriter stringWriter = new StringWriter();
@@ -202,8 +200,7 @@ public abstract class AbstractBaseTestBase {
         _baseMaleSocket.printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
-*/    
-    @Ignore
+    
     @Test
     public void testGetPrintTreeWithStandardLocale() {
         StringWriter stringWriter = new StringWriter();
@@ -212,7 +209,6 @@ public abstract class AbstractBaseTestBase {
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
     
-    @Ignore
     @Test
     public void testMaleSocketGetPrintTreeWithStandardLocale() {
         StringWriter stringWriter = new StringWriter();
@@ -220,13 +216,13 @@ public abstract class AbstractBaseTestBase {
         _baseMaleSocket.printTree(printWriter, TREE_INDENT);
         Assert.assertEquals("Tree is equal", getExpectedPrintedTree(), stringWriter.toString());
     }
-/*    
+    
     /**
      * Returns the expected result of _base.getRoot().printTree(writer, TREE_INDENT)
      * @return the expected printed tree
      */
     public abstract String getExpectedPrintedTreeFromRoot();
-/*    
+    
     @Test
     public void testGetPrintTreeFromRoot() {
         StringWriter stringWriter = new StringWriter();
@@ -234,8 +230,7 @@ public abstract class AbstractBaseTestBase {
         _base.getRoot().printTree(Locale.ENGLISH, printWriter, TREE_INDENT);
         Assert.assertEquals("Tree is equal", getExpectedPrintedTreeFromRoot(), stringWriter.toString());
     }
-*/    
-    @Ignore
+    
     @Test
     public void testIsActive() {
         Assert.assertTrue(_base.isActive());
@@ -276,7 +271,6 @@ public abstract class AbstractBaseTestBase {
         Assert.assertTrue("_base is active", _base.isActive());
     }
     
-    @Ignore
     @Test
     public void testMaleSocketIsActive() {
         Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
@@ -322,7 +316,7 @@ public abstract class AbstractBaseTestBase {
         _baseMaleSocket.setParent(null);
         Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());
     }
-/*    
+    
     @Test
     public void testLock() {
         _base.setLock(Base.Lock.NONE);
@@ -394,7 +388,7 @@ public abstract class AbstractBaseTestBase {
         Assert.assertFalse("runOnGUIDelayed is false",
                 _base.getConditionalNG().getRunOnGUIDelayed());
     }
-*/    
+    
     
     private class MyBase extends AbstractBase {
 

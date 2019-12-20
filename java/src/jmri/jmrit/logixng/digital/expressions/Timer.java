@@ -298,6 +298,9 @@ public class Timer extends AbstractDigitalExpression {
         if (!_listenersAreRegistered) {
             _listenersAreRegistered = true;
             
+            // We need to reset the timer
+            reset();
+            
             // Trigger execution of the ConditionalNG
 //            getConditionalNG().execute();
             
