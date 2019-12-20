@@ -34,28 +34,22 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
     protected void layoutComponents() {
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
-        JPanel outerBorderPanel = this;
-        JPanel innerBorderPanel = this;
-
         Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
 
-        LayoutEditor.ToolBarSide toolBarSide = layoutEditor.getToolBarSide();
-
-        outerBorderPanel = new JPanel();
+        JPanel outerBorderPanel = new JPanel();
         outerBorderPanel.setLayout(new BoxLayout(outerBorderPanel, BoxLayout.PAGE_AXIS));
         TitledBorder outerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("Track"));
         outerTitleBorder.setTitleJustification(TitledBorder.CENTER);
         outerTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
         outerBorderPanel.setBorder(outerTitleBorder);
 
-        innerBorderPanel = new JPanel();
+        JPanel innerBorderPanel = new JPanel();
         innerBorderPanel.setLayout(new BoxLayout(innerBorderPanel, BoxLayout.PAGE_AXIS));
         TitledBorder beanNameTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("BeanNameTurnouts"));
         beanNameTitleBorder.setTitleJustification(TitledBorder.CENTER);
         beanNameTitleBorder.setTitlePosition(TitledBorder.BOTTOM);
         innerBorderPanel.setBorder(beanNameTitleBorder);
 
-        FlowLayout verticalTitleLayout = new FlowLayout(FlowLayout.CENTER, 5, 5); //5 pixel gap between items, 5 vertical gap
         FlowLayout verticalContentLayout = new FlowLayout(FlowLayout.LEFT, 5, 2); //5 pixel gap between items, 2 vertical gap
 
         turnoutLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("BeanNameTurnout")));

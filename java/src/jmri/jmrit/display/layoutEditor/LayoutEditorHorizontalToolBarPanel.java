@@ -1,7 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.awt.Color;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -33,10 +32,6 @@ public class LayoutEditorHorizontalToolBarPanel extends LayoutEditorToolBarPanel
 
         JPanel outerBorderPanel = this;
         JPanel innerBorderPanel = this;
-
-        Border blacklineBorder = BorderFactory.createLineBorder(Color.black);
-
-        LayoutEditor.ToolBarSide toolBarSide = layoutEditor.getToolBarSide();
 
         //Row 1
         JPanel hTop1Panel = new JPanel();
