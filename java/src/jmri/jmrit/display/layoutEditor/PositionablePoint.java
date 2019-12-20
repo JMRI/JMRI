@@ -1382,7 +1382,8 @@ public class PositionablePoint extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at edge connector tool dialog
                         layoutEditor.getLETools().setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                                layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                layoutEditor.getLayoutEditorToolBarPanel().signalIconEditor,
+                                layoutEditor.getLayoutEditorToolBarPanel().signalFrame);
                     }
                 });
             } else {
@@ -1391,7 +1392,8 @@ public class PositionablePoint extends LayoutTrack {
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at level crossing tool dialog
                         layoutEditor.getLETools().setSignalsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                                layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                layoutEditor.getLayoutEditorToolBarPanel().signalIconEditor,
+                                layoutEditor.getLayoutEditorToolBarPanel().signalFrame);
                     }
                 };
 
@@ -1418,7 +1420,8 @@ public class PositionablePoint extends LayoutTrack {
                 public void actionPerformed(ActionEvent event) {
                     // bring up signals at block boundary tool dialog
                     layoutEditor.getLETools().setSensorsAtBlockBoundaryFromMenu(PositionablePoint.this,
-                            layoutEditor.sensorIconEditor, layoutEditor.sensorFrame);
+                            layoutEditor.getLayoutEditorToolBarPanel().sensorIconEditor, 
+                            layoutEditor.getLayoutEditorToolBarPanel().sensorFrame);
                 }
             });
         }

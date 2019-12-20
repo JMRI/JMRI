@@ -13785,7 +13785,7 @@ public class LayoutEditorTools {
     @CheckReturnValue
     public SignalHeadIcon getSignalHeadIcon(@Nonnull String signalName) {
         if (signalIconEditor == null) {
-            signalIconEditor = layoutEditor.signalIconEditor;
+            signalIconEditor = layoutEditor.getLayoutEditorToolBarPanel().signalIconEditor;
         }
         SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
         l.setSignalHead(signalName);

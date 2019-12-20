@@ -908,8 +908,8 @@ public class LayoutSlip extends LayoutTurnout {
                         public void actionPerformed(ActionEvent e) {
                             layoutEditor.getLETools().setSignalsAtSlipFromMenu(
                                     LayoutSlip.this,
-                                    layoutEditor.signalIconEditor,
-                                    layoutEditor.signalFrame);
+                                    layoutEditor.getLayoutEditorToolBarPanel().signalIconEditor,
+                                    layoutEditor.getLayoutEditorToolBarPanel().signalFrame);
                         }
                     };
                     JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
@@ -938,7 +938,7 @@ public class LayoutSlip extends LayoutTurnout {
                             layoutEditor.getLETools().setSignalMastsAtSlipFromMenu(
                                     LayoutSlip.this,
                                     boundaryBetween,
-                                    layoutEditor.signalFrame);
+                                    layoutEditor.getLayoutEditorToolBarPanel().signalFrame);
                         }
                     });
                     popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
@@ -946,8 +946,8 @@ public class LayoutSlip extends LayoutTurnout {
                         public void actionPerformed(ActionEvent e) {
                             layoutEditor.getLETools().setSensorsAtSlipFromMenu(
                                     LayoutSlip.this, boundaryBetween,
-                                    layoutEditor.sensorIconEditor,
-                                    layoutEditor.sensorFrame);
+                                    layoutEditor.getLayoutEditorToolBarPanel().sensorIconEditor,
+                                    layoutEditor.getLayoutEditorToolBarPanel().sensorFrame);
                         }
                     });
                 }
