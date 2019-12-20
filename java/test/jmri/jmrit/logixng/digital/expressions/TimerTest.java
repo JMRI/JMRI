@@ -71,7 +71,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     public NamedBean createNewBean(String systemName) {
         return new Timer(systemName, null);
     }
-    
+/*    
     @Test
     public void testCtor() {
         Timer expression2;
@@ -199,9 +199,10 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Exception is thrown", hasThrown);
         JUnitAppender.assertErrorMessage("setTimerDelay must not be called when listeners are registered");
     }
-    
+*/    
     @Test
     public void testExecute() {
+        System.out.format("testExecute() start%n");
         // Disable the _conditionalNG. This will unregister the listeners
         _conditionalNG.setEnabled(false);
         _atomicBoolean.set(false);
@@ -211,11 +212,14 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         // Enable the _conditionalNG. This will register the listeners
         _conditionalNG.setEnabled(true);
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+//        _expressionTimer.dispose();
+        System.out.format("testExecute() end ------------------------------%n");
     }
     
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
+        System.out.format("setUp()%n");
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
@@ -253,12 +257,15 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
 	_logixNG.setParentForAllChildren();
         _logixNG.setEnabled(true);
         _logixNG.activateLogixNG();
+        System.out.format("setUp() done%n");
     }
 
     @After
     public void tearDown() {
+        System.out.format("tearDown()%n");
         _expressionTimer.dispose();
         JUnitUtil.tearDown();
+        System.out.format("tearDown() done%n");
     }
     
 }

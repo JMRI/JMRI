@@ -4,6 +4,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
+import org.junit.Ignore;
 
 /**
  * Base class for classes that tests DigitalAction
@@ -12,6 +13,7 @@ public abstract class AbstractDigitalExpressionTestBase extends AbstractBaseTest
 
     public abstract NamedBean createNewBean(String systemName);
     
+    @Ignore
     @Test
     public void testBadSystemName() {
         boolean hasThrown = false;
