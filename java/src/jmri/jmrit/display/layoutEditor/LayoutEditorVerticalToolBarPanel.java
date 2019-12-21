@@ -145,10 +145,9 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
 
         add(nodesBorderPanel);
 
-        JPanel labelsBorderPanel = this;
         labelsLabel = new JLabel(String.format("-- %s --", Bundle.getMessage("Labels")));
 
-        labelsBorderPanel = new JPanel();
+        JPanel labelsBorderPanel = new JPanel();
         labelsBorderPanel.setLayout(new BoxLayout(labelsBorderPanel, BoxLayout.PAGE_AXIS));
         TitledBorder innerTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("Labels"));
         innerTitleBorder.setTitleJustification(TitledBorder.CENTER);
@@ -175,9 +174,7 @@ public class LayoutEditorVerticalToolBarPanel extends LayoutEditorToolBarPanel {
 
         add(labelsBorderPanel);
 
-        JPanel iconsBorderPanel = this;
-
-        iconsBorderPanel = new JPanel();
+        JPanel iconsBorderPanel = new JPanel();
         iconsBorderPanel.setLayout(new BoxLayout(iconsBorderPanel, BoxLayout.PAGE_AXIS));
         TitledBorder iconsTitleBorder = BorderFactory.createTitledBorder(blacklineBorder, Bundle.getMessage("IconsTitle"));
         iconsTitleBorder.setTitleJustification(TitledBorder.CENTER);

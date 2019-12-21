@@ -257,7 +257,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected transient Color defaultTrackColor = Color.DARK_GRAY;
     protected transient Color defaultOccupiedTrackColor = Color.red;
     protected transient Color defaultAlternativeTrackColor = Color.white;
-    protected transient Color defaultBackgroundColor = Color.lightGray;
     private transient Color defaultTextColor = Color.black;
 
     private transient String layoutName = "";
@@ -6639,10 +6638,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return yScale;
     }
 
-    public Color getDefaultBackgroundColor() {
-        return defaultBackgroundColor;
-    }
-
+//    public Color getDefaultBackgroundColor() {
+//        return defaultBackgroundColor;
+//    }
     public String getDefaultTrackColor() {
         return ColorUtil.colorToColorName(defaultTrackColor);
     }
@@ -7726,9 +7724,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 //    }
     @Override
     public void dispose() {
-        if (leToolBarPanel.signalFrame != null) {
-            leToolBarPanel.signalFrame.dispose();
-            leToolBarPanel.signalFrame = null;
+        if (leToolBarPanel.sensorFrame != null) {
+            leToolBarPanel.sensorFrame.dispose();
+            leToolBarPanel.sensorFrame = null;
         }
         if (leToolBarPanel.signalFrame != null) {
             leToolBarPanel.signalFrame.dispose();
