@@ -30,8 +30,8 @@ public class Timer extends AbstractDigitalExpression {
     private boolean _listenersAreRegistered = false;
     private final AtomicReference<TimerStatus> _timerStatusRef = new AtomicReference<>(TimerStatus.NOT_STARTED);
     private boolean _onOrOff = false;
-    private long _delayOff = 0;
-    private long _delayOn = 0;
+    private long _delayOff = 0;     // Time in milliseconds
+    private long _delayOn = 0;      // Time in milliseconds
     
     
     public Timer(String sys, String user) {
@@ -85,7 +85,7 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
-        System.out.format("Timer.evaluate(). _timerStatus: %s%n", _timerStatusRef.get().name());
+//        System.out.format("Timer.evaluate(). _timerStatus: %s%n", _timerStatusRef.get().name());
         boolean result = false;
         switch (_timerType) {
             case WAIT_ONCE_TRIG_ONCE:
@@ -120,8 +120,12 @@ public class Timer extends AbstractDigitalExpression {
                 break;
                 
             case REPEAT_DOUBLE_DELAY:
-                _onOrOff = ! _onOrOff;
-                startTimer();
+                if (_timerStatusRef.get() == TimerStatus.NOT_STARTED) {
+                    startTimer();
+                } else if (_timerStatusRef.get() == TimerStatus.FINISHED) {
+                    _onOrOff = ! _onOrOff;
+                    startTimer();
+                }
                 result = _onOrOff;
                 break;
                 
@@ -129,7 +133,7 @@ public class Timer extends AbstractDigitalExpression {
                 throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
         }
         
-        System.out.format("Timer.evaluate(): result: %b%n", result);
+//        System.out.format("Timer.evaluate(): result: %b%n", result);
         return result;
     }
 
@@ -137,12 +141,13 @@ public class Timer extends AbstractDigitalExpression {
     @Override
     public void reset() {
         stopTimer();
+        _onOrOff = false;
         _timerStatusRef.set(TimerStatus.NOT_STARTED);
         getConditionalNG().execute();
     }
     
     private void startTimer() {
-        System.out.println("timer.startTimer()");
+//        System.out.println("timer.startTimer()");
         final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
         
         // Ensure timer is not running
@@ -153,10 +158,10 @@ public class Timer extends AbstractDigitalExpression {
         _timerTask = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("timer: Timer has trigged. Run ConditionalNG.execute()");
+//                System.out.println("timer: Timer has trigged. Run ConditionalNG.execute()");
                 _timerStatusRef.set(TimerStatus.FINISHED);
                 c.execute();
-                System.out.println("timer: Timer has trigged. Run ConditionalNG.execute() done");
+//                System.out.println("timer: Timer has trigged. Run ConditionalNG.execute() done");
             }
         };
         

@@ -49,7 +49,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("One shot timer: Wait 0 seconds and trigger once.%n");
+        return String.format("One shot timer: Wait 0 milliseconds and trigger once.%n");
     }
     
     @Override
@@ -60,7 +60,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
                 "      ! %n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
-                "               One shot timer: Wait 0 seconds and trigger once.%n" +
+                "               One shot timer: Wait 0 milliseconds and trigger once.%n" +
                 "            ! A1%n" +
                 "               Set the atomic boolean to true%n" +
                 "            ! A2%n" +
@@ -79,12 +79,12 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         expression2 = new Timer("IQDE321", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
-        Assert.assertEquals("String matches", "One shot timer: Wait 0 seconds and trigger once.", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "One shot timer: Wait 0 milliseconds and trigger once.", expression2.getLongDescription());
         
         expression2 = new Timer("IQDE321", "My expression");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
-        Assert.assertEquals("String matches", "One shot timer: Wait 0 seconds and trigger once.", expression2.getLongDescription());
+        Assert.assertEquals("String matches", "One shot timer: Wait 0 milliseconds and trigger once.", expression2.getLongDescription());
         
         boolean thrown = false;
         try {
@@ -125,20 +125,20 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("Timer".equals(e1.getShortDescription()));
         
         e1.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
-        e1.setTimerDelay(10, 0);
-        Assert.assertEquals("One shot timer: Wait 10 seconds and trigger once.", e1.getLongDescription());
+        e1.setTimerDelay(100, 0);
+        Assert.assertEquals("One shot timer: Wait 100 milliseconds and trigger once.", e1.getLongDescription());
         
         e1.setTimerType(TimerType.WAIT_ONCE_TRIG_UNTIL_RESET);
-        e1.setTimerDelay(20, 0);
-        Assert.assertEquals("One shot timer: Wait 20 seconds. Restart timer when reset.", e1.getLongDescription());
+        e1.setTimerDelay(200, 0);
+        Assert.assertEquals("One shot timer: Wait 200 milliseconds. Restart timer when reset.", e1.getLongDescription());
         
         e1.setTimerType(TimerType.REPEAT_SINGLE_DELAY);
-        e1.setTimerDelay(30, 0);
-        Assert.assertEquals("Continuous timer: Wait 30 seconds and trigger once.", e1.getLongDescription());
+        e1.setTimerDelay(300, 0);
+        Assert.assertEquals("Continuous timer: Wait 300 milliseconds and trigger once.", e1.getLongDescription());
         
         e1.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
-        e1.setTimerDelay(40, 50);
-        Assert.assertEquals("Continuous timer: Wait 40 seconds and then trigger. Stay on for 50 seconds.", e1.getLongDescription());
+        e1.setTimerDelay(400, 500);
+        Assert.assertEquals("Continuous timer: Wait 400 milliseconds and then trigger. Stay on for 500 milliseconds.", e1.getLongDescription());
     }
     
     @Test
@@ -151,7 +151,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         // Disable the _conditionalNG. This will unregister the listeners
         _conditionalNG.setEnabled(false);
         
-        _expressionTimer.setTimerDelay(10,20);
+        _expressionTimer.setTimerDelay(100, 200);
         
         _expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
         Assert.assertEquals("timerType is correct", TimerType.WAIT_ONCE_TRIG_ONCE, _expressionTimer.getTimerType());
@@ -178,11 +178,11 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         // Disable the _conditionalNG. This will unregister the listeners
         _conditionalNG.setEnabled(false);
         
-        _expressionTimer.setTimerDelay(10,20);
-        Assert.assertEquals("delayOff is correct", 10, _expressionTimer.getTimerDelayOff());
-        Assert.assertEquals("delayOn is correct", 20, _expressionTimer.getTimerDelayOn());
+        _expressionTimer.setTimerDelay(100, 200);
+        Assert.assertEquals("delayOff is correct", 100, _expressionTimer.getTimerDelayOff());
+        Assert.assertEquals("delayOn is correct", 200, _expressionTimer.getTimerDelayOn());
         
-        _expressionTimer.setTimerDelay(43,28);
+        _expressionTimer.setTimerDelay(43, 28);
         Assert.assertEquals("delayOff is correct", 43, _expressionTimer.getTimerDelayOff());
         Assert.assertEquals("delayOn is correct", 28, _expressionTimer.getTimerDelayOn());
         
@@ -191,7 +191,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         
         boolean hasThrown = false;
         try {
-            _expressionTimer.setTimerDelay(3,2);
+            _expressionTimer.setTimerDelay(300, 200);
         } catch (RuntimeException ex) {
             hasThrown = true;
             Assert.assertEquals("Error message is correct", "setTimerDelay must not be called when listeners are registered", ex.getMessage());
@@ -206,12 +206,12 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         _conditionalNG.setEnabled(false);
         _atomicBoolean.set(false);
         _expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_ONCE);
-        _expressionTimer.setTimerDelay(1, 0);
+        _expressionTimer.setTimerDelay(100, 0);
         Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
         // Enable the _conditionalNG. This will register the listeners, reset
         // the timer and execute the conditionalNG.
         _conditionalNG.setEnabled(true);
-        // The timer should now trig after 1 second
+        // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
         // Clear the flag
         _atomicBoolean.set(false);
@@ -222,7 +222,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         // Reset the timer. This will also execute the conditionalNG which in
         // turn will restart the timer again.
         _expressionTimer.reset();
-        // The timer should now trig after 1 second
+        // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
         // Clear the flag
         _atomicBoolean.set(false);
@@ -238,12 +238,12 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         _conditionalNG.setEnabled(false);
         _atomicBoolean.set(false);
         _expressionTimer.setTimerType(TimerType.WAIT_ONCE_TRIG_UNTIL_RESET);
-        _expressionTimer.setTimerDelay(1, 0);
+        _expressionTimer.setTimerDelay(100, 0);
         Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
         // Enable the _conditionalNG. This will register the listeners, reset
         // the timer and execute the conditionalNG.
         _conditionalNG.setEnabled(true);
-        // The timer should now trig after 1 second
+        // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
         // Clear the flag
         _atomicBoolean.set(false);
@@ -259,7 +259,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         _expressionTimer.reset();
         // Check that the flag is not set
         Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
-        // The timer should now trig after 1 second
+        // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
         // Clear the flag
         _atomicBoolean.set(false);
@@ -272,66 +272,61 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExecuteSingleDelay() {
-        System.out.format("testExecuteSingleDelay() start%n");
         // Disable the _conditionalNG. This will unregister the listeners
         _conditionalNG.setEnabled(false);
         _atomicBoolean.set(false);
         _expressionTimer.setTimerType(TimerType.REPEAT_SINGLE_DELAY);
-        _expressionTimer.setTimerDelay(1, 0);
+        _expressionTimer.setTimerDelay(100, 0);
         Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
         // Enable the _conditionalNG. This will register the listeners, reset
         // the timer and execute the conditionalNG.
         _conditionalNG.setEnabled(true);
-        // The timer should now trig after 1 second
+        // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
         // Clear the flag
         _atomicBoolean.set(false);
-        // The timer should now trig after 1 second
+        // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
         // Clear the flag
         _atomicBoolean.set(false);
-        // The timer should now trig after 1 second
+        // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
-        System.out.format("testExecuteSingleDelay() end ------------------------------%n");
     }
     
     @Test
     public void testExecuteDoubleDelay() {
-        System.out.format("testExecuteDoubleDelay() start%n");
         // Disable the _conditionalNG. This will unregister the listeners
         _conditionalNG.setEnabled(false);
         _atomicBoolean.set(false);
-        _expressionTimer.setTimerType(TimerType.REPEAT_SINGLE_DELAY);
-        _expressionTimer.setTimerDelay(1, 0);
-        Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
+        _expressionTimer.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
+        _expressionTimer.setTimerDelay(100, 100);
         // Enable the _conditionalNG. This will register the listeners, reset
         // the timer and execute the conditionalNG.
         _conditionalNG.setEnabled(true);
         
-        // Check that the timer gets true after 1 second
+        // Check that the timer gets true after 100 milliseconds
         // Check that the timer is false
         Assert.assertFalse("timer is false", _expressionTimer.evaluate());
-        // The timer should now trig after 1 second
+        // The timer should now trig after 1 milliseconds
         JUnitUtil.waitFor(()->{return _expressionTimer.evaluate();}, "timer is still not true");
         
-        // Check that the timer gets false after 1 second
+        // Check that the timer gets false after 100 milliseconds
         // Check that the timer is still true
-        Assert.assertFalse("timer is true", _expressionTimer.evaluate());
+        Assert.assertTrue("timer is true", _expressionTimer.evaluate());
         // The timer should now trig after 1 second
         JUnitUtil.waitFor(()->{return !_expressionTimer.evaluate();}, "timer is still true");
         
-        // Check that the timer gets true after 1 second
+        // Check that the timer gets true after 100 milliseconds
         // Check that the timer is false
         Assert.assertFalse("timer is false", _expressionTimer.evaluate());
-        // The timer should now trig after 1 second
+        // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return _expressionTimer.evaluate();}, "timer is still not true");
         
-        // Check that the timer gets false after 1 second
+        // Check that the timer gets false after 100 milliseconds
         // Check that the timer is still true
-        Assert.assertFalse("timer is true", _expressionTimer.evaluate());
-        // The timer should now trig after 1 second
+        Assert.assertTrue("timer is true", _expressionTimer.evaluate());
+        // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return !_expressionTimer.evaluate();}, "timer is still true");
-        System.out.format("testExecuteDoubleDelay() end ------------------------------%n");
     }
     
     @Test
@@ -353,7 +348,6 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
-        System.out.format("setUp()%n");
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
@@ -391,15 +385,12 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
 	_logixNG.setParentForAllChildren();
         _logixNG.setEnabled(true);
         _logixNG.activateLogixNG();
-        System.out.format("setUp() done%n");
     }
 
     @After
     public void tearDown() {
-        System.out.format("tearDown()%n");
         _expressionTimer.dispose();
         JUnitUtil.tearDown();
-        System.out.format("tearDown() done%n");
     }
     
 }
