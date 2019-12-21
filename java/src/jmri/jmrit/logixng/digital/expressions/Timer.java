@@ -159,22 +159,23 @@ public class Timer extends AbstractDigitalExpression {
     }
     
     private void scheduleTimer(long delay) {
-        try {
-            _timerTask = getNewTimerTask();
-            _timer.schedule(_timerTask, delay);
-        } catch (IllegalStateException e) {
-            _timerTask.cancel();
-            _timer.cancel();
-            _timerTask = getNewTimerTask();
-            _timer = new java.util.Timer("LogixNG ExpressionTimer timer thread", true);
-            _timer.schedule(_timerTask, _delayOff);
+        synchronized(this) {
+            try {
+                if (_timerTask != null) _timerTask.cancel();
+                
+                _timerTask = getNewTimerTask();
+                _timer.schedule(_timerTask, delay);
+            } catch (IllegalStateException e) {
+                _timerTask.cancel();
+                _timer.cancel();
+                _timerTask = getNewTimerTask();
+                _timer = new java.util.Timer("LogixNG ExpressionTimer timer thread", true);
+                _timer.schedule(_timerTask, _delayOff);
+            }
         }
     }
     
     private void startTimer() {
-        // Ensure timer is not running
-        if (_timerTask != null) _timerTask.cancel();
-        
         _timerStatusRef.set(TimerStatus.STARTED);
         
         switch (_timerType) {
@@ -184,12 +185,10 @@ public class Timer extends AbstractDigitalExpression {
                 // fall through
             case REPEAT_SINGLE_DELAY:
                 scheduleTimer(_delayOff);
-//                _timer.schedule(_timerTask, _delayOff);
                 break;
                 
             case REPEAT_DOUBLE_DELAY:
                 scheduleTimer(_onOrOff ? _delayOn : _delayOff);
-//                _timer.schedule(_timerTask, _onOrOff ? _delayOn : _delayOff);
                 break;
                 
             default:
@@ -198,7 +197,9 @@ public class Timer extends AbstractDigitalExpression {
     }
     
     private void stopTimer() {
-        if (_timerTask != null) _timerTask.cancel();
+        synchronized(this) {
+            if (_timerTask != null) _timerTask.cancel();
+        }
     }
     
     @Override
@@ -263,7 +264,9 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        if (_timerTask != null) _timerTask.cancel();
+        synchronized(this) {
+            if (_timerTask != null) _timerTask.cancel();
+        }
     }
     
     

@@ -17,6 +17,23 @@ import org.junit.Test;
  */
 public abstract class AbstractAnalogExpressionTestBase extends AbstractBaseTestBase {
 
+    public abstract NamedBean createNewBean(String systemName);
+    
+    @Test
+    public void testBadSystemName() {
+        boolean hasThrown = false;
+        try {
+            // Create a bean with bad system name. This must throw an exception
+            NamedBean bean = createNewBean("IQ111");
+            // We should never get here.
+            Assert.assertNotNull("Bean is not null", bean);
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("Exception is correct", "system name is not valid", e.getMessage());
+            hasThrown = true;
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
     @Test
     public void testBundle() {
         Assert.assertEquals("strings are equal", "Get memory", Bundle.getMessage("AnalogExpressionMemory0"));
@@ -74,28 +91,6 @@ public abstract class AbstractAnalogExpressionTestBase extends AbstractBaseTestB
         debugConfig._forceResult = false;
         Assert.assertNotEquals("Double don't match", value1, _expression.evaluate());
         Assert.assertNotEquals("Double don't match", value2, _expression.evaluate());
-    }
-    
-    @Test
-    public void testChildAndChildCount() {
-        Assert.assertEquals("childCount is equal", _base.getChildCount(), _baseMaleSocket.getChildCount());
-        for (int i=0; i < _base.getChildCount(); i++) {
-            Assert.assertTrue("child is equal", _base.getChild(i) == _baseMaleSocket.getChild(i));
-        }
-    }
-    
-    @Test
-    public void testBeanType() {
-        Assert.assertEquals("childCount is equal",
-                ((NamedBean)_base).getBeanType(),
-                ((NamedBean)_baseMaleSocket).getBeanType());
-    }
-    
-    @Test
-    public void testDescribeState() {
-        Assert.assertEquals("description matches",
-                "Unknown",
-                ((NamedBean)_baseMaleSocket).describeState(NamedBean.UNKNOWN));
     }
     
 }

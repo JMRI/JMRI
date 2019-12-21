@@ -5,6 +5,7 @@ import java.beans.PropertyVetoException;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.AnalogActionManager;
@@ -70,6 +71,11 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
                 "               Get memory IM1%n" +
                 "            !~ A1%n" +
                 "               Set memory IM2%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new AnalogExpressionMemory(systemName, null);
     }
     
     @Test

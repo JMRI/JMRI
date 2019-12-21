@@ -1,10 +1,12 @@
 package jmri.jmrit.logixng.digital.actions;
 
+import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Test;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.DigitalAction;
+import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionWithEnableExecution;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 
@@ -28,6 +30,19 @@ public abstract class AbstractDigitalActionTestBase extends AbstractBaseTestBase
             hasThrown = true;
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
+    public void testBundle() {
+        Assert.assertEquals("strings are equal", "Set memory", Bundle.getMessage("Memory_Short"));
+        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage("Memory_Long_Null", "IM1"));
+        Assert.assertEquals("strings are equal", "Set memory", Bundle.getMessage(Locale.CANADA, "Memory_Short"));
+        Assert.assertEquals("strings are equal", "Set memory IM1 to null", Bundle.getMessage(Locale.CANADA, "Memory_Long_Null", "IM1"));
+    }
+    
+    @Test
+    public void testGetBeanType() {
+        Assert.assertTrue("String matches", "Digital action".equals(((DigitalActionBean)_base).getBeanType()));
     }
     
     @Test

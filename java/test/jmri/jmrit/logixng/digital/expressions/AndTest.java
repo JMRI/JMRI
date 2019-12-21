@@ -1,10 +1,7 @@
 package jmri.jmrit.logixng.digital.expressions;
 
-import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
-import jmri.Memory;
 import jmri.NamedBean;
-import jmri.Turnout;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -20,7 +17,6 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 
 /**
@@ -32,10 +28,6 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
 
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
-//    private And expressionAnd;
-//    private ActionAtomicBoolean actionAtomicBoolean;
-//    private AtomicBoolean atomicBoolean;
-//    private Memory memory;
     
     
     @Override

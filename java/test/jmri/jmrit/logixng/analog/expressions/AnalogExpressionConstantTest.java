@@ -4,6 +4,7 @@ import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
@@ -65,6 +66,11 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
                 "               Get constant value 10.2%n" +
                 "            !~ A1%n" +
                 "               Set memory IM2%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new AnalogExpressionConstant(systemName, null);
     }
     
     @Test

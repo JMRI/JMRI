@@ -4,6 +4,7 @@ import java.io.StringWriter;
 import java.io.PrintWriter;
 import java.util.Locale;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.junit.Assert;
 import org.junit.Ignore;
@@ -387,6 +388,28 @@ public abstract class AbstractBaseTestBase {
         // set runOnGUIDelayed to true.
         Assert.assertFalse("runOnGUIDelayed is false",
                 _base.getConditionalNG().getRunOnGUIDelayed());
+    }
+    
+    @Test
+    public void testChildAndChildCount() {
+        Assert.assertEquals("childCount is equal", _base.getChildCount(), _baseMaleSocket.getChildCount());
+        for (int i=0; i < _base.getChildCount(); i++) {
+            Assert.assertTrue("child is equal", _base.getChild(i) == _baseMaleSocket.getChild(i));
+        }
+    }
+    
+    @Test
+    public void testBeanType() {
+        Assert.assertEquals("getbeanType() is equal",
+                ((NamedBean)_base).getBeanType(),
+                ((NamedBean)_baseMaleSocket).getBeanType());
+    }
+    
+    @Test
+    public void testDescribeState() {
+        Assert.assertEquals("description matches",
+                "Unknown",
+                ((NamedBean)_baseMaleSocket).describeState(NamedBean.UNKNOWN));
     }
     
     

@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions;
 
+import java.util.Locale;
 import org.junit.Assert;
 import org.junit.Test;
 import jmri.NamedBean;
@@ -30,6 +31,19 @@ public abstract class AbstractDigitalExpressionTestBase extends AbstractBaseTest
     }
     
     @Test
+    public void testBundle() {
+        Assert.assertEquals("strings are equal", "Compare memory", Bundle.getMessage("Memory_Short"));
+        Assert.assertEquals("strings are equal", "Memory IM1 is null", Bundle.getMessage("Memory_Long_CompareNull", "IM1", Bundle.getMessage("MemoryOperation_IsNull")));
+        Assert.assertEquals("strings are equal", "Compare memory", Bundle.getMessage(Locale.CANADA, "Memory_Short"));
+        Assert.assertEquals("strings are equal", "Memory IM1 is null", Bundle.getMessage(Locale.CANADA, "Memory_Long_CompareNull", "IM1", Bundle.getMessage("MemoryOperation_IsNull")));
+    }
+    
+    @Test
+    public void testGetBeanType() {
+        Assert.assertTrue("String matches", "Digital expression".equals(((DigitalExpressionBean)_base).getBeanType()));
+    }
+    
+    @Test
     public void testEnableAndEvaluate() {
         DigitalExpressionBean _expression = (DigitalExpressionBean)_baseMaleSocket;
         Assert.assertTrue("male socket is enabled", _baseMaleSocket.isEnabled());
@@ -57,28 +71,6 @@ public abstract class AbstractDigitalExpressionTestBase extends AbstractBaseTest
         Assert.assertFalse("evaluate() returns true", _expression.evaluate());
         debugConfig._forceResult = false;
         Assert.assertTrue("evaluate() returns true", _expression.evaluate());
-    }
-    
-    @Test
-    public void testChildAndChildCount() {
-        Assert.assertEquals("childCount is equal", _base.getChildCount(), _baseMaleSocket.getChildCount());
-        for (int i=0; i < _base.getChildCount(); i++) {
-            Assert.assertTrue("child is equal", _base.getChild(i) == _baseMaleSocket.getChild(i));
-        }
-    }
-    
-    @Test
-    public void testBeanType() {
-        Assert.assertEquals("childCount is equal",
-                ((NamedBean)_base).getBeanType(),
-                ((NamedBean)_baseMaleSocket).getBeanType());
-    }
-    
-    @Test
-    public void testDescribeState() {
-        Assert.assertEquals("description matches",
-                "Unknown",
-                ((NamedBean)_baseMaleSocket).describeState(NamedBean.UNKNOWN));
     }
     
 }

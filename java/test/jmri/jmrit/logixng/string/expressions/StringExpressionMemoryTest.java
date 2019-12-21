@@ -5,6 +5,7 @@ import java.beans.PropertyVetoException;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Category;
@@ -65,6 +66,11 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
                 "               Get memory IM1%n" +
                 "            !s A1%n" +
                 "               Set memory IM2%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new StringExpressionMemory(systemName, null);
     }
     
     @Test
