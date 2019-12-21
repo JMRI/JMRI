@@ -95,7 +95,7 @@ public abstract class AbstractAnalogExpressionTestBase extends AbstractBaseTestB
     public void testDescribeState() {
         Assert.assertEquals("description matches",
                 "Unknown",
-                ((NamedBean)_base).describeState(NamedBean.UNKNOWN));
+                ((NamedBean)_baseMaleSocket).describeState(NamedBean.UNKNOWN));
     }
     
 }
