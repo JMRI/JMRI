@@ -91,19 +91,19 @@ public class JsonUtilHttpService extends JsonHttpService {
                 }
                 return this.getPanel(request.locale, name, request.id);
             case JSON.RAILROAD:
-                return this.getRailroad(request.locale, request.id);
+                return this.getRailroad(request);
             case JSON.SYSTEM_CONNECTION:
             case JSON.SYSTEM_CONNECTIONS:
                 if (name == null) {
-                    return this.getSystemConnections(request.locale, request.id);
+                    return this.getSystemConnections(request);
                 }
-                return this.getSystemConnection(request.locale, name, request.id);
+                return this.getSystemConnection(name, request);
             case JSON.CONFIG_PROFILE:
             case JSON.CONFIG_PROFILES:
                 if (name == null) {
-                    return this.getConfigProfiles(request.locale, request.id);
+                    return this.getConfigProfiles(request);
                 }
-                return this.getConfigProfile(request.locale, name, request.id);
+                return this.getConfigProfile(name, request);
             case JSON.VERSION:
                 return this.getVersion();
             default:
@@ -125,10 +125,10 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getPanels(request.id);
             case JSON.SYSTEM_CONNECTION:
             case JSON.SYSTEM_CONNECTIONS:
-                return this.getSystemConnections(request.locale, request.id);
+                return this.getSystemConnections(request);
             case JSON.CONFIG_PROFILE:
             case JSON.CONFIG_PROFILES:
-                return this.getConfigProfiles(request.locale, request.id);
+                return this.getConfigProfiles(request);
             default:
                 ArrayNode array = this.mapper.createArrayNode();
                 JsonNode node = this.doGet(type, null, data, request);
@@ -389,15 +389,11 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @return the JSON panel message.
      * @throws JsonException if panel not found
      */
-    @SuppressWarnings("null")
     public JsonNode getPanel(Locale locale, String name, int id) throws JsonException {
-        ArrayNode an = getPanels(JSON.XML, id);
-        for (JsonNode jn : an) { // loop through panels
-            if (jn.get("data").get("name").textValue().equals(name)) { // check
-                                                                       // data.name
-                                                                       // for a
-                                                                       // match
-                return message(JSON.PANEL, jn.get("data"), id);
+        ArrayNode panels = getPanels(JSON.XML, id);
+        for (JsonNode panel : panels) {
+            if (panel.path(JSON.DATA).path(JSON.NAME).asText().equals(name)) {
+                return message(JSON.PANEL, panel.path(JSON.DATA), id);
             }
         }
         throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JSON.PANEL, name), id);
@@ -583,45 +579,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      */
     @Deprecated
     public ArrayNode getSystemConnections(Locale locale, int id) {
-        ArrayNode root = mapper.createArrayNode();
-        ArrayList<String> prefixes = new ArrayList<>();
-        for (ConnectionConfig config : InstanceManager.getDefault(ConnectionConfigManager.class)) {
-            if (!config.getDisabled()) {
-                ObjectNode data = mapper.createObjectNode();
-                data.put(JSON.NAME, config.getConnectionName());
-                data.put(JSON.PREFIX, config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
-                data.put(JSON.MFG, config.getManufacturer());
-                data.put(JSON.DESCRIPTION, Bundle.getMessage(locale, "ConnectionSucceeded", config.getConnectionName(),
-                        config.name(), config.getInfo()));
-                prefixes.add(config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
-                root.add(message(JSON.SYSTEM_CONNECTION, data, id));
-            }
-        }
-        InstanceManager.getList(SystemConnectionMemo.class).stream().map(instance -> instance)
-                .filter(memo -> (!memo.getDisabled() && !prefixes.contains(memo.getSystemPrefix())))
-                .forEach(memo -> {
-                    ObjectNode data = mapper.createObjectNode();
-                    data.put(JSON.NAME, memo.getUserName());
-                    data.put(JSON.PREFIX, memo.getSystemPrefix());
-                    data.putNull(JSON.MFG);
-                    data.putNull(JSON.DESCRIPTION);
-                    prefixes.add(memo.getSystemPrefix());
-                    root.add(message(JSON.SYSTEM_CONNECTION, data, id));
-                });
-        // Following is required because despite there being a
-        // SystemConnectionMemo for the default internal connection, it is not
-        // used for the default internal connection. This allows a client to map
-        // the server's internal objects.
-        SystemConnectionMemo internal = InstanceManager.getDefault(InternalSystemConnectionMemo.class);
-        if (!prefixes.contains(internal.getSystemPrefix())) {
-            ObjectNode data = mapper.createObjectNode();
-            data.put(JSON.NAME, internal.getUserName());
-            data.put(JSON.PREFIX, internal.getSystemPrefix());
-            data.putNull(JSON.MFG);
-            data.putNull(JSON.DESCRIPTION);
-            root.add(message(JSON.SYSTEM_CONNECTION, data, id));
-        }
-        return root;
+        return getSystemConnections(new JsonRequest(locale, JSON.V5, id));
     }
 
     /**
