@@ -4885,7 +4885,7 @@ public class TrainBuilder extends TrainCommon {
                                     car.getFinalDestinationName(), car.getFinalDestinationTrackName(),
                                     car.toString(),
                                     car.getDestinationTrackName()}));
-                    car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
+                    car.setDestination(car.getFinalDestination(), car.getFinalDestinationTrack(), true);
                     redirected = true;
                 }
             }

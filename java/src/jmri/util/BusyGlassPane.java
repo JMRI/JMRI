@@ -148,7 +148,7 @@ public class BusyGlassPane extends JComponent {
                 component.dispatchEvent(new MouseEvent(component,
                         eventID,
                         e.getWhen(),
-                        e.getModifiers(),
+                        e.getModifiersEx(),
                         componentPoint.x,
                         componentPoint.y,
                         e.getClickCount(),

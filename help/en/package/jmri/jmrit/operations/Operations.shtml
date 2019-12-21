@@ -2943,24 +2943,28 @@
    
    <a name="AlternateTrack" id="AlternateTrack"></a>
    <h4>Alternate Track or "Off Spot"</h4>
-   You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur
-   or the edit schedule windows. The program when it finds a spur full will send cars to the track
-   you specify as the alternate track. The alternate track feature can be used to create an "Off
-   Spot" track for your cars. Once you specify a track as an alternate, only cars destined for the
-   spur will be placed on the alternate track. You can also use the same alternate track for several
-   spurs.
-
-   <p>Adding an alternate track will normally increase the number of cars that the program
-    routes to a spur / schedule. The program refers to these cars as "inbound" to the spur/industry.
-    For a car to be "inbound" is has to be transported by trains that don't directly service the
-    spur/industry. The maximum number of inbound cars to a spur with an alternate track is
-    determined by the length of the spur and the alternate track. So if the spur could hold 6 cars,
-    and the alternate track 5, then the program would allow a maximum of 11 cars to be sent to the
-    spur.</p>
+   You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur or the edit
+   schedule windows. The program when it finds a spur full will send cars to the track you specify as the alternate
+   track. The alternate track feature can be used to create an "Off Spot" track for your cars. Once you specify a track
+   as an alternate, only cars destined for the spur will be placed on the alternate track. You can also use the same
+   alternate track for several spurs.
 
    <p>
-    You can see all "inbound" cars by using the sort by "FD" or <a href="#FinalDestination">Final
-     Destination</a> in the <a href="#Cars">Cars</a> window.
+    Normally during the train build process, the program will check the alternate track for cars after assigning cars
+    from the spur to the train being built. This way cars on the alternate are used to keep the spur full. Note that the
+    <a href="#PlannedPickUps">Planned Pick Ups</a> feature can defeat the movement of cars from the alternate to the
+    spur, so it is recommended that you don't use both features for a spur.
+   </p>
+
+   <p>Adding an alternate track will normally increase the number of cars that the program routes to a spur /
+    schedule. The program refers to these cars as "inbound" to the spur/industry. For a car to be "inbound" is has to be
+    transported by trains that don't directly service the spur/industry. The maximum number of inbound cars to a spur
+    with an alternate track is determined by the length of the spur and the alternate track. So if the spur could hold 6
+    cars, and the alternate track 5, then the program would allow a maximum of 11 cars to be sent to the spur.</p>
+
+   <p>
+    You can see all "inbound" cars by using the sort by "FD" or <a href="#FinalDestination">Final Destination</a> in the
+    <a href="#Cars">Cars</a> window.
    </p>
 
    <a name="PlannedPickUps" id="PlannedPickUps"></a>
@@ -3008,6 +3012,11 @@
    <p>Guaranteeing that cars will be picked up from a track can be a bit tricky, so it is
     recommended that you not use this feature until you become an expert with regards to using this
     program, otherwise you will most likely overload your tracks when using this feature.</p>
+
+   <p>
+    Also recommended is that you not use the <a href="#AlternateTrack">Alternate Track</a> feature and planned
+    pickups at the same time for a spur. It can defeat car movement from the alternate track to the spur.
+   </p>
 
    <a name="TrackDestinations" id="TrackDestinations"></a>
    <h4>Track Destinations</h4>
