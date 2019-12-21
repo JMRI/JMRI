@@ -252,12 +252,35 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         // The flag should now be true since the timer will return 'true' until
         // the timer is reset.
         Assert.assertTrue("atomicBoolean is set", _atomicBoolean.get());
-        // Reset the timer. This will also execute the conditionalNG which in
         // Clear the flag
         _atomicBoolean.set(false);
+        // Reset the timer. This will also execute the conditionalNG which in
         // turn will restart the timer again.
         _expressionTimer.reset();
         // Check that the flag is not set
+        Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
+        // Check that the flag is not set.
+        Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
+        // The timer should now trig after 100 milliseconds
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // Execute the conditionalNG to evaluate the timer
+        _conditionalNG.execute();
+        // The flag should now be true since the timer will return 'true' until
+        // the timer is reset.
+        Assert.assertTrue("atomicBoolean is set", _atomicBoolean.get());
+        
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // Reset the timer. This will also execute the conditionalNG which in
+        // turn will restart the timer again.
+        _expressionTimer.reset();
+        // Check that the flag is not set
+        Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
+        // _expressionTimer._timerStatusRef is now STARTED. Try evaluate()
+        _expressionTimer.evaluate();
+        // Check that the flag is not set.
         Assert.assertFalse("atomicBoolean is not set", _atomicBoolean.get());
         // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
@@ -289,6 +312,19 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
         // Clear the flag
         _atomicBoolean.set(false);
+        // The timer should now trig after 100 milliseconds
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // _expressionTimer._timerStatusRef is now STARTED. Try evaluate()
+        _expressionTimer.evaluate();
+        // The timer should now trig after 100 milliseconds
+        JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
+        // Clear the flag
+        _atomicBoolean.set(false);
+        // _expressionTimer._timerStatusRef is now STARTED. Try evaluate()
+        _expressionTimer.evaluate();
         // The timer should now trig after 100 milliseconds
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
     }
