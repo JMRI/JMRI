@@ -46,7 +46,7 @@ deploy: off
 artifacts:
   - path: instanceManagerSequence.txt
   - path: tests.log
-  - path: junit-results.xml
+  - path: target\testreport\junit-results.xml
 
 on_failure:
 - appveyor PushArtifact tests.log
@@ -54,7 +54,7 @@ on_failure:
 - ps: echo "Failing Tests"
 # modified from an example found at https://www.codeproject.com/Articles/61900/PowerShell-and-XML
 - ps: |
-    $xml = [xml](get-content .\junit-results.xml)
+    $xml = [xml](get-content .\target\testreport\junit-results.xml)
     $xml.SelectNodes("//testcase") | where { $_.failure } | format-table classname,name,InnerXml
     $xml.SelectNodes("//testcase") | where { $_.error } | format-table classname,name,InnerXml
 
