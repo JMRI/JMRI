@@ -6,6 +6,7 @@ import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.RenderingHints;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -25,6 +26,11 @@ import org.slf4j.*;
 class LayoutEditorComponent extends JComponent {
 
     private final LayoutEditor layoutEditor;
+
+    //Antialiasing rendering
+    protected transient static final RenderingHints antialiasing = new RenderingHints(
+            RenderingHints.KEY_ANTIALIASING,
+            RenderingHints.VALUE_ANTIALIAS_ON);
 
     protected LayoutEditorComponent(@Nonnull final LayoutEditor LayoutEditor) {
         super();
@@ -49,7 +55,7 @@ class LayoutEditorComponent extends JComponent {
             //drawPositionableLabelBorder(g2);
             //Optional antialising, to eliminate (reduce) staircase on diagonal lines
             if (layoutEditor.antialiasingOn) {
-                g2.setRenderingHints(layoutEditor.antialiasing);
+                g2.setRenderingHints(antialiasing);
             }
 
             // things that only get drawn in edit mode

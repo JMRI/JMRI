@@ -10,24 +10,13 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.util.ColorUtil;
-import jmri.util.MathUtil;
-import jmri.util.QuickPromptUtil;
+import javax.annotation.*;
+import javax.swing.*;
+import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LayoutShape is a set of LayoutShapePoint used to draw a shape. Each point
@@ -395,7 +384,6 @@ public class LayoutShape {
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-//    @Override
     public void scaleCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         shapePoints.forEach((lsp) -> {
@@ -409,7 +397,6 @@ public class LayoutShape {
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-//    @Override
     public void translateCoords(float xFactor, float yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         shapePoints.forEach((lsp) -> {
@@ -418,9 +405,9 @@ public class LayoutShape {
     }
 
     /**
-     * {@inheritDoc}
+     * rotate this shape around its center
+     * @param angleDEG the angle (in degrees) to rotate CW
      */
-//    @Override
     public void rotateCoords(double angleDEG) {
         Point2D center = getCoordsCenter();
         // rotate coordinates

@@ -12,7 +12,6 @@ import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.PointerInfo;
 import java.awt.Rectangle;
-import java.awt.RenderingHints;
 import java.awt.Toolkit;
 import java.awt.event.*;
 import java.awt.geom.*;
@@ -193,7 +192,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     protected transient LayoutTrack foundTrack = null;      //found object, null if nothing found
     protected transient Point2D foundLocation = new Point2D.Double(0.0, 0.0); //location of found object
     protected transient int foundHitPointType = 0;          //connection type within the found object
-    private transient boolean foundNeedsConnect = false;    //true if found point needs a connection
+    ///private transient boolean foundNeedsConnect = false;    //true if found point needs a connection
 
     protected transient LayoutTrack beginTrack = null;      //begin track segment connection object, null if none
     protected transient Point2D beginLocation = new Point2D.Double(0.0, 0.0); //location of begin object
@@ -301,11 +300,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     //A hash to store string -> KeyEvent constants, used to set keyboard shortcuts per locale
     protected transient HashMap<String, Integer> stringsToVTCodes = new HashMap<>();
-
-    //Antialiasing rendering
-    protected transient static final RenderingHints antialiasing = new RenderingHints(
-            RenderingHints.KEY_ANTIALIASING,
-            RenderingHints.VALUE_ANTIALIAS_ON);
 
     protected enum ToolBarSide {
         eTOP("top"),
@@ -2883,7 +2877,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (layoutTrack != null) {
             foundTrack = layoutTrack;
             foundLocation = layoutTrack.getCoordsForConnectionType(foundHitPointType);
-            foundNeedsConnect = layoutTrack.isDisconnected(foundHitPointType);
+            ///foundNeedsConnect = layoutTrack.isDisconnected(foundHitPointType);
             result = true;
         }
         return result;
