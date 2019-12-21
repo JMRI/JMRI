@@ -180,6 +180,10 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
+        // Clear flag
+        atomicBoolean.set(false);
+        // Turn light off
+        turnout.setCommandedState(Turnout.CLOSED);
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
@@ -408,6 +412,7 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
         
         turnout = InstanceManager.getDefault(TurnoutManager.class).provide("IT1");
         expressionTurnout.setTurnout(turnout);
+        turnout.setCommandedState(Turnout.THROWN);
         
 	logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);

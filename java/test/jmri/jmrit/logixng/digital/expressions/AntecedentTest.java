@@ -62,6 +62,8 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         return String.format(
                 "Antecedent: R1%n" +
                 "   ? E1%n" +
+                "      Always true%n" +
+                "   ? E2%n" +
                 "      Socket not connected%n");
     }
     
@@ -75,6 +77,8 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
                 "            ? E%n" +
                 "               Antecedent: R1%n" +
                 "                  ? E1%n" +
+                "                     Always true%n" +
+                "                  ? E2%n" +
                 "                     Socket not connected%n" +
                 "            ! A1%n" +
                 "               Set the atomic boolean to true%n" +
@@ -433,6 +437,11 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionAntecedent);
         ifThenElse.getChild(0).connect(maleSocket2);
+        
+        DigitalExpressionBean childExpression = new True("IQDE322", null);
+        MaleSocket maleSocketChild =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(childExpression);
+        maleSocket2.getChild(0).connect(maleSocketChild);
         
         _base = expressionAntecedent;
         _baseMaleSocket = maleSocket2;

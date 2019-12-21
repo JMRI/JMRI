@@ -184,6 +184,11 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
+        // Clear flag
+        atomicBoolean.set(false);
+        // Set the memory
+        memory.setValue("New value");
+        
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         
@@ -387,6 +392,7 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
         
         memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         expressionMemory.setMemory(memory);
+        memory.setValue("");
         
 	logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);

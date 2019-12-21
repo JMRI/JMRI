@@ -51,6 +51,7 @@ public class ReferenceUtilTest {
     
     @Test
     public void testIsReference() {
+        Assert.assertFalse("Is reference", ReferenceUtil.isReference(null));
         Assert.assertFalse("Is reference", ReferenceUtil.isReference("{}"));
         Assert.assertTrue("Is reference", ReferenceUtil.isReference("{A}"));
         Assert.assertTrue("Is reference", ReferenceUtil.isReference("{Abc 123}"));

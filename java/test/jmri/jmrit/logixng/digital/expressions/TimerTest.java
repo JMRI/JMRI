@@ -1,6 +1,8 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Category;
@@ -173,6 +175,17 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         JUnitAppender.assertErrorMessage("setTimerType must not be called when listeners are registered");
     }
     
+    private void sleep(long time) {
+        long startTime = System.currentTimeMillis();
+        while ((System.currentTimeMillis() - startTime) < time) {
+            try {
+                Thread.sleep(time);
+            } catch (InterruptedException ex) {
+                Assert.fail("failed due to InterruptedException");
+            }
+        }
+    }
+    
     @Test
     public void testSetTimerDelay() {
         // Disable the _conditionalNG. This will unregister the listeners
@@ -218,7 +231,8 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         // Execute the conditionalNG to evaluate the timer
         _conditionalNG.execute();
         // Check that the timer is not running
-        JUnitUtil.waitForNotHappening(()->{return _atomicBoolean.get();}, "timer has triggered", 2000);
+        sleep(1000);
+        Assert.assertFalse("timer has not triggered", _atomicBoolean.get());
         // Reset the timer. This will also execute the conditionalNG which in
         // turn will restart the timer again.
         _expressionTimer.reset();
@@ -229,7 +243,8 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         // Execute the conditionalNG to evaluate the timer
         _conditionalNG.execute();
         // Check that the timer is not running
-        JUnitUtil.waitForNotHappening(()->{return _atomicBoolean.get();}, "timer has triggered", 2000);
+        sleep(1000);
+        Assert.assertFalse("timer has not triggered", _atomicBoolean.get());
     }
     
     @Test
@@ -379,6 +394,24 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertEquals("Useful for holding a light lit after some time, until reset", TimerType.WAIT_ONCE_TRIG_UNTIL_RESET.getExplanation());
         Assert.assertEquals("Useful for logging a message repeatedly at some interval", TimerType.REPEAT_SINGLE_DELAY.getExplanation());
         Assert.assertEquals("Useful for turning a light on and off repeatedly at some interval", TimerType.REPEAT_DOUBLE_DELAY.getExplanation());
+    }
+    
+    @Test
+    @Override
+    public void testEnableAndEvaluate() {
+        // Not implemented.
+        // This method is implemented for other digital expressions so no need
+        // to add support here. It doesn't need to be tested for every digital
+        // expression.
+    }
+    
+    @Test
+    @Override
+    public void testDebugConfig() {
+        // Not implemented.
+        // This method is implemented for other digital expressions so no need
+        // to add support here. It doesn't need to be tested for every digital
+        // expression.
     }
     
     // The minimal setup for log4J

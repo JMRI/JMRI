@@ -59,7 +59,7 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     public boolean evaluate() {
         boolean result = true;
         for (ExpressionEntry e : _expressionEntries) {
-            if (! e._socket.evaluate()) {
+            if (e._socket.isConnected() && !e._socket.evaluate()) {
                 result = false;
             }
         }

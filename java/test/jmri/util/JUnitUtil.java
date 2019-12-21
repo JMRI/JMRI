@@ -373,51 +373,6 @@ public class JUnitUtil {
     }
 
     /**
-     * Wait for a specific condition to be true, without having to wait longer,
-     * but fail if the condition happens.
-     * This method is the opposite of waitFor()
-     * <p>
-     * To be used in tests, will do an assert if the condition is true before
-     * total delay is longer than time
-     * <p>
-     * Typical use:
-     * <code>JUnitUtil.waitForNotHappening(()->{return replyVariable != null;},"reply received", 1000)</code>
-     *
-     * @param condition condition being waited for
-     * @param name      name of condition being waited for; will appear in
-     *                  Assert.fail if condition not true fast enough
-     * @param time      Delay in msec
-     */
-    static public void waitForNotHappening(ReleaseUntil condition, String name, int time) {
-        if (javax.swing.SwingUtilities.isEventDispatchThread()) {
-            log.error("Cannot use waitFor on Swing thread", new Exception());
-            return;
-        }
-        int delay = 0;
-        try {
-            while (delay < time) {
-                if (condition.ready()) {
-                    Assert.fail("\"" + name + "\" did occur in time");
-                }
-                int priority = Thread.currentThread().getPriority();
-                try {
-                    Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-                    Thread.sleep(WAITFOR_DELAY_STEP);
-                    delay += WAITFOR_DELAY_STEP;
-                } catch (InterruptedException e) {
-                    Assert.fail("failed due to InterruptedException");
-                } finally {
-                    Thread.currentThread().setPriority(priority);
-                }
-            }
-        } catch (Exception ex) {
-            Assert.fail("Exception while waiting for \"" + name + "\" " + ex);
-        }
-        // If we are here, we have success since we didn't want the condition
-        // to happen.
-    }
-
-    /**
      * Wait for a specific condition to be true, without having to wait longer
      * <p>
      * To be used in tests, will do an assert if the total delay is longer than

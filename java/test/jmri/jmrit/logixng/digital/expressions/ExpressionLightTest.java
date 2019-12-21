@@ -180,6 +180,10 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
+        // Clear flag
+        atomicBoolean.set(false);
+        // Turn light off
+        light.setCommandedState(Light.OFF);
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         // The action is not yet executed so the atomic boolean should be false
@@ -404,6 +408,7 @@ public class ExpressionLightTest extends AbstractDigitalExpressionTestBase {
         
         light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         expressionLight.setLight(light);
+        light.setCommandedState(Light.ON);
         
 	logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);

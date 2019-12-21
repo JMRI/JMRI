@@ -135,6 +135,24 @@ public class FalseTest extends AbstractDigitalExpressionTestBase {
         t.reset();
     }
     
+    @Test
+    @Override
+    public void testEnableAndEvaluate() {
+        // Not implemented.
+        // This method is implemented for other digital expressions so no need
+        // to add support here. It doesn't need to be tested for every digital
+        // expression.
+    }
+    
+    @Test
+    @Override
+    public void testDebugConfig() {
+        // Not implemented.
+        // This method is implemented for other digital expressions so no need
+        // to add support here. It doesn't need to be tested for every digital
+        // expression.
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {

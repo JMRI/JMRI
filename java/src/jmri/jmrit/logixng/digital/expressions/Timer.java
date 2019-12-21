@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Timer extends AbstractDigitalExpression {
 
-    private final java.util.Timer _timer;
+    private java.util.Timer _timer;
     private TimerTask _timerTask;
     private TimerType _timerType = TimerType.WAIT_ONCE_TRIG_ONCE;
     private boolean _listenersAreRegistered = false;
@@ -146,24 +146,33 @@ public class Timer extends AbstractDigitalExpression {
         getConditionalNG().execute();
     }
     
-    private void startTimer() {
-//        System.out.println("timer.startTimer()");
+    private TimerTask getNewTimerTask() {
         final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
         
+        return new TimerTask() {
+            @Override
+            public void run() {
+                _timerStatusRef.set(TimerStatus.FINISHED);
+                c.execute();
+            }
+        };
+    }
+    
+    private void scheduleTimer(long delay) {
+        try {
+            _timer.schedule(getNewTimerTask(), delay);
+        } catch (IllegalStateException e) {
+            _timer.cancel();
+            _timer = new java.util.Timer("LogixNG ExpressionTimer timer thread", true);
+            _timer.schedule(getNewTimerTask(), _delayOff);
+        }
+    }
+    
+    private void startTimer() {
         // Ensure timer is not running
         if (_timerTask != null) _timerTask.cancel();
         
         _timerStatusRef.set(TimerStatus.STARTED);
-        
-        _timerTask = new TimerTask() {
-            @Override
-            public void run() {
-//                System.out.println("timer: Timer has trigged. Run ConditionalNG.execute()");
-                _timerStatusRef.set(TimerStatus.FINISHED);
-                c.execute();
-//                System.out.println("timer: Timer has trigged. Run ConditionalNG.execute() done");
-            }
-        };
         
         switch (_timerType) {
             case WAIT_ONCE_TRIG_ONCE:
@@ -171,11 +180,13 @@ public class Timer extends AbstractDigitalExpression {
             case WAIT_ONCE_TRIG_UNTIL_RESET:
                 // fall through
             case REPEAT_SINGLE_DELAY:
-                _timer.schedule(_timerTask, _delayOff);
+                scheduleTimer(_delayOff);
+//                _timer.schedule(_timerTask, _delayOff);
                 break;
                 
             case REPEAT_DOUBLE_DELAY:
-                _timer.schedule(_timerTask, _onOrOff ? _delayOn : _delayOff);
+                scheduleTimer(_onOrOff ? _delayOn : _delayOff);
+//                _timer.schedule(_timerTask, _onOrOff ? _delayOn : _delayOff);
                 break;
                 
             default:

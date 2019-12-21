@@ -180,6 +180,10 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testExpression() throws SocketAlreadyConnectedException, JmriException {
+        // Clear flag
+        atomicBoolean.set(false);
+        // Turn light off
+        sensor.setCommandedState(Sensor.INACTIVE);
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
@@ -416,6 +420,7 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
         
         sensor = InstanceManager.getDefault(SensorManager.class).provide("IS1");
         expressionSensor.setSensor(sensor);
+        sensor.setCommandedState(Sensor.ACTIVE);
         
 	logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);

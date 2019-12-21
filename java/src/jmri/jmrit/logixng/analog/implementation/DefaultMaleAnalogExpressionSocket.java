@@ -396,7 +396,7 @@ public class DefaultMaleAnalogExpressionSocket extends AbstractMaleSocket implem
         public boolean _forceResult = false;
         
         // The result if the result is forced.
-        public float _result = 0.0f;
+        public double _result = 0.0f;
         
     }
     
