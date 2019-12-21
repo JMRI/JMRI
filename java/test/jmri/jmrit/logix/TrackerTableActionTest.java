@@ -46,7 +46,7 @@ public class TrackerTableActionTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
         panel.setVisible(false);
 
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
@@ -101,7 +101,7 @@ public class TrackerTableActionTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
         panel.setVisible(false);
 
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);
@@ -141,7 +141,7 @@ public class TrackerTableActionTest {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
         panel.setVisible(false);
 
         TrackerTableAction tta = jmri.InstanceManager.getDefault(TrackerTableAction.class);

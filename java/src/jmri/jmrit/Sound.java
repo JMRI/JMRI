@@ -151,7 +151,9 @@ public class Sound {
         }
     }
     
+    /** {@inheritDoc} */
     @Override
+    @SuppressWarnings("deprecation") // finalize deprecated in Java 9, but not yet removed
     public void finalize() throws Throwable {
         try {
             if (!streaming) {
@@ -358,6 +360,7 @@ public class Sound {
             this.url = url;
         }
 
+        /** {@inheritDoc} */
         @Override
         public void run() {
             // Note: some of the following is based on code from 
