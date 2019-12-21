@@ -36,31 +36,13 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
     private final FemaleDigitalExpressionSocket _secondaryExpressionSocket;
     private boolean _lastMainResult = false;
     
+    
     public ResetOnTrue(String sys, String user) {
         super(sys, user);
         _primaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E1");
         _secondaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
                 .createFemaleSocket(this, this, "E2");
-    }
-    
-    public ResetOnTrue(String sys, String user,
-            MaleDigitalExpressionSocket primaryExpression,
-            MaleDigitalExpressionSocket secondaryExpression) {
-        
-        super(sys, user);
-        
-        _primaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
-        _secondaryExpressionSocket = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E2");
-        
-        try {
-            _primaryExpressionSocket.connect(primaryExpression);
-            _secondaryExpressionSocket.connect(secondaryExpression);
-        } catch (SocketAlreadyConnectedException ex) {
-            log.error("socket is already connected", ex);
-        }
     }
     
     /** {@inheritDoc} */

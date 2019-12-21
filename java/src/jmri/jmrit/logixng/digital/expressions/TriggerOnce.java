@@ -31,9 +31,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     private String _childExpressionSystemName;
     private final FemaleDigitalExpressionSocket _childExpression;
     private boolean _childLastState = false;
-//    private ActionAtomicBoolean actionAtomicBoolean;
-//    private AtomicBoolean atomicBoolean;
-//    private Memory memory;
+    
     
     public TriggerOnce(String sys, String user) {
         
@@ -43,26 +41,12 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
                 .createFemaleSocket(this, this, "E");
     }
     
-    public TriggerOnce(String sys, String user, MaleDigitalExpressionSocket expression) {
-        
-        super(sys, user);
-        
-        _childExpression = InstanceManager.getDefault(DigitalExpressionManager.class)
-                .createFemaleSocket(this, this, "E");
-        
-        try {
-            _childExpression.connect(expression);
-        } catch (SocketAlreadyConnectedException ex) {
-            log.error("socket is already connected", ex);
-        }
-    }
-    
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
         return Category.OTHER;
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public boolean isExternal() {
