@@ -160,11 +160,14 @@ public class Timer extends AbstractDigitalExpression {
     
     private void scheduleTimer(long delay) {
         try {
-            _timer.schedule(getNewTimerTask(), delay);
+            _timerTask = getNewTimerTask();
+            _timer.schedule(_timerTask, delay);
         } catch (IllegalStateException e) {
+            _timerTask.cancel();
             _timer.cancel();
+            _timerTask = getNewTimerTask();
             _timer = new java.util.Timer("LogixNG ExpressionTimer timer thread", true);
-            _timer.schedule(getNewTimerTask(), _delayOff);
+            _timer.schedule(_timerTask, _delayOff);
         }
     }
     
