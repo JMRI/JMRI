@@ -9,6 +9,10 @@ package jmri.jmrit.operations.trains.configurexml;
  */
 public class Xml {
 
+    private Xml(){
+        // class of constants
+    }
+
     // TrainIconXml.java
     static final String TRAIN = "train"; // NOI18N
     static final String TRAINICON = "trainicon"; // NOI18N
