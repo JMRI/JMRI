@@ -575,12 +575,12 @@ public class LayoutSlip extends LayoutTurnout {
 
             if (useRectangles) {
                 // calculate turnout's left control rectangle
-                Rectangle2D leftRectangle = layoutEditor.trackControlCircleRectAt(leftCenter);
+                Rectangle2D leftRectangle = layoutEditor.layoutEditorControlCircleRectAt(leftCenter);
                 if (leftRectangle.contains(hitPoint)) {
                     //point is in this turnout's left control rectangle
                     result = SLIP_LEFT;
                 }
-                Rectangle2D rightRectangle = layoutEditor.trackControlCircleRectAt(rightCenter);
+                Rectangle2D rightRectangle = layoutEditor.layoutEditorControlCircleRectAt(rightCenter);
                 if (rightRectangle.contains(hitPoint)) {
                     //point is in this turnout's right control rectangle
                     result = SLIP_RIGHT;
@@ -603,7 +603,7 @@ public class LayoutSlip extends LayoutTurnout {
             // see if the passed in point is in one of those rectangles
             // we can create a rectangle for the passed in point and then
             // test if any of the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackEditControlRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.layoutEditorControlRectAt(hitPoint);
 
             if (!requireUnconnected || (getConnectA() == null)) {
                 //check the A connection point
@@ -1492,22 +1492,22 @@ public class LayoutSlip extends LayoutTurnout {
     protected void highlightUnconnected(Graphics2D g2, int specificType) {
         if (((specificType == NONE) || (specificType == SLIP_A))
                 && (getConnectA() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
+            g2.fill(trackControlCircleAt(getCoordsA()));
         }
 
         if (((specificType == NONE) || (specificType == SLIP_B))
                 && (getConnectB() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
+            g2.fill(trackControlCircleAt(getCoordsB()));
         }
 
         if (((specificType == NONE) || (specificType == SLIP_C))
                 && (getConnectC() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
+            g2.fill(trackControlCircleAt(getCoordsC()));
         }
 
         if (((specificType == NONE) || (specificType == SLIP_D))
                 && (getConnectD() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
+            g2.fill(trackControlCircleAt(getCoordsD()));
         }
     }
 
@@ -1532,9 +1532,9 @@ public class LayoutSlip extends LayoutTurnout {
                 }
                 Point2D rightCircleCenter = getCoordsRight();
                 if (layoutEditor.isTurnoutFillControlCircles()) {
-                    g2.fill(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                    g2.fill(trackControlCircleAt(rightCircleCenter));
                 } else {
-                    g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                    g2.draw(trackControlCircleAt(rightCircleCenter));
                 }
                 if (stateA != Turnout.CLOSED) {
                     g2.setColor(foregroundColor);
@@ -1554,18 +1554,18 @@ public class LayoutSlip extends LayoutTurnout {
                 // drawHidden left/right turnout control circles
                 Point2D leftCircleCenter = getCoordsLeft();
                 if (layoutEditor.isTurnoutFillControlCircles()) {
-                    g2.fill(layoutEditor.trackControlCircleAt(leftCircleCenter));
+                    g2.fill(trackControlCircleAt(leftCircleCenter));
                 } else {
-                    g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+                    g2.draw(trackControlCircleAt(leftCircleCenter));
                 }
                 if (stateB != Turnout.CLOSED) {
                     g2.setColor(foregroundColor);
                 }
             } else {
                 Point2D rightCircleCenter = getCoordsRight();
-                g2.draw(layoutEditor.trackControlCircleAt(rightCircleCenter));
+                g2.draw(trackControlCircleAt(rightCircleCenter));
                 Point2D leftCircleCenter = getCoordsLeft();
-                g2.draw(layoutEditor.trackControlCircleAt(leftCircleCenter));
+                g2.draw(trackControlCircleAt(leftCircleCenter));
             }
         }
     } // drawTurnoutControls

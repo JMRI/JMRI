@@ -1702,7 +1702,7 @@ public class PositionablePoint extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -1829,7 +1829,7 @@ public class PositionablePoint extends LayoutTrack {
         if ((specificType == LayoutTrack.NONE) || (specificType == LayoutTrack.POS_POINT)) {
             if ((getConnect1() == null)
                     || ((getType() == ANCHOR) && (getConnect2() == null))) {
-                g2.fill(layoutEditor.trackControlCircleAt(getCoordsCenter()));
+                g2.fill(trackControlCircleAt(getCoordsCenter()));
             }
         }
     }
@@ -1857,7 +1857,7 @@ public class PositionablePoint extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsCenter()));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsCenter()));
     }   // drawEditControls
 
     /**

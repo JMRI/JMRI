@@ -136,6 +136,27 @@ public abstract class LayoutTrack {
         return layoutEditor.getLayoutEditorToolBarPanel();
     }
 
+    //these are convenience methods to return circles & rectangle used to draw onscreen
+    //
+    //compute the control point rect at inPoint; use the turnout circle size
+    public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
+        return trackControlCircleAt(inPoint);
+    }
+
+    //compute the turnout circle at inPoint (used for drawing)
+    public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
+        return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
+                inPoint.getY() - layoutEditor.circleRadius, 
+                layoutEditor.circleDiameter, layoutEditor.circleDiameter);
+    }
+
+    //compute the turnout circle control rect at inPoint
+    public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
+        return new Rectangle2D.Double(inPoint.getX() - layoutEditor.circleRadius,
+                inPoint.getY() - layoutEditor.circleRadius, 
+                layoutEditor.circleDiameter, layoutEditor.circleDiameter);
+    }
+
     protected Color getColorForTrackBlock(
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
         Color result = ColorUtil.CLEAR;  // transparent
