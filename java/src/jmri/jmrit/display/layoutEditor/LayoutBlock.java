@@ -917,7 +917,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private JColorChooser occupiedColorChooser = null;
     private JColorChooser extraColorChooser = null;
 
-    protected void editLayoutBlock(Component callingPane) {
+    public void editLayoutBlock(Component callingPane) {
         LayoutBlockEditAction beanEdit = new LayoutBlockEditAction();
         if (block == null) {
             //Block may not have been initialised due to an error so manually set it in the edit window

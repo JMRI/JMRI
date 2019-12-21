@@ -355,6 +355,9 @@ First JMRI 4.17.7 files are available in the usual way at:
 http://builds.jmri.org/jenkins/job/TestReleases/job/4.17.7
 
 Feedback appreciated. I would like to release this later today or tomorrow morning if the files are OK.
+
+Note that the purpose of this check is to make sure that the _files_ were built OK.  If you find any new problems in the code, great, let's fix those for the next test release.  (Or even better, let's learn to do more checking of the development releases leading up to the test release build)
+
 ```
 
 - *Wait for some replies* before proceeding
