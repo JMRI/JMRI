@@ -17,7 +17,6 @@ import org.junit.runners.Suite;
         RoutesTableFrameTest.class,
         RoutesTableModelTest.class,
         RouteTest.class,
-        XmlTest.class,
         jmri.jmrit.operations.routes.tools.PackageTest.class,
 })
 
