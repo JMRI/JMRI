@@ -4,22 +4,14 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
-
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
-
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
-import jmri.NamedBeanPropertyDescriptor;
-import jmri.ProvidingManager;
-import jmri.ProxyManager;
+import jmri.*;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
 import jmri.util.com.dictiography.collections.IndexedTreeSet;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -369,6 +361,57 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
             throw new IllegalArgumentException("System name " + systemName + " failed to match"); // NOI18N
         }
         return index;
+    }
+
+    /**
+     * Shared method to create a systemName based on the address base, the prefix and manager class.
+     *
+     * @param curAddress base address to use
+     * @param prefix system prefix to use
+     * @param managerType BeanType manager (method is used for Turnout and Sensor Managers)
+     * @return a valid system name for this connection
+     * @throws JmriException if systemName cannot be created
+     */
+    String createSystemName(String curAddress, String prefix, Class managerType) throws JmriException {
+        for (Manager<E> m : mgrs) {
+            if (prefix.equals(m.getSystemPrefix()) && managerType.equals(m.getClass())) {
+                try {
+                    if (managerType == TurnoutManager.class) {
+                        return ((TurnoutManager) m).createSystemName(curAddress, prefix);
+                    } else if (managerType == SensorManager.class) {
+                        return ((SensorManager) m).createSystemName(curAddress, prefix);
+                    } else {
+                        log.warn("createSystemName requested for incompatible Manager");
+                    }
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
+            }
+        }
+        throw new jmri.JmriException("Manager could not be found for System Prefix " + prefix);
+    }
+
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix, char typeLetter) throws jmri.JmriException {
+        for (Manager<E> m : mgrs) {
+            log.debug("NextValidAddress requested for {}", curAddress);
+            if (prefix.equals(m.getSystemPrefix()) && typeLetter == m.typeLetter()) {
+                try {
+                    switch (typeLetter) { // use #getDefaultManager() instead?
+                        case 'T':
+                            return ((TurnoutManager) m).getNextValidAddress(curAddress, prefix);
+                        case 'S':
+                            return ((SensorManager) m).getNextValidAddress(curAddress, prefix);
+                        case 'R':
+                            return ((ReporterManager) m).getNextValidAddress(curAddress, prefix);
+                        default:
+                            return null;
+                    }
+                } catch (jmri.JmriException ex) {
+                    throw ex;
+                }
+            }
+        }
+        return null;
     }
 
     /** {@inheritDoc} */
