@@ -1,22 +1,14 @@
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 
-import java.awt.Component;
-import java.awt.Container;
-import java.awt.FlowLayout;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.text.MessageFormat;
 import javax.annotation.Nonnull;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRootPane;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import jmri.InvokeOnGuiThread;
+import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JmriJFrame;
 import jmri.util.MathUtil;
 
@@ -49,7 +41,7 @@ public class EnterGridSizesDialog {
 
     //display dialog for entering grid sizes
     @InvokeOnGuiThread
-    protected void enterGridSizes() {
+    public void enterGridSizes() {
         if (enterGridSizesOpen) {
             enterGridSizesFrame.setVisible(true);
             return;

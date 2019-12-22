@@ -1494,6 +1494,8 @@
 
 <mapID target="package.jmri.jmrit.powerpanel.PowerPanelFrame" url="package/jmri/jmrit/powerpanel/PowerPanelFrame.shtml"/>
 
+<mapID target="html.doc.Technical.gitdeveloper_release" url="html/doc/Technical/gitdeveloper.shtml#release"/>
+
 <mapID target="html.hardware.loconet.StandaloneLocoNet_routeconnprefix" url="html/hardware/loconet/StandaloneLocoNet.shtml#routeconnprefix"/>
 
 <mapID target="html.hardware.cmri.CMRI_L580" url="html/hardware/cmri/CMRI.shtml#L580"/>
