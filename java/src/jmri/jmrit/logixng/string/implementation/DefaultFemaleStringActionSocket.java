@@ -30,7 +30,7 @@ public final class DefaultFemaleStringActionSocket
     }
     
     @Override
-    public void setValue(String value) {
+    public void setValue(String value) throws Exception {
         if (isConnected()) {
             ((MaleStringActionSocket)getConnectedSocket()).setValue(value);
         }

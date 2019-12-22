@@ -56,7 +56,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws Exception {
         if (_childExpression.evaluate() && !_childLastState) {
             _childLastState = true;
             return true;

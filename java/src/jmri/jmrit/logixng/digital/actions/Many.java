@@ -70,7 +70,7 @@ public class Many extends AbstractDigitalAction
 */    
     /** {@inheritDoc} */
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         for (ActionEntry actionEntry : _actionEntries) {
             actionEntry._socket.execute();
         }

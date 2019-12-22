@@ -34,6 +34,6 @@ public interface DigitalActionWithEnableExecution {
      * <p>
      * Note that enable execution for LogixNG is the equivalent of enable for Logix.
      */
-    void evaluateOnly();
+    void evaluateOnly() throws Exception;
     
 }

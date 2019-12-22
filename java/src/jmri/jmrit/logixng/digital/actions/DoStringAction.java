@@ -52,7 +52,7 @@ public class DoStringAction
     
     /** {@inheritDoc} */
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         String result = _stringExpressionSocket.evaluate();
         
         _stringActionSocket.setValue(result);

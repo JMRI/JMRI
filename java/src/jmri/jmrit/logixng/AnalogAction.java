@@ -13,6 +13,6 @@ public interface AnalogAction extends Base {
      * @param value the value. The male socket that holds this action ensures
      * that this value is not Double.NaN or an infinite value.
      */
-    public void setValue(double value);
+    public void setValue(double value) throws Exception;
     
 }

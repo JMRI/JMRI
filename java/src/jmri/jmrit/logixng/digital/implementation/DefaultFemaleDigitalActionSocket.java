@@ -43,7 +43,7 @@ public final class DefaultFemaleDigitalActionSocket
     }
     
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         if (isConnected()) {
             ((MaleDigitalActionSocket)getConnectedSocket()).execute();
         }

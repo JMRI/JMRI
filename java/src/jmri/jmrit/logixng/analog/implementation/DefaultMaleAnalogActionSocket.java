@@ -104,7 +104,7 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
     /**
      * Set the value of the AnalogActionBean.
      */
-    private void internalSetValue(double value) {
+    private void internalSetValue(double value) throws Exception {
         if (Double.isNaN(value)) {
             throw new IllegalArgumentException("The value is NaN");
         }
@@ -119,7 +119,7 @@ public class DefaultMaleAnalogActionSocket extends AbstractMaleSocket implements
     
     /** {@inheritDoc} */
     @Override
-    public void setValue(double value) {
+    public void setValue(double value) throws Exception {
         if (! _enabled) {
             return;
         }

@@ -217,7 +217,7 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
     
     @SuppressFBWarnings(value = {"DM_EXIT"},
             justification = "This is a test method that must be removed before merging this PR")
-    public void testLogixNGs() throws PropertyVetoException {
+    public void testLogixNGs() throws PropertyVetoException, Exception {
         
         // FOR TESTING ONLY. REMOVE LATER.
         if (1==0) {
@@ -329,15 +329,18 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
                     MaleSocket socketTurnout5 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionTurnout5);
                     expressionAnd.getChild(2).connect(socketTurnout5);
                     
-                    Antecedent expressionAntecedent = new Antecedent(getSystemNamePrefix()+"DE:AUTO:00008", null, "R1");
+                    Antecedent expressionAntecedent = new Antecedent(getSystemNamePrefix()+"DE:AUTO:00008", null);
+                    expressionAntecedent.setAntecedent("R1");
                     MaleSocket socketAntecedent = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionAntecedent);
                     socketOr.getChild(index++).connect(socketAntecedent);
                     
-                    Antecedent expressionAntecedent2 = new Antecedent(getSystemNamePrefix()+"DE:AUTO:00009", "My Antecedent expression", "R1");
+                    Antecedent expressionAntecedent2 = new Antecedent(getSystemNamePrefix()+"DE:AUTO:00009", "My Antecedent expression");
+                    expressionAntecedent2.setAntecedent("R1");
                     MaleSocket socketAntecedent2 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionAntecedent2);
                     socketOr.getChild(index++).connect(socketAntecedent2);
                     
-                    Antecedent expressionAntecedent3 = new Antecedent(getSystemNamePrefix()+"DE:AUTO:00010", "My Antecedent expression", "R1");
+                    Antecedent expressionAntecedent3 = new Antecedent(getSystemNamePrefix()+"DE:AUTO:00010", "My Antecedent expression");
+                    expressionAntecedent3.setAntecedent("R1");
                     MaleSocket socketAntecedent3 = InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionAntecedent3);
                     socketAntecedent2.getChild(0).connect(socketAntecedent3);
                     

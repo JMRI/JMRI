@@ -19,6 +19,9 @@ import jmri.jmrit.logixng.MaleStringActionSocket;
 import jmri.jmrit.logixng.StringActionBean;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
+import jmri.util.Log4JUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Every StringActionBean has an DefaultMaleStringActionSocket as its parent.
@@ -29,6 +32,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
 
     private final StringActionBean _action;
     private DebugConfig _debugConfig = null;
+    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
     private boolean _enabled = true;
     
     
@@ -76,6 +80,15 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
         _action.setLock(lock);
     }
     
+    public ErrorHandlingType getErrorHandlingType() {
+        return _errorHandlingType;
+    }
+
+    public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
+    {
+        _errorHandlingType = errorHandlingType;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -93,7 +106,7 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
     /**
      * Set a string value.
      */
-    public void setValue(String value) {
+    public void setValue(String value) throws Exception {
         if (! _enabled) {
             return;
         }
@@ -102,7 +115,28 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
                 && ((StringActionDebugConfig)_debugConfig)._dontExecute) {
             return;
         }
-        _action.setValue(value);
+        
+        try {
+            _action.setValue(value);
+        } catch (Exception e) {
+            switch (_errorHandlingType) {
+                case SHOW_DIALOG_BOX:
+                    // We don't show a dialog box yet so fall thrue.
+                case LOG_ERROR:
+                    log.error("action {} thrown an exception: {}", _action.toString(), e);
+                    break;
+                    
+                case LOG_ERROR_ONCE:
+                    Log4JUtil.warnOnce(log, "action {} thrown an exception: {}", _action.toString(), e);
+                    break;
+                    
+                case THROW:
+                    throw e;
+                    
+                default:
+                    throw e;
+            }
+        }
     }
 
     @Override
@@ -343,5 +377,8 @@ public class DefaultMaleStringActionSocket extends AbstractMaleSocket implements
         public boolean _dontExecute = false;
         
     }
+    
+    
+    private final static Logger log = LoggerFactory.getLogger(DefaultMaleStringActionSocket.class);
 
 }

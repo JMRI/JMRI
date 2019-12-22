@@ -104,7 +104,7 @@ public class ExpressionScript extends AbstractDigitalExpression {
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws Exception {
         if (_scriptClass != null) {
             return _scriptClass.evaluate();
         } else {

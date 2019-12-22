@@ -19,6 +19,9 @@ import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.MaleDigitalActionWithChangeSocket;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
 import jmri.jmrit.logixng.implementation.InternalBase;
+import jmri.util.Log4JUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Every DigitalBooleanActionBean has an DefaultMaleDigitalBooleanActionSocket as its parent.
@@ -29,6 +32,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
 
     private final DigitalBooleanActionBean _action;
     private DebugConfig _debugConfig = null;
+    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
     private boolean _enabled = true;
     
     
@@ -76,6 +80,15 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
         _action.setLock(lock);
     }
     
+    public ErrorHandlingType getErrorHandlingType() {
+        return _errorHandlingType;
+    }
+
+    public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
+    {
+        _errorHandlingType = errorHandlingType;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -90,7 +103,7 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
     
     /** {@inheritDoc} */
     @Override
-    public void execute(boolean hasChangedToTrue) {
+    public void execute(boolean hasChangedToTrue) throws Exception {
         if (! _enabled) {
             return;
         }
@@ -99,7 +112,28 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
                 && ((DigitalActionWithChangeDebugConfig)_debugConfig)._dontExecute) {
             return;
         }
-        _action.execute(hasChangedToTrue);
+        
+        try {
+            _action.execute(hasChangedToTrue);
+        } catch (Exception e) {
+            switch (_errorHandlingType) {
+                case SHOW_DIALOG_BOX:
+                    // We don't show a dialog box yet so fall thrue.
+                case LOG_ERROR:
+                    log.error("action {} thrown an exception: {}", _action.toString(), e);
+                    break;
+                    
+                case LOG_ERROR_ONCE:
+                    Log4JUtil.warnOnce(log, "action {} thrown an exception: {}", _action.toString(), e);
+                    break;
+                    
+                case THROW:
+                    throw e;
+                    
+                default:
+                    throw e;
+            }
+        }
     }
 
     @Override
@@ -340,5 +374,8 @@ public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket im
         public boolean _dontExecute = false;
         
     }
+    
+    
+    private final static Logger log = LoggerFactory.getLogger(DefaultMaleDigitalBooleanActionSocket.class);
 
 }

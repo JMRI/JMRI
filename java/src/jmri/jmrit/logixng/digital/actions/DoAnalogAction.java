@@ -52,7 +52,7 @@ public class DoAnalogAction
     
     /** {@inheritDoc} */
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         double result = _analogExpressionSocket.evaluate();
         
         _analogActionSocket.setValue(result);

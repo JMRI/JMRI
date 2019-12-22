@@ -38,7 +38,7 @@ public final class DefaultFemaleAnalogActionSocket
 
     /** {@inheritDoc} */
     @Override
-    public void setValue(double value) {
+    public void setValue(double value) throws Exception {
         if (isConnected()) {
             ((MaleAnalogActionSocket)getConnectedSocket()).setValue(value);
         }

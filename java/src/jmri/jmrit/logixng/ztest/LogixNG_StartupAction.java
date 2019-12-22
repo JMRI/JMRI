@@ -28,7 +28,8 @@ public class LogixNG_StartupAction extends JmriAbstractAction {
     public void actionPerformed(ActionEvent e) {
         try {
             ((DefaultLogixNGManager)InstanceManager.getDefault(LogixNG_Manager.class)).testLogixNGs();
-        } catch (PropertyVetoException ex) {
+//        } catch (PropertyVetoException ex) {
+        } catch (Exception ex) {
             Logger.getLogger(LogixNG_StartupAction.class.getName()).log(Level.SEVERE, "exception thrown", ex);
         }
         /*

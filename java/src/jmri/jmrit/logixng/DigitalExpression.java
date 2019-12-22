@@ -1,8 +1,5 @@
 package jmri.jmrit.logixng;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-import javax.annotation.Nonnull;
-
 /**
  * DigitalExpressionBean is used in LogixNG to answer a question that can give
  * the answers 'true' or 'false'.
@@ -21,8 +18,9 @@ public interface DigitalExpression extends Base {
      * Evaluate this expression.
      * 
      * @return the result of the evaluation
+     * @throws java.lang.Exception if an exception occurs
      */
-    public boolean evaluate();
+    public boolean evaluate() throws Exception;
     
     /**
      * Reset the evaluation.

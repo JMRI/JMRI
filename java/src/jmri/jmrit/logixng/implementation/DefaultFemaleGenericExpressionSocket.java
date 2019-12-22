@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.implementation;
 
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -203,7 +202,7 @@ public class DefaultFemaleGenericExpressionSocket
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluateBoolean() {
+    public boolean evaluateBoolean() throws Exception {
 //        System.err.format("evaluateBoolean: %b%n", isConnected());
         if (isConnected()) {
 //            System.err.format("socket type: %s%n", _currentSocketType);
@@ -219,7 +218,7 @@ public class DefaultFemaleGenericExpressionSocket
     }
 
     @Override
-    public double evaluateDouble() {
+    public double evaluateDouble() throws Exception {
         if (isConnected()) {
             if (_currentSocketType == SocketType.ANALOG) {
                 return ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate();
@@ -232,7 +231,7 @@ public class DefaultFemaleGenericExpressionSocket
     }
 
     @Override
-    public String evaluateString() {
+    public String evaluateString() throws Exception {
         if (isConnected()) {
             if (_currentSocketType == SocketType.STRING) {
                 return ((MaleStringExpressionSocket)getConnectedSocket()).evaluate();
@@ -246,7 +245,7 @@ public class DefaultFemaleGenericExpressionSocket
 
     @Override
     @CheckForNull
-    public Object evaluateGeneric() {
+    public Object evaluateGeneric() throws Exception {
         if (isConnected()) {
             switch (_currentSocketType) {
                 case DIGITAL:
@@ -479,7 +478,7 @@ public class DefaultFemaleGenericExpressionSocket
         
         /** {@inheritDoc} */
         @Override
-        public double evaluate() {
+        public double evaluate() throws Exception {
             return DefaultFemaleGenericExpressionSocket.this.evaluateDouble();
         }
 
@@ -597,7 +596,7 @@ public class DefaultFemaleGenericExpressionSocket
         
         /** {@inheritDoc} */
         @Override
-        public boolean evaluate() {
+        public boolean evaluate() throws Exception {
             return DefaultFemaleGenericExpressionSocket.this.evaluateBoolean();
         }
 
@@ -715,7 +714,7 @@ public class DefaultFemaleGenericExpressionSocket
         
         /** {@inheritDoc} */
         @Override
-        public String evaluate() {
+        public String evaluate() throws Exception {
             return DefaultFemaleGenericExpressionSocket.this.evaluateString();
         }
 

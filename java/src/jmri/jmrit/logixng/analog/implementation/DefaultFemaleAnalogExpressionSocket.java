@@ -31,7 +31,7 @@ public class DefaultFemaleAnalogExpressionSocket extends AbstractFemaleSocket
     
     /** {@inheritDoc} */
     @Override
-    public double evaluate() {
+    public double evaluate() throws Exception {
         if (isConnected()) {
             return ((MaleAnalogExpressionSocket)getConnectedSocket()).evaluate();
         } else {

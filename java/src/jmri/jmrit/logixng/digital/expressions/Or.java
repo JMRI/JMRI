@@ -57,7 +57,7 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws Exception {
         boolean result = false;
         for (ExpressionEntry e : _expressionEntries) {
             if (e._socket.isConnected() && e._socket.evaluate()) {

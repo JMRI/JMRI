@@ -19,6 +19,9 @@ import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
+import jmri.util.Log4JUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Every DigitalExpressionBean has an DefaultMaleDigitalExpressionSocket as its parent.
@@ -30,6 +33,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
     private final DigitalExpressionBean _expression;
     private boolean lastEvaluationResult = false;
     private DebugConfig _debugConfig = null;
+    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
     private boolean _enabled = true;
 
 
@@ -77,6 +81,15 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         _expression.setLock(lock);
     }
     
+    public ErrorHandlingType getErrorHandlingType() {
+        return _errorHandlingType;
+    }
+
+    public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
+    {
+        _errorHandlingType = errorHandlingType;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -91,7 +104,7 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws Exception {
         if (! _enabled) {
             return false;
         }
@@ -101,7 +114,29 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
             lastEvaluationResult = ((DigitalExpressionDebugConfig)_debugConfig)._result;
             return lastEvaluationResult;
         }
-        lastEvaluationResult = _expression.evaluate();
+        
+        try {
+            lastEvaluationResult = _expression.evaluate();
+        } catch (Exception e) {
+            switch (_errorHandlingType) {
+                case SHOW_DIALOG_BOX:
+                    // We don't show a dialog box yet so fall thrue.
+                case LOG_ERROR:
+                    log.error("expression {} thrown an exception: {}", _expression.toString(), e);
+                    return false;
+                    
+                case LOG_ERROR_ONCE:
+                    Log4JUtil.warnOnce(log, "expression {} thrown an exception: {}", _expression.toString(), e);
+                    return false;
+                    
+                case THROW:
+                    throw e;
+                    
+                default:
+                    throw e;
+            }
+        }
+        
         return lastEvaluationResult;
     }
 
@@ -350,5 +385,8 @@ public class DefaultMaleDigitalExpressionSocket extends AbstractMaleSocket imple
         public boolean _result = false;
         
     }
+    
+    
+    private final static Logger log = LoggerFactory.getLogger(DefaultMaleDigitalExpressionSocket.class);
 
 }

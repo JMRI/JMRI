@@ -12,6 +12,6 @@ public interface StringAction extends Base {
     /**
      * Set a string value.
      */
-    public void setValue(@Nonnull String value);
+    public void setValue(@Nonnull String value) throws Exception;
     
 }

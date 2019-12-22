@@ -35,7 +35,7 @@ public class ImportLogix {
         log.debug("Import Logix {} to LogixNG {}", _logix.getSystemName(), _logixNG.getSystemName());
     }
     
-    public void doImport() {
+    public void doImport() throws Exception {
         for (int i=0; i < _logix.getNumConditionals(); i++) {
             Conditional c = _logix.getConditional(_logix.getConditionalByNumberOrder(i));
             log.error("Import Conditional {} to ConditionalNG {}", c.getSystemName(), _logixNG.getSystemName());

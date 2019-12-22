@@ -76,7 +76,7 @@ public class ActionThrottle extends AbstractDigitalAction
     
     /** {@inheritDoc} */
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         
         int currentLocoAddress = -1;
         int newLocoAddress = -1;

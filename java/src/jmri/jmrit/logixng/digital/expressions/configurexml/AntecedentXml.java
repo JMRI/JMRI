@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.expressions.Antecedent;
@@ -64,7 +65,7 @@ public class AntecedentXml extends jmri.managers.configurexml.AbstractNamedBeanM
     }
     
     @Override
-    public boolean load(Element shared, Element perNode) {
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         List<Map.Entry<String, String>> expressionSystemNames = new ArrayList<>();
         
         Element actionElement = shared.getChild("expressions");
@@ -84,11 +85,16 @@ public class AntecedentXml extends jmri.managers.configurexml.AbstractNamedBeanM
         
         String antecedent = shared.getChild("antecedent").getText();
         
-        DigitalExpressionBean h;
+        Antecedent h;
         if (uname == null) {
-            h = new Antecedent(sys, null, antecedent, expressionSystemNames);
+            h = new Antecedent(sys, null, expressionSystemNames);
         } else {
-            h = new Antecedent(sys, uname, antecedent, expressionSystemNames);
+            h = new Antecedent(sys, uname, expressionSystemNames);
+        }
+        try {
+            h.setAntecedent(antecedent);
+        } catch (Exception e) {
+            throw new JmriConfigureXmlException("Antecedent.setAntecedent() has thrown exeception", e);
         }
 
         loadCommon(h, shared);

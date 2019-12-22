@@ -40,7 +40,7 @@ public class DigitalExpressionPluginAdapter extends AbstractDigitalExpression {
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws Exception {
         return _pluginExpression.evaluate();
     }
     

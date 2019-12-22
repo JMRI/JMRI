@@ -104,13 +104,13 @@ public class IfThenElse extends AbstractDigitalAction
     }
     
     @Override
-    public void evaluateOnly() {
+    public void evaluateOnly() throws Exception {
         _lastExpressionResult = _ifExpressionSocket.evaluate();
     }
     
     /** {@inheritDoc} */
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         _lastExpressionResult = _ifExpressionSocket.evaluate();
 
         if (_lastExpressionResult) {

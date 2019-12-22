@@ -15,7 +15,7 @@ public interface AnalogExpression extends Base {
      * expression throws an exception if this value is a Double.NaN or an
      * infinite number.
      */
-    public double evaluate();
+    public double evaluate() throws Exception;
     
     /**
      * Reset the evaluation.

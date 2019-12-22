@@ -31,7 +31,7 @@ public class DefaultFemaleStringExpressionSocket extends AbstractFemaleSocket
     
     /** {@inheritDoc} */
     @Override
-    public String evaluate() {
+    public String evaluate() throws Exception {
         if (isConnected()) {
             return ((MaleStringExpressionSocket)getConnectedSocket()).evaluate();
         } else {

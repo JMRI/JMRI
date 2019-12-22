@@ -21,6 +21,6 @@ public interface MaleAnalogExpressionSocket
      * If an error occurs and are handled, the method returns the value 0.0f.
      */
     @Override
-    public double evaluate();
+    public double evaluate() throws Exception;
 
 }

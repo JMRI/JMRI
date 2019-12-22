@@ -2,8 +2,12 @@ package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
+import javax.annotation.Nonnull;
+import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -13,27 +17,46 @@ import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.util.parser.ParserException;
+import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
+import jmri.jmrit.logixng.util.parser.Variable;
+import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
+import jmri.util.TypeConversionUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Evaluates to True if all of the children expressions evaluate to true.
+ * Evaluates to True if the formula evaluates to true
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Daniel Bergqvist Copyright 2019
  */
-public class And extends AbstractDigitalExpression implements FemaleSocketListener {
+public class Formula extends AbstractDigitalExpression implements FemaleSocketListener {
 
+    String _formula = "";
+    ExpressionNode _expressionNode;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     
-    public And(String sys, String user)
-            throws BadUserNameException, BadSystemNameException {
+    /**
+     * Create a new instance of Formula with system name and user name.
+     */
+    public Formula(@Nonnull String sys, @CheckForNull String user,
+            @Nonnull String formula)
+            throws ParserException {
         super(sys, user);
+        Objects.requireNonNull(formula, "antecedent must not be null");
+        setFormula(formula);
+//        _formula = formula;
         init();
     }
-    
-    public And(String sys, String user, List<Map.Entry<String, String>> expressionSystemNames)
-            throws BadUserNameException, BadSystemNameException {
+
+    public Formula(@Nonnull String sys, @CheckForNull String user,
+            @Nonnull String formula,
+            List<Map.Entry<String, String>> expressionSystemNames)
+            throws ParserException {
         super(sys, user);
+        Objects.requireNonNull(formula, "antecedent must not be null");
+        setFormula(formula);
+//        _formula = formula;
         setExpressionSystemNames(expressionSystemNames);
     }
 
@@ -57,14 +80,13 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() throws Exception {
-        boolean result = true;
-        for (ExpressionEntry e : _expressionEntries) {
-            if (e._socket.isConnected() && !e._socket.evaluate()) {
-                result = false;
-            }
+    public boolean evaluate() throws ParserException {
+        
+        if (_formula.isEmpty()) {
+            return false;
         }
-        return result;
+        
+        return TypeConversionUtil.convertToBoolean(_expressionNode.calculate(), false);
     }
     
     /** {@inheritDoc} */
@@ -85,14 +107,38 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
         return _expressionEntries.size();
     }
     
+    public void setChildCount(int count) {
+        // Is there too many children?
+        while (_expressionEntries.size() > count) {
+            int childNo = _expressionEntries.size()-1;
+            FemaleSocket socket = _expressionEntries.get(childNo)._socket;
+            if (socket.isConnected()) {
+                socket.disconnect();
+            }
+            _expressionEntries.remove(childNo);
+        }
+        
+        // Is there not enough children?
+        while (_expressionEntries.size() < count) {
+            _expressionEntries
+                    .add(new ExpressionEntry(
+                            InstanceManager.getDefault(DigitalExpressionManager.class)
+                                    .createFemaleSocket(this, this, getNewSocketName())));
+        }
+    }
+    
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "And_Short");
+        return Bundle.getMessage(locale, "Formula_Short");
     }
     
     @Override
     public String getLongDescription(Locale locale) {
-        return Bundle.getMessage(locale, "And_Long");
+        if (_formula.isEmpty()) {
+            return Bundle.getMessage(locale, "Formula_Long_Empty");
+        } else {
+            return Bundle.getMessage(locale, "Formula_Long", _formula);
+        }
     }
 
     private void setExpressionSystemNames(List<Map.Entry<String, String>> systemNames) {
@@ -112,7 +158,20 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     public String getExpressionSystemName(int index) {
         return _expressionEntries.get(index)._socketSystemName;
     }
-
+    
+    public String getFormula() {
+        return _formula;
+    }
+    
+    public final void setFormula(String formula) throws ParserException {
+        Map<String, Variable> variables = new HashMap<>();
+        RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+        _expressionNode = parser.parseExpression(formula);
+        // parseExpression() may throw an exception and we don't want to set
+        // the field _formula until we now parseExpression() has succeeded.
+        _formula = formula;
+    }
+    
     @Override
     public void connected(FemaleSocket socket) {
         boolean hasFreeSocket = false;
@@ -142,7 +201,7 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
         }
         firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void setup() {
@@ -176,12 +235,13 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     }
     
     
-    /* This class is public since ExpressionAndXml needs to access it. */
-    private static class ExpressionEntry {
+    
+    /* This class is public since ExpressionFormulaXml needs to access it. */
+    public static class ExpressionEntry {
         private String _socketSystemName;
         private final FemaleDigitalExpressionSocket _socket;
         
-        private ExpressionEntry(FemaleDigitalExpressionSocket socket, String socketSystemName) {
+        public ExpressionEntry(FemaleDigitalExpressionSocket socket, String socketSystemName) {
             _socketSystemName = socketSystemName;
             _socket = socket;
         }
@@ -189,14 +249,15 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
         private ExpressionEntry(FemaleDigitalExpressionSocket socket) {
             this._socket = socket;
         }
+        
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void registerListenersForThisClass() {
         // Do nothing
     }
-
+    
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
@@ -208,6 +269,5 @@ public class And extends AbstractDigitalExpression implements FemaleSocketListen
     public void disposeMe() {
     }
     
-    private final static Logger log = LoggerFactory.getLogger(And.class);
-    
+    private final static Logger log = LoggerFactory.getLogger(Formula.class);
 }

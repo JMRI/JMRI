@@ -31,7 +31,7 @@ public class DefaultFemaleDigitalExpressionSocket extends AbstractFemaleSocket
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws Exception {
         if (isConnected()) {
             return ((MaleDigitalExpressionSocket)getConnectedSocket())
                     .evaluate();

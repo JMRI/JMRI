@@ -57,7 +57,7 @@ public class OnChange extends AbstractDigitalBooleanAction
     
     /** {@inheritDoc} */
     @Override
-    public void execute(boolean hasChangedToTrue) {
+    public void execute(boolean hasChangedToTrue) throws Exception {
         if (_actionSocket.isConnected()) {
             switch (_whichChange) {
                 case CHANGE_TO_TRUE:

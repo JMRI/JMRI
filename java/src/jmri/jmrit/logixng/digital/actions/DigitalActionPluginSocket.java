@@ -33,7 +33,7 @@ public class DigitalActionPluginSocket extends AbstractDigitalAction {
     }
 
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         _actionPlugin.execute();
     }
 

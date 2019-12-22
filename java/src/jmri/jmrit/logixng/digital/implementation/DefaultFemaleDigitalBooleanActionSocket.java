@@ -31,7 +31,7 @@ public final class DefaultFemaleDigitalBooleanActionSocket
     }
     
     @Override
-    public void execute(boolean hasChangedToTrue) {
+    public void execute(boolean hasChangedToTrue) throws Exception {
         if (isConnected()) {
             ((MaleDigitalActionWithChangeSocket)getConnectedSocket())
                     .execute(hasChangedToTrue);

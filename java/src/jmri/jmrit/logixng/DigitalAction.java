@@ -27,6 +27,6 @@ public interface DigitalAction extends Base {
     /**
      * Execute this DigitalActionBean.
      */
-    public void execute();
+    public void execute() throws Exception;
     
 }

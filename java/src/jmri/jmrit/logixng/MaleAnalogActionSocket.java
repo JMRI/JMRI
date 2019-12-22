@@ -14,6 +14,6 @@ public interface MaleAnalogActionSocket
      * IllegalArgumentException before checking if an error has occured.
      */
     @Override
-    public void setValue(double value);
+    public void setValue(double value) throws Exception;
 
 }

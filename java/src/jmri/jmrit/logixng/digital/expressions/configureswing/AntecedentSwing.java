@@ -45,7 +45,7 @@ public class AntecedentSwing implements SwingConfiguratorInterface {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        Antecedent expression = new Antecedent(systemName, userName, "");
+        Antecedent expression = new Antecedent(systemName, userName);
         return InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expression);
     }
     

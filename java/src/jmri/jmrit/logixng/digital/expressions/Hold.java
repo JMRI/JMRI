@@ -56,7 +56,7 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws Exception {
         if (_isActive) {
             _isActive = _holdExpressionSocket.evaluate();
         } else {

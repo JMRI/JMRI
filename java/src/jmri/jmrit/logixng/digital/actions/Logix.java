@@ -70,13 +70,13 @@ public class Logix extends AbstractDigitalAction
     }
     
     @Override
-    public void evaluateOnly() {
+    public void evaluateOnly() throws Exception {
         _lastExpressionResult = _expressionSocket.evaluate();
     }
     
     /** {@inheritDoc} */
     @Override
-    public void execute() {
+    public void execute() throws Exception {
         _lastExpressionResult = _expressionSocket.evaluate();
         _actionSocket.execute(_lastExpressionResult);
     }

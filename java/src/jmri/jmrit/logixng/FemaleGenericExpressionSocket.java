@@ -65,7 +65,7 @@ public interface FemaleGenericExpressionSocket
      * 
      * @return the result of the evaluation
      */
-    public boolean evaluateBoolean();
+    public boolean evaluateBoolean() throws Exception;
     
     /**
      * Evaluate this expression.
@@ -76,7 +76,7 @@ public interface FemaleGenericExpressionSocket
      * expression throws an exception if this value is a Double.NaN or an
      * infinite number.
      */
-    public double evaluateDouble();
+    public double evaluateDouble() throws Exception;
     
     /**
      * Evaluate this expression.
@@ -85,7 +85,7 @@ public interface FemaleGenericExpressionSocket
      * 
      * @return the result of the evaluation
      */
-    public String evaluateString();
+    public String evaluateString() throws Exception;
     
     /**
      * Evaluate this expression.
@@ -101,7 +101,7 @@ public interface FemaleGenericExpressionSocket
      * parentValue.
      */
     @CheckForNull
-    public Object evaluateGeneric();
+    public Object evaluateGeneric() throws Exception;
     
     /**
      * Reset the evaluation.

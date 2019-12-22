@@ -60,7 +60,7 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws Exception {
         boolean result = _primaryExpressionSocket.evaluate();
         if (!_lastMainResult && result) {
             _secondaryExpressionSocket.reset();

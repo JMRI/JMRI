@@ -19,6 +19,9 @@ import jmri.jmrit.logixng.MaleStringExpressionSocket;
 import jmri.jmrit.logixng.StringExpressionBean;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
 import jmri.jmrit.logixng.implementation.InternalBase;
+import jmri.util.Log4JUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Every StringExpressionBean has an DefaultMaleStringExpressionSocket as its parent.
@@ -29,6 +32,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
 
     private final StringExpressionBean _expression;
     private DebugConfig _debugConfig = null;
+    private ErrorHandlingType _errorHandlingType = ErrorHandlingType.LOG_ERROR;
     private boolean _enabled = true;
 
 
@@ -76,6 +80,15 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
         _expression.setLock(lock);
     }
     
+    public ErrorHandlingType getErrorHandlingType() {
+        return _errorHandlingType;
+    }
+
+    public void setErrorHandlingType(ErrorHandlingType errorHandlingType)
+    {
+        _errorHandlingType = errorHandlingType;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
@@ -90,7 +103,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
     
     /** {@inheritDoc} */
     @Override
-    public String evaluate() {
+    public String evaluate() throws Exception {
         if (! _enabled) {
             return "";
         }
@@ -99,7 +112,28 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
                 && ((StringExpressionDebugConfig)_debugConfig)._forceResult) {
             return ((StringExpressionDebugConfig)_debugConfig)._result;
         }
-        return _expression.evaluate();
+        
+        try {
+            return _expression.evaluate();
+        } catch (Exception e) {
+            switch (_errorHandlingType) {
+                case SHOW_DIALOG_BOX:
+                    // We don't show a dialog box yet so fall thrue.
+                case LOG_ERROR:
+                    log.error("expression {} thrown an exception: {}", _expression.toString(), e);
+                    return "";
+                    
+                case LOG_ERROR_ONCE:
+                    Log4JUtil.warnOnce(log, "expression {} thrown an exception: {}", _expression.toString(), e);
+                    return "";
+                    
+                case THROW:
+                    throw e;
+                    
+                default:
+                    throw e;
+            }
+        }
     }
     
     /** {@inheritDoc} */
@@ -347,5 +381,8 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
         public String _result = "";
         
     }
+    
+    
+    private final static Logger log = LoggerFactory.getLogger(DefaultMaleStringExpressionSocket.class);
 
 }

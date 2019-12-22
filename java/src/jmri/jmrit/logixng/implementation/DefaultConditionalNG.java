@@ -20,6 +20,7 @@ import jmri.jmrit.logixng.FemaleDigitalActionSocket;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
 public class DefaultConditionalNG extends AbstractBase
         implements ConditionalNG, FemaleSocketListener {
     
+    private MaleSocket.ErrorHandlingType _errorHandlingType = MaleSocket.ErrorHandlingType.LOG_ERROR;
     private Base _parent = null;
     private String _socketSystemName = null;
     private final FemaleDigitalActionSocket _femaleActionSocket;
@@ -131,7 +133,25 @@ public class DefaultConditionalNG extends AbstractBase
             runOnGUI(() -> {
                 while (executeLock.loop()) {
                     if (isEnabled()) {
-                        _femaleActionSocket.execute();
+//                        _femaleActionSocket.execute();
+                        try {
+                            _femaleActionSocket.execute();
+                        } catch (Exception e) {
+                            switch (_errorHandlingType) {
+                                case SHOW_DIALOG_BOX:
+                                    // We don't show a dialog box yet so fall thrue.
+                                case LOG_ERROR:
+                                    log.error("female socket {} thrown an exception: {}", _femaleActionSocket.toString(), e);
+                                    break;
+
+                                case LOG_ERROR_ONCE:
+                                    Log4JUtil.warnOnce(log, "female socket {} thrown an exception: {}", _femaleActionSocket.toString(), e);
+                                    break;
+
+                                default:
+                                    log.error("female socket {} thrown an exception: {}", _femaleActionSocket.toString(), e);
+                            }
+                        }
                     }
                 }
             });
@@ -223,6 +243,15 @@ public class DefaultConditionalNG extends AbstractBase
         return 1;
     }
 
+    public MaleSocket.ErrorHandlingType getErrorHandlingType() {
+        return _errorHandlingType;
+    }
+    
+    public void setErrorHandlingType(MaleSocket.ErrorHandlingType errorHandlingType)
+    {
+        _errorHandlingType = errorHandlingType;
+    }
+    
     @Override
     public Category getCategory() {
         throw new UnsupportedOperationException("Not supported.");

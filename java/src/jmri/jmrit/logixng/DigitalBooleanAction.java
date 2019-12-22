@@ -12,6 +12,6 @@ public interface DigitalBooleanAction extends Base {
      * @param hasChangedToTrue true if the expression has changed to true.
      * false if the expression has changed to false
      */
-    public void execute(boolean hasChangedToTrue);
+    public void execute(boolean hasChangedToTrue) throws Exception;
     
 }

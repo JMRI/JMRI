@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Evaluates to True if all the child expressions evaluate to true.
+ * Evaluates to True if the antecedent evaluates to true
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
@@ -40,21 +40,15 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
     /**
      * Create a new instance of Antecedent with system name and user name.
      */
-    public Antecedent(@Nonnull String sys, @CheckForNull String user,
-            @Nonnull String antecedent) {
+    public Antecedent(@Nonnull String sys, @CheckForNull String user) {
         super(sys, user);
-        Objects.requireNonNull(antecedent, "antecedent must not be null");
-        _antecedent = antecedent;
         init();
     }
 
     public Antecedent(@Nonnull String sys, @CheckForNull String user,
-            @Nonnull String antecedent,
             List<Map.Entry<String, String>> expressionSystemNames)
             throws BadUserNameException, BadSystemNameException {
         super(sys, user);
-        Objects.requireNonNull(antecedent, "antecedent must not be null");
-        _antecedent = antecedent;
         setExpressionSystemNames(expressionSystemNames);
     }
 
@@ -78,7 +72,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() {
+    public boolean evaluate() throws Exception {
         
         if (_antecedent.isEmpty()) {
             return false;
@@ -186,6 +180,12 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
     public String getAntecedent() {
         return _antecedent;
     }
+
+    public final void setAntecedent(String antecedent) throws Exception {
+        String result = validateAntecedent(antecedent, _expressionEntries);
+        if (result != null) throw new IllegalArgumentException(result);
+        _antecedent = antecedent;
+    }
     
     @Override
     public void connected(FemaleSocket socket) {
@@ -258,7 +258,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
      * @param expressionEntryList arraylist of existing ExpressionEntries
      * @return error message string if not well formed
      */
-    public String validateAntecedent(String ant, List<ExpressionEntry> expressionEntryList) {
+    public String validateAntecedent(String ant, List<ExpressionEntry> expressionEntryList) throws Exception {
         char[] ch = ant.toCharArray();
         int n = 0;
         for (int j = 0; j < ch.length; j++) {
@@ -321,7 +321,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
      * @throws jmri.JmriException if unable to compute the logic
      */
     DataPair parseCalculate(String s, List<ExpressionEntry> expressionEntryList)
-            throws JmriException {
+            throws Exception {
 
         // for simplicity, we force the string to upper case before scanning
         s = s.toUpperCase();

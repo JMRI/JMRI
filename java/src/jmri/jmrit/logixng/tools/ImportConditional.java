@@ -59,7 +59,7 @@ public class ImportConditional {
         log.error("AA: Import Conditional {} to ConditionalNG {}", _conditional.getSystemName(), _conditionalNG.getSystemName());
     }
     
-    public void doImport() throws SocketAlreadyConnectedException {
+    public void doImport() throws SocketAlreadyConnectedException, Exception {
         boolean triggerOnChange = _conditional.getTriggerOnChange();
         IfThenElse.Type type = triggerOnChange ? IfThenElse.Type.TRIGGER_ACTION : IfThenElse.Type.CONTINOUS_ACTION;
         
@@ -81,7 +81,8 @@ public class ImportConditional {
                 break;
             case MIXED:
                 // This will fail, but fix it later.
-                expression = new Antecedent("", null, antecedentExpression);
+                expression = new Antecedent("", null);
+                ((Antecedent)expression).setAntecedent(antecedentExpression);
                 break;
             default:
                 return;

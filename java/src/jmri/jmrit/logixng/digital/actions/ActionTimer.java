@@ -54,7 +54,11 @@ public class ActionTimer extends AbstractDigitalAction
             _timer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    _actionSocket.execute();
+                    try {
+                        _actionSocket.execute();
+                    } catch (Exception e) {
+                        log.error("Exception thrown", e);
+                    }
                 }
             }, _delay);
         }

@@ -13,7 +13,7 @@ public interface StringExpression extends Base {
      * 
      * @return the result of the evaluation
      */
-    public String evaluate();
+    public String evaluate() throws Exception;
     
     /**
      * Reset the evaluation.
