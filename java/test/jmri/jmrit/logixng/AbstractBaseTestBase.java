@@ -15,6 +15,7 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.implementation.AbstractBase;
 import org.junit.Assert;
+import org.junit.Assume;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -421,41 +422,80 @@ public abstract class AbstractBaseTestBase {
         femaleSocket.connect(maleSocket);
     }
     
+    private PropertyChangeListener getPropertyChangeListener(String name, AtomicBoolean flag, Object expectedNewValue) {
+        return (PropertyChangeEvent evt) -> {
+            if (name.equals(evt.getPropertyName())) {
+                Assert.assertTrue("socket is correct", expectedNewValue == evt.getNewValue());
+                flag.set(true);
+            }
+        };
+    }
+    
+    // Test these methods:
+    // * addPropertyChangeListener(PropertyChangeListener)
+    // * removePropertyChangeListener(PropertyChangeListener)
+    // * getNumPropertyChangeListeners()
+    // * getPropertyChangeListeners()
     @Test
     public void testPropertyChangeListener() throws SocketAlreadyConnectedException {
+        Assume.assumeTrue("We need at least one child to do this test", _base.getChildCount() > 0);
         MaleSocket maleSocket = getConnectableChild();
-        if (maleSocket != null && _base.getChildCount() > 0) {
-            final FemaleSocket child = _base.getChild(0);
-            
-            AtomicBoolean flagConnected = new AtomicBoolean();
-            PropertyChangeListener lc = (PropertyChangeEvent evt) -> {
-                if (Base.PROPERTY_SOCKET_CONNECTED.equals(evt.getPropertyName())) {
-                    Assert.assertTrue("socket is correct", child == evt.getNewValue());
-                    flagConnected.set(true);
-                }
-            };
-            AtomicBoolean flagDisconnected = new AtomicBoolean();
-            PropertyChangeListener ld = (PropertyChangeEvent evt) -> {
-                if (Base.PROPERTY_SOCKET_DISCONNECTED.equals(evt.getPropertyName())) {
-                    Assert.assertTrue("socket is correct", child == evt.getNewValue());
-                    flagDisconnected.set(true);
-                }
-            };
-            ((NamedBean)_baseMaleSocket).addPropertyChangeListener(lc);
-            ((NamedBean)_baseMaleSocket).addPropertyChangeListener(ld);
-            
-            // Connect shall do a firePropertyChange which will set the flag
-            flagConnected.set(false);
-            connect(child, maleSocket);
-            Assert.assertTrue("flag is set", flagConnected.get());
-            
-            // Disconnect shall do a firePropertyChange which will set the flag
-            flagDisconnected.set(false);
-            _base.getChild(0).disconnect();
-            Assert.assertTrue("flag is set", flagDisconnected.get());
-        } else {
-            Assert.assertEquals("num childs is 0", 0, _base.getChildCount());
+        
+        FemaleSocket child = _base.getChild(0);
+        
+        AtomicBoolean flagConnected = new AtomicBoolean();
+        PropertyChangeListener lc =
+                getPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, flagConnected, child);
+        
+        AtomicBoolean flagDisconnected = new AtomicBoolean();
+        PropertyChangeListener ld =
+                getPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, flagDisconnected, child);
+        
+//        System.out.format("%n%ntestPropertyChangeListener()%n");
+//        for (PropertyChangeListener l : ((NamedBean)_baseMaleSocket).getPropertyChangeListeners()) {
+//            System.out.format("Property change listener: %s: %s%n", l, l.getClass().getName());
+//        }
+        
+        // Note that AbstractManager.register() register itself as a
+        // PropertyChangeListener. Therefore we have one listener before
+        // adding our own listeners.
+        Assert.assertEquals("num property change listeners matches",
+                1, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        
+        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(lc);
+        Assert.assertEquals("num property change listeners matches",
+                2, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        
+        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(ld);
+        Assert.assertEquals("num property change listeners matches",
+                3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        
+        System.out.format("Ref: %s%n", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
+        Assert.assertNull("listener ref is null", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
+        
+        boolean hasManagerListener = false;
+        boolean hasConnectedListener = false;
+        boolean hasDisconnectedListener = false;
+        for (PropertyChangeListener l : ((NamedBean)_baseMaleSocket).getPropertyChangeListeners()) {
+            if (l instanceof jmri.Manager) hasManagerListener = true;
+            else if (l == lc) hasConnectedListener = true;
+            else if (l == ld) hasDisconnectedListener = true;
+            else Assert.fail("getPropertyChangeListeners() returns unknown listener: " + l.toString());
+            System.out.format("Property change listener: %s: %s%n", l, l.getClass().getName());
         }
+        Assert.assertTrue("getPropertyChangeListeners() has manager listener", hasManagerListener);
+        Assert.assertTrue("getPropertyChangeListeners() has connected listener", hasConnectedListener);
+        Assert.assertTrue("getPropertyChangeListeners() has disconnected listener", hasDisconnectedListener);
+        
+        // Connect shall do a firePropertyChange which will set the flag
+        flagConnected.set(false);
+        connect(child, maleSocket);
+        Assert.assertTrue("flag is set", flagConnected.get());
+        
+        // Disconnect shall do a firePropertyChange which will set the flag
+        flagDisconnected.set(false);
+        _base.getChild(0).disconnect();
+        Assert.assertTrue("flag is set", flagDisconnected.get());
     }
     
     
