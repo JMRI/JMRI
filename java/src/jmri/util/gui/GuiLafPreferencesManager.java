@@ -69,7 +69,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final int MAX_FONT_SIZE = 36;
     public static final String PROP_DIRTY = "dirty";
     public static final String PROP_RESTARTREQUIRED = "restartRequired";
-    private static final String LIST_FONT = "List.font";
+    private static final String DEFAULT_FONT = "Dialog.font";
 
     // preferences with default values
     private Locale currentLocale = Locale.getDefault();
@@ -270,7 +270,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     /**
      * @return the current {@literal Look & Feel} default font
      */
-    public Font getDefaultFont() {
+    public @Nonnull Font getDefaultFont() {
         if (defaultFont == null) {
             setDefaultFont();
         }
@@ -279,9 +279,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     /**
      * Called to load the current {@literal Look & Feel} default font, based on
-     * looking up the "List.font"
-     * <p>
-     * The value can be can be read by calling {@link #getDefaultFont()}
+     * looking up the {@code Dialog.font}, or calling
+     * {@link java.awt.Font#decode(String)} with a null value.
+     * 
+     * @see #getDefaultFont()
      */
     public void setDefaultFont() {
         java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
@@ -289,19 +290,15 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
 
-            if (value instanceof FontUIResource && key.toString().equals(LIST_FONT)) {
+            if (value instanceof FontUIResource && key.toString().equals(DEFAULT_FONT)) {
                 Font f = UIManager.getFont(key);
                 log.debug("Key: {} Font: {}", key, f.getName());
                 defaultFont = f;
                 return;
             }
         }
-        // couldn't find the default return a reasonable font
-        defaultFont = UIManager.getFont(LIST_FONT);
-        if (defaultFont == null) {
-            // or maybe not quite as reasonable
-            defaultFont = UIManager.getFont("TextArea.font");
-        }
+        // couldn't find the default, so use the absolute default
+        defaultFont = Font.decode(null);
     }
 
     /**
@@ -343,16 +340,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * The value can be can be read by calling {@link #getDefaultFontSize()}
      */
     public void setDefaultFontSize() {
-        UIManager.getDefaults().forEach((key, value) -> {
-            if (value instanceof FontUIResource && key.toString().equals(LIST_FONT)) {
-                Font f = UIManager.getFont(key);
-                log.debug("Key: {} Font: {} size: {}", key, f.getName(), f.getSize());
-                defaultFontSize = f.getSize();
-                return;
-            }
-        });
-        // couldn't find the default; so use a reasonable font size
-        defaultFontSize = 11;
+        defaultFontSize = getDefaultFont().getSize();
     }
 
     /**
