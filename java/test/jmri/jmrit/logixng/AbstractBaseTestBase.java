@@ -49,18 +49,6 @@ public abstract class AbstractBaseTestBase {
     public abstract MaleSocket getConnectableChild();
     
     @Test
-    public void testMaleSocketCategory() {
-        Assert.assertNotNull("category is not null", _category);
-        Assert.assertEquals("getCategory() returns correct value", _category, _base.getCategory());
-    }
-    
-    @Test
-    public void testMaleSocketIsExternal() {
-        Assert.assertNotNull("isExternal is not null", _isExternal);
-        Assert.assertEquals("isExternal() returns correct value", _isExternal, _base.isExternal());
-    }
-    
-    @Test
     public void testGetConditionalNG() {
         if (getConditionalNG() == null) {
             log.warn("Method getConditionalNG() returns null for class {}", this.getClass().getName());
