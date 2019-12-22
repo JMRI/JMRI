@@ -82,15 +82,14 @@ public abstract class PreferencesBean extends Bean {
      */
     protected void setIsDirty(boolean value) {
         boolean old = this.isDirty;
-        if (old != value) {
-            this.isDirty = value;
-            this.firePropertyChange(DIRTY, old, value);
-        }
+        this.isDirty = value;
+        this.firePropertyChange(DIRTY, old, value);
     }
 
     @Override
     protected void firePropertyChange(String propertyName, Object oldValue, Object newValue) {
         this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        // protect against StackOverflowException since setIsDirty calls firePropertyChange
         if (!DIRTY.equals(propertyName)) {
             this.setIsDirty(true);
         }
@@ -99,6 +98,7 @@ public abstract class PreferencesBean extends Bean {
     @Override
     protected void firePropertyChange(String propertyName, boolean oldValue, boolean newValue) {
         this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        // protect against StackOverflowException since setIsDirty calls firePropertyChange
         if (!DIRTY.equals(propertyName)) {
             this.setIsDirty(true);
         }
@@ -107,6 +107,7 @@ public abstract class PreferencesBean extends Bean {
     @Override
     protected void firePropertyChange(String propertyName, int oldValue, int newValue) {
         this.propertyChangeSupport.firePropertyChange(propertyName, oldValue, newValue);
+        // protect against StackOverflowException since setIsDirty calls firePropertyChange
         if (!DIRTY.equals(propertyName)) {
             this.setIsDirty(true);
         }

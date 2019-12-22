@@ -30,7 +30,7 @@ public class ConstrainedArbitraryBean extends ConstrainedBean {
             LoggerFactory.getLogger(this.getClass()).warn("Property {} change vetoed.", key, ex);
             // fire a property change that does not have the new value to indicate
             // to any other listeners that the property was "reset" back to its
-            // orginal value as a result of the veto
+            // original value as a result of the veto
             this.firePropertyChange(key, getProperty(key), getProperty(key));
         }
     }
@@ -51,7 +51,7 @@ public class ConstrainedArbitraryBean extends ConstrainedBean {
             LoggerFactory.getLogger(this.getClass()).warn("Property {} change vetoed.", key, ex);
             // fire a property change that does not have the new value to indicate
             // to any other listeners that the property was "reset" back to its
-            // orginal value as a result of the veto
+            // original value as a result of the veto
             this.fireIndexedPropertyChange(key, index, getProperty(key), getProperty(key));
         }
     }
