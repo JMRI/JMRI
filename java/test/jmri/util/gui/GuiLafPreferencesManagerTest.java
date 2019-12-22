@@ -9,12 +9,18 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
 
 import javax.swing.JComponent;
 import javax.swing.ToolTipManager;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.metal.MetalLookAndFeel;
+import javax.swing.plaf.metal.MetalTheme;
+import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -135,6 +141,54 @@ public class GuiLafPreferencesManagerTest {
         assertTrue("Use old location and size", t.isEditorUseOldLocSize());
         assertTrue("Changes made", t.isDirty());
         assertFalse("No need to restart", t.isRestartRequired());
+    }
+
+    @Test
+    public void testDefaultFontNimbus() throws UnsupportedLookAndFeelException {
+        UIManager.setLookAndFeel(new NimbusLookAndFeel());
+        Font f = UIManager.getFont("List.font");
+        assertEquals("Default font", f, t.getDefaultFont());
+        assertEquals("Default font size", f.getSize(), t.getDefaultFontSize());
+    }
+
+    @Test
+    public void testDefaultFontMetal() throws UnsupportedLookAndFeelException {
+        UIManager.setLookAndFeel(new MetalLookAndFeel());
+        Font f = UIManager.getFont("List.font");
+        assertEquals("Default font", f, t.getDefaultFont());
+        assertEquals("Default font size", f.getSize(), t.getDefaultFontSize());
+    }
+
+    @Test
+    public void testDefaultFontAqua() {
+        try {
+            UIManager.setLookAndFeel("apple.laf.AquaLookAndFeel");
+        } catch (
+                ClassNotFoundException |
+                InstantiationException |
+                IllegalAccessException |
+                UnsupportedLookAndFeelException e) {
+            Assume.assumeNoException("Not on macOS", e);
+        }
+        Font f = UIManager.getFont("List.font");
+        assertEquals("Default font", f, t.getDefaultFont());
+        assertEquals("Default font size", f.getSize(), t.getDefaultFontSize());
+    }
+
+    @Test
+    public void testDefaultFontWindows() {
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (
+                ClassNotFoundException |
+                InstantiationException |
+                IllegalAccessException |
+                UnsupportedLookAndFeelException e) {
+            Assume.assumeNoException("Not on Windows", e);
+        }
+        Font f = UIManager.getFont("List.font");
+        assertEquals("Default font", f, t.getDefaultFont());
+        assertEquals("Default font size", f.getSize(), t.getDefaultFontSize());
     }
 
     @Before
