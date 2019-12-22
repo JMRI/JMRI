@@ -672,6 +672,15 @@ public class LayoutEditorToolsTest {
         Assert.assertTrue("Signal head block boss logic started", layoutEditorTools.initializeBlockBossLogic("IH1"));
     }
 
+    /**
+     * convenience method for accessing...
+     * @return the layout editor's toolbar panel
+     */
+    @Nonnull
+    public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
+        return layoutEditor.getLayoutEditorToolBarPanel();
+    }
+
     //from here down is testing infrastructure
     @Before
     public void setUp() throws Exception {

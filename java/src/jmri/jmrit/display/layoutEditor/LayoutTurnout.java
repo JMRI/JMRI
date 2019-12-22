@@ -1999,7 +1999,7 @@ public class LayoutTurnout extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -2833,21 +2833,22 @@ public class LayoutTurnout extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         LayoutEditorTools tools = layoutEditor.getLETools();
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                         if (isTurnoutTypeXover()) {
                             tools.setSignalsAtXoverTurnoutFromMenu(LayoutTurnout.this,
-                                    layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                    letbp.signalIconEditor, letbp.signalFrame);
                         } else if (linkType == NO_LINK) {
                             tools.setSignalsAtTurnoutFromMenu(LayoutTurnout.this,
-                                    layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                    letbp.signalIconEditor, letbp.signalFrame);
                         } else if (linkType == THROAT_TO_THROAT) {
                             tools.setSignalsAtThroatToThroatTurnoutsFromMenu(LayoutTurnout.this, linkedTurnoutName,
-                                    layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                    letbp.signalIconEditor, letbp.signalFrame);
                         } else if (linkType == FIRST_3_WAY) {
                             tools.setSignalsAt3WayTurnoutFromMenu(getTurnoutName(), linkedTurnoutName,
-                                    layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                    letbp.signalIconEditor, letbp.signalFrame);
                         } else if (linkType == SECOND_3_WAY) {
                             tools.setSignalsAt3WayTurnoutFromMenu(linkedTurnoutName, getTurnoutName(),
-                                    layoutEditor.signalIconEditor, layoutEditor.signalFrame);
+                                    letbp.signalIconEditor, letbp.signalFrame);
                         }
                     }
                 };
@@ -2882,11 +2883,12 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                             layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
                                     LayoutTurnout.this,
                                     boundaryBetween,
-                                    layoutEditor.sensorIconEditor,
-                                    layoutEditor.sensorFrame);
+                                    letbp.sensorIconEditor,
+                                    letbp.sensorFrame);
                         }
                     });
 
@@ -4315,22 +4317,22 @@ public class LayoutTurnout extends LayoutTrack {
     protected void highlightUnconnected(Graphics2D g2, int specificType) {
         if (((specificType == NONE) || (specificType == TURNOUT_A))
                 && (getConnectA() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
+            g2.fill(trackControlCircleAt(getCoordsA()));
         }
 
         if (((specificType == NONE) || (specificType == TURNOUT_B))
                 && (getConnectB() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
+            g2.fill(trackControlCircleAt(getCoordsB()));
         }
 
         if (((specificType == NONE) || (specificType == TURNOUT_C))
                 && (getConnectC() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
+            g2.fill(trackControlCircleAt(getCoordsC()));
         }
         if (isTurnoutTypeXover()) {
             if (((specificType == NONE) || (specificType == TURNOUT_D))
                     && (getConnectD() == null)) {
-                g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
+                g2.fill(trackControlCircleAt(getCoordsD()));
             }
         }
     }
@@ -4345,9 +4347,9 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(g2.getBackground());
             }
             if (layoutEditor.isTurnoutFillControlCircles()) {
-                g2.fill(layoutEditor.trackControlCircleAt(center));
+                g2.fill(trackControlCircleAt(center));
             } else {
-                g2.draw(layoutEditor.trackControlCircleAt(center));
+                g2.draw(trackControlCircleAt(center));
             }
             // if turnout is thrown...
             if (getState() == Turnout.THROWN) {
@@ -4373,7 +4375,7 @@ public class LayoutTurnout extends LayoutTrack {
                 g2.setColor(Color.green);
             }
         }
-        g2.draw(layoutEditor.trackEditControlRectAt(pt));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
 
         pt = getCoordsB();
         if (getConnectB() == null) {
@@ -4381,7 +4383,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackEditControlRectAt(pt));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
 
         pt = getCoordsC();
         if (getConnectC() == null) {
@@ -4389,7 +4391,7 @@ public class LayoutTurnout extends LayoutTrack {
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackEditControlRectAt(pt));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
 
         if (isTurnoutTypeXover() || isTurnoutTypeSlip()) {
             pt = getCoordsD();
@@ -4398,7 +4400,7 @@ public class LayoutTurnout extends LayoutTrack {
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(layoutEditor.trackEditControlRectAt(pt));
+            g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
         }
     }
 
