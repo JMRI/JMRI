@@ -1,12 +1,12 @@
 package jmri.managers;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import java.util.Objects;
 
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
+import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -109,8 +109,22 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         }
 
         // return existing if there is one
-        Audio s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
-        if (s != null) {
+        Audio s;
+        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != s) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, s.getSystemName());
+            }
+            log.debug("Found existing Audio ({}). Returning existing (1).", s.getSystemName());  // NOI18N
+            return s;
+        }
+        if ((s = getBySystemName(systemName)) != null) {
+            if ((s.getUserName() == null) && (userName != null)) {
+                s.setUserName(userName);
+            } else if (userName != null) {
+                log.warn("Found audio via system name ({}) with non-null user name ({})", systemName, userName); // NOI18N
+            }
+            log.debug("Found existing Audio ({}). Returning existing (2).", s.getSystemName());
             return s;
         }
 
@@ -145,6 +159,14 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
     @Nonnull 
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameAudios" : "BeanNameAudio");  // NOI18N
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Audio> getNamedBeanClass() {
+        return Audio.class;
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioManager.class);

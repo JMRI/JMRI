@@ -329,6 +329,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
     }
 
     void cancelPressed(ActionEvent e) {
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -440,6 +441,7 @@ public class ReporterTableAction extends AbstractTableAction<Reporter> {
         }
 
         pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName());
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;

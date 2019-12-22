@@ -72,4 +72,12 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalHeads" : "BeanNameSignalHead");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<SignalHead> getNamedBeanClass() {
+        return SignalHead.class;
+    }
 }

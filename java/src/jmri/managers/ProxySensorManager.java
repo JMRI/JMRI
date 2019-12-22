@@ -1,11 +1,10 @@
 package jmri.managers;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.SignalHead;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -73,15 +72,6 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     @Override
     public Sensor getByUserName(@Nonnull String userName) {
         return super.getBeanByUserName(userName);
-    }
-
-    /** {@inheritDoc} */
-    @CheckForNull
-    @Override
-    public Sensor getByUserThenSystemName(@Nonnull String systemName, Sensor sysNameResult,
-                                             String userName, Sensor uNameResult) {
-        return super.getByUserThenSystemName(systemName, sysNameResult,
-                userName, uNameResult);
     }
 
     /**
@@ -184,6 +174,14 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Sensor> getNamedBeanClass() {
+        return Sensor.class;
     }
 
     /**

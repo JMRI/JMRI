@@ -1,11 +1,10 @@
 package jmri.managers;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.Light;
 import jmri.LightManager;
-import jmri.NamedBean;
+import jmri.SignalHead;
 
 /**
  * Implementation of a LightManager that can serve as a proxy for multiple
@@ -83,14 +82,6 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     @Override
     public Light getByUserName(@Nonnull String userName) {
         return super.getBeanByUserName(userName);
-    }
-
-    /** {@inheritDoc} */
-    @CheckForNull
-    @Override
-    public Light getByUserThenSystemName(@Nonnull String systemName, Light sysNameResult, String userName, Light uNameResult) {
-        return super.getByUserThenSystemName(systemName, sysNameResult,
-                userName, uNameResult);
     }
 
     /**
@@ -210,6 +201,14 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Light> getNamedBeanClass() {
+        return Light.class;
     }
 
 }

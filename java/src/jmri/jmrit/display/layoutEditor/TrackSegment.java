@@ -16,32 +16,15 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
+import java.util.*;
+import java.util.function.*;
+import javax.annotation.*;
+import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.util.ColorUtil;
-import jmri.util.FileUtil;
-import jmri.util.MathUtil;
-import jmri.util.QuickPromptUtil;
+import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -512,15 +495,13 @@ public class TrackSegment extends LayoutTrack {
     /*
      * non-accessor methods
      */
+
     /**
-     * Scale this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
+     * {@inheritDoc}
      */
-    @Override
-    public void scaleCoords(float xFactor, float yFactor) {
-        Point2D factor = new Point2D.Float(xFactor, yFactor);
+     @Override
+    public void scaleCoords(double xFactor, double yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.multiply(center, factor);
         if (isBezier()) {
             for (Point2D p : bezierControlPoints) {
@@ -530,14 +511,21 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Translate (2D Move) this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to translate X coordinates
-     * @param yFactor the amount to translate Y coordinates
+     * {@inheritDoc}
+     */
+     @Override
+    public void translateCoords(double xFactor, double yFactor) {
+        setCoordsCenter(MathUtil.add(center, new Point2D.Double(xFactor, yFactor)));
+    }
+
+    /**
+     * {@inheritDoc}
      */
     @Override
-    public void translateCoords(float xFactor, float yFactor) {
-        setCoordsCenter(MathUtil.add(center, new Point2D.Float(xFactor, yFactor)));
+    public void rotateCoords(double angleDEG) {
+        //can't really rotate a tracksegment... 
+        //(it gets its end points from the connected anchors) so...
+        //nothing to see here... move along...
     }
 
     /**
@@ -603,7 +591,7 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
-    protected void updateBlockInfo() {
+    public void updateBlockInfo() {
         LayoutBlock layoutBlock = getLayoutBlock();
         if (layoutBlock != null) {
             layoutBlock.updatePaths();
@@ -775,7 +763,7 @@ public class TrackSegment extends LayoutTrack {
         jmi.setToolTipText(Bundle.getMessage(toolTipKey));
         jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
             //prompt for lineWidth
-            int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+            int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                     Bundle.getMessage(titleKey),
                     Bundle.getMessage(titleKey),
                     // getting again, maybe something changed from the menu construction ?
@@ -1326,7 +1314,7 @@ public class TrackSegment extends LayoutTrack {
             jmi.setToolTipText(Bundle.getMessage("DecorationLineWidthMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                 //prompt for width
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                         Bundle.getMessage("DecorationLineWidthMenuItemTitle"),
                         getBumperLineWidth(), new Predicate<Integer>() {
@@ -1347,7 +1335,7 @@ public class TrackSegment extends LayoutTrack {
             jmi.setToolTipText(Bundle.getMessage("DecorationLengthMenuItemToolTip"));
             jmi.addActionListener((java.awt.event.ActionEvent e3) -> {
                 //prompt for length
-                int newValue = QuickPromptUtil.promptForInt(layoutEditor,
+                int newValue = QuickPromptUtil.promptForInteger(layoutEditor,
                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
                         Bundle.getMessage("DecorationLengthMenuItemTitle"),
                         bumperLength, new Predicate<Integer>() {
@@ -1863,7 +1851,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @see #remove()
      */
-    void dispose() {
+    public void dispose() {
         if (popupMenu != null) {
             popupMenu.removeAll();
         }
@@ -1873,12 +1861,12 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Remove this object from display and persistance.
      */
-    void remove() {
+    public void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }
 
-    boolean active = true;
+    private boolean active = true;
 
     /**
      * Get state. "active" means that the object is still displayed, and should
@@ -2500,14 +2488,15 @@ public class TrackSegment extends LayoutTrack {
                 vector = MathUtil.orthogonal(vector);
 
                 if (bridgeSideRight) {
-                    Point2D ep1L = MathUtil.add(ep1, vector);
-                    Point2D ep2L = MathUtil.add(ep2, vector);
-                    g2.draw(new Line2D.Double(ep1L, ep2L));
-                }
-                if (bridgeSideLeft) {
-                    Point2D ep1R = MathUtil.subtract(ep1, vector);
-                    Point2D ep2R = MathUtil.subtract(ep2, vector);
+                    Point2D ep1R = MathUtil.add(ep1, vector);
+                    Point2D ep2R = MathUtil.add(ep2, vector);
                     g2.draw(new Line2D.Double(ep1R, ep2R));
+                }
+
+                if (bridgeSideLeft) {
+                    Point2D ep1L = MathUtil.subtract(ep1, vector);
+                    Point2D ep2L = MathUtil.subtract(ep2, vector);
+                    g2.draw(new Line2D.Double(ep1L, ep2L));
                 }
             }   // if isArc() {} else if isBezier() {} else...
 
@@ -2663,6 +2652,32 @@ public class TrackSegment extends LayoutTrack {
             }
 
             if (tunnelHasEntry) {
+                if (tunnelSideRight) {
+                    p1 = new Point2D.Double(0.0, 0.0);
+                    p2 = new Point2D.Double(0.0, +halfFloorWidth);
+                    p3 = new Point2D.Double(0.0, +halfEntranceWidth);
+                    p4 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth);
+                    p5 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p6 = new Point2D.Double(-halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p7 = new Point2D.Double(-halfDiffWidth, 0.0);
+
+                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
+                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
+                    p3P = MathUtil.add(MathUtil.rotateRAD(p3, startAngleRAD), ep1);
+                    p4P = MathUtil.add(MathUtil.rotateRAD(p4, startAngleRAD), ep1);
+                    p5P = MathUtil.add(MathUtil.rotateRAD(p5, startAngleRAD), ep1);
+                    p6P = MathUtil.add(MathUtil.rotateRAD(p6, startAngleRAD), ep1);
+                    p7P = MathUtil.add(MathUtil.rotateRAD(p7, startAngleRAD), ep1);
+
+                    GeneralPath path = new GeneralPath();
+                    path.moveTo(p1P.getX(), p1P.getY());
+                    path.lineTo(p2P.getX(), p2P.getY());
+                    path.quadTo(p3P.getX(), p3P.getY(), p4P.getX(), p4P.getY());
+                    path.lineTo(p5P.getX(), p5P.getY());
+                    path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
+                    path.closePath();
+                    g2.draw(path);
+                }
                 if (tunnelSideLeft) {
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, -halfFloorWidth);
@@ -2689,44 +2704,15 @@ public class TrackSegment extends LayoutTrack {
                     path.closePath();
                     g2.draw(path);
                 }
+            }
+            if (tunnelHasExit) {
                 if (tunnelSideRight) {
-//                    if (getName().equals("T5")) {
-//                        log.debug("STOP");
-//                    }
                     p1 = new Point2D.Double(0.0, 0.0);
                     p2 = new Point2D.Double(0.0, +halfFloorWidth);
                     p3 = new Point2D.Double(0.0, +halfEntranceWidth);
-                    p4 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth);
-                    p5 = new Point2D.Double(-halfEntranceWidth - halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
-                    p6 = new Point2D.Double(-halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
-                    p7 = new Point2D.Double(-halfDiffWidth, 0.0);
-
-                    p1P = MathUtil.add(MathUtil.rotateRAD(p1, startAngleRAD), ep1);
-                    p2P = MathUtil.add(MathUtil.rotateRAD(p2, startAngleRAD), ep1);
-                    p3P = MathUtil.add(MathUtil.rotateRAD(p3, startAngleRAD), ep1);
-                    p4P = MathUtil.add(MathUtil.rotateRAD(p4, startAngleRAD), ep1);
-                    p5P = MathUtil.add(MathUtil.rotateRAD(p5, startAngleRAD), ep1);
-                    p6P = MathUtil.add(MathUtil.rotateRAD(p6, startAngleRAD), ep1);
-                    p7P = MathUtil.add(MathUtil.rotateRAD(p7, startAngleRAD), ep1);
-
-                    GeneralPath path = new GeneralPath();
-                    path.moveTo(p1P.getX(), p1P.getY());
-                    path.lineTo(p2P.getX(), p2P.getY());
-                    path.quadTo(p3P.getX(), p3P.getY(), p4P.getX(), p4P.getY());
-                    path.lineTo(p5P.getX(), p5P.getY());
-                    path.quadTo(p6P.getX(), p6P.getY(), p7P.getX(), p7P.getY());
-                    path.closePath();
-                    g2.draw(path);
-                }
-            }
-            if (tunnelHasExit) {
-                if (tunnelSideLeft) {
-                    p1 = new Point2D.Double(0.0, 0.0);
-                    p2 = new Point2D.Double(0.0, -halfFloorWidth);
-                    p3 = new Point2D.Double(0.0, -halfEntranceWidth);
-                    p4 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, -halfEntranceWidth);
-                    p5 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
-                    p6 = new Point2D.Double(halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
+                    p4 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, +halfEntranceWidth);
+                    p5 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p6 = new Point2D.Double(halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
                     p7 = new Point2D.Double(halfDiffWidth, 0.0);
 
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);
@@ -2746,13 +2732,13 @@ public class TrackSegment extends LayoutTrack {
                     path.closePath();
                     g2.draw(path);
                 }
-                if (tunnelSideRight) {
+                if (tunnelSideLeft) {
                     p1 = new Point2D.Double(0.0, 0.0);
-                    p2 = new Point2D.Double(0.0, +halfFloorWidth);
-                    p3 = new Point2D.Double(0.0, +halfEntranceWidth);
-                    p4 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, +halfEntranceWidth);
-                    p5 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
-                    p6 = new Point2D.Double(halfFloorWidth, +halfEntranceWidth - halfDiffWidth);
+                    p2 = new Point2D.Double(0.0, -halfFloorWidth);
+                    p3 = new Point2D.Double(0.0, -halfEntranceWidth);
+                    p4 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, -halfEntranceWidth);
+                    p5 = new Point2D.Double(halfEntranceWidth + halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
+                    p6 = new Point2D.Double(halfFloorWidth, -halfEntranceWidth + halfDiffWidth);
                     p7 = new Point2D.Double(halfDiffWidth, 0.0);
 
                     p1P = MathUtil.add(MathUtil.rotateRAD(p1, stopAngleRAD), ep2);

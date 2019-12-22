@@ -160,7 +160,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
         public int compare(Manager<E> e1, Manager<E> e2) { return e1.getSystemPrefix().compareTo(e2.getSystemPrefix()); }
     });
     private Manager<E> internalManager = null;
-    private Manager<E> defaultManager = null;
+    protected Manager<E> defaultManager = null;
 
     /**
      * Create specific internal manager as needed for concrete type.
@@ -240,16 +240,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
             }
         }
         return null;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @CheckForNull
-    public E getByUserThenSystemName(@Nonnull String systemName,
-                                             E sysNameResult,
-                                             String userName,
-                                             E uNameResult){
-        return getDefaultManager().getByUserThenSystemName(systemName, sysNameResult, userName, uNameResult);
     }
 
     /**

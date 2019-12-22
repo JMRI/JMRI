@@ -86,16 +86,8 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         return super.getBeanByUserName(userName);
     }
 
-    /** {@inheritDoc} */
-    @CheckForNull
-    @Override
-    public Turnout getByUserThenSystemName(@Nonnull String systemName, Turnout sysNameResult, String userName, Turnout uNameResult) {
-        return super.getByUserThenSystemName(systemName, sysNameResult,
-                userName, uNameResult);
-    }
-
     /**
-     * Return an instance with the specified system and user names. Note that
+     * Get an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Sensor object representing a given physical turnout and
      * therefore only one with a specific system or user name.
@@ -320,6 +312,14 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Turnout> getNamedBeanClass() {
+        return Turnout.class;
     }
 
     // initialize logging

@@ -7,6 +7,7 @@ import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
+import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -99,8 +100,20 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
                 + (userName == null ? "null" : userName));  // NOI18N
         systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
-        Sensor s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
-        if (s != null) {
+        Sensor s;
+        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != s) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
+            }
+            return s;
+        }
+        if ((s = getBySystemName(systemName)) != null) {
+            if ((s.getUserName() == null) && (userName != null)) {
+                s.setUserName(userName);
+            } else if (userName != null) {
+                log.warn("Found sensor via system name ({}) with non-null user name ({}). Sensor \"{}({})\" cannot be used.",
+                        systemName, s.getUserName(), systemName, userName);
+            }
             return s;
         }
         // doesn't exist, make a new one
@@ -116,6 +129,14 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Sensor> getNamedBeanClass() {
+        return Sensor.class;
     }
 
     /**

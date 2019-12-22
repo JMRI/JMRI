@@ -53,6 +53,11 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         return 'Y';
     }
 
+    @Override
+    public Class<Section> getNamedBeanClass() {
+        return Section.class;
+    }
+
     /**
      * Method to create a new Section if the Section does not exist.
      *

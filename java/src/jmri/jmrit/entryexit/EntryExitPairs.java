@@ -22,6 +22,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
+import jmri.SignalSystem;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -248,13 +249,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
             return b;
         }
         return getBeanBySystemName(name);
-    }
-
-    @CheckForNull
-    @Override
-    public DestinationPoints getByUserThenSystemName(@Nonnull String systemName, DestinationPoints sysNameResult,
-                                                     String userName, DestinationPoints uNameResult) {
-        return null;
     }
 
     /** {@inheritDoc} */
@@ -966,7 +960,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /**
      * Create a list of sensors that have the layout block as either
      * facing or protecting.
-     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutTrackEditors#hasNxSensorPairs}.
+     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTrackEditors#hasNxSensorPairs}.
      * @since 4.11.2
      * @param layoutBlock The layout block to be checked.
      * @return the a list of sensors affected by the layout block or an empty list.
@@ -1445,6 +1439,14 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<DestinationPoints> getNamedBeanClass() {
+        return DestinationPoints.class;
     }
 
     /** {@inheritDoc} */

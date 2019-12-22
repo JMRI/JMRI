@@ -3,55 +3,19 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBox;
-import javax.swing.JColorChooser;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
+import java.beans.*;
+import java.util.*;
+import javax.annotation.*;
+import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
-import jmri.BeanSetting;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.InstanceManager;
-import jmri.Memory;
-import jmri.MemoryManager;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
-import jmri.Path;
-import jmri.Reporter;
-import jmri.Reportable;
-import jmri.Sensor;
-import jmri.Turnout;
+import jmri.*;
 import jmri.implementation.AbstractNamedBean;
-import jmri.jmrit.beantable.beanedit.BeanEditItem;
-import jmri.jmrit.beantable.beanedit.BeanItemPanel;
-import jmri.jmrit.beantable.beanedit.BlockEditAction;
+import jmri.jmrit.beantable.beanedit.*;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.swing.NamedBeanComboBox;
-import jmri.util.JmriJFrame;
-import jmri.util.MathUtil;
-import jmri.util.swing.JmriColorChooser;
-import jmri.util.swing.SplitButtonColorChooserPanel;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import jmri.util.*;
+import jmri.util.swing.*;
+import org.slf4j.*;
 
 /**
  * A LayoutBlock is a group of track segments and turnouts on a LayoutEditor
@@ -644,7 +608,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     public int getState() {
         return getOccupancy();
     }
-    
+
     /**
      * Does nothing, do not use.
      * Dummy for completion of NamedBean interface
@@ -871,6 +835,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
                     break;
                 }
             }
+        } else if (main.isEmpty() && test.isEmpty()) {
+            result = true;          // OK if both have no neighbors, common for turntable rays
         }
         return result;
     }
@@ -951,7 +917,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     private JColorChooser occupiedColorChooser = null;
     private JColorChooser extraColorChooser = null;
 
-    protected void editLayoutBlock(Component callingPane) {
+    public void editLayoutBlock(Component callingPane) {
         LayoutBlockEditAction beanEdit = new LayoutBlockEditAction();
         if (block == null) {
             //Block may not have been initialised due to an error so manually set it in the edit window
@@ -1140,7 +1106,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
             BeanItemPanel layout = new BeanItemPanel();
             layout.setName(Bundle.getMessage("LayoutEditor"));
 
-            LayoutEditor.setupComboBox(memoryComboBox, false, true);
+            LayoutEditor.setupComboBox(memoryComboBox, false, true, false);
 
             layout.addItem(new BeanEditItem(new JLabel("" + useCount), Bundle.getMessage("UseCount"), null));
             layout.addItem(new BeanEditItem(memoryComboBox, Bundle.getMessage("BeanNameMemory"),

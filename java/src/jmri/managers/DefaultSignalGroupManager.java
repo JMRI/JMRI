@@ -12,6 +12,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
+import jmri.SignalHead;
 import jmri.implementation.DefaultSignalGroup;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.FileUtil;
@@ -166,6 +167,14 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalGroups" : "BeanNameSignalGroup");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<SignalGroup> getNamedBeanClass() {
+        return SignalGroup.class;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManager.class);

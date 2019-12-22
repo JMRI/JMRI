@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Control;
  */
 public abstract class RollingStockAttribute {
 
-    protected static final int MIN_NAME_LENGTH = 4;
+    protected static final int MIN_NAME_LENGTH = 1;
 
     public RollingStockAttribute() {
     }
@@ -136,7 +136,7 @@ public abstract class RollingStockAttribute {
     public int getMaxNameLength() {
         if (maxNameLength == 0) {
             maxName = "";
-            maxNameLength = MIN_NAME_LENGTH;
+            maxNameLength = getMinNameLength();
             for (String name : getNames()) {
                 if (name.length() > maxNameLength) {
                     maxName = name;
@@ -150,7 +150,7 @@ public abstract class RollingStockAttribute {
     public int getMaxNameSubStringLength() {
         if (maxNameLength == 0) {
             maxName = "";
-            maxNameLength = MIN_NAME_LENGTH;
+            maxNameLength = getMinNameLength();
             for (String name : getNames()) {
                 String[] subString = name.split("-");
                 if (subString[0].length() > maxNameLength) {
@@ -158,9 +158,12 @@ public abstract class RollingStockAttribute {
                     maxNameLength = subString[0].length();
                 }
             }
-            log.info("Max car type name ({}) length {}", maxName, maxNameLength);
         }
         return maxNameLength;
+    }
+    
+    protected int getMinNameLength() {
+        return MIN_NAME_LENGTH;
     }
 
     /**

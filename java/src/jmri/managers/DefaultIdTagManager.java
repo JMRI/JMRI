@@ -15,6 +15,7 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
+import jmri.SignalHead;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrix.SystemConnectionMemo;
@@ -189,8 +190,19 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         Objects.requireNonNull(systemName, "SystemName cannot be null.");
 
         // return existing if there is one
-        IdTag s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
-        if (s != null) {
+        IdTag s;
+        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != s) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName());
+            }
+            return s;
+        }
+        if ((s = getBySystemName(systemName)) != null) {
+            if ((s.getUserName() == null) && (userName != null)) {
+                s.setUserName(userName);
+            } else if (userName != null) {
+                log.warn("Found IdTag via system name ({}) with non-null user name ({})", systemName, userName); // NOI18N
+            }
             return s;
         }
 
@@ -328,6 +340,14 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<IdTag> getNamedBeanClass() {
+        return IdTag.class;
     }
 
     private static final Logger log = LoggerFactory.getLogger(DefaultIdTagManager.class);

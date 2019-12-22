@@ -14,20 +14,7 @@ import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
+import javax.swing.*;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultHighlighter;
 import javax.swing.text.Highlighter;
@@ -36,13 +23,13 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
-import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
-import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusOpCodes;
+import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
+import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
+import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.TextAreaFIFO;
@@ -59,9 +46,9 @@ import org.slf4j.LoggerFactory;
 public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements CanListener {
 
     protected static int console_instance_num;
-    static private int CAN = 0;
-    static private int CBUS = 1;
-    static private int MAX_LINES = 5000;
+    static final private int CAN = 0;
+    static final private int CBUS = 1;
+    static final private int MAX_LINES = 5000;
 
     transient private int _sent=0;
     transient private int _rcvd=0;
@@ -185,7 +172,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     @Override
     public String getTitle() {
         if (memo != null) {
-            StringBuffer title = new StringBuffer(20);
+            StringBuilder title = new StringBuilder(20);
             title.append(memo.getUserName());
             title.append(" ");
             title.append(Bundle.getMessage("CbusConsoleTitle"));
@@ -241,7 +228,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     public void initComponents(CanSystemConnectionMemo memo) {
         super.initComponents(memo);
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     /**
@@ -357,6 +344,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         showOpcCheckBox.setText(Bundle.getMessage("showOpcCheckbox"));
         showOpcCheckBox.setVisible(true);
         showOpcCheckBox.setToolTipText(Bundle.getMessage("showOpcCheckboxTip"));
+        showOpcCheckBox.setSelected(true);
         
         showOpcExtraCheckBox.setText(Bundle.getMessage("OpcExtraCheckbox"));
         showOpcExtraCheckBox.setVisible(true);
@@ -460,7 +448,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         
         paneA.add(messageCheckOptionpane);
 
-        JPanel logOptionspane = new JPanel();
+        logOptionspane = new JPanel();
         
         logOptionspane.setLayout(new BoxLayout(logOptionspane, BoxLayout.X_AXIS));
         logOptionspane.setBorder(BorderFactory.createTitledBorder(
@@ -832,8 +820,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             }
         });        
         
-        linesBuffer[CAN] = new StringBuffer();
-        linesBuffer[CBUS] = new StringBuffer();
+        linesBuffer[CAN] = new StringBuilder();
+        linesBuffer[CBUS] = new StringBuilder();
     }
 
     /**
@@ -846,8 +834,8 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      */
     public void nextLine(String line, String decoded, String priorities, int highlight) {
 
-        StringBuffer sbCan = new StringBuffer(180);
-        StringBuffer sbCbus = new StringBuffer(180);
+        StringBuilder sbCan = new StringBuilder(180);
+        StringBuilder sbCbus = new StringBuilder(180);
         final int highlightIndex = highlight;
         // log.debug("_highlightFrame: " + _highlightFrame + " highlight: " + highlight);
         if (highlightIndex >= 0) {
@@ -916,7 +904,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
                 // have to massage the line-ends
                 int j;
                 int lim = sbCbus.length();
-                StringBuffer out = new StringBuffer(sbCbus.length() + 10);  // arbitrary guess at space
+                StringBuilder out = new StringBuilder(sbCbus.length() + 10);  // arbitrary guess at space
                 for (j = 0; j < lim; j++) {
                     if (sbCbus.charAt(j) == '\n') {
                         out.append(newline);
@@ -1057,7 +1045,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
 
     public void highlightOn(int index, int nn, boolean nnEn, int ev, boolean evEn, int ty, int dr) {
         // log.debug("Cbus Console highlight applied");
-        StringBuffer sb = new StringBuffer(80);
+        StringBuilder sb = new StringBuilder(80);
         if (nnEn) {
             sb.append((Bundle.getMessage("CbusNode") + nn + " "));
         }
@@ -1235,7 +1223,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
     PrintStream logStream = null;
 
 
-    final StringBuffer[] linesBuffer = new StringBuffer[2];
+    final StringBuilder[] linesBuffer = new StringBuilder[2];
     
     
     @Override
@@ -1279,7 +1267,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         output.append(decode(m, m.isExtended(), m.getHeader()) + " ");
 
         if (showOpcExtraCheckBox.isSelected()) {
-            if (!m.isExtended()) {
+            if (!m.isExtended() && ( !CbusOpCodes.decodeopc(m).equals(Bundle.getMessage("OPC_RESERVED")) )) {
                 String cbusopc = "CTIP_" + decodeopc(m, m.isExtended(), m.getHeader());
                 output.append(Bundle.getMessage(cbusopc)+ " ");
             }

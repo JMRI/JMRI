@@ -42,6 +42,8 @@ public class CtcEditorActionTest {
         menuTests();
         frameButtonTests();
         editTests();
+        _jfo.requestClose();
+        _jfo = null;
     }
 
     void menuTests() {
@@ -340,6 +342,11 @@ public class CtcEditorActionTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
+
+        // stop any BlockBossLogic threads created
+        JUnitUtil.clearBlockBossLogic();
+
         JUnitUtil.tearDown();
     }
 

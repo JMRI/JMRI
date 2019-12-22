@@ -8,6 +8,7 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
+import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.SignalMast;
 import jmri.SignalMastManager;
@@ -123,6 +124,14 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalMasts" : "BeanNameSignalMast");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<SignalMast> getNamedBeanClass() {
+        return SignalMast.class;
     }
 
     ArrayList<SignalMastRepeater> repeaterList = new ArrayList<>();

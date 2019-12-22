@@ -5,6 +5,7 @@ import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.LightManager;
 import jmri.Manager;
+import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -93,12 +94,23 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Nonnull
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
         log.debug("newLight: {};{}", systemName, (userName == null ? "null" : userName));
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
-                + ((userName == null) ? "null" : userName));  // NOI18N
         systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
-        Light s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
-        if (s != null) {
+        Light s;
+        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != s) {
+                log.error("inconsistent user '{}' and system name '{}' results; user name related to {}",
+                        userName, systemName, s.getSystemName());
+            }
+            return s;
+        }
+        if ((s = getBySystemName(systemName)) != null) {
+            if ((s.getUserName() == null) && (userName != null)) {
+                s.setUserName(userName);
+            } else if (userName != null) {
+                log.warn("Found light via system name '{}' with non-null user name '{}'",
+                        systemName, userName);
+            }
             return s;
         }
         // doesn't exist, make a new one
@@ -173,6 +185,14 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Light> getNamedBeanClass() {
+        return Light.class;
     }
 
     /**

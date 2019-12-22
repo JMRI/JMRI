@@ -104,10 +104,24 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         }
 
         // return existing if there is one
-        Turnout s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, ((userName == null) ? null : getByUserName(userName)));
-        if (s != null) {
+        Turnout s;
+        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != s) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, s.getSystemName());
+            }
             return s;
         }
+        if ((s = getBySystemName(systemName)) != null) {
+            if ((s.getUserName() == null) && (userName != null)) {
+                s.setUserName(userName);
+            } else if (userName != null) {
+                log.warn("Found turnout via system name ({}) with non-null user name ({}). Turnout \"{} ({})\" cannot be used.",
+                        systemName, s.getUserName(), systemName, userName);
+            }
+            return s;
+        }
+
         // doesn't exist, make a new one
         s = createNewTurnout(systemName, userName);
         // if that failed, blame it on the input arguments
@@ -140,6 +154,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Turnout> getNamedBeanClass() {
+        return Turnout.class;
     }
 
     /** {@inheritDoc} */

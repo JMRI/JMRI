@@ -7,6 +7,7 @@ import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
+import jmri.SignalSystem;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -57,7 +58,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     }
 
     @Override
-    public CatalogTree getCatalogTree(String name) {
+    public CatalogTree getCatalogTree(@Nonnull String name) {
         CatalogTree t = getByUserName(name);
         if (t != null) {
             return t;
@@ -66,7 +67,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     }
 
     @Override
-    public CatalogTree getBySystemName(String key) {
+    public CatalogTree getBySystemName(@Nonnull String key) {
         if (log.isDebugEnabled()) {
             log.debug("getBySystemName: systemName= {}", key);
             CatalogTree tree = _tsys.get(key);
@@ -79,17 +80,36 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     }
 
     @Override
-    public CatalogTree getByUserName(String key) {
+    public CatalogTree getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public CatalogTree newCatalogTree(@Nonnull String systemName, @Nonnull String userName) {
-        log.debug(" newCatalogTree(\"{}\", \"{}\")", systemName, userName);
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + userName); // NOI18N
+    public CatalogTree newCatalogTree(@Nonnull String systemName, String userName) {
+        log.debug("new CatalogTree: systemName= {}, userName= {}", systemName, (userName != null ? userName : "null"));
+        if (systemName.length() == 0) {
+            log.error("Empty systemName!");
+            return null;
+        }
         // return existing if there is one
-        CatalogTree t = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, getByUserName(userName));
-        if (t != null) {
+        CatalogTree t;
+        if ((userName != null) && ((t = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != t) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, t.getSystemName());
+            }
+            return t;
+        }
+        if ((t = getBySystemName(systemName)) != null) {
+            if ((t.getUserName() == null) && (userName != null)) {
+                t.setUserName(userName);
+            } else if (userName != null) {
+                log.warn("Found memory via system name ({}) with non-null userName ({})",
+                        systemName, userName);
+            }
             return t;
         }
         // doesn't exist, make a new one
@@ -118,9 +138,9 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
      * @param userName   user name for catalog tree, never null/empty
      * @return the new catalog tree or null if unable to create
      */
-    protected CatalogTree createNewCatalogTree(@Nonnull String systemName, @Nonnull String userName) {
-        if (systemName == null || systemName.length() == 0) {
-            log.error("Null systemName!");
+    protected CatalogTree createNewCatalogTree(@Nonnull String systemName, String userName) {
+        if (systemName.length() == 0) {
+            log.error("Empty systemName!");
             return null;
         }
         if (userName == null || userName.length() == 0) {
@@ -161,10 +181,18 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         return null;
     }
 
-    @Nonnull
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameCatalogs" : "BeanNameCatalog");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<CatalogTree> getNamedBeanClass() {
+        return CatalogTree.class;
     }
 
     @Override

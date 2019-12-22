@@ -92,7 +92,11 @@ public class CbusLightManager extends AbstractLightManager {
     @Override
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         validateSystemNamePrefix(name, locale);
-        validateAddressFormat(name.substring(getSystemNamePrefix().length()));
+        try {
+            validateAddressFormat(name.substring(getSystemNamePrefix().length()));
+        } catch (IllegalArgumentException ex) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCBUS", ex.getMessage());
+        }
         return name;
     }
 

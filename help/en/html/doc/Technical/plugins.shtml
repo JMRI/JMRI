@@ -16,14 +16,15 @@
   <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
   <!-- or change them to reflect your alternative logo -->
   <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-      <h1>JMRI: Extending the JMRI Programs</h1>
+
+    <h1>JMRI: Extending the JMRI Programs</h1>
 
       <p>The original goal of the JMRI project was to produce a library upon
       which people could use to build their own applications. Although some
@@ -82,33 +83,34 @@
     part of JMRI itself, the usual sequence is to write Java code
     <ol>
         <li>that creates objects to run as part of the 
-            <a href="IntroStructure.shtml">usual JMRI structures</a>
+            <a href="IntroStructure.shtml">usual JMRI structures</a></li>
         <li>which are stored and loaded via 
             <a href="XmlPersistance.shtml">configurexml</a> 
-            classes that load and store those objects into standard panel files 
+            classes that load and store those objects into standard panel files</li>
         <li>optionally has a GUI that starts from an
             <a href="Swing.shtml">action class</a>
-            fired from some button or menu item, 
+            fired from some button or menu item,</li>
         <li>optionally can fire that action at startup to open the GUI by selecting
-            it under "Peform action.." in the Startup pane in Preferences,  
-        <li>optionally can have its own preferences pane to store more info, and 
+            it under "Peform action.." in the Startup pane in Preferences,</li>
+        <li>optionally can have its own preferences pane to store more info, and</li>
         <li>eventually has 
             <a href="JUnit.shtml">CI unit tests</a>,
             <a href="Javadoc.shtml">documentation</a> and 
-            <a href="Help.shtml">help pages</a>.
+            <a href="Help.shtml">help pages</a>.</li>
     </ol>
 
     Operationally, that's often the best order to develop new function: First, write the
     code (item 1) so that it runs inside JMRI, and use a script to create and start those objects.
     There are two places to put it:
-    <ul><li>In a top level package, i.e. a new <code>java/src/mycooltool</code> directory
+    <ul>
+        <li>In a top level package, i.e. a new <code>java/src/mycooltool</code> directory
         alongside <code>java/src/jmri</code> and <code>java/src/apps</code>.  Your
-        Java files will start with "import mycooltool;" as a package declaration.
-    <li>In a new tools package within the
+        Java files will start with "import mycooltool;" as a package declaration.</li>
+        <li>In a new tools package within the
         <a href="IntroStructure.shtml">JMRI code structure</a>, 
         i.e. a <code>java/src/jmri/jmrit/cooltool</code>
         directory with your java files starting with 
-        <code>import jmri.jmrit.coolltool;</code>.
+        <code>import jmri.jmrit.coolltool;</code>.</li>
     </ul>
     
     <p>Next, write the 
@@ -137,21 +139,21 @@
         <li>A single functional class, 
             <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/SampleFunctionalClass.java">SampleFunctionalClass</a>
             who's only role is to save a sample string.  Classes like this 
-            would be built out to do the work of your project.
+            would be built out to do the work of your project.</li>
         <li>A
             <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/configurexml/SampleFunctionalClassXml.java">configurexml.SampleFunctionalClassXml</a>
             class that stores and loads the SampleFunctionalClass object
-            contents to a panel file.
+            contents to a panel file.</li>
         <li>A
             <a href="https://github.com/JMRI/JMRI/blob/master/java/src/jmri/jmrit/sample/swing/SampleConfigPane.java">swing.SampleConfigPane</a>
             class to provide the basis of a cGUI configuration pane.
             This one just shows a label in it's window, but you
             can build it out with whatever else is needed.
             It's connected to the rest of JMRI so that you
-            can access configure connections to it in the Preferences.
+            can access configure connections to it in the Preferences.</li>
         <li>
             A complete set of basic test classes. They just
-            check the constructors now, but can be built out as needed.
+            check the constructors now, but can be built out as needed.</li>
     </ul>
     
         We encourage you to 

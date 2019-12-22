@@ -38,7 +38,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return (CanSystemConnectionMemo) memo;
     }
 
-    /** 
+    /**
      * {@inheritDoc}
      */
     @Override
@@ -51,8 +51,8 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return result;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
     protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
@@ -72,16 +72,16 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return t;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
     public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
@@ -96,8 +96,8 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
         return prefix + typeLetter() + newAddress;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
@@ -138,12 +138,16 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     @Override
     public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         validateSystemNamePrefix(name, locale);
-        validateAddressFormat(name.substring(getSystemNamePrefix().length()));
+        try {
+            validateAddressFormat(name.substring(getSystemNamePrefix().length()));
+        } catch (IllegalArgumentException ex) {
+            throw new jmri.NamedBean.BadSystemNameException(locale, "InvalidSystemNameCBUS", ex.getMessage());
+        }
         return name;
     }
 
-    /** 
-     * {@inheritDoc} 
+    /**
+     * {@inheritDoc}
      */
     @Override
     public NameValidity validSystemNameFormat(@Nonnull String systemName) {

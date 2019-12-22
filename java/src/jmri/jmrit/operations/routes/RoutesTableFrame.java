@@ -2,22 +2,20 @@ package jmri.jmrit.operations.routes;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.ScrollPaneConstants;
-import jmri.InstanceManager;
-import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.setup.Control;
-import jmri.swing.JTablePersistenceManager;
+
+import javax.swing.*;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.routes.tools.ExportRoutesAction;
+import jmri.jmrit.operations.routes.tools.PrintRoutesAction;
+import jmri.jmrit.operations.routes.tools.RouteCopyAction;
+import jmri.jmrit.operations.routes.tools.SetTrainIconPositionAction;
+import jmri.jmrit.operations.setup.Control;
+import jmri.swing.JTablePersistenceManager;
 
 /**
  * Frame for adding and editing the route roster for operations.
@@ -80,6 +78,7 @@ public class RoutesTableFrame extends OperationsFrame {
         JMenu toolMenu = new JMenu(Bundle.getMessage("MenuTools"));
         toolMenu.add(new RouteCopyAction(Bundle.getMessage("MenuItemCopy")));
         toolMenu.add(new SetTrainIconPositionAction(Bundle.getMessage("MenuSetTrainIcon")));
+        toolMenu.add(new ExportRoutesAction());
         toolMenu.addSeparator();
         toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPrint"), false));
         toolMenu.add(new PrintRoutesAction(Bundle.getMessage("MenuItemPreview"), true));

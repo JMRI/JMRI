@@ -83,14 +83,16 @@ public class SignalMastLogicTest {
      */
     @Test
     public void testRename() {
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         // provide 2 virtual signal masts:
         SignalMast sm1 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0001)");
-        Assert.assertNotNull("SignalMast is null!", sm1);
+        Assert.assertNotNull("SignalMast sm1 is null!", sm1);
         SignalMast sm2 = new jmri.implementation.VirtualSignalMast("IF$vsm:AAR-1946:CPL($0002)");
-        Assert.assertNotNull("SignalMast is null!", sm2);
+        Assert.assertNotNull("SignalMast sm2 is null!", sm2);
 
-        // Change logic delay from 500ms to 1:
-        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).setSignalLogicDelay(1);
+        // Change logic delay from 500ms to 20ms to speed tests:
+        InstanceManager.getDefault(jmri.SignalMastLogicManager.class).setSignalLogicDelay(20);
 
         // provide a signal mast logic:
         SignalMastLogic sml = InstanceManager.getDefault(jmri.SignalMastLogicManager.class).newSignalMastLogic(sm1);

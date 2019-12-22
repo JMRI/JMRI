@@ -7,6 +7,7 @@ import javax.annotation.CheckForNull;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.SignalHead;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,10 +86,27 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
                 + ((userName == null) ? "null" : userName));  // NOI18N
         // return existing if there is one
-        Memory s = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, ((userName == null) ? null : getByUserName(userName)));
-        if (s != null) {
+        Memory s;
+        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != s) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName()); // NOI18N
+            }
             return s;
         }
+        if ((s = getBySystemName(systemName)) != null) {
+            // handle user name from request
+            if (userName != null) {
+                // check if already on set in Object, might be inconsistent
+                if (!userName.equals(s.getUserName())) {
+                    // this is a problem
+                    log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"", systemName, userName, s.getUserName());
+                } else {
+                    s.setUserName(userName);
+                }
+            }
+            return s;
+        }
+
         // doesn't exist, make a new one
         s = createNewMemory(systemName, userName);
         // save in the maps
@@ -121,6 +139,14 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     @Nonnull 
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameMemories" : "BeanNameMemory");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Memory> getNamedBeanClass() {
+        return Memory.class;
     }
 
     @Override

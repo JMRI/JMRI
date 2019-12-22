@@ -1633,6 +1633,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
     }
 
     void cancelPressed(ActionEvent e) {
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;
@@ -1828,6 +1829,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
         }
 
         pref.setComboBoxLastSelection(systemSelectionCombo, prefixBox.getSelectedItem().getMemo().getUserName()); // store user pref
+        removePrefixBoxListener(prefixBox);
         addFrame.setVisible(false);
         addFrame.dispose();
         addFrame = null;

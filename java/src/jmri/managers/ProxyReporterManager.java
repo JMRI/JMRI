@@ -1,11 +1,10 @@
 package jmri.managers;
 
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
-import jmri.NamedBean;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.SignalHead;
 
 /**
  * Implementation of a ReporterManager that can serve as a proxy for multiple
@@ -44,8 +43,8 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
         return ((ReporterManager) getMgr(i)).newReporter(systemName, userName);
     }
 
-    @Nonnull
     @Override
+    @Nonnull
     public Reporter provideReporter(@Nonnull String sName) throws IllegalArgumentException {
         return super.provideNamedBean(sName);
     }
@@ -85,14 +84,6 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
         }
         // If it's not in the system list, go ahead and return null
         return (retv);
-    }
-
-    /** {@inheritDoc} */
-    @CheckForNull
-    @Override
-    public Reporter getByUserThenSystemName(@Nonnull String systemName, Reporter sysNameResult, String userName, Reporter uNameResult) {
-        return super.getByUserThenSystemName(systemName, sysNameResult,
-                userName, uNameResult);
     }
 
     /**
@@ -155,6 +146,14 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Reporter> getNamedBeanClass() {
+        return Reporter.class;
     }
 
 }

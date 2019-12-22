@@ -6,6 +6,7 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
+import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -86,6 +87,14 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Reporter> getNamedBeanClass() {
+        return Reporter.class;
+    }
+
     /** {@inheritDoc} */
     @Override
     public Reporter getByDisplayName(@Nonnull String key) {
@@ -104,8 +113,6 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     @NonNull
     public Reporter newReporter(@NonNull String systemName, String userName) {
         log.debug("new Reporter: {} {}", systemName, (userName == null ? "null" : userName));
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
-                + (userName == null ? "null" : userName));  // NOI18N
        // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
@@ -115,10 +122,23 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         }
 
         // return existing if there is one
-        Reporter r = getByUserThenSystemName(systemName, getBySystemName(systemName), userName, ((userName == null) ? null : getByUserName(userName)));
-        if (r != null) {
+        Reporter r;
+        if ((userName != null) && ((r = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != r) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, r.getSystemName());
+            }
             return r;
         }
+        if ((r = getBySystemName(systemName)) != null) {
+            if ((r.getUserName() == null) && (userName != null)) {
+                r.setUserName(userName);
+            } else if (userName != null) {
+                log.warn("Found reporter via system name ({}}) with non-null user name ({}})", systemName, userName);
+            }
+            return r;
+        }
+
         // doesn't exist, make a new one
         r = createNewReporter(systemName, userName);
 

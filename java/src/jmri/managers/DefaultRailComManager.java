@@ -39,15 +39,40 @@ public class DefaultRailComManager extends DefaultIdTagManager
         return new DefaultRailCom(systemName, userName);
     }
 
+    @SuppressFBWarnings(value="RCN_REDUNDANT_NULLCHECK_OF_NONNULL_VALUE", justification="defensive programming check of @Nonnull argument")
+    private void checkSystemName(@Nonnull String systemName, @CheckForNull String userName) {
+        if (systemName == null) {
+            log.error("SystemName cannot be null. UserName was {}",
+                    (userName == null ? "null" : userName));
+            throw new IllegalArgumentException("SystemName cannot be null. UserName was {}"
+                    + ((userName == null) ? "null" : userName));
+        }
+    }
+
     @Override
     @Nonnull
     public IdTag newIdTag(@Nonnull String systemName, @CheckForNull String userName) {
         log.debug("new IdTag: {};{}", systemName, (userName == null ? "null" : userName));
+        checkSystemName(systemName, userName);
+
         // return existing if there is one
-        RailCom s = (RailCom) getByUserThenSystemName(systemName, getBySystemName(systemName), userName, (userName == null ? null : getByUserName(userName)));
-        if (s != null) {
+        RailCom s;
+        if ((userName != null) && ((s = (RailCom)getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != s) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, s.getSystemName());
+            }
             return s;
         }
+        if ((s = (RailCom) getBySystemName(systemName)) != null) {
+            if ((s.getUserName() == null) && (userName != null)) {
+                s.setUserName(userName);
+            } else if (userName != null) {
+                log.warn("Found IdTag via system name ({}) with non-null user name ({})", systemName, userName);
+            }
+            return s;
+        }
+
         // doesn't exist, make a new one
         s = createNewIdTag(systemName, userName);
         // save in the maps

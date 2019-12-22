@@ -77,6 +77,14 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public char typeLetter();
 
     /**
+     * Get the class of NamedBean supported by this Manager. This should be the
+     * generic class used in the Manager's class declaration.
+     * 
+     * @return the class supported by this Manager.
+     */
+    public abstract Class<E> getNamedBeanClass();
+
+    /**
      * Get the prefix and type for the system name of the NamedBeans handled by
      * this manager.
      *
@@ -512,21 +520,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public E getNamedBean(@Nonnull String name);
 
     /**
-     * Check if bean exists, first by user name, then by systemName.
-     * Set userName if found by systemName, and userName was empty.
-     *
-     * @param systemName system name to use for lookup
-     * @param userName optional user name to use for lookup
-     * @param sysNameResult result of search for existing NamedBean by systemName
-     * @param uNameResult result of search for existing NamedBean by userName
-     * @return NamedBean found by given user- or systemName, null if none found
-     */
-    @CheckForNull
-    public E getByUserThenSystemName(@Nonnull String systemName, E sysNameResult,
-                                             String userName, E uNameResult);
-
-    /**
-     * Get the descriptors for the system-specific properties of the
+     * Return the descriptors for the system-specific properties of the
      * NamedBeans that are kept in this manager.
      *
      * @return list of known properties, or empty list if there are none
