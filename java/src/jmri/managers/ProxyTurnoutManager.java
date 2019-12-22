@@ -30,7 +30,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * Revise superclass behavior: support TurnoutOperations
      */
     @Override
-    public void addManager(Manager<Turnout> m) {
+    public void addManager(@Nonnull Manager<Turnout> m) {
         super.addManager(m);
         InstanceManager.getDefault(TurnoutOperationManager.class).loadOperationTypes();
     }
