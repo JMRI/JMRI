@@ -123,18 +123,21 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
             thrown = true;
         }
         Assert.assertTrue("Expected exception thrown", thrown);
+        
+        // Call setup() for coverage. setup() doesn't do anything
+        expression2.setup();
     }
     
-    @Ignore("This test doesn't work on a Swedish computer due to locale")
     @Test
-    @Override
-    public void testGetPrintTreeWithStandardLocale() {
-    }
-    
-    @Ignore("This test doesn't work on a Swedish computer due to locale")
-    @Test
-    @Override
-    public void testMaleSocketGetPrintTreeWithStandardLocale() {
+    public void testSetValue() {
+        conditionalNG.setEnabled(false);
+        StringExpressionConstant expression = (StringExpressionConstant)_base;
+        expression.setValue("");
+        Assert.assertEquals("getValue() returns correct value", "", expression.getValue());
+        expression.setValue("A value");
+        Assert.assertEquals("getValue() returns correct value", "A value", expression.getValue());
+        expression.setValue("Some other value");
+        Assert.assertEquals("getValue() returns correct value", "Some other value", expression.getValue());
     }
     
     @Test
