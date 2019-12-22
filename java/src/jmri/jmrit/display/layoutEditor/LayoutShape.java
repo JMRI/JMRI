@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -26,8 +27,9 @@ import org.slf4j.*;
  * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutShape {
+
     public static final int MAX_LINEWIDTH = 200;
-    
+
     // operational instance variables (not saved between sessions)
     private LayoutEditor layoutEditor = null;
     private String name;
@@ -311,8 +313,8 @@ public class LayoutShape {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint       the point
-     * @param useRectangles  whether to use (larger) rectangles or (smaller)
+     * @param hitPoint      the point
+     * @param useRectangles whether to use (larger) rectangles or (smaller)
      *                      circles for hit testing
      * @return the hit point type for the point (or NONE)
      */
@@ -324,7 +326,7 @@ public class LayoutShape {
             // see if the passed in point is in one of those rectangles
             // we can create a rectangle for the passed in point and then
             // test if any of the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackEditControlRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.layoutEditorControlRectAt(hitPoint);
 
             if (r.contains(getCoordsCenter())) {
                 result = LayoutTrack.SHAPE_CENTER;
@@ -416,9 +418,8 @@ public class LayoutShape {
     }
 
     /**
-     * rotate this LayoutTrack's coordinates by angleDEG's
-     *
-     * @param angleDEG the amount to rotate in degrees
+     * rotate this shape around its center
+     * @param angleDEG the angle (in degrees) to rotate CW
      */
     public void rotateCoords(double angleDEG) {
         Point2D center = getCoordsCenter();
@@ -535,7 +536,7 @@ public class LayoutShape {
                                 break;
                             }
                             default:
-                              log.error("unexpected enum member!");
+                                log.error("unexpected enum member!");
                         }
                         layoutEditor.repaint();
                     });
@@ -721,9 +722,9 @@ public class LayoutShape {
                     path.quadTo(p.getX(), p.getY(), midR.getX(), midR.getY());
                     break;
                 }
-                
+
                 default:
-                  log.error("unexpected enum member!");
+                    log.error("unexpected enum member!");
             }
         }   // for (idx = 0; idx < cnt; idx++)
 
@@ -744,7 +745,7 @@ public class LayoutShape {
         g2.setColor(controlsColor);
 
         shapePoints.forEach((slp) -> {
-            g2.draw(layoutEditor.trackEditControlRectAt(slp.getPoint()));
+            g2.draw(layoutEditor.layoutEditorControlRectAt(slp.getPoint()));
         });
         if (shapePoints.size() > 0) {
             Point2D end0 = shapePoints.get(0).getPoint();
@@ -760,8 +761,22 @@ public class LayoutShape {
             }
         }
 
-        g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
+        g2.draw(trackEditControlCircleAt(getCoordsCenter()));
     }   // drawEditControls
+
+    //these are convenience methods to return circles used to draw onscreen
+    //
+    //compute the control point rect at inPoint; use the turnout circle size
+    public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
+        return trackControlCircleAt(inPoint);
+    }
+
+    //compute the turnout circle at inPoint (used for drawing)
+    public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
+        return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
+                inPoint.getY() - layoutEditor.circleRadius,
+                layoutEditor.circleDiameter, layoutEditor.circleDiameter);
+    }
 
     /**
      * These are the points that make up the outline of the shape. Each point
