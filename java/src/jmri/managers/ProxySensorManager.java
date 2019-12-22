@@ -186,7 +186,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
 
     /**
      * Do the sensor objects provided by this manager support configuring
-     * an internal pullup or pull down resistor?
+     * an internal pull up or pull down resistor?
      *
      * @return true if pull up/pull down configuration is supported,
      * default to false to satisfy the SensorManager interface

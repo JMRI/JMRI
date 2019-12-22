@@ -179,7 +179,7 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
      * range box in the add Light window.
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((LightManager) getMgr(i)).allowMultipleAdditions(systemName);

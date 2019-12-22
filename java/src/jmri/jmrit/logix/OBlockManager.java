@@ -48,7 +48,7 @@ public class OBlockManager extends AbstractManager<OBlock>
     public OBlock createNewOBlock(@Nonnull String systemName, String userName) {
         // Check that OBlock does not already exist
         OBlock r;
-        if (userName.trim().length() > 0) {
+        if (userName != null && (userName.trim().length() > 0)) {
             r = getByUserName(userName);
             if (r != null) {
                 return null;
@@ -101,7 +101,7 @@ public class OBlockManager extends AbstractManager<OBlock>
     }
 
     @Nonnull
-    public OBlock provideOBlock(String name) throws IllegalArgumentException {
+    public OBlock provideOBlock(@Nonnull String name) throws IllegalArgumentException {
         if (name == null || name.length() == 0) {
             throw new IllegalArgumentException("name \"" + name + "\" invalid");
         }

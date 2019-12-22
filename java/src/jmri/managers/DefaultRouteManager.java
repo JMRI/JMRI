@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Route;
@@ -138,6 +139,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return InstanceManager.getDefault(DefaultRouteManager.class);
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameRoutes" : "BeanNameRoute");

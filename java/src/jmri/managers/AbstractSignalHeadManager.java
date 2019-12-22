@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.SignalHead;
@@ -40,8 +41,8 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
 
     /** {@inheritDoc} */
     @Override
-    public SignalHead getSignalHead(String name) {
-        if (name == null || name.length() == 0) {
+    public SignalHead getSignalHead(@Nonnull String name) {
+        if (name.length() == 0) {
             return null;
         }
         SignalHead t = getByUserName(name);
@@ -54,18 +55,19 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
 
     /** {@inheritDoc} */
     @Override
-    public SignalHead getBySystemName(String name) {
+    public SignalHead getBySystemName(@Nonnull String name) {
         return _tsys.get(name);
     }
 
     /** {@inheritDoc} */
     @Override
-    public SignalHead getByUserName(String key) {
+    public SignalHead getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalHeads" : "BeanNameSignalHead");
     }
@@ -77,4 +79,5 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
     public Class<SignalHead> getNamedBeanClass() {
         return SignalHead.class;
     }
+
 }
