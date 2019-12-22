@@ -635,7 +635,7 @@ public class LayoutEditorToolsTest {
         }
     }
 
-    @Before
+  @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
