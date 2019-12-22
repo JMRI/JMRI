@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.*;
 import java.util.*;
 import javax.annotation.*;
-import javax.swing.JPopupMenu;
+import javax.swing.*;
 import jmri.*;
 import jmri.util.*;
 

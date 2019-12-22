@@ -1238,6 +1238,7 @@ public class LevelXing extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         //bring up signals at level crossing tool dialog
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                         layoutEditor.getLETools().
                                 setSignalsAtLevelXingFromMenu(LevelXing.this,
                                         letbp.signalIconEditor,
