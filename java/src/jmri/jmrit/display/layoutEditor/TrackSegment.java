@@ -490,11 +490,10 @@ public class TrackSegment extends LayoutTrack {
     /*
      * non-accessor methods
      */
-
     /**
      * {@inheritDoc}
      */
-     @Override
+    @Override
     public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.multiply(center, factor);
@@ -508,7 +507,7 @@ public class TrackSegment extends LayoutTrack {
     /**
      * {@inheritDoc}
      */
-     @Override
+    @Override
     public void translateCoords(double xFactor, double yFactor) {
         setCoordsCenter(MathUtil.add(center, new Point2D.Double(xFactor, yFactor)));
     }
@@ -518,9 +517,11 @@ public class TrackSegment extends LayoutTrack {
      */
     @Override
     public void rotateCoords(double angleDEG) {
-        //can't really rotate a tracksegment... 
-        //(it gets its end points from the connected anchors) so...
-        //nothing to see here... move along...
+        if (isBezier()) {
+            for (Point2D p : bezierControlPoints) {
+                p.setLocation(MathUtil.rotateDEG(p, center, angleDEG));
+            }
+        }
     }
 
     /**
@@ -636,7 +637,7 @@ public class TrackSegment extends LayoutTrack {
             //note: optimization here: instead of creating rectangles for all the
             // points to check below, we create a rectangle for the test point
             // and test if the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
             Point2D p, minPoint = MathUtil.zeroPoint2D;
 
             double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -2343,20 +2344,20 @@ public class TrackSegment extends LayoutTrack {
                 g2.draw(new Line2D.Double(circleCenterPoint, ep2));
                 // Draw a circle and square at the circles centre, that
                 // allows the user to change the angle by dragging the mouse.
-                g2.draw(layoutEditor.trackEditControlCircleAt(circleCenterPoint));
-                g2.draw(layoutEditor.trackEditControlRectAt(circleCenterPoint));
+                g2.draw(trackEditControlCircleAt(circleCenterPoint));
+                g2.draw(layoutEditor.layoutEditorControlRectAt(circleCenterPoint));
             } else if (isBezier()) {
                 //draw construction lines and control circles
                 Point2D lastPt = ep1;
                 for (Point2D bcp : bezierControlPoints) {
                     g2.draw(new Line2D.Double(lastPt, bcp));
                     lastPt = bcp;
-                    g2.draw(layoutEditor.trackEditControlRectAt(bcp));
+                    g2.draw(layoutEditor.layoutEditorControlRectAt(bcp));
                 }
                 g2.draw(new Line2D.Double(lastPt, ep2));
             }
         }
-        g2.draw(layoutEditor.trackEditControlCircleAt(getCentreSeg()));
+        g2.draw(trackEditControlCircleAt(getCentreSeg()));
     }   // drawEditControls
 
     @Override
