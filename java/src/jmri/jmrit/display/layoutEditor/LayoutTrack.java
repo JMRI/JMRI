@@ -3,15 +3,12 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
+import java.awt.geom.*;
 import java.util.*;
 import javax.annotation.*;
-import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import jmri.*;
-import jmri.util.ColorUtil;
-import jmri.util.MathUtil;
+import jmri.util.*;
 
 /**
  * Abstract base class for all layout track objects (PositionablePoint,
@@ -129,6 +126,36 @@ public abstract class LayoutTrack {
         this.decorations = decorations;
     }
     protected Map<String, String> decorations = null;
+
+    /**
+     * convenience method for accessing...
+     * @return the layout editor's toolbar panel
+     */
+    @Nonnull
+    public LayoutEditorToolBarPanel getLayoutEditorToolBarPanel() {
+        return layoutEditor.getLayoutEditorToolBarPanel();
+    }
+
+    //these are convenience methods to return circles & rectangle used to draw onscreen
+    //
+    //compute the control point rect at inPoint; use the turnout circle size
+    public Ellipse2D trackEditControlCircleAt(@Nonnull Point2D inPoint) {
+        return trackControlCircleAt(inPoint);
+    }
+
+    //compute the turnout circle at inPoint (used for drawing)
+    public Ellipse2D trackControlCircleAt(@Nonnull Point2D inPoint) {
+        return new Ellipse2D.Double(inPoint.getX() - layoutEditor.circleRadius,
+                inPoint.getY() - layoutEditor.circleRadius, 
+                layoutEditor.circleDiameter, layoutEditor.circleDiameter);
+    }
+
+    //compute the turnout circle control rect at inPoint
+    public Rectangle2D trackControlCircleRectAt(@Nonnull Point2D inPoint) {
+        return new Rectangle2D.Double(inPoint.getX() - layoutEditor.circleRadius,
+                inPoint.getY() - layoutEditor.circleRadius, 
+                layoutEditor.circleDiameter, layoutEditor.circleDiameter);
+    }
 
     protected Color getColorForTrackBlock(
             @CheckForNull LayoutBlock layoutBlock, boolean forceBlockTrackColor) {
