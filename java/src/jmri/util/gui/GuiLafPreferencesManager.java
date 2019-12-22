@@ -2,21 +2,25 @@ package jmri.util.gui;
 
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
+import javax.swing.JComponent;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.FontUIResource;
+
 import jmri.InstanceManagerAutoDefault;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
-import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesManager;
 import jmri.util.prefs.InitializationException;
 import jmri.util.prefs.JmriPreferencesProvider;
@@ -36,15 +40,16 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final String LOCALE = "locale";
     public static final String LOOK_AND_FEEL = "lookAndFeel";
     public static final String NONSTANDARD_MOUSE_EVENT = "nonstandardMouseEvent";
-    /**
-     * Display state in bean tables as icon.
-     */
     public static final String GRAPHIC_TABLE_STATE = "graphicTableState";
     /**
      * @deprecated since 4.19.2; use {@link #GRAPHIC_TABLE_STATE} instead
      */
     @Deprecated
     public static final String GRAPHICTABLESTATE = GRAPHIC_TABLE_STATE;
+    /**
+     * @deprecated since 4.19.2 without replacement
+     */
+    @Deprecated
     public static final String VERTICAL_TOOLBAR = "verticalToolBar";
     public static final String SHOW_TOOL_TIP_TIME = "showToolTipDismissDelay";
     public static final String EDITOR_USE_OLD_LOC_SIZE = "editorUseOldLocSize";
@@ -82,7 +87,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     /*
      * Unlike most PreferencesProviders, the GUI Look & Feel preferences should
-     * be per-application instead of per-profile.
+     * be per-application instead of per-profile, so initialization state is not
+     * maintained per-profile although the preferences are stored as part of the
+     * first loaded profile.
      */
     private boolean initialized = false;
     private final List<InitializationException> exceptions = new ArrayList<>();
@@ -93,16 +100,22 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         if (!initialized) {
             @SuppressWarnings("deprecation")
             boolean migrate = false;
-            // using deprecated call to enable migration of
+            // using deprecated, not for removal, call to enable migration of
             // preferences keys from apps.gui.* to jmri.util.gui.*
-            getPreferences(JmriPreferencesProvider.getPreferences(profile, "apps.gui", true));
+            getPreferences(JmriPreferencesProvider.getPreferences(profile, "apps-gui", true));
             migrate = dirty;
             setDirty(false);
-            getPreferences(ProfileUtils.getPreferences(profile, getClass(), true));
+            if (migrate) {
+                // if not reset for migration, fontSize gets set to 0
+                // which is undesirable if fontSize was set by user
+                defaultFontSize = 0;
+            }
+            getPreferences(JmriPreferencesProvider.getPreferences(profile, getClass(), true));
             setDirty(false);
             setRestartRequired(false);
             if (migrate) {
-                savePreferences(profile);
+                log.info("Migrating preferences from apps.gui to jmri.util.gui...");
+                savePreferences(profile, migrate);
             }
             initialized = true;
         }
@@ -128,9 +141,9 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         setEditorUseOldLocSize(preferences.getBoolean(EDITOR_USE_OLD_LOC_SIZE, isEditorUseOldLocSize()));
         setToolTipDismissDelay(preferences.getInt(SHOW_TOOL_TIP_TIME, getToolTipDismissDelay()));
 
-        log.debug("About to setDefault Locale");
+        log.debug("About to set default Locale");
         Locale.setDefault(getLocale());
-        javax.swing.JComponent.setDefaultLocale(getLocale());
+        JComponent.setDefaultLocale(getLocale());
 
         applyLookAndFeel();
         applyFontSize();
@@ -156,7 +169,11 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     @Override
     public void savePreferences(Profile profile) {
-        Preferences preferences = ProfileUtils.getPreferences(profile, getClass(), true);
+        savePreferences(profile, false);
+    }
+
+    private void savePreferences(Profile profile, boolean migrate) {
+        Preferences preferences = JmriPreferencesProvider.getPreferences(profile, getClass(), true);
         preferences.put(LOCALE, getLocale().toLanguageTag());
         preferences.put(LOOK_AND_FEEL, getLookAndFeel());
 
@@ -180,18 +197,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             preferences.putInt(FONT_SIZE, temp);
         }
         preferences.putBoolean(NONSTANDARD_MOUSE_EVENT, isNonStandardMouseEvent());
-        preferences.putBoolean(GRAPHIC_TABLE_STATE, isGraphicTableState()); // use
-                                                                            // graphic
-                                                                            // icons
-                                                                            // in
-                                                                            // bean
-                                                                            // table
-                                                                            // state
-                                                                            // column
+        preferences.putBoolean(GRAPHIC_TABLE_STATE, isGraphicTableState());
         preferences.putBoolean(EDITOR_USE_OLD_LOC_SIZE, isEditorUseOldLocSize());
         preferences.putInt(SHOW_TOOL_TIP_TIME, getToolTipDismissDelay());
         try {
             preferences.sync();
+            if (migrate) {
+                preferences.flush();
+            }
         } catch (BackingStoreException ex) {
             log.error("Unable to save preferences.", ex);
         }
@@ -201,6 +214,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     /**
      * @return the locale
      */
+    @Nonnull
     public Locale getLocale() {
         return currentLocale;
     }
@@ -208,18 +222,20 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     /**
      * @param locale the locale to set
      */
-    public void setLocale(Locale locale) {
-        Locale oldLocale = locale;
-        this.currentLocale = locale;
-        setDirty(true);
-        setRestartRequired(true);
-        firePropertyChange(LOCALE, oldLocale, locale);
+    public void setLocale(@Nonnull Locale locale) {
+        Locale oldLocale = currentLocale;
+        currentLocale = locale;
+        if (!oldLocale.equals(locale)) {
+            setDirty(true);
+            setRestartRequired(true);
+            firePropertyChange(LOCALE, oldLocale, locale);
+        }
     }
 
     /**
-     * @return the currently selected font
+     * @return the currently selected font; will be null if no font is selected
      */
-    public Font getFont() {
+    public @CheckForNull Font getFont() {
         return currentFont;
     }
 
@@ -228,14 +244,14 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      *
      * @param newFont the new font to set
      */
-    public void setFont(Font newFont) {
+    public void setFont(@Nonnull Font newFont) {
         Font oldFont = currentFont;
         currentFont = newFont;
         if (currentFont != oldFont) {
+            setDirty(true);
+            setRestartRequired(true);
             firePropertyChange(FONT_NAME, oldFont, currentFont);
         }
-        setDirty(true);
-        setRestartRequired(true);
     }
 
     /**
@@ -243,7 +259,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      *
      * @param newFontName the name of the new font to set
      */
-    public void setFontByName(String newFontName) {
+    public void setFontByName(@Nonnull String newFontName) {
         Font oldFont = getFont();
         if (oldFont == null) {
             oldFont = getDefaultFont();
@@ -263,8 +279,8 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
 
     /**
      * Called to load the current {@literal Look & Feel} default font, based on
-     * looking up the "List.font" <br>
-     * <br>
+     * looking up the "List.font"
+     * <p>
      * The value can be can be read by calling {@link #getDefaultFont()}
      */
     public void setDefaultFont() {
@@ -273,7 +289,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             Object key = keys.nextElement();
             Object value = UIManager.get(key);
 
-            if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals(LIST_FONT)) {
+            if (value instanceof FontUIResource && key.toString().equals(LIST_FONT)) {
                 Font f = UIManager.getFont(key);
                 log.debug("Key: {} Font: {}", key, f.getName());
                 defaultFont = f;
@@ -307,10 +323,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             fontSize = Integer.max(MIN_FONT_SIZE, Integer.min(MAX_FONT_SIZE, fontSize));
         }
         if (fontSize != oldFontSize) {
+            setDirty(true);
+            setRestartRequired(true);
             firePropertyChange(FONT_SIZE, oldFontSize, fontSize);
         }
-        setDirty(true);
-        setRestartRequired(true);
     }
 
     /**
@@ -321,24 +337,20 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * Load the current {@literal Look & Feel} default font size,
-     * based on looking up the "List.font" size
+     * Load the current {@literal Look & Feel} default font size, based on
+     * looking up the "List.font" size
      * <p>
      * The value can be can be read by calling {@link #getDefaultFontSize()}
      */
     public void setDefaultFontSize() {
-        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
-            Object value = UIManager.get(key);
-
-            if (value instanceof javax.swing.plaf.FontUIResource && key.toString().equals(LIST_FONT)) {
+        UIManager.getDefaults().forEach((key, value) -> {
+            if (value instanceof FontUIResource && key.toString().equals(LIST_FONT)) {
                 Font f = UIManager.getFont(key);
                 log.debug("Key: {} Font: {} size: {}", key, f.getName(), f.getSize());
                 defaultFontSize = f.getSize();
                 return;
             }
-        }
+        });
         // couldn't find the default; so use a reasonable font size
         defaultFontSize = 11;
     }
@@ -347,22 +359,19 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * Logs LAF fonts at the TRACE level.
      */
     private void logAllFonts() {
-        // avoid any activity if logging at this level is disabled to avoid
+        // avoid any activity if logging at level is disabled to avoid
         // the unnecessary overhead of getting the fonts
         if (log.isTraceEnabled()) {
             log.trace("******** LAF={}", UIManager.getLookAndFeel().getClass().getName());
-            java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
-            while (keys.hasMoreElements()) {
-                Object key = keys.nextElement();
-                Object value = UIManager.get(key);
-                if (value instanceof javax.swing.plaf.FontUIResource ||
-                        value instanceof java.awt.Font ||
+            UIManager.getDefaults().forEach((key, value) -> {
+                if (value instanceof FontUIResource ||
+                        value instanceof Font ||
                         key.toString().endsWith(".font")) {
                     Font f = UIManager.getFont(key);
                     log.trace("Class={}; Key: {} Font: {} size: {}", value.getClass().getName(), key, f.getName(),
                             f.getSize());
                 }
-            }
+            });
         }
     }
 
@@ -373,9 +382,13 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      * @param time the delay in seconds.
      */
     public void setToolTipDismissDelay(int time) {
+        int old = toolTipDismissDelay;
         toolTipDismissDelay = time;
         ToolTipManager.sharedInstance().setDismissDelay(time);
-        setDirty(true);
+        if (old != time) {
+            setDirty(true);
+            firePropertyChange(SHOW_TOOL_TIP_TIME, old, time);
+        }
     }
 
     /**
@@ -393,14 +406,16 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * @param nonStandardMouseEvent the nonStandardMouseEvent to set
+     * @param flag the nonStandardMouseEvent to set
      */
-    public void setNonStandardMouseEvent(boolean nonStandardMouseEvent) {
-        boolean oldNonStandardMouseEvent = nonStandardMouseEvent;
-        this.nonStandardMouseEvent = nonStandardMouseEvent;
-        setDirty(true);
-        setRestartRequired(true);
-        firePropertyChange(NONSTANDARD_MOUSE_EVENT, oldNonStandardMouseEvent, nonStandardMouseEvent);
+    public void setNonStandardMouseEvent(boolean flag) {
+        boolean old = nonStandardMouseEvent;
+        nonStandardMouseEvent = flag;
+        if (old != flag) {
+            setDirty(true);
+            setRestartRequired(true);
+            firePropertyChange(NONSTANDARD_MOUSE_EVENT, old, flag);
+        }
     }
 
     /**
@@ -411,14 +426,16 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * @param graphicTableState the graphicTableState to set
+     * @param flag the graphicTableState to set
      */
-    public void setGraphicTableState(boolean graphicTableState) {
-        boolean oldGraphicTableState = graphicTableState;
-        this.graphicTableState = graphicTableState;
-        setDirty(true);
-        setRestartRequired(true);
-        firePropertyChange(GRAPHIC_TABLE_STATE, oldGraphicTableState, graphicTableState);
+    public void setGraphicTableState(boolean flag) {
+        boolean old = graphicTableState;
+        graphicTableState = flag;
+        if (old != flag) {
+            setDirty(true);
+            setRestartRequired(true);
+            firePropertyChange(GRAPHIC_TABLE_STATE, old, flag);
+        }
     }
 
     /**
@@ -429,104 +446,100 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * @param editorUseOldLocSize the editorUseOldLocSize value to set
+     * @param flag the editorUseOldLocSize value to set
      */
-    public void setEditorUseOldLocSize(boolean editorUseOldLocSize) {
-        boolean oldEditorUseOldLocSize = editorUseOldLocSize;
-        this.editorUseOldLocSize = editorUseOldLocSize;
-        setDirty(true);
-        setRestartRequired(false);
-        firePropertyChange(EDITOR_USE_OLD_LOC_SIZE, oldEditorUseOldLocSize, editorUseOldLocSize);
+    public void setEditorUseOldLocSize(boolean flag) {
+        boolean old = editorUseOldLocSize;
+        editorUseOldLocSize = flag;
+        if (old != flag) {
+            setDirty(true);
+            setRestartRequired(false);
+            firePropertyChange(EDITOR_USE_OLD_LOC_SIZE, old, flag);
+        }
     }
 
     /**
      * Get the name of the class implementing the preferred look and feel. Note
-     * this may not be the in-use look and feel if the preferred look and feel
-     * is not available on the current platform; and will be overwritten if
-     * preferences are saved on a platform where the preferred look and feel is
-     * not available.
+     * may not be the in-use look and feel if the preferred look and feel is not
+     * available on the current platform; and will be overwritten if preferences
+     * are saved on a platform where the preferred look and feel is not
+     * available.
      * 
      * @return the look and feel class name
      */
-    public String getLookAndFeel() {
+    public @Nonnull String getLookAndFeel() {
         return lookAndFeel;
     }
 
     /**
      * Set the name of the class implementing the preferred look and feel. Note
-     * this change only takes effect after the application is restarted, because
-     * Java has some issues setting the look and feel correctly on already open
+     * change only takes effect after the application is restarted, because Java
+     * has some issues setting the look and feel correctly on already open
      * windows.
      * 
-     * @param lookAndFeel the look and feel class name
+     * @param name the look and feel class name
      */
-    public void setLookAndFeel(String lookAndFeel) {
-        String oldLookAndFeel = lookAndFeel;
-        this.lookAndFeel = lookAndFeel;
-        setDirty(true);
-        setRestartRequired(true);
-        firePropertyChange(LOOK_AND_FEEL, oldLookAndFeel, lookAndFeel);
+    public void setLookAndFeel(@Nonnull String name) {
+        String old = lookAndFeel;
+        lookAndFeel = name;
+        if (!old.equals(name)) {
+            setDirty(true);
+            setRestartRequired(true);
+            firePropertyChange(LOOK_AND_FEEL, old, name);
+        }
     }
 
     /**
      * Apply the existing look and feel.
      */
     public void applyLookAndFeel() {
-        String lafClassName = null;
+        String lafClassName = UIManager.getLookAndFeel().getClass().getName();
         for (LookAndFeelInfo LAF : UIManager.getInstalledLookAndFeels()) {
-            // accept either name or classname of look and feel
+            // accept either name or class name of look and feel
             if (LAF.getClassName().equals(lookAndFeel) || LAF.getName().equals(lookAndFeel)) {
                 lafClassName = LAF.getClassName();
-                break; // use first match, not last match (unlikely to be
-                       // different, but you never know)
+                // use first match, not last match (unlikely to be
+                // multiple, but you never know)
+                break;
             }
         }
         log.debug("Look and feel selection \"{}\" ({})", lookAndFeel, lafClassName);
-        if (lafClassName != null) {
-            if (!lafClassName.equals(UIManager.getLookAndFeel().getClass().getName())) {
-                log.debug("Apply look and feel \"{}\" ({})", lookAndFeel, lafClassName);
-                try {
-                    UIManager.setLookAndFeel(lafClassName);
-                } catch (ClassNotFoundException ex) {
-                    log.error("Could not find look and feel \"{}\".", lookAndFeel);
-                } catch (
-                        IllegalAccessException |
-                        InstantiationException ex) {
-                    log.error("Could not load look and feel \"{}\".", lookAndFeel);
-                } catch (UnsupportedLookAndFeelException ex) {
-                    log.error("Look and feel \"{}\" is not supported on this platform.", lookAndFeel);
-                }
-            } else {
-                log.debug("Not updating look and feel {} matching existing look and feel", lafClassName);
+        if (!lafClassName.equals(UIManager.getLookAndFeel().getClass().getName())) {
+            log.debug("Apply look and feel \"{}\" ({})", lookAndFeel, lafClassName);
+            try {
+                UIManager.setLookAndFeel(lafClassName);
+            } catch (ClassNotFoundException ex) {
+                log.error("Could not find look and feel \"{}\".", lookAndFeel);
+            } catch (
+                    IllegalAccessException |
+                    InstantiationException ex) {
+                log.error("Could not load look and feel \"{}\".", lookAndFeel);
+            } catch (UnsupportedLookAndFeelException ex) {
+                log.error("Look and feel \"{}\" is not supported on platform.", lookAndFeel);
             }
+        } else {
+            log.debug("Not updating look and feel {} matching existing look and feel", lafClassName);
         }
     }
 
     /**
-     * Applies a new calculated font size to all found fonts. <br>
-     * <br>
+     * Applies a new calculated font size to all found fonts.
+     * <p>
      * Calls {@link #getCalcFontSize(int) getCalcFontSize} to calculate new size
      * for each.
      */
     private void applyFontSize() {
-        if (log.isTraceEnabled()) {
-            logAllFonts();
-        }
+        logAllFonts();
         if (getFontSize() != getDefaultFontSize()) {
-            Enumeration<Object> keys = UIManager.getDefaults().keys();
-            while (keys.hasMoreElements()) {
-                Object key = keys.nextElement();
-                Object value = UIManager.get(key);
-                if (value instanceof javax.swing.plaf.FontUIResource ||
-                        value instanceof java.awt.Font ||
+            UIManager.getDefaults().forEach((key, value) -> {
+                if (value instanceof FontUIResource ||
+                        value instanceof Font ||
                         key.toString().endsWith(".font")) {
                     UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(),
                             getCalcFontSize(((Font) value).getSize())));
                 }
-            }
-            if (log.isTraceEnabled()) {
-                logAllFonts();
-            }
+            });
+            logAllFonts();
         }
     }
 
@@ -541,12 +554,12 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      */
     public static void setLocaleMinimally(Profile profile) {
         // use current default if no setting specified
-        String name = ProfileUtils.getPreferences(profile, GuiLafPreferencesManager.class, true).get(LOCALE,
+        String name = JmriPreferencesProvider.getPreferences(profile, GuiLafPreferencesManager.class, true).get(LOCALE,
                 Locale.getDefault().toLanguageTag());
         log.debug("setLocaleMinimally found language {}, setting", name);
         Locale locale = Locale.forLanguageTag(name);
         Locale.setDefault(locale);
-        javax.swing.JComponent.setDefaultLocale(locale);
+        JComponent.setDefaultLocale(locale);
     }
 
     /**
@@ -572,12 +585,10 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
      *
      * @param dirty true if preferences need to be saved
      */
-    private void setDirty(boolean dirty) {
-        boolean oldDirty = dirty;
-        this.dirty = dirty;
-        if (oldDirty != dirty) {
-            propertyChangeSupport.firePropertyChange(PROP_DIRTY, oldDirty, dirty);
-        }
+    private void setDirty(boolean flag) {
+        boolean old = dirty;
+        dirty = flag;
+        propertyChangeSupport.firePropertyChange(PROP_DIRTY, old, flag);
     }
 
     /**
@@ -592,15 +603,12 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     /**
      * Set restart required state.
      *
-     * @param restartRequired true if application needs to restart to apply
-     *                        preferences
+     * @param flag true if application needs to restart to apply preferences
      */
-    private void setRestartRequired(boolean restartRequired) {
-        boolean oldRestartRequired = restartRequired;
-        this.restartRequired = restartRequired;
-        if (oldRestartRequired != restartRequired) {
-            propertyChangeSupport.firePropertyChange(PROP_RESTARTREQUIRED, oldRestartRequired, restartRequired);
-        }
+    private void setRestartRequired(boolean flag) {
+        boolean old = restartRequired;
+        restartRequired = flag;
+        propertyChangeSupport.firePropertyChange(PROP_RESTARTREQUIRED, old, flag);
     }
 
     @Override
