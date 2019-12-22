@@ -140,6 +140,16 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertFalse("is external", _base.isExternal());
+    }
+    
+    @Test
     public void testDescription() {
         And e1 = new And("IQDE321", null);
         Assert.assertTrue("And".equals(e1.getShortDescription()));

@@ -171,6 +171,16 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     }
     
     @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertFalse("is external", _base.isExternal());
+    }
+    
+    @Test
     public void testDescription() {
         Antecedent e1 = new Antecedent("IQDE321", null, "");
         Assert.assertEquals("strings matches", "Antecedent", e1.getShortDescription());

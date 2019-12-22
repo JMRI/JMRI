@@ -88,6 +88,16 @@ public class DigitalActionPluginSocketTest extends AbstractDigitalActionTestBase
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
+    @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertTrue("is external", _base.isExternal());
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {

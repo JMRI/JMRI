@@ -103,6 +103,16 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
     
+    @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertFalse("is external", _base.isExternal());
+    }
+    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {

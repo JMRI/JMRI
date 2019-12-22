@@ -147,6 +147,16 @@ public class ResetOnTrueTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertFalse("is external", _base.isExternal());
+    }
+    
+    @Test
     public void testDescription() throws NamedBean.BadUserNameException, NamedBean.BadSystemNameException, NamedBean.BadSystemNameException, SocketAlreadyConnectedException {
         DigitalExpressionBean e1 = new ResetOnTrue("IQDE353", null);
         Assert.assertTrue("Reset on true".equals(e1.getShortDescription()));

@@ -127,6 +127,16 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertFalse("is external", _base.isExternal());
+    }
+    
+    @Test
     public void testDescription() {
         Timer e1 = new Timer("IQDE321", null);
         Assert.assertTrue("Timer".equals(e1.getShortDescription()));

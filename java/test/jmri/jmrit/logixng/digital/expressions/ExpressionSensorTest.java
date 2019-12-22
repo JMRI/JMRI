@@ -166,6 +166,16 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertTrue("is external", _base.isExternal());
+    }
+    
+    @Test
     public void testDescription() {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);

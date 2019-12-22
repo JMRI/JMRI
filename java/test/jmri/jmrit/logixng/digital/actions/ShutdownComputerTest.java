@@ -19,7 +19,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Test ActionTurnout
+ * Test ShutdownComputer
  * 
  * @author Daniel Bergqvist 2018
  */
@@ -80,6 +80,16 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
             Assert.assertEquals("Error message is correct", "Not supported.", ex.getMessage());
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.EXRAVAGANZA == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertTrue("is external", _base.isExternal());
     }
     
     @Ignore

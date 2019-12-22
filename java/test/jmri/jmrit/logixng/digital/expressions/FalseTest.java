@@ -125,6 +125,16 @@ public class FalseTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertFalse("is external", _base.isExternal());
+    }
+    
+    @Test
     public void testDescription() {
         False e1 = new False("IQDE321", null);
         Assert.assertTrue("Always false".equals(e1.getShortDescription()));

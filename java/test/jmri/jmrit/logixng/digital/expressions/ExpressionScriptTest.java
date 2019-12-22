@@ -241,6 +241,16 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
+    public void testCategory() {
+        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+    }
+    
+    @Test
+    public void testIsExternal() {
+        Assert.assertTrue("is external", _base.isExternal());
+    }
+    
+    @Test
     public void testDescription() {
         Assert.assertTrue("Evaluate script".equals(expressionScript.getShortDescription()));
         Assert.assertTrue("Evaluate script".equals(expressionScript.getLongDescription()));
