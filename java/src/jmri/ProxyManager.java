@@ -45,5 +45,4 @@ public interface ProxyManager<B extends NamedBean> extends Manager<B> {
      * @return the list of managers
      */
     public List<Manager<B>> getDisplayOrderManagerList();
-
 }

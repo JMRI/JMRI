@@ -7,7 +7,7 @@ import jmri.ReporterManager;
 import jmri.SignalHead;
 
 /**
- * Implementation of a ReporterManager that can serve as a proxy for multiple
+ * Implementation of a ReporterManager that can serves as a proxy for multiple
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
@@ -34,7 +34,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      * @return Null if nothing by that name exists
      */
     @Override
-    public Reporter getReporter(@Nonnull String name) {
+    public Reporter getReporter(String name) {
         return super.getNamedBean(name);
     }
 
@@ -44,38 +44,38 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     @Override
-    @Nonnull
-    public Reporter provideReporter(@Nonnull String sName) throws IllegalArgumentException {
+    public Reporter provideReporter(String sName) throws IllegalArgumentException {
         return super.provideNamedBean(sName);
     }
 
-    /** {@inheritDoc} */
     @Override
-    @Nonnull
+    /** {@inheritDoc} */
     public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
     /**
-     * Locate an instance based on a system name.
+     * Locate an instance based on a system name. Returns null if no instance
+     * already exists.
      *
      * @return requested Reporter object or null if none exists
      */
     @Override
-    public Reporter getBySystemName(@Nonnull String sName) {
+    public Reporter getBySystemName(String sName) {
         return super.getBeanBySystemName(sName);
     }
 
     /**
-     * Locate an instance based on a user name.
+     * Locate an instance based on a user name. Returns null if no instance
+     * already exists.
      *
      * @return requested Reporter object or null if none exists
      */
     @Override
-    public Reporter getByUserName(@Nonnull String userName) {
+    public Reporter getByUserName(String userName) {
         return super.getBeanByUserName(userName);
     }
 
     @Override
-    public Reporter getByDisplayName(@Nonnull String key) {
+    public Reporter getByDisplayName(String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
         Reporter retv = this.getByUserName(key);
@@ -87,7 +87,7 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     /**
-     * Get an instance with the specified system and user names. Note that
+     * Return an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Reporter object representing a given physical Reporter and
      * therefore only one with a specific system or user name.
@@ -115,13 +115,12 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
      * @return requested Reporter object (never null)
      */
     @Override
-    @Nonnull
-    public Reporter newReporter(@Nonnull String systemName, String userName) {
+    public Reporter newReporter(String systemName, String userName) {
         return newNamedBean(systemName, userName);
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((ReporterManager) getMgr(i)).allowMultipleAdditions(systemName);
@@ -143,7 +142,6 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     }
 
     @Override
-    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
     }

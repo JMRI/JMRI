@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of a SensorManager that can serve as a proxy for multiple
+ * Implementation of a SensorManager that can serves as a proxy for multiple
  * system-specific implementations.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
@@ -33,7 +33,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      * @return Null if nothing by that name exists
      */
     @Override
-    public Sensor getSensor(@Nonnull String name) {
+    public Sensor getSensor(String name) {
         return super.getNamedBean(name);
     }
 
@@ -44,33 +44,33 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    @Nonnull
-    public Sensor provideSensor(@Nonnull String sName) throws IllegalArgumentException {
+    public Sensor provideSensor(String sName) throws IllegalArgumentException {
         return super.provideNamedBean(sName);
     }
 
-    /** {@inheritDoc} */
     @Override
-    @Nonnull
+    /** {@inheritDoc} */
     public Sensor provide(@Nonnull String name) throws IllegalArgumentException { return provideSensor(name); }
 
     /**
-     * Locate an instance based on a system name.
+     * Locate an instance based on a system name. Returns null if no instance
+     * already exists.
      *
      * @return requested Turnout object or null if none exists
      */
     @Override
-    public Sensor getBySystemName(@Nonnull String sName) {
+    public Sensor getBySystemName(String sName) {
         return super.getBeanBySystemName(sName);
     }
 
     /**
-     * Locate an instance based on a user name.
+     * Locate an instance based on a user name. Returns null if no instance
+     * already exists.
      *
      * @return requested Turnout object or null if none exists
      */
     @Override
-    public Sensor getByUserName(@Nonnull String userName) {
+    public Sensor getByUserName(String userName) {
         return super.getBeanByUserName(userName);
     }
 
@@ -103,8 +103,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
      * @return requested Sensor object (never null)
      */
     @Override
-    @Nonnull
-    public Sensor newSensor(@Nonnull String systemName, String userName) {
+    public Sensor newSensor(String systemName, String userName) {
         return newNamedBean(systemName, userName);
     }
 
@@ -114,7 +113,7 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((SensorManager) getMgr(i)).allowMultipleAdditions(systemName);
@@ -171,7 +170,6 @@ public class ProxySensorManager extends AbstractProxyManager<Sensor>
     }
 
     @Override
-    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSensors" : "BeanNameSensor");
     }

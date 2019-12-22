@@ -4,7 +4,6 @@ import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 
 import jmri.*;
@@ -43,7 +42,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * @return Null if nothing by that name exists
      */
     @Override
-    public Turnout getTurnout(@Nonnull String name) {
+    public Turnout getTurnout(String name) {
         return super.getNamedBean(name);
     }
 
@@ -53,15 +52,12 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    @Nonnull
-    public Turnout provideTurnout(@Nonnull String name) throws IllegalArgumentException {
+    public Turnout provideTurnout(String name) throws IllegalArgumentException {
         return super.provideNamedBean(name);
     }
 
-
-    /** {@inheritDoc} */
     @Override
-    @Nonnull
+    /** {@inheritDoc} */
     public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
 
     /**
@@ -71,7 +67,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * @return requested Turnout object or null if none exists
      */
     @Override
-    public Turnout getBySystemName(@Nonnull String systemName) {
+    public Turnout getBySystemName(String systemName) {
         return super.getBeanBySystemName(systemName);
     }
 
@@ -82,12 +78,12 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * @return requested Turnout object or null if none exists
      */
     @Override
-    public Turnout getByUserName(@Nonnull String userName) {
+    public Turnout getByUserName(String userName) {
         return super.getBeanByUserName(userName);
     }
 
     /**
-     * Get an instance with the specified system and user names. Note that
+     * Return an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Sensor object representing a given physical turnout and
      * therefore only one with a specific system or user name.
@@ -115,8 +111,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * @return requested Turnout object (never null)
      */
     @Override
-    @Nonnull
-    public Turnout newTurnout(@Nonnull String systemName, String userName) {
+    public Turnout newTurnout(String systemName, String userName) {
         return newNamedBean(systemName, userName);
     }
 
@@ -129,7 +124,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * "CLOSED" is the desired terminology.
      */
     @Override
-    @Nonnull
     public String getClosedText() {
         return ((TurnoutManager) getMgr(0)).getClosedText();
     }
@@ -143,7 +137,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * "THROWN" is the desired terminology.
      */
     @Override
-    @Nonnull
     public String getThrownText() {
         return ((TurnoutManager) getMgr(0)).getThrownText();
     }
@@ -160,7 +153,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * informing the user of the problem.
      */
     @Override
-    public int askNumControlBits(@Nonnull String systemName) {
+    public int askNumControlBits(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((TurnoutManager) getMgr(i)).askNumControlBits(systemName);
@@ -179,7 +172,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * (normally in seconds).
      */
     @Override
-    public int askControlType(@Nonnull String systemName) {
+    public int askControlType(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((TurnoutManager) getMgr(i)).askControlType(systemName);
@@ -188,7 +181,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    public boolean isControlTypeSupported(@Nonnull String systemName) {
+    public boolean isControlTypeSupported(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((TurnoutManager) getMgr(i)).isControlTypeSupported(systemName);
@@ -197,7 +190,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    public boolean isNumControlBitsSupported(@Nonnull String systemName) {
+    public boolean isNumControlBitsSupported(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((TurnoutManager) getMgr(i)).isNumControlBitsSupported(systemName);
@@ -210,7 +203,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      * of all the valid operation types
      */
     @Override
-    @Nonnull
     public String[] getValidOperationTypes() {
         List<String> typeList = new LinkedList<String>();
         for (int i = 0; i < nMgrs(); ++i) {
@@ -221,7 +213,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         int i = matchTentative(systemName);
         if (i >= 0) {
             return ((TurnoutManager) getMgr(i)).allowMultipleAdditions(systemName);
@@ -240,7 +232,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    public void setDefaultClosedSpeed(@Nonnull String speed) throws jmri.JmriException {
+    public void setDefaultClosedSpeed(String speed) throws jmri.JmriException {
         for (int i = 0; i < nMgrs(); i++) {
             try {
                 ((TurnoutManager) getMgr(i)).setDefaultClosedSpeed(speed);
@@ -252,7 +244,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    public void setDefaultThrownSpeed(@Nonnull String speed) throws jmri.JmriException {
+    public void setDefaultThrownSpeed(String speed) throws jmri.JmriException {
         for (int i = 0; i < nMgrs(); i++) {
             try {
                 ((TurnoutManager) getMgr(i)).setDefaultThrownSpeed(speed);
@@ -309,7 +301,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     @Override
-    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
     }

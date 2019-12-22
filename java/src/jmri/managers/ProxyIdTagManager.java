@@ -1,11 +1,16 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
+
+import jmri.IdTag;
+import jmri.IdTagManager;
+import jmri.Manager;
+import jmri.Reporter;
+import jmri.SignalHead;
+
 import java.util.List;
 import java.util.ArrayList;
 import java.util.SortedSet;
-import javax.annotation.Nonnull;
-
-import jmri.*;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
@@ -46,9 +51,8 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * {@inheritDoc}
      */
     @Override
-    @Nonnull
     public Manager<IdTag> getDefaultManager() {
-        if(defaultManager != getInternalManager()){
+        if(defaultManager!=getInternalManager()){
            defaultManager = getInternalManager();
         }
         return defaultManager;
@@ -69,7 +73,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * @return Null if nothing by that name exists
      */
     @Override
-    public IdTag getIdTag(@Nonnull String name) {
+    public IdTag getIdTag(String name) {
         init();
         return super.getNamedBean(name);
     }
@@ -88,11 +92,10 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
         return ((IdTagManager) getMgr(i)).newIdTag(systemName, userName);
     }
 
+    @Override
     /**
      * {@inheritDoc}
      */
-    @Override
-    @Nonnull
     public IdTag provide(@Nonnull String name) throws IllegalArgumentException {
         return provideIdTag(name);
     }
@@ -106,36 +109,37 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * @return Never null under normal circumstances
      */
     @Override
-    @Nonnull
-    public IdTag provideIdTag(@Nonnull String name) throws IllegalArgumentException {
+    public IdTag provideIdTag(String name) throws IllegalArgumentException {
         init();
         return super.provideNamedBean(name);
     }
 
     /**
-     * Locate an instance based on a system name.
+     * Locate an instance based on a system name. Returns null if no instance
+     * already exists.
      *
      * @return requested IdTag object or null if none exists
      */
     @Override
-    public IdTag getBySystemName(@Nonnull String systemName) {
+    public IdTag getBySystemName(String systemName) {
         init();
         return super.getBeanBySystemName(systemName);
     }
 
     /**
-     * Locate an instance based on a user name.
+     * Locate an instance based on a user name. Returns null if no instance
+     * already exists.
      *
      * @return requested Turnout object or null if none exists
      */
     @Override
-    public IdTag getByUserName(@Nonnull String userName) {
+    public IdTag getByUserName(String userName) {
         init();
         return super.getBeanByUserName(userName);
     }
 
     /**
-     * Get an instance with the specified system and user names. Note that
+     * Return an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one IdTag object representing a given physical light and therefore
      * only one with a specific system or user name.
@@ -163,14 +167,13 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * @return requested IdTag object (never null)
      */
     @Override
-    @Nonnull
-    public IdTag newIdTag(@Nonnull String systemName, String userName) {
+    public IdTag newIdTag(String systemName, String userName) {
         init();
         return newNamedBean(systemName, userName);
     }
 
     @Override
-    public IdTag getByTagID(@Nonnull String tagID) {
+    public IdTag getByTagID(String tagID) {
         init();
         return getBySystemName(makeSystemName(tagID));
     }
@@ -184,7 +187,6 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     }
 
     @Override
-    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameIdTags" : "BeanNameIdTag");
     }
@@ -242,8 +244,7 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     }
 
     @Override
-    @Nonnull
-    public List<IdTag> getTagsForReporter(@Nonnull Reporter reporter, long threshold) {
+    public List<IdTag> getTagsForReporter(Reporter reporter, long threshold) {
         init();
         return new ArrayList<>();
     }
