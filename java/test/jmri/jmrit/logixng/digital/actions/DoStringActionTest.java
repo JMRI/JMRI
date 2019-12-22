@@ -42,7 +42,7 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
     
     @Override
     public MaleSocket getConnectableChild() {
-        StringExpressionBean childExpression = new StringExpressionConstant("IQAE999", null);
+        StringExpressionBean childExpression = new StringExpressionConstant("IQSE999", null);
         MaleSocket maleSocketChild =
                 InstanceManager.getDefault(StringExpressionManager.class).registerExpression(childExpression);
         return maleSocketChild;
