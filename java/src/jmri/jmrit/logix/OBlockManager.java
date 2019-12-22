@@ -120,7 +120,6 @@ public class OBlockManager extends AbstractManager<OBlock>
         return ob;
     }
 
-    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameOBlocks" : "BeanNameOBlock");

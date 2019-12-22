@@ -3383,7 +3383,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * Select the menu items to display for the Positionable's popup.
+     * Select the menu items to display for the Positionable's popup
      */
     @Override
     protected void showPopUp(@Nonnull Positionable p, @Nonnull MouseEvent event) {

@@ -473,7 +473,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public List<E> getNamedBeanList();
 
     /**
-     *  an
+     * Provide an
      * {@linkplain java.util.Collections#unmodifiableSet unmodifiable} SortedSet
      * of NamedBeans in system-name order.
      * <p>

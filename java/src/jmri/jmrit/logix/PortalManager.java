@@ -13,8 +13,6 @@ import javax.annotation.OverridingMethodsMustInvokeSuper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Basic implementation of a PortalManager.
  * <p>
@@ -43,9 +41,9 @@ import javax.annotation.Nonnull;
 public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyChangeListener {
 
     private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private ArrayList<Portal> _nameList = new ArrayList<>();          // stores Portal in loaded order
-    private Hashtable<String, Portal> _portalMap = new Hashtable<>(); // stores portal by current name
-    private Integer _nextIndex = 1;
+    private ArrayList<Portal> _nameList = new ArrayList<>();   // stores Portal in loaded order
+    private Hashtable<String, Portal> _portalMap = new Hashtable<>();   // stores portal by current name
+    private Integer _nextIndex = Integer.valueOf(1);
 
     public PortalManager() {
     }
@@ -70,15 +68,10 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         return Collections.unmodifiableCollection(_nameList);
     }
 
-    /*
-     * Create a new Portal.
-     *
-     * @return null if a Portal with the same userName already exists
-     */
-    public Portal createNewPortal(@Nonnull String userName) {
+    public Portal createNewPortal(String userName) {
         // Check that Portal does not already exist
         Portal portal;
-        if (userName.trim().length() > 0) {
+        if (userName != null && userName.trim().length() > 0) {
             portal = _portalMap.get(userName);
             if (portal != null) {
                 return null;
@@ -91,7 +84,7 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
         // save in the maps
         _nameList.add(portal);
         _portalMap.put(userName, portal);
-        _nextIndex = _nextIndex + 1;
+        _nextIndex = Integer.valueOf(_nextIndex.intValue()+1);
         pcs.firePropertyChange("numPortals", null, _nameList.size());
         // listen for name and state changes to forward
         portal.addPropertyChangeListener(this);
@@ -139,7 +132,6 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
     }
 
     private final static Logger log = LoggerFactory.getLogger(PortalManager.class);
-
 }
 
 

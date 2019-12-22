@@ -11,7 +11,6 @@ import java.beans.VetoableChangeListener;
 import java.beans.VetoableChangeSupport;
 import java.util.*;
 import java.util.Map.Entry;
-import javax.annotation.CheckForNull;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.JDialog;
@@ -259,8 +258,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     /** {@inheritDoc} */
-    @Nonnull
     @Override
+    @Nonnull
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
@@ -272,8 +271,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     /** {@inheritDoc} */
-    @Nonnull
     @Override
+    @Nonnull
     public String makeSystemName(@Nonnull String s) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
@@ -290,8 +289,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @since 4.9.3
      * @return a sorted array of NX names
      */
-    @Nonnull
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public String[] getSystemNameArray() {
         List<String> nxList = getEntryExitList();
@@ -306,8 +305,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     /** {@inheritDoc} */
-    @Nonnull
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
         return getEntryExitList();
@@ -318,8 +317,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @since 4.9.3
      * @return a list of Destination Point beans
      */
-    @Nonnull
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<DestinationPoints> getNamedBeanList() {
         List<DestinationPoints> beanList = new ArrayList<>();
@@ -337,8 +336,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @since 4.9.3
      * @return a list of Destination Point beans
      */
-    @Nonnull
     @Override
+    @Nonnull
     public SortedSet<DestinationPoints> getNamedBeanSet() {
         TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
         for (Source e : nxpair.values()) {
@@ -1435,8 +1434,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     }
 
-    @Nonnull
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
     }

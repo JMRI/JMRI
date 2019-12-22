@@ -135,7 +135,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
      * </pre>
      *
      * @param systemName system name for catalog tree, never null/empty
-     * @param userName   user name for catalog tree, never null/empty
+     * @param userName   user name for catalog tree
      * @return the new catalog tree or null if unable to create
      */
     protected CatalogTree createNewCatalogTree(@Nonnull String systemName, String userName) {
