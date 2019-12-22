@@ -46,6 +46,11 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Set memory IM1%n");
     }

@@ -12,6 +12,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.ThrottleListener;
 import jmri.ThrottleManager;
+import jmri.jmrit.logixng.AnalogExpressionBean;
 import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -53,6 +54,14 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
+    }
+    
+    @Override
+    public MaleSocket getConnectableChild() {
+        AnalogExpressionBean childExpression = new AnalogExpressionConstant("IQAE999", null);
+        MaleSocket maleSocketChild =
+                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(childExpression);
+        return maleSocketChild;
     }
     
     @Override

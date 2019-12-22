@@ -2,14 +2,20 @@ package jmri.jmrit.logixng.digital.actions;
 
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.jmrit.logixng.AnalogExpressionBean;
+import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalExpressionBean;
+import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.analog.expressions.AnalogExpressionConstant;
+import jmri.jmrit.logixng.digital.expressions.True;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -35,6 +41,14 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
+    }
+    
+    @Override
+    public MaleSocket getConnectableChild() {
+        AnalogExpressionBean childExpression = new AnalogExpressionConstant("IQAE999", null);
+        MaleSocket maleSocketChild =
+                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(childExpression);
+        return maleSocketChild;
     }
     
     @Override

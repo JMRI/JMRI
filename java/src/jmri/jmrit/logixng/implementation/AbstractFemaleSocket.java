@@ -89,7 +89,7 @@ public abstract class AbstractFemaleSocket implements FemaleSocket, InternalBase
         }
         
         if (!isCompatible(socket)) {
-            throw new UnsupportedOperationException("Socket is not compatible");
+            throw new IllegalArgumentException("Socket is not compatible");
         }
         
         _socket = socket;

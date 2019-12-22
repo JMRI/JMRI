@@ -51,6 +51,11 @@ public class StringExpressionMemoryTest extends AbstractStringExpressionTestBase
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Get memory IM1%n");
     }

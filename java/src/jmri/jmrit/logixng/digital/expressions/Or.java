@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Map;
 import jmri.InstanceManager;
+import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -128,6 +129,7 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
                             InstanceManager.getDefault(DigitalExpressionManager.class)
                                     .createFemaleSocket(this, this, getNewSocketName())));
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
 
     @Override

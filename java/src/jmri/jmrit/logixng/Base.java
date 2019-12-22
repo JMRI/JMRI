@@ -69,13 +69,22 @@ public interface Base {
     public static final String PROPERTY_CHILD_COUNT = "ChildCount";
 
     /**
-     * The status of the socket, if it is connected or not.
+     * The socket has been connected.
      * This constant is used in calls to firePropertyChange().
      * The socket fires a property change to its _parent_ when it is connected
      * or disconnected. Note that the parent does not need to register a
      * listener for this.
      */
     public static final String PROPERTY_SOCKET_CONNECTED = "SocketConnected";
+
+    /**
+     * The socket has been disconnected.
+     * This constant is used in calls to firePropertyChange().
+     * The socket fires a property change to its _parent_ when it is connected
+     * or disconnected. Note that the parent does not need to register a
+     * listener for this.
+     */
+    public static final String PROPERTY_SOCKET_DISCONNECTED = "SocketDisconnected";
 
     /**
      * Constant representing an "connected" state of the socket

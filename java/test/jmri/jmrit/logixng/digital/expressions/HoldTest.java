@@ -46,6 +46,14 @@ public class HoldTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        DigitalExpressionBean childExpression = new True("IQDE999", null);
+        MaleSocket maleSocketChild =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(childExpression);
+        return maleSocketChild;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format(
                 "Hold while E1. Trigger on E2%n" +

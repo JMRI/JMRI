@@ -10,6 +10,9 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.StringExpressionBean;
+import jmri.jmrit.logixng.StringExpressionManager;
+import jmri.jmrit.logixng.string.expressions.StringExpressionConstant;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -35,6 +38,14 @@ public class DoStringActionTest extends AbstractDigitalActionTestBase {
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
+    }
+    
+    @Override
+    public MaleSocket getConnectableChild() {
+        StringExpressionBean childExpression = new StringExpressionConstant("IQAE999", null);
+        MaleSocket maleSocketChild =
+                InstanceManager.getDefault(StringExpressionManager.class).registerExpression(childExpression);
+        return maleSocketChild;
     }
     
     @Override

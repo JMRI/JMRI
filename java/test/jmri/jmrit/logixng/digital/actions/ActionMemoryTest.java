@@ -48,6 +48,11 @@ public class ActionMemoryTest extends AbstractDigitalActionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Set memory IM1 to \"\"%n");
     }

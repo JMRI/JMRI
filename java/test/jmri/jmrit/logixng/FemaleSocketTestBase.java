@@ -156,7 +156,7 @@ public abstract class FemaleSocketTestBase {
         errorFlag.set(false);
         try {
             femaleSocket.connect(incompatibleSocket);
-        } catch (UnsupportedOperationException ex) {
+        } catch (IllegalArgumentException ex) {
             errorFlag.set(true);
         } catch (SocketAlreadyConnectedException ex) {
             // We shouldn't be here.

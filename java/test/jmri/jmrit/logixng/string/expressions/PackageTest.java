@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     jmri.jmrit.logixng.string.expressions.configurexml.PackageTest.class,
+    StringExpressionConstantTest.class,
     StringExpressionMemoryTest.class,
 })
 

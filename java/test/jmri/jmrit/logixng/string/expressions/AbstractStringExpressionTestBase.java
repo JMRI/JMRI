@@ -76,11 +76,11 @@ public abstract class AbstractStringExpressionTestBase extends AbstractBaseTestB
     
     @Test
     public void testDebugConfig() {
-        String value1 = "Something";
+        String value1 = "Something else";
         String value2 = "Some other thing";
         StringExpressionBean _expression = (StringExpressionBean)_baseMaleSocket;
-        Assert.assertNotEquals("Double don't match", value1, _expression.evaluate());
-        Assert.assertNotEquals("Double don't match", value2, _expression.evaluate());
+        Assert.assertNotEquals("Strings don't match", value1, _expression.evaluate());
+        Assert.assertNotEquals("Strings don't match", value2, _expression.evaluate());
         StringExpressionDebugConfig debugConfig = new StringExpressionDebugConfig();
         debugConfig._forceResult = true;
         debugConfig._result = value1;

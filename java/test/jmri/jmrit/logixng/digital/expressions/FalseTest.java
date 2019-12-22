@@ -48,6 +48,11 @@ public class FalseTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Always false%n");
     }

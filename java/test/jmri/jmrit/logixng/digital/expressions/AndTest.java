@@ -41,6 +41,14 @@ public class AndTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        DigitalExpressionBean childExpression = new True("IQDE999", null);
+        MaleSocket maleSocketChild =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(childExpression);
+        return maleSocketChild;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format(
                 "And%n" +

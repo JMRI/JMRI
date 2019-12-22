@@ -45,6 +45,11 @@ public class ActionListenOnBeansTest extends AbstractDigitalActionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Listen on beans%n");
     }

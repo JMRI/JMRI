@@ -48,6 +48,11 @@ public class ActionTurnoutTest extends AbstractDigitalActionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Set turnout IT1 to Thrown%n");
     }

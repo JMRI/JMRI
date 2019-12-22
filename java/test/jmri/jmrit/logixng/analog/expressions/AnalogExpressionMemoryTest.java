@@ -56,6 +56,11 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Get memory IM1%n");
     }
@@ -305,13 +310,11 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
     }
     
     @Test
-    @Override
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
     }
     
     @Test
-    @Override
     public void testIsExternal() {
         Assert.assertTrue("is external", _base.isExternal());
     }

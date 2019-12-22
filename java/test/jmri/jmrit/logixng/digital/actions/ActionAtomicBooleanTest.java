@@ -41,6 +41,11 @@ public class ActionAtomicBooleanTest extends AbstractDigitalActionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Set the atomic boolean to true%n");
     }

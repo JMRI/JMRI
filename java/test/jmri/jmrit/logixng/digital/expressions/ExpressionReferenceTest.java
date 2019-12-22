@@ -19,6 +19,7 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
 import jmri.jmrit.logixng.LogixNG;
@@ -57,6 +58,14 @@ public class ExpressionReferenceTest extends AbstractDigitalExpressionTestBase {
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
+    }
+    
+    @Override
+    public MaleSocket getConnectableChild() {
+        DigitalExpressionBean childExpression = new True("IQDE999", null);
+        MaleSocket maleSocketChild =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(childExpression);
+        return maleSocketChild;
     }
     
     @Override

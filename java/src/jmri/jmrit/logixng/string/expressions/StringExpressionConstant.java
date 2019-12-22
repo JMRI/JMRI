@@ -1,10 +1,7 @@
-package jmri.jmrit.logixng.analog.expressions;
+package jmri.jmrit.logixng.string.expressions;
 
 import java.text.NumberFormat;
 import java.util.Locale;
-import jmri.InstanceManager;
-import jmri.jmrit.logixng.AnalogExpressionManager;
-import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import org.slf4j.Logger;
@@ -16,12 +13,12 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2019
  */
-public class AnalogExpressionConstant extends AbstractAnalogExpression {
+public class StringExpressionConstant extends AbstractStringExpression {
 
-    private double _value;
+    private String _value;
     private boolean _listenersAreRegistered = false;
     
-    public AnalogExpressionConstant(String sys, String user)
+    public StringExpressionConstant(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         
         super(sys, user);
@@ -39,7 +36,7 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
         return false;
     }
     
-    public void setValue(double value) {
+    public void setValue(String value) {
         if (_listenersAreRegistered) {
             RuntimeException e = new RuntimeException("setValue must not be called when listeners are registered");
             log.error("setValue must not be called when listeners are registered", e);
@@ -48,13 +45,13 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
         _value = value;
     }
     
-    public double getValue() {
+    public String getValue() {
         return _value;
     }
     
     /** {@inheritDoc} */
     @Override
-    public double evaluate() {
+    public String evaluate() {
         return _value;
     }
     
@@ -77,8 +74,11 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
 
     @Override
     public String getShortDescription(Locale locale) {
-        NumberFormat numberFormat = NumberFormat.getInstance(locale);
-        return Bundle.getMessage(locale, "AnalogExpressionConstant1", numberFormat.format(_value));
+        if (_value == null) {
+            return Bundle.getMessage(locale, "StringExpressionConstantNull");
+        } else {
+            return Bundle.getMessage(locale, "StringExpressionConstant1", _value);
+        }
     }
 
     @Override
@@ -114,6 +114,6 @@ public class AnalogExpressionConstant extends AbstractAnalogExpression {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(AnalogExpressionConstant.class);
+    private final static Logger log = LoggerFactory.getLogger(StringExpressionConstant.class);
     
 }

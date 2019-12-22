@@ -50,6 +50,11 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("One shot timer: Wait 0 milliseconds and trigger once.%n");
     }

@@ -1,12 +1,10 @@
-package jmri.jmrit.logixng.analog.expressions;
+package jmri.jmrit.logixng.string.expressions;
 
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
 import jmri.NamedBean;
-import jmri.jmrit.logixng.AnalogActionManager;
-import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
@@ -16,8 +14,10 @@ import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
-import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
+import jmri.jmrit.logixng.StringActionManager;
+import jmri.jmrit.logixng.StringExpressionManager;
+import jmri.jmrit.logixng.digital.actions.DoStringAction;
+import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -27,17 +27,17 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 /**
- * Test AnalogExpressionConstant
+ * Test StringExpressionConstant
  * 
  * @author Daniel Bergqvist 2018
  */
-public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBase {
+public class StringExpressionConstantTest extends AbstractStringExpressionTestBase {
 
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
-    private AnalogExpressionConstant expressionConstant;
+    private StringExpressionConstant expressionConstant;
     private Memory _memoryOut;
-    private AnalogActionMemory actionMemory;
+    private StringActionMemory actionMemory;
     
     
     @Override
@@ -57,7 +57,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get constant value 10.2%n");
+        return String.format("Get constant value \"Something\"%n");
     }
     
     @Override
@@ -66,50 +66,50 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
-                "         Read analog E1 and set analog A1%n" +
-                "            ?~ E1%n" +
-                "               Get constant value 10.2%n" +
-                "            !~ A1%n" +
+                "         Read string E1 and set string A1%n" +
+                "            ?s E1%n" +
+                "               Get constant value \"Something\"%n" +
+                "            !s A1%n" +
                 "               Set memory IM2%n");
     }
     
     @Override
     public NamedBean createNewBean(String systemName) {
-        return new AnalogExpressionConstant(systemName, null);
+        return new StringExpressionConstant(systemName, null);
     }
     
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);
         
-        AnalogExpressionConstant expression2;
+        StringExpressionConstant expression2;
         
-        expression2 = new AnalogExpressionConstant("IQAE11", null);
+        expression2 = new StringExpressionConstant("IQSE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", null, expression2.getUserName());
-        Assert.assertEquals("String matches", "Get constant value 0", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get constant value null", expression2.getLongDescription(Locale.ENGLISH));
         
-        expression2 = new AnalogExpressionConstant("IQAE11", "My constant value");
+        expression2 = new StringExpressionConstant("IQSE11", "My constant value");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My constant value", expression2.getUserName());
-        Assert.assertEquals("String matches", "Get constant value 0", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get constant value null", expression2.getLongDescription(Locale.ENGLISH));
         
-        expression2 = new AnalogExpressionConstant("IQAE11", null);
-        expression2.setValue(12.34);
+        expression2 = new StringExpressionConstant("IQSE11", null);
+        expression2.setValue("A value");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", null, expression2.getUserName());
-        Assert.assertEquals("String matches", "Get constant value 12.34", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get constant value \"A value\"", expression2.getLongDescription(Locale.ENGLISH));
         
-        expression2 = new AnalogExpressionConstant("IQAE11", "My constant");
-        expression2.setValue(98.76);
+        expression2 = new StringExpressionConstant("IQSE11", "My constant");
+        expression2.setValue("Some other value");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My constant", expression2.getUserName());
-        Assert.assertEquals("String matches", "Get constant value 98.76", expression2.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get constant value \"Some other value\"", expression2.getLongDescription(Locale.ENGLISH));
         
         boolean thrown = false;
         try {
             // Illegal system name
-            new AnalogExpressionConstant("IQA55:12:XY11", null);
+            new StringExpressionConstant("IQA55:12:XY11", null);
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -118,7 +118,7 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         thrown = false;
         try {
             // Illegal system name
-            new AnalogExpressionConstant("IQA55:12:XY11", "A name");
+            new StringExpressionConstant("IQA55:12:XY11", "A name");
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -141,9 +141,9 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     public void testSetValueWithListenersRegistered() {
         boolean exceptionThrown = false;
         try {
-            AnalogExpressionConstant expression = (AnalogExpressionConstant)_base;
+            StringExpressionConstant expression = (StringExpressionConstant)_base;
             expression.registerListeners();
-            expression.setValue(1.2);
+            expression.setValue("A value");
         } catch (RuntimeException e) {
             exceptionThrown = true;
         }
@@ -155,11 +155,11 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     public void testEvaluate() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
-        AnalogExpressionConstant expression = (AnalogExpressionConstant)_base;
-        expression.setValue(0.0d);
-        Assert.assertTrue("Evaluate matches", 0.0d == expression.evaluate());
-        expression.setValue(10.0d);
-        Assert.assertTrue("Evaluate matches", 10.0d == expression.evaluate());
+        StringExpressionConstant expression = (StringExpressionConstant)_base;
+        expression.setValue("");
+        Assert.assertEquals("Evaluate matches", "", expression.evaluate());
+        expression.setValue("");
+        Assert.assertEquals("Evaluate matches", "", expression.evaluate());
         expression.reset();
     }
     
@@ -167,25 +167,24 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     public void testEvaluateAndAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         
         // Set the memory
-        _memoryOut.setValue(0.0);
-        // The double should be 0.0
-        Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
+        _memoryOut.setValue("");
+        // The string should be ""
+        Assert.assertEquals("memory is \"\"", "", _memoryOut.getValue());
         // Execute the logixNG
         logixNG.execute();
-        // The action is executed so the double should be 10.2
-        Assert.assertTrue("memory is 10.2", 10.2 == (Double)_memoryOut.getValue());
+        // The action is executed so the string should be "Something"
+        Assert.assertEquals("memory is \"Something\"", "Something", _memoryOut.getValue());
         
         // Disable the conditionalNG
         conditionalNG.setEnabled(false);
         // Set the value of the constant.
-        expressionConstant.setValue(1.0);
+        expressionConstant.setValue("A value");
         // Enable the conditionalNG
         conditionalNG.setEnabled(true);
         // Execute the logixNG
         logixNG.execute();
-        conditionalNG.setEnabled(false);
-        // The action is executed so the double should be 1.0
-        Assert.assertTrue("memory is 1.0", 1.0 == (Double)_memoryOut.getValue());
+        // The action is executed so the string should be "A value"
+        Assert.assertEquals("memory is \"A value\"", "A value", _memoryOut.getValue());
     }
     
     @Test
@@ -200,12 +199,12 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
     
     @Test
     public void testShortDescription() {
-        Assert.assertEquals("String matches", "Get constant value 10.2", _base.getShortDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get constant value \"Something\"", _base.getShortDescription(Locale.ENGLISH));
     }
     
     @Test
     public void testLongDescription() {
-        Assert.assertEquals("String matches", "Get constant value 10.2", _base.getLongDescription(Locale.ENGLISH));
+        Assert.assertEquals("String matches", "Get constant value \"Something\"", _base.getLongDescription(Locale.ENGLISH));
     }
     
     @Test
@@ -230,8 +229,8 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
         
-        expressionConstant = new AnalogExpressionConstant("IQAE321", "AnalogIO_Constant");
-        expressionConstant.setValue(10.2);
+        expressionConstant = new StringExpressionConstant("IQSE321", "StringIO_Constant");
+        expressionConstant.setValue("Something");
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
@@ -241,23 +240,23 @@ public class AnalogExpressionConstantTest extends AbstractAnalogExpressionTestBa
         
         logixNG.addConditionalNG(conditionalNG);
         
-        DigitalActionBean actionDoAnalog =
-                new DoAnalogAction(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
-        MaleSocket socketDoAnalog =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoAnalog);
-        conditionalNG.getChild(0).connect(socketDoAnalog);
+        DigitalActionBean actionDoString =
+                new DoStringAction(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        MaleSocket socketDoString =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoString);
+        conditionalNG.getChild(0).connect(socketDoString);
         
         MaleSocket socketExpression =
-                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(expressionConstant);
-        socketDoAnalog.getChild(0).connect(socketExpression);
+                InstanceManager.getDefault(StringExpressionManager.class).registerExpression(expressionConstant);
+        socketDoString.getChild(0).connect(socketExpression);
         
         _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
         _memoryOut.setValue(0.0);
-        actionMemory = new AnalogActionMemory("IQAA1", null);
+        actionMemory = new StringActionMemory("IQSA1", null);
         actionMemory.setMemory(_memoryOut);
         MaleSocket socketAction =
-                InstanceManager.getDefault(AnalogActionManager.class).registerAction(actionMemory);
-        socketDoAnalog.getChild(1).connect(socketAction);
+                InstanceManager.getDefault(StringActionManager.class).registerAction(actionMemory);
+        socketDoString.getChild(1).connect(socketAction);
         
         _base = expressionConstant;
         _baseMaleSocket = socketExpression;

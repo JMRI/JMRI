@@ -9,11 +9,14 @@ import jmri.jmrit.logixng.ConditionalNG_Manager;
 import jmri.jmrit.logixng.DigitalAction;
 import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionManager;
+import jmri.jmrit.logixng.DigitalExpressionBean;
+import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleDigitalActionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.digital.expressions.True;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -38,6 +41,14 @@ public class ManyTest extends AbstractDigitalActionTestBase {
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
+    }
+    
+    @Override
+    public MaleSocket getConnectableChild() {
+        Many action = new Many("IQDA999", null);
+        MaleSocket maleSocket =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(action);
+        return maleSocket;
     }
     
     @Override

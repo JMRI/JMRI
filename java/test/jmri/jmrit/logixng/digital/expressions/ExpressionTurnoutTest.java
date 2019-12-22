@@ -55,6 +55,11 @@ public class ExpressionTurnoutTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Turnout IT1 is Thrown%n");
     }

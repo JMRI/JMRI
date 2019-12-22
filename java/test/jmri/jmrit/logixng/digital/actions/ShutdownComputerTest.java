@@ -40,6 +40,11 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Shutdown computer after 0 seconds%n");
     }

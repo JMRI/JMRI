@@ -19,6 +19,7 @@ import jmri.jmrit.logixng.DigitalAction;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalBooleanAction;
 import jmri.jmrit.logixng.DigitalExpression;
+import jmri.jmrit.logixng.DigitalExpressionBean;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
@@ -135,6 +136,14 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
+    }
+    
+    @Override
+    public MaleSocket getConnectableChild() {
+        DigitalExpressionBean childExpression = new True("IQDE999", null);
+        MaleSocket maleSocketChild =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(childExpression);
+        return maleSocketChild;
     }
     
     @Override

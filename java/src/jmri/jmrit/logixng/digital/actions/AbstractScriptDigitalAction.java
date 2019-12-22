@@ -27,15 +27,15 @@ public abstract class AbstractScriptDigitalAction extends AbstractDigitalAction
         implements PropertyChangeListener, VetoableChangeListener {
 
     private boolean _listenersAreRegistered = false;
-    private final DigitalAction _parentDigitalExpression;
+    private final ActionScript _parentDigitalAction;
     
     
-    public AbstractScriptDigitalAction(DigitalAction de)
+    public AbstractScriptDigitalAction(ActionScript da)
             throws BadUserNameException, BadSystemNameException {
         // This bean is never stored in a manager and
         // its system name nor user name is never used.
         super("IQDA0", null);
-        _parentDigitalExpression = de;
+        _parentDigitalAction = da;
     }
     
     @Override
@@ -118,7 +118,13 @@ public abstract class AbstractScriptDigitalAction extends AbstractDigitalAction
     /** {@inheritDoc} */
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        _parentDigitalExpression.getConditionalNG().execute();
+        _parentDigitalAction.getConditionalNG().execute();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
+    public void firePropertyChange(String p, Object old, Object n) {
+        if (_parentDigitalAction != null) _parentDigitalAction.firePropertyChange(p, old, n);
     }
     
     /** {@inheritDoc} */

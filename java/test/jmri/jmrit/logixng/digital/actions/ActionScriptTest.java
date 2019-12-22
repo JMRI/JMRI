@@ -12,6 +12,8 @@ import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.logixng.AnalogAction;
+import jmri.jmrit.logixng.AnalogActionBean;
+import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.AnalogExpression;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
@@ -27,6 +29,7 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.StringAction;
 import jmri.jmrit.logixng.StringExpression;
+import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.digital.expressions.True;
 import jmri.util.JUnitAppender;
@@ -47,6 +50,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
             + "import java\n"
             + "import java.beans\n"
             + "import jmri\n"
+            + "import jmri.jmrit.logixng\n"
             + ""
             + "class MyAction(jmri.jmrit.logixng.digital.actions.AbstractScriptDigitalAction, jmri.jmrit.logixng.FemaleSocketListener):\n"
             + ""
@@ -81,6 +85,12 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
             + ""
             + "  def getChildCount(self):\n"
             + "    return 7\n"
+            + ""
+            + "  def connected(self, femaleSocket):\n"
+            + "    self.firePropertyChange(jmri.jmrit.logixng.Base.PROPERTY_SOCKET_CONNECTED, None, femaleSocket)\n"
+            + ""
+            + "  def disconnected(self, femaleSocket):\n"
+            + "    self.firePropertyChange(jmri.jmrit.logixng.Base.PROPERTY_SOCKET_DISCONNECTED, None, femaleSocket)\n"
             + ""
             + "  def execute(self):\n"
             + "    if self.l is None:\n"
@@ -131,6 +141,14 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
+    }
+    
+    @Override
+    public MaleSocket getConnectableChild() {
+        AnalogActionBean childAction = new AnalogActionMemory("IQAA999", null);
+        MaleSocket maleSocketChild =
+                InstanceManager.getDefault(AnalogActionManager.class).registerAction(childAction);
+        return maleSocketChild;
     }
     
     @Override

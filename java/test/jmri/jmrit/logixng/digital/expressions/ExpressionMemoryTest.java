@@ -54,6 +54,11 @@ public class ExpressionMemoryTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Memory IM1 is equal to \"\"%n");
     }

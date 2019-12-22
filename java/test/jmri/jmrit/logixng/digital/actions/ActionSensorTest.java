@@ -68,6 +68,11 @@ public class ActionSensorTest extends AbstractDigitalActionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Set sensor IS1 to Active%n");
     }

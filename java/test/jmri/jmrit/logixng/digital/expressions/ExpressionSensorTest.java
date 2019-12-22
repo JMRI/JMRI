@@ -55,6 +55,11 @@ public class ExpressionSensorTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Override
+    public MaleSocket getConnectableChild() {
+        return null;
+    }
+    
+    @Override
     public String getExpectedPrintedTree() {
         return String.format("Sensor IS1 is Active%n");
     }

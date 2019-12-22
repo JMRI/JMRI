@@ -1,8 +1,16 @@
 package jmri.jmrit.logixng;
 
+
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyVetoException;
 import java.io.StringWriter;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicBoolean;
+import javax.annotation.CheckForNull;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.implementation.AbstractBase;
@@ -32,14 +40,22 @@ public abstract class AbstractBaseTestBase {
      */
     public abstract ConditionalNG getConditionalNG();
     
+    /**
+     * Returns a MaleSocket that can be connected to _base.getChild(0).
+     * If _base cannot have any children, this method returns null.
+     * @return a male socket or null
+     */
+    @CheckForNull
+    public abstract MaleSocket getConnectableChild();
+    
     @Test
-    public void testCategory() {
+    public void testMaleSocketCategory() {
         Assert.assertNotNull("category is not null", _category);
         Assert.assertEquals("getCategory() returns correct value", _category, _base.getCategory());
     }
     
     @Test
-    public void testIsExternal() {
+    public void testMaleSocketIsExternal() {
         Assert.assertNotNull("isExternal is not null", _isExternal);
         Assert.assertEquals("isExternal() returns correct value", _isExternal, _base.isExternal());
     }
@@ -410,6 +426,48 @@ public abstract class AbstractBaseTestBase {
         Assert.assertEquals("description matches",
                 "Unknown",
                 ((NamedBean)_baseMaleSocket).describeState(NamedBean.UNKNOWN));
+    }
+    
+    private void connect(FemaleSocket femaleSocket, MaleSocket maleSocket) throws SocketAlreadyConnectedException {
+        if (femaleSocket.isConnected()) femaleSocket.disconnect();
+        femaleSocket.connect(maleSocket);
+    }
+    
+    @Test
+    public void testPropertyChangeListener() throws SocketAlreadyConnectedException {
+        MaleSocket maleSocket = getConnectableChild();
+        if (maleSocket != null && _base.getChildCount() > 0) {
+            final FemaleSocket child = _base.getChild(0);
+            
+            AtomicBoolean flagConnected = new AtomicBoolean();
+            PropertyChangeListener lc = (PropertyChangeEvent evt) -> {
+                if (Base.PROPERTY_SOCKET_CONNECTED.equals(evt.getPropertyName())) {
+                    Assert.assertTrue("socket is correct", child == evt.getNewValue());
+                    flagConnected.set(true);
+                }
+            };
+            AtomicBoolean flagDisconnected = new AtomicBoolean();
+            PropertyChangeListener ld = (PropertyChangeEvent evt) -> {
+                if (Base.PROPERTY_SOCKET_DISCONNECTED.equals(evt.getPropertyName())) {
+                    Assert.assertTrue("socket is correct", child == evt.getNewValue());
+                    flagDisconnected.set(true);
+                }
+            };
+            ((NamedBean)_baseMaleSocket).addPropertyChangeListener(lc);
+            ((NamedBean)_baseMaleSocket).addPropertyChangeListener(ld);
+            
+            // Connect shall do a firePropertyChange which will set the flag
+            flagConnected.set(false);
+            connect(child, maleSocket);
+            Assert.assertTrue("flag is set", flagConnected.get());
+            
+            // Disconnect shall do a firePropertyChange which will set the flag
+            flagDisconnected.set(false);
+            _base.getChild(0).disconnect();
+            Assert.assertTrue("flag is set", flagDisconnected.get());
+        } else {
+            Assert.assertEquals("num childs is 0", 0, _base.getChildCount());
+        }
     }
     
     

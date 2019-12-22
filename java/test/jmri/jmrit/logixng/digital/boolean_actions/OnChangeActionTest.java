@@ -22,6 +22,8 @@ import org.junit.Before;
 import org.junit.Test;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
+import jmri.jmrit.logixng.DigitalExpressionBean;
+import jmri.jmrit.logixng.digital.expressions.True;
 
 /**
  * Test IfThenElse
@@ -41,6 +43,14 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
     @Override
     public LogixNG getLogixNG() {
         return logixNG;
+    }
+    
+    @Override
+    public MaleSocket getConnectableChild() {
+        DigitalExpressionBean childExpression = new True("IQDE999", null);
+        MaleSocket maleSocketChild =
+                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(childExpression);
+        return maleSocketChild;
     }
     
     @Override

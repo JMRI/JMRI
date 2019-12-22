@@ -198,6 +198,7 @@ public class ActionThrottle extends AbstractDigitalAction
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
 
     @Override
@@ -220,6 +221,7 @@ public class ActionThrottle extends AbstractDigitalAction
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
     
     private void executeConditionalNG() {
