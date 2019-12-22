@@ -69,14 +69,11 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     public static final int MAX_FONT_SIZE = 36;
     public static final String PROP_DIRTY = "dirty";
     public static final String PROP_RESTARTREQUIRED = "restartRequired";
-    private static final String DEFAULT_FONT = "Dialog.font";
 
     // preferences with default values
     private Locale currentLocale = Locale.getDefault();
     private Font currentFont = null;
-    private Font defaultFont = null;
     private int fontSize = 0;
-    private int defaultFontSize = 0;
     private boolean nonStandardMouseEvent = false;
     private boolean graphicTableState = false;
     private boolean editorUseOldLocSize = false;
@@ -96,21 +93,24 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     private static final Logger log = LoggerFactory.getLogger(GuiLafPreferencesManager.class);
 
     @Override
+    @SuppressWarnings("deprecation")
     public void initialize(Profile profile) throws InitializationException {
         if (!initialized) {
-            @SuppressWarnings("deprecation")
-            boolean migrate = false;
-            // using deprecated, not for removal, call to enable migration of
-            // preferences keys from apps.gui.* to jmri.util.gui.*
-            getPreferences(JmriPreferencesProvider.getPreferences(profile, "apps-gui", true));
-            migrate = dirty;
-            setDirty(false);
-            if (migrate) {
-                // if not reset for migration, fontSize gets set to 0
-                // which is undesirable if fontSize was set by user
-                defaultFontSize = 0;
+            Preferences preferences = JmriPreferencesProvider.getPreferences(profile, getClass(), true);
+            boolean migrate = true;
+            try {
+                migrate = !preferences.nodeExists("");
+            } catch (BackingStoreException e) {
+                // don't migrate if unable to handle preferences
+                migrate = false;
             }
-            getPreferences(JmriPreferencesProvider.getPreferences(profile, getClass(), true));
+            if (migrate) {
+                // using deprecated, not for removal, call to enable migration
+                // of preferences keys from apps.gui.* to jmri.util.gui.*
+                getPreferences(JmriPreferencesProvider.getPreferences(profile, "apps-gui", true));
+                setDirty(false);
+            }
+            getPreferences(preferences);
             setDirty(false);
             setRestartRequired(false);
             if (migrate) {
@@ -125,8 +125,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
         setLocale(Locale.forLanguageTag(preferences.get(LOCALE, getLocale().toLanguageTag())));
         setLookAndFeel(preferences.get(LOOK_AND_FEEL, getLookAndFeel()));
 
-        setDefaultFontSize(); // before we change anything
-        setFontSize(preferences.getInt(FONT_SIZE, getDefaultFontSize()));
+        setFontSize(preferences.getInt(FONT_SIZE, getFontSize()));
         if (getFontSize() == 0) {
             setFontSize(getDefaultFontSize());
         }
@@ -268,37 +267,32 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * @return the current {@literal Look & Feel} default font
+     * Get the default font, using the font used for lists in the current
+     * {@literal Look & Feel}, or by calling
+     * {@link java.awt.Font#decode(String)} with a null value if the list font
+     * is not specified.
+     * 
+     * @return the default font
      */
     public @Nonnull Font getDefaultFont() {
+        Font defaultFont = UIManager.getFont("List.font");
         if (defaultFont == null) {
-            setDefaultFont();
+            defaultFont = Font.decode(null);
         }
         return defaultFont;
     }
 
     /**
-     * Called to load the current {@literal Look & Feel} default font, based on
-     * looking up the {@code Dialog.font}, or calling
-     * {@link java.awt.Font#decode(String)} with a null value.
+     * Loads the current {@literal Look & Feel} default font, based on looking
+     * up the {@code List.font}, or calling {@link java.awt.Font#decode(String)}
+     * with a null value.
      * 
      * @see #getDefaultFont()
+     * @deprecated since 4.19.2 without direct replacement
      */
+    @Deprecated
     public void setDefaultFont() {
-        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
-            Object value = UIManager.get(key);
-
-            if (value instanceof FontUIResource && key.toString().equals(DEFAULT_FONT)) {
-                Font f = UIManager.getFont(key);
-                log.debug("Key: {} Font: {}", key, f.getName());
-                defaultFont = f;
-                return;
-            }
-        }
-        // couldn't find the default, so use the absolute default
-        defaultFont = Font.decode(null);
+        // nothing to do
     }
 
     /**
@@ -327,20 +321,22 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     /**
-     * @return the current {@literal Look & Feel} default font size
+     * @return the size of the font returned by {@link #getDefaultFont()}
      */
     public int getDefaultFontSize() {
-        return defaultFontSize;
+        return getDefaultFont().getSize();
     }
 
     /**
-     * Load the current {@literal Look & Feel} default font size, based on
-     * looking up the "List.font" size
-     * <p>
-     * The value can be can be read by calling {@link #getDefaultFontSize()}
+     * Load the current {@literal Look & Feel} default font size, based on the
+     * default font.
+     * 
+     * @see #getDefaultFontSize()
+     * @deprecated since 4.19.2 without direct replacement
      */
+    @Deprecated
     public void setDefaultFontSize() {
-        defaultFontSize = getDefaultFont().getSize();
+        // nothing to do
     }
 
     /**
