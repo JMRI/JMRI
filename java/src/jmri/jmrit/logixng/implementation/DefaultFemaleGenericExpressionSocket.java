@@ -398,7 +398,7 @@ public class DefaultFemaleGenericExpressionSocket
             _currentActiveSocket = _stringSocket;
             _currentActiveSocket.connect(socket);
         } else {
-            throw new UnsupportedOperationException("Socket is not compatible");
+            throw new IllegalArgumentException("Socket is not compatible");
         }
     }
 

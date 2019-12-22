@@ -134,7 +134,13 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
 
     @Override
     public void disconnected(FemaleSocket socket) {
-        // Do nothing
+        for (ExpressionEntry entry : _expressionEntries) {
+            if (socket == entry._socket) {
+                entry._socketSystemName = null;
+                break;
+            }
+        }
+        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
 
     /** {@inheritDoc} */

@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.digital.boolean_actions;
 import jmri.jmrit.logixng.digital.boolean_actions.AbstractDigitalBooleanAction;
 import java.util.Locale;
 import jmri.InstanceManager;
+import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -119,6 +120,7 @@ public class OnChange extends AbstractDigitalBooleanAction
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
 
     @Override
@@ -128,6 +130,7 @@ public class OnChange extends AbstractDigitalBooleanAction
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
 
     @Override

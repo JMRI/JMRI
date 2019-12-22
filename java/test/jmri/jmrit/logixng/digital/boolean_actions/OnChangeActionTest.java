@@ -5,6 +5,7 @@ import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
+import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.LogixNG;
@@ -13,17 +14,15 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.digital.actions.ActionTurnout;
 import jmri.jmrit.logixng.digital.actions.Logix;
-import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
+import jmri.jmrit.logixng.DigitalBooleanActionManager;
+import jmri.jmrit.logixng.DigitalBooleanActionBean;
+import jmri.jmrit.logixng.digital.actions.Many;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrit.logixng.DigitalBooleanActionManager;
-import jmri.jmrit.logixng.DigitalBooleanActionBean;
-import jmri.jmrit.logixng.DigitalExpressionBean;
-import jmri.jmrit.logixng.digital.expressions.True;
 
 /**
  * Test IfThenElse
@@ -47,9 +46,9 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
     
     @Override
     public MaleSocket getConnectableChild() {
-        DigitalExpressionBean childExpression = new True("IQDE999", null);
+        DigitalActionBean childAction = new Many("IQDA999", null);
         MaleSocket maleSocketChild =
-                InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(childExpression);
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(childAction);
         return maleSocketChild;
     }
     
@@ -59,16 +58,6 @@ public class OnChangeActionTest extends AbstractBaseTestBase {
                 "On change to true%n" +
                 "   ! A%n" +
                 "      Set turnout '' to Thrown%n");
-/*        
-        return String.format(
-                "Logix%n" +
-                "   ? E%n" +
-                "      Sensor '' is Active%n" +
-                "   ! A%n" +
-                "      On change to true%n" +
-                "         ! A%n" +
-                "            Set turnout '' to Thrown%n");
-*/
     }
     
     @Override

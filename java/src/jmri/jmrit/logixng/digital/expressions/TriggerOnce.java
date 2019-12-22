@@ -4,6 +4,7 @@ import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import jmri.InstanceManager;
 import jmri.Memory;
+import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
@@ -92,6 +93,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
     
     @Override
@@ -101,6 +103,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
 
     @Override

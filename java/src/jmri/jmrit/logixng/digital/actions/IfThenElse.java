@@ -192,7 +192,6 @@ public class IfThenElse extends AbstractDigitalAction
 
     @Override
     public void connected(FemaleSocket socket) {
-//        System.out.format("AAA: %s, %s, %s, %s%n", socket, socket.getClass().getName(), _ifExpressionSocket, _ifExpressionSocket.getClass().getName());
         if (socket == _ifExpressionSocket) {
             _ifExpressionSocketSystemName = socket.getConnectedSocket().getSystemName();
         } else if (socket == _thenActionSocket) {
@@ -202,6 +201,7 @@ public class IfThenElse extends AbstractDigitalAction
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
 
     @Override
@@ -215,6 +215,7 @@ public class IfThenElse extends AbstractDigitalAction
         } else {
             throw new IllegalArgumentException("unkown socket");
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
 
     @Override

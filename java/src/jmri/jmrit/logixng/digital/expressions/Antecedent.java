@@ -203,6 +203,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
                             InstanceManager.getDefault(DigitalExpressionManager.class)
                                     .createFemaleSocket(this, this, getNewSocketName())));
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
 
     @Override
@@ -213,6 +214,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
                 break;
             }
         }
+        firePropertyChange(Base.PROPERTY_SOCKET_DISCONNECTED, null, socket);
     }
 
     /** {@inheritDoc} */
