@@ -1,16 +1,11 @@
 package jmri.managers;
 
-import javax.annotation.Nonnull;
-
-import jmri.IdTag;
-import jmri.IdTagManager;
-import jmri.Manager;
-import jmri.Reporter;
-import jmri.SignalHead;
-
 import java.util.List;
 import java.util.ArrayList;
 import java.util.SortedSet;
+import javax.annotation.Nonnull;
+
+import jmri.*;
 import jmri.InstanceManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
@@ -51,8 +46,9 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Manager<IdTag> getDefaultManager() {
-        if(defaultManager!=getInternalManager()){
+        if(defaultManager != getInternalManager()){
            defaultManager = getInternalManager();
         }
         return defaultManager;
