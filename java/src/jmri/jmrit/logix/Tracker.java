@@ -25,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.JmriException;
-import jmri.InstanceManager;
 import jmri.jmrit.display.LocoIcon;
 
 /**
@@ -436,9 +435,8 @@ public class Tracker {
                 // is distance of 1 block OK?
                 if (Math.abs(w.getIndexOfBlock(block, 0) - idx) < 2) {
                     _statusMessage = msg;
-                } else {  // otherwise claim it for tracker
-                    log.warn(_statusMessage);
-                }
+                    return true;
+                }  // otherwise claim it for tracker
             }
             if (_headRange.contains(block)) {
                 if (_darkBlock != null) {
