@@ -151,7 +151,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     @Override
     @Nonnull
-    public Memory provide(String name) throws IllegalArgumentException {
+    public Memory provide(@Nonnull String name) throws IllegalArgumentException {
         return provideMemory(name);
     }
 

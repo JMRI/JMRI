@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractReporterManager;
@@ -30,6 +31,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      */
     @Nonnull
     @Override
+    @Nonnull
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }

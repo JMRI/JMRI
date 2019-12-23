@@ -1,8 +1,8 @@
 package jmri.managers;
 
 import java.util.Objects;
-
-import edu.umd.cs.findbugs.annotations.NonNull;
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -10,8 +10,6 @@ import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
 
 /**
  * Abstract partial implementation of a ReporterManager.
@@ -43,8 +41,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     }
 
     /** {@inheritDoc} */
-    @Nonnull
     @Override
+    @Nonnull
     public Reporter provideReporter(@Nonnull String sName) {
         Reporter t = getReporter(sName);
         if (t != null) {
@@ -110,13 +108,17 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    @NonNull
-    public Reporter newReporter(@NonNull String systemName, String userName) {
-        log.debug("new Reporter: {} {}", systemName, (userName == null ? "null" : userName));
+    @Nonnull
+    public Reporter newReporter(@Nonnull String systemName, @CheckForNull String userName) {
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + ((userName == null) ? "null" : userName));  // NOI18N
+        log.debug("new Reporter: {} {}", systemName, userName);
+
        // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
-            log.error("Invalid system name for reporter: {} needed {}{}", systemName, getSystemPrefix(), typeLetter());
+            log.error("Invalid system name for reporter: {} needed {}{}",
+                    systemName, getSystemPrefix(), typeLetter());
             throw new IllegalArgumentException("Invalid system name for turnout: " + systemName
                     + " needed " + getSystemPrefix() + typeLetter());
         }
@@ -142,13 +144,13 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         // doesn't exist, make a new one
         r = createNewReporter(systemName, userName);
 
-        // Some implementations of createNewReporter() registers the bean, some don't.
-        // Check if the bean is registered and register it if it isn't registered.
+        // Some implementations of createNewReporter() registers the bean, some
+        // don't. Check if the bean is registered and register it if it isn't
+        // registered.
         if (getBeanBySystemName(systemName) == null) {
             // save in the maps
             register(r);
         }
-
         return r;
     }
 

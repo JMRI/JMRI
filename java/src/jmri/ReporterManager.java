@@ -53,8 +53,8 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      *                                  due to an illegal name or name that
      *                                  can't be parsed.
      */
-    @Nonnull public
-    Reporter provideReporter(@Nonnull String name);
+    @Nonnull
+    public Reporter provideReporter(@Nonnull String name);
 
     /** {@inheritDoc} */
     @Override
@@ -68,8 +68,8 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      * @param name User name or system name to match
      * @return null if no match found
      */
-    @CheckForNull public
-    Reporter getReporter(@Nonnull String name);
+    @CheckForNull
+    public Reporter getReporter(@Nonnull String name);
 
     /**
      * Locate an instance based on a system name. Returns null if no instance
@@ -78,8 +78,8 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      * @param systemName the system name to locate
      * @return requested Reporter object or null if none exists
      */
-    @CheckForNull public
-    Reporter getBySystemName(@Nonnull String systemName);
+    @CheckForNull
+    public Reporter getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an instance based on a user name. Returns null if no instance
@@ -88,8 +88,8 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      * @param userName the user name to locate
      * @return requested Reporter object or null if none exists
      */
-    @CheckForNull public
-    Reporter getByUserName(@Nonnull String userName);
+    @CheckForNull
+    public Reporter getByUserName(@Nonnull String userName);
 
     /**
      * Locate an instance based on a user name, or if that fails, by system
@@ -98,8 +98,8 @@ public interface ReporterManager extends ProvidingManager<Reporter> {
      * @param userName the name to locate
      * @return requested Reporter object or null if none exists
      */
-    @CheckForNull public
-    Reporter getByDisplayName(@Nonnull String userName);
+    @CheckForNull
+    public Reporter getByDisplayName(@Nonnull String userName);
 
     /**
      * Return an instance with the specified system and user names. Note that

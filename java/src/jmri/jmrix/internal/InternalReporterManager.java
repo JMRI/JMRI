@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 
 import javax.annotation.Nonnull;

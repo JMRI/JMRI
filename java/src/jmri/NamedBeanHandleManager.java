@@ -216,6 +216,7 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
 
     @Nonnull
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public String[] getSystemNameArray() {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -223,6 +224,7 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
 
     @Nonnull
     @Override
+    @Nonnull
     @CheckReturnValue
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
@@ -268,7 +270,6 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNames" : "BeanName");
     }
-
 
     /**
      * {@inheritDoc}

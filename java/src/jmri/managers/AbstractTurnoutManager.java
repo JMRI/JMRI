@@ -91,9 +91,10 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     @Override
     @Nonnull
     public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("newTurnout: {};{}", systemName, (userName == null ? "null" : userName));
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
-                + (userName == null ? "null" : userName));  // NOI18N
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
+        // add normalize? see AbstractSensor
+        log.debug("newTurnout: {};{}", systemName, userName);
+
         // is system name in correct format?
         if (!systemName.startsWith(getSystemPrefix() + typeLetter())
                 || !(systemName.length() > (getSystemPrefix() + typeLetter()).length())) {
@@ -129,7 +130,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             throw new IllegalArgumentException("Unable to create turnout from " + systemName);
         }
 
-        // Some implementations of createNewTurnout() register the new bean, some don't.
+        // Some implementations of createNewTurnout() register the new bean,
+        // some don't. 
         if (getBeanBySystemName(s.getSystemName()) == null) {
             // save in the maps if successful
             register(s);
@@ -150,8 +152,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     }
 
     /** {@inheritDoc} */
-    @Nonnull
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
     }

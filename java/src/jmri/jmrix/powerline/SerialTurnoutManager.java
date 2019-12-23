@@ -1,6 +1,7 @@
 package jmri.jmrix.powerline;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -20,7 +21,7 @@ import javax.annotation.Nonnull;
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
-    SerialTrafficController tc = null;
+    private SerialTrafficController tc = null;
 
     public SerialTurnoutManager(SerialTrafficController tc) {
         super(tc.getAdapterMemo());
@@ -32,6 +33,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      */
     @Nonnull
     @Override
+    @Nonnull
     public SerialSystemConnectionMemo getMemo() {
         return (SerialSystemConnectionMemo) memo;
     }

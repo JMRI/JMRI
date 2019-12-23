@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.Nonnull;
 import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
@@ -24,6 +25,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
      */
     @Nonnull
     @Override
+    @Nonnull
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;
     }
@@ -46,7 +48,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
             }
 
             @Override
-            public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
+            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
                 return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
         };
@@ -75,6 +77,7 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
      */
     @Nonnull
     @Override
+    @Nonnull
     public String[] getValidOperationTypes() {
         return new String[]{"NoFeedback"};
     }

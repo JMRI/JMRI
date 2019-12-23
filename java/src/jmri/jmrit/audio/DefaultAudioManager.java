@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import javax.annotation.Nonnull;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.InstanceManager;
@@ -72,7 +73,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     @Override
-    protected synchronized Audio createNewAudio(String systemName, String userName) throws AudioException {
+    protected synchronized Audio createNewAudio(@Nonnull String systemName, String userName) throws AudioException {
 
         if (activeAudioFactory == null) {
             log.debug("Initialise in createNewAudio");
@@ -127,6 +128,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     @Override
     @Deprecated
+    @Nonnull
     public List<String> getSystemNameList(char subType) {
         Set<Audio> tempSet = getNamedBeanSet();
         List<String> out = new ArrayList<>();
@@ -140,6 +142,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public SortedSet<Audio> getNamedBeanSet(char subType) {
         switch (subType) {
             case Audio.BUFFER: {
@@ -217,7 +220,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     /**
-     * Method used to initialise the manager and make connections
+     * Initialise the manager and make connections.
      */
     @SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // OK to write to static variables as we only do so if not initialised
@@ -314,7 +317,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     /**
-     * Return the current instance of this object.
+     * Get the current instance of this object.
      * <p>
      * If not existing, create a new instance.
      *

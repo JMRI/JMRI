@@ -33,27 +33,27 @@ import javax.annotation.Nonnull;
 public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Override
-    public Turnout provideTurnout(String name) {
+    public Turnout provideTurnout(@Nonnull String name) {
         return null;
     }
 
     @Override
-    public Turnout getTurnout(String name) {
+    public Turnout getTurnout(@Nonnull String name) {
         return null;
     }
 
     @Override
-    public Turnout getBySystemName(String systemName) {
+    public Turnout getBySystemName(@Nonnull String systemName) {
         return null;
     }
 
     @Override
-    public Turnout getByUserName(String userName) {
+    public Turnout getByUserName(@Nonnull String userName) {
         return null;
     }
 
     @Override
-    public Turnout newTurnout(String systemName, String userName) {
+    public Turnout newTurnout(@Nonnull String systemName, String userName) {
         return null;
     }
 
@@ -100,17 +100,18 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public int askNumControlBits(String systemName) {
+    public int askNumControlBits(@Nonnull String systemName) {
         return -1;
     }
 
     @Override
-    public int askControlType(String systemName) {
+    public int askControlType(@Nonnull String systemName) {
         return -1;
     }
 
     @Nonnull
     @Override
+    @Nonnull
     public String getSystemPrefix() {
         return " ";
     }
@@ -153,11 +154,13 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    @Nonnull
     public PropertyChangeListener[] getPropertyChangeListeners() {
         return new PropertyChangeListener[0];
     }
 
     @Override
+    @Nonnull
     public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
         return new PropertyChangeListener[0];
     }
@@ -179,11 +182,13 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    @Nonnull
     public VetoableChangeListener[] getVetoableChangeListeners() {
         return new VetoableChangeListener[0];
     }
 
     @Override
+    @Nonnull
     public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
         return new VetoableChangeListener[0];
     }
@@ -206,31 +211,31 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         return curAddress;
     }
 
     @Override
-    public boolean isControlTypeSupported(String systemName) {
+    public boolean isControlTypeSupported(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public boolean isNumControlBitsSupported(String systemName) {
+    public boolean isNumControlBitsSupported(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public void setDefaultClosedSpeed(String speed) {
+    public void setDefaultClosedSpeed(@Nonnull String speed) {
     }
 
     @Override
-    public void setDefaultThrownSpeed(String speed) {
+    public void setDefaultThrownSpeed(@Nonnull String speed) {
     }
 
     @Override
@@ -264,12 +269,13 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         return " ";
     }
 
     @Nonnull
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return plural ? "Turnouts" : "Turnout";
     }

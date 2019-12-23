@@ -1,6 +1,7 @@
 package jmri;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.Nonnull;
 
 import javax.annotation.Nonnull;
 

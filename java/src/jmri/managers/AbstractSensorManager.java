@@ -2,12 +2,10 @@ package jmri.managers;
 
 import java.util.Enumeration;
 import java.util.Objects;
-
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,7 +62,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     static final java.util.regex.Matcher numberMatcher = java.util.regex.Pattern.compile("\\d++").matcher("");
 
-    boolean isNumber(String s) {
+    boolean isNumber(@Nonnull String s) {
         synchronized (numberMatcher) {
             return numberMatcher.reset(s).matches();
         }
@@ -118,6 +116,12 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         }
         // doesn't exist, make a new one
         s = createNewSensor(systemName, userName);
+
+        // if that failed, blame it on the input arguments
+        if (s == null) {
+            throw new IllegalArgumentException();
+        }
+
         // save in the maps
         register(s);
 
