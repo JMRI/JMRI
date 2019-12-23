@@ -13,10 +13,10 @@ import jmri.jmrit.logixng.digital.implementation.DefaultMaleDigitalExpressionSoc
  */
 public abstract class AbstractDigitalExpressionTestBase extends AbstractBaseTestBase {
 
-    public abstract NamedBean createNewBean(String systemName);
+    public abstract NamedBean createNewBean(String systemName) throws Exception;
     
     @Test
-    public void testBadSystemName() {
+    public void testBadSystemName() throws Exception {
         boolean hasThrown = false;
         try {
             // Create a bean with bad system name. This must throw an exception
@@ -44,7 +44,7 @@ public abstract class AbstractDigitalExpressionTestBase extends AbstractBaseTest
     }
     
     @Test
-    public void testEnableAndEvaluate() {
+    public void testEnableAndEvaluate() throws Exception {
         DigitalExpressionBean _expression = (DigitalExpressionBean)_baseMaleSocket;
         Assert.assertTrue("male socket is enabled", _baseMaleSocket.isEnabled());
         Assert.assertTrue("evaluate() returns true", _expression.evaluate());
@@ -57,7 +57,7 @@ public abstract class AbstractDigitalExpressionTestBase extends AbstractBaseTest
     }
     
     @Test
-    public void testDebugConfig() {
+    public void testDebugConfig() throws Exception {
         DigitalExpressionBean _expression = (DigitalExpressionBean)_baseMaleSocket;
         Assert.assertTrue("evaluate() returns true", _expression.evaluate());
         DigitalExpressionDebugConfig debugConfig = new DigitalExpressionDebugConfig();

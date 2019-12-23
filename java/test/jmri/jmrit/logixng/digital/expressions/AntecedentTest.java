@@ -95,30 +95,36 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     }
     
     @Override
-    public NamedBean createNewBean(String systemName) {
-        return new Antecedent(systemName, null, "R1");
+    public NamedBean createNewBean(String systemName) throws Exception {
+        Antecedent a = new Antecedent(systemName, null);
+        a.setAntecedent("R1");
+        return a;
     }
     
     @Test
-    public void testCtor() {
+    public void testCtor() throws Exception {
         Antecedent expression2;
         
-        expression2 = new Antecedent("IQDE321", null, "R1");
+        expression2 = new Antecedent("IQDE321", null);
+        expression2.setAntecedent("R1");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
         Assert.assertEquals("String matches", "Antecedent: R1", expression2.getLongDescription());
         
-        expression2 = new Antecedent("IQDE321", "My expression", "R1");
+        expression2 = new Antecedent("IQDE321", "My expression");
+        expression2.setAntecedent("R1");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
         Assert.assertEquals("String matches", "Antecedent: R1", expression2.getLongDescription());
         
-        expression2 = new Antecedent("IQDE321", null, "R1 and R2");
+        expression2 = new Antecedent("IQDE321", null);
+        expression2.setAntecedent("R1 and R2");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertNull("Username matches", expression2.getUserName());
         Assert.assertEquals("String matches", "Antecedent: R1 and R2", expression2.getLongDescription());
         
-        expression2 = new Antecedent("IQDE321", "My expression", "R1 or R2");
+        expression2 = new Antecedent("IQDE321", "My expression");
+        expression2.setAntecedent("R1 or R2");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertEquals("Username matches", "My expression", expression2.getUserName());
         Assert.assertEquals("String matches", "Antecedent: R1 or R2", expression2.getLongDescription());
@@ -126,7 +132,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         boolean thrown = false;
         try {
             // Illegal system name
-            new Antecedent("IQE55:12:XY11", null, "R1");
+            new Antecedent("IQE55:12:XY11", null);
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -135,7 +141,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         thrown = false;
         try {
             // Illegal system name
-            new Antecedent("IQE55:12:XY11", "A name", "R1");
+            new Antecedent("IQE55:12:XY11", "A name");
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -143,8 +149,9 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     }
     
     @Test
-    public void testGetChild() throws SocketAlreadyConnectedException {
-        Antecedent expression2 = new Antecedent("IQDE321", null, "R1");
+    public void testGetChild() throws Exception {
+        Antecedent expression2 = new Antecedent("IQDE321", null);
+        expression2.setAntecedent("R1");
         
         for (int i=0; i < 3; i++) {
             Assert.assertTrue("getChildCount() returns "+i, i+1 == expression2.getChildCount());
@@ -182,13 +189,14 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     
     @Test
     public void testDescription() {
-        Antecedent e1 = new Antecedent("IQDE321", null, "");
+        Antecedent e1 = new Antecedent("IQDE321", null);
         Assert.assertEquals("strings matches", "Antecedent", e1.getShortDescription());
         Assert.assertEquals("strings matches", "Antecedent: empty", e1.getLongDescription());
     }
     
-    private void testValidate(boolean expectedResult, String antecedent, List<DigitalExpressionBean> conditionalVariablesList) throws SocketAlreadyConnectedException {
-        Antecedent ix1 = new Antecedent("IQDE321", "IXIC 1", "R1");
+    private void testValidate(boolean expectedResult, String antecedent, List<DigitalExpressionBean> conditionalVariablesList) throws Exception {
+        Antecedent ix1 = new Antecedent("IQDE321", "IXIC 1");
+        ix1.setAntecedent("R1");
         
         int count = 0;
         List<ExpressionEntry> expressionEntryList = new ArrayList<>();
@@ -210,9 +218,12 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
         }
     }
     
-    private void testCalculate(int expectedResult, String antecedent, List<DigitalExpressionBean> conditionalVariablesList, String errorMessage) throws SocketAlreadyConnectedException {
+    private void testCalculate(int expectedResult, String antecedent,
+            List<DigitalExpressionBean> conditionalVariablesList, String errorMessage)
+            throws Exception {
         
-        Antecedent ix1 = new Antecedent("IQDE321", "IXIC 1", antecedent);
+        Antecedent ix1 = new Antecedent("IQDE321", "IXIC 1");
+        ix1.setAntecedent(antecedent);
         
 //        for (int i=0; i < ix1.getChildCount(); i++) {
 //            ix1.getChild(i).disconnect();
@@ -247,7 +258,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     }
     
     @Test
-    public void testValidate() throws SocketAlreadyConnectedException {
+    public void testValidate() throws Exception {
         DigitalExpressionBean[] conditionalVariables_Empty = { };
         List<DigitalExpressionBean> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
@@ -305,7 +316,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     
     @Test
     @SuppressWarnings("unused") // test building in progress
-    public void testCalculate() throws SocketAlreadyConnectedException {
+    public void testCalculate() throws Exception {
         DigitalExpressionBean[] conditionalVariables_Empty = { };
         List<DigitalExpressionBean> conditionalVariablesList_Empty = Arrays.asList(conditionalVariables_Empty);
         
@@ -431,7 +442,7 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
     
     // The minimal setup for log4J
     @Before
-    public void setUp() throws SocketAlreadyConnectedException {
+    public void setUp() throws Exception {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
@@ -451,7 +462,8 @@ public class AntecedentTest extends AbstractDigitalExpressionTestBase implements
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(ifThenElse);
         conditionalNG.getChild(0).connect(maleSocket);
         
-        expressionAntecedent = new Antecedent("IQDE321", null, "R1");
+        expressionAntecedent = new Antecedent("IQDE321", null);
+        expressionAntecedent.setAntecedent("R1");
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionAntecedent);
         ifThenElse.getChild(0).connect(maleSocket2);

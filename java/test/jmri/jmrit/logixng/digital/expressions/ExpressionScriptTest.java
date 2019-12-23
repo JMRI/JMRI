@@ -257,7 +257,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testExpression() throws SocketAlreadyConnectedException, JmriException {
+    public void testExpression() throws Exception {
         expressionScript.setScript(_scriptText);
         
         // The action is not yet executed so the atomic boolean should be false
@@ -368,7 +368,7 @@ public class ExpressionScriptTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testVetoableChange() throws PropertyVetoException {
+    public void testVetoableChange() throws Exception {
         // This test calls expressionScript.evaluate() to see if the script still has
         // the light registered. Once the light is deleted, expressionScript.evaluate()
         // will throw a NullPointerException.

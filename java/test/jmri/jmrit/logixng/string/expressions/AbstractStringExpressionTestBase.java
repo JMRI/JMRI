@@ -62,7 +62,7 @@ public abstract class AbstractStringExpressionTestBase extends AbstractBaseTestB
     }
     
     @Test
-    public void testEnableAndEvaluate() {
+    public void testEnableAndEvaluate() throws Exception {
         StringExpressionBean _expression = (StringExpressionBean)_baseMaleSocket;
         Assert.assertTrue("male socket is enabled", _baseMaleSocket.isEnabled());
         Assert.assertNotEquals("Strings don't match", "", _expression.evaluate());
@@ -75,7 +75,7 @@ public abstract class AbstractStringExpressionTestBase extends AbstractBaseTestB
     }
     
     @Test
-    public void testDebugConfig() {
+    public void testDebugConfig() throws Exception {
         String value1 = "Something else";
         String value2 = "Some other thing";
         StringExpressionBean _expression = (StringExpressionBean)_baseMaleSocket;

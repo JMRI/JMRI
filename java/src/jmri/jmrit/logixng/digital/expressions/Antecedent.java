@@ -34,7 +34,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
 
     static final java.util.ResourceBundle rbx = java.util.ResourceBundle.getBundle("jmri.jmrit.conditional.ConditionalBundle");  // NOI18N
     
-    String _antecedent = "";
+    private String _antecedent = "";
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     
     /**
@@ -182,8 +182,9 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
     }
 
     public final void setAntecedent(String antecedent) throws Exception {
-        String result = validateAntecedent(antecedent, _expressionEntries);
-        if (result != null) throw new IllegalArgumentException(result);
+//        String result = validateAntecedent(antecedent, _expressionEntries);
+//        if (result != null) System.out.format("DANIEL: Exception: %s%n", result);
+//        if (result != null) throw new IllegalArgumentException(result);
         _antecedent = antecedent;
     }
     
@@ -296,6 +297,7 @@ public class Antecedent extends AbstractDigitalExpression implements FemaleSocke
             }
             int index = dp.argsUsed.nextClearBit(0);
             if (index >= 0 && index < expressionEntryList.size()) {
+                System.out.format("Daniel: ant: %s%n", ant);
                 return java.text.MessageFormat.format(
                         rbx.getString("ParseError5"),  // NOI18N
                         new Object[]{expressionEntryList.size(), index + 1});

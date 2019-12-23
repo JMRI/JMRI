@@ -284,7 +284,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testAction() throws SocketAlreadyConnectedException, JmriException {
+    public void testAction() throws Exception {
         // Test action
         Light light = InstanceManager.getDefault(LightManager.class).provide("IL1");
         light.setCommandedState(Light.OFF);
@@ -410,7 +410,7 @@ public class ActionScriptTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testVetoableChange() throws PropertyVetoException {
+    public void testVetoableChange() throws Exception {
         // This test calls actionScript.evaluate() to see if the script still has
         // the light registered. Once the light is deleted, actionScript.evaluate()
         // will throw a NullPointerException.

@@ -202,8 +202,7 @@ public class ActionThrottleTest extends AbstractDigitalActionTestBase {
     }
     
     @Test
-    public void testExecute() throws SocketAlreadyConnectedException, JmriException {
-//        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+    public void testExecute() throws Exception {
         ConditionalNG conditionalNG_2 = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A second conditionalNG");  // NOI18N
         logixNG.addConditionalNG(conditionalNG_2);

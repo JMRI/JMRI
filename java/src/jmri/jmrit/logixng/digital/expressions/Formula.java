@@ -32,8 +32,8 @@ import org.slf4j.LoggerFactory;
  */
 public class Formula extends AbstractDigitalExpression implements FemaleSocketListener {
 
-    String _formula = "";
-    ExpressionNode _expressionNode;
+    private String _formula = "";
+    private ExpressionNode _expressionNode;
     private final List<ExpressionEntry> _expressionEntries = new ArrayList<>();
     
     /**

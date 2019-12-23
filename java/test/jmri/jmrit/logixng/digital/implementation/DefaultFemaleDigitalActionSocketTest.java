@@ -77,7 +77,7 @@ public class DefaultFemaleDigitalActionSocketTest extends FemaleSocketTestBase {
     }
     
     @Test
-    public void testSetValue() {
+    public void testSetValue() throws Exception {
         // Every test method should have an assertion
         Assert.assertNotNull("femaleSocket is not null", femaleSocket);
         Assert.assertFalse("femaleSocket is not connected", femaleSocket.isConnected());

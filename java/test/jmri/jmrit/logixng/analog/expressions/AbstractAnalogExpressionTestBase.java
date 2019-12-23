@@ -62,7 +62,7 @@ public abstract class AbstractAnalogExpressionTestBase extends AbstractBaseTestB
     }
     
     @Test
-    public void testEnableAndEvaluate() {
+    public void testEnableAndEvaluate() throws Exception {
         AnalogExpressionBean _expression = (AnalogExpressionBean)_baseMaleSocket;
         Assert.assertTrue("male socket is enabled", _baseMaleSocket.isEnabled());
         Assert.assertNotEquals("Double don't match", 0.0, _expression.evaluate());
@@ -75,7 +75,7 @@ public abstract class AbstractAnalogExpressionTestBase extends AbstractBaseTestB
     }
     
     @Test
-    public void testDebugConfig() {
+    public void testDebugConfig() throws Exception {
         double value1 = 88.99;
         double value2 = 99.88;
         AnalogExpressionBean _expression = (AnalogExpressionBean)_baseMaleSocket;

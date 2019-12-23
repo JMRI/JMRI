@@ -142,7 +142,7 @@ public class TrueTest extends AbstractDigitalExpressionTestBase {
     }
     
     @Test
-    public void testExpression() {
+    public void testExpression() throws Exception {
         DigitalExpressionBean t = new True("IQDE321", null);
         Assert.assertTrue("Expression is true",t.evaluate());
         
