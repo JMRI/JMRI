@@ -478,6 +478,7 @@ public class CbusFilter {
                 if ( filters.get(CFARDAT) ){ return CFARDAT; } else { incrementCount(CFARDAT); }
                 break;
             case CbusConstants.CBUS_DDES:
+            case CbusConstants.CBUS_DDWS:
                 if ( checkevent(nodeNum) > -1 ) { return checkevent(nodeNum); } // byte 1 and 2 are device num
                 if ( filters.get(CFDATA) ){ return CFDATA; } else { incrementCount(CFDATA); }
                 if ( filters.get(CFDDES) ){ return CFDDES; } else { incrementCount(CFDDES); }
