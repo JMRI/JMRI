@@ -109,7 +109,7 @@ public class ExportTrains extends XmlFile {
                 del +
                 Bundle.getMessage("LoadOption") +
                 del +
-                Bundle.getMessage("Loads");;
+                Bundle.getMessage("Loads");
         fileOut.println(header);
 
         int count = 0;
