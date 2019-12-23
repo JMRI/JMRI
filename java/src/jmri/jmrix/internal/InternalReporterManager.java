@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 
 /**
@@ -25,7 +26,7 @@ public class InternalReporterManager extends jmri.managers.AbstractReporterManag
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -33,6 +34,7 @@ public class InternalReporterManager extends jmri.managers.AbstractReporterManag
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;
     }
