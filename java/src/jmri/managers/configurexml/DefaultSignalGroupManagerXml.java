@@ -7,9 +7,8 @@ import jmri.InstanceManager;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
 import jmri.SignalHead;
+
 import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for a DefaultSignalGroupManager objects.
@@ -157,7 +156,7 @@ public class DefaultSignalGroupManagerXml
             List<Element> appList = e.getChildren("appearance"); // deprecated 4.7.2 for aspect; warning added 4.19.1
             for (Element app : appList) {
                 String value = app.getAttribute("valid").getValue();
-                Log4JUtil.warnOnce(logger, "Found appearance elements in file", new Exception("traceback"));
+                jmri.util.Log4JUtil.warnOnce(log, "Found appearance elements in file", new Exception("traceback"));
                 sg.addSignalMastAspect(value);
             }
             List<Element> aspList = e.getChildren("aspect");
@@ -255,6 +254,6 @@ public class DefaultSignalGroupManagerXml
         return InstanceManager.getDefault(jmri.SignalGroupManager.class).getXMLOrder();
     }
 
-    private final static Logger log = LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(DefaultSignalGroupManagerXml.class);
 
 }
