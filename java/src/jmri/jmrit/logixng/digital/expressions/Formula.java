@@ -20,6 +20,7 @@ import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.jmrit.logixng.util.parser.Variable;
+import jmri.jmrit.logixng.util.parser.variables.DigitalExpressionVariable;
 import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
 import jmri.util.TypeConversionUtil;
 import org.slf4j.Logger;
@@ -156,6 +157,10 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
     public final void setFormula(String formula) throws ParserException {
         Map<String, Variable> variables = new HashMap<>();
         RecursiveDescentParser parser = new RecursiveDescentParser(variables);
+        for (int i=0; i < getChildCount(); i++) {
+            Variable v = new DigitalExpressionVariable((FemaleDigitalExpressionSocket)getChild(i));
+            variables.put(v.getName(), v);
+        }
         _expressionNode = parser.parseExpression(formula);
         // parseExpression() may throw an exception and we don't want to set
         // the field _formula until we now parseExpression() has succeeded.

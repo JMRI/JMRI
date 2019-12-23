@@ -7,6 +7,6 @@ public interface Variable {
 
     public String getName();
     
-    public Object getValue();
+    public Object getValue() throws Exception;
     
 }

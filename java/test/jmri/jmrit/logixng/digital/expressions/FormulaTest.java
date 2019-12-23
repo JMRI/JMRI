@@ -68,8 +68,7 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase implements Fe
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-//                "Formula: R1%n" +
-                "Formula: 1%n" +
+                "Formula: E1%n" +
                 "   ? E1%n" +
                 "      Always true%n" +
                 "   ? E2%n" +
@@ -84,8 +83,7 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase implements Fe
                 "      ! %n" +
                 "         If E then A1 else A2%n" +
                 "            ? E%n" +
-                "               Formula: 1%n" +
-//                "               Formula: R1%n" +
+                "               Formula: E1%n" +
                 "                  ? E1%n" +
                 "                     Always true%n" +
                 "                  ? E2%n" +
@@ -465,9 +463,9 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase implements Fe
         conditionalNG.getChild(0).connect(maleSocket);
         
         expressionFormula = new Formula("IQDE321", null);
-        expressionFormula.setFormula("1");
+//        expressionFormula.setFormula("1");
 //        expressionFormula.setFormula("true");
-//        expressionFormula.setFormula("E1");
+        expressionFormula.setFormula("E1");
         MaleSocket maleSocket2 =
                 InstanceManager.getDefault(DigitalExpressionManager.class).registerExpression(expressionFormula);
         ifThenElse.getChild(0).connect(maleSocket2);
