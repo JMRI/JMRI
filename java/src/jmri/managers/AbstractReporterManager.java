@@ -1,7 +1,8 @@
 package jmri.managers;
 
 import java.util.Objects;
-
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.Manager;
 import jmri.Reporter;
 import jmri.ReporterManager;
@@ -41,7 +42,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public Reporter provideReporter(String sName) {
+    @Nonnull
+    public Reporter provideReporter(@Nonnull String sName) {
         Reporter t = getReporter(sName);
         if (t != null) {
             return t;
@@ -55,7 +57,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public Reporter getReporter(String name) {
+    public Reporter getReporter(@Nonnull String name) {
         Reporter t = getByUserName(name);
         if (t != null) {
             return t;
@@ -66,18 +68,19 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public Reporter getBySystemName(String name) {
+    public Reporter getBySystemName(@Nonnull String name) {
         return _tsys.get(name);
     }
 
     /** {@inheritDoc} */
     @Override
-    public Reporter getByUserName(String key) {
+    public Reporter getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
     }
@@ -92,7 +95,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public Reporter getByDisplayName(String key) {
+    public Reporter getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list
         Reporter retv = this.getByUserName(key);
@@ -105,8 +108,9 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public Reporter newReporter(String systemName, String userName) {
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
+    @Nonnull
+    public Reporter newReporter(@Nonnull String systemName, @CheckForNull String userName) {
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
 
         log.debug("new Reporter: {} {}", systemName, userName);
 
@@ -147,7 +151,6 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
             // save in the maps
             register(r);
         }
-
         return r;
     }
 
@@ -161,13 +164,13 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
         // If the hardware address passed does not already exist then this can
         // be considered the next valid address.
         Reporter r = getBySystemName(prefix + typeLetter() + curAddress);
