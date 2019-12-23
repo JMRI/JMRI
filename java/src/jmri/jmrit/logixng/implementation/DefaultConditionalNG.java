@@ -138,16 +138,15 @@ public class DefaultConditionalNG extends AbstractBase
                             _femaleActionSocket.execute();
                         } catch (Exception e) {
                             switch (_errorHandlingType) {
-                                case SHOW_DIALOG_BOX:   // We don't show a dialog box yet so fall thrue.
-                                    // fall through
-                                case LOG_ERROR:
-                                    log.error("female socket {} thrown an exception: {}", _femaleActionSocket.toString(), e);
-                                    break;
-
                                 case LOG_ERROR_ONCE:
                                     Log4JUtil.warnOnce(log, "female socket {} thrown an exception: {}", _femaleActionSocket.toString(), e);
                                     break;
-
+                                    
+                                case SHOW_DIALOG_BOX:
+                                    // We don't show a dialog box yet so fall thrue.
+                                    // fall through
+                                case LOG_ERROR:
+                                    // fall through
                                 default:
                                     log.error("female socket {} thrown an exception: {}", _femaleActionSocket.toString(), e);
                             }
