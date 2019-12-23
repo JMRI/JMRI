@@ -1,19 +1,22 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.Component;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
+import java.io.FileNotFoundException;
 import java.util.logging.*;
-import javax.annotation.Nonnull;
-import javax.swing.JComboBox;
+import javax.annotation.*;
 import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
+import org.junit.Test;
 import org.junit.rules.Timeout;
-import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.*;
 import org.netbeans.jemmy.operators.*;
+import org.netbeans.jemmy.util.*;
 
 /**
  * Test simple functioning of LayoutEditorTools
@@ -23,26 +26,27 @@ import org.netbeans.jemmy.operators.*;
  */
 public class LayoutEditorToolsTest {
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); //10 second timeout for methods in this test class.
+    @Rule   //10 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(10);
 
-    //allow 2 retries of intermittent tests
-    @Rule
-    public RetryRule retryRule = new RetryRule(2); //allow 2 retries
+    @Rule   //allow 2 retries of intermittent tests
+    public RetryRule retryRule = new RetryRule(0);
 
-    private LayoutEditor layoutEditor = null;
-    private LayoutEditorTools let = null;
+    private static LayoutEditor layoutEditor = null;
+    private static LayoutEditorTools let = null;
 
     //these all have to contain the same number of elements
-    private LayoutBlock layoutBlocks[] = new LayoutBlock[5];
-    private Turnout turnouts[] = new Turnout[5];
-    private SignalHead signalHeads[] = new SignalHead[5];
-    private Sensor sensors[] = new Sensor[5];
+    private static LayoutBlock layoutBlocks[] = new LayoutBlock[8];
+    private static Turnout turnouts[] = new Turnout[8];
+    private static SignalHead signalHeads[] = new SignalHead[8];
+    private static Sensor sensors[] = new Sensor[8];
 
-    private LayoutTurnout layoutTurnout = null;
-    private PositionablePoint positionablePoint1 = null;
-    private PositionablePoint positionablePoint2 = null;
-    private PositionablePoint positionablePoint3 = null;
+    private static LayoutTurnout layoutTurnout = null;
+    private static LayoutTurnout layoutTurnout2 = null;
+    private static PositionablePoint positionablePoint1 = null;
+    private static PositionablePoint positionablePoint2 = null;
+    private static PositionablePoint positionablePoint3 = null;
+    private static TrackSegment trackSegment = null;
 
     @Test
     public void testCtor() {
@@ -74,7 +78,6 @@ public class LayoutEditorToolsTest {
     @Test
     public void testSetSignalsAtTurnoutWithDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         //create a new Layout Turnout
         layoutTurnout = new LayoutTurnout("Right Hand",
                 LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
@@ -103,27 +106,26 @@ public class LayoutEditorToolsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
         JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
 
-        //pressing "Done" should throw up a "no turnout name was entered" (SignalsError1)
-        //error dialog... dismiss it
-        Thread modalDialogOperatorThread0 = JemmyUtil.createModalDialogOperatorThread(
+        //pressing "Done" should display a dialog
+        //SignalsError1 = Error - No turnout name was entered. Please enter a turnout name or cancel.
+        Thread modalDialogOperatorThread0 = createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SignalsError1"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
-        doneButtonOperator.doClick();
+        doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread0.isAlive());
         }, "modalDialogOperatorThread0 finished");
 
         //select the turnout from the popup menu
-        JLabelOperator JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("BeanNameTurnout")));
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) JLabelOperator.getLabelFor());
+                jFrameOperator, new ByNameComponentChooser("turnoutComboBox"));
         jComboBoxOperator.selectItem(0);  //TODO:fix hardcoded index
 
-        //pressing "Done" should throw up a "Turnout XXX is not drawn on the panel" (SignalsError3)
-        //error dialog... dismiss it
-        Thread modalDialogOperatorThread0a = JemmyUtil.createModalDialogOperatorThread(
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread0a = createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SignalsError3", turnouts[0].getSystemName()),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -146,10 +148,11 @@ public class LayoutEditorToolsTest {
         /*
         * test all four comboboxes for "Signal head name was not entered"  (SignalsError5)
          */
-        //pressing "Done" should throw up a "Signal head name was not entered"  (SignalsError5)
-        //error dialog... dismiss it
-        Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
+        //pressing "Done" should display a dialog
+        //SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
+        Thread modalDialogOperatorThread1 = createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SignalsError5"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -157,16 +160,14 @@ public class LayoutEditorToolsTest {
         }, "modalDialogOperatorThread1 finished");
 
         //select signal head for this combobox
-        JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("ThroatContinuing")));
         jComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) JLabelOperator.getLabelFor());
+                jFrameOperator, new ByNameComponentChooser("throatContinuingSignalHeadComboBox"));
         jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
 
-        //pressing "Done" should throw up a "Signal head name was not entered"  (SignalsError5)
-        //error dialog... dismiss it
-        Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread2 = createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SignalsError5"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -174,16 +175,14 @@ public class LayoutEditorToolsTest {
         }, "modalDialogOperatorThread2 finished");
 
         //select signal head for this combobox
-        JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("ThroatDiverging")));
         jComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) JLabelOperator.getLabelFor());
+                jFrameOperator, new ByNameComponentChooser("throatDivergingSignalHeadComboBox"));
         jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
 
-        //pressing "Done" should throw up a "Signal head name was not entered"  (SignalsError5)
-        //error dialog... dismiss it
-        Thread modalDialogOperatorThread3 = JemmyUtil.createModalDialogOperatorThread(
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread3 = createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SignalsError5"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -191,17 +190,14 @@ public class LayoutEditorToolsTest {
         }, "modalDialogOperatorThread3 finished");
 
         //select signal head for this combobox
-        //NOTE: index used here because "Continuing" matches against "ThroadContinuing" above
-        JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("Continuing")), 1);
         jComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) JLabelOperator.getLabelFor());
+                jFrameOperator, new ByNameComponentChooser("continuingSignalHeadComboBox"));
         jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
 
-        //pressing "Done" should throw up a "Signal head name was not entered"  (SignalsError5)
-        //error dialog... dismiss it
-        Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread4 = createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SignalsError5"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -209,11 +205,8 @@ public class LayoutEditorToolsTest {
         }, "modalDialogOperatorThread4 finished");
 
         //select signal head for this combobox
-        //NOTE: index used here because "Diverging" matches against "ThroadDiverging" above
-        JLabelOperator = new JLabelOperator(jFrameOperator,
-                Bundle.getMessage("MakeLabel", Bundle.getMessage("Diverging")), 1);
         jComboBoxOperator = new JComboBoxOperator(
-                (JComboBox) JLabelOperator.getLabelFor());
+                jFrameOperator, new ByNameComponentChooser("divergingSignalHeadComboBox"));
         jComboBoxOperator.selectItem(4); //TODO:fix hardcoded index
 
         testSetupSSL(0);    //test Throat Continuing SSL logic setup
@@ -240,10 +233,12 @@ public class LayoutEditorToolsTest {
         JCheckBoxOperator cboSetLogic = new JCheckBoxOperator(jfoSignalsAtTurnout, Bundle.getMessage("SetLogic"), idx);
         cboSetLogic.doClick(); //click on
 
-        //pressing "Done" should throw up a "all connections have not been defined"  (InfoMessage7)
-        //error dialog... dismiss it
-        Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
+        //pressing "Done" should display a dialog
+        //InfoMessage6 = Cannot set up logic because blocks have\nnot been defined around this item.
+        //InfoMessage7 = Cannot set up logic because all connections\nhave not been defined around this item.
+        Thread modalDialogOperatorThread1 = createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
+                //Bundle.getMessage("InfoMessage6"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -274,10 +269,10 @@ public class LayoutEditorToolsTest {
             Logger.getLogger(LayoutEditorToolsTest.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        //pressing "Done" should throw up a "the next signal... apparently is not yet defined."  (InfoMessage5)
-        //error dialog... dismiss it
-        Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread2 = createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
+                //Bundle.getMessage("InfoMessage5"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -295,10 +290,10 @@ public class LayoutEditorToolsTest {
         //change anchor to end bumper
         positionablePoints[idx].setType(PositionablePoint.END_BUMPER);
 
-        //pressing "Done" should throw up a "blocks have not been defined around this item."  (InfoMessage6)
-        //error dialog... dismiss it
-        Thread modalDialogOperatorThread3 = JemmyUtil.createModalDialogOperatorThread(
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread3 = createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
+                Bundle.getMessage("InfoMessage6"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -317,10 +312,10 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
 
-        //pressing "Done" should throw up a "block XXX doesn''t have an occupancy sensor"  (InfoMessage4)
-        //error dialog... dismiss it
-        Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread4 = createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
+                Bundle.getMessage("InfoMessage4", layoutBlocks[lbIndex[idx]].getUserName()),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
@@ -378,17 +373,16 @@ public class LayoutEditorToolsTest {
         });
         //the JFrameOperator waits for the set signal frame to appear
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
-        //then we find and press the "Done" button.
+        //then we find and press the "Cancel" button.
         JButtonOperator jbo = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel"));
-        jbo.press();
-        jFrameOperator.requestClose();
+        jbo.doClick();
+        ///jFrameOperator.requestClose();
         jFrameOperator.waitClosed();    // make sure the dialog closed
     }
 
     @Test
     public void testSetSignalsAtTurnoutFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
         ThreadingUtil.runOnLayoutEventually(() -> {
             Point2D point = new Point2D.Double(150.0, 100.0);
             LayoutTurnout to = new LayoutTurnout("Right Hand",
@@ -436,6 +430,255 @@ public class LayoutEditorToolsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
         //then closes it.
         jFrameOperator.requestClose();
+        jFrameOperator.waitClosed();    // make sure the dialog closed
+    }
+
+    @Test
+    public void testSetSignalsAtThroatToThroatTurnouts() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear,
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        //then closes it.
+        jFrameOperator.requestClose();
+        jFrameOperator.waitClosed();    // make sure the dialog closed
+    }
+
+    @Test
+    public void testSetSignalsAtThroatToThroatTurnoutsWithDone() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear,
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        //pressing "Done" should display a dialog
+        //SignalsError1 = Error - No turnout name was entered. Please enter a turnout name or cancel.
+        Thread modalDialogOperatorThread0 = createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SignalsError1"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread0.isAlive());
+        }, "modalDialogOperatorThread0 finished");
+
+        //so lets create a turnout
+        layoutTurnout = new LayoutTurnout("Right Hand",
+                LayoutTurnout.RH_TURNOUT, new Point2D.Double(100.0, 100.0),
+                180.0, 1.1, 1.2, layoutEditor);
+        Assert.assertNotNull("RH turnout for testSetSignalsAtThroatToThroatTurnoutsWithDone", layoutTurnout);
+        layoutEditor.getLayoutTracks().add(layoutTurnout);
+
+        //select the turnout from the popup menu
+        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new ByNameComponentChooser("turnout1ComboBox"));
+        jComboBoxOperator.selectItem(0);  //TODO:fix hardcoded index
+
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread1 = createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SignalsError3", turnouts[0].getSystemName()),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.push();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread1.isAlive());
+        }, "modalDialogOperatorThread1 finished");
+
+        layoutTurnout.setTurnout(turnouts[0].getSystemName()); //this should fix the "is not drawn on the panel" error
+
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread2 = createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SignalsError18"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread2.isAlive());
+        }, "modalDialogOperatorThread2 finished");
+
+        //so lets create a second turnout
+        layoutTurnout2 = new LayoutTurnout("Left Hand",
+                LayoutTurnout.LH_TURNOUT, new Point2D.Double(200.0, 100.0),
+                0.0, 1.1, 1.2, layoutEditor);
+        Assert.assertNotNull("LH turnout for testSetSignalsAtThroatToThroatTurnoutsWithDone", layoutTurnout2);
+        layoutEditor.getLayoutTracks().add(layoutTurnout2);
+        layoutTurnout2.setTurnout(turnouts[1].getSystemName()); //this should fix the "is not drawn on the panel" error
+
+        jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new ByNameComponentChooser("turnout2ComboBox"));
+        jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+
+        trackSegment = addNewTrackSegment(layoutTurnout, LayoutTrack.TURNOUT_A,
+                layoutTurnout2, LayoutTrack.TURNOUT_A, 1);
+
+        JButtonOperator jButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("GetSaved"));
+        jButtonOperator.doClick();
+
+        JCheckBoxOperator jCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("PlaceAllHeads"));
+        jCheckBoxOperator.doClick();
+
+        //select the "SetAllLogic" checkbox
+        JCheckBoxOperator allLogicCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetAllLogic"));
+        allLogicCheckBoxOperator.doClick(); //click all on
+        allLogicCheckBoxOperator.doClick(); //click all off
+
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread3 = createModalDialogOperatorThread(
+                Bundle.getMessage("ErrorTitle"),
+                Bundle.getMessage("SignalsError5"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread3.isAlive());
+        }, "modalDialogOperatorThread3 finished");
+
+        //select the turnouts from the popup menus
+        jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new ByNameComponentChooser("a1TToTSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(0);  //TODO:fix hardcoded index
+
+        //select the turnout from the popup menu
+        jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new ByNameComponentChooser("a2TToTSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+
+        jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new ByNameComponentChooser("b1TToTSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+
+        jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new ByNameComponentChooser("b2TToTSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
+
+        //select the turnout from the popup menu
+        jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new ByNameComponentChooser("c1TToTSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(4);  //TODO:fix hardcoded index
+
+        jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new ByNameComponentChooser("c2TToTSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(5);  //TODO:fix hardcoded index
+
+        //select the turnout from the popup menu
+        jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new ByNameComponentChooser("d1TToTSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(6);  //TODO:fix hardcoded index
+
+        jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new ByNameComponentChooser("d2TToTSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(7);  //TODO:fix hardcoded index
+
+        //this time everything should work
+        doneButtonOperator.doClick();
+        jFrameOperator.waitClosed();    //make sure the dialog closed
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear
+        jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+        //allLogicCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetAllLogic"));
+        allLogicCheckBoxOperator.doClick(); //click all on
+
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread4 = createModalDialogOperatorThread(
+                Bundle.getMessage("MessageTitle"),
+                Bundle.getMessage("InfoMessage6"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.pushNoBlock();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread4.isAlive());
+        }, "modalDialogOperatorThread4 finished");
+
+        for (int idx = 0; idx < 3; idx++) {
+            waitAndCloseDialog(Bundle.getMessage("MessageTitle"), Bundle.getMessage("InfoMessage6"), Bundle.getMessage("ButtonOK"));
+        }
+
+        layoutTurnout.setLayoutBlock(layoutBlocks[0]);
+        layoutTurnout2.setLayoutBlock(layoutBlocks[1]);
+        trackSegment.setLayoutBlock(layoutBlocks[2]);
+
+        //pressing "Done" should display a dialog
+        Thread modalDialogOperatorThread5 = createModalDialogOperatorThread(
+                Bundle.getMessage("MessageTitle"),
+                Bundle.getMessage("InfoMessage4", layoutBlocks[2].getUserName()),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.pushNoBlock();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread5.isAlive());
+        }, "modalDialogOperatorThread5 finished");
+
+        //close three InfoMessage4 dialogs
+        for (int idx = 0; idx < 3; idx++) {
+            waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
+                    Bundle.getMessage("InfoMessage4", layoutBlocks[2].getUserName()),
+                    Bundle.getMessage("ButtonOK"));
+        }
+
+        //assign Occupancy Sensor to block
+        layoutBlocks[2].setOccupancySensorName(sensors[2].getUserName());
+
+        if (false) {
+            //pressing "Done" should display a dialog
+            //InfoMessage7 = Cannot set up logic because all connections\nhave not been defined around this item.
+            Thread modalDialogOperatorThread6 = createModalDialogOperatorThread(
+                    Bundle.getMessage("MessageTitle"),
+                    Bundle.getMessage("InfoMessage7"),
+                    Bundle.getMessage("ButtonOK"), true);  // NOI18N
+            doneButtonOperator.doClick();
+            JUnitUtil.waitFor(() -> {
+                return !(modalDialogOperatorThread6.isAlive());
+            }, "modalDialogOperatorThread1 finished");
+
+            waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
+                    Bundle.getMessage("InfoMessage7"),
+                    Bundle.getMessage("ButtonOK"));
+
+            waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
+                    Bundle.getMessage("InfoMessage7"),
+                    Bundle.getMessage("ButtonOK"));
+
+            waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
+                    Bundle.getMessage("InfoMessage7"),
+                    Bundle.getMessage("ButtonOK"));
+
+            waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
+                    Bundle.getMessage("InfoMessage7"),
+                    Bundle.getMessage("ButtonOK"));
+        }
+//
+//        captureScreenshot();
+//        new JFrameOperator("PLOVER");   //delay for observation
+        //this time everything should work
+//        doneButtonOperator.doClick();
+        jFrameOperator.waitClosed();    //make sure the dialog closed
+    }
+
+    @Test
+    public void testSetSignalsAtThroatToThroatTurnoutsWithCancel() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        //then we find and press the "Cancel" button.
+        JButtonOperator jbo = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel"));
+        jbo.doClick();
+        ///jFrameOperator.requestClose();
         jFrameOperator.waitClosed();    // make sure the dialog closed
     }
 
@@ -578,7 +821,131 @@ public class LayoutEditorToolsTest {
     }
 
     /**
+     * convenience method for creating a track segment to connect two
+     * LayoutTracks
+     *
+     * @return the layout editor's toolbar panel
+     */
+    @Nonnull
+    private static TrackSegment addNewTrackSegment(
+            @CheckForNull LayoutTrack c1, int t1,
+            @CheckForNull LayoutTrack c2, int t2,
+            int idx) {
+        TrackSegment result = null;
+        if ((c1 != null) && (c2 != null)) {
+            //create new track segment
+            String name = layoutEditor.getFinder().uniqueName("T", idx);
+            result = new TrackSegment(name, c1, t1, c2, t2,
+                    false, true, layoutEditor);
+            Assert.assertNotNull("new TrackSegment is null", result);
+            layoutEditor.getLayoutTracks().add(result);
+            //link to connected objects
+            layoutEditor.setLink(c1, t1, result, LayoutTrack.TRACK);
+            layoutEditor.setLink(c2, t2, result, LayoutTrack.TRACK);
+        }
+        return result;
+    }
+
+    public static void waitAndCloseDialog(String dialogTitle, String messageText, String buttonText) {
+        JDialogOperator jdo = new JDialogOperator(dialogTitle);
+        waitForLables(jdo, messageText);
+        JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
+        jbo.pushNoBlock();
+        jdo.waitClosed();    //make sure the dialog closed
+    }
+
+    public static void waitForLables(JDialogOperator jdo, String labelText) {
+        waitForLables(jdo, labelText, false);
+    }
+
+    public static void waitForLables(JDialogOperator jdo, String labelText, boolean debugFlag) {
+        if ((labelText != null) && !labelText.isEmpty()) {
+            String[] lines = labelText.split("\\n");
+            for (String line : lines) {
+                if (debugFlag) {
+                    System.out.println("line: " + line);
+                }
+                JLabelOperator jlo = new JLabelOperator(jdo, line);
+            }
+        }
+    }
+
+    /**
+     * createModalDialogOperatorThread (wrapper for
+     * JemmyUtil.createModalDialogOperatorThread)
+     *
+     * @param dialogTitle the title for the dialog to wait for
+     * @param buttonText  the name of the button to push to dismiss this dialog
+     * @return the thread that's waiting for this dialog
+     */
+    public static Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
+        return JemmyUtil.createModalDialogOperatorThread(dialogTitle, buttonText);
+    }
+
+    /**
+     * create a modal dialog operator thread
+     *
+     * @param dialogTitle the title for the dialog
+     * @param messageText the message for the dialog
+     * @param buttonText  the name of the button to press to dismiss
+     * @return the thread that is waiting to dismiss this dialog
+     */
+    public static Thread createModalDialogOperatorThread(String dialogTitle, String messageText, String buttonText) {
+        return createModalDialogOperatorThread(dialogTitle, messageText, buttonText, false);
+    }
+
+    /**
+     * create a modal dialog operator thread
+     *
+     * @param dialogTitle the title for the dialog
+     * @param messageText the message for the dialog
+     * @param buttonText  the name of the button to press to dismiss
+     * @param debugFlag   set true to dumpToXML, captureScreenshot and log
+     *                    message labels
+     * @return the thread that is waiting to dismiss this dialog
+     */
+    public static Thread createModalDialogOperatorThread(String dialogTitle, String messageText, String buttonText, boolean debugFlag) {
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(dialogTitle);
+            if (debugFlag) {
+                dumpToXML();
+                captureScreenshot();
+            }
+            waitForLables(jdo, messageText, debugFlag);
+            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
+            jbo.pushNoBlock();
+        });
+        t.setName(dialogTitle + " Close Dialog Thread");
+        t.start();
+        return t;
+    }
+
+    public class ByNameComponentChooser implements ComponentChooser {
+
+        private final String componentName;
+
+        public ByNameComponentChooser(String componentName) {
+            this.componentName = componentName;
+        }
+
+        @Override
+        public boolean checkComponent(Component comp) {
+            if (comp == null) {
+                return false;
+            }
+            return componentName.equals(comp.getName());
+        }
+
+        @Override
+        public String getDescription() {
+            return componentName;
+        }
+    }
+
+    /**
      * convenience method for accessing...
+     *
      * @return the layout editor's toolbar panel
      */
     @Nonnull
@@ -648,26 +1015,26 @@ public class LayoutEditorToolsTest {
 //        //wait until no event is registered for a given number of milliseconds
 //        new EventTool().waitNoEvent(s * 1000);
 //    }
-//
-//    //save screenshot of GUI
-//    private void captureScreenshot() {
-//        //grab image
-//        PNGEncoder.captureScreen(System.getProperty("user.home")
-//                + System.getProperty("file.separator")
-//                + "screen.png");
-//    }
-//
-//   //dump jemmy GUI info to xml file
-//   private void dumpToXML() {
-//        //grab component state
-//        try {
-//            Dumper.dumpAll(System.getProperty("user.home")
-//                    + System.getProperty("file.separator")
-//                    + "dump.xml");
-//
-//        } catch (FileNotFoundException e) {
-//        }
-//    }
+
+    //save screenshot of GUI
+    private static void captureScreenshot() {
+        //grab image
+        PNGEncoder.captureScreen(System.getProperty("user.home")
+                + System.getProperty("file.separator")
+                + "screen.png");
+    }
+
+    //dump jemmy GUI info to xml file
+    private static void dumpToXML() {
+        //grab component state
+        try {
+            Dumper.dumpAll(System.getProperty("user.home")
+                    + System.getProperty("file.separator")
+                    + "dump.xml");
+
+        } catch (FileNotFoundException e) {
+        }
+    }
 //
     //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
 }   //class LayoutEditorToolsTest

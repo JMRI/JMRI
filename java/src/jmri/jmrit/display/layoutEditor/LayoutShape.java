@@ -727,7 +727,7 @@ public class LayoutShape {
     }   // draw
 
     protected void drawEditControls(Graphics2D g2) {
-        Color backgroundColor = layoutEditor.getBackgroundColor();
+        Color backgroundColor = layoutEditor.getBackground();
         Color controlsColor = ColorUtil.contrast(backgroundColor);
         controlsColor = ColorUtil.setAlpha(controlsColor, 0.5);
         g2.setColor(controlsColor);

@@ -3420,8 +3420,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     setPositionableMenu(p, popup);
                 }
 
-                boolean popupSet = false;
-                popupSet |= p.setRotateOrthogonalMenu(popup);
+                boolean popupSet = p.setRotateOrthogonalMenu(popup);
                 popupSet |= p.setRotateMenu(popup);
                 if (popupSet) {
                     popup.addSeparator();
@@ -4089,9 +4088,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     protected boolean showAlignPopup() {
-        return ((_positionableSelection.size() > 0)
-                || (_layoutTrackSelection.size() > 0)
-                || (_layoutShapeSelection.size() > 0));
+        return ((_positionableSelection.size()
+                + _layoutTrackSelection.size()
+                + _layoutShapeSelection.size()) >= 2);
     }
 
     /**
