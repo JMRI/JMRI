@@ -2256,7 +2256,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * 
      * @param xDel the amount to translate the X coordinates
      * @param yDel the amount to translate the Y coordinates
-     * @return 
+     * @return true (?)
      */
     public boolean translateTrack(float xDel, float yDel) {
         Point2D delta = new Point2D.Double(xDel, yDel);
