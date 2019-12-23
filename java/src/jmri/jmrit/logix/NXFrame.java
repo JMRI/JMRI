@@ -70,6 +70,7 @@ public class NXFrame extends WarrantRoute {
     private final JCheckBox _stageEStop = new JCheckBox();
     private final JCheckBox _shareRouteBox = new JCheckBox();
     private final JCheckBox _haltStartBox = new JCheckBox();
+    private final JCheckBox _addTracker = new JCheckBox();
     private final JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
     private final JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
 
@@ -149,6 +150,7 @@ public class NXFrame extends WarrantRoute {
             _stageEStop.setSelected(false);
             _shareRouteBox.setSelected(false);
             _haltStartBox.setSelected(false);
+            _addTracker.setSelected(false);
         });
         JPanel pp = new JPanel();
         pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
@@ -364,6 +366,8 @@ public class NXFrame extends WarrantRoute {
         p2.add(makeTextBoxPanel(_stageEStop, "StageEStop", null));
         p2.add(makeTextBoxPanel(_haltStartBox, "HaltAtStart", null));
         p2.add(makeTextBoxPanel(_shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
+        p2.add(makeTextBoxPanel(_addTracker, "AddTracker", "ToolTipAddTracker"));
+        
 
         JPanel autoRunPanel = new JPanel();
         autoRunPanel.setLayout(new BoxLayout(autoRunPanel, BoxLayout.PAGE_AXIS));
@@ -473,6 +477,7 @@ public class NXFrame extends WarrantRoute {
         if (!_runManual.isSelected()) {
             mode = Warrant.MODE_RUN;
             warrant.setShareRoute(_shareRouteBox.isSelected());
+            warrant.setAddTracker(_addTracker.isSelected());
             msg = makeCommands(warrant);
         } else {
             mode = Warrant.MODE_MANUAL;
@@ -1050,12 +1055,6 @@ public class NXFrame extends WarrantRoute {
             w.addThrottleCommand(new ThrottleSetting(3000, "F2", "false", blockName));
         }
         w.addThrottleCommand(new ThrottleSetting(1000, "F0", "false", blockName));
-        /*      if (_addTracker.isSelected()) {
-            WarrantTableFrame._defaultAddTracker = true;
-            w.addThrottleCommand(new ThrottleSetting(10, "START TRACKER", "", blockName));
-        } else {
-            WarrantTableFrame._defaultAddTracker = false;
-        }*/
         return null;
     }
 
