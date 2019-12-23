@@ -17,6 +17,7 @@ import org.junit.runners.Suite;
     ExpressionScriptTest.class,
     ExpressionSensorTest.class,
     ExpressionTurnoutTest.class,
+    FormulaTest.class,
     FalseTest.class,
     HoldTest.class,
     OrTest.class,

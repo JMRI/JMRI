@@ -39,24 +39,14 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
     /**
      * Create a new instance of Formula with system name and user name.
      */
-    public Formula(@Nonnull String sys, @CheckForNull String user,
-            @Nonnull String formula)
-            throws ParserException {
+    public Formula(@Nonnull String sys, @CheckForNull String user) {
         super(sys, user);
-        Objects.requireNonNull(formula, "antecedent must not be null");
-        setFormula(formula);
-//        _formula = formula;
         init();
     }
 
     public Formula(@Nonnull String sys, @CheckForNull String user,
-            @Nonnull String formula,
-            List<Map.Entry<String, String>> expressionSystemNames)
-            throws ParserException {
+            List<Map.Entry<String, String>> expressionSystemNames) {
         super(sys, user);
-        Objects.requireNonNull(formula, "antecedent must not be null");
-        setFormula(formula);
-//        _formula = formula;
         setExpressionSystemNames(expressionSystemNames);
     }
 

@@ -12,7 +12,6 @@ import jmri.jmrit.logixng.digital.expressions.Antecedent;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.logixng.DigitalExpressionBean;
 
 /**
  * Handle XML configuration for ActionLightXml objects.
