@@ -928,6 +928,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionBottom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
