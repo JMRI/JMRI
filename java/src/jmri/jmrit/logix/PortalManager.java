@@ -71,7 +71,7 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
     }
 
     /*
-     * Create a new Portal.
+     * Create a new Portal with a given user name.
      *
      * @return null if a Portal with the same userName already exists
      */

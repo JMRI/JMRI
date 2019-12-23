@@ -181,11 +181,11 @@ public class BlockBossLogicTest {
     public void testSimpleBlockNoSignal() throws jmri.JmriException {
 
         try { 
-            new BlockBossLogic(null);
+            new BlockBossLogic("");
         } catch (java.lang.IllegalArgumentException e) {
             // this is expected
         }
-        jmri.util.JUnitAppender.assertWarnMessage("Signal Head \"null\" was not found");
+        jmri.util.JUnitAppender.assertWarnMessage("Signal Head \"\" was not found");
     }
 
     // test interruption

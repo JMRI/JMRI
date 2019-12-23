@@ -23,7 +23,7 @@ public class PortalTest {
 
     @Test
     public void testCtor() {
-        Portal p = _portalMgr.createNewPortal(null);
+        Portal p = _portalMgr.createNewPortal(""); // @Nonnull annotated userName
         Assert.assertNull("No User Name", p);       // Portals must have a user name
         p = _portalMgr.createNewPortal("portal_1");
         Assert.assertNotNull("Has User Name", p);
