@@ -15,9 +15,9 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Extends jmri.Path. An OPath is a route that traverses a Block from one
- * boundary to another. The dest parameter of Path is used to reference the
- * Block to which this OPath belongs. (Not a destination Block as might be
- * inferred from the naming in Path.java)
+ * boundary to another. The dest parameter of Path (renamed to owner) is
+ * used to reference the Block to which this OPath belongs. (Not a
+ * destination Block as might be inferred from the naming in Path.java)
  * <p>
  * An OPath inherits the List of BeanSettings for all the turnouts needed to
  * traverse the Block. It also has references to the Portals (block boundary
