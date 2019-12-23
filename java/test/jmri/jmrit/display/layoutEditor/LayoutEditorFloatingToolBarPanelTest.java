@@ -1,10 +1,8 @@
 package jmri.jmrit.display.layoutEditor;
 
+import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.*;
 
 /**
  * Test simple functioning of LayoutEditorFloatingToolBarPanel
@@ -15,6 +13,7 @@ public class LayoutEditorFloatingToolBarPanelTest {
 
     @Test
     public void testCtor() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         LayoutEditor le = new LayoutEditor();
         new LayoutEditorFloatingToolBarPanel(le);
     }
