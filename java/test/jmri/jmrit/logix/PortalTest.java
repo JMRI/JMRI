@@ -23,8 +23,15 @@ public class PortalTest {
 
     @Test
     public void testCtor() {
-        Portal p = _portalMgr.createNewPortal(null);
-        Assert.assertNull("No User Name", p);       // Portals must have a user name
+        Portal p = null;
+        try {
+            p = _portalMgr.createNewPortal(null);
+        } catch (NullPointerException ex) {
+            // expected
+        }
+        Assert.assertNull("Null User Name", p); // Portals must have a user name
+        p = _portalMgr.createNewPortal("");
+        Assert.assertNull("Empty User Name", p);
         p = _portalMgr.createNewPortal("portal_1");
         Assert.assertNotNull("Has User Name", p);
     }
