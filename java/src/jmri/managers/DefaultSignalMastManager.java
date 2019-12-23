@@ -48,7 +48,7 @@ public class DefaultSignalMastManager extends AbstractManager<SignalMast>
 
     @Override
     public SignalMast getSignalMast(@Nonnull String name) {
-        if (name.length() == 0) {
+        if (Objects.isNull(name) || name.length() == 0) {
             return null;
         }
         SignalMast t = getByUserName(name);

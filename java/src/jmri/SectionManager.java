@@ -2,6 +2,7 @@ package jmri;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
@@ -66,6 +67,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
      *         Section.
      */
     public Section createNewSection(@Nonnull String systemName, String userName) {
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
         // check system name
         if (systemName.length() < 1) {
             // no valid system name entered, return without creating

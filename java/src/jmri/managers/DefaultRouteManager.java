@@ -43,7 +43,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
-    public Route provideRoute(String systemName, String userName) {
+    @Nonnull
+    public Route provideRoute(@Nonnull String systemName, String userName) {
         log.debug("provideRoute({})", systemName);
         Route r;
         r = getByUserName(systemName);
@@ -74,7 +75,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
      */
     @Deprecated // 4.17.7
     @Override
-    @javax.annotation.Nonnull
+    @Nonnull
     public String validateSystemNameFormat(@javax.annotation.Nonnull String name, @javax.annotation.Nonnull java.util.Locale locale) 
                         throws jmri.NamedBean.BadSystemNameException {
         try {
@@ -92,7 +93,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
-    public Route newRoute(String userName) {
+    @Nonnull
+    public Route newRoute(@Nonnull String userName) {
         return provideRoute(getAutoSystemName(), userName);
     }
 
@@ -101,7 +103,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * invoking this.
      */
     @Override
-    public void deleteRoute(Route r) {
+    public void deleteRoute(@Nonnull Route r) {
         deregister(r);
     }
 
@@ -111,7 +113,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * both fail, returns null.
      */
     @Override
-    public Route getRoute(String name) {
+    public Route getRoute(@Nonnull String name) {
         Route r = getByUserName(name);
         if (r != null) {
             return r;
@@ -120,12 +122,12 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     @Override
-    public Route getBySystemName(String name) {
+    public Route getBySystemName(@Nonnull String name) {
         return _tsys.get(name);
     }
 
     @Override
-    public Route getByUserName(String key) {
+    public Route getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
@@ -154,7 +156,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     @Override
-    public Route provide(String name) {
+    @Nonnull
+    public Route provide(@Nonnull String name) {
         return provideRoute(name, null);
     }
 

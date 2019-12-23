@@ -7,6 +7,8 @@ import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
+import java.util.Objects;
+
 /**
  * Abstract partial implementation of a SignalHeadManager.
  * <p>
@@ -42,14 +44,14 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
     /** {@inheritDoc} */
     @Override
     public SignalHead getSignalHead(@Nonnull String name) {
-        if (name.length() == 0) {
+        Objects.requireNonNull(name, "SignalHead name cannot be null.");  // NOI18N
+        if (name.trim().length() == 0) {
             return null;
         }
         SignalHead t = getByUserName(name);
         if (t != null) {
             return t;
         }
-
         return getBySystemName(name);
     }
 

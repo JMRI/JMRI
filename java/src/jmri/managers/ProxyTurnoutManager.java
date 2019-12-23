@@ -63,8 +63,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
 
     /**
-     * Locate an instance based on a system name. Returns null if no instance
-     * already exists.
+     * Locate an instance based on a system name.
      *
      * @return requested Turnout object or null if none exists
      */
@@ -74,8 +73,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     }
 
     /**
-     * Locate an instance based on a user name. Returns null if no instance
-     * already exists.
+     * Locate an instance based on a user name.
      *
      * @return requested Turnout object or null if none exists
      */
@@ -203,10 +201,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         return ((TurnoutManager) getMgr(0)).isNumControlBitsSupported(systemName);
     }
 
-    /**
-     * TurnoutOperation support. Return a list which is just the concatenation
-     * of all the valid operation types
-     */
+    /** {@inheritDoc} */
     @Override
     @Nonnull
     public String[] getValidOperationTypes() {
