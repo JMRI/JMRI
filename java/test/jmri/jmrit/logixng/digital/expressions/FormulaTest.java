@@ -37,8 +37,8 @@ import jmri.jmrit.logixng.digital.actions.IfThenElse;
  */
 public class FormulaTest extends AbstractDigitalExpressionTestBase implements FemaleSocketListener {
 
-    private static final boolean EXPECT_SUCCESS = true;
-    private static final boolean EXPECT_FAILURE = false;
+//    private static final boolean EXPECT_SUCCESS = true;
+//    private static final boolean EXPECT_FAILURE = false;
 
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
