@@ -39,7 +39,7 @@ public class MathFunctions implements FunctionFactory {
         }
 
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws ParserException {
+        public Object calculate(List<ExpressionNode> parameterList) throws Exception {
             if (parameterList.size() != 1) {
                 throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
             }
@@ -56,7 +56,7 @@ public class MathFunctions implements FunctionFactory {
         }
 
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws ParserException {
+        public Object calculate(List<ExpressionNode> parameterList) throws Exception {
             if (parameterList.size() != 1) {
                 throw new WrongNumberOfParametersException(Bundle.getMessage("WrongNumberOfParameters2", getName(), 1));
             }
@@ -87,7 +87,7 @@ public class MathFunctions implements FunctionFactory {
         }
 
         @Override
-        public Object calculate(List<ExpressionNode> parameterList) throws ParserException {
+        public Object calculate(List<ExpressionNode> parameterList) throws Exception {
             if (parameterList.size() == 1) {
                 double param = TypeConversionUtil.convertToDouble(parameterList.get(0).calculate(), false);
                 return Math.sin(param);

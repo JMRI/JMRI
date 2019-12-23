@@ -14,13 +14,14 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.DigitalExpressionManager;
-import jmri.jmrit.logixng.FemaleDigitalExpressionSocket;
+import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.implementation.DefaultFemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.util.parser.ParserException;
 import jmri.jmrit.logixng.util.parser.RecursiveDescentParser;
 import jmri.jmrit.logixng.util.parser.Variable;
-import jmri.jmrit.logixng.util.parser.variables.DigitalExpressionVariable;
+import jmri.jmrit.logixng.util.parser.variables.GenericExpressionVariable;
 import jmri.jmrit.logixng.util.parser.expressionnode.ExpressionNode;
 import jmri.util.TypeConversionUtil;
 import org.slf4j.Logger;
@@ -53,8 +54,14 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
 
     private void init() {
         _expressionEntries
-                .add(new ExpressionEntry(InstanceManager.getDefault(DigitalExpressionManager.class)
-                        .createFemaleSocket(this, this, getNewSocketName())));
+                .add(new ExpressionEntry(createFemaleSocket(this, this, getNewSocketName())));
+    }
+    
+    private FemaleGenericExpressionSocket createFemaleSocket(
+            Base parent, FemaleSocketListener listener, String socketName) {
+        return new DefaultFemaleGenericExpressionSocket(
+                FemaleGenericExpressionSocket.SocketType.GENERIC,
+                parent, listener, socketName);
     }
 
     /** {@inheritDoc} */
@@ -71,7 +78,7 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() throws ParserException {
+    public boolean evaluate() throws Exception {
         
         if (_formula.isEmpty()) {
             return false;
@@ -112,9 +119,7 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
         // Is there not enough children?
         while (_expressionEntries.size() < count) {
             _expressionEntries
-                    .add(new ExpressionEntry(
-                            InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .createFemaleSocket(this, this, getNewSocketName())));
+                    .add(new ExpressionEntry(createFemaleSocket(this, this, getNewSocketName())));
         }
     }
     
@@ -138,9 +143,11 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
         }
         
         for (Map.Entry<String, String> entry : systemNames) {
-            FemaleDigitalExpressionSocket socket =
-                    InstanceManager.getDefault(DigitalExpressionManager.class)
-                            .createFemaleSocket(this, this, entry.getKey());
+            FemaleGenericExpressionSocket socket =
+                    createFemaleSocket(this, this, entry.getKey());
+//            FemaleGenericExpressionSocket socket =
+//                    InstanceManager.getDefault(DigitalExpressionManager.class)
+//                            .createFemaleSocket(this, this, entry.getKey());
             
             _expressionEntries.add(new ExpressionEntry(socket, entry.getValue()));
         }
@@ -158,7 +165,7 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
         Map<String, Variable> variables = new HashMap<>();
         RecursiveDescentParser parser = new RecursiveDescentParser(variables);
         for (int i=0; i < getChildCount(); i++) {
-            Variable v = new DigitalExpressionVariable((FemaleDigitalExpressionSocket)getChild(i));
+            Variable v = new GenericExpressionVariable((FemaleGenericExpressionSocket)getChild(i));
             variables.put(v.getName(), v);
         }
         _expressionNode = parser.parseExpression(formula);
@@ -169,6 +176,7 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
     
     @Override
     public void connected(FemaleSocket socket) {
+        if (1==1) throw new RuntimeException("Daniel"); // Remove this. This is only to find why this is not happening. / Daniel
         boolean hasFreeSocket = false;
         for (ExpressionEntry entry : _expressionEntries) {
             hasFreeSocket = !entry._socket.isConnected();
@@ -179,9 +187,7 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
         }
         if (!hasFreeSocket) {
             _expressionEntries
-                    .add(new ExpressionEntry(
-                            InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .createFemaleSocket(this, this, getNewSocketName())));
+                    .add(new ExpressionEntry(createFemaleSocket(this, this, getNewSocketName())));
         }
         firePropertyChange(Base.PROPERTY_SOCKET_CONNECTED, null, socket);
     }
@@ -234,14 +240,14 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
     /* This class is public since ExpressionFormulaXml needs to access it. */
     public static class ExpressionEntry {
         private String _socketSystemName;
-        private final FemaleDigitalExpressionSocket _socket;
+        private final FemaleGenericExpressionSocket _socket;
         
-        public ExpressionEntry(FemaleDigitalExpressionSocket socket, String socketSystemName) {
+        public ExpressionEntry(FemaleGenericExpressionSocket socket, String socketSystemName) {
             _socketSystemName = socketSystemName;
             _socket = socket;
         }
         
-        private ExpressionEntry(FemaleDigitalExpressionSocket socket) {
+        private ExpressionEntry(FemaleGenericExpressionSocket socket) {
             this._socket = socket;
         }
         

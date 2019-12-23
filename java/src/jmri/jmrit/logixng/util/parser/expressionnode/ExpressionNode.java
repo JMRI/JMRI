@@ -1,13 +1,11 @@
 package jmri.jmrit.logixng.util.parser.expressionnode;
 
-import jmri.jmrit.logixng.util.parser.ParserException;
-
 /**
  * A parsed expression
  */
 public interface ExpressionNode {
 
-    public Object calculate() throws ParserException;
+    public Object calculate() throws Exception;
     
     /**
      * Get a String that defines this expression node.

@@ -129,7 +129,7 @@ public class RecursiveDescentParserTest {
     
     
     @Test
-    public void testParseAndCalculate() throws ParserException {
+    public void testParseAndCalculate() throws Exception {
         
         AtomicBoolean exceptionIsThrown = new AtomicBoolean();
         Map<String, Variable> _variables = new HashMap<>();
@@ -257,12 +257,10 @@ public class RecursiveDescentParserTest {
         Assert.assertTrue("calculate is probably correct", (result instanceof Double) && (((Double)result) >= 0.0) && (((Double)result) <= 1.0));
         exprNode = t.parseExpression("int(23.56)");
         Assert.assertTrue("expression matches", "Function:int(FloatNumber:23.56)".equals(exprNode.getDefinitionString()));
-        result = exprNode.calculate();
 //        System.err.format("Result: %s, %s%n", result, result.getClass().getName());
         Assert.assertTrue("calculate is correct", ((Integer)23).equals(exprNode.calculate()));
         exprNode = t.parseExpression("sin(180,\"deg\")");
         Assert.assertTrue("expression matches", "Function:sin(IntNumber:180,String:deg)".equals(exprNode.getDefinitionString()));
-        result = exprNode.calculate();
 //        System.err.format("Result: %s, %s%n", result, result.getClass().getName());
         Assert.assertEquals("calculate is correct", 0, (Double)exprNode.calculate(), 1e-15);
         exprNode = t.parseExpression("int(x*2+5)");

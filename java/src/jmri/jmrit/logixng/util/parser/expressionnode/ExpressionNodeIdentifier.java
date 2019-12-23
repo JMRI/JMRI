@@ -27,7 +27,7 @@ public class ExpressionNodeIdentifier implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() {
+    public Object calculate() throws Exception {
         return _variable.getValue();
     }
     

@@ -12,6 +12,6 @@ public interface Function {
 
     public String getName();
     
-    public Object calculate(List<ExpressionNode> parameterList) throws ParserException;
+    public Object calculate(List<ExpressionNode> parameterList) throws Exception;
     
 }

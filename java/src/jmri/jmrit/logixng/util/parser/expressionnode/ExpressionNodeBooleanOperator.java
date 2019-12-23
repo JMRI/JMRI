@@ -44,7 +44,7 @@ public class ExpressionNodeBooleanOperator implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() throws ParserException {
+    public Object calculate() throws Exception {
         
         Object rightValue = _rightSide.calculate();
         if (!(rightValue instanceof Boolean)) {

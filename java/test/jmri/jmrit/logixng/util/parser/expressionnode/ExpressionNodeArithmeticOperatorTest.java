@@ -67,7 +67,7 @@ public class ExpressionNodeArithmeticOperatorTest {
     }
     
     @Test
-    public void testCalculate() throws ParserException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+    public void testCalculate() throws Exception {
         
         ExpressionNode expr12_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12.34", 0));
         ExpressionNode expr25_46 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "25.46", 0));
@@ -159,7 +159,7 @@ public class ExpressionNodeArithmeticOperatorTest {
     }
     
     @Test
-    public void testGetDefinitionString() throws ParserException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+    public void testGetDefinitionString() throws Exception {
         
         ExpressionNode expr12_34 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "12.34", 0));
         ExpressionNode expr25_46 = new ExpressionNodeFloatingNumber(new Token(TokenType.NONE, "25.46", 0));

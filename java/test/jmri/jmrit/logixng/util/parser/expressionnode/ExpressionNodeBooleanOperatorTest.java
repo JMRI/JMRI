@@ -84,7 +84,7 @@ public class ExpressionNodeBooleanOperatorTest {
     }
     
     @Test
-    public void testCalculate() throws ParserException, NoSuchFieldException, IllegalArgumentException, IllegalAccessException {
+    public void testCalculate() throws Exception {
         
         ExpressionNode exprTrue1 = new ExpressionNodeTrue();
         ExpressionNode exprTrue2 = new ExpressionNodeTrue();

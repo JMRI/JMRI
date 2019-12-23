@@ -366,6 +366,8 @@ public class DefaultFemaleGenericExpressionSocket
     /** {@inheritDoc} */
     @Override
     public void connect(MaleSocket socket) throws SocketAlreadyConnectedException {
+        if (_listener != null) System.out.format("Listener: %s%n", _listener.getClass().getName());
+        if (_listener != null) throw new RuntimeException("Hej");
         if (socket == null) {
             throw new NullPointerException("socket cannot be null");
         }
@@ -377,6 +379,7 @@ public class DefaultFemaleGenericExpressionSocket
                 throw new SocketAlreadyConnectedException("Socket is already connected");
             } else {
                 _currentActiveSocket.connect(socket);
+                if (_listener != null) _listener.connected(this);
                 return;
             }
         }
@@ -388,14 +391,17 @@ public class DefaultFemaleGenericExpressionSocket
             _currentSocketType = SocketType.DIGITAL;
             _currentActiveSocket = _digitalSocket;
             _currentActiveSocket.connect(socket);
+            if (_listener != null) _listener.connected(this);
         } else if (_analogSocket.isCompatible(socket)) {
             _currentSocketType = SocketType.ANALOG;
             _currentActiveSocket = _analogSocket;
             _currentActiveSocket.connect(socket);
+            if (_listener != null) _listener.connected(this);
         } else if (_stringSocket.isCompatible(socket)) {
             _currentSocketType = SocketType.STRING;
             _currentActiveSocket = _stringSocket;
             _currentActiveSocket.connect(socket);
+            if (_listener != null) _listener.connected(this);
         } else {
             throw new IllegalArgumentException("Socket is not compatible");
         }

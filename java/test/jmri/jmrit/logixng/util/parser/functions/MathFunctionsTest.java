@@ -60,7 +60,7 @@ public class MathFunctionsTest {
     }
     
     @Test
-    public void testIntFunction() throws ParserException {
+    public void testIntFunction() throws Exception {
         MathFunctions.IntFunction intFunction = new MathFunctions.IntFunction();
         Assert.assertEquals("strings matches", "int", intFunction.getName());
         Assert.assertEquals("strings matches", "int", new MathFunctions.IntFunction().getName());
@@ -88,7 +88,7 @@ public class MathFunctionsTest {
     }
     
     @Test
-    public void testLongFunction() throws ParserException {
+    public void testLongFunction() throws Exception {
         MathFunctions.LongFunction longFunction = new MathFunctions.LongFunction();
         Assert.assertEquals("strings matches", "long", longFunction.getName());
         Assert.assertEquals("strings matches", "long", new MathFunctions.LongFunction().getName());
@@ -117,7 +117,7 @@ public class MathFunctionsTest {
     }
     
     @Test
-    public void testSinFunction() throws ParserException {
+    public void testSinFunction() throws Exception {
         MathFunctions.SinFunction sinFunction = new MathFunctions.SinFunction();
         Assert.assertEquals("strings matches", "sin", sinFunction.getName());
         

@@ -49,7 +49,7 @@ public class ExpressionNodeFunction implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() throws ParserException {
+    public Object calculate() throws Exception {
         return _function.calculate(_parameterList);
     }
     

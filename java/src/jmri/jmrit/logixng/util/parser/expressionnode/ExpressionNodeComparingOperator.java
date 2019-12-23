@@ -37,7 +37,7 @@ public class ExpressionNodeComparingOperator implements ExpressionNode {
     }
     
     @Override
-    public Object calculate() throws ParserException {
+    public Object calculate() throws Exception {
         Object left = _leftSide.calculate();
         Object right = _rightSide.calculate();
         
