@@ -119,6 +119,7 @@ public class DefaultMaleStringExpressionSocket extends AbstractMaleSocket implem
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
                     // We don't show a dialog box yet so fall thrue.
+                    // fall through
                 case LOG_ERROR:
                     log.error("expression {} thrown an exception: {}", _expression.toString(), e);
                     return "";

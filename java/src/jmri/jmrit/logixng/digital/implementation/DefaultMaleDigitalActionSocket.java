@@ -125,6 +125,7 @@ public class DefaultMaleDigitalActionSocket extends AbstractMaleSocket implement
             switch (_errorHandlingType) {
                 case SHOW_DIALOG_BOX:
                     // We don't show a dialog box yet so fall thrue.
+                    // fall through
                 case LOG_ERROR:
                     log.error("action {} thrown an exception: {}", _action.toString(), e);
                     break;
