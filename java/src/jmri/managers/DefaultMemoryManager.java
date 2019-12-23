@@ -1,5 +1,7 @@
 package jmri.managers;
 
+import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.implementation.DefaultMemory;
@@ -17,7 +19,8 @@ public class DefaultMemoryManager extends AbstractMemoryManager {
     }
 
     @Override
-    protected Memory createNewMemory(String systemName, String userName) {
+    @Nonnull
+    protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName) {
         // makeSystemName validates that systemName is correct
         return new DefaultMemory(makeSystemName(systemName), userName);
     }
