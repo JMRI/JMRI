@@ -102,7 +102,7 @@ public class OBlockManager extends AbstractManager<OBlock>
 
     @Nonnull
     public OBlock provideOBlock(@Nonnull String name) throws IllegalArgumentException {
-        if (name == null || name.length() == 0) {
+        if (name.trim().length() == 0) {
             throw new IllegalArgumentException("name \"" + name + "\" invalid");
         }
         OBlock ob = getByUserName(name);
