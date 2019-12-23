@@ -1,12 +1,11 @@
 package jmri.jmrix.roco.z21;
 
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.RailComManager;
 import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 /**
  * Z21ReporterManager implements the Reporter Manager interface for Roco Z21
@@ -56,6 +55,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public Z21SystemConnectionMemo getMemo() {
         return (Z21SystemConnectionMemo) memo;
     }
@@ -154,7 +154,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
      * {@inheritDoc}
      */
     @Override
-    public Reporter getBySystemName(String sName){
+    public Reporter getBySystemName(@Nonnull String sName){
         Z21SystemNameComparator comparator = new Z21SystemNameComparator(getSystemPrefix(),typeLetter());
         return getBySystemName(sName,comparator);
     }
