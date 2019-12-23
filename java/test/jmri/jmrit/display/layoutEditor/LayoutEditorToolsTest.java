@@ -865,7 +865,8 @@ public class LayoutEditorToolsTest {
                 if (debugFlag) {
                     System.out.println("line: " + line);
                 }
-                JLabelOperator jlo = new JLabelOperator(jdo, line);
+                //wait for this label
+                new JLabelOperator(jdo, line);
             }
         }
     }

@@ -2251,6 +2251,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
     }
 
+    /**
+     * translate all layout tracks by the x and Y factors
+     * 
+     * @param xDel the amount to translate the X coordinates
+     * @param yDel the amount to translate the Y coordinates
+     * @return 
+     */
     public boolean translateTrack(float xDel, float yDel) {
         Point2D delta = new Point2D.Double(xDel, yDel);
         layoutTrackList.forEach((lt) -> {
@@ -2286,8 +2293,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * translate entire layout by x and y amounts
      *
-     * @param xTranslation
-     * @param yTranslation
+     * @param xTranslation the amount to translate the layout in the X dimension
+     * @param yTranslation the amount to translate the layout in the Y dimension
      */
     public void translate(float xTranslation, float yTranslation) {
         //here when all numbers read in - translation if entered
