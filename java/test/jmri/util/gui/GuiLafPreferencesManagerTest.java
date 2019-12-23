@@ -7,6 +7,7 @@ import jmri.util.gui.GuiLafPreferencesManager;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.awt.Font;
@@ -19,7 +20,6 @@ import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.metal.MetalLookAndFeel;
-import javax.swing.plaf.metal.MetalTheme;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
 
 import org.junit.After;
@@ -144,6 +144,37 @@ public class GuiLafPreferencesManagerTest {
     }
 
     @Test
+    public void testFont() {
+        Font f1 = Font.decode(null).deriveFont(Font.PLAIN, 44);
+        Font f2 = t.getDefaultFont();
+        assertNull("Has no font", t.getFont());
+        assertFalse("No changes", t.isDirty());
+        assertFalse("No need to restart", t.isRestartRequired());
+        t.setFont(f2);
+        assertEquals("Font is list default", f2, t.getFont());
+        assertNotEquals("Font is not Font default", Font.decode(null), t.getFont());
+        assertNotEquals("Font is not derived font", f1, t.getFont());
+        assertTrue("Changes made", t.isDirty());
+        assertTrue("Need to restart", t.isRestartRequired());
+        t.setFont(f1);
+        assertNotEquals("Font is not list default", f2, t.getFont());
+        assertEquals("Font is derived font", f1, t.getFont());
+        assertTrue("Changes made", t.isDirty());
+        assertTrue("Need to restart", t.isRestartRequired());
+        // set to f2 to ensure setting to f1 by name is a change
+        t.setFont(f2);
+        assertEquals("Font is list default", f2, t.getFont());
+        // change to setFont(String) when removing deprecated method
+        t.setFontByName(f1.getFontName());
+        // without calling setFontSize(int), font size == 0
+        assertEquals("Font is list default", f1.deriveFont((float) 0), t.getFont());
+        assertNotEquals("Font is not Font default", Font.decode(null), t.getFont());
+        assertNotEquals("Font is not derived font", f1, t.getFont());
+        assertTrue("Changes made", t.isDirty());
+        assertTrue("Need to restart", t.isRestartRequired());
+    }
+
+    @Test
     public void testDefaultFontNimbus() throws UnsupportedLookAndFeelException {
         UIManager.setLookAndFeel(new NimbusLookAndFeel());
         Font f = UIManager.getFont("List.font");
@@ -168,6 +199,7 @@ public class GuiLafPreferencesManagerTest {
                 InstantiationException |
                 IllegalAccessException |
                 UnsupportedLookAndFeelException e) {
+            // skip test if not on macOS
             Assume.assumeNoException("Not on macOS", e);
         }
         Font f = UIManager.getFont("List.font");
@@ -184,6 +216,7 @@ public class GuiLafPreferencesManagerTest {
                 InstantiationException |
                 IllegalAccessException |
                 UnsupportedLookAndFeelException e) {
+            // skip test if not on Microsoft Windows
             Assume.assumeNoException("Not on Windows", e);
         }
         Font f = UIManager.getFont("List.font");

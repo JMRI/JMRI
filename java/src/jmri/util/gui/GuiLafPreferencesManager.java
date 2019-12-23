@@ -130,7 +130,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
             setFontSize(getDefaultFontSize());
         }
 
-        setFontByName(preferences.get(FONT_NAME, getDefaultFont().getFontName()));
+        setFont(preferences.get(FONT_NAME, getDefaultFont().getFontName()));
         if (getFont() == null) {
             setFont(getDefaultFont());
         }
@@ -256,14 +256,25 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     /**
      * Sets a new font by name
      *
-     * @param newFontName the name of the new font to set
+     * @param name the name of the new font to set
      */
-    public void setFontByName(@Nonnull String newFontName) {
-        Font oldFont = getFont();
-        if (oldFont == null) {
-            oldFont = getDefaultFont();
+    public void setFont(@Nonnull String name) {
+        Font base = getFont();
+        if (base == null) {
+            base = getDefaultFont();
         }
-        setFont(new Font(newFontName, oldFont.getStyle(), fontSize));
+        setFont(new Font(name, base.getStyle(), fontSize));
+    }
+
+    /**
+     * Sets a new font by name
+     *
+     * @param name the name of the new font to set
+     * @deprecated since 4.19.2; use {@link #setFont(String)} instead
+     */
+    @Deprecated
+    public void setFontByName(@Nonnull String name) {
+        setFont(name);
     }
 
     /**
