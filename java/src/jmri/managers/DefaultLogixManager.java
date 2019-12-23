@@ -1,6 +1,6 @@
 package jmri.managers;
 
-import java.text.DecimalFormat;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
@@ -182,6 +182,7 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLogixes" : "BeanNameLogix");
     }
