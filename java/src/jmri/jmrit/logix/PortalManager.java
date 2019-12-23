@@ -7,13 +7,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Hashtable;
-
+import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
 
 /**
  * Basic implementation of a PortalManager.
@@ -73,9 +71,11 @@ public class PortalManager implements jmri.InstanceManagerAutoDefault, PropertyC
     /*
      * Create a new Portal with a given user name.
      *
-     * @return null if a Portal with the same userName already exists
+     * @return null if a Portal with the same userName already exists,
+     * or if an empty userName was requested
      */
     public Portal createNewPortal(@Nonnull String userName) {
+        java.util.Objects.requireNonNull(userName, "Name cannot be null");
         // Check that Portal does not already exist
         Portal portal;
         if (userName.trim().length() > 0) {
