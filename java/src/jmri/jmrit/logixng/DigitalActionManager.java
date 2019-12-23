@@ -8,7 +8,8 @@ import jmri.Manager;
 /**
  * Manager for DigitalActionBean
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public interface DigitalActionManager extends Manager<MaleDigitalActionSocket> {
 

@@ -45,7 +45,7 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
         
         DigitalBooleanActionBean actionA = new OnChange("IQDB321", null, OnChange.ChangeType.CHANGE);
         Assert.assertNotNull("exists", actionA);
-        DigitalBooleanActionBean actionB = new MyDigitalActionWithChange("IQDB322");
+        DigitalBooleanActionBean actionB = new MyDigitalBooleanAction("IQDB322");
         Assert.assertNotNull("exists", actionA);
         
         maleSocketA =
@@ -69,9 +69,9 @@ public class DefaultMaleDigitalBooleanActionSocketTest extends MaleSocketTestBas
      * This action is different from MyStringAction and is used to test the
      * male socket.
      */
-    private class MyDigitalActionWithChange extends AbstractDigitalBooleanAction {
+    private class MyDigitalBooleanAction extends AbstractDigitalBooleanAction {
         
-        MyDigitalActionWithChange(String sysName) {
+        MyDigitalBooleanAction(String sysName) {
             super(sysName, null);
         }
 

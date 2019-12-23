@@ -19,18 +19,19 @@ import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.LogixNGPluginFactory;
 import jmri.managers.AbstractManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.jmrit.logixng.MaleDigitalActionWithChangeSocket;
 import jmri.jmrit.logixng.FemaleDigitalBooleanActionSocket;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
 import jmri.jmrit.logixng.DigitalBooleanActionBean;
 import jmri.jmrit.logixng.DigitalBooleanActionFactory;
+import jmri.jmrit.logixng.MaleDigitalBooleanAction;
 
 /**
  * Class providing the basic logic of the DigitalBooleanActionManager interface.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigitalActionWithChangeSocket>
+public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigitalBooleanAction>
         implements DigitalBooleanActionManager {
 
     private final Map<Category, List<Class<? extends Base>>> actionClassList = new HashMap<>();
@@ -61,23 +62,23 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
         }
     }
 
-    protected MaleDigitalActionWithChangeSocket createMaleActionSocket(DigitalBooleanActionBean action) {
-        MaleDigitalActionWithChangeSocket socket = new DefaultMaleDigitalBooleanActionSocket(action);
+    protected MaleDigitalBooleanAction createMaleActionSocket(DigitalBooleanActionBean action) {
+        MaleDigitalBooleanAction socket = new DefaultMaleDigitalBooleanActionSocket(action);
         action.setParent(socket);
         return socket;
     }
     
     /**
      * Remember a NamedBean Object created outside the manager.
-     * This method creates a MaleDigitalActionWithChangeSocket for the action.
+     * This method creates a MaleDigitalBooleanAction for the action.
      *
      * @param action the bean
      */
     @Override
-    public MaleDigitalActionWithChangeSocket registerAction(@Nonnull DigitalBooleanActionBean action)
+    public MaleDigitalBooleanAction registerAction(@Nonnull DigitalBooleanActionBean action)
             throws IllegalArgumentException {
         
-        if (action instanceof MaleDigitalActionWithChangeSocket) {
+        if (action instanceof MaleDigitalBooleanAction) {
             throw new IllegalArgumentException("registerAction() cannot register a MaleDigitalActionWithChangeSocket. Use the method register() instead.");
         }
         
@@ -91,7 +92,7 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
         updateAutoNumber(action.getSystemName());
         
         // save in the maps
-        MaleDigitalActionWithChangeSocket maleSocket = createMaleActionSocket(action);
+        MaleDigitalBooleanAction maleSocket = createMaleActionSocket(action);
         register(maleSocket);
         return maleSocket;
     }
@@ -191,8 +192,8 @@ public class DefaultDigitalBooleanActionManager extends AbstractManager<MaleDigi
     }
 
     @Override
-    public Class<MaleDigitalActionWithChangeSocket> getNamedBeanClass() {
-        return MaleDigitalActionWithChangeSocket.class;
+    public Class<MaleDigitalBooleanAction> getNamedBeanClass() {
+        return MaleDigitalBooleanAction.class;
     }
     
     private final static Logger log = LoggerFactory.getLogger(DefaultDigitalBooleanActionManager.class);

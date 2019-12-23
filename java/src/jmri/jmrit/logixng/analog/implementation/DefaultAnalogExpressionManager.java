@@ -30,7 +30,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Class providing the basic logic of the ExpressionManager interface.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public class DefaultAnalogExpressionManager extends AbstractManager<MaleAnalogExpressionSocket>
         implements AnalogExpressionManager, InstanceManagerAutoDefault {

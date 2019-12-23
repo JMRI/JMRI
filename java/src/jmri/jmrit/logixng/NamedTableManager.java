@@ -9,6 +9,9 @@ import jmri.NamedBean;
 
 /**
  * A manager for a NamedTable
+ * 
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public interface NamedTableManager extends Manager<NamedTable> {
 

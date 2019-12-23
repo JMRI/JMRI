@@ -3,7 +3,7 @@ package jmri.jmrit.logixng;
 /**
  * A LogixNG male DigitalBooleanActionBean socket.
  */
-public interface MaleDigitalActionWithChangeSocket
+public interface MaleDigitalBooleanAction
         extends MaleSocket, DigitalBooleanActionBean {
 
     /**

@@ -8,7 +8,8 @@ import jmri.Manager;
 /**
  * Manager for StringActionBean
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public interface StringActionManager extends Manager<MaleStringActionSocket> {
 

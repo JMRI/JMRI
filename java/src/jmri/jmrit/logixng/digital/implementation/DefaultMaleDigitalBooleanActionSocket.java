@@ -6,18 +6,18 @@ import java.beans.PropertyVetoException;
 import java.util.ArrayList;
 import java.util.Locale;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Category;
-import javax.annotation.Nonnull;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.ConditionalNG;
+import jmri.jmrit.logixng.DigitalBooleanActionBean;
 import jmri.jmrit.logixng.FemaleSocket;
+import jmri.jmrit.logixng.MaleDigitalBooleanAction;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.implementation.AbstractMaleSocket;
-import jmri.jmrit.logixng.MaleDigitalActionWithChangeSocket;
-import jmri.jmrit.logixng.DigitalBooleanActionBean;
 import jmri.jmrit.logixng.implementation.InternalBase;
 import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket implements MaleDigitalActionWithChangeSocket {
+public class DefaultMaleDigitalBooleanActionSocket extends AbstractMaleSocket implements MaleDigitalBooleanAction {
 
     private final DigitalBooleanActionBean _action;
     private DebugConfig _debugConfig = null;

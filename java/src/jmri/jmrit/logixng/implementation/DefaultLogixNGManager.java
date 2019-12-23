@@ -78,7 +78,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Class providing the basic logic of the LogixNG_Manager interface.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         implements LogixNG_Manager {

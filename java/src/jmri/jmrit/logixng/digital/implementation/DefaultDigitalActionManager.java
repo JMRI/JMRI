@@ -28,7 +28,8 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 /**
  * Class providing the basic logic of the DigitalActionManager interface.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public class DefaultDigitalActionManager extends AbstractManager<MaleDigitalActionSocket>
         implements DigitalActionManager {

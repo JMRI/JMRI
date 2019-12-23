@@ -8,19 +8,20 @@ import jmri.Manager;
 /**
  * Manager for DigitalBooleanActionBean
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
-public interface DigitalBooleanActionManager extends Manager<MaleDigitalActionWithChangeSocket> {
+public interface DigitalBooleanActionManager extends Manager<MaleDigitalBooleanAction> {
 
     /**
      * Remember a NamedBean Object created outside the manager.
-     * This method creates a MaleDigitalActionWithChangeSocket for the action.
+     * This method creates a MaleDigitalBooleanAction for the action.
      *
      * @param action the bean
      * @return the male socket for this action
      * @throws IllegalArgumentException if the action has an invalid system name
      */
-    public MaleDigitalActionWithChangeSocket registerAction(@Nonnull DigitalBooleanActionBean action)
+    public MaleDigitalBooleanAction registerAction(@Nonnull DigitalBooleanActionBean action)
             throws IllegalArgumentException;
     
     /**

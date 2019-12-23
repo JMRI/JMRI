@@ -6,7 +6,8 @@ import jmri.Manager;
 /**
  * Manager for ConditionalNG
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public interface ConditionalNG_Manager extends Manager<ConditionalNG> {
 

@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.digital.boolean_actions;
 
-import jmri.jmrit.logixng.digital.boolean_actions.AbstractDigitalBooleanAction;
 import java.util.Locale;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -15,7 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Executes an action when the after some time.
+ * Executes an action depending on the parameter.
  * 
  * @author Daniel Bergqvist Copyright 2019
  */

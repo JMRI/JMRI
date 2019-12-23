@@ -9,9 +9,9 @@ import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocketListener;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.implementation.AbstractFemaleSocket;
-import jmri.jmrit.logixng.MaleDigitalActionWithChangeSocket;
 import jmri.jmrit.logixng.FemaleDigitalBooleanActionSocket;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
+import jmri.jmrit.logixng.MaleDigitalBooleanAction;
 
 /**
  *
@@ -27,13 +27,13 @@ public final class DefaultFemaleDigitalBooleanActionSocket
     
     @Override
     public boolean isCompatible(MaleSocket socket) {
-        return socket instanceof MaleDigitalActionWithChangeSocket;
+        return socket instanceof MaleDigitalBooleanAction;
     }
     
     @Override
     public void execute(boolean hasChangedToTrue) throws Exception {
         if (isConnected()) {
-            ((MaleDigitalActionWithChangeSocket)getConnectedSocket())
+            ((MaleDigitalBooleanAction)getConnectedSocket())
                     .execute(hasChangedToTrue);
         }
     }

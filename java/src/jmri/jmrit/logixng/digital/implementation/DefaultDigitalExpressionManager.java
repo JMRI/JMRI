@@ -32,7 +32,8 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 /**
  * Class providing the basic logic of the DigitalExpressionManager interface.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public class DefaultDigitalExpressionManager extends AbstractManager<MaleDigitalExpressionSocket>
         implements DigitalExpressionManager, InstanceManagerAutoDefault {

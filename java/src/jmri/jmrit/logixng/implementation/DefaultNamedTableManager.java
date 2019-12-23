@@ -11,7 +11,6 @@ import jmri.NamedBean;
 import jmri.jmrit.logixng.AnonymousTable;
 import jmri.jmrit.logixng.NamedTable;
 import jmri.jmrit.logixng.NamedTableManager;
-import jmri.jmrit.logixng.Table;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 import jmri.util.Log4JUtil;
@@ -22,7 +21,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Class providing the basic logic of the NamedTable_Manager interface.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public class DefaultNamedTableManager extends AbstractManager<NamedTable>
         implements NamedTableManager {

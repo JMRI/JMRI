@@ -30,7 +30,8 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 /**
  * Class providing the basic logic of the ExpressionManager interface.
  * 
- * @author Daniel Bergqvist Copyright 2018
+ * @author Dave Duchamp       Copyright (C) 2007
+ * @author Daniel Bergqvist   Copyright (C) 2018
  */
 public class DefaultStringExpressionManager extends AbstractManager<MaleStringExpressionSocket>
         implements StringExpressionManager, InstanceManagerAutoDefault {
