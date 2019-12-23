@@ -53,14 +53,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public Turnout getByUserThenSystemName(@Nonnull String systemName,
-                                           Turnout sysNameResult,
-                                           String userName,
-                                           Turnout uNameResult) {
-        return null;
-    }
-
-    @Override
     public Turnout newTurnout(String systemName, String userName) {
         return null;
     }

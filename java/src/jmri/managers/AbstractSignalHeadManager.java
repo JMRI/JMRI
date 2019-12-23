@@ -6,8 +6,6 @@ import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
-import javax.annotation.Nonnull;
-
 /**
  * Abstract partial implementation of a SignalHeadManager.
  * <p>
@@ -67,7 +65,6 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
     }
 
     /** {@inheritDoc} */
-    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalHeads" : "BeanNameSignalHead");

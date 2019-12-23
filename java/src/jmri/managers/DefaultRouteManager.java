@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Route;
@@ -8,8 +9,6 @@ import jmri.implementation.DefaultRoute;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
 
 /**
  * Basic Implementation of a RouteManager.
@@ -75,7 +74,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
      */
     @Deprecated // 4.17.7
     @Override
-    @javax.annotation.Nonnull
+    @Nonnull
     public String validateSystemNameFormat(@javax.annotation.Nonnull String name, @javax.annotation.Nonnull java.util.Locale locale) 
                         throws jmri.NamedBean.BadSystemNameException {
         try {
