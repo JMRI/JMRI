@@ -1,86 +1,66 @@
 package jmri.util.swing;
 
 import java.awt.Component;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JToggleButton;
+import java.io.FileNotFoundException;
+import javax.swing.*;
 import jmri.util.JmriJFrame;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.JToggleButtonOperator;
-import org.netbeans.jemmy.operators.WindowOperator;
-import org.netbeans.jemmy.util.NameComponentChooser;
+import org.netbeans.jemmy.operators.*;
+import org.netbeans.jemmy.util.*;
 
 /**
  * Utility Methods for Jemmy Tests.
- * 
+ *
  * @author Paul Bender Copyright (C) 2018
+ * @author George Warner Copyright (C) 2019
  */
-
 public class JemmyUtil {
-    static public void pressDialogButton(JmriJFrame f, String buttonName) {
+
+    public static void pressDialogButton(JmriJFrame f, String buttonLabel) {
         JFrameOperator jfo = new JFrameOperator(f);
         JDialogOperator jdo = new JDialogOperator(jfo, 1); // wait for the first dialog.
-        NameComponentChooser bChooser = new NameComponentChooser(buttonName);
+        NameComponentChooser bChooser = new NameComponentChooser(buttonLabel);
         JButtonOperator jbo = new JButtonOperator(jdo, bChooser);
-        // Click button
-        jbo.push();
-    }
-    
-    static public void pressDialogButton(String dialogTitle, String buttonName) {
-        JDialogOperator jdo = new JDialogOperator(dialogTitle); // wait for the first dialog.
-        JButtonOperator jbo = new JButtonOperator(jdo, buttonName);
-        // Click button
         jbo.push();
     }
 
-    static public void pressDialogButton(JmriJFrame f, String dialogTitle, String buttonName) {
+    public static void pressDialogButton(String dialogTitle, String buttonLabel) {
+        JDialogOperator jdo = new JDialogOperator(dialogTitle); // wait for the first dialog.
+        pressButton(jdo, buttonLabel);
+    }
+
+    public static void pressDialogButton(JmriJFrame f, String dialogTitle, String buttonLabel) {
         JFrameOperator jfo = new JFrameOperator(f);
         JDialogOperator jdo = new JDialogOperator(jfo, dialogTitle); // wait for the first dialog.
-        JButtonOperator jbo = new JButtonOperator(jdo, buttonName);
-        // Click button
-        jbo.push();
+        pressButton(jdo, buttonLabel);
     }
 
-    static public void enterClickAndLeave(JButton comp) {
-        JButtonOperator jbo = new JButtonOperator(comp);
-        jbo.push();
+    public static void enterClickAndLeave(JButton comp) {
+        new JButtonOperator(comp).push();
     }
 
-    static public void enterClickAndLeave(JCheckBox comp) {
-        JCheckBoxOperator jbo = new JCheckBoxOperator(comp);
-        jbo.doClick();
+    public static void enterClickAndLeave(JCheckBox comp) {
+        new JCheckBoxOperator(comp).push();
     }
 
-    static public void enterClickAndLeave(JRadioButton comp) {
-        JRadioButtonOperator jbo = new JRadioButtonOperator(comp);
-        jbo.doClick();
+    public static void enterClickAndLeave(JRadioButton comp) {
+        new JRadioButtonOperator(comp).push();
     }
 
-    static public void enterClickAndLeave(JToggleButton comp) {
-        JToggleButtonOperator jtbo = new JToggleButtonOperator(comp);
-        jtbo.doClick();
+    public static void enterClickAndLeave(JToggleButton comp) {
+        new JToggleButtonOperator(comp).push();
     }
 
-    static public void pressButton(WindowOperator frame, String text) {
-        JButtonOperator jbo = new JButtonOperator(frame, text);
-        jbo.push();
+    public static void pressButton(WindowOperator frame, String text) {
+        new JButtonOperator(frame, text).push();
     }
 
-    static public void confirmJOptionPane(WindowOperator wo, String title, String message, String buttonLabel) {
+    public static void confirmJOptionPane(WindowOperator wo, String dialogTitle, String message, String buttonLabel) {
         // the previous version of this message verified the text string
         // if the dialog matched the passed message value.  We need to
         // determine how to do that using Jemmy.
-        JDialogOperator jdo = new JDialogOperator(wo, title);
-        JButtonOperator jbo = new JButtonOperator(jdo, buttonLabel);
-        jbo.push();
+        JDialogOperator jdo = new JDialogOperator(wo, dialogTitle);
+        pressButton(jdo, buttonLabel);
     }
 
     public static Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
@@ -95,26 +75,172 @@ public class JemmyUtil {
         return t;
     }
 
-    static public JLabel getLabelWithText(String frameName, String text) {
+    public static JLabel getLabelWithText(String frameName, String labelText) {
         // Find window by name
         JmriJFrame frame = JmriJFrame.getFrame(frameName);
 
         // find label within that
-        JLabel jl = JLabelOperator.findJLabel(frame,new ComponentChooser(){
-               public boolean checkComponent(Component comp){
-                   if(comp == null){
-                      return false;
-                   } else if (comp instanceof JLabel ) {
-                      return ((JLabel)comp).getText().equals(text);
-                   } else {
-                      return false;
-                   }
-               }
-               public String getDescription(){
-                  return "find JLabel with text: " + text;
-               }
+        JLabel jl = JLabelOperator.findJLabel(frame, new ComponentChooser() {
+            public boolean checkComponent(Component comp) {
+                if (comp == null) {
+                    return false;
+                } else if (comp instanceof JLabel) {
+                    return ((JLabel) comp).getText().equals(labelText);
+                } else {
+                    return false;
+                }
+            }
+
+            public String getDescription() {
+                return "find JLabel with text: " + labelText;
+            }
         });
         return jl;
+    }
+
+    /**
+     * wait for a dialog with the title and message and then press button to
+     * close it
+     *
+     * @param dialogTitle the title of the dialog to wait for
+     * @param messageText the message (JLable(s)) to wait for
+     * @param buttonText the name of the button to press to dismiss this dialog
+     */
+    public static void waitAndCloseDialog(String dialogTitle, String messageText, String buttonText) {
+        JDialogOperator jdo = new JDialogOperator(dialogTitle);
+        waitForLabels(jdo, messageText);
+        JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
+        jbo.pushNoBlock();
+        jdo.waitClosed();    //make sure the dialog closed
+    }
+
+    /**
+     * wait for labels based on label text (delimited by /n's)
+     *
+     * @param jdo       the dialog operator these labels are in
+     * @param labelText the label text to wait for
+     */
+    public static void waitForLabels(JDialogOperator jdo, String labelText) {
+        waitForLabels(jdo, labelText, false);
+    }
+
+    /**
+     * wait for labels based on label text (delimited by /n's)
+     *
+     * @param jdo       the dialog operator these labels are in
+     * @param labelText the label text to wait for
+     * @param debugFlag set true to output debug information
+     */
+    public static void waitForLabels(JDialogOperator jdo, String labelText, boolean debugFlag) {
+        if ((labelText != null) && !labelText.isEmpty()) {
+            //the JOptionPane.showMessageDialog method splits the message
+            //by the new line character ('\n') and creates JLables for
+            //each line... so that's what we have to match here
+            String[] lines = labelText.split("\\n");
+            for (String line : lines) {
+                if (debugFlag) {
+                    System.out.println("line: " + line);
+                }
+                //wait for this label
+                new JLabelOperator(jdo, line);
+            }
+        }
+    }
+
+    /**
+     * create a modal dialog operator thread
+     *
+     * @param dialogTitle the title for the dialog
+     * @param messageText the message for the dialog
+     * @param buttonText  the name of the button to press to dismiss
+     * @return the thread that is waiting to dismiss this dialog
+     */
+    public static Thread createModalDialogOperatorThread(String dialogTitle, String messageText, String buttonText) {
+        return createModalDialogOperatorThread(dialogTitle, messageText, buttonText, false);
+    }
+
+    /**
+     * create a modal dialog operator thread
+     *
+     * @param dialogTitle the title for the dialog
+     * @param messageText the message for the dialog
+     * @param buttonText  the name of the button to press to dismiss
+     * @param debugFlag   set true to dumpToXML, captureScreenshot and log
+     *                    message labels
+     * @return the thread that is waiting to dismiss this dialog
+     */
+    public static Thread createModalDialogOperatorThread(String dialogTitle, String messageText, String buttonText, boolean debugFlag) {
+        Thread t = new Thread(() -> {
+            // constructor for jdo will wait until the dialog is visible
+            JDialogOperator jdo = new JDialogOperator(dialogTitle);
+            if (debugFlag) {
+                dumpToXML();
+                captureScreenshot();
+            }
+            waitForLabels(jdo, messageText, debugFlag);
+            JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
+            jbo.pushNoBlock();
+        });
+        t.setName(dialogTitle + " Close Dialog Thread");
+        t.start();
+        return t;
+    }
+
+    /*
+     * a component chooser that matches by ToolTipText
+     */
+    public static class ToolTipComponentChooser implements ComponentChooser {
+
+        private String buttonTooltip;
+        private Operator.StringComparator comparator = Operator.getDefaultStringComparator();
+
+        public ToolTipComponentChooser(String buttonTooltip) {
+            this.buttonTooltip = buttonTooltip;
+        }
+
+        public boolean checkComponent(Component comp) {
+            return comparator.equals(((JComponent) comp).getToolTipText(), buttonTooltip);
+        }
+
+        public String getDescription() {
+            return "Component with tooltip \"" + buttonTooltip + "\".";
+        }
+    }
+
+//TODO: finish this!
+//WIP:delay for s seconds
+//    private void waitSeconds(int s) {
+//        //waits until queue has been empty for X milliseconds
+//        //new QueueTool().waitEmpty(s * 1000);
+//
+//        //wait until no event is registered for a given number of milliseconds
+//        new EventTool().waitNoEvent(s * 1000);
+//    }
+    /**
+     * utility method to save screenshot to desktop file
+     */
+    public static void captureScreenshot() {
+        //grab image
+        PNGEncoder.captureScreen(System.getProperty("user.home")
+                + System.getProperty("file.separator")
+                + "Desktop"
+                + System.getProperty("file.separator")
+                + "JemmyScreenshot.png");
+    }
+
+    /**
+     * utility method to save jemmy xml to desktop file
+     */
+    public static void dumpToXML() {
+        //grab component state
+        try {
+            Dumper.dumpAll(System.getProperty("user.home")
+                    + System.getProperty("file.separator")
+                    + "Desktop"
+                    + System.getProperty("file.separator")
+                    + "JemmyDump.xml");
+        } catch (FileNotFoundException e) {
+        }
     }
 
 }
