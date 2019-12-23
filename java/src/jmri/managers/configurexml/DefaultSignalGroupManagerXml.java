@@ -156,7 +156,7 @@ public class DefaultSignalGroupManagerXml
             List<Element> appList = e.getChildren("appearance"); // deprecated 4.7.2 for aspect; warning added 4.19.1
             for (Element app : appList) {
                 String value = app.getAttribute("valid").getValue();
-                jmri.util.Log4JUtil.warnOnce(log, "Found appearance elements in file", new Exception("traceback"));
+                jmri.util.Log4JUtil.deprecationWarning(log, "appearance elements in file");
                 sg.addSignalMastAspect(value);
             }
             List<Element> aspList = e.getChildren("aspect");
