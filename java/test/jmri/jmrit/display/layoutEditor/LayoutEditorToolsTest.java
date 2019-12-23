@@ -30,7 +30,7 @@ public class LayoutEditorToolsTest {
     public Timeout globalTimeout = Timeout.seconds(10);
 
     @Rule   //allow 2 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(0);
+    public RetryRule retryRule = new RetryRule(2);
 
     private static LayoutEditor layoutEditor = null;
     private static LayoutEditorTools let = null;
