@@ -898,6 +898,8 @@ public class LightControlTest {
         jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         _listenerkicks = 0;
+
+        InstanceManager.getDefault(jmri.TurnoutManager.class).setOutputInterval(0); // default outputInterval = 250, set to 0 to speed up test
     }
 
     @After

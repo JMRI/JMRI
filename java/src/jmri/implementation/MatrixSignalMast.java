@@ -534,7 +534,7 @@ public class MatrixSignalMast extends AbstractSignalMast {
 
     /**
      * Set the delay between issuing Matrix Output commands to the outputs on this specific mast.
-     * Delay be extended by a connection specific Output Delay set in the connection config.
+     * Mast Delay will be extended by a connection specific Output Delay set in the connection config.
      *
      * @see jmri.implementation.configurexml.MatrixSignalMastXml#load(org.jdom2.Element, org.jdom2.Element)
      * @param delay the new delay in milliseconds

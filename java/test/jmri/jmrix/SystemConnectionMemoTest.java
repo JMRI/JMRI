@@ -17,7 +17,7 @@ import org.junit.Test;
  */
 public class SystemConnectionMemoTest {
 
-    SystemConnectionMemo t = null;
+    private SystemConnectionMemo t = null;
 
     @Test
     public void testCTor() {
@@ -180,7 +180,7 @@ public class SystemConnectionMemoTest {
         JUnitUtil.setUp();
         JUnitUtil.initDebugCommandStation();
         JUnitUtil.initDebugProgrammerManager();
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
+        t = new SystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
