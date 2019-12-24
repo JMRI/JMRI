@@ -39,4 +39,5 @@
 <!ATTLIST location trainIconY		CDATA #IMPLIED> 
 <!ATTLIST location comment			CDATA #IMPLIED>
 <!ATTLIST location randomControl	CDATA #IMPLIED>
+<!ATTLIST location commentColor		CDATA #IMPLIED>
 
