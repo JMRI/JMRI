@@ -29,7 +29,6 @@ public class CbusReporterManager extends AbstractReporterManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     @Nonnull
     public CanSystemConnectionMemo getMemo() {

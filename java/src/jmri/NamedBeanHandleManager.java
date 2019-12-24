@@ -214,7 +214,6 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Nonnull
     @Override
     @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
@@ -222,7 +221,6 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
-    @Nonnull
     @Override
     @Nonnull
     @CheckReturnValue

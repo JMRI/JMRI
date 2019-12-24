@@ -23,7 +23,6 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     @Nonnull
     public InternalSystemConnectionMemo getMemo() {
@@ -75,7 +74,6 @@ public class InternalTurnoutManager extends AbstractTurnoutManager {
     /**
      * Turnout operation support. Internal turnouts don't need retries.
      */
-    @Nonnull
     @Override
     @Nonnull
     public String[] getValidOperationTypes() {

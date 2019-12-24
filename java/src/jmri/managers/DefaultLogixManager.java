@@ -183,7 +183,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         return InstanceManager.getDefault(DefaultLogixManager.class);
     }
 
-    @Nonnull
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {

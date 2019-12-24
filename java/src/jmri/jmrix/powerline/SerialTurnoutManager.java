@@ -31,7 +31,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     @Nonnull
     public SerialSystemConnectionMemo getMemo() {

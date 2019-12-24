@@ -181,7 +181,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      *
      * @return a string for the type of object handled by this manager
      */
-    @Nonnull
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
