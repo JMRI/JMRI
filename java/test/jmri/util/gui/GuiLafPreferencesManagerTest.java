@@ -30,6 +30,7 @@ import org.junit.Test;
 
 /**
  * @author Paul Bender Copyright (C) 2017
+ * @author Randall Wood Copyright 2019
  */
 public class GuiLafPreferencesManagerTest {
 
@@ -143,6 +144,8 @@ public class GuiLafPreferencesManagerTest {
         assertFalse("No need to restart", t.isRestartRequired());
     }
 
+    // passing null to @Nonnull annotated method to test later use
+    @SuppressWarnings({"null", "deprecation"})
     @Test
     public void testFont() {
         Font f1 = Font.decode(null).deriveFont(Font.PLAIN, 44);
@@ -150,6 +153,12 @@ public class GuiLafPreferencesManagerTest {
         assertNull("Has no font", t.getFont());
         assertFalse("No changes", t.isDirty());
         assertFalse("No need to restart", t.isRestartRequired());
+        // change to setFont(String) when removing deprecated method
+        t.setFontByName(f1.getFontName());
+        // without calling setFontSize(int), font size == 0
+        assertEquals("Font is 0 size", f1.deriveFont((float) 0), t.getFont());
+        assertNotEquals("Font is not Font default", Font.decode(null), t.getFont());
+        assertNotEquals("Font is not derived font", f1, t.getFont());
         t.setFont(f2);
         assertEquals("Font is list default", f2, t.getFont());
         assertNotEquals("Font is not Font default", Font.decode(null), t.getFont());
@@ -161,15 +170,59 @@ public class GuiLafPreferencesManagerTest {
         assertEquals("Font is derived font", f1, t.getFont());
         assertTrue("Changes made", t.isDirty());
         assertTrue("Need to restart", t.isRestartRequired());
+        // setting the same font twice should not change anything
+        t.setFont(f1);
+        assertNotEquals("Font is not list default", f2, t.getFont());
+        assertEquals("Font is derived font", f1, t.getFont());
+        assertTrue("Changes made", t.isDirty());
+        assertTrue("Need to restart", t.isRestartRequired());
         // set to f2 to ensure setting to f1 by name is a change
         t.setFont(f2);
         assertEquals("Font is list default", f2, t.getFont());
         // change to setFont(String) when removing deprecated method
         t.setFontByName(f1.getFontName());
         // without calling setFontSize(int), font size == 0
-        assertEquals("Font is list default", f1.deriveFont((float) 0), t.getFont());
+        assertEquals("Font is 0 size", f1.deriveFont((float) 0), t.getFont());
         assertNotEquals("Font is not Font default", Font.decode(null), t.getFont());
         assertNotEquals("Font is not derived font", f1, t.getFont());
+        assertTrue("Changes made", t.isDirty());
+        assertTrue("Need to restart", t.isRestartRequired());
+        // set to null to test unique code path
+        t.setFont((Font) null);
+        assertNull("No font set", t.getFont());
+        // change to setFont(String) when removing deprecated method
+        t.setFontByName(f1.getFontName());
+        // without calling setFontSize(int), font size == 0
+        assertEquals("Font is ", f1.deriveFont((float) 0), t.getFont());
+        assertNotEquals("Font is not Font default", Font.decode(null), t.getFont());
+        assertNotEquals("Font is not derived font", f1, t.getFont());
+        assertTrue("Changes made", t.isDirty());
+        assertTrue("Need to restart", t.isRestartRequired());
+    }
+
+    @Test
+    public void testFontSize() {
+        assertEquals("Font size == 0", 0, t.getFontSize());
+        assertFalse("No changes", t.isDirty());
+        assertFalse("No need to restart", t.isRestartRequired());
+        int low = 1;
+        int high = 50;
+        assertTrue("low < MIN_FONT_SIZE", low < GuiLafPreferencesManager.MIN_FONT_SIZE);
+        assertTrue("high > MIN_FONT_SIZE", high > GuiLafPreferencesManager.MAX_FONT_SIZE);
+        for (int i = low; i < high; i++) {
+            t.setFontSize(i);
+            if (i < GuiLafPreferencesManager.MIN_FONT_SIZE) {
+                assertEquals("Min font size", GuiLafPreferencesManager.MIN_FONT_SIZE, t.getFontSize());
+            } else if (i > GuiLafPreferencesManager.MAX_FONT_SIZE) {
+                assertEquals("Max font size", GuiLafPreferencesManager.MAX_FONT_SIZE, t.getFontSize());
+            } else {
+                assertEquals("font size", i, t.getFontSize());
+            }
+            assertTrue("Changes made", t.isDirty());
+            assertTrue("Need to restart", t.isRestartRequired());
+        }
+        t.setFontSize(0);
+        assertEquals("Font size == 0", 0, t.getFontSize());
         assertTrue("Changes made", t.isDirty());
         assertTrue("Need to restart", t.isRestartRequired());
     }
