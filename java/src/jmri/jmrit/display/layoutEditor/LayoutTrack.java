@@ -267,17 +267,6 @@ public abstract class LayoutTrack {
         return hidden;
     }
 
-    /**
-     * Get the hidden state of the track element.
-     *
-     * @return true if hidden; false otherwise
-     * @deprecated since 4.7.2; use {@link #isHidden()} instead
-     */
-    @Deprecated // Java standard pattern for boolean getters is "isHidden()"
-    public boolean getHidden() {
-        return hidden;
-    }
-
     public void setHidden(boolean hide) {
         if (hidden != hide) {
             hidden = hide;
