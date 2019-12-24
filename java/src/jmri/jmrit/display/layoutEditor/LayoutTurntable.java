@@ -442,6 +442,15 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
+     * Set the coordinates for the ray at this index.
+     *
+     * @param point the new coordinates
+     * @param index the index
+     */
+    public void setRayCoordsIndexed(Point2D point, int index) {
+        setRayCoordsIndexed(point.getX(), point.getY(), index);
+    }
+    /**
      * Get the coordinates for a specified connection type.
      *
      * @param locationType the connection type
