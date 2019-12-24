@@ -42,8 +42,7 @@ import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
-import jmri.util.swing.JComboBoxUtil;
-import jmri.util.swing.JmriColorChooser;
+import jmri.util.swing.*;
 import org.slf4j.*;
 
 /**
@@ -1473,12 +1472,36 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
         undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
 
+        //rotate selection
+        jmi = new JMenuItem(Bundle.getMessage("RotateSelection90MenuItemTitle"));
+        jmi.setToolTipText(Bundle.getMessage("RotateSelection90MenuItemToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            rotateSelection90();
+        });
+
         //rotate entire layout
-        jmi = new JMenuItem(Bundle.getMessage("RotateLayout90MenuItemTitle") + "...");
+        jmi = new JMenuItem(Bundle.getMessage("RotateLayout90MenuItemTitle"));
         jmi.setToolTipText(Bundle.getMessage("RotateLayout90MenuItemToolTip"));
         toolsMenu.add(jmi);
         jmi.addActionListener((ActionEvent event) -> {
-            rotate90();
+            rotateLayout90();
+        });
+
+        //align layout to grid
+        jmi = new JMenuItem(Bundle.getMessage("AlignLayoutToGridMenuItemTitle") + "...");
+        jmi.setToolTipText(Bundle.getMessage("AlignLayoutToGridMenuItemToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            alignLayoutToGrid();
+        });
+
+        //align selection to grid
+        jmi = new JMenuItem(Bundle.getMessage("AlignSelectionToGridMenuItemTitle") + "...");
+        jmi.setToolTipText(Bundle.getMessage("AlignSelectionToGridMenuItemToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            alignSelectionToGrid();
         });
 
         //reset turnout size to program defaults
@@ -2363,12 +2386,48 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
+     * rotate selection by 90 degrees clockwise
+     */
+    public void rotateSelection90() {
+        Rectangle2D bounds = getSelectionRect();
+        Point2D center = MathUtil.midPoint(bounds);
+
+        for (Positionable positionable : _positionableSelection) {
+            Rectangle2D cBounds = positionable.getBounds(new Rectangle());
+            Point2D oldBottomLeft = new Point2D.Double(cBounds.getMinX(), cBounds.getMaxY());
+            Point2D newTopLeft = MathUtil.rotateDEG(oldBottomLeft, center, 90);
+            boolean rotateFlag = true;
+            if (positionable instanceof PositionableLabel) {
+                PositionableLabel positionableLabel = (PositionableLabel) positionable;
+                if (positionableLabel.isBackground()) {
+                    rotateFlag = false;
+                }
+            }
+            if (rotateFlag) {
+                positionable.rotate(positionable.getDegrees() + 90);
+                positionable.setLocation((int) newTopLeft.getX(), (int) newTopLeft.getY());
+            }
+        }
+
+        for (LayoutTrack lt : _layoutTrackSelection) {
+            lt.setCoordsCenter(MathUtil.rotateDEG(lt.getCoordsCenter(), center, 90));
+            lt.rotateCoords(90);
+        }
+
+      for (LayoutShape ls : _layoutShapeSelection) {
+            ls.setCoordsCenter(MathUtil.rotateDEG(ls.getCoordsCenter(), center, 90));
+            ls.rotateCoords(90);
+        }
+
+        resizePanelBounds(true);
+        setDirty();
+        redrawPanel();
+    }
+
+    /**
      * rotate the entire layout by 90 degrees clockwise
      */
-    public void rotate90() {
-        Rectangle2D bounds = getPanelBounds();
-        Point2D lowerLeft = new Point2D.Double(bounds.getMinX(), bounds.getMaxY());
-
+    public void rotateLayout90() {
         List<Positionable> positionables = new ArrayList<Positionable>(_contents);
         positionables.addAll(backgroundImage);
         positionables.addAll(blockContentsLabelList);
@@ -2383,6 +2442,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //do this to remove duplicates that may be in more than one list
         positionables = positionables.stream().distinct().collect(Collectors.toList());
 
+        Rectangle2D bounds = getPanelBounds();
+        Point2D lowerLeft = new Point2D.Double(bounds.getMinX(), bounds.getMaxY());
+
         for (Positionable positionable : positionables) {
             Rectangle2D cBounds = positionable.getBounds(new Rectangle());
             Point2D newTopLeft = MathUtil.subtract(MathUtil.rotateDEG(positionable.getLocation(), lowerLeft, 90), lowerLeft);
@@ -2395,7 +2457,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     }
                     positionableLabel.rotate(positionableLabel.getDegrees() + 90);
                 } catch (NullPointerException ex) {
-
                 }
             }
             if (reLocateFlag) {
@@ -2418,12 +2479,63 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         }
 
         for (LayoutShape ls : layoutShapes) {
-            try {
-                Point2D newPoint = MathUtil.subtract(MathUtil.rotateDEG(ls.getCoordsCenter(), lowerLeft, 90), lowerLeft);
-                ls.setCoordsCenter(newPoint);
-                ls.rotateCoords(90);
-            } catch (NullPointerException ex) {
+            Point2D newPoint = MathUtil.subtract(MathUtil.rotateDEG(ls.getCoordsCenter(), lowerLeft, 90), lowerLeft);
+            ls.setCoordsCenter(newPoint);
+            ls.rotateCoords(90);
+        }
 
+        resizePanelBounds(true);
+        setDirty();
+        redrawPanel();
+    }
+
+    /**
+     * align the layout to grid
+     */
+    public void alignLayoutToGrid() {
+        //align to grid
+        List<Positionable> positionables = new ArrayList<Positionable>(_contents);
+        positionables.addAll(backgroundImage);
+        positionables.addAll(blockContentsLabelList);
+        positionables.addAll(labelImage);
+        positionables.addAll(memoryLabelList);
+        positionables.addAll(sensorImage);
+        positionables.addAll(sensorList);
+        positionables.addAll(signalHeadImage);
+        positionables.addAll(signalList);
+        positionables.addAll(signalMastList);
+
+        //do this to remove duplicates that may be in more than one list
+        positionables = positionables.stream().distinct().collect(Collectors.toList());
+        alignToGrid(positionables, layoutTrackList, layoutShapes);
+    }
+
+    /**
+     * align selection to grid
+     */
+    public void alignSelectionToGrid() {
+        alignToGrid(_positionableSelection, _layoutTrackSelection, _layoutShapeSelection);
+    }
+
+    private void alignToGrid(List<Positionable> positionables, List<LayoutTrack> tracks, List<LayoutShape> shapes) {
+        for (Positionable positionable : positionables) {
+            Point2D newLocation = MathUtil.granulize(positionable.getLocation(), gridSize1st);
+            positionable.setLocation((int) (newLocation.getX()), (int) newLocation.getY());
+        }
+        for (LayoutTrack lt : tracks) {
+            lt.setCoordsCenter(MathUtil.granulize(lt.getCoordsCenter(), gridSize1st));
+            if (lt instanceof LayoutTurntable) {
+                LayoutTurntable tt = (LayoutTurntable) lt;
+                for (LayoutTurntable.RayTrack rt : tt.getRayList()) {
+                    int rayIndex = rt.getConnectionIndex();
+                    tt.setRayCoordsIndexed(MathUtil.granulize(tt.getRayCoordsIndexed(rayIndex), gridSize1st), rayIndex);
+                }
+            }
+        }
+        for (LayoutShape ls : shapes) {
+            ls.setCoordsCenter(MathUtil.granulize(ls.getCoordsCenter(), gridSize1st));
+            for (int idx = 0; idx < ls.getNumberPoints(); idx++) {
+                ls.setPoint(idx, MathUtil.granulize(ls.getPoint(idx), gridSize1st));
             }
         }
 
@@ -5226,8 +5338,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             if (InstanceManager.getDefault(SignalMastLogicManager.class)
                     .isSignalMastUsed((SignalMast) sm)) {
-                SignalMastLogic sml
-                        = InstanceManager.getDefault(SignalMastLogicManager.class).getSignalMastLogic((SignalMast) sm);
+                SignalMastLogic sml = InstanceManager.getDefault(
+                        SignalMastLogicManager.class).getSignalMastLogic((SignalMast) sm);
                 if ((sml != null) && sml.useLayoutEditor(sml.getDestinationList().get(0))) {
                     msgKey = "DeleteSmlReference";  // NOI18N
                 }
