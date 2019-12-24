@@ -1,13 +1,11 @@
-package jmri.jmrit.display.layoutEditor;
+package jmri.jmrit.display.controlPanelEditor;
 
 import java.io.File;
-import java.util.ArrayList;
 import jmri.configurexml.SchemaTestBase;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
-//import jmri.InstanceManager;
 /**
  * Checks of JMRI XML Schema
  *
@@ -19,10 +17,14 @@ public class SchemaTest extends SchemaTestBase {
 
     @Parameters(name = "{0} (pass={1})")
     public static Iterable<Object[]> data() {
-        return setTestFilesBelowThisPath("java/test/jmri/jmrit/display/layoutEditor");
+        return setTestFilesBelowThisPath("java/test/jmri/jmrit/display/controlPanelEditor");
     }
 
     public SchemaTest(File file, boolean pass) {
         super(file, pass);
+    }
+
+    public void foo() {
+
     }
 }
