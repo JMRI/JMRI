@@ -392,12 +392,12 @@ public class LayoutShape {
     }
 
     /**
-     * scale this LayoutTrack's coordinates by the x and y factors
+     * scale this shapes coordinates by the x and y factors
      *
      * @param xFactor the amount to scale X coordinates
      * @param yFactor the amount to scale Y coordinates
      */
-    public void scaleCoords(float xFactor, float yFactor) {
+    public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         shapePoints.forEach((lsp) -> {
             lsp.setPoint(MathUtil.multiply(lsp.getPoint(), factor));
@@ -405,12 +405,12 @@ public class LayoutShape {
     }
 
     /**
-     * translate this LayoutTrack's coordinates by the x and y factors
+     * translate this shapes coordinates by the x and y factors
      *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
      */
-    public void translateCoords(float xFactor, float yFactor) {
+    public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         shapePoints.forEach((lsp) -> {
             lsp.setPoint(MathUtil.add(factor, lsp.getPoint()));
@@ -418,8 +418,9 @@ public class LayoutShape {
     }
 
     /**
-     * rotate this shape around its center
-     * @param angleDEG the angle (in degrees) to rotate CW
+     * rotate this LayoutTrack's coordinates by angleDEG's
+     *
+     * @param angleDEG the amount to rotate in degrees
      */
     public void rotateCoords(double angleDEG) {
         Point2D center = getCoordsCenter();
@@ -739,7 +740,7 @@ public class LayoutShape {
     }   // draw
 
     protected void drawEditControls(Graphics2D g2) {
-        Color backgroundColor = layoutEditor.getBackgroundColor();
+        Color backgroundColor = layoutEditor.getBackground();
         Color controlsColor = ColorUtil.contrast(backgroundColor);
         controlsColor = ColorUtil.setAlpha(controlsColor, 0.5);
         g2.setColor(controlsColor);

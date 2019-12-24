@@ -1467,12 +1467,20 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         });
         undoTranslateSelectionMenuItem.setEnabled(canUndoMoveSelection);
 
+        //rotate selection
+        jmi = new JMenuItem(Bundle.getMessage("RotateSelection90MenuItemTitle"));
+        jmi.setToolTipText(Bundle.getMessage("RotateSelection90MenuItemToolTip"));
+        toolsMenu.add(jmi);
+        jmi.addActionListener((ActionEvent event) -> {
+            rotateSelection90();
+        });
+
         //rotate entire layout
-        jmi = new JMenuItem(Bundle.getMessage("RotateLayout90MenuItemTitle") + "...");
+        jmi = new JMenuItem(Bundle.getMessage("RotateLayout90MenuItemTitle"));
         jmi.setToolTipText(Bundle.getMessage("RotateLayout90MenuItemToolTip"));
         toolsMenu.add(jmi);
         jmi.addActionListener((ActionEvent event) -> {
-            rotate90();
+            rotateLayout90();
         });
 
         //align layout to grid
@@ -2373,12 +2381,48 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
+     * rotate selection by 90 degrees clockwise
+     */
+    public void rotateSelection90() {
+        Rectangle2D bounds = getSelectionRect();
+        Point2D center = MathUtil.midPoint(bounds);
+
+        for (Positionable positionable : _positionableSelection) {
+            Rectangle2D cBounds = positionable.getBounds(new Rectangle());
+            Point2D oldBottomLeft = new Point2D.Double(cBounds.getMinX(), cBounds.getMaxY());
+            Point2D newTopLeft = MathUtil.rotateDEG(oldBottomLeft, center, 90);
+            boolean rotateFlag = true;
+            if (positionable instanceof PositionableLabel) {
+                PositionableLabel positionableLabel = (PositionableLabel) positionable;
+                if (positionableLabel.isBackground()) {
+                    rotateFlag = false;
+                }
+            }
+            if (rotateFlag) {
+                positionable.rotate(positionable.getDegrees() + 90);
+                positionable.setLocation((int) newTopLeft.getX(), (int) newTopLeft.getY());
+            }
+        }
+
+        for (LayoutTrack lt : _layoutTrackSelection) {
+            lt.setCoordsCenter(MathUtil.rotateDEG(lt.getCoordsCenter(), center, 90));
+            lt.rotateCoords(90);
+        }
+
+      for (LayoutShape ls : _layoutShapeSelection) {
+            ls.setCoordsCenter(MathUtil.rotateDEG(ls.getCoordsCenter(), center, 90));
+            ls.rotateCoords(90);
+        }
+
+        resizePanelBounds(true);
+        setDirty();
+        redrawPanel();
+    }
+
+    /**
      * rotate the entire layout by 90 degrees clockwise
      */
-    public void rotate90() {
-        Rectangle2D bounds = resizePanelBounds(true);
-        Point2D lowerLeft = new Point2D.Double(bounds.getMinX(), bounds.getMaxY());
-
+    public void rotateLayout90() {
         List<Positionable> positionables = new ArrayList<Positionable>(_contents);
         positionables.addAll(backgroundImage);
         positionables.addAll(blockContentsLabelList);
@@ -2393,6 +2437,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //do this to remove duplicates that may be in more than one list
         positionables = positionables.stream().distinct().collect(Collectors.toList());
 
+        Rectangle2D bounds = getPanelBounds();
+        Point2D lowerLeft = new Point2D.Double(bounds.getMinX(), bounds.getMaxY());
+
         for (Positionable positionable : positionables) {
             Rectangle2D cBounds = positionable.getBounds(new Rectangle());
             Point2D newTopLeft = MathUtil.subtract(MathUtil.rotateDEG(positionable.getLocation(), lowerLeft, 90), lowerLeft);
@@ -2405,7 +2452,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                     }
                     positionableLabel.rotate(positionableLabel.getDegrees() + 90);
                 } catch (NullPointerException ex) {
-
                 }
             }
             if (reLocateFlag) {
