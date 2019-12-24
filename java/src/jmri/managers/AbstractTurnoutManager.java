@@ -428,8 +428,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     private LocalTime waitUntil = LocalTime.now();
 
     /** {@inheritDoc} */
-    @Nonnull
     @Override
+    @Nonnull
     public LocalTime outputIntervalEnds() {
         log.debug("outputIntervalEnds called in AbstractTurnoutManager");
         if (waitUntil.isAfter(LocalTime.now())) {

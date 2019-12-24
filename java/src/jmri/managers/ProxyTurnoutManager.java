@@ -275,26 +275,36 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
         return "Enter a number from 1 to 9999"; // Basic number format help
     }
 
-    /** {@inheritDoc} */
+    /** {@inheritDoc}
+     * @return outputInterval from first TurnoutManager
+     */
     @Override
     public int getOutputInterval() {
-        return 0;
+        return ((TurnoutManager) getMgr(0)).getOutputInterval();
     }
 
-    /** {@inheritDoc} */
+    /**
+     * {@inheritDoc}
+     * set outputInterval on all known TurnoutManagers
+     */
     @Override
     public void setOutputInterval(int newInterval) {
         log.debug("setOutputInterval called in ProxyTurnoutManager");
+        // not expected to be set via ProxyTurnoutManager
+        for (int i = 0; i < nMgrs(); i++) {
+            ((TurnoutManager) getMgr(i)).setOutputInterval(newInterval);
+        }
     }
 
-    /** {@inheritDoc}
-     * outputInterval is always 0 in ProxyTurnoutManager
+    /**
+     * {@inheritDoc}
+     * @return outputInterval from first TurnoutManager
      */
     @Nonnull
     @Override
     public LocalTime outputIntervalEnds() {
         log.debug("outputIntervalEnds called in ProxyTurnoutManager");
-        return LocalTime.now();
+        return ((TurnoutManager) getMgr(0)).outputIntervalEnds();
     }
 
     @Override
