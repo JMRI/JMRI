@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2004 - 2019 All rights reserved                     -->
-<!-- $Id$                                                                   -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,6 +14,7 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="jefflaw@datamasta.co.nz" version="1.00" lastUpdated="20040809"/>
 	<version author="W.D.Kok" version="2.00" lastUpdated="20180217"/>
+    <version author="Bob Jacobsen" version="3" lastUpdated="20190727"/> <!-- xinclude for CV19 -->
 	<version author="W.D.Kok" version="3.00" lastUpdated="20191202"/>
 	<!-- version 1.00 - initial version                                          -->
 	<!-- Version 2.00 - CV Corrections and German and Dutch translating inserted -->
