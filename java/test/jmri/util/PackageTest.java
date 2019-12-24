@@ -43,7 +43,6 @@ import org.junit.runners.Suite;
         WaitHandlerTest.class,
         PropertyChangeEventQueueTest.class,
         DateUtilTest.class,
-        BareBonesBrowserLaunchTest.class,
         ConnectionNameFromSystemNameTest.class,
         DnDStringImportHandlerTest.class,
         DnDTableExportHandlerTest.class,
