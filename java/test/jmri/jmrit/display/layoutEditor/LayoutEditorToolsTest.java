@@ -25,11 +25,11 @@ import org.netbeans.jemmy.util.NameComponentChooser;
  */
 public class LayoutEditorToolsTest {
 
-    @Rule   //10 second timeout for methods in this test class.
-    public Timeout globalTimeout = Timeout.seconds(10);
+    @Rule   //5 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(5);
 
     @Rule   //allow 5 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(5);
+    public RetryRule retryRule = new RetryRule(0);
 
     private static LayoutEditor layoutEditor = null;
     private static LayoutEditorTools let = null;
@@ -67,15 +67,11 @@ public class LayoutEditorToolsTest {
         ThreadingUtil.runOnLayoutEventually(() -> {
             let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
-        //the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
-        //then closes it.
-        jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"));
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -383,13 +379,7 @@ public class LayoutEditorToolsTest {
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
-        //the JFrameOperator waits for the set signal frame to appear
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
-        //then we find and press the "Cancel" button.
-        JButtonOperator jbo = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel"));
-        jbo.push();
-        ///jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"), Bundle.getMessage("ButtonCancel"));
     }
 
     @Test
@@ -404,11 +394,7 @@ public class LayoutEditorToolsTest {
             //this causes a "set Signal Heads Turnout" dialog to be displayed.
             let.setSignalsAtTurnoutFromMenu(to, getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
-        //the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
-        //then closes it.
-        jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"));
     }
 
     @Test
@@ -419,11 +405,7 @@ public class LayoutEditorToolsTest {
             //this causes a "set Signal Heads Level Crossing" dialog to be displayed.
             let.setSignalsAtLevelXing(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
-        //the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
-        //then closes it.
-        jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtLevelXing"));
     }
 
     @Test
@@ -438,14 +420,11 @@ public class LayoutEditorToolsTest {
             //this causes a "set Signal Heads Level Crossing" dialog to be displayed.
             let.setSignalsAtLevelXingFromMenu(lx, getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
-        //the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtLevelXing"));
-        //then closes it.
-        jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtLevelXing"));
     }
 
     @Test
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnouts() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
@@ -453,11 +432,7 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtThroatToThroatTurnouts(
                     getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
-        //the JFrameOperator waits for the set signal frame to appear,
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
-        //then closes it.
-        jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"), Bundle.getMessage("ButtonCancel"));
     }
 
     @Test
@@ -641,9 +616,9 @@ public class LayoutEditorToolsTest {
             }, "modalDialogOperatorThread1 finished");
 
             for (idx = 0; idx < 4; idx++) {
-            JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
-                    Bundle.getMessage("InfoMessage7"),
-                    Bundle.getMessage("ButtonOK"));
+                JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
+                        Bundle.getMessage("InfoMessage7"),
+                        Bundle.getMessage("ButtonOK"));
             }
         }
 //
@@ -663,13 +638,7 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtThroatToThroatTurnouts(
                     getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
-        //the JFrameOperator waits for the set signal frame to appear
-        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
-        //then we find and press the "Cancel" button.
-        JButtonOperator jbo = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonCancel"));
-        jbo.push();
-        ///jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"), Bundle.getMessage("ButtonCancel"));
     }
 
     @Test
@@ -715,7 +684,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    //@Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYIntAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -734,7 +703,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    //@Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtPointAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -754,7 +723,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    //@Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
@@ -841,6 +810,7 @@ public class LayoutEditorToolsTest {
 
     /**
      * convenience method for accessing...
+     *
      * @return the layout editor's toolbar panel
      */
     @Nonnull
