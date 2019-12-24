@@ -109,7 +109,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return -1;
     }
 
-    @Nonnull
     @Override
     @Nonnull
     public String getSystemPrefix() {
@@ -273,7 +272,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
         return " ";
     }
 
-    @Nonnull
     @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
