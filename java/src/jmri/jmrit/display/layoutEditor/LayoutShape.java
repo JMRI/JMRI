@@ -260,6 +260,19 @@ public class LayoutShape {
         }
     }
 
+    /**
+     * get point
+     *
+     * @param idx the index of the point to add
+     */
+    public Point2D getPoint(int idx) {
+        Point2D result = MathUtil.zeroPoint2D;
+        if (idx < shapePoints.size()) {
+            result = shapePoints.get(idx).getPoint();
+        }
+        return result;
+    }
+
     // should only be used by xml save code
     public ArrayList<LayoutShapePoint> getPoints() {
         return shapePoints;
@@ -410,7 +423,6 @@ public class LayoutShape {
      */
     public void rotateCoords(double angleDEG) {
         Point2D center = getCoordsCenter();
-        // rotate coordinates
         shapePoints.forEach((lsp) -> {
             lsp.setPoint(MathUtil.rotateDEG(lsp.getPoint(), center, angleDEG));
         });

@@ -872,7 +872,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         EditorFrameOperator jfo = new EditorFrameOperator(e);
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuTools"));
         Assert.assertNotNull("Tools Menu Exists", jmo);
-        Assert.assertEquals("Tools Menu Item Count", 17, jmo.getItemCount());
+        Assert.assertEquals("Tools Menu Item Count", 19, jmo.getItemCount());
     }
 
     @Test
@@ -918,7 +918,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideLeft"), "/");
 
-        new EventTool().waitNoEvent(500);
+        new EventTool().waitNoEvent(200);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -941,7 +941,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideBottom"), "/");
 
-        new EventTool().waitNoEvent(500);
+        new EventTool().waitNoEvent(200);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -963,7 +963,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideRight"), "/");
 
-        new EventTool().waitNoEvent(500);
+        new EventTool().waitNoEvent(200);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
