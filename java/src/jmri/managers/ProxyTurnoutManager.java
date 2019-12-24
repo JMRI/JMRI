@@ -284,7 +284,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     /** {@inheritDoc} */
     @Override
     public void setOutputInterval(int newInterval) {
-        log.warn("setOutputInterval called in ProxyTurnoutManager");
+        log.debug("setOutputInterval called in ProxyTurnoutManager");
     }
 
     /** {@inheritDoc}
