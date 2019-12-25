@@ -150,7 +150,6 @@ public class FormulaTest extends AbstractDigitalExpressionTestBase implements Fe
     
     @Test
     public void testGetChild() throws Exception {
-        if (1==1) return;
         Formula expression2 = new Formula("IQDE321", null);
 //        expression2.setFormula("R1");
         
