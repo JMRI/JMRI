@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- Schema for JMRI programmer name definitions       -->
+<!-- Schema for JMRI's file of NMRA manufacturer name definitions       -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010, 2015, 2019          -->
 <!--                                                                        -->
@@ -33,7 +33,7 @@
 
     <xs:annotation>
       <xs:documentation>
-      Defines the JMRI programmer definition file "names.xml"
+      Defines the JMRI's NMRA ID definition file "nmra_mfg_list.xml"
 
       This version is for use with JMRI 4.19.1 and later.
 
@@ -45,52 +45,19 @@
       </xs:appinfo>
     </xs:annotation>
 
-  <xs:complexType name="VersionType">
-      <xs:attribute name="author" type="xs:string" />
-      <xs:attribute name="version" type="xs:string" />
-      <xs:attribute name="lastUpdated" type="xs:string" />
+  <xs:complexType name="ManufacturerType">
+      <xs:attribute name="mfg" type="xs:string" />
+      <xs:attribute name="mfgID" type="xs:int" />
   </xs:complexType>
 
-  <xs:complexType name="DefinitionType">
-      <xs:attribute name="item" type="xs:string" />
-  </xs:complexType>
-
-  <xs:complexType name="DefinitionGroupType">
-    <xs:sequence>
-      <xs:element name="definition" type="DefinitionType" minOccurs="1" maxOccurs="unbounded" />
-    </xs:sequence>
-    <xs:attribute name="name" type="xs:string" />
-  </xs:complexType>
-
-  <xs:element name="names-config">
+  <xs:element name="mfgList">
     <xs:complexType>
       <xs:sequence>
-        <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" >
-              <xs:annotation><xs:documentation>
-              DocBook element(s) providing copyright information in standard form.
-              </xs:documentation></xs:annotation>
-        </xs:element>
-        <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" >
-              <xs:annotation><xs:documentation>
-              DocBook element(s) describing the authors in standard form.
-              </xs:documentation></xs:annotation>
-        </xs:element>
-        <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" >
-              <xs:annotation><xs:documentation>
-              DocBook element(s) describing the revision history in standard form.
-              </xs:documentation></xs:annotation>
-        </xs:element>
-        <xs:element name="version" type="VersionType" minOccurs="0" maxOccurs="unbounded">
-              <xs:annotation><xs:documentation>
-              Older form of version information. Not deprecated as such, but prefer
-              the authorgroup/revhistory style to enable future automated processing.
-              </xs:documentation></xs:annotation>
-        </xs:element>
-        <xs:sequence minOccurs="1" maxOccurs="unbounded">
-          <xs:element name="definitiongroup" type="DefinitionGroupType" minOccurs="0" maxOccurs="unbounded"/>
-          <xs:element name="definition"      type="DefinitionType"      minOccurs="0" maxOccurs="unbounded"/>
-        </xs:sequence>
+          <xs:element name="manufacturer" type="ManufacturerType" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
+      <xs:attribute name="nmraListDate" type="xs:string" />
+      <xs:attribute name="updated" type="xs:string" />
+      <xs:attribute name="lastadd" type="xs:string" />
     </xs:complexType>
   </xs:element>
 
