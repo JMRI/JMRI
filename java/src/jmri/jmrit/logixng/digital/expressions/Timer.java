@@ -149,8 +149,6 @@ public class Timer extends AbstractDigitalExpression {
     private TimerTask getNewTimerTask() {
         final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
         
-        if (c == null) throw new NullPointerException("getConditionalNG() returns null");
-        
         return new TimerTask() {
             @Override
             public void run() {
