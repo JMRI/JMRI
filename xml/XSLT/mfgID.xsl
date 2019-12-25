@@ -66,14 +66,49 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 </xsl:template>
 
 <!-- Index through manufacturers -->
-<xsl:template match="mfgList/manufacturer">
-<xsl:if test="not( @mfg = 'NMRA' )" >
-    <xsl:element name="a">
-        <xsl:attribute name="name"><xsl:value-of select="@mfgID"/></xsl:attribute>
-        <xsl:attribute name="id"><xsl:value-of select="@mfgID"/></xsl:attribute>
-    </xsl:element>
-    <h3><xsl:value-of select="@mfg"/> CV8=<xsl:value-of select="@mfgID"/></h3>
-</xsl:if>
+<xsl:template match="mfgList">
+
+  These tables are made from
+  <a href="https:/jmri.org/index.shtml">JMRI's</a>
+  local cache of the 
+  <a href="http://nmra.org">NMRA</a>'s 
+  <a href="https://www.nmra.org/sites/default/files/standards/sandrp/pdf/appendix_a_s-9.2.2.pdf">Manufacturer ID definitions</a>.
+  The content is the NMRAs, the formatting is JMRI's. 
+  <br/>
+  (And if you're curious why we make that distinction, there's 
+  <a href="https://www.jmri.org/k/summary.shtml">more info here</a>)
+  
+  <!-- the following blocks are identical except for title and sort element -->
+  
+  <h2>By Manufacturer Name</h2>
+  <table border="1">
+  <tr><th>Name</th><th>ID number</th></tr>
+  <xsl:for-each select="manufacturer">
+    <xsl:sort select="@mfg" /> <!-- by name -->
+    <xsl:if test="not( @mfg = 'NMRA' )" >
+      <xsl:element name="a">
+          <xsl:attribute name="name"><xsl:value-of select="@mfgID"/></xsl:attribute>
+          <xsl:attribute name="id"><xsl:value-of select="@mfgID"/></xsl:attribute>
+      </xsl:element>
+      <tr><td><xsl:value-of select="@mfg"/></td><td align="right"><xsl:value-of select="@mfgID"/></td></tr>
+    </xsl:if>
+  </xsl:for-each>
+  </table>
+
+  <h2>By Manufacturer Number</h2>
+  <table border="1">
+  <tr><th>Name</th><th>ID number</th></tr>
+  <xsl:for-each select="manufacturer">
+    <xsl:sort select="@mfgID" data-type="number"/> <!-- by number -->
+    <xsl:if test="not( @mfg = 'NMRA' )" >
+      <xsl:element name="a">
+          <xsl:attribute name="name"><xsl:value-of select="@mfgID"/></xsl:attribute>
+          <xsl:attribute name="id"><xsl:value-of select="@mfgID"/></xsl:attribute>
+      </xsl:element>
+      <tr><td><xsl:value-of select="@mfg"/></td><td align="right"><xsl:value-of select="@mfgID"/></td></tr>
+    </xsl:if>
+  </xsl:for-each>
+  </table>
 </xsl:template>
 
 
