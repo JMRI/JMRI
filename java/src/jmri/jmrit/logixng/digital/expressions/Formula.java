@@ -59,9 +59,10 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
     
     private FemaleGenericExpressionSocket createFemaleSocket(
             Base parent, FemaleSocketListener listener, String socketName) {
+        
         return new DefaultFemaleGenericExpressionSocket(
-                FemaleGenericExpressionSocket.SocketType.GENERIC,
-                parent, listener, socketName);
+                FemaleGenericExpressionSocket.SocketType.GENERIC, parent, listener, socketName)
+                .getGenericSocket();
     }
 
     /** {@inheritDoc} */
@@ -176,7 +177,6 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
     
     @Override
     public void connected(FemaleSocket socket) {
-        if (1==1) throw new RuntimeException("Daniel"); // Remove this. This is only to find why this is not happening. / Daniel
         boolean hasFreeSocket = false;
         for (ExpressionEntry entry : _expressionEntries) {
             hasFreeSocket = !entry._socket.isConnected();

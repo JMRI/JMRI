@@ -470,7 +470,6 @@ public abstract class AbstractBaseTestBase {
         Assert.assertEquals("num property change listeners matches",
                 3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
         
-        System.out.format("Ref: %s%n", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
         Assert.assertNull("listener ref is null", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
         
         boolean hasManagerListener = false;
@@ -481,7 +480,6 @@ public abstract class AbstractBaseTestBase {
             else if (l == lc) hasConnectedListener = true;
             else if (l == ld) hasDisconnectedListener = true;
             else Assert.fail("getPropertyChangeListeners() returns unknown listener: " + l.toString());
-            System.out.format("Property change listener: %s: %s%n", l, l.getClass().getName());
         }
         Assert.assertTrue("getPropertyChangeListeners() has manager listener", hasManagerListener);
         Assert.assertTrue("getPropertyChangeListeners() has connected listener", hasConnectedListener);
