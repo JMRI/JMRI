@@ -2,6 +2,44 @@
 <?xml-stylesheet href="/xml/XSLT/mfgID.xsl" type="text/xsl"?>
 <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166" 
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/nmra_mfg_list-4-19-1.xsd">
+
+  <!-- 
+    This file is JMRI's master list of NMRA manufacturer IDs.
+    
+    It can be viewed more readily in a web browser, which also
+    provides lists by name and number:
+        http://jmri.org/xml/nmra_mfg_list.xml
+    or your local copy (after starting the JMRI web server) at
+        http://localhost:12080/xml/nmra_mfg_list.xml
+        
+    It should be periodically updated from the contents of 
+    the NMRA's definition.  (The formatting is ours, the content
+    is the NMRA's; see https://www.jmri.org/k/summary.shtml)
+    At the time of this writing, the NMRA's list was at
+        https://www.nmra.org/sites/default/files/standards/sandrp/pdf/appendix_a_s-9.2.2.pdf
+    
+    The schema for this file may be found at 
+        http://jmri.org/xml/schema/nmra_mfg_list-4-19-1.xsd
+
+    Note that definitions should not be removed from this, even if the 
+    NMRA removes it from their documentation:  Some JMRI users may be 
+    depending on it.
+    
+    Be careful with spelling changes, including even changes to abbreviations
+    and capitalization.  Decoder definitions (including local ones that 
+    JMRI users may have created for themselves) depend on these strings.
+    
+    When you update this file, please adjust the attributes above:
+        updated:        The date you did the update
+        
+        nmraListDate:   The date on the NMRA document from which you updated
+        
+        lastadd         The last values you added. The NMRA used to 
+                        add values sequentially, and this made it
+                        easier to find changes.  It's not clear 
+                        what pattern they've used recently.
+
+  -->
   <manufacturer mfg="NMRA" mfgID="999" />
   <manufacturer mfg="A-Train Electronics" mfgID="137" />
   <manufacturer mfg="AMW" mfgID="19" />
