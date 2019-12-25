@@ -33,9 +33,9 @@ public class DoAnalogAction
     public DoAnalogAction(String sys, String user) {
         super(sys, user);
         _analogExpressionSocket = InstanceManager.getDefault(AnalogExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
+                .createFemaleSocket(this, this, "E");
         _analogActionSocket = InstanceManager.getDefault(AnalogActionManager.class)
-                .createFemaleSocket(this, this, "A1");
+                .createFemaleSocket(this, this, "A");
     }
     
     /** {@inheritDoc} */

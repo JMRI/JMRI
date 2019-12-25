@@ -384,6 +384,7 @@ public class DefaultFemaleGenericExpressionSocket
                 throw new SocketAlreadyConnectedException("Socket is already connected");
             } else {
                 _currentActiveSocket.connect(socket);
+                getConnectedSocket().getSystemName();
                 return;
             }
         }
@@ -394,17 +395,16 @@ public class DefaultFemaleGenericExpressionSocket
         if (_digitalSocket.isCompatible(socket)) {
             _currentSocketType = SocketType.DIGITAL;
             _currentActiveSocket = _digitalSocket;
-            _currentActiveSocket.connect(socket);
         } else if (_analogSocket.isCompatible(socket)) {
             _currentSocketType = SocketType.ANALOG;
             _currentActiveSocket = _analogSocket;
-            _currentActiveSocket.connect(socket);
         } else if (_stringSocket.isCompatible(socket)) {
             _currentSocketType = SocketType.STRING;
             _currentActiveSocket = _stringSocket;
         } else {
             throw new IllegalArgumentException("Socket is not compatible");
         }
+        _currentActiveSocket.connect(socket);
     }
 
     /** {@inheritDoc} */

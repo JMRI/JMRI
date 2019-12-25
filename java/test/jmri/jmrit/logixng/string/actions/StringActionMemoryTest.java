@@ -61,10 +61,10 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
-                "         Read string E1 and set string A1%n" +
-                "            ?s E1%n" +
+                "         Read string E and set string A%n" +
+                "            ?s E%n" +
                 "               Socket not connected%n" +
-                "            !s A1%n" +
+                "            !s A%n" +
                 "               Set memory IM1%n");
     }
     

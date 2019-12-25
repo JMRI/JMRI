@@ -8,6 +8,7 @@ import org.junit.runners.Suite;
     jmri.jmrit.logixng.analog.expressions.configurexml.PackageTest.class,
     AnalogExpressionConstantTest.class,
     AnalogExpressionMemoryTest.class,
+    FormulaTest.class,
 })
 
 /**

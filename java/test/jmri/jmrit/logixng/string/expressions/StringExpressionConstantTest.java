@@ -66,10 +66,10 @@ public class StringExpressionConstantTest extends AbstractStringExpressionTestBa
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
-                "         Read string E1 and set string A1%n" +
-                "            ?s E1%n" +
+                "         Read string E and set string A%n" +
+                "            ?s E%n" +
                 "               Get constant value \"Something\"%n" +
-                "            !s A1%n" +
+                "            !s A%n" +
                 "               Set memory IM2%n");
     }
     

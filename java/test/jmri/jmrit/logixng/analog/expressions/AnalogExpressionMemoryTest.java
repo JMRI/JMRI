@@ -71,10 +71,10 @@ public class AnalogExpressionMemoryTest extends AbstractAnalogExpressionTestBase
                 "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
-                "         Read analog E1 and set analog A1%n" +
-                "            ?~ E1%n" +
+                "         Read analog E and set analog A%n" +
+                "            ?~ E%n" +
                 "               Get memory IM1%n" +
-                "            !~ A1%n" +
+                "            !~ A%n" +
                 "               Set memory IM2%n");
     }
     

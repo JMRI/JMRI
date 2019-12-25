@@ -17,10 +17,10 @@ import org.junit.Test;
  */
 public abstract class AbstractStringExpressionTestBase extends AbstractBaseTestBase {
 
-    public abstract NamedBean createNewBean(String systemName);
+    public abstract NamedBean createNewBean(String systemName) throws Exception;
     
     @Test
-    public void testBadSystemName() {
+    public void testBadSystemName() throws Exception {
         boolean hasThrown = false;
         try {
             // Create a bean with bad system name. This must throw an exception

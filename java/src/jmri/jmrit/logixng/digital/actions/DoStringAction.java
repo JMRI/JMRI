@@ -33,9 +33,9 @@ public class DoStringAction
     public DoStringAction(String sys, String user) {
         super(sys, user);
         _stringExpressionSocket = InstanceManager.getDefault(StringExpressionManager.class)
-                .createFemaleSocket(this, this, "E1");
+                .createFemaleSocket(this, this, "E");
         _stringActionSocket = InstanceManager.getDefault(StringActionManager.class)
-                .createFemaleSocket(this, this, "A1");
+                .createFemaleSocket(this, this, "A");
     }
     
     /** {@inheritDoc} */

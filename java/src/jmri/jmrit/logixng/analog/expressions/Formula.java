@@ -1,4 +1,4 @@
-package jmri.jmrit.logixng.digital.expressions;
+package jmri.jmrit.logixng.analog.expressions;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -8,11 +8,11 @@ import java.util.Map;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import jmri.InstanceManager;
+import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleGenericExpressionSocket;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2019
  */
-public class Formula extends AbstractDigitalExpression implements FemaleSocketListener {
+public class Formula extends AbstractAnalogExpression implements FemaleSocketListener {
 
     private String _formula = "";
     private ExpressionNode _expressionNode;
@@ -78,13 +78,13 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
     
     /** {@inheritDoc} */
     @Override
-    public boolean evaluate() throws Exception {
+    public double evaluate() throws Exception {
         
         if (_formula.isEmpty()) {
-            return false;
+            return 0.0;
         }
         
-        return TypeConversionUtil.convertToBoolean(_expressionNode.calculate(), false);
+        return TypeConversionUtil.convertToDouble(_expressionNode.calculate(), false);
     }
     
     /** {@inheritDoc} */
@@ -146,7 +146,7 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
             FemaleGenericExpressionSocket socket =
                     createFemaleSocket(this, this, entry.getKey());
 //            FemaleGenericExpressionSocket socket =
-//                    InstanceManager.getDefault(DigitalExpressionManager.class)
+//                    InstanceManager.getDefault(AnalogExpressionManager.class)
 //                            .createFemaleSocket(this, this, entry.getKey());
             
             _expressionEntries.add(new ExpressionEntry(socket, entry.getValue()));
@@ -215,7 +215,7 @@ public class Formula extends AbstractDigitalExpression implements FemaleSocketLi
                     ee._socket.disconnect();
                     if (socketSystemName != null) {
                         MaleSocket maleSocket =
-                                InstanceManager.getDefault(DigitalExpressionManager.class)
+                                InstanceManager.getDefault(AnalogExpressionManager.class)
                                         .getBeanBySystemName(socketSystemName);
                         if (maleSocket != null) {
                             ee._socket.connect(maleSocket);

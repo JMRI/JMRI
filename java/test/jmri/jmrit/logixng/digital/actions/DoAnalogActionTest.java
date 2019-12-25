@@ -54,10 +54,10 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
     @Override
     public String getExpectedPrintedTree() {
         return String.format(
-                "Read analog E1 and set analog A1%n" +
-                "   ?~ E1%n" +
+                "Read analog E and set analog A%n" +
+                "   ?~ E%n" +
                 "      Socket not connected%n" +
-                "   !~ A1%n" +
+                "   !~ A%n" +
                 "      Socket not connected%n");
     }
     
@@ -67,10 +67,10 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
-                "         Read analog E1 and set analog A1%n" +
-                "            ?~ E1%n" +
+                "         Read analog E and set analog A%n" +
+                "            ?~ E%n" +
                 "               Socket not connected%n" +
-                "            !~ A1%n" +
+                "            !~ A%n" +
                 "               Socket not connected%n");
     }
     

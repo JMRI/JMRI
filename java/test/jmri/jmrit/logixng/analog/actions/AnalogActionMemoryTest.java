@@ -61,10 +61,10 @@ public class AnalogActionMemoryTest extends AbstractAnalogActionTestBase {
                 "LogixNG: A new logix for test%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
-                "         Read analog E1 and set analog A1%n" +
-                "            ?~ E1%n" +
+                "         Read analog E and set analog A%n" +
+                "            ?~ E%n" +
                 "               Socket not connected%n" +
-                "            !~ A1%n" +
+                "            !~ A%n" +
                 "               Set memory IM1%n");
     }
     
