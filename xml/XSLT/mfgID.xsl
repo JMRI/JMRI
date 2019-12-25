@@ -49,25 +49,6 @@
 	<body>
 		<h2>NMRA Manufacturer IDs</h2>
 
-                <xsl:apply-templates/>
-
-<hr/>
-This page was produced by <a href="http://jmri.org">JMRI</a>.
-<p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
-
-<p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
-<p/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
-<p/>Site hosted by: <br/>
-		<a href="http://www.tagadab.com/">
-		<img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
-	</body>
-</html>
-
-</xsl:template>
-
-<!-- Index through manufacturers -->
-<xsl:template match="mfgList">
-
   These tables are made from
   <a href="https:/jmri.org/index.shtml">JMRI's</a>
   local cache of the 
@@ -77,10 +58,10 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
   <br/>
   (And if you're curious why we make that distinction, there's 
   <a href="https://www.jmri.org/k/summary.shtml">more info here</a>)
-  
+
   <!-- the following blocks are identical except for title and sort element -->
   
-  <h2>By Manufacturer Name</h2>
+  <h3>By Manufacturer Name</h3>
   <table border="1">
   <tr><th>Name</th><th>ID number</th></tr>
   <xsl:for-each select="manufacturer">
@@ -95,7 +76,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
   </xsl:for-each>
   </table>
 
-  <h2>By Manufacturer Number</h2>
+  <h3>By Manufacturer Number</h3>
   <table border="1">
   <tr><th>Name</th><th>ID number</th></tr>
   <xsl:for-each select="manufacturer">
@@ -109,6 +90,19 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
     </xsl:if>
   </xsl:for-each>
   </table>
+
+<hr/>
+This page was produced by <a href="http://jmri.org">JMRI</a>.
+<p/>Copyright &#169; <xsl:value-of select="$JmriCopyrightYear" /> JMRI Community.
+
+<p/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
+<p/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
+<p/>Site hosted by: <br/>
+		<a href="http://www.tagadab.com/">
+		<img src="https://www.tagadab.com/sites/default/files/logo-tagadab-nostrap.png" height="28" width="103" border="0" alt="Tagadab logo"/></a>
+	</body>
+</html>
+
 </xsl:template>
 
 
