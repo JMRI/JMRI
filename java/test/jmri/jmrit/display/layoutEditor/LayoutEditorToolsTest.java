@@ -72,27 +72,10 @@ public class LayoutEditorToolsTest {
 
     @Test
     //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
-    public void testSetSignalsAtTurnoutWithDone() {
+    public void testSetSignalsAtTurnoutWithDonePart1() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
-        //create a new Layout Turnout
-        layoutTurnout = new LayoutTurnout("Right Hand",
-                LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
-                33.0, 1.1, 1.2, layoutEditor);
-        Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
-        layoutEditor.getLayoutTracks().add(layoutTurnout);
-
-        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(250.0, 100.0), layoutEditor);
-        Assert.assertNotNull("positionablePoint1 for testSetSignalsAtTurnoutWithDone", positionablePoint1);
-        layoutEditor.getLayoutTracks().add(positionablePoint1);
-
-        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(50.0, 100.0), layoutEditor);
-        layoutEditor.getLayoutTracks().add(positionablePoint2);
-        Assert.assertNotNull("positionablePoint2 for testSetSignalsAtTurnoutWithDone", positionablePoint2);
-
-        positionablePoint3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(250.0, 150.0), layoutEditor);
-        layoutEditor.getLayoutTracks().add(positionablePoint3);
-        Assert.assertNotNull("positionablePoint3 for testSetSignalsAtTurnoutWithDone", positionablePoint3);
+        setupSetSignalsAtTurnoutWithDone();
 
         //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -114,11 +97,49 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread0.isAlive());
         }, "modalDialogOperatorThread0 finished");
 
-        //select the turnout from the popup menu
-        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
-                jFrameOperator, new NameComponentChooser("turnoutComboBox"));
-        JemmyUtil.dumpToXML();
-        jComboBoxOperator.selectItem(0);  //TODO:fix hardcoded index
+        //now close this dialog
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"));
+    }   //testSetSignalsAtTurnoutWithDonePart1
+
+    private void setupSetSignalsAtTurnoutWithDone() {
+        List<LayoutTrack> layoutTracks = layoutEditor.getLayoutTracks();
+        //create a new Layout Turnout
+        layoutTurnout = new LayoutTurnout("Right Hand",
+                LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
+                33.0, 1.1, 1.2, layoutEditor);
+        Assert.assertNotNull("RH turnout for testSetSignalsAtTurnoutWithDone", layoutTurnout);
+        layoutTracks.add(layoutTurnout);
+
+        positionablePoint1 = new PositionablePoint("A1", PositionablePoint.ANCHOR, new Point2D.Double(250.0, 100.0), layoutEditor);
+        Assert.assertNotNull("positionablePoint1 for testSetSignalsAtTurnoutWithDone", positionablePoint1);
+        layoutTracks.add(positionablePoint1);
+
+        positionablePoint2 = new PositionablePoint("A2", PositionablePoint.ANCHOR, new Point2D.Double(50.0, 100.0), layoutEditor);
+        layoutTracks.add(positionablePoint2);
+        Assert.assertNotNull("positionablePoint2 for testSetSignalsAtTurnoutWithDone", positionablePoint2);
+
+        positionablePoint3 = new PositionablePoint("A3", PositionablePoint.ANCHOR, new Point2D.Double(250.0, 150.0), layoutEditor);
+        layoutTracks.add(positionablePoint3);
+        Assert.assertNotNull("positionablePoint3 for testSetSignalsAtTurnoutWithDone", positionablePoint3);
+    }   //setupSetSignalsAtTurnoutWithDone
+
+    @Test
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    public void testSetSignalsAtTurnoutWithDonePart2() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        setupSetSignalsAtTurnoutWithDone();
+
+        //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtTurnoutWithDonePart2(jFrameOperator);
 
         //pressing "Done" should display a dialog
         //SignalsError3 = Error - Turnout "{0}" is not drawn on the panel.\nPlease enter the name of a drawn turnout.
@@ -131,7 +152,34 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread0a.isAlive());
         }, "modalDialogOperatorThread0a finished");
 
-        layoutTurnout.setTurnout(turnouts[0].getSystemName()); //this should fix the "is not drawn on the panel" error
+        //now close this dialog
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"));
+    }   //testSetSignalsAtTurnoutWithDonePart2
+
+    private void setupSetSignalsAtTurnoutWithDonePart2(JFrameOperator jFrameOperator) {
+        //select the turnout from the popup menu
+        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new NameComponentChooser("turnoutComboBox"));
+        jComboBoxOperator.selectItem(0);  //TODO:fix hardcoded index
+    }
+
+    @Test
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    public void testSetSignalsAtTurnoutWithDonePart3() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        setupSetSignalsAtTurnoutWithDone();
+
+        //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtTurnoutWithDonePart3(jFrameOperator);
 
         JButtonOperator jButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("GetSaved"));
         jButtonOperator.push();
@@ -141,8 +189,9 @@ public class LayoutEditorToolsTest {
 
         //select the "SetAllLogic" checkbox
         JCheckBoxOperator allLogicCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetAllLogic"));
-        allLogicCheckBoxOperator.push(); //turn all on
-        allLogicCheckBoxOperator.push(); //turn all off
+        do {
+            allLogicCheckBoxOperator.push(); //toggle all on/off
+        } while (allLogicCheckBoxOperator.isSelected());
 
         /*
         * test all four comboboxes for "Signal head name was not entered"  (SignalsError5)
@@ -158,10 +207,32 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread1.isAlive());
         }, "modalDialogOperatorThread1 finished");
 
-        //select signal head for this combobox
-        jComboBoxOperator = new JComboBoxOperator(
-                jFrameOperator, new NameComponentChooser("throatContinuingSignalHeadComboBox"));
-        jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+        //now close this dialog
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"));
+    }   //testSetSignalsAtTurnoutWithDonePart3
+
+    private void setupSetSignalsAtTurnoutWithDonePart3(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtTurnoutWithDonePart2(jFrameOperator);
+        layoutTurnout.setTurnout(turnouts[0].getSystemName()); //this should fix the "is not drawn on the panel" error
+    }
+
+    @Test
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    public void testSetSignalsAtTurnoutWithDonePart4() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        setupSetSignalsAtTurnoutWithDone();
+
+        //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtTurnoutWithDonePart4(jFrameOperator);
 
         //pressing "Done" should display a dialog
         //SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
@@ -174,10 +245,36 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread2.isAlive());
         }, "modalDialogOperatorThread2 finished");
 
+        //now close this dialog
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"));
+    }   //testSetSignalsAtTurnoutWithDonePart4
+
+    private void setupSetSignalsAtTurnoutWithDonePart4(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtTurnoutWithDonePart3(jFrameOperator);
+
         //select signal head for this combobox
-        jComboBoxOperator = new JComboBoxOperator(
-                jFrameOperator, new NameComponentChooser("throatDivergingSignalHeadComboBox"));
-        jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new NameComponentChooser("throatContinuingSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+    }
+
+    @Test
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    public void testSetSignalsAtTurnoutWithDonePart5() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        setupSetSignalsAtTurnoutWithDone();
+
+        //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtTurnoutWithDonePart5(jFrameOperator);
 
         //pressing "Done" should display a dialog
         //SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
@@ -190,10 +287,36 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread3.isAlive());
         }, "modalDialogOperatorThread3 finished");
 
+        //now close this dialog
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"));
+    }   //testSetSignalsAtTurnoutWithDonePart5
+
+    private void setupSetSignalsAtTurnoutWithDonePart5(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtTurnoutWithDonePart4(jFrameOperator);
+
         //select signal head for this combobox
-        jComboBoxOperator = new JComboBoxOperator(
-                jFrameOperator, new NameComponentChooser("continuingSignalHeadComboBox"));
-        jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
+        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new NameComponentChooser("throatDivergingSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+    }
+
+    @Test
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    public void testSetSignalsAtTurnoutWithDonePart6() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        setupSetSignalsAtTurnoutWithDone();
+
+        //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtTurnoutWithDonePart6(jFrameOperator);
 
         //pressing "Done" should display a dialog
         //SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
@@ -206,14 +329,133 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread4.isAlive());
         }, "modalDialogOperatorThread4 finished");
 
+        //now close this dialog
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"));
+    }   //testSetSignalsAtTurnoutWithDonePart6
+
+    private void setupSetSignalsAtTurnoutWithDonePart6(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtTurnoutWithDonePart5(jFrameOperator);
+
         //select signal head for this combobox
-        jComboBoxOperator = new JComboBoxOperator(
-                jFrameOperator, new NameComponentChooser("divergingSignalHeadComboBox"));
-        jComboBoxOperator.selectItem(4); //TODO:fix hardcoded index
+        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new NameComponentChooser("continuingSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
+    }
+
+    @Test
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    public void testSetSignalsAtTurnoutWithDonePart7a() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        setupSetSignalsAtTurnoutWithDone();
+
+        //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtTurnoutWithDonePart7(jFrameOperator);
 
         testSetupSSL(0);    //test Throat Continuing SSL logic setup
+//        testSetupSSL(1);    //test Throat Diverging SSL logic setup
+//        testSetupSSL(2);    //test Continuing SSL logic setup
+//        testSetupSSL(3);    //test Diverging SSL logic setup
+
+        //TODO: fix the other failure conditions (testing each one)
+        //layoutBlocks[i].setOccupancySensorName(uName);
+//
+        //this time everything should work
+        doneButtonOperator.push();
+        jFrameOperator.waitClosed();    //make sure the dialog closed
+    }   //testSetSignalsAtTurnoutWithDonePart7a
+
+    @Test
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    public void testSetSignalsAtTurnoutWithDonePart7b() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        setupSetSignalsAtTurnoutWithDone();
+
+        //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtTurnoutWithDonePart7(jFrameOperator);
+
+//        testSetupSSL(0);    //test Throat Continuing SSL logic setup
         testSetupSSL(1);    //test Throat Diverging SSL logic setup
+//        testSetupSSL(2);    //test Continuing SSL logic setup
+//        testSetupSSL(3);    //test Diverging SSL logic setup
+
+        //TODO: fix the other failure conditions (testing each one)
+        //layoutBlocks[i].setOccupancySensorName(uName);
+//
+        //this time everything should work
+        doneButtonOperator.push();
+        jFrameOperator.waitClosed();    //make sure the dialog closed
+    }   //testSetSignalsAtTurnoutWithDonePart7b
+
+    @Test
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    public void testSetSignalsAtTurnoutWithDonePart7c() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        setupSetSignalsAtTurnoutWithDone();
+
+        //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtTurnoutWithDonePart7(jFrameOperator);
+
+//        testSetupSSL(0);    //test Throat Continuing SSL logic setup
+//        testSetupSSL(1);    //test Throat Diverging SSL logic setup
         testSetupSSL(2);    //test Continuing SSL logic setup
+//        testSetupSSL(3);    //test Diverging SSL logic setup
+
+        //TODO: fix the other failure conditions (testing each one)
+        //layoutBlocks[i].setOccupancySensorName(uName);
+//
+        //this time everything should work
+        doneButtonOperator.push();
+        jFrameOperator.waitClosed();    //make sure the dialog closed
+    }   //testSetSignalsAtTurnoutWithDonePart7c
+
+    @Test
+    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    public void testSetSignalsAtTurnoutWithDonePart7d() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+
+        setupSetSignalsAtTurnoutWithDone();
+
+        //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtTurnoutWithDonePart7(jFrameOperator);
+
+//        testSetupSSL(0);    //test Throat Continuing SSL logic setup
+//        testSetupSSL(1);    //test Throat Diverging SSL logic setup
+//        testSetupSSL(2);    //test Continuing SSL logic setup
         testSetupSSL(3);    //test Diverging SSL logic setup
 
         //TODO: fix the other failure conditions (testing each one)
@@ -222,7 +464,16 @@ public class LayoutEditorToolsTest {
         //this time everything should work
         doneButtonOperator.push();
         jFrameOperator.waitClosed();    //make sure the dialog closed
-    }   //testSetSignalsAtTurnoutWithDone
+    }   //testSetSignalsAtTurnoutWithDonePart7d
+
+    private void setupSetSignalsAtTurnoutWithDonePart7(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtTurnoutWithDonePart6(jFrameOperator);
+
+        //select signal head for this combobox
+        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new NameComponentChooser("divergingSignalHeadComboBox"));
+        jComboBoxOperator.selectItem(4); //TODO:fix hardcoded index
+    }
 
     /*
      * test SSL logic setup
@@ -240,7 +491,7 @@ public class LayoutEditorToolsTest {
         //InfoMessage7 = Cannot set up logic because all connections\nhave not been defined around this item.
         Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
-                //Bundle.getMessage("InfoMessage6"),
+                //Bundle.getMessage("InfoMessage7"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
@@ -254,6 +505,10 @@ public class LayoutEditorToolsTest {
         ThreadingUtil.runOnLayoutEventually(() -> {
             let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        jfoSignalsAtTurnout = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        doneButtonOperator = new JButtonOperator(jfoSignalsAtTurnout, Bundle.getMessage("ButtonDone"));
 
         //define connection
         String uName = "T" + (idx + 1);
@@ -276,7 +531,7 @@ public class LayoutEditorToolsTest {
         //InfoMessage6 = Cannot set up logic because blocks have\nnot been defined around this item.
         Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
-                Bundle.getMessage("InfoMessage6"),
+                //Bundle.getMessage("InfoMessage6"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
@@ -290,6 +545,10 @@ public class LayoutEditorToolsTest {
         ThreadingUtil.runOnLayoutEventually(() -> {
             let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
+
+        //the JFrameOperator waits for the set signal frame to appear
+        jfoSignalsAtTurnout = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        doneButtonOperator = new JButtonOperator(jfoSignalsAtTurnout, Bundle.getMessage("ButtonDone"));
 
         //change anchor to end bumper
         positionablePoints[idx].setType(PositionablePoint.END_BUMPER);
@@ -317,6 +576,10 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
 
+        //the JFrameOperator waits for the set signal frame to appear
+        jfoSignalsAtTurnout = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
+        doneButtonOperator = new JButtonOperator(jfoSignalsAtTurnout, Bundle.getMessage("ButtonDone"));
+
         //pressing "Done" should display a dialog
         //InfoMessage4 = Cannot set up logic because block "{0}"\ndoesn''t have an occupancy sensor.
         Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
@@ -339,8 +602,10 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
 
+        //the JFrameOperator waits for the set signal frame to appear
         jfoSignalsAtTurnout = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
         doneButtonOperator = new JButtonOperator(jfoSignalsAtTurnout, Bundle.getMessage("ButtonDone"));
+
         doneButtonOperator.push();
         // make sure the dialog closed
         jfoSignalsAtTurnout.waitClosed();
@@ -352,7 +617,7 @@ public class LayoutEditorToolsTest {
 
         //the JFrameOperator waits for the set signal frame to (re)appear
         jfoSignalsAtTurnout = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
-        //doneButtonOperator = new JButtonOperator(jfoSignalsAtTurnout, Bundle.getMessage("ButtonDone"));
+        doneButtonOperator = new JButtonOperator(jfoSignalsAtTurnout, Bundle.getMessage("ButtonDone"));
 
         cboSetLogic = new JCheckBoxOperator(jfoSignalsAtTurnout, Bundle.getMessage("SetLogic"), idx);
         cboSetLogic.push(); //turn off
@@ -364,7 +629,7 @@ public class LayoutEditorToolsTest {
         positionablePoint1.setType(PositionablePoint.ANCHOR);
         positionablePoint2.setType(PositionablePoint.ANCHOR);
         positionablePoint3.setType(PositionablePoint.ANCHOR);
-    }
+    }   //testSetupSSL
 
     @Test
     public void testSetSignalsAtTurnoutWithCancel() {
@@ -436,7 +701,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    public void testSetSignalsAtThroatToThroatTurnoutsWithDone() {
+    public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart1() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
             //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
@@ -458,17 +723,22 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread0.isAlive());
         }, "modalDialogOperatorThread0 finished");
 
-        //so lets create a turnout
-        layoutTurnout = new LayoutTurnout("Right Hand",
-                LayoutTurnout.RH_TURNOUT, new Point2D.Double(100.0, 100.0),
-                180.0, 1.1, 1.2, layoutEditor);
-        Assert.assertNotNull("RH turnout for testSetSignalsAtThroatToThroatTurnoutsWithDone", layoutTurnout);
-        layoutEditor.getLayoutTracks().add(layoutTurnout);
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"));
+    }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart1
 
-        //select the turnout from the popup menu
-        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
-                jFrameOperator, new NameComponentChooser("turnout1ComboBox"));
-        jComboBoxOperator.selectItem(0);  //TODO:fix hardcoded index
+    @Test
+    public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart2() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear,
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart2(jFrameOperator);
 
         //pressing "Done" should display a dialog
         //SignalsError3 = Error - Turnout "{0}" is not drawn on the panel.\nPlease enter the name of a drawn turnout.
@@ -481,7 +751,37 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread1.isAlive());
         }, "modalDialogOperatorThread1 finished");
 
-        layoutTurnout.setTurnout(turnouts[0].getSystemName()); //this should fix the "is not drawn on the panel" error
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"));
+    }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart2
+
+    private void setupSetSignalsAtThroatToThroatTurnoutsWithDonePart2(JFrameOperator jFrameOperator) {
+        //fixes SignalsError1 = Error - No turnout name was entered. Please enter a turnout name or cancel.
+        //so lets create a turnout
+        layoutTurnout = new LayoutTurnout("Right Hand",
+                LayoutTurnout.RH_TURNOUT, new Point2D.Double(100.0, 100.0),
+                180.0, 1.1, 1.2, layoutEditor);
+        Assert.assertNotNull("RH turnout for testSetSignalsAtThroatToThroatTurnoutsWithDone", layoutTurnout);
+        layoutEditor.getLayoutTracks().add(layoutTurnout);
+
+        //select the turnout from the popup menu
+        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new NameComponentChooser("turnout1ComboBox"));
+        jComboBoxOperator.selectItem(0);  //TODO:fix hardcoded index
+    }
+
+    @Test
+    public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart3() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear,
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart3(jFrameOperator);
 
         //pressing "Done" should display a dialog
         //SignalsError18 = Error - This tool requires two turnouts (RH, LH, or WYE) \nconnected throat-to-throat by a single track segment.
@@ -494,20 +794,28 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread2.isAlive());
         }, "modalDialogOperatorThread2 finished");
 
-        //so lets create a second turnout
-        layoutTurnout2 = new LayoutTurnout("Left Hand",
-                LayoutTurnout.LH_TURNOUT, new Point2D.Double(200.0, 100.0),
-                0.0, 1.1, 1.2, layoutEditor);
-        Assert.assertNotNull("LH turnout for testSetSignalsAtThroatToThroatTurnoutsWithDone", layoutTurnout2);
-        layoutEditor.getLayoutTracks().add(layoutTurnout2);
-        layoutTurnout2.setTurnout(turnouts[1].getSystemName()); //this should fix the "is not drawn on the panel" error
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"));
+    }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart3
 
-        jComboBoxOperator = new JComboBoxOperator(
-                jFrameOperator, new NameComponentChooser("turnout2ComboBox"));
-        jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+    private void setupSetSignalsAtThroatToThroatTurnoutsWithDonePart3(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart2(jFrameOperator);
+        //fixes SignalsError3 = Error - Turnout "{0}" is not drawn on the panel.\nPlease enter the name of a drawn turnout.
+        layoutTurnout.setTurnout(turnouts[0].getSystemName());
+    }
 
-        trackSegment = addNewTrackSegment(layoutTurnout, LayoutTrack.TURNOUT_A,
-                layoutTurnout2, LayoutTrack.TURNOUT_A, 1);
+    @Test
+    public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart4() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear,
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart4(jFrameOperator);
 
         JButtonOperator jButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("GetSaved"));
         jButtonOperator.push();
@@ -517,8 +825,9 @@ public class LayoutEditorToolsTest {
 
         //select the "SetAllLogic" checkbox
         JCheckBoxOperator allLogicCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetAllLogic"));
-        allLogicCheckBoxOperator.push(); //turn all on
-        allLogicCheckBoxOperator.push(); //turn all off
+        do {
+            allLogicCheckBoxOperator.push(); //toggle all on/off
+        } while (allLogicCheckBoxOperator.isSelected());
 
         //pressing "Done" should display a dialog
         //SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
@@ -531,6 +840,50 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread3.isAlive());
         }, "modalDialogOperatorThread3 finished");
 
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"));
+    }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart4
+
+    private void setupSetSignalsAtThroatToThroatTurnoutsWithDonePart4(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart3(jFrameOperator);
+        //fixes SignalsError18 = Error - This tool requires two turnouts (RH, LH, or WYE) \nconnected throat-to-throat by a single track segment.
+        //so lets create a second turnout
+        layoutTurnout2 = new LayoutTurnout("Left Hand",
+                LayoutTurnout.LH_TURNOUT, new Point2D.Double(200.0, 100.0),
+                0.0, 1.1, 1.2, layoutEditor);
+        Assert.assertNotNull("LH turnout for testSetSignalsAtThroatToThroatTurnoutsWithDone", layoutTurnout2);
+        layoutEditor.getLayoutTracks().add(layoutTurnout2);
+        layoutTurnout2.setTurnout(turnouts[1].getSystemName()); //this should fix the "is not drawn on the panel" error
+
+        JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
+                jFrameOperator, new NameComponentChooser("turnout2ComboBox"));
+        jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+
+        trackSegment = addNewTrackSegment(layoutTurnout, LayoutTrack.TURNOUT_A,
+                layoutTurnout2, LayoutTrack.TURNOUT_A, 1);
+    }
+
+    @Test
+    public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart5() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear,
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart5(jFrameOperator);
+
+        //this time everything should work
+        doneButtonOperator.push();
+        jFrameOperator.waitClosed();    //make sure the dialog closed
+    }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart5
+
+    private void setupSetSignalsAtThroatToThroatTurnoutsWithDonePart5(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart4(jFrameOperator);
+        //fixes SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
         //select the turnouts from the popup menus
         List<String> names = new ArrayList<>(Arrays.asList(
                 "a1TToTSignalHeadComboBox",
@@ -543,14 +896,24 @@ public class LayoutEditorToolsTest {
                 "d2TToTSignalHeadComboBox"));
         int idx = 0;
         for (String name : names) {
-            jComboBoxOperator = new JComboBoxOperator(
+            JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                     jFrameOperator, new NameComponentChooser(name));
             jComboBoxOperator.selectItem(idx++);  //TODO:fix hardcoded index
         }
+    }
 
-        //this time everything should work
-        doneButtonOperator.push();
-        jFrameOperator.waitClosed();    //make sure the dialog closed
+    @Test
+    public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart6() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear,
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
         ThreadingUtil.runOnLayoutEventually(() -> {
             //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
             let.setSignalsAtThroatToThroatTurnouts(
@@ -559,8 +922,8 @@ public class LayoutEditorToolsTest {
         //the JFrameOperator waits for the set signal frame to appear
         jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
         doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
-        //allLogicCheckBoxOperator = new JCheckBoxOperator(jFrameOperator, Bundle.getMessage("SetAllLogic"));
-        allLogicCheckBoxOperator.push(); //turn all on
+
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart6(jFrameOperator);
 
         //pressing "Done" should display a dialog
         //InfoMessage6 = Cannot set up logic because blocks have\nnot been defined around this item.
@@ -573,14 +936,39 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread4.isAlive());
         }, "modalDialogOperatorThread4 finished");
 
-        for (idx = 0; idx < 3; idx++) {
+        for (int idx = 0; idx < 3; idx++) {
             //InfoMessage6 = Cannot set up logic because blocks have\nnot been defined around this item.
-            JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"), Bundle.getMessage("InfoMessage6"), Bundle.getMessage("ButtonOK"));
+            JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
+                    Bundle.getMessage("InfoMessage6"),
+                    Bundle.getMessage("ButtonOK"));  // NOI18N
         }
 
-        layoutTurnout.setLayoutBlock(layoutBlocks[0]);
-        layoutTurnout2.setLayoutBlock(layoutBlocks[1]);
-        trackSegment.setLayoutBlock(layoutBlocks[2]);
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"));
+    }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart6
+
+    private void setupSetSignalsAtThroatToThroatTurnoutsWithDonePart6(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart5(jFrameOperator);
+
+        JCheckBoxOperator allLogicCheckBoxOperator = new JCheckBoxOperator(
+                jFrameOperator, Bundle.getMessage("SetAllLogic"));
+        do {
+            allLogicCheckBoxOperator.push(); //toggle all on/off
+        } while (!allLogicCheckBoxOperator.isSelected());
+    }
+
+    @Test
+    public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart7() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear,
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart7(jFrameOperator);
 
         //pressing "Done" should display a dialog
         //InfoMessage4 = Cannot set up logic because block "{0}"\ndoesn''t have an occupancy sensor.
@@ -594,40 +982,69 @@ public class LayoutEditorToolsTest {
         }, "modalDialogOperatorThread5 finished");
 
         //close three InfoMessage4 dialogs
-        for (idx = 0; idx < 3; idx++) {
+        for (int idx = 0; idx < 3; idx++) {
             JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
                     Bundle.getMessage("InfoMessage4", layoutBlocks[2].getUserName()),
-                    Bundle.getMessage("ButtonOK"));
+                    Bundle.getMessage("ButtonOK"));  // NOI18N
         }
 
-        //assign Occupancy Sensor to block
-        layoutBlocks[2].setOccupancySensorName(sensors[2].getUserName());
+        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"));
+    }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart7
 
-        if (false) {
-            //pressing "Done" should display a dialog
-            //InfoMessage7 = Cannot set up logic because all connections\nhave not been defined around this item.
-            Thread modalDialogOperatorThread6 = JemmyUtil.createModalDialogOperatorThread(
-                    Bundle.getMessage("MessageTitle"),
+    private void setupSetSignalsAtThroatToThroatTurnoutsWithDonePart7(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart6(jFrameOperator);
+        //fixes InfoMessage6 = Cannot set up logic because blocks have\nnot been defined around this item.
+        layoutTurnout.setLayoutBlock(layoutBlocks[0]);
+        layoutTurnout2.setLayoutBlock(layoutBlocks[1]);
+        trackSegment.setLayoutBlock(layoutBlocks[2]);
+    }
+
+    @Test
+    public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart8() {
+        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        ThreadingUtil.runOnLayoutEventually(() -> {
+            //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
+            let.setSignalsAtThroatToThroatTurnouts(
+                    getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
+        });
+        //the JFrameOperator waits for the set signal frame to appear,
+        JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTToTTurnout"));
+        JButtonOperator doneButtonOperator = new JButtonOperator(jFrameOperator, Bundle.getMessage("ButtonDone"));
+
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart8(jFrameOperator);
+
+        //pressing "Done" should display a dialog
+        //InfoMessage7 = Cannot set up logic because all connections\nhave not been defined around this item.
+        Thread modalDialogOperatorThread6 = JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("MessageTitle"),
+                Bundle.getMessage("InfoMessage7"),
+                Bundle.getMessage("ButtonOK"));  // NOI18N
+        doneButtonOperator.push();
+        JUnitUtil.waitFor(() -> {
+            return !(modalDialogOperatorThread6.isAlive());
+        }, "modalDialogOperatorThread1 finished");
+
+        //three more times
+        for (int idx = 0; idx < 3; idx++) {
+            JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
                     Bundle.getMessage("InfoMessage7"),
                     Bundle.getMessage("ButtonOK"));  // NOI18N
-            doneButtonOperator.push();
-            JUnitUtil.waitFor(() -> {
-                return !(modalDialogOperatorThread6.isAlive());
-            }, "modalDialogOperatorThread1 finished");
-
-            for (idx = 0; idx < 4; idx++) {
-                JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
-                        Bundle.getMessage("InfoMessage7"),
-                        Bundle.getMessage("ButtonOK"));
-            }
         }
 //
 //        captureScreenshot();
 //        new JFrameOperator("PLOVER");   //delay for observation
 //
         //this time everything should work
-        doneButtonOperator.push();
+//        doneButtonOperator.push();
         jFrameOperator.waitClosed();    //make sure the dialog closed
+//        JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"));
+    }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart8
+
+    private void setupSetSignalsAtThroatToThroatTurnoutsWithDonePart8(JFrameOperator jFrameOperator) {
+        setupSetSignalsAtThroatToThroatTurnoutsWithDonePart7(jFrameOperator);
+        //fixes InfoMessage4 = Cannot set up logic because block "{0}"\ndoesn''t have an occupancy sensor.
+        //assign Occupancy Sensor to block
+        layoutBlocks[2].setOccupancySensorName(sensors[2].getUserName());
     }
 
     @Test
@@ -861,6 +1278,7 @@ public class LayoutEditorToolsTest {
                 //(no sensor assigned to block) first
                 //layoutBlocks[i].setOccupancySensorName(uName);
             }
+            JemmyUtil.debugFlag = true;
         }
     }
 
