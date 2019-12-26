@@ -464,6 +464,37 @@ public abstract class AbstractBaseTestBase {
         }
     }
     
+    // This method is needet to test property change methods which only listen
+    // to a particular property, since these property change listeners uses a
+    // proxy listener.
+    private void assertListeners(
+            String propertyName,
+            FemaleSocket child,
+            AtomicBoolean flag,
+            boolean expectedResult) {
+        
+        // Check that we have the expected listener
+        PropertyChangeListener[] listeners =
+                ((NamedBean)_baseMaleSocket).getPropertyChangeListeners(propertyName);
+        
+        if (expectedResult) {
+            Assert.assertEquals("num property change listeners matches",
+                    1, listeners.length);
+        } else {
+            Assert.assertEquals("num property change listeners matches",
+                    0, listeners.length);
+            return;
+        }
+        
+        // If here, we expect success.
+        
+        // We call propertyChange to check that it's the correct listener we have
+        flag.set(false);
+        listeners[0].propertyChange(new PropertyChangeEvent(this, propertyName, null, child));
+        Assert.assertTrue("flag is set", flag.get());
+        Assert.assertTrue("getPropertyChangeListeners("+propertyName+") has listener", flag.get());
+    }
+    
     // Test these methods:
     // * addPropertyChangeListener(PropertyChangeListener l)
     // * removePropertyChangeListener(PropertyChangeListener l)
@@ -515,6 +546,19 @@ public abstract class AbstractBaseTestBase {
         flagDisconnected.set(false);
         _base.getChild(0).disconnect();
         Assert.assertTrue("flag is set", flagDisconnected.get());
+        
+        // Try to remove the listeners
+        
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, true, true);
+        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(lc);
+        
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, false, true);
+        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(ld);
+        
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, false, false);
     }
     
     // Test these methods:
@@ -547,14 +591,30 @@ public abstract class AbstractBaseTestBase {
         ((NamedBean)_baseMaleSocket).addPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, lc);
         Assert.assertEquals("num property change listeners matches",
                 2, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-//        assertListeners(lc, ld, true, true, false);
+        
+        // Check that we have the expected listener
+        PropertyChangeListener[] listeners = ((NamedBean)_baseMaleSocket).getPropertyChangeListeners(Base.PROPERTY_SOCKET_CONNECTED);
+        Assert.assertEquals("num property change listeners matches",
+                1, listeners.length);
+        
+        // We call propertyChange to check that it's the correct listener we have
+        flagConnected.set(false);
+        listeners[0].propertyChange(new PropertyChangeEvent(this, Base.PROPERTY_SOCKET_CONNECTED, null, child));
+        Assert.assertTrue("flag is set", flagConnected.get());
         
         ((NamedBean)_baseMaleSocket).addPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, ld);
         Assert.assertEquals("num property change listeners matches",
                 3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
-        // Check that we have the expected listeners
-//        assertListeners(lc, ld, true, true, true);
+        
+        // Check that we have the expected listener
+        listeners = ((NamedBean)_baseMaleSocket).getPropertyChangeListeners(Base.PROPERTY_SOCKET_DISCONNECTED);
+        Assert.assertEquals("num property change listeners matches",
+                1, listeners.length);
+        
+        // We call propertyChange to check that it's the correct listener we have
+        flagDisconnected.set(false);
+        listeners[0].propertyChange(new PropertyChangeEvent(this, Base.PROPERTY_SOCKET_DISCONNECTED, null, child));
+        Assert.assertTrue("flag is set", flagConnected.get());
         
         Assert.assertNull("listener ref is null", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
         
@@ -567,6 +627,40 @@ public abstract class AbstractBaseTestBase {
         flagDisconnected.set(false);
         _base.getChild(0).disconnect();
         Assert.assertTrue("flag is set", flagDisconnected.get());
+        
+        // Try to remove the listeners
+        
+        // Check that we have the expected listeners
+        assertListeners(Base.PROPERTY_SOCKET_CONNECTED, child, flagConnected, true);
+        assertListeners(Base.PROPERTY_SOCKET_DISCONNECTED, child, flagDisconnected, true);
+        
+        // This should be ignored since the name doesn't match the listener
+        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, lc);
+        
+        // Check that we have the expected listeners
+        assertListeners(Base.PROPERTY_SOCKET_CONNECTED, child, flagConnected, true);
+        assertListeners(Base.PROPERTY_SOCKET_DISCONNECTED, child, flagDisconnected, true);
+        
+        // This should work
+        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, lc);
+        
+        // Check that we have the expected listeners
+        assertListeners(Base.PROPERTY_SOCKET_CONNECTED, child, flagConnected, false);
+        assertListeners(Base.PROPERTY_SOCKET_DISCONNECTED, child, flagDisconnected, true);
+        
+        // This should be ignored since the name doesn't match the listener
+        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, ld);
+        
+        // Check that we have the expected listeners
+        assertListeners(Base.PROPERTY_SOCKET_CONNECTED, child, flagConnected, false);
+        assertListeners(Base.PROPERTY_SOCKET_DISCONNECTED, child, flagDisconnected, true);
+        
+        // This should work
+        ((NamedBean)_baseMaleSocket).removePropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, ld);
+        
+        // Check that we have the expected listeners
+        assertListeners(Base.PROPERTY_SOCKET_CONNECTED, child, flagConnected, false);
+        assertListeners(Base.PROPERTY_SOCKET_DISCONNECTED, child, flagDisconnected, false);
     }
     
     // Test these methods:
