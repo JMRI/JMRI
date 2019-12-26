@@ -918,7 +918,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideLeft"), "/");
 
-        new EventTool().waitNoEvent(200);
+        delay(500); //TODO: switch to JemmyUtil.delay
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -941,7 +941,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideBottom"), "/");
 
-        new EventTool().waitNoEvent(200);
+        delay(500); //TODO: switch to JemmyUtil.delay
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -963,7 +963,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideRight"), "/");
 
-        new EventTool().waitNoEvent(200);
+        delay(500); //TODO: switch to JemmyUtil.delay
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -986,8 +986,12 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideFloat"), "/");
 
+        delay(500); //TODO: switch to JemmyUtil.delay
+
         // bring this window back to the front...
         jfo.activate();
+
+        delay(500); //TODO: switch to JemmyUtil.delay
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -1003,6 +1007,25 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         LayoutEditorAuxTools t = e.getLEAuxTools();
         Assert.assertNotNull("tools exist", t);
         JUnitUtil.dispose(e);
+    }
+
+    //TODO:move this to JemmyUtil.delay after PR #7759 merges
+    /**
+     * delay for N milliseconds
+     *
+     * @param milliseconds how log to delay
+     */
+    public static void delay(long milliseconds) {
+        long nextTime = System.currentTimeMillis() + milliseconds;
+        for (long delta = nextTime - System.currentTimeMillis(); delta > 0;) {
+            try {
+                Thread.sleep(delta);
+            } catch (InterruptedException ex) {
+                //ignore any interruptions
+            }
+            //new EventTool().waitNoEvent(milliseconds);
+            new QueueTool().waitEmpty();
+        }
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LayoutEditorTest.class.getName());
