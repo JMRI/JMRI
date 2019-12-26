@@ -73,7 +73,7 @@ public class JemmyUtil {
                 JDialogOperator jdo = new JDialogOperator(dialogTitle);
                 JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
                 jbo.pushNoBlock();
-            } catch (Exception ex) {
+            } catch (JemmyException ex) {
                 if (debugFlag) {
                     dumpToXML();
                     captureScreenshot();
@@ -191,11 +191,14 @@ public class JemmyUtil {
                 //each line... so that's what we have to match here
                 String[] lines = labelText.split("\\n");
                 for (String line : lines) {
+//                    if (debugFlag) {
+//                        System.out.println("line: " + line);
+//                    }
                     //wait for this label
                     new JLabelOperator(jdo, line);
                 }
             }
-        } catch (Exception ex) {
+        } catch (JemmyException ex) {
             if (debugFlag) {
                 dumpToXML();
                 captureScreenshot();
@@ -291,7 +294,7 @@ public class JemmyUtil {
                     //wait for this label
                     new JLabelOperator(jfo, line);
                 }
-            } catch (Exception ex) {
+            } catch (JemmyException ex) {
                 if (debugFlag) {
                     dumpToXML();
                     captureScreenshot();
@@ -317,7 +320,7 @@ public class JemmyUtil {
                 waitForLabels(jdo, messageText);
                 JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
                 jbo.pushNoBlock();
-            } catch (Exception ex) {
+            } catch (JemmyException ex) {
                 if (debugFlag) {
                     dumpToXML();
                     captureScreenshot();
@@ -348,6 +351,24 @@ public class JemmyUtil {
 
         public String getDescription() {
             return "Component with tooltip \"" + buttonTooltip + "\".";
+        }
+    }
+
+    /**
+     * delay for N milliseconds
+     *
+     * @param milliseconds how log to delay
+     */
+    public static void delay(long milliseconds) {
+        long nextTime = System.currentTimeMillis() + milliseconds;
+        while (nextTime > System.currentTimeMillis()) {
+            try {
+                //new EventTool().waitNoEvent(milliseconds);
+                //new QueueTool().waitEmpty();
+                Thread.sleep(milliseconds);
+            } catch (InterruptedException ex) {
+                //ignore any interruptions
+            }
         }
     }
 
