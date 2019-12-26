@@ -37,7 +37,7 @@ import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class FormulaTest extends AbstractAnalogExpressionTestBase implements FemaleSocketListener {
+public class FormulaTest extends AbstractAnalogExpressionTestBase {
 
 //    private static final boolean EXPECT_SUCCESS = true;
 //    private static final boolean EXPECT_FAILURE = false;
@@ -495,15 +495,4 @@ public class FormulaTest extends AbstractAnalogExpressionTestBase implements Fem
         JUnitUtil.tearDown();
     }
 
-    @Override
-    public void connected(FemaleSocket socket) {
-        throw new RuntimeException("Hej");
-        // Do nothing
-    }
-
-    @Override
-    public void disconnected(FemaleSocket socket) {
-        // Do nothing
-    }
-    
 }

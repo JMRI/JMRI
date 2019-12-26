@@ -3,8 +3,10 @@ package jmri.jmrit.logixng.analog.actions;
 import java.util.Locale;
 import jmri.AnalogIO;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.AnalogActionBean;
+import jmri.jmrit.logixng.AnalogExpressionBean;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -15,6 +17,23 @@ import org.junit.Test;
  */
 public abstract class AbstractAnalogActionTestBase extends AbstractBaseTestBase {
 
+    public abstract NamedBean createNewBean(String systemName) throws Exception;
+    
+    @Test
+    public void testBadSystemName() throws Exception {
+        boolean hasThrown = false;
+        try {
+            // Create a bean with bad system name. This must throw an exception
+            NamedBean bean = createNewBean("IQ111");
+            // We should never get here.
+            Assert.assertNotNull("Bean is not null", bean);
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("Exception is correct", "system name is not valid", e.getMessage());
+            hasThrown = true;
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
     @Test
     public void testBundle() {
         Assert.assertEquals("strings are equal", "Set memory", Bundle.getMessage("AnalogActionMemory0"));

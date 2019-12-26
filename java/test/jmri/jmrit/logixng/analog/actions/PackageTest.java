@@ -7,6 +7,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     jmri.jmrit.logixng.analog.actions.configurexml.PackageTest.class,
     AnalogActionMemoryTest.class,
+    ManyTest.class,
 })
 
 /**

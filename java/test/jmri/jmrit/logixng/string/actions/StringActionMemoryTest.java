@@ -5,6 +5,7 @@ import java.beans.PropertyVetoException;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
 import jmri.jmrit.logixng.Category;
@@ -47,7 +48,10 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
     
     @Override
     public MaleSocket getConnectableChild() {
-        return null;
+        Many action = new Many("IQSA999", null);
+        MaleSocket maleSocket =
+                InstanceManager.getDefault(StringActionManager.class).registerAction(action);
+        return maleSocket;
     }
     
     @Override
@@ -66,6 +70,11 @@ public class StringActionMemoryTest extends AbstractStringActionTestBase {
                 "               Socket not connected%n" +
                 "            !s A%n" +
                 "               Set memory IM1%n");
+    }
+    
+    @Override
+    public NamedBean createNewBean(String systemName) {
+        return new Many(systemName, null);
     }
     
     @Test

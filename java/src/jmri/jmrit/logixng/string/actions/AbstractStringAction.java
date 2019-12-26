@@ -77,6 +77,25 @@ public abstract class AbstractStringAction extends AbstractBase
         _lock = lock;
     }
 
+    public String getNewSocketName() {
+        int x = 1;
+        while (x < 10000) {     // Protect from infinite loop
+            boolean validName = true;
+            for (int i=0; i < getChildCount(); i++) {
+                String name = "A" + Integer.toString(x);
+                if (name.equals(getChild(i).getName())) {
+                    validName = false;
+                    break;
+                }
+            }
+            if (validName) {
+                return "A" + Integer.toString(x);
+            }
+            x++;
+        }
+        throw new RuntimeException("Unable to find a new socket name");
+    }
+    
 
     private final static Logger log = LoggerFactory.getLogger(AbstractStringAction.class);
 }

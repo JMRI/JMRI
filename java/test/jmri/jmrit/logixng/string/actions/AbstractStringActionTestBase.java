@@ -3,6 +3,7 @@ package jmri.jmrit.logixng.string.actions;
 import java.util.Locale;
 import jmri.StringIO;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.jmrit.logixng.AbstractBaseTestBase;
 import jmri.jmrit.logixng.StringActionBean;
 import org.junit.Assert;
@@ -15,6 +16,23 @@ import org.junit.Test;
  */
 public abstract class AbstractStringActionTestBase extends AbstractBaseTestBase {
 
+    public abstract NamedBean createNewBean(String systemName) throws Exception;
+    
+    @Test
+    public void testBadSystemName() throws Exception {
+        boolean hasThrown = false;
+        try {
+            // Create a bean with bad system name. This must throw an exception
+            NamedBean bean = createNewBean("IQ111");
+            // We should never get here.
+            Assert.assertNotNull("Bean is not null", bean);
+        } catch (IllegalArgumentException e) {
+            Assert.assertEquals("Exception is correct", "system name is not valid: IQ111", e.getMessage());
+            hasThrown = true;
+        }
+        Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
     @Test
     public void testBundle() {
         Assert.assertEquals("strings are equal", "Set memory", Bundle.getMessage("StringActionMemory0"));

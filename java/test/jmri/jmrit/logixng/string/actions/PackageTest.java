@@ -6,6 +6,7 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     jmri.jmrit.logixng.string.actions.configurexml.PackageTest.class,
+    ManyTest.class,
     StringActionMemoryTest.class,
 })
 
