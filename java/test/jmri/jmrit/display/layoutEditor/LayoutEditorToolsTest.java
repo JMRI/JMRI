@@ -26,10 +26,10 @@ import org.netbeans.jemmy.util.NameComponentChooser;
 public class LayoutEditorToolsTest {
 
     @Rule   //5 second timeout for methods in this test class.
-    public Timeout globalTimeout = Timeout.seconds(10);
+    public Timeout globalTimeout = Timeout.seconds(5);
 
-    @Rule   //allow 5 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(0);
+    @Rule   //allow 3 retries of intermittent tests
+    public RetryRule retryRule = new RetryRule(3);
 
     private static LayoutEditor layoutEditor = null;
     private static LayoutEditorTools let = null;
