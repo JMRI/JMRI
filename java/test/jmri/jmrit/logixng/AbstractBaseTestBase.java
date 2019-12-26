@@ -431,13 +431,46 @@ public abstract class AbstractBaseTestBase {
         };
     }
     
+    private void assertListeners(
+            PropertyChangeListener lc,
+            PropertyChangeListener ld,
+            boolean expectManagerListener,
+            boolean expectConnectedListener,
+            boolean expectDisconnectedListener) {
+        
+        boolean hasManagerListener = false;
+        boolean hasConnectedListener = false;
+        boolean hasDisconnectedListener = false;
+        for (PropertyChangeListener l : ((NamedBean)_baseMaleSocket).getPropertyChangeListeners()) {
+            if (l instanceof jmri.Manager) hasManagerListener = true;
+            else if (l == lc) hasConnectedListener = true;
+            else if (l == ld) hasDisconnectedListener = true;
+            else Assert.fail("getPropertyChangeListeners() returns unknown listener: " + l.toString());
+        }
+        if (expectManagerListener) {
+            Assert.assertTrue("getPropertyChangeListeners() has manager listener", hasManagerListener);
+        } else {
+            Assert.assertFalse("getPropertyChangeListeners() has not manager listener", hasManagerListener);
+        }
+        if (expectConnectedListener) {
+            Assert.assertTrue("getPropertyChangeListeners() has connected listener", hasConnectedListener);
+        } else {
+            Assert.assertFalse("getPropertyChangeListeners() has not connected listener", hasConnectedListener);
+        }
+        if (expectDisconnectedListener) {
+            Assert.assertTrue("getPropertyChangeListeners() has disconnected listener", hasDisconnectedListener);
+        } else {
+            Assert.assertFalse("getPropertyChangeListeners() has not disconnected listener", hasDisconnectedListener);
+        }
+    }
+    
     // Test these methods:
-    // * addPropertyChangeListener(PropertyChangeListener)
-    // * removePropertyChangeListener(PropertyChangeListener)
+    // * addPropertyChangeListener(PropertyChangeListener l)
+    // * removePropertyChangeListener(PropertyChangeListener l)
     // * getNumPropertyChangeListeners()
     // * getPropertyChangeListeners()
     @Test
-    public void testPropertyChangeListener() throws SocketAlreadyConnectedException {
+    public void testPropertyChangeListener1() throws SocketAlreadyConnectedException {
         Assume.assumeTrue("We need at least one child to do this test", _base.getChildCount() > 0);
         MaleSocket maleSocket = getConnectableChild();
         
@@ -451,39 +484,186 @@ public abstract class AbstractBaseTestBase {
         PropertyChangeListener ld =
                 getPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, flagDisconnected, child);
         
-//        System.out.format("%n%ntestPropertyChangeListener()%n");
-//        for (PropertyChangeListener l : ((NamedBean)_baseMaleSocket).getPropertyChangeListeners()) {
-//            System.out.format("Property change listener: %s: %s%n", l, l.getClass().getName());
-//        }
+        // Note that AbstractManager.register() register itself as a
+        // PropertyChangeListener. Therefore we have one listener before
+        // adding our own listeners.
+        Assert.assertEquals("num property change listeners matches",
+                1, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, false, false);
+        
+        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(lc);
+        Assert.assertEquals("num property change listeners matches",
+                2, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, true, false);
+        
+        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(ld);
+        Assert.assertEquals("num property change listeners matches",
+                3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, true, true);
+        
+        Assert.assertNull("listener ref is null", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
+        
+        // Connect shall do a firePropertyChange which will set the flag
+        flagConnected.set(false);
+        connect(child, maleSocket);
+        Assert.assertTrue("flag is set", flagConnected.get());
+        
+        // Disconnect shall do a firePropertyChange which will set the flag
+        flagDisconnected.set(false);
+        _base.getChild(0).disconnect();
+        Assert.assertTrue("flag is set", flagDisconnected.get());
+    }
+    
+    // Test these methods:
+    // * addPropertyChangeListener(String propertyName, PropertyChangeListener l)
+    // * removePropertyChangeListener(String propertyName, PropertyChangeListener l)
+    // * getNumPropertyChangeListeners()
+    @Test
+    public void testPropertyChangeListener2() throws SocketAlreadyConnectedException {
+        Assume.assumeTrue("We need at least one child to do this test", _base.getChildCount() > 0);
+        MaleSocket maleSocket = getConnectableChild();
+        
+        FemaleSocket child = _base.getChild(0);
+        
+        AtomicBoolean flagConnected = new AtomicBoolean();
+        PropertyChangeListener lc =
+                getPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, flagConnected, child);
+        
+        AtomicBoolean flagDisconnected = new AtomicBoolean();
+        PropertyChangeListener ld =
+                getPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, flagDisconnected, child);
         
         // Note that AbstractManager.register() register itself as a
         // PropertyChangeListener. Therefore we have one listener before
         // adding our own listeners.
         Assert.assertEquals("num property change listeners matches",
                 1, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, false, false);
         
-        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(lc);
+        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, lc);
         Assert.assertEquals("num property change listeners matches",
                 2, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+//        assertListeners(lc, ld, true, true, false);
         
-        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(ld);
+        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, ld);
         Assert.assertEquals("num property change listeners matches",
                 3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+//        assertListeners(lc, ld, true, true, true);
         
         Assert.assertNull("listener ref is null", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
         
-        boolean hasManagerListener = false;
-        boolean hasConnectedListener = false;
-        boolean hasDisconnectedListener = false;
-        for (PropertyChangeListener l : ((NamedBean)_baseMaleSocket).getPropertyChangeListeners()) {
-            if (l instanceof jmri.Manager) hasManagerListener = true;
-            else if (l == lc) hasConnectedListener = true;
-            else if (l == ld) hasDisconnectedListener = true;
-            else Assert.fail("getPropertyChangeListeners() returns unknown listener: " + l.toString());
-        }
-        Assert.assertTrue("getPropertyChangeListeners() has manager listener", hasManagerListener);
-        Assert.assertTrue("getPropertyChangeListeners() has connected listener", hasConnectedListener);
-        Assert.assertTrue("getPropertyChangeListeners() has disconnected listener", hasDisconnectedListener);
+        // Connect shall do a firePropertyChange which will set the flag
+        flagConnected.set(false);
+        connect(child, maleSocket);
+        Assert.assertTrue("flag is set", flagConnected.get());
+        
+        // Disconnect shall do a firePropertyChange which will set the flag
+        flagDisconnected.set(false);
+        _base.getChild(0).disconnect();
+        Assert.assertTrue("flag is set", flagDisconnected.get());
+    }
+    
+    // Test these methods:
+    // * addPropertyChangeListener(PropertyChangeListener l, String name, String listenerRef)
+    // * removePropertyChangeListener(PropertyChangeListener l, String name, String listenerRef)
+    // * getNumPropertyChangeListeners()
+    // * getPropertyChangeListeners()
+    @Test
+    public void testPropertyChangeListener3() throws SocketAlreadyConnectedException {
+        Assume.assumeTrue("We need at least one child to do this test", _base.getChildCount() > 0);
+        MaleSocket maleSocket = getConnectableChild();
+        
+        FemaleSocket child = _base.getChild(0);
+        
+        AtomicBoolean flagConnected = new AtomicBoolean();
+        PropertyChangeListener lc =
+                getPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, flagConnected, child);
+        
+        AtomicBoolean flagDisconnected = new AtomicBoolean();
+        PropertyChangeListener ld =
+                getPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, flagDisconnected, child);
+        
+        // Note that AbstractManager.register() register itself as a
+        // PropertyChangeListener. Therefore we have one listener before
+        // adding our own listeners.
+        Assert.assertEquals("num property change listeners matches",
+                1, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, false, false);
+        
+        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(lc, _baseMaleSocket.getSystemName(), "Connected listener");
+        Assert.assertEquals("num property change listeners matches",
+                2, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, true, false);
+        
+        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(ld, _baseMaleSocket.getSystemName(), "Disconnected listener");
+        Assert.assertEquals("num property change listeners matches",
+                3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, true, true);
+        
+        Assert.assertEquals("listener ref is correct", "Connected listener", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
+        Assert.assertEquals("listener ref is correct", "Disconnected listener", ((NamedBean)_baseMaleSocket).getListenerRef(ld));
+        
+        // Connect shall do a firePropertyChange which will set the flag
+        flagConnected.set(false);
+        connect(child, maleSocket);
+        Assert.assertTrue("flag is set", flagConnected.get());
+        
+        // Disconnect shall do a firePropertyChange which will set the flag
+        flagDisconnected.set(false);
+        _base.getChild(0).disconnect();
+        Assert.assertTrue("flag is set", flagDisconnected.get());
+    }
+    
+    // Test these methods:
+    // * addPropertyChangeListener(String propertyName, PropertyChangeListener l, String name, String listenerRef)
+    // * removePropertyChangeListener(String propertyName, PropertyChangeListener l)
+    // * getNumPropertyChangeListeners()
+    @Test
+    public void testPropertyChangeListener4() throws SocketAlreadyConnectedException {
+        Assume.assumeTrue("We need at least one child to do this test", _base.getChildCount() > 0);
+        MaleSocket maleSocket = getConnectableChild();
+        
+        FemaleSocket child = _base.getChild(0);
+        
+        AtomicBoolean flagConnected = new AtomicBoolean();
+        PropertyChangeListener lc =
+                getPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, flagConnected, child);
+        
+        AtomicBoolean flagDisconnected = new AtomicBoolean();
+        PropertyChangeListener ld =
+                getPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, flagDisconnected, child);
+        
+        // Note that AbstractManager.register() register itself as a
+        // PropertyChangeListener. Therefore we have one listener before
+        // adding our own listeners.
+        Assert.assertEquals("num property change listeners matches",
+                1, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+        assertListeners(lc, ld, true, false, false);
+        
+        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(Base.PROPERTY_SOCKET_CONNECTED, lc, _baseMaleSocket.getSystemName(), "Connected listener");
+        Assert.assertEquals("num property change listeners matches",
+                2, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+//        assertListeners(lc, ld, true, true, false);
+        
+        ((NamedBean)_baseMaleSocket).addPropertyChangeListener(Base.PROPERTY_SOCKET_DISCONNECTED, ld, _baseMaleSocket.getSystemName(), "Disconnected listener");
+        Assert.assertEquals("num property change listeners matches",
+                3, ((NamedBean)_baseMaleSocket).getNumPropertyChangeListeners());
+        // Check that we have the expected listeners
+//        assertListeners(lc, ld, true, true, true);
+        
+        Assert.assertEquals("listener ref is correct", "Connected listener", ((NamedBean)_baseMaleSocket).getListenerRef(lc));
+        Assert.assertEquals("listener ref is correct", "Disconnected listener", ((NamedBean)_baseMaleSocket).getListenerRef(ld));
         
         // Connect shall do a firePropertyChange which will set the flag
         flagConnected.set(false);
