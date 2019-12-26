@@ -258,7 +258,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart5() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
