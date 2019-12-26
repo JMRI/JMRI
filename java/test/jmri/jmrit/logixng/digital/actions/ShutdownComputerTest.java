@@ -12,6 +12,7 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
+import org.apache.log4j.Level;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -92,22 +93,24 @@ public class ShutdownComputerTest extends AbstractDigitalActionTestBase {
         Assert.assertTrue("is external", _base.isExternal());
     }
     
-    @Ignore
     @Test
     @Override
     // The only purpose of override this method is to catch the error message
+    // The reason for this is that we have a security manager installed to block
+    // the ShutdownComputer action to shut down the computer during this test.
     public void testMaleSocketIsActive() {
         super.testMaleSocketIsActive();
-        JUnitAppender.assertErrorMessageStartsWith("Shutdown failed");
+        JUnitAppender.suppressMessage(Level.ERROR, "exec is not allowed during test of ShutdownComputer");
     }
     
-    @Ignore
     @Test
     @Override
-    // The only purpose of override this method is to catch the error message
+    // The only purpose of override this method is to catch the error message.
+    // The reason for this is that we have a security manager installed to block
+    // the ShutdownComputer action to shut down the computer during this test.
     public void testIsActive() {
         super.testIsActive();
-        JUnitAppender.assertErrorMessageStartsWith("Shutdown failed");
+        JUnitAppender.suppressMessage(Level.ERROR, "exec is not allowed during test of ShutdownComputer");
     }
     
     // The minimal setup for log4J
