@@ -16,56 +16,113 @@ import org.netbeans.jemmy.util.*;
  */
 public class JemmyUtil {
 
-    public static boolean debugFlag = false;
+    public static boolean debugFlag = false;    //TODO: get rid of this for production
 
-    public static void pressDialogButton(JmriJFrame f, String buttonLabel) {
-        JFrameOperator jfo = new JFrameOperator(f);
+    /**
+     * press the named button in the specified frame
+     *
+     * @param frame      the specified frame
+     * @param buttonText the name of the button to press to dismiss
+     */
+    public static void pressDialogButton(JmriJFrame frame, String buttonText) {
+        JFrameOperator jfo = new JFrameOperator(frame);
         JDialogOperator jdo = new JDialogOperator(jfo, 1); // wait for the first dialog.
-        NameComponentChooser bChooser = new NameComponentChooser(buttonLabel);
+        NameComponentChooser bChooser = new NameComponentChooser(buttonText);
         JButtonOperator jbo = new JButtonOperator(jdo, bChooser);
         jbo.push();
     }
 
-    public static void pressDialogButton(String dialogTitle, String buttonLabel) {
+    /**
+     * press the named button in the named dialog
+     *
+     * @param dialogTitle the title of the dialog
+     * @param buttonText  the name of the button to press to dismiss
+     */
+    public static void pressDialogButton(String dialogTitle, String buttonText) {
         JDialogOperator jdo = new JDialogOperator(dialogTitle); // wait for the first dialog.
-        pressButton(jdo, buttonLabel);
+        pressButton(jdo, buttonText);
     }
 
-    public static void pressDialogButton(JmriJFrame f, String dialogTitle, String buttonLabel) {
-        JFrameOperator jfo = new JFrameOperator(f);
+    /**
+     * press the named button in the named dialog in the specified frame
+     *
+     * @param frame       the specified frame
+     * @param dialogTitle the title of the dialog
+     * @param buttonText  the name of the button to press to dismiss
+     */
+    public static void pressDialogButton(JmriJFrame frame, String dialogTitle, String buttonText) {
+        JFrameOperator jfo = new JFrameOperator(frame);
         JDialogOperator jdo = new JDialogOperator(jfo, dialogTitle); // wait for the first dialog.
-        pressButton(jdo, buttonLabel);
+        pressButton(jdo, buttonText);
     }
 
+    /**
+     * click the JButton
+     *
+     * @param comp the JButton
+     */
     public static void enterClickAndLeave(JButton comp) {
         new JButtonOperator(comp).push();
     }
 
+    /**
+     * click the JCheckBox
+     *
+     * @param comp the JCheckBox
+     */
     public static void enterClickAndLeave(JCheckBox comp) {
         new JCheckBoxOperator(comp).push();
     }
 
+    /**
+     * click the JRadioButton
+     *
+     * @param comp the JRadioButton
+     */
     public static void enterClickAndLeave(JRadioButton comp) {
         new JRadioButtonOperator(comp).push();
     }
 
+    /**
+     * click the JToggleButton
+     *
+     * @param comp the JToggleButton
+     */
     public static void enterClickAndLeave(JToggleButton comp) {
         new JToggleButtonOperator(comp).push();
     }
 
-    public static void pressButton(WindowOperator frame, String text) {
-        new JButtonOperator(frame, text).push();
+    /**
+     * press the named button in the specified frame
+     *
+     * @param wo         the window operator
+     * @param buttonText the name of the button to press to dismiss
+     */
+    public static void pressButton(WindowOperator wo, String buttonText) {
+        new JButtonOperator(wo, buttonText).push();
     }
 
-    public static void confirmJOptionPane(WindowOperator wo, String dialogTitle, String message, String buttonLabel) {
-        // the previous version of this message verified the text string
-        // if the dialog matched the passed message value.  We need to
-        // determine how to do that using Jemmy.
-        //(hint: see note in waitForLabels method below)
+    /**
+     *
+     * @param wo          the window operator
+     * @param dialogTitle the title of the dialog
+     * @param messageText the message (JLable(s)) to wait for
+     * @param buttonText  the name of the button to press to dismiss this dialog
+     */
+    public static void confirmJOptionPane(WindowOperator wo, String dialogTitle, String messageText, String buttonText) {
         JDialogOperator jdo = new JDialogOperator(wo, dialogTitle);
-        pressButton(jdo, buttonLabel);
+        waitForLabels(jdo, messageText);
+        pressButton(jdo, buttonText);
     }
 
+    /**
+     * create a thread to wait for a dialog with title and then press named
+     * button to close
+     *
+     * @param dialogTitle the title of the dialog
+     * @param buttonText  the name of the button to press to dismiss this dialog
+     * @return the thread
+     */
     public static Thread createModalDialogOperatorThread(String dialogTitle, String buttonText) {
         Thread t = new Thread(() -> {
             try {
@@ -86,6 +143,13 @@ public class JemmyUtil {
         return t;
     }
 
+    /**
+     * get the JLabel with text labelText on the named frame
+     *
+     * @param frameName
+     * @param labelText
+     * @return JLabel or null if not found
+     */
     public static JLabel getLabelWithText(String frameName, String labelText) {
         // Find window by name
         JmriJFrame frame = JmriJFrame.getFrame(frameName);
@@ -113,7 +177,7 @@ public class JemmyUtil {
      * wait for a dialog with the title and message and then press button to
      * close it
      *
-     * @param dialogTitle the title of the dialog to wait for
+     * @param dialogTitle the title of the dialog
      * @param messageText the message (JLable(s)) to wait for
      * @param buttonText  the name of the button to press to dismiss this dialog
      */
@@ -122,10 +186,10 @@ public class JemmyUtil {
     }
 
     /**
-     * wait for a dialog with the title and message and then press button to
+     * wait for the message in the dialog and then press the named button to
      * close it
      *
-     * @param dialogTitle the title of the dialog to wait for
+     * @param jdo         the JDialogOperator
      * @param messageText the message (JLable(s)) to wait for
      * @param buttonText  the name of the button to press to dismiss this dialog
      */
@@ -133,13 +197,13 @@ public class JemmyUtil {
         waitForLabels(jdo, messageText);
         JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
         jbo.pushNoBlock();
-        jdo.waitClosed();    //make sure the dialog closed
+        jdo.waitClosed(); //make sure the dialog closed
     }
 
     /**
      * wait for a dialog with the title and then press button to close it
      *
-     * @param dialogTitle the title of the dialog to wait for
+     * @param dialogTitle the title of the dialog
      * @param buttonText  the name of the button to press to dismiss this dialog
      */
     public static void waitAndCloseDialog(String dialogTitle, String buttonText) {
@@ -149,19 +213,19 @@ public class JemmyUtil {
     /**
      * wait for a dialog with the title and then press button to close it
      *
-     * @param dialogTitle the title of the dialog to wait for
-     * @param buttonText  the name of the button to press to dismiss this dialog
+     * @param jdo        the JDialogOperator
+     * @param buttonText the name of the button to press to dismiss this dialog
      */
     public static void waitAndCloseDialog(JDialogOperator jdo, String buttonText) {
         JButtonOperator jbo = new JButtonOperator(jdo, buttonText);
         jbo.pushNoBlock();
-        jdo.waitClosed();    //make sure the dialog closed
+        jdo.waitClosed(); //make sure the dialog closed
     }
 
     /**
      * wait for a dialog with the title and then request close
      *
-     * @param dialogTitle the title of the dialog to wait for
+     * @param dialogTitle the title of the dialog
      */
     public static void waitAndCloseDialog(String dialogTitle) {
         waitAndCloseDialog(new JDialogOperator(dialogTitle));
@@ -170,11 +234,11 @@ public class JemmyUtil {
     /**
      * wait for a dialog with the title and then request close
      *
-     * @param dialogTitle the title of the dialog to wait for
+     * @param jdo the JDialogOperator
      */
     public static void waitAndCloseDialog(JDialogOperator jdo) {
         jdo.requestClose();
-        jdo.waitClosed();    //make sure the dialog closed
+        jdo.waitClosed(); //make sure the dialog closed
     }
 
     /**
@@ -191,9 +255,9 @@ public class JemmyUtil {
                 //each line... so that's what we have to match here
                 String[] lines = labelText.split("\\n");
                 for (String line : lines) {
-//                    if (debugFlag) {
-//                        System.out.println("line: " + line);
-//                    }
+                    // if (debugFlag) {
+                    //      System.out.println("line: " + line);
+                    // }
                     //wait for this label
                     new JLabelOperator(jdo, line);
                 }
@@ -213,25 +277,24 @@ public class JemmyUtil {
      *
      * @param frameTitle  the title of the frame to wait for
      * @param messageText the message (JLable(s)) to wait for
-     * @param buttonText  the name of the button to press to dismiss this frame
+     * @param buttonText  the name of the button to press to dismiss
      */
     public static void waitAndCloseFrame(String frameTitle, String messageText, String buttonText) {
         waitAndCloseFrame(new JFrameOperator(frameTitle), messageText, buttonText);
     }
 
     /**
-     * wait for a frame with the title and message and then press button to
-     * close it
+     * wait for a frame and message and then press button to close it
      *
-     * @param frameTitle  the title of the frame to wait for
+     * @param jfo         the JFrameOperator
      * @param messageText the message (JLable(s)) to wait for
-     * @param buttonText  the name of the button to press to dismiss this frame
+     * @param buttonText  the name of the button to press to dismiss
      */
     public static void waitAndCloseFrame(JFrameOperator jfo, String messageText, String buttonText) {
         waitForLabels(jfo, messageText);
         JButtonOperator jbo = new JButtonOperator(jfo, buttonText);
         jbo.pushNoBlock();
-        jfo.waitClosed();    //make sure the frame closed
+        jfo.waitClosed(); //make sure the frame closed
     }
 
     /**
@@ -247,16 +310,16 @@ public class JemmyUtil {
     /**
      * wait for a frame with the title and then press button to close it
      *
-     * @param frameTitle the title of the frame to wait for
+     * @param jfo         the JFrameOperator
      * @param buttonText the name of the button to press to dismiss this frame
      */
     public static void waitAndCloseFrame(JFrameOperator jfo, String buttonText) {
         new JButtonOperator(jfo, buttonText).pushNoBlock();
-        jfo.waitClosed();    //make sure the frame closed
+        jfo.waitClosed(); //make sure the frame closed
     }
 
     /**
-     * wait for a frame with the title and then request close
+     * wait for a frame with the title and then request to close it
      *
      * @param frameTitle the title of the frame to wait for
      */
@@ -265,16 +328,13 @@ public class JemmyUtil {
     }
 
     /**
-     * wait for a frame with the title and message and then press button to
-     * close it
+     * wait for a frame and then request to close it
      *
-     * @param frameTitle  the title of the frame to wait for
-     * @param messageText the message (JLable(s)) to wait for
-     * @param buttonText  the name of the button to press to dismiss this frame
+     * @param jfo         the JFrameOperator
      */
     public static void waitAndCloseFrame(JFrameOperator jfo) {
         jfo.requestClose();
-        jfo.waitClosed();    //make sure the frame closed
+        jfo.waitClosed(); //make sure the frame closed
     }
 
     /**
@@ -334,7 +394,7 @@ public class JemmyUtil {
     }
 
     /*
-     * a component chooser that matches by ToolTipText
+ * a component chooser that matches by ToolTipText
      */
     public static class ToolTipComponentChooser implements ComponentChooser {
 
@@ -374,13 +434,13 @@ public class JemmyUtil {
 
 //TODO: finish this!
 //WIP:delay for s seconds
-//    private void waitSeconds(int s) {
-//        //waits until queue has been empty for X milliseconds
-//        //new QueueTool().waitEmpty(s * 1000);
+// private void waitSeconds(int s) {
+// //waits until queue has been empty for X milliseconds
+// //new QueueTool().waitEmpty(s * 1000);
 //
-//        //wait until no event is registered for a given number of milliseconds
-//        new EventTool().waitNoEvent(s * 1000);
-//    }
+// //wait until no event is registered for a given number of milliseconds
+// new EventTool().waitNoEvent(s * 1000);
+// }
     /**
      * utility method to save screenshot to desktop file
      */

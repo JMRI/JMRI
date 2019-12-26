@@ -123,8 +123,8 @@ public class LayoutEditorToolsTest {
         Assert.assertNotNull("positionablePoint3 for testSetSignalsAtTurnoutWithDone", positionablePoint3);
     }   //setupSetSignalsAtTurnoutWithDone
 
-    ///@Test
-    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Test
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -165,8 +165,8 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator.selectItem(turnouts[0].getSystemName());
     }
 
-    ///@Test
-    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Test
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart3() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -299,8 +299,8 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
     }
 
-    ///@Test
-    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Test
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart6() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
