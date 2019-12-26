@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<names-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/names-4.19.1.xsd">
+<names-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/names-4-19-1.xsd">
    <!-- This file defines the proper values for "item" attributes in JMRI   -->
    <!-- DecoderPro programmer and decoder definition files.  As such, it    -->
    <!-- should _NOT_ be translated to other languages. The "item"           -->
