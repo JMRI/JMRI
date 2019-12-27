@@ -136,8 +136,7 @@ public class StringActionLocoNet_OPC_PEER extends AbstractStringAction {
     // This method is protected to be able to test it from the
     // StringActionLocoNet_OPC_PEERTest class
     protected int getTopBitsByte(int D4, int D3, int D2, int D1) {
-        return (int)
-                (
+        return  (
                     ((D4 & 0x80) >> (7-3))
                     + ((D3 & 0x80) >> (7-2))
                     + ((D2 & 0x80) >> (7-1))
@@ -278,6 +277,6 @@ public class StringActionLocoNet_OPC_PEER extends AbstractStringAction {
     public void disposeMe() {
     }
     
-    private final static Logger log = LoggerFactory.getLogger(StringActionLocoNet_OPC_PEER.class);
+//    private final static Logger log = LoggerFactory.getLogger(StringActionLocoNet_OPC_PEER.class);
 
 }
