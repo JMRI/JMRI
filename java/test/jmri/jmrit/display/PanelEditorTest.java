@@ -23,7 +23,7 @@ public class PanelEditorTest {
     public void testShow() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         // load and display
-        File f = new File("java/test/jmri/jmrit/display/verify/PanelEditorTest1.xml");
+        File f = new File("java/test/jmri/jmrit/display/valid/PanelEditorTest1.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
     }
 

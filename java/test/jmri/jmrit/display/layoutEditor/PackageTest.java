@@ -53,6 +53,8 @@ import org.junit.runners.Suite;
         LayoutTrackDrawingOptionsTest.class,
         LayoutTrackExpectedStateTest.class,
         LayoutEditorFloatingToolBarPanelTest.class,
+        LayoutEditorHorizontalToolBarPanelTest.class,
+        LayoutEditorVerticalToolBarPanelTest.class,
         LoadAndStoreTest.class
 })
 
