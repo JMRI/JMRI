@@ -36,10 +36,15 @@
 
   <aspecttable>BN</aspecttable>
   <name>Triple searchlight signal</name>
-  <reference> As described in the
-October 1989 Burlington Northern Railroad Southern Region, Debraska Division Timetable #2. In effect at 0001 Continental Mountain Time, Sunday October 29, 1989.
+  <reference>
+    As described in the
+    October 1989 Burlington Northern Railroad Southern Region, Debraska Division Timetable #2. 
+    In effect at 0001 Continental Mountain Time, Sunday October 29, 1989.
   </reference>
-  <description>Appearances for a three-searchlight signal head or semaphore which are used in Automatic Block, CTC and Interlocking Systems</description>
+  <description>Appearances for a three-searchlight signal head or semaphore which are used in 
+    Automatic Block, CTC and Interlocking Systems. 
+    Provides an alternate Clear appearance.
+  </description>
   
   <appearances>
 
@@ -49,7 +54,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
       <show>red</show>
       <show>red</show>
       <reference>Rule 230</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-230-a.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-230-b.gif</imagelink>
     </appearance>
 
     <appearance>
