@@ -312,7 +312,7 @@ public class AnalogExpressionLocoNet_OPC_PEERTest extends AbstractAnalogExpressi
     
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
     }
     
     @Test

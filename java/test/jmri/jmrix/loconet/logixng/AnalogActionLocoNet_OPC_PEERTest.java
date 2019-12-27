@@ -212,7 +212,7 @@ public class AnalogActionLocoNet_OPC_PEERTest extends AbstractAnalogActionTestBa
     
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
     }
     
     @Test

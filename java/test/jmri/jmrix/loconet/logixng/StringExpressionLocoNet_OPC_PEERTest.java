@@ -311,7 +311,7 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
     
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.ITEM == _base.getCategory());
+        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
     }
     
     @Test
