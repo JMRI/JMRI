@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    jmri.jmrix.loconet.logixng.configureswing.PackageTest.class,
 //    jmri.jmrix.loconet.logixng.configurexml.PackageTest.class,
     AnalogActionLocoNet_OPC_PEERTest.class,
     AnalogExpressionLocoNet_OPC_PEERTest.class,

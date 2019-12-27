@@ -35,6 +35,7 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
 
     LogixNG logixNG;
     ConditionalNG conditionalNG;
+    StringActionLocoNet_OPC_PEER stringActionLocoNet_OPC_PEER;
     protected Memory _memory;
     
     @Override
@@ -57,7 +58,8 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set memory IM1%n");
+        return String.format("Set memory none%n");
+//        return String.format("Set memory IM1%n");
     }
     
     @Override
@@ -70,7 +72,8 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
                 "            ?s E%n" +
                 "               Socket not connected%n" +
                 "            !s A%n" +
-                "               Set memory IM1%n");
+                "               Set memory none%n");
+//                "               Set memory IM1%n");
     }
     
     @Override
@@ -97,16 +100,18 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
         Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
         
         action2 = new StringActionLocoNet_OPC_PEER("IQSA11", null);
-        action2.setMemory(_memory);
+//        action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
-        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
+        Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
+//        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
         
         action2 = new StringActionLocoNet_OPC_PEER("IQSA11", "My memory");
-        action2.setMemory(_memory);
+//        action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
-        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
+        Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
+//        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
         
         boolean thrown = false;
         try {
@@ -126,7 +131,7 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
         }
         Assert.assertTrue("Expected exception thrown", thrown);
     }
-    
+/*    
     @Test
     public void testAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         StringActionLocoNet_OPC_PEER action = (StringActionLocoNet_OPC_PEER)_base;
@@ -209,7 +214,7 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
         action.vetoableChange(new PropertyChangeEvent(this, "DoDelete", _memory, null));
         Assert.assertNull("Memory is null", action.getMemory());
     }
-    
+*/    
     @Test
     public void testCategory() {
         Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
@@ -222,12 +227,14 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Set memory IM1".equals(_base.getShortDescription()));
+        Assert.assertTrue("String matches", "Set memory none".equals(_base.getShortDescription()));
+//        Assert.assertTrue("String matches", "Set memory IM1".equals(_base.getShortDescription()));
     }
     
     @Test
     public void testLongDescription() {
-        Assert.assertTrue("String matches", "Set memory IM1".equals(_base.getLongDescription()));
+        Assert.assertTrue("String matches", "Set memory none".equals(_base.getLongDescription()));
+//        Assert.assertTrue("String matches", "Set memory IM1".equals(_base.getLongDescription()));
     }
     
     @Test
@@ -241,6 +248,60 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
             Assert.assertTrue("Error message is correct", "Not supported.".equals(ex.getMessage()));
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
+    }
+    
+    @Test
+    public void testGetTopBitsByte2() {
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x00, stringActionLocoNet_OPC_PEER.getTopBitsByte(0,0));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x01, stringActionLocoNet_OPC_PEER.getTopBitsByte(0x80,0));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x02, stringActionLocoNet_OPC_PEER.getTopBitsByte(0x8000,0));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x04, stringActionLocoNet_OPC_PEER.getTopBitsByte(0,0x80));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x08, stringActionLocoNet_OPC_PEER.getTopBitsByte(0,0x8000));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x03, stringActionLocoNet_OPC_PEER.getTopBitsByte(0xFFFF, 0));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x0C, stringActionLocoNet_OPC_PEER.getTopBitsByte(0,0xFFFF));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x0F, stringActionLocoNet_OPC_PEER.getTopBitsByte(0xFFFF, 0xFFFF));
+    }
+    
+    @Test
+    public void testGetTopBitsByte4() {
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x00, stringActionLocoNet_OPC_PEER.getTopBitsByte(0,0,0,0));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x01, stringActionLocoNet_OPC_PEER.getTopBitsByte(0,0,0,0x80));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x02, stringActionLocoNet_OPC_PEER.getTopBitsByte(0,0,0x80,0));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x04, stringActionLocoNet_OPC_PEER.getTopBitsByte(0,0x80,0,0));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x08, stringActionLocoNet_OPC_PEER.getTopBitsByte(0x80,0,0,0));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x03, stringActionLocoNet_OPC_PEER.getTopBitsByte(0,0,0xFF,0xFF));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x0C, stringActionLocoNet_OPC_PEER.getTopBitsByte(0xFF,0xFF,0,0));
+        
+        Assert.assertEquals("getTopBitsByte() returns correct value",
+                0x0F, stringActionLocoNet_OPC_PEER.getTopBitsByte(0xFF,0xFF,0xFF,0xFF));
     }
     
     // The minimal setup for log4J
@@ -263,12 +324,12 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
         conditionalNG.getChild(0).connect(maleSocketDoStringAction);
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        StringActionLocoNet_OPC_PEER stringActionMemory = new StringActionLocoNet_OPC_PEER("IQSA321", "StringIO_Memory");
+        stringActionLocoNet_OPC_PEER = new StringActionLocoNet_OPC_PEER("IQSA321", "StringIO_Memory");
         MaleSocket maleSocketStringActionLocoNet_OPC_PEER =
-                InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionMemory);
+                InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionLocoNet_OPC_PEER);
         doStringAction.getChild(1).connect(maleSocketStringActionLocoNet_OPC_PEER);
-        stringActionMemory.setMemory(_memory);
-        _base = stringActionMemory;
+//        stringActionMemory.setMemory(_memory);
+        _base = stringActionLocoNet_OPC_PEER;
         _baseMaleSocket = maleSocketStringActionLocoNet_OPC_PEER;
         
 	logixNG.setParentForAllChildren();
