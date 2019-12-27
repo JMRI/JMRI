@@ -31,7 +31,7 @@ public class StringExpressionMemorySwing extends AbstractExpressionSwing {
     
     @Override
     protected void createPanel(Base object) {
-        StringExpressionMemory action = (StringExpressionMemory)object;
+//        StringExpressionMemory action = (StringExpressionMemory)object;
         
         panel = new JPanel();
         memoryBeanPanel = new BeanSelectCreatePanel<>(InstanceManager.getDefault(MemoryManager.class), null);
