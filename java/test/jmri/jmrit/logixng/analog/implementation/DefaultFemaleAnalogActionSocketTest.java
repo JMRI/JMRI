@@ -103,7 +103,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrix.loconet.logixng.AnalogActionLocoNet_OPC_PEER.class);
+//        classes.add(jmri.jmrix.loconet.logixng.AnalogActionLocoNet_OPC_PEER.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();

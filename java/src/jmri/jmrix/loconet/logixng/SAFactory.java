@@ -18,7 +18,12 @@ public class SAFactory implements StringActionFactory {
     @Override
     public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {
         Set<Map.Entry<Category, Class<? extends Base>>> stringActionClasses = new HashSet<>();
-        stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, StringActionLocoNet_OPC_PEER.class));
+        
+        // We don't want to add these classes if we don't have a LocoNet connection
+        if (Common.hasLocoNet()) {
+            stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, StringActionLocoNet_OPC_PEER.class));
+        }
+        
         return stringActionClasses;
     }
 

@@ -100,7 +100,7 @@ public class DefaultFemaleStringActionSocketTest extends FemaleSocketTestBase {
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
-        classes.add(jmri.jmrix.loconet.logixng.StringActionLocoNet_OPC_PEER.class);
+//        classes.add(jmri.jmrix.loconet.logixng.StringActionLocoNet_OPC_PEER.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();

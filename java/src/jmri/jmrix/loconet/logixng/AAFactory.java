@@ -18,7 +18,12 @@ public class AAFactory implements AnalogActionFactory {
     @Override
     public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {
         Set<Map.Entry<Category, Class<? extends Base>>> analogActionClasses = new HashSet<>();
-        analogActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, AnalogActionLocoNet_OPC_PEER.class));
+        
+        // We don't want to add these classes if we don't have a LocoNet connection
+        if (Common.hasLocoNet()) {
+            analogActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, AnalogActionLocoNet_OPC_PEER.class));
+        }
+        
         return analogActionClasses;
     }
 

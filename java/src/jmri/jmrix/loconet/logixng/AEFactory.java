@@ -18,7 +18,12 @@ public class AEFactory implements AnalogExpressionFactory {
     @Override
     public Set<Map.Entry<Category, Class<? extends Base>>> getClasses() {
         Set<Map.Entry<Category, Class<? extends Base>>> analogExpressionClasses = new HashSet<>();
-        analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, AnalogExpressionLocoNet_OPC_PEER.class));
+        
+        // We don't want to add these classes if we don't have a LocoNet connection
+        if (Common.hasLocoNet()) {
+            analogExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, AnalogExpressionLocoNet_OPC_PEER.class));
+        }
+        
         return analogExpressionClasses;
     }
 
