@@ -163,7 +163,7 @@ public class ActionListenOnBeans extends AbstractDigitalAction implements Vetoab
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.ITEM;
+        return Category.OTHER;
     }
 
     /** {@inheritDoc} */

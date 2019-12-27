@@ -16,7 +16,6 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.actions.ActionSensor;
 import jmri.jmrit.logixng.digital.actions.ActionSensor.SensorState;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.swing.BeanSelectCreatePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,28 +23,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Configures an ActionSensor object with a Swing JPanel.
  */
-public class ActionSensorSwing implements SwingConfiguratorInterface {
+public class ActionSensorSwing extends AbstractActionSwing {
 
-    private JPanel panel;
     private BeanSelectCreatePanel<Sensor> sensorBeanPanel;
     private JComboBox<SensorState> stateComboBox;
     
     
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel(null);
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel(object);
-        return panel;
-    }
-    
-    private void createPanel(Base object) {
+    protected void createPanel(Base object) {
         ActionSensor action = (ActionSensor)object;
         
         panel = new JPanel();
@@ -80,15 +65,23 @@ public class ActionSensorSwing implements SwingConfiguratorInterface {
     
     /** {@inheritDoc} */
     @Override
+    public String getAutoSystemName() {
+        return InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName();
+    }
+    
+    /** {@inheritDoc} */
+    @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ActionSensor action = new ActionSensor(systemName, userName);
         try {
-            Sensor sensor = sensorBeanPanel.getNamedBean();
-            if (sensor != null) {
-                NamedBeanHandle<Sensor> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(sensor.getDisplayName(), sensor);
-                action.setSensor(handle);
+            if (!sensorBeanPanel.isEmpty()) {
+                Sensor sensor = sensorBeanPanel.getNamedBean();
+                if (sensor != null) {
+                    NamedBeanHandle<Sensor> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(sensor.getDisplayName(), sensor);
+                    action.setSensor(handle);
+                }
             }
             action.setSensorState((SensorState)stateComboBox.getSelectedItem());
         } catch (JmriException ex) {

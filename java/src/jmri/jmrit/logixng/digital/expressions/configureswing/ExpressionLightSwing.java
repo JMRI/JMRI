@@ -17,7 +17,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.expressions.ExpressionLight;
 import jmri.jmrit.logixng.digital.expressions.ExpressionLight.LightState;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.swing.BeanSelectCreatePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,29 +24,15 @@ import org.slf4j.LoggerFactory;
 /**
  * Configures an ExpressionLight object with a Swing JPanel.
  */
-public class ExpressionLightSwing implements SwingConfiguratorInterface {
+public class ExpressionLightSwing extends AbstractExpressionSwing {
 
-    private JPanel panel;
     private BeanSelectCreatePanel<Light> lightBeanPanel;
     private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
     private JComboBox<LightState> stateComboBox;
     
     
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel(null);
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel(object);
-        return panel;
-    }
-    
-    private void createPanel(Base object) {
+    protected void createPanel(Base object) {
         if ((object != null) && !(object instanceof ExpressionLight)) {
             throw new IllegalArgumentException("object must be an ExpressionLight but is a: "+object.getClass().getName());
         }
@@ -95,12 +80,14 @@ public class ExpressionLightSwing implements SwingConfiguratorInterface {
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ExpressionLight expression = new ExpressionLight(systemName, userName);
         try {
-            Light turnout = lightBeanPanel.getNamedBean();
-            if (turnout != null) {
-                NamedBeanHandle<Light> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                expression.setLight(handle);
+            if (!lightBeanPanel.isEmpty()) {
+                Light turnout = lightBeanPanel.getNamedBean();
+                if (turnout != null) {
+                    NamedBeanHandle<Light> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(turnout.getDisplayName(), turnout);
+                    expression.setLight(handle);
+                }
             }
             expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
             expression.setLightState((LightState)stateComboBox.getSelectedItem());

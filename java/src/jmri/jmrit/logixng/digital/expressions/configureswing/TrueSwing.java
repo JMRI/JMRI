@@ -8,31 +8,14 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.expressions.True;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class TrueSwing implements SwingConfiguratorInterface {
+public class TrueSwing extends AbstractExpressionSwing {
 
-    private JPanel panel;
-    
-    
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel(null);
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel(object);
-        return panel;
-    }
-    
-    private void createPanel(Base object) {
+    protected void createPanel(Base object) {
         panel = new JPanel();
     }
     

@@ -7,33 +7,18 @@ import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.DigitalBooleanActionManager;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class OnChangeActionSwing implements SwingConfiguratorInterface {
+public class OnChangeSwing extends AbstractBooleanActionSwing {
 
-    private JPanel panel;
     OnChange.ChangeType type = OnChange.ChangeType.CHANGE;
     
     
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel();
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel();
-        return panel;
-    }
-    
-    private void createPanel() {
+    protected void createPanel(Base object) {
         panel = new JPanel();
     }
     

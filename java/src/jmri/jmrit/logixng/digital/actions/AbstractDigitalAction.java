@@ -30,7 +30,7 @@ public abstract class AbstractDigitalAction extends AbstractBase
         // Do this test here to ensure all the tests are using correct system names
         Manager.NameValidity isNameValid = InstanceManager.getDefault(DigitalActionManager.class).validSystemNameFormat(mSystemName);
         if (isNameValid != Manager.NameValidity.VALID) {
-            throw new IllegalArgumentException("system name is not valid");
+            throw new IllegalArgumentException("system name is not valid: "+mSystemName);
         }
     }
     

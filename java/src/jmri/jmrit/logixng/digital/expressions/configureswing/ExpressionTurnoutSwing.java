@@ -17,7 +17,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout;
 import jmri.jmrit.logixng.digital.expressions.ExpressionTurnout.TurnoutState;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.swing.BeanSelectCreatePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,29 +24,15 @@ import org.slf4j.LoggerFactory;
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class ExpressionTurnoutSwing implements SwingConfiguratorInterface {
+public class ExpressionTurnoutSwing extends AbstractExpressionSwing {
 
-    private JPanel panel;
     private BeanSelectCreatePanel<Turnout> turnoutBeanPanel;
     private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
     private JComboBox<TurnoutState> stateComboBox;
     
     
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel(null);
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel(object);
-        return panel;
-    }
-    
-    private void createPanel(Base object) {
+    protected void createPanel(Base object) {
         if ((object != null) && !(object instanceof ExpressionTurnout)) {
             throw new IllegalArgumentException("object must be an ExpressionTurnout but is a: "+object.getClass().getName());
         }
@@ -95,12 +80,14 @@ public class ExpressionTurnoutSwing implements SwingConfiguratorInterface {
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ExpressionTurnout expression = new ExpressionTurnout(systemName, userName);
         try {
-            Turnout turnout = turnoutBeanPanel.getNamedBean();
-            if (turnout != null) {
-                NamedBeanHandle<Turnout> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                expression.setTurnout(handle);
+            if (!turnoutBeanPanel.isEmpty()) {
+                Turnout turnout = turnoutBeanPanel.getNamedBean();
+                if (turnout != null) {
+                    NamedBeanHandle<Turnout> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(turnout.getDisplayName(), turnout);
+                    expression.setTurnout(handle);
+                }
             }
             expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
             expression.setTurnoutState((TurnoutState)stateComboBox.getSelectedItem());

@@ -111,6 +111,7 @@ public class DefaultFemaleStringExpressionSocketTest extends FemaleSocketTestBas
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
+        classes.add(jmri.jmrix.loconet.logixng.StringExpressionLocoNet_OPC_PEER.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();

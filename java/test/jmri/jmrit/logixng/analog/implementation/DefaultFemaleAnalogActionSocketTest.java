@@ -21,6 +21,8 @@ import org.junit.Test;
 import jmri.jmrit.logixng.AnalogActionBean;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
+import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.swing.SwingTools;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -101,6 +103,7 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
+        classes.add(jmri.jmrix.loconet.logixng.AnalogActionLocoNet_OPC_PEER.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();
@@ -109,7 +112,25 @@ public class DefaultFemaleAnalogActionSocketTest extends FemaleSocketTestBase {
         Assert.assertTrue("maps are equal",
                 isConnectionClassesEquals(map, femaleSocket.getConnectableClasses()));
     }
-    
+/*    
+    @Test
+    public void testCategory() {
+        // Test that the classes method getCategory() returns the same value as
+        // the factory.
+        Map<Category, List<Class<? extends Base>>> map = femaleSocket.getConnectableClasses();
+        
+        for (Map.Entry<Category, List<Class<? extends Base>>> entry : map.entrySet()) {
+            
+            for (Class<? extends Base> clazz : entry.getValue()) {
+                // The class SwingToolsTest does not have a swing configurator
+                SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForClass(clazz);
+                iface.getConfigPanel();
+                Base obj = iface.createNewObject(iface.getAutoSystemName(), null);
+                Assert.assertEquals("category is correct", entry.getKey(), obj.getCategory());
+            }
+        }
+    }
+*/    
     // The minimal setup for log4J
     @Before
     public void setUp() {

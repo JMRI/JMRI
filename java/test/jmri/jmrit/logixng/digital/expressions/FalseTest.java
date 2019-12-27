@@ -126,7 +126,7 @@ public class FalseTest extends AbstractDigitalExpressionTestBase {
     
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.COMMON == _base.getCategory());
+        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
     }
     
     @Test

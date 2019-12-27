@@ -17,7 +17,6 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor;
 import jmri.jmrit.logixng.digital.expressions.ExpressionSensor.SensorState;
 import jmri.jmrit.logixng.Is_IsNot_Enum;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.swing.BeanSelectCreatePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,29 +24,15 @@ import org.slf4j.LoggerFactory;
 /**
  * Configures an ExpressionSensor object with a Swing JPanel.
  */
-public class ExpressionSensorSwing implements SwingConfiguratorInterface {
+public class ExpressionSensorSwing extends AbstractExpressionSwing {
 
-    private JPanel panel;
     private BeanSelectCreatePanel<Sensor> sensorBeanPanel;
     private JComboBox<Is_IsNot_Enum> is_IsNot_ComboBox;
     private JComboBox<SensorState> stateComboBox;
     
     
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel(null);
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel(object);
-        return panel;
-    }
-    
-    private void createPanel(Base object) {
+    protected void createPanel(Base object) {
         if ((object != null) && !(object instanceof ExpressionSensor)) {
             throw new IllegalArgumentException("object must be an ExpressionSensor but is a: "+object.getClass().getName());
         }
@@ -95,12 +80,14 @@ public class ExpressionSensorSwing implements SwingConfiguratorInterface {
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ExpressionSensor expression = new ExpressionSensor(systemName, userName);
         try {
-            Sensor turnout = sensorBeanPanel.getNamedBean();
-            if (turnout != null) {
-                NamedBeanHandle<Sensor> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(turnout.getDisplayName(), turnout);
-                expression.setSensor(handle);
+            if (!sensorBeanPanel.isEmpty()) {
+                Sensor sensor = sensorBeanPanel.getNamedBean();
+                if (sensor != null) {
+                    NamedBeanHandle<Sensor> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(sensor.getDisplayName(), sensor);
+                    expression.setSensor(handle);
+                }
             }
             expression.set_Is_IsNot((Is_IsNot_Enum)is_IsNot_ComboBox.getSelectedItem());
             expression.setSensorState((SensorState)stateComboBox.getSelectedItem());

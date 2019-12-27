@@ -16,7 +16,6 @@ import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.actions.ActionLight;
 import jmri.jmrit.logixng.digital.actions.ActionLight.LightState;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.swing.BeanSelectCreatePanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,28 +23,14 @@ import org.slf4j.LoggerFactory;
 /**
  * Configures an ActionLight object with a Swing JPanel.
  */
-public class ActionLightSwing implements SwingConfiguratorInterface {
+public class ActionLightSwing extends AbstractActionSwing {
 
-    private JPanel panel;
     private BeanSelectCreatePanel<Light> lightBeanPanel;
     private JComboBox<LightState> stateComboBox;
     
     
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel(null);
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel(object);
-        return panel;
-    }
-    
-    private void createPanel(Base object) {
+    protected void createPanel(Base object) {
         ActionLight action = (ActionLight)object;
         
         panel = new JPanel();
@@ -83,12 +68,14 @@ public class ActionLightSwing implements SwingConfiguratorInterface {
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
         ActionLight action = new ActionLight(systemName, userName);
         try {
-            Light light = lightBeanPanel.getNamedBean();
-            if (light != null) {
-                NamedBeanHandle<Light> handle
-                        = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                                .getNamedBeanHandle(light.getDisplayName(), light);
-                action.setLight(handle);
+            if (!lightBeanPanel.isEmpty()) {
+                Light light = lightBeanPanel.getNamedBean();
+                if (light != null) {
+                    NamedBeanHandle<Light> handle
+                            = InstanceManager.getDefault(NamedBeanHandleManager.class)
+                                    .getNamedBeanHandle(light.getDisplayName(), light);
+                    action.setLight(handle);
+                }
             }
             action.setLightState((LightState)stateComboBox.getSelectedItem());
         } catch (JmriException ex) {

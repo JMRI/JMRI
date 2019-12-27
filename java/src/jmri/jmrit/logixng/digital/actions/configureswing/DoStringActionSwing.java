@@ -8,31 +8,14 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.actions.DoStringAction;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class DoStringActionSwing implements SwingConfiguratorInterface {
+public class DoStringActionSwing extends AbstractActionSwing {
 
-    private JPanel panel;
-    
-    
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel();
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel();
-        return panel;
-    }
-    
-    private void createPanel() {
+    protected void createPanel(Base object) {
         panel = new JPanel();
     }
     

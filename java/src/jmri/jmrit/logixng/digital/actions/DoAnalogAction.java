@@ -41,7 +41,7 @@ public class DoAnalogAction
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.OTHER;
+        return Category.COMMON;
     }
 
     /** {@inheritDoc} */

@@ -46,6 +46,12 @@ public interface SwingConfiguratorInterface {
     public boolean validate(@Nonnull StringBuilder errorMessage);
     
     /**
+     * Create a new system name.
+     * @return a new system name
+     */
+    public String getAutoSystemName();
+    
+    /**
      * Create a new object with the data entered.
      * This method must also register the object in its manager.
      * 

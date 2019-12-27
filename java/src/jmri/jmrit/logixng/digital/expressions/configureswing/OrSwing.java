@@ -8,31 +8,14 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.expressions.Or;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class OrSwing implements SwingConfiguratorInterface {
+public class OrSwing extends AbstractExpressionSwing {
 
-    private JPanel panel;
-    
-    
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel();
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel();
-        return panel;
-    }
-    
-    private void createPanel() {
+    protected void createPanel(Base object) {
         panel = new JPanel();
     }
     

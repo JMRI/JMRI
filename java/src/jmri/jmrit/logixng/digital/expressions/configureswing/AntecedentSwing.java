@@ -13,26 +13,10 @@ import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class AntecedentSwing implements SwingConfiguratorInterface {
+public class AntecedentSwing extends AbstractExpressionSwing {
 
-    private JPanel panel;
-    
-    
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel(null);
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel(object);
-        return panel;
-    }
-    
-    private void createPanel(Base object) {
+    protected void createPanel(Base object) {
         panel = new JPanel();
     }
     

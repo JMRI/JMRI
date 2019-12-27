@@ -26,7 +26,7 @@ public abstract class AbstractDigitalActionTestBase extends AbstractBaseTestBase
             // We should never get here.
             Assert.assertNotNull("Bean is not null", bean);
         } catch (IllegalArgumentException e) {
-            Assert.assertEquals("Exception is correct", "system name is not valid", e.getMessage());
+            Assert.assertEquals("Exception is correct", "system name is not valid: IQ111", e.getMessage());
             hasThrown = true;
         }
         Assert.assertTrue("Exception is thrown", hasThrown);

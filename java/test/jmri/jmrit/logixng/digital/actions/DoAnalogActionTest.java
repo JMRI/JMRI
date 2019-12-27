@@ -105,7 +105,7 @@ public class DoAnalogActionTest extends AbstractDigitalActionTestBase {
     
     @Test
     public void testCategory() {
-        Assert.assertTrue("Category matches", Category.OTHER == _base.getCategory());
+        Assert.assertEquals("Category matches", Category.COMMON, _base.getCategory());
     }
     
     @Test

@@ -21,6 +21,8 @@ import jmri.jmrit.logixng.AnalogExpressionBean;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
+import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
+import jmri.jmrit.logixng.swing.SwingTools;
 import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 
@@ -112,6 +114,7 @@ public class DefaultFemaleAnalogExpressionSocketTest extends FemaleSocketTestBas
         map.put(Category.COMMON, classes);
         
         classes = new ArrayList<>();
+        classes.add(jmri.jmrix.loconet.logixng.AnalogExpressionLocoNet_OPC_PEER.class);
         map.put(Category.OTHER, classes);
         
         classes = new ArrayList<>();

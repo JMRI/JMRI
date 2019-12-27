@@ -19,7 +19,7 @@ public class True extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public Category getCategory() {
-        return Category.COMMON;
+        return Category.OTHER;
     }
     
     /** {@inheritDoc} */

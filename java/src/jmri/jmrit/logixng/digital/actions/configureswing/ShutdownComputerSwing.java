@@ -13,27 +13,13 @@ import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class ShutdownComputerSwing implements SwingConfiguratorInterface {
+public class ShutdownComputerSwing extends AbstractActionSwing {
 
-    private JPanel panel;
     int seconds = 0;
     
     
-    /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel();
-        return panel;
-    }
-    
-    /** {@inheritDoc} */
-    @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel();
-        return panel;
-    }
-    
-    private void createPanel() {
+    protected void createPanel(Base object) {
         panel = new JPanel();
     }
     

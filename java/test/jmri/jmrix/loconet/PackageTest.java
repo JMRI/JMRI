@@ -10,6 +10,7 @@ import org.junit.runners.Suite;
         jmri.jmrix.loconet.sdf.PackageTest.class,
         jmri.jmrix.loconet.sdfeditor.PackageTest.class,
         jmri.jmrix.loconet.locomon.PackageTest.class,
+        jmri.jmrix.loconet.logixng.PackageTest.class,
         jmri.jmrix.loconet.soundloader.PackageTest.class,
         jmri.jmrix.loconet.spjfile.PackageTest.class,
         jmri.jmrix.loconet.messageinterp.PackageTest.class,
