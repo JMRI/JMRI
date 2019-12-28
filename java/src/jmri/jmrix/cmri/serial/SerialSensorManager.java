@@ -1,6 +1,8 @@
 package jmri.jmrix.cmri.serial;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
@@ -46,15 +48,19 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public CMRISystemConnectionMemo getMemo() {
         return (CMRISystemConnectionMemo) memo;
     }
 
     /**
      * {@inheritDoc}
+     *
+     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
         String sName = getMemo().normalizeSystemName(systemName);
@@ -154,7 +160,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -162,7 +168,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         String tmpSName = "";
         if (curAddress.contains(":")) {
             //Address format passed is in the form node:address
@@ -205,14 +212,14 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return tmpSName;
     }
 
-    int bitNum = 0;
-    int nAddress = 0;
+    private int bitNum = 0;
+    private int nAddress = 0;
 
     /**
      * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
         //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
 
@@ -253,7 +260,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return getMemo().validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
     
@@ -261,7 +269,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 

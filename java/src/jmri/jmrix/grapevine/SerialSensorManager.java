@@ -1,5 +1,6 @@
 package jmri.jmrix.grapevine;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
@@ -41,18 +42,21 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public GrapevineSystemConnectionMemo getMemo() {
         return (GrapevineSystemConnectionMemo) memo;
     }
 
     /**
-     * Create a new sensor if all checks are passed.
+     * {@inheritDoc}
+     * <p>
      * System name is normalized to ensure uniqueness.
      *
      * @return null if sensor already exists by that name or an alternate
      */
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         String prefix = getSystemPrefix();
         log.debug("createNewSensor {} {}", systemName, userName);
         Sensor s;
@@ -104,7 +108,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     /** {@inheritDoc} */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
         String tmpSName = prefix + "S" + curAddress;
         // first, check validity
         try {
@@ -120,7 +125,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return SerialAddress.validateSystemNameFormat(name, this, locale);
     }
 
@@ -128,7 +134,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix());
     }
 
@@ -165,13 +171,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      */
     @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(SerialNode node) {
-        // get list containing all Sensors
-        java.util.Iterator<String> iter
-                = getSystemNameList().iterator();
-        // Iterate through the sensors
+        // Iterate through list containing names of all Sensors
         SerialNode tNode = null;
-        while (iter.hasNext()) {
-            String sName = iter.next();
+        for (String sName : getSystemNameList()) {
             if (sName == null) {
                 log.error("System Name null during register Sensor");
             } else {
@@ -181,8 +183,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                     tNode = SerialAddress.getNodeFromSystemName(sName, getMemo().getTrafficController());
                     if (tNode == node) {
                         // This sensor is for this new Serial Node - register it
-                        node.registerSensor(getBySystemName(sName),
-                                SerialAddress.getBitFromSystemName(sName, getSystemPrefix()));
+                        Sensor s = getBySystemName(sName);
+                        if (s != null) {
+                            node.registerSensor(s, SerialAddress.getBitFromSystemName(sName, getSystemPrefix()));
+                        } else {
+                            log.error("Sensor {} not found by its system name", sName);
+                        }
                     }
                 }
             }

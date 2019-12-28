@@ -1,6 +1,8 @@
 package jmri.jmrix.acela;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,16 +35,21 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public AcelaSystemConnectionMemo getMemo() {
         return (AcelaSystemConnectionMemo) memo;
     }
 
     /**
-     * Create a new sensor if all checks are passed. System name is normalized to
-     * ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     *
+     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;
         // TODO: validate the system name
         String sName = systemName;
@@ -102,7 +109,8 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * {@value AcelaAddress#MAXSENSORADDRESS}.
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return super.validateIntegerSystemNameFormat(systemName,
                 AcelaAddress.MINSENSORADDRESS,
                 AcelaAddress.MAXSENSORADDRESS,
@@ -113,7 +121,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
 
@@ -240,7 +248,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
