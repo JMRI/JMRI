@@ -449,7 +449,8 @@ public final class ConditionalNGEditor extends JmriJFrame {
             panel5.add(create);
             create.addActionListener((ActionEvent e) -> {
                 if (_systemName.getText().isEmpty() && _autoSystemName.isSelected()) {
-                    _systemName.setText(femaleSocket.getNewSystemName());
+//                    _systemName.setText(femaleSocket.getNewSystemName());
+                    _systemName.setText(addSwingConfiguratorInterface.getAutoSystemName());
                 }
                 MaleSocket socket;
                 if (_addUserName.getText().isEmpty()) {

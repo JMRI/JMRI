@@ -21,7 +21,7 @@ public class SAFactory implements StringActionFactory {
         
         // We don't want to add these classes if we don't have a LocoNet connection
         if (Common.hasLocoNet()) {
-            stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, StringActionLocoNet_OPC_PEER.class));
+            stringActionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, StringActionLocoNetOpcPeer.class));
         }
         
         return stringActionClasses;

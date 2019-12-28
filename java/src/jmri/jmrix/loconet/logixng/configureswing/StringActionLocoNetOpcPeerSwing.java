@@ -8,12 +8,12 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.string.actions.configureswing.AbstractActionSwing;
-import jmri.jmrix.loconet.logixng.StringActionLocoNet_OPC_PEER;
+import jmri.jmrix.loconet.logixng.StringActionLocoNetOpcPeer;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class StringActionLocoNet_OPC_PEERSwing extends AbstractActionSwing {
+public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
 
     @Override
     protected void createPanel(Base object) {
@@ -29,7 +29,7 @@ public class StringActionLocoNet_OPC_PEERSwing extends AbstractActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        StringActionLocoNet_OPC_PEER action = new StringActionLocoNet_OPC_PEER(systemName, userName);
+        StringActionLocoNetOpcPeer action = new StringActionLocoNetOpcPeer(systemName, userName);
         return InstanceManager.getDefault(StringActionManager.class).registerAction(action);
     }
     

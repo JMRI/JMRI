@@ -1,6 +1,5 @@
-package jmri.jmrix.loconet.logixng.configureswing;
+package jmri.jmrix.loconet.logixng.configurexml;
 
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,12 +11,12 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class AnalogExpressionLocoNet_OPC_PEERSwingTest {
+public class StringActionLocoNetOpcPeerXmlTest {
 
     @Test
     public void testCtor() {
-        SwingConfiguratorInterface sci = new AnalogExpressionLocoNet_OPC_PEERSwing();
-        Assert.assertNotNull("object exists", sci);
+        StringActionLocoNetOpcPeerXml obj = new StringActionLocoNetOpcPeerXml();
+        Assert.assertNotNull("object exists", obj);
     }
     
     // The minimal setup for log4J

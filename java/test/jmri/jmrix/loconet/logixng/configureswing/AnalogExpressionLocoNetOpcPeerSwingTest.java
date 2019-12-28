@@ -12,11 +12,11 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class StringActionLocoNet_OPC_PEERSwingTest {
+public class AnalogExpressionLocoNetOpcPeerSwingTest {
 
     @Test
     public void testCtor() {
-        SwingConfiguratorInterface sci = new StringActionLocoNet_OPC_PEERSwing();
+        SwingConfiguratorInterface sci = new AnalogExpressionLocoNetOpcPeerSwing();
         Assert.assertNotNull("object exists", sci);
     }
     

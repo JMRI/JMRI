@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.logixng.AnalogActionLocoNet_OPC_PEER;
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
  */
-public class AnalogActionLocoNet_OPC_PEERSwing extends AbstractActionSwing {
+public class AnalogActionLocoNetOpcPeerSwing extends AbstractActionSwing {
 
     @Override
     protected void createPanel(Base object) {

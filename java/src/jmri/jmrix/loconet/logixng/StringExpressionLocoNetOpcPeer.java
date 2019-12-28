@@ -22,13 +22,13 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class StringExpressionLocoNet_OPC_PEER extends AbstractStringExpression
+public class StringExpressionLocoNetOpcPeer extends AbstractStringExpression
         implements PropertyChangeListener, VetoableChangeListener {
 
     private NamedBeanHandle<Memory> _memoryHandle;
     private boolean _listenersAreRegistered = false;
     
-    public StringExpressionLocoNet_OPC_PEER(String sys, String user)
+    public StringExpressionLocoNetOpcPeer(String sys, String user)
             throws BadUserNameException, BadSystemNameException {
         
         super(sys, user);
@@ -185,6 +185,6 @@ public class StringExpressionLocoNet_OPC_PEER extends AbstractStringExpression
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(StringExpressionLocoNet_OPC_PEER.class);
+    private final static Logger log = LoggerFactory.getLogger(StringExpressionLocoNetOpcPeer.class);
     
 }

@@ -27,15 +27,15 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test StringActionLocoNet_OPC_PEER
+ * Test StringActionLocoNetOpcPeer
  * 
  * @author Daniel Bergqvist 2018
  */
-public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBase {
+public class StringActionLocoNetOpcPeerTest extends AbstractStringActionTestBase {
 
     LogixNG logixNG;
     ConditionalNG conditionalNG;
-    StringActionLocoNet_OPC_PEER stringActionLocoNet_OPC_PEER;
+    StringActionLocoNetOpcPeer stringActionLocoNet_OPC_PEER;
     protected Memory _memory;
     
     @Override
@@ -85,28 +85,28 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);
         
-        StringActionLocoNet_OPC_PEER action2;
+        StringActionLocoNetOpcPeer action2;
         Assert.assertNotNull("memory is not null", _memory);
         _memory.setValue(10.2);
         
-        action2 = new StringActionLocoNet_OPC_PEER("IQSA11", null);
+        action2 = new StringActionLocoNetOpcPeer("IQSA11", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
         Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
         
-        action2 = new StringActionLocoNet_OPC_PEER("IQSA11", "My memory");
+        action2 = new StringActionLocoNetOpcPeer("IQSA11", "My memory");
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
         Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
         
-        action2 = new StringActionLocoNet_OPC_PEER("IQSA11", null);
+        action2 = new StringActionLocoNetOpcPeer("IQSA11", null);
 //        action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
         Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
 //        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
         
-        action2 = new StringActionLocoNet_OPC_PEER("IQSA11", "My memory");
+        action2 = new StringActionLocoNetOpcPeer("IQSA11", "My memory");
 //        action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
@@ -116,7 +116,7 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
         boolean thrown = false;
         try {
             // Illegal system name
-            new StringActionLocoNet_OPC_PEER("IQA55:12:XY11", null);
+            new StringActionLocoNetOpcPeer("IQA55:12:XY11", null);
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -125,7 +125,7 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
         thrown = false;
         try {
             // Illegal system name
-            new StringActionLocoNet_OPC_PEER("IQA55:12:XY11", "A name");
+            new StringActionLocoNetOpcPeer("IQA55:12:XY11", "A name");
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -134,7 +134,7 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
 /*    
     @Test
     public void testAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
-        StringActionLocoNet_OPC_PEER action = (StringActionLocoNet_OPC_PEER)_base;
+        StringActionLocoNetOpcPeer action = (StringActionLocoNetOpcPeer)_base;
         action.setValue("");
         Assert.assertEquals("Memory has correct value", "", _memory.getValue());
         action.setValue("Test");
@@ -146,10 +146,10 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
     
     @Test
     public void testMemory() {
-        StringActionLocoNet_OPC_PEER action = (StringActionLocoNet_OPC_PEER)_base;
+        StringActionLocoNetOpcPeer action = (StringActionLocoNetOpcPeer)_base;
         action.setMemory((Memory)null);
         Assert.assertNull("Memory is null", action.getMemory());
-        ((StringActionLocoNet_OPC_PEER)_base).setMemory(_memory);
+        ((StringActionLocoNetOpcPeer)_base).setMemory(_memory);
         Assert.assertTrue("Memory matches", _memory == action.getMemory().getBean());
         
         action.setMemory((NamedBeanHandle<Memory>)null);
@@ -158,7 +158,7 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
         Assert.assertNotNull("memory is not null", otherMemory);
         NamedBeanHandle<Memory> memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-        ((StringActionLocoNet_OPC_PEER)_base).setMemory(memoryHandle);
+        ((StringActionLocoNetOpcPeer)_base).setMemory(memoryHandle);
         Assert.assertTrue("Memory matches", memoryHandle == action.getMemory());
         Assert.assertTrue("Memory matches", otherMemory == action.getMemory().getBean());
         
@@ -181,7 +181,7 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
         Assert.assertNotEquals("Memory is not equal", _memory, otherMemory);
         
         // Get the expression and set the memory
-        StringActionLocoNet_OPC_PEER action = (StringActionLocoNet_OPC_PEER)_base;
+        StringActionLocoNetOpcPeer action = (StringActionLocoNetOpcPeer)_base;
         action.setMemory(_memory);
         Assert.assertEquals("Memory matches", _memory, action.getMemory().getBean());
         
@@ -324,7 +324,7 @@ public class StringActionLocoNet_OPC_PEERTest extends AbstractStringActionTestBa
                 InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
         conditionalNG.getChild(0).connect(maleSocketDoStringAction);
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        stringActionLocoNet_OPC_PEER = new StringActionLocoNet_OPC_PEER("IQSA321", "StringIO_Memory");
+        stringActionLocoNet_OPC_PEER = new StringActionLocoNetOpcPeer("IQSA321", "StringIO_Memory");
         MaleSocket maleSocketStringActionLocoNet_OPC_PEER =
                 InstanceManager.getDefault(StringActionManager.class).registerAction(stringActionLocoNet_OPC_PEER);
         doStringAction.getChild(1).connect(maleSocketStringActionLocoNet_OPC_PEER);

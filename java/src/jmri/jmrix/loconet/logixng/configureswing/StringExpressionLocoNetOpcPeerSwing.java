@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.logixng.AnalogExpressionLocoNet_OPC_PEER;
 /**
  * Configures an ExpressionTurnout object with a Swing JPanel.
  */
-public class StringExpressionLocoNet_OPC_PEERSwing extends AbstractExpressionSwing {
+public class StringExpressionLocoNetOpcPeerSwing extends AbstractExpressionSwing {
 
     @Override
     protected void createPanel(Base object) {

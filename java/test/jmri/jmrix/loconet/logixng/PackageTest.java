@@ -6,12 +6,12 @@ import org.junit.runners.Suite;
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
     jmri.jmrix.loconet.logixng.configureswing.PackageTest.class,
-//    jmri.jmrix.loconet.logixng.configurexml.PackageTest.class,
-    AnalogActionLocoNet_OPC_PEERTest.class,
-    AnalogExpressionLocoNet_OPC_PEERTest.class,
+    jmri.jmrix.loconet.logixng.configurexml.PackageTest.class,
+    AnalogActionLocoNetOpcPeerTest.class,
+    AnalogExpressionLocoNetOpcPeerTest.class,
     BundleTest.class,
-    StringActionLocoNet_OPC_PEERTest.class,
-    StringExpressionLocoNet_OPC_PEERTest.class,
+    StringActionLocoNetOpcPeerTest.class,
+    StringExpressionLocoNetOpcPeerTest.class,
 })
 
 /**

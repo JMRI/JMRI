@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class StringActionLocoNet_OPC_PEER extends AbstractStringAction {
+public class StringActionLocoNetOpcPeer extends AbstractStringAction {
 //        implements VetoableChangeListener {
 
 //    private NamedBeanHandle<Memory> _memoryHandle;
@@ -46,7 +46,7 @@ public class StringActionLocoNet_OPC_PEER extends AbstractStringAction {
     private long _start_SV_address;
     private int _numCharsToSend = 8;    // This MUST be a multiple of 4.
     
-    public StringActionLocoNet_OPC_PEER(String sys, String user) {
+    public StringActionLocoNetOpcPeer(String sys, String user) {
         super(sys, user);
     }
     
@@ -277,6 +277,6 @@ public class StringActionLocoNet_OPC_PEER extends AbstractStringAction {
     public void disposeMe() {
     }
     
-//    private final static Logger log = LoggerFactory.getLogger(StringActionLocoNet_OPC_PEER.class);
+//    private final static Logger log = LoggerFactory.getLogger(StringActionLocoNetOpcPeer.class);
 
 }

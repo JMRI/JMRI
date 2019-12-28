@@ -31,7 +31,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class AnalogActionLocoNet_OPC_PEERTest extends AbstractAnalogActionTestBase {
+public class AnalogActionLocoNetOpcPeerTest extends AbstractAnalogActionTestBase {
 
     LogixNG logixNG;
     ConditionalNG conditionalNG;

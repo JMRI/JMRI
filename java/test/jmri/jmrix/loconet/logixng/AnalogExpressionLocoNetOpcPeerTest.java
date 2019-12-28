@@ -1,6 +1,6 @@
 package jmri.jmrix.loconet.logixng;
 
-import jmri.jmrit.logixng.string.expressions.*;
+import jmri.jmrit.logixng.analog.expressions.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import jmri.InstanceManager;
@@ -9,18 +9,19 @@ import jmri.MemoryManager;
 import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
+import jmri.jmrit.logixng.AnalogActionManager;
+import jmri.jmrit.logixng.AnalogExpressionManager;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.ConditionalNG;
 import jmri.jmrit.logixng.ConditionalNG_Manager;
+import jmri.jmrit.logixng.DigitalActionBean;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.LogixNG;
 import jmri.jmrit.logixng.LogixNG_Manager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
-import jmri.jmrit.logixng.StringActionManager;
-import jmri.jmrit.logixng.StringExpressionManager;
-import jmri.jmrit.logixng.digital.actions.DoStringAction;
-import jmri.jmrit.logixng.string.actions.StringActionMemory;
+import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
+import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -29,17 +30,21 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * Test StringExpressionLocoNet_OPC_PEER
+ * Test AnalogExpressionLocoNet_OPC_PEER
  * 
  * @author Daniel Bergqvist 2018
  */
-public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressionTestBase {
+public class AnalogExpressionLocoNetOpcPeerTest extends AbstractAnalogExpressionTestBase {
 
-    LogixNG logixNG;
-    ConditionalNG conditionalNG;
-    StringExpressionLocoNet_OPC_PEER stringExpressionMemory;
     protected Memory _memory;
-    protected Memory _memoryOut;
+    
+    
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private AnalogExpressionLocoNet_OPC_PEER expressionMemory;
+    private Memory _memoryOut;
+    private AnalogActionMemory actionMemory;
+    
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -64,46 +69,46 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
     @Override
     public String getExpectedPrintedTreeFromRoot() {
         return String.format(
-                "LogixNG: A new logix for test%n" +
+                "LogixNG: A logixNG%n" +
                 "   ConditionalNG: A conditionalNG%n" +
                 "      ! %n" +
-                "         Read string E and set string A%n" +
-                "            ?s E%n" +
+                "         Read analog E and set analog A%n" +
+                "            ?~ E%n" +
                 "               Get memory IM1%n" +
-                "            !s A%n" +
+                "            !~ A%n" +
                 "               Set memory IM2%n");
     }
     
     @Override
     public NamedBean createNewBean(String systemName) {
-        return new StringExpressionLocoNet_OPC_PEER(systemName, null);
+        return new AnalogExpressionLocoNet_OPC_PEER(systemName, null);
     }
     
     @Test
     public void testCtor() {
         Assert.assertTrue("object exists", _base != null);
         
-        StringExpressionLocoNet_OPC_PEER expression2;
+        AnalogExpressionLocoNet_OPC_PEER expression2;
         Assert.assertNotNull("memory is not null", _memory);
         _memory.setValue(10.2);
         
-        expression2 = new StringExpressionLocoNet_OPC_PEER("IQSE11", null);
+        expression2 = new AnalogExpressionLocoNet_OPC_PEER("IQAE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
         Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
         
-        expression2 = new StringExpressionLocoNet_OPC_PEER("IQSE11", "My memory");
+        expression2 = new AnalogExpressionLocoNet_OPC_PEER("IQAE11", "My memory");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
         Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
         
-        expression2 = new StringExpressionLocoNet_OPC_PEER("IQSE11", null);
+        expression2 = new AnalogExpressionLocoNet_OPC_PEER("IQAE11", null);
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
         Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
         
-        expression2 = new StringExpressionLocoNet_OPC_PEER("IQSE11", "My memory");
+        expression2 = new AnalogExpressionLocoNet_OPC_PEER("IQAE11", "My memory");
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
@@ -112,7 +117,7 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
         boolean thrown = false;
         try {
             // Illegal system name
-            new StringExpressionLocoNet_OPC_PEER("IQA55:12:XY11", null);
+            new AnalogExpressionLocoNet_OPC_PEER("IQA55:12:XY11", null);
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -121,7 +126,7 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
         thrown = false;
         try {
             // Illegal system name
-            new StringExpressionLocoNet_OPC_PEER("IQA55:12:XY11", "A name");
+            new AnalogExpressionLocoNet_OPC_PEER("IQA55:12:XY11", "A name");
         } catch (IllegalArgumentException ex) {
             thrown = true;
         }
@@ -132,64 +137,60 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
     public void testEvaluate() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
-        
-        StringExpressionLocoNet_OPC_PEER expression = (StringExpressionLocoNet_OPC_PEER)_base;
-        _memory.setValue("");
-        Assert.assertEquals("Evaluate matches", "", expression.evaluate());
-        _memory.setValue("Other");
-        Assert.assertEquals("Evaluate matches", "Other", expression.evaluate());
+        AnalogExpressionLocoNet_OPC_PEER expression = (AnalogExpressionLocoNet_OPC_PEER)_base;
+        _memory.setValue(0.0d);
+        Assert.assertTrue("Evaluate matches", 0.0d == expression.evaluate());
+        _memory.setValue(10.0d);
+        Assert.assertTrue("Evaluate matches", 10.0d == expression.evaluate());
         expression.setMemory((Memory)null);
-        Assert.assertEquals("Evaluate matches", "", expression.evaluate());
+        Assert.assertTrue("Evaluate matches", 0.0d == expression.evaluate());
         expression.reset();
     }
     
     @Test
     public void testEvaluateAndAction() throws SocketAlreadyConnectedException, SocketAlreadyConnectedException {
-        // Disable the conditionalNG
+        // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
-        
         // Set the memory
-        _memoryOut.setValue("");
-        // The memory should have the value ""
-        Assert.assertEquals("memory is \"\"", "", _memoryOut.getValue());
+        _memoryOut.setValue(0.0);
+        // The double should be 0.0
+        Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
-        _memory.setValue("Test");
+        _memory.setValue(1.0);
         // The conditionalNG is not yet enabled so it shouldn't be executed.
         // So the memory should be 0.0
-        Assert.assertEquals("memory is \"\"", "", _memoryOut.getValue());
+        Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
-        _memory.setValue("Other test");
-        // Enable the logixNG and all its children.
-        logixNG.setEnabled(true);
+        _memory.setValue(2.0);
         // The action is not yet executed so the memory should be 0.0
-        Assert.assertEquals("memory is \"\"", "", _memoryOut.getValue());
+        Assert.assertTrue("memory is 0.0", 0.0 == (Double)_memoryOut.getValue());
         // Enable the conditionalNG and all its children.
         conditionalNG.setEnabled(true);
         // Set the value of the memory. This should execute the conditional.
-        _memory.setValue("Something else");
+        _memory.setValue(3.0);
         // The action should now be executed so the memory should be 3.0
-        Assert.assertEquals("memory is \"Something else\"", "Something else", _memoryOut.getValue());
+        Assert.assertTrue("memory is 3.0", 3.0 == (Double)_memoryOut.getValue());
         // Disable the conditionalNG and all its children.
         conditionalNG.setEnabled(false);
         // The action is not yet executed so the memory should be 0.0
-        Assert.assertEquals("memory is \"something else\"", "Something else", _memoryOut.getValue());
+        Assert.assertTrue("memory is 0.0", 3.0 == (Double)_memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
-        _memory.setValue("Something new");
+        _memory.setValue(4.0);
         // The action should not be executed so the memory should still be 3.0
-        Assert.assertEquals("memory is \"something else\"", "Something else", _memoryOut.getValue());
+        Assert.assertTrue("memory is 3.0", 3.0 == (Double)_memoryOut.getValue());
         // Unregister listeners. This should do nothing since the listeners are
         // already unregistered.
-        stringExpressionMemory.unregisterListeners();
-        // The action is not yet executed so the memory should be 0.0
-        Assert.assertEquals("memory is \"something else\"", "Something else", _memoryOut.getValue());
+        expressionMemory.unregisterListeners();
+        // The memory should be 3.0
+        Assert.assertTrue("memory is 0.0", 3.0 == (Double)_memoryOut.getValue());
         // Set the value of the memory. This should not execute the conditional.
-        _memory.setValue("Something different");
+        _memory.setValue(5.0);
         // The action should not be executed so the memory should still be 3.0
-        Assert.assertEquals("memory is \"something else\"", "Something else", _memoryOut.getValue());
+        Assert.assertTrue("memory is 3.0", 3.0 == (Double)_memoryOut.getValue());
         
         // Test register listeners when there is no memory.
-        stringExpressionMemory.setMemory((Memory)null);
-        stringExpressionMemory.registerListeners();
+        expressionMemory.setMemory((Memory)null);
+        expressionMemory.registerListeners();
     }
     
     @Test
@@ -197,39 +198,49 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
         // Disable the conditionalNG. This will unregister the listeners
         conditionalNG.setEnabled(false);
         
-        StringExpressionLocoNet_OPC_PEER expressionString = (StringExpressionLocoNet_OPC_PEER)_base;
-        expressionString.setMemory((Memory)null);
-        Assert.assertNull("Memory is null", expressionString.getMemory());
-        expressionString.setMemory(_memory);
-        Assert.assertTrue("Memory matches", _memory == expressionString.getMemory().getBean());
+        AnalogExpressionLocoNet_OPC_PEER expressionMemory = (AnalogExpressionLocoNet_OPC_PEER)_base;
+        expressionMemory.setMemory((Memory)null);
+        Assert.assertNull("Memory is null", expressionMemory.getMemory());
+        expressionMemory.setMemory(_memory);
+        Assert.assertTrue("Memory matches", _memory == expressionMemory.getMemory().getBean());
         
-        expressionString.setMemory((NamedBeanHandle<Memory>)null);
-        Assert.assertNull("Memory is null", expressionString.getMemory());
+        expressionMemory.setMemory((NamedBeanHandle<Memory>)null);
+        Assert.assertNull("Memory is null", expressionMemory.getMemory());
         Memory otherMemory = InstanceManager.getDefault(MemoryManager.class).provide("IM99");
         Assert.assertNotNull("memory is not null", otherMemory);
         NamedBeanHandle<Memory> memoryHandle = InstanceManager.getDefault(NamedBeanHandleManager.class)
                 .getNamedBeanHandle(otherMemory.getDisplayName(), otherMemory);
-        expressionString.setMemory(memoryHandle);
-        Assert.assertTrue("Memory matches", memoryHandle == expressionString.getMemory());
-        Assert.assertTrue("Memory matches", otherMemory == expressionString.getMemory().getBean());
+        expressionMemory.setMemory(memoryHandle);
+        Assert.assertTrue("Memory matches", memoryHandle == expressionMemory.getMemory());
+        Assert.assertTrue("Memory matches", otherMemory == expressionMemory.getMemory().getBean());
         
-        expressionString.setMemory((String)null);
-        Assert.assertNull("Memory is null", expressionString.getMemory());
-        expressionString.setMemory(memoryHandle.getName());
-        Assert.assertTrue("Memory matches", memoryHandle == expressionString.getMemory());
+        expressionMemory.setMemory((String)null);
+        Assert.assertNull("Memory is null", expressionMemory.getMemory());
+        expressionMemory.setMemory(memoryHandle.getName());
+        Assert.assertTrue("Memory matches", memoryHandle == expressionMemory.getMemory());
         
         // Test setMemory with a memory name that doesn't exists
-        expressionString.setMemory("Non existent memory");
-        Assert.assertTrue("Memory matches", memoryHandle == expressionString.getMemory());
+        expressionMemory.setMemory("Non existent memory");
+        Assert.assertTrue("Memory matches", memoryHandle == expressionMemory.getMemory());
         JUnitAppender.assertWarnMessage("memory 'Non existent memory' does not exists");
         
         // Test setMemory() when listeners are registered
-        Assert.assertNotNull("Memory is not null", expressionString.getMemory());
+        Assert.assertNotNull("Memory is not null", expressionMemory.getMemory());
         // Enable the conditionalNG. This will register the listeners
         conditionalNG.setEnabled(true);
         boolean thrown = false;
         try {
-            expressionString.setMemory((String)null);
+            expressionMemory.setMemory((String)null);
+        } catch (RuntimeException ex) {
+            thrown = true;
+        }
+        Assert.assertTrue("Expected exception thrown", thrown);
+        JUnitAppender.assertWarnMessage("the object is null and the returned number is therefore 0.0");
+        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
+        
+        thrown = false;
+        try {
+            expressionMemory.setMemory((NamedBeanHandle<Memory>)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -238,16 +249,7 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
         
         thrown = false;
         try {
-            expressionString.setMemory((NamedBeanHandle<Memory>)null);
-        } catch (RuntimeException ex) {
-            thrown = true;
-        }
-        Assert.assertTrue("Expected exception thrown", thrown);
-        JUnitAppender.assertErrorMessage("setMemory must not be called when listeners are registered");
-        
-        thrown = false;
-        try {
-            expressionString.setMemory((Memory)null);
+            expressionMemory.setMemory((Memory)null);
         } catch (RuntimeException ex) {
             thrown = true;
         }
@@ -257,10 +259,9 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
     
     @Test
     public void testRegisterListeners() {
-        StringExpressionLocoNet_OPC_PEER expressionString = (StringExpressionLocoNet_OPC_PEER)_base;
-        // Test registerListeners() when the ExpressionLight has no light
+        // Test registerListeners() when the ExpressionMemory has no memory
         conditionalNG.setEnabled(false);
-        expressionString.setMemory((Memory)null);
+        expressionMemory.setMemory((Memory)null);
         conditionalNG.setEnabled(true);
     }
     
@@ -274,8 +275,8 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
         Assert.assertNotNull("Memory is not null", otherMemory);
         Assert.assertNotEquals("Memory is not equal", _memory, otherMemory);
         
-        // Get the stringExpressionMemory and set the memory
-        StringExpressionLocoNet_OPC_PEER expression = (StringExpressionLocoNet_OPC_PEER)_base;
+        // Get the expression and set the memory
+        AnalogExpressionLocoNet_OPC_PEER expression = (AnalogExpressionLocoNet_OPC_PEER)_base;
         expression.setMemory(_memory);
         Assert.assertEquals("Memory matches", _memory, expression.getMemory().getBean());
         
@@ -351,7 +352,13 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
         
-        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
+        _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
+        Assert.assertNotNull("memory is not null", _memory);
+        _memory.setValue(10.2);
+        expressionMemory = new AnalogExpressionLocoNet_OPC_PEER("IQAE321", "AnalogIO_Memory");
+        expressionMemory.setMemory(_memory);
+        
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A logixNG");
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
                 .createConditionalNG("A conditionalNG");  // NOI18N
         conditionalNG.setRunOnGUIDelayed(false);
@@ -359,31 +366,28 @@ public class StringExpressionLocoNet_OPC_PEERTest extends AbstractStringExpressi
         
         logixNG.addConditionalNG(conditionalNG);
         
-        DoStringAction doStringAction = new DoStringAction("IQDA321", null);
-        MaleSocket maleSocketDoStringAction =
-                InstanceManager.getDefault(DigitalActionManager.class).registerAction(doStringAction);
-        conditionalNG.getChild(0).connect(maleSocketDoStringAction);
-        _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        stringExpressionMemory = new StringExpressionLocoNet_OPC_PEER("IQSE321", "StringIO_Memory");
-        MaleSocket maleSocketStringExpressionLocoNet_OPC_PEER =
-                InstanceManager.getDefault(StringExpressionManager.class).registerExpression(stringExpressionMemory);
-        doStringAction.getChild(0).connect(maleSocketStringExpressionLocoNet_OPC_PEER);
-        stringExpressionMemory.setMemory(_memory);
-        _base = stringExpressionMemory;
-        _baseMaleSocket = maleSocketStringExpressionLocoNet_OPC_PEER;
+        DigitalActionBean actionDoAnalog =
+                new DoAnalogAction(InstanceManager.getDefault(DigitalActionManager.class).getAutoSystemName(), null);
+        MaleSocket socketDoAnalog =
+                InstanceManager.getDefault(DigitalActionManager.class).registerAction(actionDoAnalog);
+        conditionalNG.getChild(0).connect(socketDoAnalog);
         
-        _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
-        Assert.assertNotNull("memory is not null", _memory);
-        _memory.setValue(10.2);
+        MaleSocket socketExpression =
+                InstanceManager.getDefault(AnalogExpressionManager.class).registerExpression(expressionMemory);
+        socketDoAnalog.getChild(0).connect(socketExpression);
         
         _memoryOut = InstanceManager.getDefault(MemoryManager.class).provide("IM2");
-        _memoryOut.setValue("");
-        StringActionMemory actionMemory = new StringActionMemory("IQSA1", null);
+        _memoryOut.setValue(0.0);
+        actionMemory = new AnalogActionMemory("IQAA1", null);
         actionMemory.setMemory(_memoryOut);
-        MaleSocket socketAction = InstanceManager.getDefault(StringActionManager.class).registerAction(actionMemory);
-        maleSocketDoStringAction.getChild(1).connect(socketAction);
+        MaleSocket socketAction =
+                InstanceManager.getDefault(AnalogActionManager.class).registerAction(actionMemory);
+        socketDoAnalog.getChild(1).connect(socketAction);
         
-	logixNG.setParentForAllChildren();
+        _base = expressionMemory;
+        _baseMaleSocket = socketExpression;
+        
+        logixNG.setParentForAllChildren();
         logixNG.setEnabled(true);
         logixNG.activateLogixNG();
     }

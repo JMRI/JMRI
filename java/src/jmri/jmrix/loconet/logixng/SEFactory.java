@@ -21,7 +21,7 @@ public class SEFactory implements StringExpressionFactory {
         
         // We don't want to add these classes if we don't have a LocoNet connection
         if (Common.hasLocoNet()) {
-            stringExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, StringExpressionLocoNet_OPC_PEER.class));
+            stringExpressionClasses.add(new AbstractMap.SimpleEntry<>(Category.OTHER, StringExpressionLocoNetOpcPeer.class));
         }
         
         return stringExpressionClasses;
