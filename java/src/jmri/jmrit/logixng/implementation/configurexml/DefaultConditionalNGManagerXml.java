@@ -38,7 +38,7 @@ public class DefaultConditionalNGManagerXml extends jmri.managers.configurexml.A
         ConditionalNG_Manager tm = (ConditionalNG_Manager) o;
         if (tm != null) {
             for (ConditionalNG conditionalNG : tm.getNamedBeanSet()) {
-                log.debug("logixng system name is " + conditionalNG.getSystemName());  // NOI18N
+                log.debug("conditionalng system name is " + conditionalNG.getSystemName());  // NOI18N
                 boolean enabled = conditionalNG.isEnabled();
                 Element elem = new Element("conditionalng");  // NOI18N
                 elem.addContent(new Element("systemName").addContent(conditionalNG.getSystemName()));  // NOI18N

@@ -240,7 +240,7 @@ public class StringActionLocoNet_OPC_PEER extends AbstractStringAction {
     /** {@inheritDoc} */
     @Override
     public String getShortDescription(Locale locale) {
-        return Bundle.getMessage(locale, "StringActionMemory1", "none");
+        return Bundle.getMessage(locale, "StringActionLocoNet_OPC_PEER_Short", "none");
 /*        
         if (_memoryHandle != null) {
             return Bundle.getMessage(locale, "StringActionMemory1", _memoryHandle.getBean().getDisplayName());

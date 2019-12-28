@@ -44,7 +44,7 @@ public class IfThenElseSwing extends AbstractActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("IfThen_Short");
+        return Bundle.getMessage("IfThenElse_Short");
     }
     
     @Override

@@ -5,10 +5,10 @@ import javax.annotation.Nonnull;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
-import jmri.jmrit.logixng.AnalogActionManager;
 import jmri.jmrit.logixng.MaleSocket;
-import jmri.jmrit.logixng.analog.actions.configureswing.AbstractActionSwing;
-import jmri.jmrix.loconet.logixng.AnalogActionLocoNet_OPC_PEER;
+import jmri.jmrit.logixng.StringActionManager;
+import jmri.jmrit.logixng.string.actions.configureswing.AbstractActionSwing;
+import jmri.jmrix.loconet.logixng.StringActionLocoNet_OPC_PEER;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
@@ -29,8 +29,8 @@ public class StringActionLocoNet_OPC_PEERSwing extends AbstractActionSwing {
     /** {@inheritDoc} */
     @Override
     public MaleSocket createNewObject(@Nonnull String systemName, @CheckForNull String userName) {
-        AnalogActionLocoNet_OPC_PEER action = new AnalogActionLocoNet_OPC_PEER(systemName, userName);
-        return InstanceManager.getDefault(AnalogActionManager.class).registerAction(action);
+        StringActionLocoNet_OPC_PEER action = new StringActionLocoNet_OPC_PEER(systemName, userName);
+        return InstanceManager.getDefault(StringActionManager.class).registerAction(action);
     }
     
     /** {@inheritDoc} */
@@ -42,7 +42,7 @@ public class StringActionLocoNet_OPC_PEERSwing extends AbstractActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("AnalogActionLocoNet_OPC_PEER_Short");
+        return Bundle.getMessage("StringActionLocoNet_OPC_PEER_Short");
     }
     
     @Override

@@ -41,7 +41,7 @@ public class ActionScriptSwing extends AbstractActionSwing {
     /** {@inheritDoc} */
     @Override
     public String toString() {
-        return Bundle.getMessage("ActionScript_Short");
+        return Bundle.getMessage("Script_Short");
     }
     
     @Override
