@@ -43,7 +43,7 @@
   </reference>
   <description>Appearances for a three-searchlight signal head or semaphore which are used in 
     Automatic Block, CTC and Interlocking Systems. 
-    Provides an alternate Clear appearance.
+    Provides alternate appearances for a number of aspects.
   </description>
   
   <appearances>
@@ -64,24 +64,6 @@
       <show>red</show>
       <reference>Rule 232</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-232.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Approach Diverging</aspectname>
-      <show>yellow</show>
-      <show>yellow</show>
-      <show>red</show>
-      <reference>Rule 233</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-233.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Approach Medium</aspectname>
-      <show>flashyellow</show>
-      <show>red</show>
-      <show>red</show>
-      <reference>Rule 234</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-234-a.gif</imagelink>
     </appearance>
     
     <appearance>
@@ -105,15 +87,6 @@
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
-      <show>red</show>
-      <show>red</show>
-      <reference>Rule 236</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-236-a.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Approach</aspectname>
-      <show>yellow</show>
       <show>dark</show>
       <show>dark</show>
       <reference>Rule 236</reference>
@@ -123,28 +96,10 @@
     <appearance>
       <aspectname>Diverging Clear</aspectname>
       <show>red</show>
-      <show>green</show>
-      <show>red</show>
-      <reference>Rule 237</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-237-a.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Diverging Clear</aspectname>
-      <show>red</show>
       <show>red</show>
       <show>green</show>
       <reference>Rule 237</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-237-b.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Diverging Clear</aspectname>
-      <show>red</show>
-      <show>green</show>
-      <show>dark</show>
-      <reference>Rule 237</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-237-c.gif</imagelink>
     </appearance>
 
     <appearance>
@@ -159,39 +114,12 @@
     <appearance>
       <aspectname>Diverging Approach</aspectname>
       <show>red</show>
-      <show>yellow</show>
-      <show>red</show>
-      <reference>Rule 239</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-239-a.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Diverging Approach</aspectname>
-      <show>red</show>
       <show>red</show>
       <show>yellow</show>
       <reference>Rule 239</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-239-b.gif</imagelink>
     </appearance>
-
-    <appearance>
-      <aspectname>Diverging Approach</aspectname>
-      <show>red</show>
-      <show>yellow</show>
-      <show>dark</show>
-      <reference>Rule 239</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-239-c.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricted Proceed</aspectname>
-      <show>red</show>
-      <show>flashred</show>
-      <show>red</show>
-      <reference>Rule 241</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-241-a.gif</imagelink>
-    </appearance>
-
+    
     <appearance>
       <aspectname>Restricted Proceed</aspectname>
       <show>flashred</show>
@@ -199,33 +127,6 @@
       <show>red</show>
       <reference>Rule 241</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-241-b.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricted Proceed</aspectname>
-      <show>red</show>
-      <show>red</show>
-      <show>flashred</show>
-      <reference>Rule 241</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-241-c.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricted Proceed</aspectname>
-      <show>red</show>
-      <show>red</show>
-      <show>lunar</show>
-      <reference>Rule 241</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-241-d.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricted Proceed</aspectname>
-      <show>red</show>
-      <show>lunar</show>
-      <show>red</show>
-      <reference>Rule 241</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-241-e.gif</imagelink>
     </appearance>
 
     <appearance>
