@@ -22,6 +22,8 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.SocketAlreadyConnectedException;
 import jmri.jmrit.logixng.analog.actions.AnalogActionMemory;
 import jmri.jmrit.logixng.digital.actions.DoAnalogAction;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -36,8 +38,10 @@ import org.junit.Test;
  */
 public class AnalogExpressionLocoNetOpcPeerTest extends AbstractAnalogExpressionTestBase {
 
-    protected Memory _memory;
+    private LnTrafficController lnis;
+    private LocoNetSystemConnectionMemo memo;
     
+    protected Memory _memory;
     
     private LogixNG logixNG;
     private ConditionalNG conditionalNG;
@@ -348,9 +352,21 @@ public class AnalogExpressionLocoNetOpcPeerTest extends AbstractAnalogExpression
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        
+        // The class under test uses one LocoNet connection it pulls from the InstanceManager.
+        memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
+        lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        memo.setLnTrafficController(lnis);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        memo.configureManagers();
+        jmri.InstanceManager.store(memo, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
+        
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        
+        // Ensure we have a working LocoNet connection
+        Assert.assertTrue("Has LocoNet", Common.hasLocoNet());
         
         _memory = InstanceManager.getDefault(MemoryManager.class).provide("IM1");
         Assert.assertNotNull("memory is not null", _memory);

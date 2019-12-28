@@ -22,9 +22,7 @@ import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.digital.actions.DoStringAction;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
 import jmri.jmrix.loconet.LnTrafficController;
-import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-import jmri.jmrix.loconet.SlotManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -40,7 +38,6 @@ import org.junit.Test;
 public class StringExpressionLocoNetOpcPeerTest extends AbstractStringExpressionTestBase {
 
     private LnTrafficController lnis;
-    private SlotManager slotmanager;
     private LocoNetSystemConnectionMemo memo;
     
     private LogixNG logixNG;

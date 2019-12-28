@@ -18,6 +18,7 @@ import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,9 +43,9 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     private String _stringToSend;
     private int _index = -1;    // Index in string to send. -1 if not sending.
     private int _sourceAddress = 0x00;
-    private long _destAddress;
-    private long _start_SV_address;
-    private int _numCharsToSend = 8;    // This MUST be a multiple of 4.
+    private int _destAddress = 200;        // FIX LATER !!!
+    private int _start_SV_address = 100;   // FIX LATER !!!
+    private int _numCharsToSend = 8;        // This MUST be a multiple of 4.
     
     public StringActionLocoNetOpcPeer(String sys, String user) {
         super(sys, user);
@@ -74,19 +75,19 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
         return _sourceAddress;
     }
     
-    public void setDestAddress(long address) {
+    public void setDestAddress(int address) {
         _destAddress = address;
     }
     
-    public long getDestAddress() {
+    public int getDestAddress() {
         return _destAddress;
     }
     
-    public void set_SV_Address(long address) {
+    public void set_SV_Address(int address) {
         _start_SV_address = address;
     }
     
-    public long get_SV_Address() {
+    public int get_SV_Address() {
         return _start_SV_address;
     }
     
@@ -150,35 +151,30 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
         // Return if we don't have any LocoNet connection
         if (list.isEmpty()) return;
         
+        // FIX THIS LATER !!!
         LocoNetSystemConnectionMemo lm = list.get(0);
-//        LocoNetSystemConnectionMemo lm2 = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class).get(1);
-//        lm.getSystemPrefix();
-//        lm.getUserName();
+        
         LnTrafficController tc = lm.getLnTrafficController();
         if (_index >= 0) {
-            LocoNetMessage l = new LocoNetMessage(16);
             String localText;
             if (_stringToSend.length() > _index) {
                 localText = _stringToSend.substring(_index) + "    ";  // ensure at least 4 characters
             } else {
                 localText = "    "; // 4 characters
             }
-            long svAddr = _start_SV_address + _index;
-            l.setOpCode(LnConstants.OPC_PEER_XFER);
-            l.setElement(1, 0x10);
-            l.setElement(2, _sourceAddress & 0x7F);     // source address
-            l.setElement(3, 0x05);      // SV_CMD: 0x05 = SV write 4 bytes: write 4 bytes of data from D1..D4
-            l.setElement(4, 0x02);      // SV_TYPE: 
-            l.setElement(5, getTopBitsByte(_destAddress, svAddr)); // SVX1
-            l.setElement(6, (int)(_destAddress & 0x7F));  // DST_L
-            l.setElement(7, (int)(_destAddress / 256));  // DST_H
-            l.setElement(8, (int)(svAddr & 0x7F));  // SV_ADRL
-            l.setElement(9, (int)(svAddr / 256));  // SV_ADRH
-            l.setElement(10, getTopBitsByte(localText.charAt(3), localText.charAt(2), localText.charAt(1), localText.charAt(0)));    // SVX2
-            l.setElement(11, localText.charAt(0));  // D1
-            l.setElement(12, localText.charAt(1));  // D2
-            l.setElement(13, localText.charAt(2));  // D3
-            l.setElement(14, localText.charAt(3));  // D4
+            int svAddr = _start_SV_address + _index;
+            
+            LocoNetMessage l = LnSv2MessageContents.createSv2Message(
+                    _sourceAddress,
+                    LnSv2MessageContents.SV_CMD_WRITE_FOUR,
+                    _destAddress,
+                    svAddr,
+                    localText.charAt(0),
+                    localText.charAt(1),
+                    localText.charAt(2),
+                    localText.charAt(3)
+            );
+            
             tc.sendLocoNetMessage(l);
             _index += 4;
             if (_index >= _numCharsToSend) _index = -1;
