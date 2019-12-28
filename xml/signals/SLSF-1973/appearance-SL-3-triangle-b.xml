@@ -51,7 +51,8 @@
   <reference> As described in the
 July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
   </reference>
-  <description>Appearances for a three-searchlight signal head with a triangular placard</description>
+  <description>Appearances for a three-searchlight signal head with a triangular placard.
+    Provides alternate Restricting appearance.</description>
   
   <appearances>
 
@@ -100,6 +101,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule286.gif</imagelink>
     </appearance>
 
+
     <appearance>
       <aspectname>Diverging Approach</aspectname>
       <show>red</show>
@@ -112,10 +114,10 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
+      <show>lunar</show>
       <show>red</show>
-      <show>yellow</show>
       <reference>Rule 288</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-a.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-b.gif</imagelink>
     </appearance>
 
     <appearance>

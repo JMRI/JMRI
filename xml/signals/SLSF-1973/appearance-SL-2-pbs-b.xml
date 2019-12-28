@@ -34,12 +34,18 @@
     </revision>    
     <revision>
         <revnumber>3</revnumber>
-        <date>2013-07-09</date>
+        <date>2013-7-9</date>
         <authorinitials>PAB</authorinitials>
-        <revremark>Add aspect mappings</revremark>
+        <revremark>Add Aspect Mapping</revremark>
     </revision>    
     <revision>
         <revnumber>4</revnumber>
+        <date>2013-7-10</date>
+        <authorinitials>PAB</authorinitials>
+        <revremark>Add Signal Icons</revremark>
+    </revision>    
+    <revision>
+        <revnumber>5</revnumber>
         <date>2019-03-17</date>
         <authorinitials>PAB</authorinitials>
         <revremark>fix image links</revremark>
@@ -47,11 +53,12 @@
   </revhistory>
 
   <aspecttable>SLSF</aspecttable>
-  <name>Triple searchlight signal with triangle plackard</name>
+  <name>Double searchlight permissive signal</name>
   <reference> As described in the
 July 1978 Revision of the St. Louis San Francisco Railway Company publication "RULES for the Maintenance of way and Structures" effective July 1,1973, chapter titled Description of Signals.  As noted in the source material, these rules are rules of the Frisco Transportation department.
   </reference>
-  <description>Appearances for a three-searchlight signal head with a triangular placard</description>
+  <description>Appearances for a two-searchlight signal head with number plate.
+        Provides alternate Restricting appearance.</description>
   
   <appearances>
 
@@ -59,82 +66,74 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <aspectname>Clear</aspectname>
       <show>green</show>
       <show>red</show>
-      <show>red</show>
-      <reference>Rule 281</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule281.gif</imagelink>
+      <reference>281</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-281.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Advance Approach</aspectname>
       <show>yellow</show>
       <show>yellow</show>
-      <show>red</show>
       <reference>Rule 282</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule282.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-282.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Approach Limited</aspectname>
+      <aspectname>Approach Medium</aspectname>
       <show>yellow</show>
       <show>green</show>
-      <show>red</show>
-      <reference>Rule 283</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule283.gif</imagelink>
+      <reference>Rule 284</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-284.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
       <show>red</show>
-      <show>red</show>
       <reference>Rule 285</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule285.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-285.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Diverging Clear</aspectname>
       <show>red</show>
       <show>green</show>
-      <show>red</show>
       <reference>Rule 286</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule286.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-286.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Diverging Approach</aspectname>
       <show>red</show>
       <show>yellow</show>
-      <show>red</show>
       <reference>Rule 287</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule287.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-287.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Restricting</aspectname>
       <show>red</show>
-      <show>red</show>
-      <show>yellow</show>
+      <show>lunar</show>
       <reference>Rule 288</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-a.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-288-b.gif</imagelink>
     </appearance>
 
     <appearance>
-      <aspectname>Stop</aspectname>
+      <aspectname>Stop and Proceed</aspectname>
       <show>red</show>
       <show>red</show>
-      <show>red</show>
-      <reference>Rule 291</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule291.gif</imagelink>
+      <reference>Rule 290</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-290.gif</imagelink>
     </appearance>
 
   </appearances>
 
         <specificappearances><!-- Start of Specific Appearances list -->
            <danger>
-              <aspect>Stop</aspect>
+              <aspect>Stop and Proceed</aspect>
            </danger>
            <held>
-              <aspect>Stop</aspect>
+              <aspect>Stop and Proceed</aspect>
            </held>
     </specificappearances><!-- End of Specific Appearances list -->
  
@@ -163,12 +162,12 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
 
     <aspectMapping>
      <advancedAspect>Diverging Approach</advancedAspect>
-     <ourAspect>Approach Limited</ourAspect>
+     <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
      <advancedAspect>Diverging Clear</advancedAspect>
-     <ourAspect>Approach Limited</ourAspect>
+     <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
