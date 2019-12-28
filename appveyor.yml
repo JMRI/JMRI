@@ -50,7 +50,7 @@ artifacts:
 
 on_failure:
 - appveyor PushArtifact tests.log
-- appveyor PushArtifact junit-results.xml
+- appveyor PushArtifact target\testreport\junit-results.xml
 - ps: echo "Failing Tests"
 # modified from an example found at https://www.codeproject.com/Articles/61900/PowerShell-and-XML
 - ps: |
