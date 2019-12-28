@@ -6,10 +6,10 @@ import javax.annotation.concurrent.NotThreadSafe;
 /**
  * Annotation denoting that specific code was auto-generated
  * <p>
- * This is used in preference to {@link javax.annotation.Generated} and
- * {@link javax.annotation.processing.Generated} because the first of those
- * 8s only available up to Java 10, and the second is only available in Java 11
- * or later; there's no single one that works across all current JDKs.
+ * This is used in preference to javax.annotation.Generated and
+ * javax.annotation.processing.Generated because the first of those
+ * is only available up to Java 10, and the second is only available in Java 11
+ * or later; there's no single one that works across all (current) JMRI-supported JDKs.
  * <p>
  * The implementation is from the OpenJDK 11 sources via their license.
  *
