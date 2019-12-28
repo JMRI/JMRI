@@ -58,8 +58,7 @@ public class StringActionLocoNetOpcPeerTest extends AbstractStringActionTestBase
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Set memory none%n");
-//        return String.format("Set memory IM1%n");
+        return String.format("LocoNet OPC_PEER string action%n");
     }
     
     @Override
@@ -72,8 +71,7 @@ public class StringActionLocoNetOpcPeerTest extends AbstractStringActionTestBase
                 "            ?s E%n" +
                 "               Socket not connected%n" +
                 "            !s A%n" +
-                "               Set memory none%n");
-//                "               Set memory IM1%n");
+                "               LocoNet OPC_PEER string action%n");
     }
     
     @Override
@@ -92,25 +90,25 @@ public class StringActionLocoNetOpcPeerTest extends AbstractStringActionTestBase
         action2 = new StringActionLocoNetOpcPeer("IQSA11", null);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
-        Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string action".equals(action2.getLongDescription()));
         
         action2 = new StringActionLocoNetOpcPeer("IQSA11", "My memory");
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
-        Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string action".equals(action2.getLongDescription()));
         
         action2 = new StringActionLocoNetOpcPeer("IQSA11", null);
 //        action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", null == action2.getUserName());
-        Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string action".equals(action2.getLongDescription()));
 //        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
         
         action2 = new StringActionLocoNetOpcPeer("IQSA11", "My memory");
 //        action2.setMemory(_memory);
         Assert.assertNotNull("object exists", action2);
         Assert.assertTrue("Username matches", "My memory".equals(action2.getUserName()));
-        Assert.assertTrue("String matches", "Set memory none".equals(action2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string action".equals(action2.getLongDescription()));
 //        Assert.assertTrue("String matches", "Set memory IM1".equals(action2.getLongDescription()));
         
         boolean thrown = false;
@@ -227,13 +225,13 @@ public class StringActionLocoNetOpcPeerTest extends AbstractStringActionTestBase
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Set memory none".equals(_base.getShortDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string action".equals(_base.getShortDescription()));
 //        Assert.assertTrue("String matches", "Set memory IM1".equals(_base.getShortDescription()));
     }
     
     @Test
     public void testLongDescription() {
-        Assert.assertTrue("String matches", "Set memory none".equals(_base.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string action".equals(_base.getLongDescription()));
 //        Assert.assertTrue("String matches", "Set memory IM1".equals(_base.getLongDescription()));
     }
     

@@ -77,6 +77,15 @@ public interface LogixNG_Manager extends Manager<LogixNG> {
     public void setupAllLogixNGs();
 
     /**
+     * Activate all LogixNGs, starts LogixNG processing by connecting all
+     * inputs that are included the ConditionalNGs in this LogixNG.
+     * <p>
+     * A LogixNG must be activated before it will calculate any of its
+     * ConditionalNGs.
+     */
+    public void activateAllLogixNGs();
+    
+    /**
      * Delete LogixNG by removing it from the manager. The LogixNG must first
      * be deactivated so it stops processing.
      *

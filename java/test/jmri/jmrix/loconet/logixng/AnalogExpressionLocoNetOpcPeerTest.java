@@ -63,7 +63,7 @@ public class AnalogExpressionLocoNetOpcPeerTest extends AbstractAnalogExpression
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get memory IM1%n");
+        return String.format("LocoNet OPC_PEER analog expression%n");
     }
     
     @Override
@@ -74,7 +74,7 @@ public class AnalogExpressionLocoNetOpcPeerTest extends AbstractAnalogExpression
                 "      ! %n" +
                 "         Read analog E and set analog A%n" +
                 "            ?~ E%n" +
-                "               Get memory IM1%n" +
+                "               LocoNet OPC_PEER analog expression%n" +
                 "            !~ A%n" +
                 "               Set memory IM2%n");
     }
@@ -95,24 +95,24 @@ public class AnalogExpressionLocoNetOpcPeerTest extends AbstractAnalogExpression
         expression2 = new AnalogExpressionLocoNet_OPC_PEER("IQAE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER analog expression".equals(expression2.getLongDescription()));
         
         expression2 = new AnalogExpressionLocoNet_OPC_PEER("IQAE11", "My memory");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER analog expression".equals(expression2.getLongDescription()));
         
         expression2 = new AnalogExpressionLocoNet_OPC_PEER("IQAE11", null);
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER analog expression".equals(expression2.getLongDescription()));
         
         expression2 = new AnalogExpressionLocoNet_OPC_PEER("IQAE11", "My memory");
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER analog expression".equals(expression2.getLongDescription()));
         
         boolean thrown = false;
         try {
@@ -322,12 +322,12 @@ public class AnalogExpressionLocoNetOpcPeerTest extends AbstractAnalogExpression
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Get memory IM1".equals(_base.getShortDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER analog expression".equals(_base.getShortDescription()));
     }
     
     @Test
     public void testLongDescription() {
-        Assert.assertTrue("String matches", "Get memory IM1".equals(_base.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER analog expression".equals(_base.getLongDescription()));
     }
     
     @Test

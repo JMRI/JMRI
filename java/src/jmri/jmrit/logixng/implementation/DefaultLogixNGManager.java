@@ -732,6 +732,14 @@ public class DefaultLogixNGManager extends AbstractManager<LogixNG>
         }
     }
 
+    /** {@inheritDoc} */
+    @Override
+    public void activateAllLogixNGs() {
+        for (LogixNG logixNG : _tsys.values()) {
+            logixNG.activateLogixNG();
+        }
+    }
+
     @Override
     public void deleteLogixNG(LogixNG x) {
         // delete the LogixNG

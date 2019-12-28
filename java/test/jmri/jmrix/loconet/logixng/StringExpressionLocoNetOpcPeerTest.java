@@ -58,7 +58,7 @@ public class StringExpressionLocoNetOpcPeerTest extends AbstractStringExpression
     
     @Override
     public String getExpectedPrintedTree() {
-        return String.format("Get memory IM1%n");
+        return String.format("LocoNet OPC_PEER string expression%n");
     }
     
     @Override
@@ -69,7 +69,7 @@ public class StringExpressionLocoNetOpcPeerTest extends AbstractStringExpression
                 "      ! %n" +
                 "         Read string E and set string A%n" +
                 "            ?s E%n" +
-                "               Get memory IM1%n" +
+                "               LocoNet OPC_PEER string expression%n" +
                 "            !s A%n" +
                 "               Set memory IM2%n");
     }
@@ -90,24 +90,24 @@ public class StringExpressionLocoNetOpcPeerTest extends AbstractStringExpression
         expression2 = new StringExpressionLocoNetOpcPeer("IQSE11", null);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string expression".equals(expression2.getLongDescription()));
         
         expression2 = new StringExpressionLocoNetOpcPeer("IQSE11", "My memory");
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory none".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string expression".equals(expression2.getLongDescription()));
         
         expression2 = new StringExpressionLocoNetOpcPeer("IQSE11", null);
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", null == expression2.getUserName());
-        Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string expression".equals(expression2.getLongDescription()));
         
         expression2 = new StringExpressionLocoNetOpcPeer("IQSE11", "My memory");
         expression2.setMemory(_memory);
         Assert.assertNotNull("object exists", expression2);
         Assert.assertTrue("Username matches", "My memory".equals(expression2.getUserName()));
-        Assert.assertTrue("String matches", "Get memory IM1".equals(expression2.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string expression".equals(expression2.getLongDescription()));
         
         boolean thrown = false;
         try {
@@ -321,12 +321,12 @@ public class StringExpressionLocoNetOpcPeerTest extends AbstractStringExpression
     
     @Test
     public void testShortDescription() {
-        Assert.assertTrue("String matches", "Get memory IM1".equals(_base.getShortDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string expression".equals(_base.getShortDescription()));
     }
     
     @Test
     public void testLongDescription() {
-        Assert.assertTrue("String matches", "Get memory IM1".equals(_base.getLongDescription()));
+        Assert.assertTrue("String matches", "LocoNet OPC_PEER string expression".equals(_base.getLongDescription()));
     }
     
     @Test

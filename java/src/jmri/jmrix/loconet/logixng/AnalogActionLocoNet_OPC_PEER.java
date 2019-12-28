@@ -116,9 +116,9 @@ public class AnalogActionLocoNet_OPC_PEER extends AbstractAnalogAction
     @Override
     public String getShortDescription(Locale locale) {
         if (_memoryHandle != null) {
-            return Bundle.getMessage(locale, "AnalogActionMemory1", _memoryHandle.getBean().getDisplayName());
+            return Bundle.getMessage(locale, "AnalogActionLocoNet_OPC_PEER_Short", _memoryHandle.getBean().getDisplayName());
         } else {
-            return Bundle.getMessage(locale, "AnalogActionMemory1", "none");
+            return Bundle.getMessage(locale, "AnalogActionLocoNet_OPC_PEER_Short", "none");
         }
     }
 

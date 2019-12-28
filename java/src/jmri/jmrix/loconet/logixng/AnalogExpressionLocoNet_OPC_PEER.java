@@ -144,9 +144,9 @@ public class AnalogExpressionLocoNet_OPC_PEER extends AbstractAnalogExpression
     @Override
     public String getShortDescription(Locale locale) {
         if (_memoryHandle != null) {
-            return Bundle.getMessage(locale, "AnalogExpressionMemory1", _memoryHandle.getBean().getDisplayName());
+            return Bundle.getMessage(locale, "AnalogExpressionLocoNet_OPC_PEER_Short", _memoryHandle.getBean().getDisplayName());
         } else {
-            return Bundle.getMessage(locale, "AnalogExpressionMemory1", "none");
+            return Bundle.getMessage(locale, "AnalogExpressionLocoNet_OPC_PEER_Short", "none");
         }
     }
 
