@@ -19,6 +19,7 @@ import jmri.jmrit.logixng.digital.actions.ActionAtomicBoolean;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.jmrit.logixng.digital.expressions.Timer.TimerType;
 import jmri.util.JUnitAppender;
+import jmri.util.junit.annotations.ToDo;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.After;
 import org.junit.Assert;
@@ -436,6 +437,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         // expression.
     }
     
+    @ToDo("This class fails maybe 1 of 20 times. The class has a Retry rule as a temporary fix.")
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {

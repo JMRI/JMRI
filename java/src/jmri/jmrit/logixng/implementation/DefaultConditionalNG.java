@@ -36,7 +36,7 @@ public class DefaultConditionalNG extends AbstractBase
     private Base _parent = null;
     private String _socketSystemName = null;
     private final FemaleDigitalActionSocket _femaleActionSocket;
-    private boolean _enabled = false;
+    private boolean _enabled = true;
     private final ExecuteLock executeLock = new ExecuteLock();
     private boolean _runOnGUIDelayed = true;
     

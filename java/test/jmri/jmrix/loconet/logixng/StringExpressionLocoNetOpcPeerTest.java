@@ -21,6 +21,10 @@ import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.StringExpressionManager;
 import jmri.jmrit.logixng.digital.actions.DoStringAction;
 import jmri.jmrit.logixng.string.actions.StringActionMemory;
+import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.jmrix.loconet.SlotManager;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -35,11 +39,15 @@ import org.junit.Test;
  */
 public class StringExpressionLocoNetOpcPeerTest extends AbstractStringExpressionTestBase {
 
-    LogixNG logixNG;
-    ConditionalNG conditionalNG;
-    StringExpressionLocoNetOpcPeer stringExpressionMemory;
-    protected Memory _memory;
-    protected Memory _memoryOut;
+    private LnTrafficController lnis;
+    private SlotManager slotmanager;
+    private LocoNetSystemConnectionMemo memo;
+    
+    private LogixNG logixNG;
+    private ConditionalNG conditionalNG;
+    private StringExpressionLocoNetOpcPeer stringExpressionMemory;
+    private Memory _memory;
+    private Memory _memoryOut;
     
     @Override
     public ConditionalNG getConditionalNG() {
@@ -347,9 +355,21 @@ public class StringExpressionLocoNetOpcPeerTest extends AbstractStringExpression
     public void setUp() throws SocketAlreadyConnectedException {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
+        
+        // The class under test uses one LocoNet connection it pulls from the InstanceManager.
+        memo = new jmri.jmrix.loconet.LocoNetSystemConnectionMemo();
+        lnis = new jmri.jmrix.loconet.LocoNetInterfaceScaffold(memo);
+        memo.setLnTrafficController(lnis);
+        memo.configureCommandStation(jmri.jmrix.loconet.LnCommandStationType.COMMAND_STATION_DCS100, false, false, false);
+        memo.configureManagers();
+        jmri.InstanceManager.store(memo, jmri.jmrix.loconet.LocoNetSystemConnectionMemo.class);
+        
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initMemoryManager();
+        
+        // Ensure we have a working LocoNet connection
+        Assert.assertTrue("Has LocoNet", Common.hasLocoNet());
         
         logixNG = InstanceManager.getDefault(LogixNG_Manager.class).createLogixNG("A new logix for test");  // NOI18N
         conditionalNG = InstanceManager.getDefault(ConditionalNG_Manager.class)
@@ -391,6 +411,8 @@ public class StringExpressionLocoNetOpcPeerTest extends AbstractStringExpression
     @After
     public void tearDown() {
         _base.dispose();
+        memo.dispose();
+        memo = null;
         JUnitUtil.tearDown();
     }
     
