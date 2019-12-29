@@ -59,11 +59,11 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     private LocoNetSystemConnectionMemo lm;
     private LnTrafficController tc;
     
-//    private String _stringToSend;
+    private String _stringToSend;
     private int _index = -1;    // Index in string to send. -1 if not sending.
     private int _sourceAddress = 0x00;
-    private int _destAddress = 200;         // FIX LATER !!!
-    private int _sv_address = 100;          // FIX LATER !!!
+    private int _destAddress = 256;         // FIX LATER !!!
+    private int _sv_address = 20;           // FIX LATER !!!
     private byte[] _dataToSend;
     private int _numCharsToSend = 8;        // This MUST be a multiple of 3.
     
@@ -174,7 +174,14 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
             // byte to 1 to mark that this is the last part of the string.
             if (_index+3 >= _dataToSend.length) lengthByte += 0x80;
             
-            LocoNetMessage l = LnSv2MessageContents.createSv2Message(
+            LocoNetMessage l;
+            
+            if ("Hej".equals(_stringToSend))
+                l = LnSv2MessageContents.createSvDiscoverQueryMessage();
+//            LocoNetMessage l = LnSv2MessageContents.createSvDiscoverQueryMessage();
+            else
+//            LocoNetMessage l = LnSv2MessageContents.createSv2Message(
+            l = LnSv2MessageContents.createSv2Message(
                     _sourceAddress,
                     LnSv2MessageContents.SV_CMD_WRITE_FOUR,
                     _destAddress,
@@ -202,6 +209,7 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
         else if (value.length() % 3 == 1) value += "  ";    // Add two spaces
         else if (value.length() % 3 == 2) value += ' ';     // Add one space
         
+        _stringToSend = value;
         _dataToSend = value.getBytes("ISO-8859-1");
         _index = 0;
         sendString();
