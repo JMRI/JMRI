@@ -59,7 +59,7 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     private LocoNetSystemConnectionMemo lm;
     private LnTrafficController tc;
     
-    private String _stringToSend;
+//    private String _stringToSend;
     private int _index = -1;    // Index in string to send. -1 if not sending.
     private int _sourceAddress = 0x00;
     private int _destAddress = 200;         // FIX LATER !!!
