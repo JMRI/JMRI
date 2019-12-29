@@ -1,7 +1,10 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>JMRI 4.19.1 and later enforce the standard form of system names,
+                where the system is denoted by a single letter or a letter plus digits.
+                Some users of JMRI 4.18 or earlier might have incompatible values.
+                See warnings above.</li>
         </ul>
 
 	    <h4>Anyma DMX512</h4>
