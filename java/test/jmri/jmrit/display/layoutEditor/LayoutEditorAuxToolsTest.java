@@ -523,6 +523,7 @@ public class LayoutEditorAuxToolsTest {
             stringComparator = Operator.getDefaultStringComparator();
             // set default string matching comparator to one that exactly matches and is case sensitive
             Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
+
             ThreadingUtil.runOnLayoutEventually(() -> {
                 // load and display test panel file
                 ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
@@ -554,6 +555,8 @@ public class LayoutEditorAuxToolsTest {
                 layoutEditorFrameOperator.closeFrameWithConfirmations();
                 //jFrameOperator.waitClosed();    //make sure the dialog actually closed
             }
+            //restore the default string matching comparator
+            Operator.setDefaultStringComparator(stringComparator);
         }
         JUnitUtil.tearDown();
     }
