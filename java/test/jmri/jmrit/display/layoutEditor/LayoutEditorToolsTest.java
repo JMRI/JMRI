@@ -28,6 +28,8 @@ public class LayoutEditorToolsTest {
     @Rule   //allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2);
 
+    private static Operator.StringComparator stringComparator;
+
     private LayoutEditor layoutEditor = null;
     private LayoutEditorTools layoutEditorTools = null;
     private LayoutEditorToolBarPanel leToolBarPanel = null;
@@ -679,14 +681,33 @@ public class LayoutEditorToolsTest {
     }
 
     //from here down is testing infrastructure
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+
+            //save the old string comparator
+            stringComparator = Operator.getDefaultStringComparator();
+            //set default string matching comparator to one that exactly matches and is case sensitive
+            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
+        }
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        if (!GraphicsEnvironment.isHeadless()) {
+            //restore the default string matching comparator
+            Operator.setDefaultStringComparator(stringComparator);
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
-
-            // set default string matching comparator to one that exactly matches and is case sensitive
-            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
 
             layoutEditor = new LayoutEditor();
             layoutEditor.setVisible(true);
@@ -735,35 +756,6 @@ public class LayoutEditorToolsTest {
         }
         JUnitUtil.tearDown();
     }
-//
-//
-//    private void waitSeconds(int s) {
-//        //waits until queue has been empty for X milliseconds
-//        //new QueueTool().waitEmpty(s * 1000);
-//
-//        //wait until no event is registered for a given number of milliseconds
-//        new EventTool().waitNoEvent(s * 1000);
-//    }
-//
-//    //save screenshot of GUI
-//    private void captureScreenshot() {
-//        //grab image
-//        PNGEncoder.captureScreen(System.getProperty("user.home")
-//                + System.getProperty("file.separator")
-//                + "screen.png");
-//    }
-//
-//   //dump jemmy GUI info to xml file
-//   private void dumpToXML() {
-//        //grab component state
-//        try {
-//            Dumper.dumpAll(System.getProperty("user.home")
-//                    + System.getProperty("file.separator")
-//                    + "dump.xml");
-//
-//        } catch (FileNotFoundException e) {
-//        }
-//    }
-//
+
     //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
 }   //class LayoutEditorToolsTest

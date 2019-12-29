@@ -20,11 +20,13 @@ import org.netbeans.jemmy.operators.*;
  */
 public class LayoutEditorChecksTest {
 
-    @Rule   // 10 second timeout for methods in this test class.
+    @Rule   //10 second timeout for methods in this test class.
     public Timeout globalTimeout = Timeout.seconds(10);
 
-    @Rule   // allow 5 retries
+    @Rule   //allow 5 retries
     public RetryRule retryRule = new RetryRule(5);
+
+    private static Operator.StringComparator stringComparator;
 
     //LayoutEditorChecks Bundle Strings
     private String toolsMenuTitle = Bundle.getMessage("MenuTools");
@@ -254,9 +256,11 @@ public class LayoutEditorChecksTest {
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
 
-            // set default string matching comparator to one that exactly matches and is case sensitive
+            //save the old string comparator
+            stringComparator = Operator.getDefaultStringComparator();
+            //set default string matching comparator to one that exactly matches and is case sensitive
             Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
-
+ 
             layoutEditor = new LayoutEditor("Layout Editor Checks Test Layout");
             layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
             layoutEditor.setVisible(true);
@@ -343,6 +347,8 @@ public class LayoutEditorChecksTest {
             layoutEditorChecks = null;
             layoutEditorEFO.requestClose();
             layoutEditorEFO.waitClosed();
+            //restore the default string matching comparator
+            Operator.setDefaultStringComparator(stringComparator);
         }
         JUnitUtil.tearDown();
     }

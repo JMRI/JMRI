@@ -28,6 +28,29 @@ public class EnterReporterDialogTest {
     @Rule    // allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
 
+    private static Operator.StringComparator stringComparator;
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+
+            //save the old string comparator
+            stringComparator = Operator.getDefaultStringComparator();
+            //set default string matching comparator to one that exactly matches and is case sensitive
+            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
+        }
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        if (!GraphicsEnvironment.isHeadless()) {
+            //restore the default string matching comparator
+            Operator.setDefaultStringComparator(stringComparator);
+        }
+    }
+
     /*
      * This is called before each test
      */
@@ -35,9 +58,6 @@ public class EnterReporterDialogTest {
     public void setUp() {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
-            // set default string matching comparator to one that exactly matches and is case sensitive
-            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
-
             layoutEditor = new LayoutEditor();
             enterReporterDialog = new EnterReporterDialog(layoutEditor);
             layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
