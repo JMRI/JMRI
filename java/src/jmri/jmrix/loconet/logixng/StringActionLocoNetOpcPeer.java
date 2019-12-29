@@ -3,6 +3,7 @@ package jmri.jmrix.loconet.logixng;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
@@ -25,6 +26,20 @@ import org.slf4j.LoggerFactory;
 /**
  * Sends an OPC_PEER message on the LocoNet
  * 
+ * There doesn't seem to be a LocoNet command for sending strings. The strings
+ * are sent with the OPC_PEER LocoNet command, using "SV Programming Message
+ * Formats Version 13", using "SV programming format 2".
+ * 
+ * This LocoNet command has four data bytes, D1, D2, D3, and D4. The strings
+ * are sent three characters at a time, encoded as ISO-8859-1 aka Latin1 in
+ * D1, D2 and D3. The lower 7 bits of byte D4 has the index in the string,
+ * there these three bytes are located. The highest bit in D4 is 1 if this
+ * is the last package, or 0 if there is more data to send.
+ * 
+ * If the length of the string is not a multiple of three, spaces are added so
+ * that the length is a multiple of three. The longest string that can be sent
+ * is 129 characters.
+ * 
  * @author Daniel Bergqvist Copyright 2018
  */
 public class StringActionLocoNetOpcPeer extends AbstractStringAction {
@@ -40,12 +55,17 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     private int _manufacturerID = 13;   // Default to NMRA DIY DCC ManufacturerId of 13
     private int _developerID = 17;      // Default to the developer ID of Daniel Bergqvist, 17.
     
+    // FIX THIS LATER!!! IT'S HARDCODED NOW.
+    private LocoNetSystemConnectionMemo lm;
+    private LnTrafficController tc;
+    
     private String _stringToSend;
     private int _index = -1;    // Index in string to send. -1 if not sending.
     private int _sourceAddress = 0x00;
-    private int _destAddress = 200;        // FIX LATER !!!
-    private int _start_SV_address = 100;   // FIX LATER !!!
-    private int _numCharsToSend = 8;        // This MUST be a multiple of 4.
+    private int _destAddress = 200;         // FIX LATER !!!
+    private int _sv_address = 100;          // FIX LATER !!!
+    private byte[] _dataToSend;
+    private int _numCharsToSend = 8;        // This MUST be a multiple of 3.
     
     public StringActionLocoNetOpcPeer(String sys, String user) {
         super(sys, user);
@@ -84,11 +104,11 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     }
     
     public void set_SV_Address(int address) {
-        _start_SV_address = address;
+        _sv_address = address;
     }
     
     public int get_SV_Address() {
-        return _start_SV_address;
+        return _sv_address;
     }
     
 /*    
@@ -146,33 +166,23 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     }
     
     private void sendString() {
-        List<LocoNetSystemConnectionMemo> list = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class);
-        
-        // Return if we don't have any LocoNet connection
-        if (list.isEmpty()) return;
-        
-        // FIX THIS LATER !!!
-        LocoNetSystemConnectionMemo lm = list.get(0);
-        
-        LnTrafficController tc = lm.getLnTrafficController();
-        if (_index >= 0) {
-            String localText;
-            if (_stringToSend.length() > _index) {
-                localText = _stringToSend.substring(_index) + "    ";  // ensure at least 4 characters
-            } else {
-                localText = "    "; // 4 characters
-            }
-            int svAddr = _start_SV_address + _index;
+        if (_dataToSend != null && _index < _dataToSend.length) {
+            
+            int lengthByte = _index;
+            
+            // If this is the last part to send, set the highest bit in the
+            // byte to 1 to mark that this is the last part of the string.
+            if (_index+3 >= _dataToSend.length) lengthByte += 0x80;
             
             LocoNetMessage l = LnSv2MessageContents.createSv2Message(
                     _sourceAddress,
                     LnSv2MessageContents.SV_CMD_WRITE_FOUR,
                     _destAddress,
-                    svAddr,
-                    localText.charAt(0),
-                    localText.charAt(1),
-                    localText.charAt(2),
-                    localText.charAt(3)
+                    _sv_address,
+                    _dataToSend[_index],
+                    _dataToSend[_index+1],
+                    _dataToSend[_index+2],
+                    lengthByte
             );
             
             tc.sendLocoNetMessage(l);
@@ -183,8 +193,14 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     
     /** {@inheritDoc} */
     @Override
-    public void setValue(String value) {
-        _stringToSend = value;
+    public void setValue(String value) throws UnsupportedEncodingException {
+        // We cannot send the string if we don't have any LocoNet connection
+        if (tc == null) return;
+        
+        // The length of the string to send must be a multiple of 3
+        while ((value.length() % 3) != 0) value += ' ';
+        
+        _dataToSend = value.getBytes("ISO-8859-1");
         _index = 0;
         sendString();
 //        if (_memoryHandle != null) {
@@ -255,7 +271,15 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     /** {@inheritDoc} */
     @Override
     public void setup() {
-        // Do nothing
+        List<LocoNetSystemConnectionMemo> list = jmri.InstanceManager.getList(LocoNetSystemConnectionMemo.class);
+        
+        // Return if we don't have any LocoNet connection
+        if (list.isEmpty()) return;
+        
+        // FIX THIS LATER !!!
+        lm = list.get(0);
+        
+        tc = lm.getLnTrafficController();
     }
     
     /** {@inheritDoc} */
