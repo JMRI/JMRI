@@ -2,8 +2,8 @@ package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import jmri.InstanceManager;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
@@ -384,7 +384,7 @@ public class ThrottleFrameTest {
         panel = null;
         frame = null;
         to = null;
-        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.resetWindows(false, false);
         JUnitUtil.tearDown();
     }
 }
