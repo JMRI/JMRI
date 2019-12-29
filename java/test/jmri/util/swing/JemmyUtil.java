@@ -310,7 +310,7 @@ public class JemmyUtil {
     /**
      * wait for a frame with the title and then press button to close it
      *
-     * @param jfo         the JFrameOperator
+     * @param jfo        the JFrameOperator
      * @param buttonText the name of the button to press to dismiss this frame
      */
     public static void waitAndCloseFrame(JFrameOperator jfo, String buttonText) {
@@ -330,7 +330,7 @@ public class JemmyUtil {
     /**
      * wait for a frame and then request to close it
      *
-     * @param jfo         the JFrameOperator
+     * @param jfo the JFrameOperator
      */
     public static void waitAndCloseFrame(JFrameOperator jfo) {
         jfo.requestClose();
@@ -394,7 +394,7 @@ public class JemmyUtil {
     }
 
     /*
- * a component chooser that matches by ToolTipText
+     * a component chooser that matches by ToolTipText
      */
     public static class ToolTipComponentChooser implements ComponentChooser {
 
@@ -421,14 +421,15 @@ public class JemmyUtil {
      */
     public static void delay(long milliseconds) {
         long nextTime = System.currentTimeMillis() + milliseconds;
-        while (nextTime > System.currentTimeMillis()) {
+        for (long delta = milliseconds; delta > 0;
+                delta = nextTime - System.currentTimeMillis()) {
             try {
-                //new EventTool().waitNoEvent(milliseconds);
-                //new QueueTool().waitEmpty();
-                Thread.sleep(milliseconds);
+                Thread.sleep(delta);
             } catch (InterruptedException ex) {
                 //ignore any interruptions
             }
+            //new EventTool().waitNoEvent(milliseconds);
+            new QueueTool().waitEmpty();
         }
     }
 
@@ -467,5 +468,4 @@ public class JemmyUtil {
         } catch (FileNotFoundException e) {
         }
     }
-
 }
