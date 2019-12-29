@@ -23,8 +23,8 @@ public class LayoutEditorChecksTest {
     @Rule   //10 second timeout for methods in this test class.
     public Timeout globalTimeout = Timeout.seconds(10);
 
-    @Rule   //allow 5 retries
-    public RetryRule retryRule = new RetryRule(5);
+    @Rule   //allow 3 retries
+    public RetryRule retryRule = new RetryRule(3);
 
     private static Operator.StringComparator stringComparator;
 
@@ -57,64 +57,25 @@ public class LayoutEditorChecksTest {
     @Test
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists", layoutEditorChecks);
-    }
-
-    @Test
-    public void testSetup() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("layoutEditor not null", layoutEditor);
-
-        //everything not null?
-        Assert.assertNotNull("layoutBlock not null", layoutBlock);
-        Assert.assertNotNull("ltRH not null", ltRH);
-        Assert.assertNotNull("ltLH not null", ltLH);
-        Assert.assertNotNull("a1 not null", a1);
-        Assert.assertNotNull("a2 not null", a2);
-        Assert.assertNotNull("ts1 not null", ts1);
-        Assert.assertNotNull("ts2 not null", ts2);
-        Assert.assertNotNull("ts3 not null", ts3);
-
-        //everything named correctly?
-        Assert.assertEquals("layoutBlock.getUserName()", myBlockName, layoutBlock.getUserName());
-        Assert.assertEquals("ltRH.getName()", rightHandName, ltRH.getName());
-        Assert.assertEquals("ltLH.getName()", leftHandName, ltLH.getName());
-        Assert.assertEquals("a1.getName()", "A1", a1.getName());
-        Assert.assertEquals("a2.getName()", "A2", a2.getName());
-        Assert.assertEquals("ts1.getName()", "T1", ts1.getName());
-        Assert.assertEquals("ts2.getName()", "T2", ts2.getName());
-        Assert.assertEquals("ts3.getName()", "T3", ts3.getName());
-    }
-
-    @Test
-    public void testBundleStrings() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-
-        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
-        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
-
-        Assert.assertNotNull("checkUnConnectedTracksMenuTitle not null", checkUnConnectedTracksMenuTitle);
-        Assert.assertNotNull("checkUnBlockedTracksMenuTitle not null", checkUnBlockedTracksMenuTitle);
-        Assert.assertNotNull("checkNonContiguousBlocksMenuTitle not null", checkNonContiguousBlocksMenuTitle);
-        Assert.assertNotNull("checkUnnecessaryAnchorsMenuTitle not null", checkUnnecessaryAnchorsMenuTitle);
+        Assert.assertNotNull("layoutEditorChecks null", layoutEditorChecks);
     }
 
     @Test
     public void testToolsCheckMenuExists() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
+        Assert.assertNotNull("toolsMenuTitle null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle null", checkMenuTitle);
         toolsJMO.pushMenu(toolsMenuTitle + "/" + checkMenuTitle, "/");
     }
 
     @Test
     public void testCheckUnConnectedTracks() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
+        Assert.assertNotNull("toolsMenuTitle null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
-        Assert.assertNotNull("checkUnConnectedTracksMenuTitle not null", checkUnConnectedTracksMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle null", checkMenuTitle);
+        Assert.assertNotNull("checkUnConnectedTracksMenuTitle null", checkUnConnectedTracksMenuTitle);
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -145,10 +106,10 @@ public class LayoutEditorChecksTest {
     @Test
     public void testCheckUnBlockedTracks() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
+        Assert.assertNotNull("toolsMenuTitle null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
-        Assert.assertNotNull("checkUnBlockedTracksMenuTitle not null", checkUnBlockedTracksMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle null", checkMenuTitle);
+        Assert.assertNotNull("checkUnBlockedTracksMenuTitle null", checkUnBlockedTracksMenuTitle);
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -180,10 +141,10 @@ public class LayoutEditorChecksTest {
     @Test
     public void testCheckNonContiguousBlocks() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
+        Assert.assertNotNull("toolsMenuTitle null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
-        Assert.assertNotNull("checkNonContiguousBlocksMenuTitle not null", checkNonContiguousBlocksMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle null", checkMenuTitle);
+        Assert.assertNotNull("checkNonContiguousBlocksMenuTitle null", checkNonContiguousBlocksMenuTitle);
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -220,10 +181,10 @@ public class LayoutEditorChecksTest {
     @Test
     public void testCheckUnnecessaryAnchors() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("toolsMenuTitle not null", toolsMenuTitle);
+        Assert.assertNotNull("toolsMenuTitle null", toolsMenuTitle);
         JMenuOperator toolsJMO = new JMenuOperator(layoutEditorEFO, toolsMenuTitle);
-        Assert.assertNotNull("CheckMenuTitle not null", checkMenuTitle);
-        Assert.assertNotNull("checkUnnecessaryAnchorsMenuTitle not null", checkUnnecessaryAnchorsMenuTitle);
+        Assert.assertNotNull("CheckMenuTitle null", checkMenuTitle);
+        Assert.assertNotNull("checkUnnecessaryAnchorsMenuTitle null", checkUnnecessaryAnchorsMenuTitle);
 
         JPopupMenu toolsPopupMenu = toolsJMO.getPopupMenu();
         JMenuItem checkMenuItem = (JMenuItem) toolsPopupMenu.getComponent(0);
@@ -271,7 +232,7 @@ public class LayoutEditorChecksTest {
             Point2D point = new Point2D.Double(150.0, 100.0);
             Point2D delta = new Point2D.Double(100.0, 50.0);
             List<LayoutTrack> layoutTracks = layoutEditor.getLayoutTracks();
-            Assert.assertNotNull("layoutTracks not null", layoutTracks);
+            Assert.assertNotNull("layoutTracks null", layoutTracks);
 
             //create a layout block
             layoutBlock = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(null, myBlockName);
