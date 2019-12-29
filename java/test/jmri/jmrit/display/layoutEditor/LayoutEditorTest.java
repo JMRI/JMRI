@@ -919,7 +919,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideLeft"), "/");
 
-        JemmyUtil.delay(500); //TODO: switch to JemmyUtil.delay
+        JemmyUtil.delay(500);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -942,7 +942,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideBottom"), "/");
 
-        JemmyUtil.delay(500); //TODO: switch to JemmyUtil.delay
+        JemmyUtil.delay(500);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -965,7 +965,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideRight"), "/");
 
-        JemmyUtil.delay(500); //TODO: switch to JemmyUtil.delay
+        JemmyUtil.delay(500);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -988,12 +988,12 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideFloat"), "/");
 
-        JemmyUtil.delay(500); //TODO: switch to JemmyUtil.delay
+        JemmyUtil.delay(500);
 
         // bring this window back to the front...
         jfo.activate();
 
-        JemmyUtil.delay(500); //TODO: switch to JemmyUtil.delay
+        JemmyUtil.delay(500);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
