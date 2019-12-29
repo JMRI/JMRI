@@ -1,27 +1,17 @@
 package jmri.util.swing;
 
 import java.awt.Component;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JRadioButton;
-import javax.swing.JToggleButton;
+import javax.swing.*;
 import jmri.util.JmriJFrame;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.JToggleButtonOperator;
-import org.netbeans.jemmy.operators.WindowOperator;
+import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  * Utility Methods for Jemmy Tests.
  * 
  * @author Paul Bender Copyright (C) 2018
+ * @author George Warner Copyright (C) 2019
  */
 
 public class JemmyUtil {
