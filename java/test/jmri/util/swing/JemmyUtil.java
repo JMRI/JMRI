@@ -62,7 +62,7 @@ public class JemmyUtil {
      * @param comp the JButton
      */
     public static void enterClickAndLeave(JButton comp) {
-        new JButtonOperator(comp).push();
+        new JButtonOperator(comp).doClick();
     }
 
     /**
@@ -71,7 +71,7 @@ public class JemmyUtil {
      * @param comp the JCheckBox
      */
     public static void enterClickAndLeave(JCheckBox comp) {
-        new JCheckBoxOperator(comp).push();
+        new JCheckBoxOperator(comp).doClick();
     }
 
     /**
@@ -80,7 +80,7 @@ public class JemmyUtil {
      * @param comp the JRadioButton
      */
     public static void enterClickAndLeave(JRadioButton comp) {
-        new JRadioButtonOperator(comp).push();
+        new JRadioButtonOperator(comp).doClick();
     }
 
     /**
@@ -89,7 +89,7 @@ public class JemmyUtil {
      * @param comp the JToggleButton
      */
     public static void enterClickAndLeave(JToggleButton comp) {
-        new JToggleButtonOperator(comp).push();
+        new JToggleButtonOperator(comp).doClick();
     }
 
     /**
@@ -111,7 +111,7 @@ public class JemmyUtil {
      */
     public static void confirmJOptionPane(WindowOperator wo, String dialogTitle, String messageText, String buttonText) {
         JDialogOperator jdo = new JDialogOperator(wo, dialogTitle);
-        ///waitForLabels(jdo, messageText); //TODO:FIX THIS!
+        waitForLabels(jdo, messageText);
         pressButton(jdo, buttonText);
     }
 
@@ -310,7 +310,7 @@ public class JemmyUtil {
     /**
      * wait for a frame with the title and then press button to close it
      *
-     * @param jfo        the JFrameOperator
+     * @param jfo         the JFrameOperator
      * @param buttonText the name of the button to press to dismiss this frame
      */
     public static void waitAndCloseFrame(JFrameOperator jfo, String buttonText) {
@@ -330,7 +330,7 @@ public class JemmyUtil {
     /**
      * wait for a frame and then request to close it
      *
-     * @param jfo the JFrameOperator
+     * @param jfo         the JFrameOperator
      */
     public static void waitAndCloseFrame(JFrameOperator jfo) {
         jfo.requestClose();
