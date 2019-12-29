@@ -62,7 +62,7 @@ public class JemmyUtil {
      * @param comp the JButton
      */
     public static void enterClickAndLeave(JButton comp) {
-        new JButtonOperator(comp).push();
+        new JButtonOperator(comp).doClick();
     }
 
     /**
@@ -71,7 +71,7 @@ public class JemmyUtil {
      * @param comp the JCheckBox
      */
     public static void enterClickAndLeave(JCheckBox comp) {
-        new JCheckBoxOperator(comp).push();
+        new JCheckBoxOperator(comp).doClick();
     }
 
     /**
@@ -80,7 +80,7 @@ public class JemmyUtil {
      * @param comp the JRadioButton
      */
     public static void enterClickAndLeave(JRadioButton comp) {
-        new JRadioButtonOperator(comp).push();
+        new JRadioButtonOperator(comp).doClick();
     }
 
     /**
@@ -89,7 +89,7 @@ public class JemmyUtil {
      * @param comp the JToggleButton
      */
     public static void enterClickAndLeave(JToggleButton comp) {
-        new JToggleButtonOperator(comp).push();
+        new JToggleButtonOperator(comp).doClick();
     }
 
     /**
