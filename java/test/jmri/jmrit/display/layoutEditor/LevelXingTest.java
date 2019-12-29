@@ -20,11 +20,13 @@ import org.netbeans.jemmy.operators.Operator;
  */
 public class LevelXingTest {
 
-    @Rule   // 10 second timeout for methods in this test class.
+    @Rule   //10 second timeout for methods in this test class.
     public Timeout globalTimeout = Timeout.seconds(10);
 
-    @Rule   // allow 2 retries of intermittent tests
+    @Rule   //allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2);
+
+    private static Operator.StringComparator stringComparator;
 
     private static LayoutEditor layoutEditor = null;
     private static LevelXing levelXing = null;
@@ -406,12 +408,12 @@ public class LevelXingTest {
         Assert.assertNotNull("layoutBlockAC is null", layoutBlockAC);
         Assert.assertNotNull("layoutBlockBD is null", layoutBlockBD);
 
-//        Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
-//                Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        //Thread misc1 = jmri.util.swing.JemmyUtil.createModalDialogOperatorThread(
+        //Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  //NOI18N
         levelXing.canRemove();
-//        JUnitUtil.waitFor(() -> {
-//            return !(misc1.isAlive());
-//        }, "misc1 finished");
+        //JUnitUtil.waitFor(() -> {
+        //return !(misc1.isAlive());
+        //}, "misc1 finished");
 
         levelXing.setLayoutBlockAC(layoutBlockAC);
         levelXing.setLayoutBlockBD(layoutBlockBD);
@@ -856,14 +858,17 @@ public class LevelXingTest {
     }
 
     //
-    // from here down is testing infrastructure
+    //from here down is testing infrastructure
     //
     @BeforeClass
     public static void setUpClass() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
-            // set default string matching comparator to one that exactly matches and is case sensitive
+ 
+            //save the old string comparator
+            stringComparator = Operator.getDefaultStringComparator();
+            //set default string matching comparator to one that exactly matches and is case sensitive
             Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
 
             layoutEditor = new LayoutEditor("LevelXing Tests Layout");
@@ -924,6 +929,9 @@ public class LevelXingTest {
             new QueueTool().waitEmpty();
             JUnitUtil.dispose(layoutEditor);
             layoutEditor = null;
+
+            //restore the default string matching comparator
+            Operator.setDefaultStringComparator(stringComparator);
         }
         JUnitUtil.tearDown();
     }
