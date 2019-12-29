@@ -398,7 +398,15 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Improved how the XML files defining a signal system
+                    are validated.  Unfortunately, some files are already inconsistent.
+                    Fixed a number of files with invisible appearance definitions
+                    by duplicating the appearance file (i.e. adding a -b version with
+                    the different appearances).  Temporarily commented out 
+                    some of the 
+                    <a href="http://jmri.org/xml/schema/appearancetable.xsd">schema checks</a>
+                    until the existing files can be resolved.
+                    </li>
             </ul>
 
         <h4>Signal Heads</h4>
