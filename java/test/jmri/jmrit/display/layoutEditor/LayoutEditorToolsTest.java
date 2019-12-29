@@ -29,6 +29,8 @@ public class LayoutEditorToolsTest {
     @Rule   //allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2);
 
+    private static Operator.StringComparator stringComparator;
+
     private LayoutEditor layoutEditor = null;
     private LayoutEditorTools layoutEditorTools = null;
     private LayoutEditorToolBarPanel leToolBarPanel = null;
@@ -690,14 +692,33 @@ public class LayoutEditorToolsTest {
     }
 
     //from here down is testing infrastructure
+
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        JUnitUtil.setUp();
+        if (!GraphicsEnvironment.isHeadless()) {
+            JUnitUtil.resetProfileManager();
+
+            //save the old string comparator
+            stringComparator = Operator.getDefaultStringComparator();
+            //set default string matching comparator to one that exactly matches and is case sensitive
+            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
+        }
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        if (!GraphicsEnvironment.isHeadless()) {
+            //restore the default string matching comparator
+            Operator.setDefaultStringComparator(stringComparator);
+        }
+    }
+
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
-
-            // set default string matching comparator to one that exactly matches and is case sensitive
-            Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
 
             layoutEditor = new LayoutEditor();
             layoutEditor.setVisible(true);
