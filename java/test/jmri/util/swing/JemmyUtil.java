@@ -111,7 +111,7 @@ public class JemmyUtil {
      */
     public static void confirmJOptionPane(WindowOperator wo, String dialogTitle, String messageText, String buttonText) {
         JDialogOperator jdo = new JDialogOperator(wo, dialogTitle);
-        waitForLabels(jdo, messageText);
+        ///waitForLabels(jdo, messageText); //TODO:FIX THIS!
         pressButton(jdo, buttonText);
     }
 
