@@ -1,5 +1,6 @@
 package jmri.jmrit.display.layoutEditor;
 
+
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import java.util.logging.*;
@@ -27,6 +28,8 @@ public class LayoutEditorToolsTest {
 
     @Rule   //allow 4 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(4);
+
+    private static Operator.StringComparator stringComparator;
 
     private LayoutEditor layoutEditor = null;
     private LayoutEditorTools layoutEditorTools = null;
@@ -67,14 +70,14 @@ public class LayoutEditorToolsTest {
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
         //then closes it.
         jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        jFrameOperator.waitClosed();    //make sure the dialog closed
     }
 
     @Test
     @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         //create a new Layout Turnout
         layoutTurnout = new LayoutTurnout("Right Hand",
                 LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
@@ -110,7 +113,7 @@ public class LayoutEditorToolsTest {
         //error dialog... dismiss it
         Thread modalDialogOperatorThread0 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"));  // NOI18N
+                Bundle.getMessage("ButtonOK"));  //NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread0.isAlive());
@@ -127,7 +130,7 @@ public class LayoutEditorToolsTest {
         //error dialog... dismiss it
         Thread modalDialogOperatorThread0a = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"));  // NOI18N
+                Bundle.getMessage("ButtonOK"));  //NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread0a.isAlive());
@@ -153,7 +156,7 @@ public class LayoutEditorToolsTest {
         //error dialog... dismiss it
         Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"));  // NOI18N
+                Bundle.getMessage("ButtonOK"));  //NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread1.isAlive());
@@ -170,7 +173,7 @@ public class LayoutEditorToolsTest {
         //error dialog... dismiss it
         Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"));  // NOI18N
+                Bundle.getMessage("ButtonOK"));  //NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread2.isAlive());
@@ -187,7 +190,7 @@ public class LayoutEditorToolsTest {
         //error dialog... dismiss it
         Thread modalDialogOperatorThread3 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"));  // NOI18N
+                Bundle.getMessage("ButtonOK"));  //NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread3.isAlive());
@@ -204,7 +207,7 @@ public class LayoutEditorToolsTest {
         //error dialog... dismiss it
         Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("ButtonOK"));  // NOI18N
+                Bundle.getMessage("ButtonOK"));  //NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread4.isAlive());
@@ -248,13 +251,13 @@ public class LayoutEditorToolsTest {
         //error dialog... dismiss it
         Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
-                Bundle.getMessage("ButtonOK"));  // NOI18N
+                Bundle.getMessage("ButtonOK"));  //NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread1.isAlive());
         }, "modalDialogOperatorThread1 finished");
 
-        // make sure the dialog closed
+        //make sure the dialog closed
         jfoSignalsAtTurnout.waitClosed();
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
@@ -287,13 +290,13 @@ public class LayoutEditorToolsTest {
         //error dialog... dismiss it
         Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
-                Bundle.getMessage("ButtonOK"));  // NOI18N
+                Bundle.getMessage("ButtonOK"));  //NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread2.isAlive());
         }, "modalDialogOperatorThread2 finished");
 
-        // make sure the dialog closed
+        //make sure the dialog closed
         jfoSignalsAtTurnout.waitClosed();
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
@@ -312,13 +315,13 @@ public class LayoutEditorToolsTest {
         //error dialog... dismiss it
         Thread modalDialogOperatorThread3 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
-                Bundle.getMessage("ButtonOK"));  // NOI18N
+                Bundle.getMessage("ButtonOK"));  //NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread3.isAlive());
         }, "modalDialogOperatorThread3 finished");
 
-        // make sure the dialog closed
+        //make sure the dialog closed
         jfoSignalsAtTurnout.waitClosed();
 
         //assign block to track segment
@@ -337,13 +340,13 @@ public class LayoutEditorToolsTest {
         //error dialog... dismiss it
         Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
-                Bundle.getMessage("ButtonOK"));  // NOI18N
+                Bundle.getMessage("ButtonOK"));  //NOI18N
         doneButtonOperator.doClick();
         JUnitUtil.waitFor(() -> {
             return !(modalDialogOperatorThread4.isAlive());
         }, "modalDialogOperatorThread4 finished");
 
-        // make sure the dialog closed
+        //make sure the dialog closed
         jfoSignalsAtTurnout.waitClosed();
 
         //assign Occupancy Sensor to block
@@ -358,7 +361,7 @@ public class LayoutEditorToolsTest {
         new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
 
         doneButtonOperator.doClick();
-        // make sure the dialog closed
+        //make sure the dialog closed
         jfoSignalsAtTurnout.waitClosed();
 
         //this causes the "set Signal Heads Turnout" dialog to be (re)displayed.
@@ -407,7 +410,7 @@ public class LayoutEditorToolsTest {
                 jFrameOperator, Bundle.getMessage("ButtonCancel"));
         jbo.press();
         jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        jFrameOperator.waitClosed();    //make sure the dialog closed
     }
 
     @Test
@@ -429,7 +432,7 @@ public class LayoutEditorToolsTest {
                 Bundle.getMessage("SignalsAtTurnout"));
         //then closes it.
         jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        jFrameOperator.waitClosed();    //make sure the dialog closed
     }
 
     @Test
@@ -446,7 +449,7 @@ public class LayoutEditorToolsTest {
                 Bundle.getMessage("SignalsAtLevelXing"));
         //then closes it.
         jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        jFrameOperator.waitClosed();    //make sure the dialog closed
     }
 
     @Test
@@ -467,7 +470,7 @@ public class LayoutEditorToolsTest {
                 Bundle.getMessage("SignalsAtLevelXing"));
         //then closes it.
         jFrameOperator.requestClose();
-        jFrameOperator.waitClosed();    // make sure the dialog closed
+        jFrameOperator.waitClosed();    //make sure the dialog closed
     }
 
     @Test
@@ -628,15 +631,26 @@ public class LayoutEditorToolsTest {
     }
 
     //
-    // from here down is testing infrastructure
+    //from here down is testing infrastructure
     //
     @BeforeClass
     public static void setUpClass() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
-            // set default string matching comparator to one that exactly matches and is case sensitive
+
+            //save the old string comparator
+            stringComparator = Operator.getDefaultStringComparator();
+            //set default string matching comparator to one that exactly matches and is case sensitive
             Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
+        }
+    }
+
+    @AfterClass
+    public static void tearDownClass() throws Exception {
+        if (!GraphicsEnvironment.isHeadless()) {
+            //restore the default string matching comparator
+            Operator.setDefaultStringComparator(stringComparator);
         }
     }
 
@@ -655,23 +669,28 @@ public class LayoutEditorToolsTest {
             for (int i = 0; i < layoutBlocks.length; i++) {
                 String sBlockName = "IB" + i;
                 String uBlockName = "Block " + i;
-                layoutBlocks[i] = InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(sBlockName, uBlockName);
+                layoutBlocks[i] = InstanceManager.getDefault(LayoutBlockManager.class
+                ).createNewLayoutBlock(sBlockName, uBlockName);
 
                 String toName = "TO" + i;
-                turnouts[i] = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout(toName);
+                turnouts[i] = InstanceManager.getDefault(jmri.TurnoutManager.class
+                ).provideTurnout(toName);
 
                 String sName = "SH" + i;
                 String uName = "signal head " + i;
-                NamedBeanHandle<Turnout> nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(toName, turnouts[i]);
+                NamedBeanHandle<Turnout> nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class
+                ).getNamedBeanHandle(toName, turnouts[i]);
                 if (nbh != null) {
                     signalHeads[i] = new SingleTurnoutSignalHead(
                             sName, uName, nbh, SignalHead.GREEN, SignalHead.RED);
-                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(signalHeads[i]);
+                    InstanceManager.getDefault(jmri.SignalHeadManager.class
+                    ).register(signalHeads[i]);
                 }
 
                 sName = "IS" + i;
                 uName = "sensor " + i;
-                sensors[i] = InstanceManager.getDefault(SensorManager.class).newSensor(sName, uName);
+                sensors[i] = InstanceManager.getDefault(SensorManager.class
+                ).newSensor(sName, uName);
                 //TODO: don't do this here because he have to test the failure cases 
                 //(no sensor assigned to block) first
                 //layoutBlocks[i].setOccupancySensorName(uName);
@@ -696,35 +715,5 @@ public class LayoutEditorToolsTest {
         }
         JUnitUtil.tearDown();
     }
-//
-//
-//    private void waitSeconds(int s) {
-//        //waits until queue has been empty for X milliseconds
-//        //new QueueTool().waitEmpty(s * 1000);
-//
-//        //wait until no event is registered for a given number of milliseconds
-//        new EventTool().waitNoEvent(s * 1000);
-//    }
-//
-//    //save screenshot of GUI
-//    private void captureScreenshot() {
-//        //grab image
-//        PNGEncoder.captureScreen(System.getProperty("user.home")
-//                + System.getProperty("file.separator")
-//                + "screen.png");
-//    }
-//
-//   //dump jemmy GUI info to xml file
-//   private void dumpToXML() {
-//        //grab component state
-//        try {
-//            Dumper.dumpAll(System.getProperty("user.home")
-//                    + System.getProperty("file.separator")
-//                    + "dump.xml");
-//
-//        } catch (FileNotFoundException e) {
-//        }
-//    }
-//
     //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
 }   //class LayoutEditorToolsTest

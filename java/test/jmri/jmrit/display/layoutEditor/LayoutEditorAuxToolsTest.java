@@ -27,6 +27,8 @@ public class LayoutEditorAuxToolsTest {
     @Rule   // allow 3 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(0);
 
+    private static Operator.StringComparator stringComparator;
+
     private static EditorFrameOperator layoutEditorFrameOperator = null;
     private static LayoutEditor layoutEditor = null;
     private static LayoutEditorAuxTools layoutEditorAuxTools = null;
@@ -517,6 +519,8 @@ public class LayoutEditorAuxToolsTest {
             JUnitUtil.initInternalTurnoutManager();
             JUnitUtil.initInternalSensorManager();
 
+            //save the old string comparator
+            stringComparator = Operator.getDefaultStringComparator();
             // set default string matching comparator to one that exactly matches and is case sensitive
             Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
             ThreadingUtil.runOnLayoutEventually(() -> {

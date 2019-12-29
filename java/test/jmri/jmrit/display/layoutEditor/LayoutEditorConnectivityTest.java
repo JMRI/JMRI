@@ -16,8 +16,8 @@ import org.netbeans.jemmy.operators.Operator;
 /**
  * LayoutEditorConnectivityTest
  *
- * @author	Dave Duchamp Copyright 2011
- * @author  George Warner Copyright (C) 2019
+ * @author Dave Duchamp Copyright 2011
+ * @author George Warner Copyright (C) 2019
  */
 public class LayoutEditorConnectivityTest {
 
@@ -26,6 +26,8 @@ public class LayoutEditorConnectivityTest {
 
     @Rule   //allow 3 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(3);
+
+    private static Operator.StringComparator stringComparator;
 
     private static EditorFrameOperator layoutEditorFrameOperator = null;
     private static LayoutEditor layoutEditor = null;
@@ -784,8 +786,11 @@ public class LayoutEditorConnectivityTest {
             JUnitUtil.initInternalTurnoutManager();
             JUnitUtil.initInternalSensorManager();
 
+            //save the old string comparator
+            stringComparator = Operator.getDefaultStringComparator();
             //set default string matching comparator to one that exactly matches and is case sensitive
             Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
+
             ThreadingUtil.runOnLayoutEventually(() -> {
                 //load and display test panel file
                 ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
@@ -823,6 +828,8 @@ public class LayoutEditorConnectivityTest {
                 layoutEditorFrameOperator.closeFrameWithConfirmations();
                 //jFrameOperator.waitClosed();    //make sure the dialog actually closed
             }
+            //restore the default string matching comparator
+            Operator.setDefaultStringComparator(stringComparator);
         }
         JUnitUtil.tearDown();
     }
