@@ -4,15 +4,15 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.IllegalComponentStateException;
 import java.awt.Insets;
 import java.awt.event.*;
-import java.util.EnumSet;
+import java.util.*;
 import javax.swing.*;
 import javax.swing.event.*;
 import jmri.*;
 import jmri.jmrit.roster.*;
 import jmri.util.*;
-import jmri.util.swing.JemmyUtil;
 import org.jdom2.*;
 
 /**
@@ -206,15 +206,15 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     }
 
     /**
-     * Set the GUI to match the speed steps of the current address. initializes
+     * Set the GUI to match the speed steps of the current address. Initialises
      * the speed slider and spinner - including setting their maximums based on
      * the speed step setting and the max speed for the particular loco
      *
      * @param speedStepMode Desired speed step mode. One of:
      *                      SpeedStepMode.NMRA_DCC_128,
      *                      SpeedStepMode.NMRA_DCC_28,
-     *                      SpeedStepMode.NMRA_DCC_27,
-     *                      SpeedStepMode.NMRA_DCC_14 step mode
+     *                      SpeedStepMode.NMRA_DCC_27, SpeedStepMode.NMRA_DCC_14
+     *                      step mode
      */
     private void setSpeedStepsMode(SpeedStepMode speedStepMode) {
         internalAdjust = true;
@@ -258,7 +258,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedSlider.setMaximum(maxSpeed);
         speedSlider.setValue((int) (oldSpeed * maxSpeed));
         speedSlider.setMajorTickSpacing(maxSpeed / 2);
-        java.util.Hashtable<Integer, JLabel> labelTable = new java.util.Hashtable<Integer, JLabel>();
+        Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
         labelTable.put(Integer.valueOf(maxSpeed / 2), new JLabel("50%"));
         labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
         labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("ButtonStop")));
@@ -283,7 +283,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
             }
             speedSliderContinuous.setValue((int) (oldSpeed * maxSpeed));
             speedSliderContinuous.setMajorTickSpacing(maxSpeed / 2);
-            labelTable = new java.util.Hashtable<Integer, JLabel>();
+            labelTable = new Hashtable<Integer, JLabel>();
             labelTable.put(Integer.valueOf(maxSpeed / 2), new JLabel("50%"));
             labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
             labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("ButtonStop")));
@@ -564,7 +564,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedControlPanel.add(sliderPanel);
         speedSlider.setOrientation(JSlider.VERTICAL);
         speedSlider.setMajorTickSpacing(maxSpeed / 2);
-        java.util.Hashtable<Integer, JLabel> labelTable = new java.util.Hashtable<Integer, JLabel>();
+        Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
         labelTable.put(Integer.valueOf(maxSpeed / 2), new JLabel("50%"));
         labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
         labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("ButtonStop")));
@@ -637,7 +637,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         speedControlPanel.add(speedSliderContinuousPanel);
         speedSliderContinuous.setOrientation(JSlider.VERTICAL);
         speedSliderContinuous.setMajorTickSpacing(maxSpeed / 2);
-        labelTable = new java.util.Hashtable<Integer, JLabel>();
+        labelTable = new Hashtable<Integer, JLabel>();
         labelTable.put(Integer.valueOf(maxSpeed / 2), new JLabel("50%"));
         labelTable.put(Integer.valueOf(maxSpeed), new JLabel("100%"));
         labelTable.put(Integer.valueOf(0), new JLabel(Bundle.getMessage("ButtonStop")));
@@ -1262,7 +1262,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 try {
                     _menu.show(e.getComponent(),
                             e.getX(), e.getY());
-                } catch (java.awt.IllegalComponentStateException cs) {
+                } catch (IllegalComponentStateException cs) {
                     // Message sent to a hidden component, so we need
                 }
                 e.consume();
@@ -1286,7 +1286,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 try {
                     _menu.show(e.getComponent(),
                             e.getX(), e.getY());
-                } catch (java.awt.IllegalComponentStateException cs) {
+                } catch (IllegalComponentStateException cs) {
                     // Message sent to a hidden component, so we need
                 }
 
@@ -1311,7 +1311,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         me.setAttribute("trackSliderMinInterval", String.valueOf(this.trackSliderMinInterval));
         me.setAttribute("switchSliderOnFunction", switchSliderFunction != null ? switchSliderFunction : "Fxx");
         //Element window = new Element("window");
-        java.util.ArrayList<Element> children = new java.util.ArrayList<Element>(1);
+        ArrayList<Element> children = new ArrayList<Element>(1);
         children.add(WindowPreferences.getPreferences(this));
         me.setContent(children);
         return me;
@@ -1330,7 +1330,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         internalAdjust = true;
         try {
             this.setSpeedController(e.getAttribute("displaySpeedSlider").getIntValue());
-        } catch (org.jdom2.DataConversionException ex) {
+        } catch (DataConversionException ex) {
             log.error("DataConverstionException in setXml: " + ex);
         } catch (Exception em) {
             // in this case, recover by displaying the speed slider.
@@ -1340,7 +1340,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if (tsAtt != null) {
             try {
                 trackSlider = tsAtt.getBooleanValue();
-            } catch (org.jdom2.DataConversionException ex) {
+            } catch (DataConversionException ex) {
                 trackSlider = trackSliderDefault;
             }
         } else {
@@ -1350,7 +1350,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         if (tsmiAtt != null) {
             try {
                 trackSliderMinInterval = tsmiAtt.getLongValue();
-            } catch (org.jdom2.DataConversionException ex) {
+            } catch (DataConversionException ex) {
                 trackSliderMinInterval = trackSliderMinIntervalDefault;
             }
             if (trackSliderMinInterval < trackSliderMinIntervalMin) {
@@ -1402,7 +1402,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
         this.throttle.addPropertyChangeListener(this);
         if (log.isDebugEnabled()) {
-            jmri.DccLocoAddress Address = (jmri.DccLocoAddress) throttle.getLocoAddress();
+            DccLocoAddress Address = (DccLocoAddress) throttle.getLocoAddress();
             log.debug("new address is " + Address.toString());
         }
 
@@ -1432,7 +1432,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     public void setSwitchSliderFunction(String fn) {
         switchSliderFunction = fn;
-        if ((switchSliderFunction == null) || (switchSliderFunction.length() == 0)) {
+        if ((switchSliderFunction == null) || switchSliderFunction.isEmpty()) {
             return;
         }
         if ((throttle != null) && (_displaySlider != STEPDISPLAY)) { // Update UI depending on function state
@@ -1447,7 +1447,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
                 } else {
                     setSpeedController(SLIDERDISPLAY);
                 }
-
             } catch (IllegalAccessException | NoSuchMethodException | java.lang.reflect.InvocationTargetException ex) {
                 log.debug("Exception in setSwitchSliderFunction: " + ex + " while looking for function " + switchSliderFunction);
             }
@@ -1472,7 +1471,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         Roster.getDefault().writeRoster();
     }
 
-    JemmyUtil ;
     // initialize logging
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(ControlPanel.class);
 }
