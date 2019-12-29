@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 
 /**
@@ -12,7 +13,7 @@ import jmri.Turnout;
  */
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    int _bus = 0;
+    private int _bus = 0;
 
     public SRCPTurnoutManager(SRCPBusConnectionMemo memo, int bus) {
         super(memo);
@@ -23,12 +24,13 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public SRCPBusConnectionMemo getMemo() {
         return (SRCPBusConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         Turnout t;
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         t = new SRCPTurnout(addr, getMemo());
@@ -38,7 +40,7 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

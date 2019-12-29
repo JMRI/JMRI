@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp;
 
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 
 /**
@@ -12,7 +13,7 @@ import jmri.Sensor;
  */
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
-    int _bus;
+    private int _bus;
 
     public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
         super(memo);
@@ -23,12 +24,14 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public SRCPBusConnectionMemo getMemo() {
         return (SRCPBusConnectionMemo) memo;
     }
 
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor t;
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         t = new SRCPSensor(addr, getMemo());

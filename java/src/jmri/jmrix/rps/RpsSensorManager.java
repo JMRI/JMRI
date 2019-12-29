@@ -1,6 +1,7 @@
 package jmri.jmrix.rps;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public RpsSystemConnectionMemo getMemo() {
         return (RpsSystemConnectionMemo) memo;
     }
@@ -38,7 +40,8 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * System name is normalized to ensure uniqueness.
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         try {
            RpsSensor r = new RpsSensor(systemName, userName, getSystemPrefix());
            Distributor.instance().addMeasurementListener(r);
@@ -52,10 +55,11 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (!prefix.equals(getSystemPrefix())) {
             log.warn("prefix does not match memo.prefix");
-            return null;
+            throw new JmriException("Unable to convert " + curAddress + ", Prefix does not match");
         }
         String sys = getSystemPrefix() + typeLetter() + curAddress;
         // first, check validity
@@ -71,7 +75,8 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return getMemo().validateSystemNameFormat(name, this, locale);
     }
     
@@ -79,7 +84,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 

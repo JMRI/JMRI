@@ -39,7 +39,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
         //this.et.setSystemConnectionMemo(this);
         _bus = bus;
         register();
-        log.debug("Created SRCPBusConnectionMemo for bus " + bus);
+        log.debug("Created SRCPBusConnectionMemo for bus {}", bus);
         et.addSRCPListener(this);
         et.sendSRCPMessage(new SRCPMessage("GET " + bus + " DESCRIPTION\n"), null);
         configured = false;
@@ -76,7 +76,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
               }
            }
         }
-        log.debug("Manager configuration complete for bus " + _bus );
+        log.debug("Manager configuration complete for bus {}", _bus );
     }
 
     /**
@@ -314,6 +314,3 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     private final static Logger log = LoggerFactory.getLogger(SRCPBusConnectionMemo.class);
 
 }
-
-
-

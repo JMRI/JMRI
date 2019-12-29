@@ -1,6 +1,7 @@
 package jmri.jmrix.powerline;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public SerialSystemConnectionMemo getMemo() {
         return (SerialSystemConnectionMemo) memo;
     }
@@ -72,7 +74,8 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return tc.getAdapterMemo().getSerialAddress().validateSystemNameFormat(name, typeLetter(), locale);
     }
 
@@ -80,7 +83,7 @@ abstract public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, typeLetter());
     }
 

@@ -1,6 +1,8 @@
 package jmri.jmrix.powerline;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,13 +14,13 @@ import org.slf4j.LoggerFactory;
  * the unit number without padding.
  *
  * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @author Ken Cameron, (C) 2009, sensors from poll replies Converted to
- * multiple connection
+ * @author Ken Cameron, (C) 2009, sensors from poll replies. Converted to
+ * multiple connection support
  * @author kcameron Copyright (C) 2011
  */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager implements SerialListener {
 
-    SerialTrafficController tc = null;
+    private SerialTrafficController tc = null;
 
     public SerialSensorManager(SerialTrafficController tc) {
         super(tc.getAdapterMemo());
@@ -30,6 +32,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public SerialSystemConnectionMemo getMemo() {
         return (SerialSystemConnectionMemo) memo;
     }
@@ -41,11 +44,15 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     }
 
     /**
-     * Create a new sensor if all checks are passed System name is normalized to
-     * ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     *
+     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
@@ -66,7 +73,6 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         } else {
             s = new SerialSensor(sName, tc, userName);
         }
-
         return s;
     }
 
@@ -86,12 +92,12 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     abstract public void reply(SerialReply r);
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
@@ -135,7 +141,8 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return tc.getAdapterMemo().getSerialAddress().validateSystemNameFormat(name, typeLetter(), locale);
     }
 
@@ -143,7 +150,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, typeLetter());
     }
 

@@ -1,6 +1,8 @@
 package jmri.jmrix.maple;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -43,16 +45,21 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public MapleSystemConnectionMemo getMemo() {
         return (MapleSystemConnectionMemo) memo;
     }
 
     /**
-     * Create a new sensor if all checks are passed System name is normalized to
-     * ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     *
+     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
@@ -95,7 +102,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return SerialAddress.validateSystemNameFormat(name, this, locale);
     }
 
@@ -103,7 +111,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 
@@ -156,12 +164,13 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             //Address format passed is in the form of sysNode:address or T:turnout address
             int seperator = curAddress.indexOf(":");
@@ -185,12 +194,12 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         return prefix + typeLetter() + iName;
     }
 
-    int sysNode = 0;
-    int address = 0;
-    int iName = 0;
+    private int sysNode = 0;
+    private int address = 0;
+    private int iName = 0;
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName = "";
 

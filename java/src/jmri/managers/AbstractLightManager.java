@@ -97,36 +97,36 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         systemName = validateSystemNameFormat(systemName);
 
         // return existing if there is one
-        Light s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
+        Light l;
+        if ((userName != null) && ((l = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != l) {
                 log.error("inconsistent user '{}' and system name '{}' results; user name related to {}",
-                        userName, systemName, s.getSystemName());
+                        userName, systemName, l.getSystemName());
             }
-            return s;
+            return l;
         }
-        if ((s = getBySystemName(systemName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
+        if ((l = getBySystemName(systemName)) != null) {
+            if ((l.getUserName() == null) && (userName != null)) {
+                l.setUserName(userName);
             } else if (userName != null) {
                 log.warn("Found light via system name '{}' with non-null user name '{}'",
                         systemName, userName);
             }
-            return s;
+            return l;
         }
 
         // doesn't exist, make a new one
-        s = createNewLight(systemName, userName);
+        l = createNewLight(systemName, userName);
 
         // if that failed, blame it on the input arguments
-        if (s == null) {
+        if (l == null) {
             throw new IllegalArgumentException("cannot create new light " + systemName);
         }
 
         // save in the maps
-        register(s);
+        register(l);
 
-        return s;
+        return l;
     }
 
     /**
@@ -140,7 +140,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @CheckForNull
     abstract protected Light createNewLight(
             @Nonnull String systemName,
-            @Nonnull String userName);
+            @CheckForNull String userName);
 
     /**
      * {@inheritDoc}
@@ -148,10 +148,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     public void activateAllLights() {
         // Set up an iterator over all Lights contained in this manager
-        java.util.Iterator<Light> iter
-                = getNamedBeanSet().iterator();
-        while (iter.hasNext()) {
-            Light l = iter.next();
+        for (Light l : getNamedBeanSet()) {
             log.debug("Activated Light system name is {}", l.getSystemName());
             l.activateLight();
         }

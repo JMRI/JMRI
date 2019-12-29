@@ -1,12 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrix.openlcb;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Nonnull;
 import jmri.BooleanPropertyDescriptor;
 import jmri.Light;
 import jmri.NamedBean;
@@ -34,11 +30,13 @@ public class OlcbLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
     
     @Override
+    @Nonnull
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
         l.add(new BooleanPropertyDescriptor(OlcbUtils.PROPERTY_IS_AUTHORITATIVE, OlcbLight

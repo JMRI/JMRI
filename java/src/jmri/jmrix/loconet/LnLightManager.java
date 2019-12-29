@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 
@@ -24,6 +25,7 @@ public class LnLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public LocoNetSystemConnectionMemo getMemo() {
         return (LocoNetSystemConnectionMemo) memo;
     }
@@ -55,7 +57,7 @@ public class LnLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -63,7 +65,8 @@ public class LnLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
