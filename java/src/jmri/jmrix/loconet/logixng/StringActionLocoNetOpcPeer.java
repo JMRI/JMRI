@@ -198,7 +198,9 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
         if (tc == null) return;
         
         // The length of the string to send must be a multiple of 3
-        while ((value.length() % 3) != 0) value += ' ';
+        if (value.isEmpty()) value = "   ";                 // Three spaces
+        else if (value.length() % 3 == 1) value += "  ";    // Add two spaces
+        else if (value.length() % 3 == 2) value += ' ';     // Add one space
         
         _dataToSend = value.getBytes("ISO-8859-1");
         _index = 0;
