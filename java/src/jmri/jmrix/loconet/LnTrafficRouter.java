@@ -18,17 +18,6 @@ import org.slf4j.LoggerFactory;
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
 
     /**
-     * Create a default LnTrafficRouter instance without a SystemConnectionMemo.
-     * Not compatible with multi connections.
-     *
-     * @deprecated since 4.11.6, use LnTrafficRouter(LocoNetSystemConnectionMemo) instead
-     */
-    @Deprecated
-    public LnTrafficRouter() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "LnTrafficRouter"); 
-    }
-
-    /**
      * Create a default instance connected to a given SystemConnectionMemo.
      *
      * @since 4.11.6

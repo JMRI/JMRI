@@ -661,18 +661,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 		que les utilisateurs &#233;taient susceptibles de modifier et soumettre de nouveau pour l'inclusion.
 
 		<p>
-		Mais avec Git
-		<!--
-			il n'y a pas de fa&#231;on de maintenir ceci automatiquement,
-			http://thomas-cokelaer.info/blog/2014/12/moving-from-svn-to-git-id-equivalent/
-
-		  see .git/info/attributes
-		  # see man gitattributes
-		  # expands $Id$ but not $Revision$ $Author$
-		  *.xml ident
-	      -->
-
-		il y a moins de besoin pour ces derniers.
+		Mais avec Git il y a moins de besoin pour ces derniers.
 		Donc, nous supprimons ces lignes.
 		Si lors de travaux sur un fichier vous en voyez, habituellement 
 		dans l'en t&#234;te, vous pouvez les effacer.</p>

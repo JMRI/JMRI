@@ -24,6 +24,8 @@ import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.noClasses;
  * Note that this only checks the classes in target/classes, which come from java/src, not
  * the ones in target/test-classes, which come from java/test.  It's relying on the common
  * build procedure to make this distinction.
+ * 
+ * See examples in the <a href='https://github.com/TNG/ArchUnit-Examples/tree/master/example-plain/src/test/java/com/tngtech/archunit/exampletest">ArchUnit sample code</a>.
  *
  * @author Bob Jacobsen 2019
  */
@@ -171,11 +173,22 @@ public class ArchitectureTest {
     /**
      * (Try to) confine JDOM to configurexml packages.
      * (Is this working right? Seems to not flag anything)
+     *  Probably not working because the JDOM classes are not part of initially-read set
      */
     @ArchTest // Not complete
     public static final ArchRule checkJdomOutsideConfigurexml = classes()
             .that().resideInAPackage("org.jdom2..")
             .should().onlyBeAccessed().byAnyPackage("..configurexml..");
+
+    /**
+     * (Try to) confine purejavacomm to jmri.jmrix packages.
+     * (Is this working right? Seems to not flag anything; note jmri.jmrit as a test below)
+     *  Probably not working because the purejavacomm classes are not part of initially-read set
+     */
+    @ArchTest // Not complete
+    public static final ArchRule checkPurejavacoomOutsideConfigurexml = classes()
+            .that().resideInAPackage("purejavacomm..")
+            .should().onlyBeAccessed().byAnyPackage("jmri.jmrit");
 
     /**
      * Check that *Bundle classes inherit from their parent.
