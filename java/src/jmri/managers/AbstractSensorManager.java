@@ -72,6 +72,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
      * Special handling for numeric argument, which is treated as the suffix of a new system name
     */
     @Override
+
     public Sensor getBySystemName(@Nonnull String key) {
         if (isNumber(key)) {
             key = makeSystemName(key);

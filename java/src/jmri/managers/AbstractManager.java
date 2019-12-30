@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.ConfigureManager;
@@ -163,6 +164,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
+    @CheckForNull
     public E getByUserName(@Nonnull String userName) {
         String normalizedUserName = NamedBean.normalizeUserName(userName);
         return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;

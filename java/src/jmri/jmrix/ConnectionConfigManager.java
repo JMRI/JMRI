@@ -143,6 +143,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
     }
 
     @Override
+    @Nonnull
     public Set<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
@@ -375,6 +376,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
         }
 
         @Override
+        @Nonnull
         public String[] getAvailableProtocolClasses() {
             TreeSet<String> classes = new TreeSet<>();
             this.connectionTypeLists.stream().forEach((connectionTypeList) -> {
@@ -384,6 +386,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
         }
 
         @Override
+        @Nonnull
         public String[] getManufacturers() {
             TreeSet<String> manufacturers = new TreeSet<>();
             this.connectionTypeLists.stream().forEach((connectionTypeList) -> {

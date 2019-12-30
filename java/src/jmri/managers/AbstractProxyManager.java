@@ -5,6 +5,7 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.*;
@@ -214,6 +215,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
+    @CheckReturnValue
+    @CheckForNull
     public E getBySystemName(@Nonnull String systemName) {
         // System names can be matched to managers by system and type at front of name
         int index = matchTentative(systemName);
@@ -227,6 +230,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
+    @CheckReturnValue
+    @CheckForNull
     public E getByUserName(@Nonnull String userName) {
         for (Manager<E> m : this.mgrs) {
             E b = m.getByUserName(userName);
