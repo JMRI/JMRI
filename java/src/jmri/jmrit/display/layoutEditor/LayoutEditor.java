@@ -2721,7 +2721,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         _lastX = _anchorX;
         _lastY = _anchorY;
         calcLocation(event);
-        log.warn("••••mousePressed @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
+        //log.warn("••••mousePressed @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
 
         //TODO: Add command-click on nothing to pan view?
         if (isEditable()) {
@@ -3180,7 +3180,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //initialize mouse position
         calcLocation(event);
-        log.warn("••••mouseReleased @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
+        //log.warn("••••mouseReleased @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
 
         //if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
@@ -3283,7 +3283,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 //controlling slips, in edit mode
                 LayoutSlip sl = (LayoutSlip) selectedObject;
                 sl.toggleState(selectedHitPointType);
-            } else if ((selectedObject != null) && (selectedHitPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
+            } else if ((selectedObject != null) && (LayoutTrack.isTurntableRayHitType(selectedHitPointType))
                     && allControlling() && (!isMetaDown(event) && !event.isAltDown()) && !event.isPopupTrigger()
                     && !event.isShiftDown() && !event.isControlDown()) {
                 //controlling turntable, in edit mode
@@ -3332,7 +3332,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             //controlling slip out of edit mode
             LayoutSlip sl = (LayoutSlip) selectedObject;
             sl.toggleState(selectedHitPointType);
-        } else if ((selectedObject != null) && (selectedHitPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
+        } else if ((selectedObject != null) && (LayoutTrack.isTurntableRayHitType(selectedHitPointType))
                 && allControlling() && !isMetaDown(event) && !event.isAltDown() && !event.isPopupTrigger()
                 && !event.isShiftDown() && (!delayedPopupTrigger)) {
             //controlling turntable out of edit mode
@@ -3426,7 +3426,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (findLayoutTracksHitPoint(dLoc)) {
             if (LayoutTrack.isBezierHitType(foundHitPointType)) {
                 ((TrackSegment) foundTrack).showBezierPopUp(event, foundHitPointType);
-            } else if (foundHitPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+            } else if (LayoutTrack.isTurntableRayHitType(foundHitPointType)) {
                 LayoutTurntable t = (LayoutTurntable) foundTrack;
                 if (t.isTurnoutControlled()) {
                     ((LayoutTurntable) foundTrack).showRayPopUp(event, foundHitPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
@@ -3605,7 +3605,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void mouseClicked(@Nonnull MouseEvent event) {
         //initialize mouse position
         calcLocation(event);
-        log.warn("••••mouseClicked @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
+        //log.warn("••••mouseClicked @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
 
         //if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
@@ -3759,7 +3759,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 }
 
                 default: {
-                    if (foundHitPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+                    if (LayoutTrack.isTurntableRayHitType(foundHitPointType)) {
                         LayoutTurntable tt = (LayoutTurntable) foundTrack;
                         int ray = foundHitPointType - LayoutTrack.TURNTABLE_RAY_OFFSET;
 
@@ -4336,7 +4336,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void mouseMoved(@Nonnull MouseEvent event) {
         //initialize mouse position
         calcLocation(event);
-        log.warn("••••mouseMoved @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
+        //log.warn("••••mouseMoved @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
 
         //if alt modifier is down invert the snap to grid behaviour
         snapToGridInvert = event.isAltDown();
@@ -4371,7 +4371,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     public void mouseDragged(@Nonnull MouseEvent event) {
         //initialize mouse position
         calcLocation(event);
-        log.warn("••••mouseDragged @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
+        //log.warn("••••mouseDragged @ {{}, {}}, startDelta: {}.", xLoc, yLoc, startDelta);
 
         //ignore this event if still at the original point
         if ((!isDragging) && (xLoc == getAnchorX()) && (yLoc == getAnchorY())) {
@@ -4415,7 +4415,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                         || (_layoutTrackSelection.size() > 0)
                         || (_layoutShapeSelection.size() > 0)) {
                     Point2D lastPoint = new Point2D.Double(_lastX, _lastY);
-                    Point2D offset = MathUtil.subtract(currentPoint, lastPoint);
+                    Point2D offset = MathUtil.subtract(dLoc, lastPoint);
                     Point2D newPoint;
 
                     for (Positionable c : _positionableSelection) {
@@ -4568,17 +4568,18 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                             t.reCalculateTrackSegmentAngle(currentPoint.getX(), currentPoint.getY());
                             break;
                         }
-
+                        case LayoutTrack.SHAPE_CENTER: {
+                            ((LayoutShape) selectedObject).setCoordsCenter(currentPoint);
+                            break;
+                        }
                         default: {
                             if (LayoutTrack.isBezierHitType(foundHitPointType)) {
                                 int index = selectedHitPointType - LayoutTrack.BEZIER_CONTROL_POINT_OFFSET_MIN;
                                 ((TrackSegment) selectedObject).setBezierControlPoint(currentPoint, index);
-                            } else if ((selectedHitPointType == LayoutTrack.SHAPE_CENTER)) {
-                                ((LayoutShape) selectedObject).setCoordsCenter(currentPoint);
                             } else if (LayoutShape.isShapePointOffsetHitPointType(selectedHitPointType)) {
                                 int index = selectedHitPointType - LayoutTrack.SHAPE_POINT_OFFSET_MIN;
                                 ((LayoutShape) selectedObject).setPoint(index, currentPoint);
-                            } else if (selectedHitPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+                            } else if (LayoutTrack.isTurntableRayHitType(selectedHitPointType)) {
                                 LayoutTurntable turn = (LayoutTurntable) selectedObject;
                                 turn.setRayCoordsIndexed(currentPoint.getX(), currentPoint.getY(),
                                         selectedHitPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
@@ -5103,7 +5104,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             default: {
-                if ((fromPointType >= LayoutTrack.TURNTABLE_RAY_OFFSET)
+                if ((LayoutTrack.isTurntableRayHitType(fromPointType))
                         && (toPointType == LayoutTrack.TRACK)) {
                     ((LayoutTurntable) fromObject).setRayConnect((TrackSegment) toObject,
                             fromPointType - LayoutTrack.TURNTABLE_RAY_OFFSET);
@@ -5987,7 +5988,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
 
             default: {
-                if (type >= LayoutTrack.TURNTABLE_RAY_OFFSET) {
+                if (LayoutTrack.isTurntableRayHitType(type)) {
                     ((LayoutTurntable) o).setRayConnect(null, type - LayoutTrack.TURNTABLE_RAY_OFFSET);
                 }
                 break;
