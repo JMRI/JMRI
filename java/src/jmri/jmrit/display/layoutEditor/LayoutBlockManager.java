@@ -175,18 +175,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
         return null;
     }
 
-    @CheckReturnValue
-    @CheckForNull
-    public LayoutBlock getBySystemName(@Nonnull String key) {
-        return _tsys.get(key);
-    }
-
-    @CheckReturnValue
-    @CheckForNull
-    public LayoutBlock getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
     /**
      * Find a LayoutBlock with a specified Sensor assigned as its
      * occupancy sensor.
