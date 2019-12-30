@@ -224,13 +224,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getBeanBySystemName(String systemName) {
+    public DestinationPoints getBeanBySystemName(@Nonnull String systemName) {
         return getBySystemName(systemName);
     }
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getBeanByUserName(String userName) {
+    public DestinationPoints getBeanByUserName(@Nonnull String userName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUserName(userName);
             if (pd != null) {
@@ -242,7 +242,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getNamedBean(String name) {
+    public DestinationPoints getNamedBean(@Nonnull String name) {
         DestinationPoints b = getBeanByUserName(name);
         if (b != null) {
             return b;
@@ -251,6 +251,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public SystemConnectionMemo getMemo() {
         return memo;
@@ -258,6 +259,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
@@ -270,7 +272,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public String makeSystemName(String s) {
+    @Nonnull
+    public String makeSystemName(@Nonnull String s) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
@@ -287,6 +290,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a sorted array of NX names
      */
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public String[] getSystemNameArray() {
         List<String> nxList = getEntryExitList();
@@ -302,6 +306,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
         return getEntryExitList();
@@ -313,6 +318,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a list of Destination Point beans
      */
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<DestinationPoints> getNamedBeanList() {
         List<DestinationPoints> beanList = new ArrayList<>();
@@ -331,6 +337,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a list of Destination Point beans
      */
     @Override
+    @Nonnull
     public SortedSet<DestinationPoints> getNamedBeanSet() {
         TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
         for (Source e : nxpair.values()) {
@@ -344,13 +351,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public void register(DestinationPoints n) {
+    public void register(@Nonnull DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     /** {@inheritDoc} */
     @Override
-    public void deregister(DestinationPoints n) {
+    public void deregister(@Nonnull DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
@@ -1423,11 +1430,12 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     @Override
-    public void deleteBean(DestinationPoints bean, String property) throws PropertyVetoException {
+    public void deleteBean(@Nonnull DestinationPoints bean, @Nonnull String property) throws PropertyVetoException {
 
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
     }
@@ -1456,4 +1464,5 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
+
 }

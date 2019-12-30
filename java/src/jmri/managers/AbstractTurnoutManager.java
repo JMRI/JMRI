@@ -38,6 +38,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Turnout provideTurnout(@Nonnull String name) {
         Turnout result = getTurnout(name);
         if (result == null) {
@@ -69,15 +70,15 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
-    public Turnout getByUserName(String key) {
+    public Turnout getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
-
         // add normalize? see AbstractSensor
         log.debug("newTurnout: {};{}", systemName, userName);
 
@@ -140,6 +141,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
     }
@@ -154,12 +156,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getClosedText() {
         return Bundle.getMessage("TurnoutStateClosed");
     }
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getThrownText() {
         return Bundle.getMessage("TurnoutStateThrown");
     }
@@ -217,6 +221,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String[] getValidOperationTypes() {
         if (jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class) != null) {
             return new String[]{"Sensor", "Raw", "NoFeedback"};
@@ -301,8 +306,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         }
     }
 
-    String defaultClosedSpeed = "Normal";
-    String defaultThrownSpeed = "Restricted";
+    private String defaultClosedSpeed = "Normal";
+    private String defaultThrownSpeed = "Restricted";
 
     /** {@inheritDoc} */
     @Override

@@ -70,34 +70,6 @@ public class JmriUserPreferencesManager extends Bean implements UserPreferencesM
     private final static String WINDOWS_ELEMENT = "windowDetails"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(JmriUserPreferencesManager.class);
 
-    /**
-     * Get the default UserPreferencesManager or create a new one if none
-     * exists. Load user preferences if needed.
-     *
-     * @return the default UserPreferencesManager
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with
-     * {@code UserPreferencesManager.class} as the argument instead.
-     */
-    @Deprecated
-    public static UserPreferencesManager getInstance() {
-        return JmriUserPreferencesManager.getDefault();
-    }
-
-    /**
-     * Get the default UserPreferencesManager or create a new one if none
-     * exists. Load user preferences if needed.
-     *
-     * @return the default UserPreferencesManager
-     * @deprecated since 4.9.2; use
-     * {@link jmri.InstanceManager#getDefault(java.lang.Class)} with
-     * {@code UserPreferencesManager.class} as the argument instead.
-     */
-    @Deprecated
-    public static UserPreferencesManager getDefault() {
-        return InstanceManager.getDefault(UserPreferencesManager.class);
-    }
-
     private boolean dirty = false;
     private boolean loading = false;
     private boolean allowSave;
