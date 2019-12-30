@@ -51,7 +51,7 @@ public class SchemaTestBase {
         files.addAll(getFiles(new File(path+"/invalid"), true, false));
         // also tested for load/store
         files.addAll(getFiles(new File(path+"/load"), true, true));
-        System.out.println("found "+files.size());
+
         Assert.assertTrue("There should be something here; misconfigured?", files.size() > 0);
         return files;    
     }

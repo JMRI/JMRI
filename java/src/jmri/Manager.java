@@ -701,20 +701,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
             throw new NamedBean.BadSystemNameException();
         }
 
-        // As a very special case, check for legacy prefixes - to be removed
-        // This is also quite a bit slower than the tuned implementation below
-        int p = startsWithLegacySystemPrefix(inputName);
-        if (p > 0) {
-            if (legacyNameSet.isEmpty()) {
-                // register our own shutdown
-                InstanceManager.getDefault(ShutDownManager.class)
-                        .register(legacyReportTask);
-            }
-            legacyNameSet.add(inputName);
-            return p;
-        }
-
-        // implementation for well-formed names
         int i;
         for (i = 1; i < inputName.length(); i++) {
             if (!Character.isDigit(inputName.charAt(i))) {
@@ -723,54 +709,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
         }
         return i;
     }
-
-    @Deprecated  // as part of name migration, Issue #4670
-    static Set<String> legacyNameSet = Collections.synchronizedSet(new HashSet<String>(200)); // want fast search and insert
-    @Deprecated  // as part of name migration, Issue #4670
-    static ShutDownTask legacyReportTask = new jmri.implementation.AbstractShutDownTask("Legacy Name List") {
-        @Override
-        public boolean execute() {
-            if (legacyNameSet.isEmpty()) {
-                return true;
-            }
-
-            // as an extremely ugly hack, handle the special case of
-            // Reporters-with-an-M-system letter, e.g. from MERG
-            //
-            // We couldn't do this earlier because the name might be checked
-            // before the bean is created
-            ReporterManager rm = InstanceManager.getDefault(ReporterManager.class);
-            java.util.SortedSet<String> tempSet = new java.util.TreeSet<>();
-            legacyNameSet.stream()
-                    // The legacy MR name for MRC can't do Reporters
-                    .filter((name) -> !(name.startsWith("MR") && rm.getReporter(name) != null))
-                    .forEachOrdered((name) -> {
-                tempSet.add(name);
-            });
-            if (tempSet.isEmpty()) {
-                return true;
-            }
-
-            org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Manager.class);
-            log.warn("The following legacy names need to be migrated:");
-            tempSet.forEach((name) -> {
-                log.warn("    {}", name);
-            });
-
-            // now create the legacy.csv file
-            try (java.io.PrintWriter writer = new java.io.PrintWriter(jmri.util.FileUtil.getUserFilesPath() + java.io.File.separator + "legacy_bean_names.csv");) {
-                tempSet.forEach((name) -> {
-                    writer.println(name);
-                });
-            } catch (java.io.IOException e) {
-                log.error("Failed to write legacy name file", e);
-            }
-
-            // clean up in case invoked twice
-            legacyNameSet.clear();
-            return true;
-        }
-    };
 
     /**
      * Provides the system prefix of the given system name.
@@ -788,55 +726,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     static public @Nonnull
     String getSystemPrefix(@Nonnull String inputName) throws NamedBean.BadSystemNameException {
         return inputName.substring(0, getSystemPrefixLength(inputName));
-    }
-
-    /**
-     * Indicate whether a system-prefix is one of the legacy non-parsable ones
-     * that are being removed during the JMRI 4.11 cycle.
-     *
-     * @param prefix the system prefix
-     * @deprecated 4.11.2 to make sure we remember to remove this post-migration
-     * @since 4.11.2
-     * @return true if a legacy prefix, hence non-parsable
-     */
-    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
-    @CheckReturnValue
-    public static boolean isLegacySystemPrefix(@Nonnull String prefix) {
-        return LEGACY_PREFIXES.contains(prefix);
-    }
-
-    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
-    static final TreeSet<String> LEGACY_PREFIXES = new TreeSet<>(Arrays.asList(
-            new String[]{
-                "DX", "DCCPP", "DP", "MR", "MC", "PI", "TM"
-            }));
-
-    /**
-     * If the argument starts with one of the legacy prefixes, detect that and
-     * indicate its length.
-     * <p>
-     * This is a slightly-expensive operation, and should be used sparingly
-     *
-     * @param prefix the system prefix
-     * @deprecated // 4.11.2 to make sure we remember to remove this
-     * post-migration
-     * @since 4.11.2
-     * @return length of a legacy prefix, if present, otherwise -1
-     */
-    @Deprecated // 4.11.2 to make sure we remember to remove this post-migration
-    @CheckReturnValue
-    public static int startsWithLegacySystemPrefix(@Nonnull String prefix) {
-        // implementation replies on legacy suffix length properties to gain a bit of speed...
-        if (prefix.length() < 2) {
-            return -1;
-        }
-        if (LEGACY_PREFIXES.contains(prefix.substring(0, 2))) {
-            return 2;
-        } else if (prefix.startsWith("DCCPP")) {
-            return 5;
-        } else {
-            return -1;
-        }
     }
 
     /**
