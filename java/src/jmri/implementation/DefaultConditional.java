@@ -667,15 +667,18 @@ public class DefaultConditional extends AbstractNamedBean
                             if (sname == null) {
                                 errorList.add("Conditional system name null during cancel turnout timers for "  // NOI18N
                                         + action.getDeviceName());
+                                continue; // no more processing of this one
                             }
+                            
                             Conditional c = cmg.getBySystemName(sname);
                             if (c == null) {
                                 errorList.add("Conditional null during cancel turnout timers for "  // NOI18N
                                         + action.getDeviceName());
-                            } else {
-                                c.cancelTurnoutTimer(devName);
-                                actionCount++;
+                                continue; // no more processing of this one
                             }
+                            
+                            c.cancelTurnoutTimer(devName);
+                            actionCount++;
                         }
                         break;
                     case LOCK_TURNOUT:
@@ -809,15 +812,17 @@ public class DefaultConditional extends AbstractNamedBean
                             if (sname == null) {
                                 errorList.add("Conditional system name null during cancel sensor timers for "  // NOI18N
                                         + action.getDeviceName());
+                                continue; // no more processing of this one
                             }
                             Conditional c = cm.getBySystemName(sname);
                             if (c == null) {
                                 errorList.add("Conditional null during cancel sensor timers for "  // NOI18N
                                         + action.getDeviceName());
-                            } else {
-                                c.cancelSensorTimer(devName);
-                                actionCount++;
+                                continue; // no more processing of this one
                             }
+                            
+                            c.cancelSensorTimer(devName);
+                            actionCount++;
                         }
                         break;
                     case SET_LIGHT:

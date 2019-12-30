@@ -68,18 +68,6 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public Reporter getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Reporter getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
@@ -147,7 +135,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         // Some implementations of createNewReporter() registers the bean, some
         // don't. Check if the bean is registered and register it if it isn't
         // registered.
-        if (getBeanBySystemName(systemName) == null) {
+        if (getBySystemName(systemName) == null) {
             // save in the maps
             register(r);
         }

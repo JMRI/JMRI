@@ -16,7 +16,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
       <h1>Hardware Support: Maple Systems</h1><a href=

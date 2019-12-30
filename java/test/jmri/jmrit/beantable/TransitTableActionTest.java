@@ -79,8 +79,8 @@ public class TransitTableActionTest extends AbstractTableActionBase<Transit> {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeTrue(a.includeAddButton());
         Transit t1 = InstanceManager.getDefault(jmri.TransitManager.class).createNewTransit("t1","test transit");
-        TransitSection ts1 = new TransitSection(InstanceManager.getDefault(SectionManager.class).getBeanBySystemName("TS1"),0,0);
-        TransitSection ts2 = new TransitSection(InstanceManager.getDefault(SectionManager.class).getBeanBySystemName("TS2"),0,0);
+        TransitSection ts1 = new TransitSection(InstanceManager.getDefault(SectionManager.class).getBySystemName("TS1"),0,0);
+        TransitSection ts2 = new TransitSection(InstanceManager.getDefault(SectionManager.class).getBySystemName("TS2"),0,0);
         t1.addTransitSection(ts1);
         t1.addTransitSection(ts2);
 

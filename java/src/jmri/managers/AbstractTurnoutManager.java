@@ -64,18 +64,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
-    public Turnout getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Turnout getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     @Nonnull
     public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
@@ -120,7 +108,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
         // Some implementations of createNewTurnout() register the new bean,
         // some don't. 
-        if (getBeanBySystemName(s.getSystemName()) == null) {
+        if (getBySystemName(s.getSystemName()) == null) {
             // save in the maps if successful
             register(s);
         }

@@ -116,28 +116,6 @@ public class ProxyIdTagManager extends AbstractProxyManager<IdTag>
     }
 
     /**
-     * Locate an instance based on a system name.
-     *
-     * @return requested IdTag object or null if none exists
-     */
-    @Override
-    public IdTag getBySystemName(@Nonnull String systemName) {
-        init();
-        return super.getBeanBySystemName(systemName);
-    }
-
-    /**
-     * Locate an instance based on a user name.
-     *
-     * @return requested Turnout object or null if none exists
-     */
-    @Override
-    public IdTag getByUserName(@Nonnull String userName) {
-        init();
-        return super.getBeanByUserName(userName);
-    }
-
-    /**
      * Get an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one IdTag object representing a given physical light and therefore
