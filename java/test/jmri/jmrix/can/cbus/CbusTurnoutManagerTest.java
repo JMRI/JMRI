@@ -240,8 +240,8 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         }
         Turnout t = l.provideTurnout(name.toUpperCase());
         Assert.assertNotNull(t);
-        Assert.assertNotEquals(t, l.getBeanBySystemName(name));
-        Assert.assertNull(l.getBeanBySystemName(name));
+        Assert.assertNotEquals(t, l.getBySystemName(name));
+        Assert.assertNull(l.getBySystemName(name));
     }
 
     @Test

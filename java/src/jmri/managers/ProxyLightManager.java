@@ -63,26 +63,6 @@ public class ProxyLightManager extends AbstractProxyManager<Light>
     }
 
     /**
-     * Locate an instance based on a system name.
-     *
-     * @return requested Light object or null if none exists
-     */
-    @Override
-    public Light getBySystemName(@Nonnull String systemName) {
-        return super.getBeanBySystemName(systemName);
-    }
-
-    /**
-     * Locate an instance based on a user name.
-     *
-     * @return requested Light object or null if none exists
-     */
-    @Override
-    public Light getByUserName(@Nonnull String userName) {
-        return super.getBeanByUserName(userName);
-    }
-
-    /**
      * Return an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Light object representing a given physical light and therefore

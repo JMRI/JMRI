@@ -114,39 +114,39 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
      * Get a NamedBean by its system name.
      *
      * @param systemName the system name
-     * @return the result of {@link #getBeanBySystemName(java.lang.String)}
+     * @return the result of {@link #getBySystemName(java.lang.String)}
      *         with systemName
      * @deprecated since 4.15.6; use
-     * {@link #getBeanBySystemName(java.lang.String)} instead
+     * {@link #getBySystemName(java.lang.String)} instead
      */
     @Deprecated
     protected E getInstanceBySystemName(String systemName) {
-        return getBeanBySystemName(systemName);
+        return getBySystemName(systemName);
     }
 
     /**
      * Get a NamedBean by its user name.
      *
      * @param userName the user name
-     * @return the result of {@link #getBeanByUserName(java.lang.String)} call,
+     * @return the result of {@link #getByUserName(java.lang.String)} call,
      *         with userName
      * @deprecated since 4.15.6; use
-     * {@link #getBeanByUserName(java.lang.String)} instead
+     * {@link #getByUserName(java.lang.String)} instead
      */
     @Deprecated
     protected E getInstanceByUserName(String userName) {
-        return getBeanByUserName(userName);
+        return getByUserName(userName);
     }
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanBySystemName(@Nonnull String systemName) {
+    public E getBySystemName(@Nonnull String systemName) {
         return _tsys.get(systemName);
     }
 
     /**
      * Protected method used by subclasses to over-ride the default behavior of
-     * getBeanBySystemName when a simple string lookup is not sufficient.
+     * getBySystemName when a simple string lookup is not sufficient.
      *
      * @param systemName the system name to check
      * @param comparator a Comparator encapsulating the system specific comparison behavior
@@ -163,7 +163,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanByUserName(@Nonnull String userName) {
+    public E getByUserName(@Nonnull String userName) {
         String normalizedUserName = NamedBean.normalizeUserName(userName);
         return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
@@ -173,12 +173,12 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     public E getNamedBean(@Nonnull String name) {
         String normalizedUserName = NamedBean.normalizeUserName(name);
         if (normalizedUserName != null) {
-            E b = getBeanByUserName(normalizedUserName);
+            E b = getByUserName(normalizedUserName);
             if (b != null) {
                 return b;
             }
         }
-        return getBeanBySystemName(name);
+        return getBySystemName(name);
     }
 
     /** {@inheritDoc} */
@@ -199,7 +199,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     public void register(@Nonnull E s) {
         String systemName = s.getSystemName();
 
-        E existingBean = getBeanBySystemName(systemName);
+        E existingBean = getBySystemName(systemName);
         if (existingBean != null) {
             if (s == existingBean) {
                 log.debug("the named bean is registered twice: {}", systemName);

@@ -179,7 +179,7 @@ public class JsonReporterHttpServiceTest extends JsonNamedBeanHttpServiceTestBas
         assertNotNull(manager.getReporter("IR1"));
         // will throw if prior catch failed
         service.doDelete(REPORTER, "IR1", message, locale, 0);
-        assertNull(manager.getBeanBySystemName("IR1"));
+        assertNull(manager.getBySystemName("IR1"));
         try {
             // deleting again should throw an exception
             service.doDelete(REPORTER, "IR1", NullNode.getInstance(), locale, 0);

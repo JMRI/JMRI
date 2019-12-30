@@ -167,11 +167,11 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     /** {@inheritDoc} */
     @Override
     public E getNamedBean(@Nonnull String name) {
-        E t = getBeanByUserName(name);
+        E t = getByUserName(name);
         if (t != null) {
             return t;
         }
-        return getBeanBySystemName(name);
+        return getBySystemName(name);
     }
 
     /**
@@ -214,22 +214,22 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanBySystemName(@Nonnull String systemName) {
+    public E getBySystemName(@Nonnull String systemName) {
         // System names can be matched to managers by system and type at front of name
         int index = matchTentative(systemName);
         if (index >= 0) {
             Manager<E> m = getMgr(index);
-            return m.getBeanBySystemName(systemName);
+            return m.getBySystemName(systemName);
         }
-        log.debug("getBeanBySystemName did not find manager from name {}, defer to default manager", systemName); // NOI18N
-        return getDefaultManager().getBeanBySystemName(systemName);
+        log.debug("getBySystemName did not find manager from name {}, defer to default manager", systemName); // NOI18N
+        return getDefaultManager().getBySystemName(systemName);
     }
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanByUserName(@Nonnull String userName) {
+    public E getByUserName(@Nonnull String userName) {
         for (Manager<E> m : this.mgrs) {
-            E b = m.getBeanByUserName(userName);
+            E b = m.getByUserName(userName);
             if (b != null) {
                 return b;
             }

@@ -68,25 +68,15 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Sensor getBeanBySystemName(@Nonnull String key) {
-        return this.getBySystemName(key);
-    }
-    
-    /** {@inheritDoc} */
+    /** {@inheritDoc} 
+     * Special handling for numeric argument, which is treated as the suffix of a new system name
+    */
     @Override
     public Sensor getBySystemName(@Nonnull String key) {
         if (isNumber(key)) {
             key = makeSystemName(key);
         }
         return _tsys.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Sensor getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
     }
 
     /** {@inheritDoc} */
