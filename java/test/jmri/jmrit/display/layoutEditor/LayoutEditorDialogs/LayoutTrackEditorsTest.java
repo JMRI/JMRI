@@ -51,13 +51,6 @@ public class LayoutTrackEditorsTest {
     }
 
     @Test
-    public void testBundleStrings() {
-        Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("closedString", closedString);
-        Assert.assertNotNull("thrownString", thrownString);
-    }
-
-    @Test
     public void testHasNxSensorPairsNull() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("null block NxSensorPairs", layoutTrackEditors.hasNxSensorPairs(null));

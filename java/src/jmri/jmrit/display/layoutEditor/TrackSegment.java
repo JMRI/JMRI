@@ -639,7 +639,7 @@ public class TrackSegment extends LayoutTrack {
             Point2D p, minPoint = MathUtil.zeroPoint2D;
 
             double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-            double distance, minDistance = Float.POSITIVE_INFINITY;
+            double distance, minDistance = Double.POSITIVE_INFINITY;
 
             if (isCircle()) {
                 p = getCoordsCenterCircle();
