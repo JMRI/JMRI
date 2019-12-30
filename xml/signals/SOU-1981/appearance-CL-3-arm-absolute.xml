@@ -249,7 +249,8 @@
 	<aspectMapping>
 	  <advancedAspect>Restricted Proceed</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Route Approach</ourAspect>
+	  <ourAspect>Diverging Route Approach (Medium)</ourAspect>
+	  <ourAspect>Diverging Route Approach (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
