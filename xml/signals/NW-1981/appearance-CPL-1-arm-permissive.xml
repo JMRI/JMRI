@@ -59,6 +59,12 @@
       <reference>Page 66</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-permissive/rule-291.gif</imagelink>
     </appearance>
+    
+    <appearance>
+        <aspectname>Not Lit</aspectname>
+        <show>dark</show>
+      <imagelink>../../../resources/icons/smallschematics/aspects/NW-1981/NW-CPL-1arm-permissive/notlit.gif</imagelink>
+    </appearance>
 
   </appearances>
 
