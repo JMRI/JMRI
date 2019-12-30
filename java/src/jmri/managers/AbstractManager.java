@@ -15,8 +15,6 @@ import jmri.NamedBean;
 import jmri.NamedBean.DuplicateSystemNameException;
 import jmri.NamedBeanPropertyDescriptor;
 import jmri.jmrix.SystemConnectionMemo;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Abstract partial implementation for all Manager-type classes.
@@ -702,6 +700,6 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
         return b.toString();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(AbstractManager.class);
+    private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AbstractManager.class);
 
 }
