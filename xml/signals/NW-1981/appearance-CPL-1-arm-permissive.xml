@@ -30,6 +30,12 @@
         <authorinitials>GPM</authorinitials>
         <revremark>Corrected the aspect mapping to eliminate aspects not possible on this signal.</revremark>
     </revision>
+    <revision>
+        <revnumber>3</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Add missing 'Not Lit' aspect</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>N&amp;W 1981</aspecttable>
