@@ -39,7 +39,10 @@
   <reference> As described in the
 October 1989 Burlington Northern Railroad Southern Region, Debraska Division Timetable #2. In effect at 0001 Continental Mountain Time, Sunday October 29, 1989.
   </reference>
-  <description>Appearances for a three-searchlight signal head or semaphore which are used in Automatic Block, CTC and Interlocking Systems</description>
+  <description>
+    Appearances for a three-searchlight signal head or semaphore which are used in Automatic Block, CTC and Interlocking Systems.
+    Provides an alternate Restricted Proceed appearance.
+    </description>
   
   <appearances>
 
@@ -78,7 +81,7 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
       <reference>Rule 234</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-234-a.gif</imagelink>
     </appearance>
-    
+        
     <appearance>
       <aspectname>Approach Restricting</aspectname>
       <show>yellow</show>
@@ -127,10 +130,10 @@ October 1989 Burlington Northern Railroad Southern Region, Debraska Division Tim
     <appearance>
       <aspectname>Restricted Proceed</aspectname>
       <show>red</show>
-      <show>flashred</show>
+      <show>lunar</show>
       <show>red</show>
       <reference>Rule 241</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-241-a.gif</imagelink>
+      <imagelink>../../../resources/icons/smallschematics/aspects/BN-1989/SL-3-high/rule-241-e.gif</imagelink>
     </appearance>
 
     <appearance>
