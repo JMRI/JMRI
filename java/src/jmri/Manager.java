@@ -500,6 +500,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     @CheckForNull
     @Deprecated // 4.19.1
     public default E getBeanBySystemName(@Nonnull String systemName) {
+        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanBySystemName");
         return getBySystemName(systemName);
     }
 
@@ -514,8 +515,12 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     @CheckForNull
     @Deprecated // 4.19.1
     public default E getBeanByUserName(@Nonnull String userName) {
+        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanByUserName");
         return getByUserName(userName);
     }
+
+    // needed for deprecationWarning call above
+    static final org.slf4j.Logger deprecatedManagerLogger = org.slf4j.LoggerFactory.getLogger(Manager.class);
 
     /**
      * Locate an existing instance based on a system name.
