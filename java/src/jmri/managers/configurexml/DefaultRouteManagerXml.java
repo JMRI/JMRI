@@ -494,7 +494,10 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             r.activateRoute();
         }
         if (namesChanged > 0) {
-            if (!GraphicsEnvironment.isHeadless()) {
+            // TODO: replace the System property check with an in-application mechanism
+            // for notifying users of multiple changes that can be silenced as part of
+            // normal operations
+            if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage(namesChanged > 1 ? "RouteManager.SystemNamesChanged.Message" : "RouteManager.SystemNameChanged.Message", namesChanged),
                         Bundle.getMessage("Manager.SystemNamesChanged.Title", namesChanged, tm.getBeanTypeHandled(namesChanged > 1)),
