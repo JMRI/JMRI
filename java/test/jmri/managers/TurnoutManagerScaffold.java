@@ -60,21 +60,25 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public int getObjectCount() { return -1;}    
 
     @Override
+    @Nonnull
     public java.util.List<String> getSystemNameList() {
         return null;
     }
 
     @Override
+    @Nonnull
     public java.util.List<Turnout> getNamedBeanList() {
         return null;
     }
 
     @Override
+    @Nonnull
     public java.util.SortedSet<Turnout> getNamedBeanSet() {
         return null;
     }
 
     @Override
+    @Nonnull
     public String[] getSystemNameArray() {
         return null;
     }
@@ -116,11 +120,13 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    @Nonnull
     public Class<Turnout> getNamedBeanClass() {
         return Turnout.class;
     }
 
     @Override
+    @Nonnull
     public String makeSystemName(@Nonnull String s) {
         return null;
     }

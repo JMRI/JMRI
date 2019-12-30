@@ -433,4 +433,5 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             }
         }
     }
+
 }

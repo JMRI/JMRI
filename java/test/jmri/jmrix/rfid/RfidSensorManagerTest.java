@@ -10,7 +10,9 @@ import org.junit.Test;
 import javax.annotation.Nonnull;
 
 /**
- * Tests for the jmri.jmrix.rfid.RfidSensorManager class.
+ * RfidSensorManagerTest.java
+ *
+ * Description:	tests for the jmri.jmrix.rfid.RfidSensorManager class
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
