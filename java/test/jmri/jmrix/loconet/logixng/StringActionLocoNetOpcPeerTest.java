@@ -252,7 +252,7 @@ public class StringActionLocoNetOpcPeerTest extends AbstractStringActionTestBase
         }
         Assert.assertTrue("Exception is thrown", hasThrown);
     }
-    
+/*    
     @Test
     public void testGetTopBitsByte2() {
         Assert.assertEquals("getTopBitsByte() returns correct value",
@@ -306,7 +306,7 @@ public class StringActionLocoNetOpcPeerTest extends AbstractStringActionTestBase
         Assert.assertEquals("getTopBitsByte() returns correct value",
                 0x0F, stringActionLocoNet_OPC_PEER.getTopBitsByte(0xFF,0xFF,0xFF,0xFF));
     }
-    
+*/    
     // The minimal setup for log4J
     @Before
     public void setUp() throws SocketAlreadyConnectedException {
