@@ -914,12 +914,12 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
 
         //switch to Left
-        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideLeft"), "/");
 
-        JemmyUtil.delay(500);
+        new EventTool().waitNoEvent(200);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -937,12 +937,12 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
 
         //switch to Bottom
-        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideBottom"), "/");
 
-        JemmyUtil.delay(500);
+        new EventTool().waitNoEvent(200);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -960,12 +960,12 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
 
         //switch to Right
-        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideRight"), "/");
 
-        JemmyUtil.delay(500);
+        new EventTool().waitNoEvent(200);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
@@ -983,17 +983,17 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         JMenuOperator jmo = new JMenuOperator(jfo, Bundle.getMessage("MenuOptions"));
 
         //switch to Float
-        jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"
+        jmo.pushMenuNoBlock(Bundle.getMessage("MenuOptions") + "/"
                 + Bundle.getMessage("ToolBar") + "/"
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideFloat"), "/");
 
-        JemmyUtil.delay(500);
+        new EventTool().waitNoEvent(200);
 
         // bring this window back to the front...
         jfo.activate();
 
-        JemmyUtil.delay(500);
+        new EventTool().waitNoEvent(200);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"

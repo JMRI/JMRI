@@ -26,8 +26,8 @@ public class LayoutEditorToolsTest {
     @Rule   //10 second timeout for methods in this test class.
     public Timeout globalTimeout = Timeout.seconds(10);
 
-    @Rule   //allow 4 retries of intermittent tests
-    public RetryRule retryRule = new RetryRule(4);
+    @Rule   //allow 3 retries of intermittent tests
+    public RetryRule retryRule = new RetryRule(3);
 
     private static Operator.StringComparator stringComparator;
 
