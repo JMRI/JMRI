@@ -87,14 +87,6 @@ public class OBlockManager extends AbstractManager<OBlock>
         return getBySystemName(name);
     }
 
-    public OBlock getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    public OBlock getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
     @Override
     public OBlock provide(@Nonnull String name) throws IllegalArgumentException {
         return provideOBlock(name);
