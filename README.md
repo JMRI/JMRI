@@ -14,9 +14,9 @@ Test:
 [![Test release](https://img.shields.io/github/release/JMRI/JMRI.svg)](https://www.jmri.org/download/index.shtml#test-rel)
 [![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/latest/total.svg)](https://www.jmri.org/download/index.shtml#test-rel)
 Production:
-[![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/v4.16/total.svg)](https://www.jmri.org/download/index.shtml#prod-rel)
+[![Production release](https://img.shields.io/github/downloads/JMRI/JMRI/v4.18/total.svg)](https://www.jmri.org/download/index.shtml#prod-rel)
 Total (since 9/2017):
-[![Test release](https://img.shields.io/github/downloads/JMRI/JMRI/total.svg)](https://www.jmri.org/download/index.shtml)
+[![Totals since 9/2017](https://img.shields.io/github/downloads/JMRI/JMRI/total.svg)](https://www.jmri.org/download/index.shtml)
 
 Jenkins: [![Build Status](http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/Builds&subject=Development/Builds)](http://builds.jmri.org/jenkins/job/Development/job/Builds/)
 [![Build Status](http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/Packages&subject=Development/Packages)](http://builds.jmri.org/jenkins/job/Development/job/Packages/)
