@@ -2309,8 +2309,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * translate entire layout by x and y amounts
      *
-     * @param xTranslation
-     * @param yTranslation
+     * @param xTranslation the horizontal amount to translate the layout
+     * @param yTranslation the vertical amount to translate the layout
      */
     public void translate(float xTranslation, float yTranslation) {
         //here when all numbers read in - translation if entered
