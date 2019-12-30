@@ -39,8 +39,7 @@
       and how user-readable names are used.</p>
 
       <span class="since">Since JMRI 4.7.4</span>
-        <b>As of March 2017, we have changed
-        the allowable user names: They can't have leading or trailing spaces.  
+        <b>As of March 2017, user names can not have leading or trailing spaces.  
         If leading or trailing spaces are entered, they'll be "trimmed" off.</b> 
         
       <h2>What's in a name?</h2>Why do we need names at all, rather
@@ -70,20 +69,19 @@
         <li>Aspects for signals</li>
         <li>Blocks (track segments)</li>
         <li>Conditionals (for logiX, although these are not entirely named beans)</li>
-        <li>signal mast Groups</li>
-        <li>signal Heads</li>
-        <li>signal masts (F, for some reason)</li>
-        <li>Lights (a type of output)</li>
-        <li>eNtry/exit destiNation points</li>
+        <li>Signal mast groups</li>
+        <li>Signal heads</li>
+        <li>Signal masts</li>
+        <li>Lights and other outputs</li>
+        <li>Entry/exit destination points</li>
         <li>Memories</li>
-        <li>Outputs</li>
         <li>Power districts and subdistricts</li>
         <li>Reporters</li>
-        <li>Routes (shared for historical reasons with Reporters)</li>
-        <li>input Sensors</li>
+        <li>Routes</li>
+        <li>Input sensors</li>
         <li>Turnouts</li>
         <li>logiX</li>
-        <li>Sections (Y, for some reason)</li>
+        <li>Sections</li>
         
       </ul>Some of these are associated with a specific hardware
       device, e.g. a particular turnout. Others are more virtual,
@@ -330,6 +328,10 @@
 
         <li>N eNtry/exit destination points</li>
 
+        <li>O rOutes - a tool for setting multiple Turnout states at once.
+        Prior to version 4.19.2, the "R" letter was shared between Reporters
+        and Routes.</li>
+
         <li>P Power manager i.e. layout, district, subdistrict; not
         all systems distinguish between these, so the device type
         letter doesn't either. The system-specific part of the name
@@ -341,9 +343,6 @@
         complicated information from the layout, e.g. locomotive
         identification from some transponding hardware, RFID tag
         numbers, etc.</li>
-
-        <li>R Routes - a tool for setting multiple Turnout states at once.
-        The "R" letter is shared with Reporters for historical reasons.</li>
 
         <li>S Sensors - general purpose input sensors that can
         generally be either ACTIVE or INACTIVE. This is most
