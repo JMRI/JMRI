@@ -23,7 +23,13 @@
         <date>2017-03-16</date>
         <authorinitials>GPM</authorinitials>
         <revremark>Original Edition</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Add missing 'Approach Slow' aspect definition</revremark>
+    </revision>
   </revhistory>
   
   <aspecttable>SOU 1981</aspecttable>
@@ -57,6 +63,13 @@
 	<appearance>
       <aspectname>Approach</aspectname>
       <show>yellow</show>
+      <show>red</show>
+	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-307.gif</imagelink>
+    </appearance>
+	
+	<appearance>
+      <aspectname>Approach Slow</aspectname>
+      <show>flashyellow</show>
       <show>red</show>
 	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-307.gif</imagelink>
     </appearance>
