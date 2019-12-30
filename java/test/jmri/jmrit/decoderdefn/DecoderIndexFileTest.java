@@ -19,36 +19,36 @@ import org.junit.Test;
 public class DecoderIndexFileTest {
 
     @Test
-    public void testLoading() {
+    public void testLoading() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // success here is getting to the end
     }
 
     @Test
-    public void testMfgSection() {
+    public void testMfgSection() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         // check results
         Assert.assertEquals("Digitrax ID from name ", "129", di.mfgIdFromName("Digitrax"));
-        Assert.assertEquals("NMRA ID from name ", null, di.mfgIdFromName("NMRA"));
+        Assert.assertEquals("NMRA ID from name ", "999", di.mfgIdFromName("NMRA"));
         Assert.assertEquals("Digitrax name from id ", "Digitrax", di.mfgNameFromId("129"));
     }
 
     @Test
-    public void testReadFamilySection() {
+    public void testReadFamilySection() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // check first Digitrax decoder in test tree; actually the 5th decoder (counting 2 families)
         Assert.assertEquals("1st decoder model ", "DH142", (di.decoderList.get(4)).getModel());
@@ -58,11 +58,11 @@ public class DecoderIndexFileTest {
     }
 
     @Test
-    public void testReadFamily1() {
+    public void testReadFamily1() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         // parse a single Family
         di.readFamily(family1);
         // expect to find two decoders in a single family
@@ -70,16 +70,16 @@ public class DecoderIndexFileTest {
         // check second one
         Assert.assertEquals("2nd decoder model ", "full set", (di.decoderList.get(1)).getModel());
         Assert.assertEquals("2nd decoder mfg ", "NMRA", (di.decoderList.get(1)).getMfg());
-        Assert.assertEquals("2nd decoder mfgID ", null, (di.decoderList.get(1)).getMfgID());
+        Assert.assertEquals("2nd decoder mfgID ", "999", (di.decoderList.get(1)).getMfgID());
         Assert.assertEquals("2nd decoder family ", "NMRA S&RP definitions", (di.decoderList.get(1)).getFamily());
     }
 
     @Test
-    public void testReadFamily2() {
+    public void testReadFamily2() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         // parse a single Family
         di.readFamily(family2);
         // expect to find two decoders in a single family
@@ -108,12 +108,12 @@ public class DecoderIndexFileTest {
     }
 
     @Test
-    public void testMatchingDecoderList() {
+    public void testMatchingDecoderList() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // search for the two Digitrax decoders
         List<DecoderFile> l1 = di.matchingDecoderList("Digitrax", null, null, null, null, null);
@@ -132,12 +132,12 @@ public class DecoderIndexFileTest {
     }
 
     @Test
-    public void testMatchingComboBox() {
+    public void testMatchingComboBox() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // search for the two Digitrax decoders
         JComboBox<String> l1 = di.matchingComboBox("Digitrax", null, null, null, null, null);
@@ -156,12 +156,12 @@ public class DecoderIndexFileTest {
     }
 
     @Test
-    public void testMatchingVersionRange() {
+    public void testMatchingVersionRange() throws org.jdom2.JDOMException, java.io.IOException {
         // setup the test object with guts
         DecoderIndexFile di = new DecoderIndexFile();
         setupDoc();
         // invoke parsing
-        di.readMfgSection(decoderIndexElement);
+        di.readMfgSection();
         di.readFamilySection(decoderIndexElement);
         // search for the one with various version IDs
         List<DecoderFile> l3;

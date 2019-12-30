@@ -246,16 +246,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
-    public Turnout getBeanBySystemName(@Nonnull String systemName) {
-        return null;
-    }
-
-    @Override
-    public Turnout getBeanByUserName(@Nonnull String userName) {
-        return null;
-    }
-
-    @Override
     public Turnout getNamedBean(@Nonnull String name) {
         return null;
     }

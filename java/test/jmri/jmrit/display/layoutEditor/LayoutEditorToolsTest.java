@@ -594,6 +594,9 @@ public class LayoutEditorToolsTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.initLayoutBlockManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSignalHeadManager();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
 
@@ -643,35 +646,6 @@ public class LayoutEditorToolsTest {
         }
         JUnitUtil.tearDown();
     }
-//
-//
-//    private void waitSeconds(int s) {
-//        //waits until queue has been empty for X milliseconds
-//        //new QueueTool().waitEmpty(s * 1000);
-//
-//        //wait until no event is registered for a given number of milliseconds
-//        new EventTool().waitNoEvent(s * 1000);
-//    }
-//
-//    //save screenshot of GUI
-//    private void captureScreenshot() {
-//        //grab image
-//        PNGEncoder.captureScreen(System.getProperty("user.home")
-//                + System.getProperty("file.separator")
-//                + "screen.png");
-//    }
-//
-//   //dump jemmy GUI info to xml file
-//   private void dumpToXML() {
-//        //grab component state
-//        try {
-//            Dumper.dumpAll(System.getProperty("user.home")
-//                    + System.getProperty("file.separator")
-//                    + "dump.xml");
-//
-//        } catch (FileNotFoundException e) {
-//        }
-//    }
-//
+
     //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
 }   //class LayoutEditorToolsTest

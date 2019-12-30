@@ -1,7 +1,10 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>JMRI 4.19.1 and later enforce the standard form of system names,
+                where the system is denoted by a single letter or a letter plus digits.
+                Some users of JMRI 4.18 or earlier might have incompatible values.
+                See warnings above.</li>
         </ul>
 
 	    <h4>Anyma DMX512</h4>
@@ -403,7 +406,15 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li></li>
+                <li>Improved how the XML files defining a signal system
+                    are validated.  Unfortunately, some files are already inconsistent.
+                    Fixed a number of files with invisible appearance definitions
+                    by duplicating the appearance file (i.e. adding a -b version with
+                    the different appearances).  Temporarily commented out 
+                    some of the 
+                    <a href="http://jmri.org/xml/schema/appearancetable.xsd">schema checks</a>
+                    until the existing files can be resolved.
+                    </li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -481,6 +492,15 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+                calls in the various <code>Manager<code> classes
+                are no longer needed with Java 8 and have been deprecated for eventual
+                removal.  Their replacements are 
+                <code>getByUserName<code> and <code>getBySystemName<code> 
+                respectively.
+                If you use <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+                in script or Java code you've written, please 
+                switch to the new names.
+            </li>
         </ul>
 

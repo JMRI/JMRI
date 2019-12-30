@@ -50,9 +50,6 @@
     <danger>
       <aspect>Stop</aspect>
     </danger>
-    <permissive>
-      <aspect>Restricting</aspect>
-    </permissive>
     <held>
       <aspect>Stop</aspect>
     </held>

@@ -52,26 +52,6 @@ public class ProxyReporterManager extends AbstractProxyManager<Reporter> impleme
     @Nonnull
     public Reporter provide(@Nonnull String name) throws IllegalArgumentException { return provideReporter(name); }
 
-    /**
-     * Locate an instance based on a system name.
-     *
-     * @return requested Reporter object or null if none exists
-     */
-    @Override
-    public Reporter getBySystemName(@Nonnull String sName) {
-        return super.getBeanBySystemName(sName);
-    }
-
-    /**
-     * Locate an instance based on a user name.
-     *
-     * @return requested Reporter object or null if none exists
-     */
-    @Override
-    public Reporter getByUserName(@Nonnull String userName) {
-        return super.getBeanByUserName(userName);
-    }
-
     @Override
     public Reporter getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.

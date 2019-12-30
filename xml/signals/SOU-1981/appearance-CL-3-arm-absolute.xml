@@ -245,6 +245,7 @@
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
+	<!-- The following references the "Restricted Proceed" aspect, which is undefined here-->
 	<aspectMapping>
 	  <advancedAspect>Restricted Proceed</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
