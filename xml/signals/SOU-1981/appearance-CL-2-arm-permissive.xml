@@ -23,7 +23,13 @@
         <date>2017-03-16</date>
         <authorinitials>GPM</authorinitials>
         <revremark>Original Edition</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Correct specificaspects 'danger' and 'held'; remove mast's unsupported aspects from aspecttable.</revremark>
+    </revision>
   </revhistory>
   
   <aspecttable>SOU 1981</aspecttable>
