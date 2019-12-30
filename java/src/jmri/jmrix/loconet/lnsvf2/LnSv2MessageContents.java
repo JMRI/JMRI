@@ -636,7 +636,7 @@ public class LnSv2MessageContents {
     
     public int getDestAddr() {
         if (sv_cmd != Sv2Command.SV2_DISCOVER_ALL.cmd) {
-            return dst_l + 246*dst_h;
+            return dst_l + 256*dst_h;
         }
         return -1;
     }

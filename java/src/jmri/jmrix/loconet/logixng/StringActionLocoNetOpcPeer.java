@@ -17,9 +17,11 @@ import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.string.actions.AbstractStringAction;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LnTrafficController;
+import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents;
+import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +44,8 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Daniel Bergqvist Copyright 2018
  */
-public class StringActionLocoNetOpcPeer extends AbstractStringAction {
+public class StringActionLocoNetOpcPeer extends AbstractStringAction
+        implements LocoNetListener {
 //        implements VetoableChangeListener {
 
 //    private NamedBeanHandle<Memory> _memoryHandle;
@@ -59,13 +62,13 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     private LocoNetSystemConnectionMemo lm;
     private LnTrafficController tc;
     
-    private String _stringToSend;
+//    private String _stringToSend;
     private int _index = -1;    // Index in string to send. -1 if not sending.
     private int _sourceAddress = 0x00;
     private int _destAddress = 256;         // FIX LATER !!!
     private int _sv_address = 20;           // FIX LATER !!!
     private byte[] _dataToSend;
-    private int _numCharsToSend = 8;        // This MUST be a multiple of 3.
+//    private int _numCharsToSend = 8;        // This MUST be a multiple of 3.
     
     public StringActionLocoNetOpcPeer(String sys, String user) {
         super(sys, user);
@@ -141,7 +144,7 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     public NamedBeanHandle<Memory> getMemory() {
         return _memoryHandle;
     }
-*/    
+*./    
     // This method is protected to be able to test it from the
     // StringActionLocoNet_OPC_PEERTest class
     protected int getTopBitsByte(long destAddr, long svAddr) {
@@ -164,7 +167,7 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
                     + ((D1 & 0x80) >> (7-0))
                 );
     }
-    
+*/    
     private void sendString() {
         if (_dataToSend != null && _index < _dataToSend.length) {
             
@@ -176,25 +179,38 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
             
             LocoNetMessage l;
             
-            if ("Hej".equals(_stringToSend))
-                l = LnSv2MessageContents.createSvDiscoverQueryMessage();
+            int D1 = 32;    // 32 is space
+            int D2 = 32;
+            int D3 = 32;
+            
+            if (_dataToSend.length > _index) D1 = _dataToSend[_index];
+            if (_dataToSend.length > _index+1) D2 = _dataToSend[_index+1];
+            if (_dataToSend.length > _index+2) D3 = _dataToSend[_index+2];
+//            if ("Hej".equals(_stringToSend))
+//                l = LnSv2MessageContents.createSvDiscoverQueryMessage();
 //            LocoNetMessage l = LnSv2MessageContents.createSvDiscoverQueryMessage();
-            else
+//            else
 //            LocoNetMessage l = LnSv2MessageContents.createSv2Message(
             l = LnSv2MessageContents.createSv2Message(
                     _sourceAddress,
                     LnSv2MessageContents.SV_CMD_WRITE_FOUR,
                     _destAddress,
                     _sv_address,
-                    _dataToSend[_index],
-                    _dataToSend[_index+1],
-                    _dataToSend[_index+2],
+                    D1,
+                    D2,
+                    D3,
                     lengthByte
             );
             
+            System.out.format("Send LocoNet message: %s%n", l.toString());
+            
+//            ThreadingUtil.runOnGUIEventually(() -> {
+//                tc.sendLocoNetMessage(l);
+//            });
             tc.sendLocoNetMessage(l);
-            _index += 4;
-            if (_index >= _numCharsToSend) _index = -1;
+            _index += 3;
+            if (_index >= _dataToSend.length) _index = -1;
+//            if (_index >= _numCharsToSend) _index = -1;
         }
     }
     
@@ -205,11 +221,11 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
         if (tc == null) return;
         
         // The length of the string to send must be a multiple of 3
-        if (value.isEmpty()) value = "   ";                 // Three spaces
-        else if (value.length() % 3 == 1) value += "  ";    // Add two spaces
-        else if (value.length() % 3 == 2) value += ' ';     // Add one space
+//        if (value.isEmpty()) value = "   ";                 // Three spaces
+//        else if (value.length() % 3 == 1) value += "  ";    // Add two spaces
+//        else if (value.length() % 3 == 2) value += ' ';     // Add one space
         
-        _stringToSend = value;
+//        _stringToSend = value;
         _dataToSend = value.getBytes("ISO-8859-1");
         _index = 0;
         sendString();
@@ -290,6 +306,7 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
         lm = list.get(0);
         
         tc = lm.getLnTrafficController();
+        tc.addLocoNetListener(~0, this);
     }
     
     /** {@inheritDoc} */
@@ -308,5 +325,28 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction {
     }
     
 //    private final static Logger log = LoggerFactory.getLogger(StringActionLocoNetOpcPeer.class);
+
+    @Override
+    public void message(LocoNetMessage msg) {
+        System.out.format("Receive LocoNet message: %s, %s%n", msg.toString(), msg.getClass().getName());
+        
+        // We don't care if we don't have anything to send.
+        if (_index == -1) return;
+        
+        if (msg.getOpCode() == LnConstants.OPC_PEER_XFER) {
+            System.out.format("aaa%n");
+            LnSv2MessageContents lnSV2Message = new LnSv2MessageContents(msg);
+            System.out.format("Receive LocoNet message: %d, %d - %d, %d%n", lnSV2Message.getDestAddr(), _destAddress, lnSV2Message.getSVNum(), _sv_address);
+            if (lnSV2Message.getDestAddr() == _destAddress
+                    && lnSV2Message.getSVNum() == _sv_address) {
+                
+                System.out.format("bbb%n");
+                
+                // If the highest bit of D4 is set, we are finished.
+                if (lnSV2Message.getSv2D4() >= 0x80) _index = -1;
+                else sendString();
+            }
+        }
+    }
 
 }
