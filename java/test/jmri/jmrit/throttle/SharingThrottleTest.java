@@ -1,11 +1,12 @@
 package jmri.jmrit.throttle;
 
 import java.awt.GraphicsEnvironment;
-import jmri.InstanceManager;
 import jmri.DccLocoAddress;
+import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
 import org.junit.*;
+import org.netbeans.jemmy.EventTool;
 
 /**
  * Test sharing functionality of ThrottleFrame
@@ -31,12 +32,12 @@ public class SharingThrottleTest {
 
         // because of the throttle manager we are using, a steal
         // request is expected next, and we want to steal.
-        to.answerShareQuestion(true); 
+        to.answerShareQuestion(true);
 
         Assert.assertEquals("address set",new DccLocoAddress(42,false),
 		                    to.getAddressValue());
 
-        to.pushReleaseButton();	
+        to.pushReleaseButton();
     }
 
     @Test
@@ -48,8 +49,8 @@ public class SharingThrottleTest {
 
         // because of the throttle manager we are using, a share
         // request is expected next, and we do not want to share.
-        to.answerShareQuestion(false); 
- 
+        to.answerShareQuestion(false);
+
         Assert.assertFalse("release button disabled",to.releaseButtonEnabled());
         Assert.assertTrue("set button enabled",to.setButtonEnabled());
     }
@@ -63,8 +64,8 @@ public class SharingThrottleTest {
 
         // because of the throttle manager we are using, a share
         // request is expected next, and we do not want to share.
-        to.answerShareQuestion(false); 
- 
+        to.answerShareQuestion(false);
+
         Assert.assertFalse("release button disabled",to.releaseButtonEnabled());
         Assert.assertTrue("set button enabled",to.setButtonEnabled());
 
@@ -73,12 +74,12 @@ public class SharingThrottleTest {
 
         // because of the throttle manager we are using, a share
         // request is expected next, and we want to share.
-        to.answerShareQuestion(true); 
+        to.answerShareQuestion(true);
 
         Assert.assertEquals("address set",new DccLocoAddress(4245,true),
 		                    to.getAddressValue());
 
-        to.pushReleaseButton();	
+        to.pushReleaseButton();
     }
 
 
@@ -90,7 +91,7 @@ public class SharingThrottleTest {
         // these tests use the SharingThrottleManager.
         jmri.ThrottleManager m = new jmri.managers.SharingThrottleManager();
         jmri.InstanceManager.setThrottleManager(m);
-        
+
 	    if(!GraphicsEnvironment.isHeadless()){
            frame = new ThrottleWindow();
            panel = new ThrottleFrame(frame);
@@ -104,7 +105,7 @@ public class SharingThrottleTest {
     public void tearDown() {
 	if(!GraphicsEnvironment.isHeadless()){
 	   to.requestClose();
-           new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+           new EventTool().waitNoEvent(100);  //pause for frame to close
            JUnitUtil.dispose(frame);
            // the throttle list frame gets created above, but needs to be shown to be disposed
            InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();

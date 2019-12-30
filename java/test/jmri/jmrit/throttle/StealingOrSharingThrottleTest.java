@@ -148,7 +148,7 @@ public class StealingOrSharingThrottleTest {
     public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
             to.requestClose();
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+            to.waitClosed();
             JUnitUtil.dispose(frame);
             // the throttle list frame gets created above, but needs to be shown to be disposed
             InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();

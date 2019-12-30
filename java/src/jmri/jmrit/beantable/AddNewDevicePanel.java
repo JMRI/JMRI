@@ -74,7 +74,7 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
         sysName.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent a) {
-                if (sysName.getText().length() > 0) {
+                if (!sysName.getText().isEmpty()) {
                     setOK();
                 }
             }

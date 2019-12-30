@@ -13,13 +13,11 @@ import jmri.jmrix.internal.InternalTurnoutManager;
 import jmri.swing.ManagerComboBox;
 import jmri.util.JUnitUtil;
 import org.junit.*;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
+import org.netbeans.jemmy.util.NameComponentChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTableOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
  * Tests for the jmri.jmrit.beantable.TurnoutTableAction class.
@@ -107,9 +105,9 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
 
         // Open Speed pane to test Speed menu, which displays a JOptionPane
         log.debug("Speed pane started at " + java.time.LocalTime.now()); // debug
-        JFrameOperator main = new JFrameOperator(Bundle.getMessage("TitleTurnoutTable")); 
+        JFrameOperator main = new JFrameOperator(Bundle.getMessage("TitleTurnoutTable"));
         // Use GUI menu to open Speeds pane:
-	
+
 	//This is a modal JOptionPane, so create a thread to dismiss it.
 	Thread t = new Thread(() -> {
             try {
@@ -131,7 +129,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         jmio.pushNoBlock();
 
         // wait for the dismiss thread to finish
-        JUnitUtil.waitFor(()-> { return !t.isAlive(); 
+        JUnitUtil.waitFor(()-> { return !t.isAlive();
                   }, "Dismiss Default Speeds Thread finished");
 
         // clean up
@@ -174,7 +172,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
@@ -183,9 +181,9 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         // set to "1"
         new JTextFieldOperator(hwAddressField).typeText("1");
 
-        //and press create 
+        //and press create
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
@@ -221,7 +219,7 @@ public class TurnoutTableActionTest extends AbstractTableActionBase<Turnout> {
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalTurnoutManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        helpTarget = "package.jmri.jmrit.beantable.TurnoutTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.TurnoutTable";
         a = new TurnoutTableAction();
     }
 

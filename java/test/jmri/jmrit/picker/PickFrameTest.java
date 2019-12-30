@@ -17,23 +17,30 @@ public class PickFrameTest extends JmriJFrameTestBase {
     public void testAddNames() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         PickFrame f = new PickFrame("Pick Frame Test Adds");
-        Assert.assertNotNull("exists",f);
+        Assert.assertNotNull("exists", f);
         JFrameOperator jfo = new JFrameOperator("Pick Frame Test Adds");
-        Assert.assertNotNull(jfo);
 
         JTabbedPaneOperator jtab = new JTabbedPaneOperator(jfo);
+        //jtab.selectPage(Bundle.getMessage("TitleSensorTable"));   //TODO: why doesn't this work?
         jtab.selectPage("Sensor Table");
+
+        //JButtonOperator jbo = new JButtonOperator(jfo,
+        //        Bundle.getMessage("addToTable"));   //TODO: why doesn't this work?
+        JButtonOperator jbo = new JButtonOperator(jfo, "Add to Table");
 
         // Add an invalid name
         JTextFieldOperator jto = new JTextFieldOperator(jfo, 0);
         jto.enterText("AAA");
-        Thread add1 = JemmyUtil.createModalDialogOperatorThread(Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
-        new JButtonOperator(jfo, "Add to Table").doClick();  // NOI18N
-        JUnitUtil.waitFor(()->{return !(add1.isAlive());}, "add1 finished");  // NOI18N
+        Thread add1 = JemmyUtil.createModalDialogOperatorThread(
+                Bundle.getMessage("WarningTitle"), Bundle.getMessage("ButtonOK"));  // NOI18N
+        jbo.doClick();
+        JUnitUtil.waitFor(() -> {
+            return !(add1.isAlive());
+        }, "add1 finished");  // NOI18N
 
         // Add a valid name
         jto.enterText("IS123");
-        new JButtonOperator(jfo, "Add to Table").doClick();  // NOI18N
+        jbo.doClick();
 
         // Switch to the signal mast table
         jtab.selectPage("Signal Mast Table");
@@ -63,9 +70,9 @@ public class PickFrameTest extends JmriJFrameTestBase {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
-        if(!GraphicsEnvironment.isHeadless()){
-           frame = new PickFrame("Pick Frame Test");
-	}
+        if (!GraphicsEnvironment.isHeadless()) {
+            frame = new PickFrame("Pick Frame Test");
+        }
     }
 
     @After

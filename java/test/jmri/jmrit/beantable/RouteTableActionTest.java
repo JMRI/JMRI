@@ -1,13 +1,12 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
-
 import javax.swing.JFrame;
-
 import jmri.Route;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -99,11 +98,11 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         //enable "Auto System Name" via checkbox
         JCheckBoxOperator jcbo = new JCheckBoxOperator(jf,Bundle.getMessage("LabelAutoSysName"));
         jcbo.doClick();
-        
+
         //press create button to create a Route, then close the create window
         jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
         jf.requestClose();
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
 
         // press "Edit" button, which is the last column (no heading), to open the Edit Route window
         JTableOperator tbl = new JTableOperator(jfo);
@@ -115,21 +114,21 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         //username field is the first field in window
         JTextFieldOperator jtxt = new JTextFieldOperator(jf, 0);
         jtxt.clickMouse();
-        jtxt.setText("TestRouteUserName");      
-        
+        jtxt.setText("TestRouteUserName");
+
         //press Update to save the Route change
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonUpdate"));
 
         //press Cancel to close the Edit window
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
-        
+
         //retrieve the expected route for verification
         Route chkRoute = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("IR:AUTO:0001");  // NOI18N
         Assert.assertEquals("Verify no additional routes were created", 1, tbl.getRowCount());  // NOI18N
         Assert.assertNotNull("Verify IR:AUTO:0001 Added", chkRoute);  // NOI18N
         Assert.assertEquals("Verify system name didn't change", "IR:AUTO:0001", chkRoute.getSystemName());  // NOI18N
         Assert.assertEquals("Verify user name is TestRouteUserName", "TestRouteUserName", chkRoute.getUserName());  // NOI18N
-        
+
         JUnitUtil.dispose(f2);
         JUnitUtil.dispose(f1);
         JUnitUtil.dispose(f);
@@ -162,7 +161,7 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        helpTarget = "package.jmri.jmrit.beantable.RouteTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.RouteTable";
         a = new RouteTableAction();
     }
 

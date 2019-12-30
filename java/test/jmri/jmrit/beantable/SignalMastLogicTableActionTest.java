@@ -76,9 +76,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
 
         a.actionPerformed(null);
         JFrame f = JFrameOperator.waitJFrame(Bundle.getMessage("TitleSignalMastLogicTable"), true, true);
-        Assert.assertNotNull("found frame", f);
 
-        //new org.netbeans.jemmy.QueueTool().waitEmpty();
         JFrameOperator jfo = new JFrameOperator(f);
         JTableOperator tbl = new JTableOperator(jfo, 0);
 
@@ -264,7 +262,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase<Sign
     public void setUp() {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
-        helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.SignalMastLogicTable";
         a = new SignalMastLogicTableAction();
     }
 

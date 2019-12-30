@@ -8,6 +8,7 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.util.JUnitUtil;
 import org.junit.*;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
 import org.slf4j.Logger;
@@ -111,7 +112,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
 
         // find the "Add... " button and press it.
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonClose")); // not sure why this is close in this frame.
         JUnitUtil.dispose(f1);
@@ -129,7 +130,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         jmri.util.swing.JemmyUtil.pressButton(jfo,Bundle.getMessage("ButtonAdd"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
@@ -137,9 +138,9 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
 
         // set to "1"
         new JTextFieldOperator(hwAddressField).typeText("1");
-        //and press create 
+        //and press create
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f1),Bundle.getMessage("ButtonCreate"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
 
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
@@ -165,7 +166,7 @@ public class SensorTableActionTest extends AbstractTableActionBase<Sensor> {
         JUnitUtil.setUp();
         jmri.util.JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
-        helpTarget = "package.jmri.jmrit.beantable.SensorTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.SensorTable";
         a = new SensorTableAction();
     }
 

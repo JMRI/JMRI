@@ -4,18 +4,15 @@ import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 import jmri.InstanceManager;
 import jmri.Logix;
-
 import jmri.util.*;
-import jmri.util.junit.rules.*;
 import jmri.util.junit.annotations.*;
+import jmri.util.junit.rules.*;
 import jmri.util.swing.JemmyUtil;
-
 import org.junit.*;
 import org.junit.rules.*;
-
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 
@@ -155,7 +152,7 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
         Assert.assertNotNull("Found Logix Frame", lgxFrame);  // NOI18N
 
         lgxTable.addPressed(null);
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrameOperator addFrame = new JFrameOperator(Bundle.getMessage("TitleAddLogix"));  // NOI18N
         Assert.assertNotNull("Found Add Logix Frame", addFrame);  // NOI18N
 
@@ -231,7 +228,7 @@ public class LogixTableActionTest extends AbstractTableActionBase<Logix> {
         InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX103", "Logix 103");
         InstanceManager.getDefault(jmri.LogixManager.class).createNewLogix("IX104", "Logix 104");
 
-        helpTarget = "package.jmri.jmrit.beantable.LogixTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.LogixTable";
         a = new LogixTableAction();
     }
 

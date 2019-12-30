@@ -4,13 +4,12 @@ import java.awt.GraphicsEnvironment;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.EventTool;
 
 /**
  * Swing tests for the OBlock table.
@@ -30,14 +29,14 @@ public class OBlockTableActionTest {
         // Find new table window by name
         JmriJFrame doc = JmriJFrame.getFrame(jmri.jmrit.beantable.oblock.Bundle.getMessage("TitleOBlocks"));
         Assert.assertNotNull("Occupancy window", doc);
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
 
         javax.swing.JDesktopPane dt = (javax.swing.JDesktopPane) doc.getContentPane();
         javax.swing.JInternalFrame[] fob = dt.getAllFrames();
         Assert.assertNotNull("OBlock window", fob);
 
         Assert.assertEquals(4, fob.length);
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         // Ask to close add window
         ThreadingUtil.runOnGUI(() -> {
             doc.setVisible(false);

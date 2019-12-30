@@ -14,7 +14,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.EventTool;
 
 /**
  * Test simple functioning of BlockContentsIcon
@@ -46,11 +46,11 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         jmri.jmrit.roster.RosterEntry re = jmri.jmrit.roster.RosterEntry.fromFile(new java.io.File("java/test/jmri/jmrit/roster/ACL1012-Schema.xml"));
 
         jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(re);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
 
         jf.setVisible(false);
@@ -71,11 +71,11 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         jmri.IdTag tag = new jmri.implementation.DefaultIdTag("1234");
 
         jmri.InstanceManager.getDefault(BlockManager.class).getBlock("IB1").setValue(tag);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
 
         jf.pack();
         jf.setVisible(true);
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertFalse("No Warn Level or higher Messages",JUnitAppender.unexpectedMessageSeen(Level.WARN));
         Assert.assertNotNull("Label with correct text value",jmri.util.swing.JemmyUtil.getLabelWithText(jf.getTitle(),tag.getDisplayName()));
 
@@ -96,7 +96,7 @@ public class BlockContentsIconTest extends PositionableLabelTest {
         p.setScale(5.0D);
         Assert.assertEquals("Scale",5.0D,p.getScale(),0.0);
     }
-    
+
     @Test
     @Override
     @ToDo("The test in the parent class fails if there is no icon set")

@@ -30,12 +30,12 @@ public class StealingThrottleTest {
 
         // because of the throttle manager we are using, a steal
         // request is expected next, and we want to steal.
-        to.answerStealQuestion(true); 
+        to.answerStealQuestion(true);
 
         Assert.assertEquals("address set",new DccLocoAddress(42,false),
 		                    to.getAddressValue());
 
-        to.pushReleaseButton();	
+        to.pushReleaseButton();
     }
 
     @Test
@@ -47,8 +47,8 @@ public class StealingThrottleTest {
 
         // because of the throttle manager we are using, a steal
         // request is expected next, and we do not want to steal.
-        to.answerStealQuestion(false); 
- 
+        to.answerStealQuestion(false);
+
         Assert.assertFalse("release button disabled",to.releaseButtonEnabled());
         Assert.assertTrue("set button enabled",to.setButtonEnabled());
     }
@@ -62,8 +62,8 @@ public class StealingThrottleTest {
 
         // because of the throttle manager we are using, a steal
         // request is expected next, and we do not want to steal.
-        to.answerStealQuestion(false); 
- 
+        to.answerStealQuestion(false);
+
         Assert.assertFalse("release button disabled",to.releaseButtonEnabled());
         Assert.assertTrue("set button enabled",to.setButtonEnabled());
 
@@ -72,12 +72,12 @@ public class StealingThrottleTest {
 
         // because of the throttle manager we are using, a steal
         // request is expected next, and we want to steal.
-        to.answerStealQuestion(true); 
+        to.answerStealQuestion(true);
 
         Assert.assertEquals("address set",new DccLocoAddress(4245,true),
 		                    to.getAddressValue());
 
-        to.pushReleaseButton();	
+        to.pushReleaseButton();
     }
 
 
@@ -89,7 +89,7 @@ public class StealingThrottleTest {
         // these tests use the StealingThrottleManager.
         jmri.ThrottleManager m = new jmri.managers.StealingThrottleManager();
         jmri.InstanceManager.setThrottleManager(m);
-        
+
 	    if(!GraphicsEnvironment.isHeadless()){
            frame = new ThrottleWindow();
            panel = new ThrottleFrame(frame);
@@ -101,13 +101,13 @@ public class StealingThrottleTest {
 
     @After
     public void tearDown() {
-	if(!GraphicsEnvironment.isHeadless()){
-	   to.requestClose();
-           new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
-           JUnitUtil.dispose(frame);
-           // the throttle list frame gets created above, but needs to be shown to be disposed
-           InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
-           JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
+        if(!GraphicsEnvironment.isHeadless()){
+            to.requestClose();
+            to.waitClosed(); //make sure the frame closed
+            JUnitUtil.dispose(frame);
+            // the throttle list frame gets created above, but needs to be shown to be disposed
+            InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();
+            JUnitUtil.disposeFrame(Bundle.getMessage("ThrottleListFrameTile"), true, true);
         }
         panel = null;
 	    frame = null;

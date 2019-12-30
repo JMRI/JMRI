@@ -10,6 +10,7 @@ import jmri.Turnout;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
 import org.junit.*;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -109,7 +110,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
 
         // find the "Add... " button and press it.
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonAdd"));
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
 	    //Enter 1 in the text field labeled "System Name:"
@@ -136,13 +137,13 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         JFrameOperator jf = new JFrameOperator(f1);
 	//Enter 1 in the text field labeled "System Name:"
-	   
+
         JLabelOperator jlo = new JLabelOperator(jf,Bundle.getMessage("LabelSystemName"));
         ((JTextField)jlo.getLabelFor()).setText("1");
 	//and press create
 	jmri.util.swing.JemmyUtil.pressButton(jf,Bundle.getMessage("ButtonCreate"));
 
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
 	// find the "Edit" button and press it.  This may be in the table body.
 	jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f),Bundle.getMessage("ButtonEdit"));
         JFrame f2 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
@@ -160,7 +161,7 @@ public class SignalGroupTableActionTest extends AbstractTableActionBase<SignalGr
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         jmri.util.JUnitUtil.initDefaultUserMessagePreferences();
-        helpTarget = "package.jmri.jmrit.beantable.SignalGroupTable"; 
+        helpTarget = "package.jmri.jmrit.beantable.SignalGroupTable";
         a = new SignalGroupTableAction();
     }
 

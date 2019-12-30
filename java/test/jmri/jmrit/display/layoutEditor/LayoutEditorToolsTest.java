@@ -12,7 +12,7 @@ import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.rules.Timeout;
-import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
 
 /**
@@ -75,7 +75,7 @@ public class LayoutEditorToolsTest {
     @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        
+
         //create a new Layout Turnout
         layoutTurnout = new LayoutTurnout("Right Hand",
                 LayoutTurnout.RH_TURNOUT, new Point2D.Double(150.0, 100.0),
@@ -492,12 +492,12 @@ public class LayoutEditorToolsTest {
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
         let.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
     }
 
@@ -512,12 +512,12 @@ public class LayoutEditorToolsTest {
         let.setSignalHeadOnPanel(0.D, "IH1", point);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
         let.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
     }
 
@@ -531,12 +531,12 @@ public class LayoutEditorToolsTest {
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
         let.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
     }
 
@@ -621,7 +621,7 @@ public class LayoutEditorToolsTest {
                 sName = "IS" + i;
                 uName = "sensor " + i;
                 sensors[i] = InstanceManager.getDefault(SensorManager.class).newSensor(sName, uName);
-                //TODO: don't do this here because he have to test the failure cases 
+                //TODO: don't do this here because he have to test the failure cases
                 //(no sensor assigned to block) first
                 //layoutBlocks[i].setOccupancySensorName(uName);
             }
@@ -643,35 +643,6 @@ public class LayoutEditorToolsTest {
         }
         JUnitUtil.tearDown();
     }
-//
-//
-//    private void waitSeconds(int s) {
-//        //waits until queue has been empty for X milliseconds
-//        //new QueueTool().waitEmpty(s * 1000);
-//
-//        //wait until no event is registered for a given number of milliseconds
-//        new EventTool().waitNoEvent(s * 1000);
-//    }
-//
-//    //save screenshot of GUI
-//    private void captureScreenshot() {
-//        //grab image
-//        PNGEncoder.captureScreen(System.getProperty("user.home")
-//                + System.getProperty("file.separator")
-//                + "screen.png");
-//    }
-//
-//   //dump jemmy GUI info to xml file
-//   private void dumpToXML() {
-//        //grab component state
-//        try {
-//            Dumper.dumpAll(System.getProperty("user.home")
-//                    + System.getProperty("file.separator")
-//                    + "dump.xml");
-//
-//        } catch (FileNotFoundException e) {
-//        }
-//    }
-//
+
     //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
 }   //class LayoutEditorToolsTest

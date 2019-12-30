@@ -15,7 +15,7 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JLabelOperator;
@@ -119,7 +119,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 1 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
@@ -129,11 +129,11 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         new JTextFieldOperator(hwAddressField).setText("1");
         //and press create
         JemmyUtil.pressButton(new JFrameOperator(f1), Bundle.getMessage("ButtonCreate"));
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JTableOperator tbl = new JTableOperator(jfo, 0);
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
         JemmyUtil.pressButton(new JFrameOperator(f2), Bundle.getMessage("ButtonCancel"));
         JUnitUtil.dispose(f2);
@@ -162,7 +162,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 1234 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
@@ -205,7 +205,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
 
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
         JFrameOperator jfoce = new JFrameOperator(f2);
         JTableOperator controltbl = new JTableOperator(jfoce, 0);
@@ -263,7 +263,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 4321 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
@@ -304,7 +304,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
 
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
 
         JFrameOperator jfoce = new JFrameOperator(f2);
@@ -342,7 +342,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
 
         // now we edit the control then cancel the edit
         tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f4 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
 
         JFrameOperator jfocef4 = new JFrameOperator(f4);
@@ -363,43 +363,43 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         new JTextFieldOperator(jfof5, 1).setText("02");
         new JTextFieldOperator(jfof5, 2).setText("01");
         new JTextFieldOperator(jfof5, 3).setText("02");
-        
+
         JemmyUtil.pressButton(jfof5, Bundle.getMessage("ButtonUpdate"));
         // light control edit frame does not close as the on and off times are the same
-        
+
         checkEditLightFeedback( Bundle.getMessage("LightWarn11"), jfocef4);
-        
+
         new JTextFieldOperator(jfof5, 2).setText("03");
         new JTextFieldOperator(jfof5, 3).setText("04");
-        
+
         JemmyUtil.pressButton(jfof5, Bundle.getMessage("ButtonUpdate"));
         // light control edit frame closes
-        
+
         // now attempt to create a new Light Control with the same time
-        
+
         JemmyUtil.pressButton(jfocef4, Bundle.getMessage("LightAddControlButton"));
         fControl = JFrameOperator.waitJFrame(Bundle.getMessage("TitleAddLightControl"), true, true);
         jfoc = new JFrameOperator(fControl);
-        
+
         new JComboBoxOperator(jfoc, 0).setSelectedItem(Bundle.getMessage("LightFastClockControl"));
-        
+
         new JTextFieldOperator(jfoc, 0).setText("03");
         new JTextFieldOperator(jfoc, 1).setText("04");
         new JTextFieldOperator(jfoc, 2).setText("01");
         new JTextFieldOperator(jfoc, 3).setText("02");
-        
+
         JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
         // light control edit frame does not close as the on and off times are the same
-        
+
         checkEditLightFeedback( Bundle.getMessage("LightWarn12"), jfocef4);
-        
+
         new JTextFieldOperator(jfoc, 0).setText("05");
         new JTextFieldOperator(jfoc, 1).setText("06");
         new JTextFieldOperator(jfoc, 2).setText("07");
         new JTextFieldOperator(jfoc, 3).setText("08");
-        
+
         JemmyUtil.pressButton(jfoc, Bundle.getMessage("ButtonCreate"));
-        
+
         checkEditLightFeedback( Bundle.getMessage("LightUpdateInst"), jfocef4);
 
         // now we click cancel on the edit light and ensure changes from the edited control are not passed
@@ -412,7 +412,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JUnitUtil.dispose(f);  // close Light Table window
 
     }
-    
+
     @Test
     public void testAddEditTurnoutLightControl() throws jmri.JmriException {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -430,7 +430,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 333 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
@@ -465,7 +465,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
 
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
         // JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         JFrameOperator jfoce = new JFrameOperator(f2);
@@ -494,7 +494,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         JemmyUtil.pressButton(jfoce, Bundle.getMessage("ButtonUpdate"));
         // light edit frame closes
 
-        // confirm light has been created with correct control        
+        // confirm light has been created with correct control
         Assert.assertEquals("Correct LightControl", "ON when ITT1 is Closed.",
                 LightTableAction.getDescriptionText(created.getLightControlList().get(0),
                         created.getLightControlList().get(0).getControlType()));
@@ -521,7 +521,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 444 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
@@ -553,7 +553,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
 
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
 
         JFrameOperator jfoce = new JFrameOperator(f2);
@@ -612,7 +612,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 555 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));
@@ -649,7 +649,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Edit" button and press it.  This is in the table body.
         tbl.clickOnCell(0, tbl.getColumnCount() - 1); // edit column is last in light table.
 
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f2 = JFrameOperator.waitJFrame(getEditFrameName(), true, true);
 
         JFrameOperator jfoce = new JFrameOperator(f2);
@@ -713,7 +713,7 @@ public class LightTableActionTest extends AbstractTableActionBase<Light> {
         // find the "Add... " button and press it.
         JFrameOperator jfo = new JFrameOperator(f);
         JemmyUtil.pressButton(jfo, Bundle.getMessage("ButtonAdd"));
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         JFrame f1 = JFrameOperator.waitJFrame(getAddFrameName(), true, true);
         //Enter 777 in the text field labeled "Hardware address:"
         JTextField hwAddressField = JTextFieldOperator.findJTextField(f1, new NameComponentChooser("hwAddressTextField"));

@@ -9,6 +9,7 @@ import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.rules.TemporaryFolder;
+import org.netbeans.jemmy.EventTool;
 
 /**
  * Test simple functioning of ThrottleFrame
@@ -55,7 +56,7 @@ public class ThrottleFrameTest {
                 to.getAddressValue());
         // don't release the throttle here.  When the frame is disposed,
         // the throttle will still be attached, which causes a different code
-        // path to be executed. 
+        // path to be executed.
     }
 
     @Test
@@ -86,7 +87,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertTrue("Function F" + i + " continuous", f.getIsLockable());
             to.toggleFunctionMomentary(i);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+            new EventTool().waitNoEvent(100);  //pause for frame to close
             Assert.assertFalse("Function F" + i + " momentary", f.getIsLockable());
         }
 
@@ -107,7 +108,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertFalse("Function F" + i + " off", f.isSelected());
             JemmyUtil.enterClickAndLeave(f);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+            new EventTool().waitNoEvent(100);  //pause for frame to close
             Assert.assertTrue("Function F" + i + " on", f.isSelected());
         }
 
@@ -128,7 +129,7 @@ public class ThrottleFrameTest {
             FunctionButton f = to.getFunctionButton(i);
             Assert.assertFalse("Function F" + i + " off", f.isSelected());
             JemmyUtil.enterClickAndLeave(f);
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame tot close
+            new EventTool().waitNoEvent(100);  //pause for frame to close
             Assert.assertTrue("Function F" + i + " on", f.isSelected());
         }
 
@@ -233,7 +234,7 @@ public class ThrottleFrameTest {
 
         to.setAddressValue(new DccLocoAddress(42, false));
 
-        to.pushForwardButton();	// need to verify this took effect.	
+        to.pushForwardButton();	// need to verify this took effect.
         Assert.assertTrue("Forward Direction", to.getAttachedThrottle().getIsForward());
 
         to.pushReleaseButton();
@@ -245,7 +246,7 @@ public class ThrottleFrameTest {
 
         to.setAddressValue(new DccLocoAddress(42, false));
 
-        to.pushReverseButton(); // need to verify this took effect.	
+        to.pushReverseButton(); // need to verify this took effect.
         Assert.assertFalse("Reverse Direction", to.getAttachedThrottle().getIsForward());
         to.pushReleaseButton();
     }
@@ -260,13 +261,13 @@ public class ThrottleFrameTest {
         Assert.assertEquals("Speed setting 28", 28, to.getSpeedSliderValue());
         float speed = to.getAttachedThrottle().getSpeedSetting();
 
-        to.pushForwardButton();	// need to verify this took effect.	
+        to.pushForwardButton();	// need to verify this took effect.
         Assert.assertTrue("Forward Direction", to.getAttachedThrottle().getIsForward());
         // and the absolute value of the speed is the same.
 
         Assert.assertEquals("Throttle Speed Setting after forward", Math.abs(speed), Math.abs(to.getAttachedThrottle().getSpeedSetting()), 0.0);
 
-        to.pushReverseButton();	// need to verify this took effect.	
+        to.pushReverseButton();	// need to verify this took effect.
         Assert.assertFalse("Reverse Direction", to.getAttachedThrottle().getIsForward());
         // and the absolute value of the speed is the same.
 
@@ -375,7 +376,7 @@ public class ThrottleFrameTest {
     public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
             to.requestClose();
-            new org.netbeans.jemmy.QueueTool().waitEmpty(100);  //pause for frame to close
+            to.waitClosed();
             JUnitUtil.dispose(frame);
             // the throttle list frame gets created above, but needs to be shown to be disposed
             InstanceManager.getDefault(ThrottleFrameManager.class).showThrottlesList();

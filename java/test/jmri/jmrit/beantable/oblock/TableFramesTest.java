@@ -1,11 +1,9 @@
 package jmri.jmrit.beantable.oblock;
 
 import java.awt.*;
-
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Path;
-import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
@@ -14,15 +12,11 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-
-import javax.swing.*;
+import org.netbeans.jemmy.EventTool;
 
 /**
  *
- * @author Paul Bender Copyright (C) 2017	
+ * @author Paul Bender Copyright (C) 2017
  */
 public class TableFramesTest {
 
@@ -60,7 +54,7 @@ public class TableFramesTest {
         // call import method
         t.importBlocks();
         // find + close Message Dialog "Finished"
-        new org.netbeans.jemmy.QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         // create a thread that waits to close the dialog box opened later
 //        Thread thr = new Thread(() -> {
 //            // constructor for jdo will wait until the dialog is visible

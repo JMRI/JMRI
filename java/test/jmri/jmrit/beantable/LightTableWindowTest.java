@@ -1,25 +1,13 @@
 package jmri.jmrit.beantable;
 
 import java.awt.GraphicsEnvironment;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-import jmri.InstanceManager;
-import jmri.LightManager;
+import javax.swing.*;
+import jmri.*;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
-import jmri.util.JUnitUtil;
-import jmri.util.JmriJFrame;
-
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Test;
-import org.netbeans.jemmy.QueueTool;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JComboBoxOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
+import jmri.util.*;
+import org.junit.*;
+import org.netbeans.jemmy.EventTool;
+import org.netbeans.jemmy.operators.*;
 import org.netbeans.jemmy.util.NameComponentChooser;
 
 /**
@@ -39,7 +27,7 @@ public class LightTableWindowTest {
 
         // Find new table window by name
         JmriJFrame ft = JmriJFrame.getFrame(Bundle.getMessage("TitleLightTable"));
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
 
         // Find the Add... button and open Add Light pane
         JUnitUtil.pressButton(ft, Bundle.getMessage("ButtonAdd"));
@@ -57,7 +45,7 @@ public class LightTableWindowTest {
         JButton createButton = JButtonOperator.findJButton(fa, new NameComponentChooser("createButton"));
         createButton.setEnabled(true); // skip validation
 
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         Assert.assertEquals("name content", "1", hwAddressField.getText());
 
         // Find system combobox
@@ -77,7 +65,7 @@ public class LightTableWindowTest {
         // Ask to close turnout table window
         new JFrameOperator(ft).dispose();
 
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
 
         // check that light was created
         Assert.assertNotNull(jmri.InstanceManager.lightManagerInstance().getLight("IL1"));

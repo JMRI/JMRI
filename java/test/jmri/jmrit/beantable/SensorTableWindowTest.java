@@ -10,13 +10,12 @@ import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.ThreadingUtil;
-
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.QueueTool;
+import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JComboBoxOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -41,7 +40,7 @@ public class SensorTableWindowTest {
 
         // Find new table window by name
         JmriJFrame ft = JmriJFrame.getFrame(Bundle.getMessage("TitleSensorTable"));
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
 
         // Find the add button and click it to open add window
         JUnitUtil.pressButton(ft, Bundle.getMessage("ButtonAdd"));
@@ -59,7 +58,7 @@ public class SensorTableWindowTest {
         JButton createButton = JButtonOperator.findJButton(fa, new NameComponentChooser("createButton"));
         createButton.setEnabled(true); // skip validation
 
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         Assert.assertEquals("name content", "1", hwAddressField.getText());
 
         // Find system combobox
@@ -79,7 +78,7 @@ public class SensorTableWindowTest {
         // Ask to close sensor table window
         new JFrameOperator(ft).dispose();
 
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
 
         // check for existing sensor
         Assert.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS1"));
@@ -99,7 +98,7 @@ public class SensorTableWindowTest {
         ThreadingUtil.runOnGUIEventually(() -> {
             a.setDefaultDebounce(null);
         });
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         // Find new dialog window by name
         java.awt.Container dialog = JUnitUtil.findContainer(Bundle.getMessage("SensorGlobalDebounceMessageTitle"));
         Assert.assertNotNull("Not found Global Debounce dialog", dialog);
@@ -110,7 +109,7 @@ public class SensorTableWindowTest {
         ThreadingUtil.runOnGUIEventually(() -> {
             a.setDefaultState(null);
         });
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
         // Find new dialog window by name
         dialog = JUnitUtil.findContainer(Bundle.getMessage("InitialSensorState"));
         Assert.assertNotNull("Not found Global Debounce dialog", dialog);
@@ -120,7 +119,7 @@ public class SensorTableWindowTest {
         // Ask to close table window
         new JFrameOperator(ft).dispose();
 
-        new QueueTool().waitEmpty();
+        new EventTool().waitNoEvent(0);
     }
 
     @Before
