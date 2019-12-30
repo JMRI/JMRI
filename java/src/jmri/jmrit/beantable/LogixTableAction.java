@@ -1261,7 +1261,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                         } else if (key.equals("chgUname")) {         // NOI18N
                             Logix x = _logixManager.getBySystemName(lgxName);
                             if (x == null) {
-                                log.error("Found no logix for name {} when changing user name (1)", lgxname);
+                                log.error("Found no logix for name {} when changing user name (1)", lgxName);
                                 return;
                             }
                             x.setUserName(value);
@@ -1288,7 +1288,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
                         } else if (key.equals("chgUname")) {         // NOI18N
                             Logix x = _logixManager.getBySystemName(lgxName);
                             if (x == null) {
-                                log.error("Found no logix for name {} when changing user name (2)", lgxname);
+                                log.error("Found no logix for name {} when changing user name (2)", lgxName);
                                 return;
                             }
                             x.setUserName(value);
