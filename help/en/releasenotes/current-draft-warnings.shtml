@@ -19,3 +19,14 @@
         to installing JMRI 4.19.1 (or later) and check the JMRI Console to
         see if there are any instructions there.
     </li>
+    <li>
+        The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+        calls in the various <code>Manager<code> classes
+        are no longer needed with Java 8 and have been deprecated for eventual
+        removal.  Their replacements are 
+        <code>getByUserName<code> and <code>getBySystemName<code> 
+        respectively. 
+        If you use <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+        in script or Java code you've written, please 
+        switch to the new names.
+    </li>
