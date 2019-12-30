@@ -68,18 +68,6 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
 
     /** {@inheritDoc} */
     @Override
-    public Reporter getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Reporter getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");

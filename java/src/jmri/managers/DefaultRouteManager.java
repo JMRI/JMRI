@@ -121,16 +121,6 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return getBySystemName(name);
     }
 
-    @Override
-    public Route getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    @Override
-    public Route getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
     /**
      * 
      * @return the default instance of DefaultRouteManager
