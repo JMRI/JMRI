@@ -140,7 +140,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanBySystemName(@Nonnull String systemName) {
+    public E getBySystemName(@Nonnull String systemName) {
         return _tsys.get(systemName);
     }
 
@@ -152,7 +152,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
      * @param comparator a Comparator encapsulating the system specific comparison behavior.
      * @return A named bean of the appropriate type, or null if not found.
      */
-    protected E getBySystemName(String systemName,Comparator<String> comparator){
+    protected E getBySystemName(String systemName, Comparator<String> comparator){
         for(Map.Entry<String,E> e:_tsys.entrySet()){
             if(0==comparator.compare(e.getKey(),systemName)){
                 return e.getValue();
@@ -163,7 +163,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanByUserName(@Nonnull String userName) {
+    public E getByUserName(@Nonnull String userName) {
         String normalizedUserName = NamedBean.normalizeUserName(userName);
         return normalizedUserName != null ? _tuser.get(normalizedUserName) : null;
     }
@@ -173,12 +173,12 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     public E getNamedBean(@Nonnull String name) {
         String normalizedUserName = NamedBean.normalizeUserName(name);
         if (normalizedUserName != null) {
-            E b = getBeanByUserName(normalizedUserName);
+            E b = getByUserName(normalizedUserName);
             if (b != null) {
                 return b;
             }
         }
-        return getBeanBySystemName(name);
+        return getBySystemName(name);
     }
 
     /** {@inheritDoc} */
@@ -199,7 +199,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     public void register(@Nonnull E s) {
         String systemName = s.getSystemName();
 
-        E existingBean = getBeanBySystemName(systemName);
+        E existingBean = getBySystemName(systemName);
         if (existingBean != null) {
             if (s == existingBean) {
                 log.debug("the named bean is registered twice: {}", systemName);

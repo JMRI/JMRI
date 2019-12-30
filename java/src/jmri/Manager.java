@@ -489,6 +489,35 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public SortedSet<E> getNamedBeanSet();
 
     /**
+     * Deprecated form to locate an existing instance based on a system name.
+     *
+     * @param systemName System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     * @throws IllegalArgumentException if provided name is invalid
+     * @deprecated since 4.19.1
+     */
+    @CheckReturnValue
+    @CheckForNull
+    @Deprecated // 4.19.1
+    public default E getBeanBySystemName(@Nonnull String systemName) {
+        return getBySystemName(systemName);
+    }
+
+    /**
+     * Deprecated form to locate an existing instance based on a user name.
+     *
+     * @param userName System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     * @deprecated since 4.19.1
+     */
+    @CheckReturnValue
+    @CheckForNull
+    @Deprecated // 4.19.1
+    public default E getBeanByUserName(@Nonnull String userName) {
+        return getByUserName(userName);
+    }
+
+    /**
      * Locate an existing instance based on a system name.
      *
      * @param systemName System Name of the required NamedBean
@@ -497,7 +526,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @CheckReturnValue
     @CheckForNull
-    public E getBeanBySystemName(@Nonnull String systemName);
+    public E getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an existing instance based on a user name.
@@ -507,7 +536,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @CheckReturnValue
     @CheckForNull
-    public E getBeanByUserName(@Nonnull String userName);
+    public E getByUserName(@Nonnull String userName);
 
     /**
      * Locate an existing instance based on a name.
