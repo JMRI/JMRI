@@ -7,10 +7,10 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import javax.annotation.Nonnull;
+
 /**
- * RfidSensorManagerTest.java
- *
- * Description:	tests for the jmri.jmrix.rfid.RfidSensorManager class
+ * Tests for the jmri.jmrix.rfid.RfidSensorManager class.
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */
@@ -22,7 +22,8 @@ public class RfidSensorManagerTest {
     public void testCtor() {
         RfidSensorManager c = new RfidSensorManager(new RfidSystemConnectionMemo()){
             @Override
-            protected Sensor createNewSensor(String systemName, String userName){
+            @Nonnull
+            protected Sensor createNewSensor(@Nonnull String systemName, String userName){
                return null;
             }
             @Override

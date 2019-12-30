@@ -55,6 +55,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * @return null if sensor already exists by that name or an alternate
      */
     @Override
+    @Nonnull
     @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         String prefix = getSystemPrefix();

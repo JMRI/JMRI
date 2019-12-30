@@ -44,9 +44,9 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     /** {@inheritDoc} */
     @Override
     public @Nonnull Memory provideMemory(@Nonnull String sName) {
-        Memory t = getMemory(sName);
-        if (t != null) {
-            return t;
+        Memory m = getMemory(sName);
+        if (m != null) {
+            return m;
         }
         if (sName.startsWith(getSystemNamePrefix())) {
             return newMemory(sName, null);
@@ -80,10 +80,11 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     /** {@inheritDoc} */
     @Override
-    public @Nonnull Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("new Memory: {}; {}", systemName, userName); // NOI18N
-        Objects.requireNonNull(systemName, "Value of requested systemName cannot be null");
-
+    @Nonnull
+    public Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
+        log.debug("new Memory: {}; {}", systemName, (userName == null ? "null" : userName)); // NOI18N
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + ((userName == null) ? "null" : userName));  // NOI18N
         // return existing if there is one
         Memory s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
@@ -116,7 +117,6 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
         // save in the maps
         register(s);
-
         // Keep track of the last created auto system name
         updateAutoNumber(systemName);
 

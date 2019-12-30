@@ -73,7 +73,7 @@ public class OlcbLightManager extends AbstractLightManager {
      * @return never null
      */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         OlcbLight l = new OlcbLight(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         l.setUserName(userName);
@@ -114,12 +114,12 @@ public class OlcbLightManager extends AbstractLightManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return false;
     }
 
     @Override
-    public boolean validSystemNameConfig(String address) throws IllegalArgumentException {
+    public boolean validSystemNameConfig(@Nonnull String address) throws IllegalArgumentException {
         String withoutPrefix = address.replace("ML", "");
         OlcbAddress a = new OlcbAddress(withoutPrefix);
         OlcbAddress[] v = a.split();

@@ -91,11 +91,8 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     @Nonnull
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("newLight: {};{}",
-                ((systemName == null) ? "null" : systemName),
-                ((userName == null) ? "null" : userName));
+        log.debug("newLight: {};{}", systemName, (userName == null ? "null" : userName));
         systemName = validateSystemNameFormat(systemName);
-
         // return existing if there is one
         Light l;
         if ((userName != null) && ((l = getByUserName(userName)) != null)) {
@@ -114,7 +111,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
             }
             return l;
         }
-
         // doesn't exist, make a new one
         l = createNewLight(systemName, userName);
 
@@ -122,7 +118,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
         if (l == null) {
             throw new IllegalArgumentException("cannot create new light " + systemName);
         }
-
         // save in the maps
         register(l);
 
@@ -131,16 +126,14 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
+     * an existing Light has been invoked.
      *
      * @param systemName the system name to use for this light
      * @param userName   the user name to use for this light
-     * @return the new light
+     * @return the new light or null if unsuccessful
      */
     @CheckForNull
-    abstract protected Light createNewLight(
-            @Nonnull String systemName,
-            @CheckForNull String userName);
+    abstract protected Light createNewLight(@Nonnull String systemName, String userName);
 
     /**
      * {@inheritDoc}

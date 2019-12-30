@@ -43,7 +43,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     protected int nMgrs() {
         // make sure internal present
         initInternal();
-
         return mgrs.size();
     }
 
@@ -332,7 +331,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     /**
      * Find the index of a matching manager.
      *
-     * @param  systemName the system name
+     * @param  systemName the system name to find a manager for
      * @return the index of the matching manager, or -1 if there is no match,
      *         which is not considered an error
      */
@@ -349,7 +348,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * Find the index of a matching manager. Throws IllegalArgumentException if
      * there is no match, here considered to be an error that must be reported.
      *
-     * @param systemName the system name
+     * @param systemName the system name to find a manager for
      * @return the index of the matching manager
      */
     protected int match(String systemName) {

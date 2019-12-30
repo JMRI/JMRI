@@ -77,7 +77,7 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (SerialAddress.validSystemNameConfig(systemName, typeLetter(), getMemo()));
     }
 
@@ -88,7 +88,8 @@ public class SerialLightManager extends AbstractLightManager {
      * alternate representation, else return ""
      */
     @Override
-    public String convertSystemNameToAlternate(String systemName) {
+    @Nonnull
+    public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return (SerialAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 

@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.annotations.*;
@@ -94,7 +95,7 @@ public class RfidReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         };
         l = new RfidReporterManager(new RfidSystemConnectionMemo()){
             @Override
-            protected Reporter createNewReporter(String systemName, String userName){
+            protected Reporter createNewReporter(@Nonnull String systemName, String userName){
                return null;
             }
             @Override

@@ -51,6 +51,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
+    @Nonnull
     @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;

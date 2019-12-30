@@ -48,6 +48,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
+    @Nonnull
     @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor s;

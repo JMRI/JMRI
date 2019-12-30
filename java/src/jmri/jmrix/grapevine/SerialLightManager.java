@@ -95,6 +95,7 @@ public class SerialLightManager extends AbstractLightManager {
      * alternate representation, else return ""
      */
     @Override
+    @Nonnull
     public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return (SerialAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }

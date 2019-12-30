@@ -114,6 +114,7 @@ public class UsbLightManager extends AbstractLightManager {
      *         alternate representation, else returns ""
      */
     @Override
+    @Nonnull
     public String convertSystemNameToAlternate(@Nonnull String systemName) {
         log.debug("*    UsbLightManager.convertSystemNameToAlternate() called");
         return getMemo().convertSystemNameToAlternate(systemName);

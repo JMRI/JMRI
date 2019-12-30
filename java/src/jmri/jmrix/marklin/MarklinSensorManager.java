@@ -43,6 +43,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     @Override
+    @Nonnull
     @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         MarklinSensor s = new MarklinSensor(systemName, userName);

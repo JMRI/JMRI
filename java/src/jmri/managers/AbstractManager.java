@@ -59,7 +59,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     // simplify concurrency.
     AtomicInteger lastAutoNamedBeanRef = new AtomicInteger(0);
     DecimalFormat paddedNumber = new DecimalFormat("0000");
-            
+
     public AbstractManager(SystemConnectionMemo memo) {
         this.memo = memo;
         this._beans = new TreeSet<>(memo.getNamedBeanComparator(getNamedBeanClass()));
@@ -146,15 +146,15 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
 
     /**
      * Protected method used by subclasses to over-ride the default behavior of
-     * getBeanBySystemName when a simple string lookup is not sufficient
+     * getBeanBySystemName when a simple string lookup is not sufficient.
      *
-     * @param systemName the system name to check.
-     * @param comparator a Comparator encapsulating the system specific comparison behavior.
-     * @return A named bean of the appropriate type, or null if not found.
+     * @param systemName the system name to check
+     * @param comparator a Comparator encapsulating the system specific comparison behavior
+     * @return a named bean of the appropriate type, or null if not found
      */
-    protected E getBySystemName(String systemName,Comparator<String> comparator){
-        for(Map.Entry<String,E> e:_tsys.entrySet()){
-            if(0==comparator.compare(e.getKey(),systemName)){
+    protected E getBySystemName(String systemName, Comparator<String> comparator){
+        for (Map.Entry<String,E> e : _tsys.entrySet()) {
+            if (0 == comparator.compare(e.getKey(), systemName)) {
                 return e.getValue();
             }
         }
@@ -296,7 +296,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     /** {@inheritDoc} */
     @Override
     @OverridingMethodsMustInvokeSuper
-    public void deregister(E s) {
+    public void deregister(@Nonnull E s) {
         int position = getPosition(s);
 
         // clear caches
@@ -359,7 +359,6 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
                         // If so, clear. Note that this is not a "move" operation
                         _tuser.get(now).setUserName(null);
                     }
-
                     _tuser.put(now, t); // put new name for this bean
                 }
             } catch (ClassCastException ex) {
@@ -398,7 +397,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
         // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList");
         if (cachedSystemNameList == null) {
             cachedSystemNameList = new ArrayList<>();
-            for (E b :_beans) {
+            for (E b : _beans) {
                 cachedSystemNameList.add(b.getSystemName());
             }
         }
@@ -527,7 +526,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /**
-     * Method to inform all registered listeners of a vetoable change. If the
+     * Inform all registered listeners of a vetoable change. If the
      * propertyName is "CanDelete" ALL listeners with an interest in the bean
      * will throw an exception, which is recorded returned back to the invoking
      * method, so that it can be presented back to the user. However if a

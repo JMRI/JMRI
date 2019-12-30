@@ -120,6 +120,7 @@ public class SerialLightManager extends AbstractLightManager {
      * alternate representation, else returns ""
      */
     @Override
+    @Nonnull
     public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return getMemo().convertSystemNameToAlternate(systemName);
     }

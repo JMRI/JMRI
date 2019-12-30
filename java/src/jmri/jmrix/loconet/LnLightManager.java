@@ -39,7 +39,7 @@ public class LnLightManager extends AbstractLightManager {
      * @return null if the system name is not in a valid format
      */
     @Override
-    public Light createNewLight(String systemName, String userName) {
+    public Light createNewLight(@Nonnull String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
         int bitNum = getBitFromSystemName(systemName);
@@ -93,7 +93,7 @@ public class LnLightManager extends AbstractLightManager {
      * else returns 'false'. For now this method always returns 'true';
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (true);
     }
 
@@ -105,7 +105,7 @@ public class LnLightManager extends AbstractLightManager {
      * @return true, always
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
