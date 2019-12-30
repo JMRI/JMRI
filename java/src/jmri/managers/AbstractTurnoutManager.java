@@ -108,7 +108,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
         // Some implementations of createNewTurnout() register the new bean,
         // some don't. 
-        if (getBeanBySystemName(s.getSystemName()) == null) {
+        if (getBySystemName(s.getSystemName()) == null) {
             // save in the maps if successful
             register(s);
         }
