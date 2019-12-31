@@ -1262,6 +1262,9 @@ public class LayoutEditorToolsTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.initLayoutBlockManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalSignalHeadManager();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
             JUnitUtil.initInternalTurnoutManager();

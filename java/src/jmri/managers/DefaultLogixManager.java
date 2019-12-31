@@ -151,16 +151,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         return getBySystemName(name);
     }
 
-    @Override
-    public Logix getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    @Override
-    public Logix getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
     /**
      * Support for loading Logixs in a disabled state to debug loops
      */

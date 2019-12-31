@@ -212,6 +212,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return ENTRYEXIT;
     }
 
+    /** {@inheritDoc} */
     public DestinationPoints getBySystemName(String systemName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUniqueId(systemName);
@@ -224,13 +225,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getBeanBySystemName(@Nonnull String systemName) {
-        return getBySystemName(systemName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public DestinationPoints getBeanByUserName(@Nonnull String userName) {
+    public DestinationPoints getByUserName(@Nonnull String userName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUserName(userName);
             if (pd != null) {
@@ -243,11 +238,11 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /** {@inheritDoc} */
     @Override
     public DestinationPoints getNamedBean(@Nonnull String name) {
-        DestinationPoints b = getBeanByUserName(name);
+        DestinationPoints b = getByUserName(name);
         if (b != null) {
             return b;
         }
-        return getBeanBySystemName(name);
+        return getBySystemName(name);
     }
 
     /** {@inheritDoc} */

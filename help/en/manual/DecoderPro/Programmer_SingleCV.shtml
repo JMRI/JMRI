@@ -22,7 +22,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top" id="Top"></a> <img src="images/Logo.gif" alt=
       "JMRI DecoderPro Logo" border="10" height="117" width="163"

@@ -120,14 +120,6 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
         return getBySystemName(name);
     }
 
-    public Transit getBySystemName(String key) {
-        return  _tsys.get(key);
-    }
-
-    public Transit getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
     /**
      * Remove an existing Transit.
      *
