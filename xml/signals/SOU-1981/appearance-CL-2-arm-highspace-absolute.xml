@@ -67,13 +67,6 @@
 	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-307.gif</imagelink>
     </appearance>
 	
-	<appearance>
-      <aspectname>Approach Slow</aspectname>
-      <show>flashyellow</show>
-      <show>red</show>
-	  <imagelink>../../../resources/icons/smallschematics/aspects/SOU-1981/SOU-CL-2-Arm-highspaced-absolute/rule-307.gif</imagelink>
-    </appearance>
-	
     <appearance>
       <aspectname>Restricted Proceed</aspectname>
       <show>red</show>
@@ -134,7 +127,6 @@
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
-	  <ourAspect>Approach Slow</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
