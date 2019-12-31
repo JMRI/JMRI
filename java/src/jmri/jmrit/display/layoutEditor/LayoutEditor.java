@@ -2307,13 +2307,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private Point2D undoDelta = MathUtil.zeroPoint2D;
 
     /**
-     * translate entire layout by x and y amounts
+     * Translate entire layout by x and y amounts.
      *
-     * @param xTranslation
-     * @param yTranslation
+     * @param xTranslation horizontal (X) translation value
+     * @param yTranslation vertical (Y) translation value
      */
     public void translate(float xTranslation, float yTranslation) {
-        //here when all numbers read in - translation if entered
+        // here when all numbers read in - translation if entered
         if ((xTranslation != 0.0F) || (yTranslation != 0.0F)) {
             Point2D delta = new Point2D.Double(xTranslation, yTranslation);
             Rectangle2D selectionRect = getSelectionRect();
@@ -2381,7 +2381,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * rotate selection by 90 degrees clockwise
+     * Rotate selection by 90 degrees clockwise.
      */
     public void rotateSelection90() {
         Rectangle2D bounds = getSelectionRect();
@@ -2420,7 +2420,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     /**
-     * rotate the entire layout by 90 degrees clockwise
+     * Rotate the entire layout by 90 degrees clockwise.
      */
     public void rotateLayout90() {
         List<Positionable> positionables = new ArrayList<Positionable>(_contents);
