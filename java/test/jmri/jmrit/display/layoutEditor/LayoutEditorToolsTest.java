@@ -134,7 +134,7 @@ public class LayoutEditorToolsTest {
         ThreadingUtil.runOnLayoutEventually(() -> {
             let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
-        JemmyUtil.delay(250); //1/4th second
+        new EventTool().waitNoEvent(0);
 
         //the JFrameOperator waits for the set signal frame to appear
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
@@ -163,7 +163,9 @@ public class LayoutEditorToolsTest {
         //select the turnout from the popup menu
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("turnoutComboBox"));
-        JemmyUtil.delay(250); //1/4th second
+
+        new EventTool().waitNoEvent(0);
+
         jComboBoxOperator.selectItem(turnouts[0].getSystemName());
     }
 
@@ -245,7 +247,8 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread2.isAlive());
         }, "modalDialogOperatorThread2 finished");
 
-        JemmyUtil.delay(250); //1/4th second
+        new EventTool().waitNoEvent(0);
+
         //now close this dialog
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
     }   //testSetSignalsAtTurnoutWithDonePart4
@@ -269,7 +272,7 @@ public class LayoutEditorToolsTest {
             let.setSignalsAtTurnout(getLayoutEditorToolBarPanel().signalIconEditor, layoutEditor.getTargetFrame());
         });
 
-        JemmyUtil.delay(250); //1/4th second
+        new EventTool().waitNoEvent(0);
 
         //the JFrameOperator waits for the set signal frame to appear
         JFrameOperator jFrameOperator = new JFrameOperator(Bundle.getMessage("SignalsAtTurnout"));
@@ -328,7 +331,8 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread4.isAlive());
         }, "modalDialogOperatorThread4 finished");
 
-        JemmyUtil.delay(250); //1/4th second
+        new EventTool().waitNoEvent(0);
+
         //now close this dialog
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
     }   //testSetSignalsAtTurnoutWithDonePart6
@@ -716,7 +720,8 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread0.isAlive());
         }, "modalDialogOperatorThread0 finished");
 
-        JemmyUtil.delay(250); //1/4th second
+        new EventTool().waitNoEvent(0);
+
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
     }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart1
 
@@ -746,7 +751,8 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread1.isAlive());
         }, "modalDialogOperatorThread1 finished");
 
-        JemmyUtil.delay(250); //1/4th second
+        new EventTool().waitNoEvent(0);
+        
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
     }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart2
 
@@ -838,7 +844,8 @@ public class LayoutEditorToolsTest {
             return !(modalDialogOperatorThread3.isAlive());
         }, "modalDialogOperatorThread3 finished");
 
-        JemmyUtil.delay(250); //1/4th second
+        new EventTool().waitNoEvent(0);
+
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
     }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart4
 
@@ -938,7 +945,8 @@ public class LayoutEditorToolsTest {
         }, "modalDialogOperatorThread4 finished");
 
         for (int idx = 0; idx < 3; idx++) {
-            JemmyUtil.delay(250); //1/4th second
+            new EventTool().waitNoEvent(0);
+
             //InfoMessage6 = Cannot set up logic because blocks have\nnot been defined around this item.
             JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
                     Bundle.getMessage("InfoMessage6"),
@@ -988,7 +996,8 @@ public class LayoutEditorToolsTest {
 
         //close three InfoMessage4 dialogs
         for (int idx = 0; idx < 3; idx++) {
-            JemmyUtil.delay(250); //1/4th second
+            new EventTool().waitNoEvent(0);
+
             JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
                     Bundle.getMessage("InfoMessage4", layoutBlocks[2].getUserName()),
                     Bundle.getMessage("ButtonOK"));  // NOI18N
@@ -1033,7 +1042,8 @@ public class LayoutEditorToolsTest {
 
         //three more times
         for (int idx = 0; idx < 3; idx++) {
-            JemmyUtil.delay(250); //1/4th second
+            new EventTool().waitNoEvent(0);
+
             JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
                     Bundle.getMessage("InfoMessage7"),
                     Bundle.getMessage("ButtonOK"));  // NOI18N
