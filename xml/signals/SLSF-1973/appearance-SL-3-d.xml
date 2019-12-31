@@ -43,7 +43,13 @@
         <date>2019-03-17</date>
         <authorinitials>PAB</authorinitials>
         <revremark>fix image links</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Fix a typo in aspectmappings</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>SLSF</aspecttable>
@@ -171,7 +177,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
 
     <aspectMapping>
      <advancedAspect>Diverging Clear</advancedAspect>
-     <ourAspect>Approace Medium</ourAspect>
+     <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
