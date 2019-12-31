@@ -419,29 +419,8 @@ public class JemmyUtil {
      *
      * @param milliseconds how log to delay
      */
-    public static void delay(long milliseconds) {
-        long nextTime = System.currentTimeMillis() + milliseconds;
-        for (long delta = milliseconds; delta > 0;
-                delta = nextTime - System.currentTimeMillis()) {
-            try {
-                Thread.sleep(delta);
-            } catch (InterruptedException ex) {
-                //ignore any interruptions
-            }
-            //new EventTool().waitNoEvent(milliseconds);
-            new QueueTool().waitEmpty();
-        }
-    }
-
-//TODO: finish this!
-//WIP:delay for s seconds
-// private void waitSeconds(int s) {
-// //waits until queue has been empty for X milliseconds
-// //new QueueTool().waitEmpty(s * 1000);
-//
-// //wait until no event is registered for a given number of milliseconds
-// new EventTool().waitNoEvent(s * 1000);
-// }
+    //REMOVED: use JUnitUtil.waitFor() instead (if at all!)
+    
     /**
      * utility method to save screenshot to desktop file
      */
