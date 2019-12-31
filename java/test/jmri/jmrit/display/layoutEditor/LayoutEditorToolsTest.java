@@ -639,7 +639,8 @@ public class LayoutEditorToolsTest {
         JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"), Bundle.getMessage("ButtonCancel"));
     }
 
-    ///@Test
+    @Test
+    @Ignore("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtTurnoutFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -1160,7 +1161,8 @@ public class LayoutEditorToolsTest {
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
     }
 
-    ///@Test
+    @Test
+    @Ignore("causes error on jenkins; exhausts failure retries")
     public void testGetSignalHeadIcon() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");
