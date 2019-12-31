@@ -12,7 +12,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
-port jmri.util.swing.JemmyUtil;
+import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 import org.junit.*;
 import org.junit.rules.*;
