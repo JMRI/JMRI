@@ -387,6 +387,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
+    @Ignore("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtTurnoutFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -541,6 +542,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
+    @Ignore("causes error on jenkins; exhausts failure retries")
     public void testGetSignalHeadIcon() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         VirtualSignalHead h = new VirtualSignalHead("IH1");

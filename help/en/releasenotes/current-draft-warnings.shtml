@@ -1,39 +1,10 @@
 
     <!-- contains new warnings for the release under development -->
 
-    <li>JMRI 4.19.1 and later enforce the standard form of system names,
-        where the system is denoted by a single letter or a letter plus digits.
-        Some users of JMRI 4.18 or earlier might have incompatible values.
-        If you have one of these hardware connections:
-        <ul>
-            <li>Anyma DX512 using “DX”
-            <li>DCC++ using “DCCPP"
-            <li>DCC4PC using “DP"
-            <li>JSON client using “json”
-            <li>MRC using “MR"
-            <li>Marklin CS2 using “MC"
-            <li>Raspberry PI using “PI"
-            <li>TAMS using “TM”
-        </ul>
-        you may have to migrate.  Please update to JMRI 4.18 prior 
-        to installing JMRI 4.19.1 (or later) and check the JMRI Console to
-        see if there are any instructions there.
-    </li>
-    <li>
-        The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
-        calls in the various <code>Manager<code> classes
-        are no longer needed with Java 8 and have been deprecated for eventual
-        removal.  Their replacements are 
-        <code>getByUserName<code> and <code>getBySystemName<code> 
-        respectively. 
-        If you use <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
-        in script or Java code you've written, please 
-        switch to the new names.
-    </li>
     <li>The system names for Routes are required to start with "IO" to avoid
     	ambiguity or confusion with Reporters (the system names of which start
     	with "IR"). JMRI 4.19.2 or later should automatically rename Routes
     	correctly, but it is possible that references to those Routes will need
     	to be updated.
-	</li>
+	  </li>
     	
