@@ -624,6 +624,7 @@ public class LayoutTrackEditorsTest {
     }
 
     @Test
+    @Ignore("Travis timeout 12/32/2019")
     public void testEditTurntableDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
