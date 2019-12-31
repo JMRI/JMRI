@@ -234,7 +234,7 @@ public class NamedBeanComboBoxTest {
         assertEquals("IS1", c.getText());
         assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         Sensor s1 = t.getSelectedItem();
-        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(s1, m.getBySystemName("IS1"));
 
         c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
@@ -260,7 +260,7 @@ public class NamedBeanComboBoxTest {
         assertEquals("IS1", c.getText());
         assertEquals(Validation.Type.INFORMATION, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         s1 = t.getSelectedItem();
-        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(s1, m.getBySystemName("IS1"));
 
         c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
@@ -286,7 +286,7 @@ public class NamedBeanComboBoxTest {
         assertEquals("IS1", c.getText());
         assertEquals(Validation.Type.NONE, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         s1 = t.getSelectedItem();
-        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(s1, m.getBySystemName("IS1"));
 
         c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
@@ -314,7 +314,7 @@ public class NamedBeanComboBoxTest {
         assertEquals("IS1", c.getText());
         assertEquals(Validation.Type.INFORMATION, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         s1 = t.getSelectedItem();
-        assertEquals(s1, m.getBeanBySystemName("IS1"));
+        assertEquals(s1, m.getBySystemName("IS1"));
 
         c.setText("K ");
         c.getInputVerifier().verify(c); // manually force validation because not on AWT thread

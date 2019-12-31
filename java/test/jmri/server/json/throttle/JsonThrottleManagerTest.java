@@ -20,17 +20,6 @@ import jmri.util.JUnitAppender;
 public class JsonThrottleManagerTest {
 
     /**
-     * Test that a deprecated method functions correctly.
-     */
-    @SuppressWarnings("deprecation")
-    @Test
-    public void testGetDefault() {
-        Assert.assertEquals("Default instance", InstanceManager.getDefault(JsonThrottleManager.class),
-                JsonThrottleManager.getDefault());
-        JUnitAppender.assertWarnMessage("getDefault is deprecated, please remove references to it");
-    }
-
-    /**
      * Testing
      * {@link jmri.server.json.throttle.JsonThrottleManager#put(JsonThrottle, JsonThrottleSocketService)}
      * because testing via JsonThrottleSocketService does not trigger the

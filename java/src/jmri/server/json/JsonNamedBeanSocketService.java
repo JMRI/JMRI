@@ -48,9 +48,9 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         T bean = null;
         // protect against a request made with a user name instead of a system name
         if (!method.equals(PUT)) {
-            bean = service.getManager().getBeanBySystemName(name);
+            bean = service.getManager().getBySystemName(name);
             if (bean == null) {
-                bean = service.getManager().getBeanByUserName(name);
+                bean = service.getManager().getByUserName(name);
                 if (bean != null) {
                     // set to warn so users can provide specific feedback to developers of JSON clients
                     log.warn("{} request for {} made with user name \"{}\"; should use system name", method, type, name);
@@ -68,7 +68,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
             case PUT:
                 JsonNode message = service.doPut(type, name, data, request);
                 connection.sendMessage(message, request.id);
-                bean = service.getManager().getBeanBySystemName(message.path(DATA).path(NAME).asText());
+                bean = service.getManager().getBySystemName(message.path(DATA).path(NAME).asText());
                 break;
             case GET:
             default:
@@ -92,7 +92,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
     }
 
     protected void addListenerToBean(String name) {
-        addListenerToBean(service.getManager().getBeanBySystemName(name));
+        addListenerToBean(service.getManager().getBySystemName(name));
     }
 
     protected void addListenerToBean(T bean) {
@@ -105,7 +105,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
 
     protected void removeListenersFromRemovedBeans() {
         for (T bean : new HashSet<>(beanListeners.keySet())) {
-            if (service.getManager().getBeanBySystemName(bean.getSystemName()) == null) {
+            if (service.getManager().getBySystemName(bean.getSystemName()) == null) {
                 beanListeners.remove(bean);
             }
         }

@@ -148,10 +148,10 @@ public class JsonLayoutBlockSocketServiceTest {
             assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }
-        assertNotNull("LayoutBlock not deleted", manager.getBeanBySystemName(lb.getSystemName()));
+        assertNotNull("LayoutBlock not deleted", manager.getBySystemName(lb.getSystemName()));
         // will throw if prior catch failed
         instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message, JSON.DELETE, new JsonRequest(locale, JSON.V5, 42));
-        assertNull("LayoutBlock deleted", manager.getBeanBySystemName(lb.getSystemName()));
+        assertNull("LayoutBlock deleted", manager.getBySystemName(lb.getSystemName()));
         try {
             // deleting again should throw an exception
             instance.onMessage(JsonLayoutBlock.LAYOUTBLOCK, message, JSON.DELETE, new JsonRequest(locale, JSON.V5, 42));

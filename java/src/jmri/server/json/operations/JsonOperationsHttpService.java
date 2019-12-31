@@ -472,7 +472,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         // set things that throw exceptions first
         if (!data.path(REPORTER).isMissingNode()) {
             String name = data.path(REPORTER).asText();
-            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBeanBySystemName(name);
+            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBySystemName(name);
             if (reporter != null) {
                 location.setReporter(reporter);
             } else {
@@ -493,7 +493,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
         // set things that throw exceptions first
         if (!data.path(REPORTER).isMissingNode()) {
             String name = data.path(REPORTER).asText();
-            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBeanBySystemName(name);
+            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBySystemName(name);
             if (reporter != null) {
                 track.setReporter(reporter);
             } else {
