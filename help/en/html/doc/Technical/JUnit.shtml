@@ -1145,7 +1145,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       and "<code>ComponentOperator.WaitComponentTimeout</code>" to a lower value from their
       defaults of 60000L (a minute) can speed work when you're trying to debug the cause of a timeout.
       <p>
-      If you change a timeout, you <u>must</u> set it back to the <u>original</a>
+      If you change a timeout, you <u>must</u> set it back to the <u>original</u>
       value (which you had earlier saved) in your @After routine.  If you leave it
       changed, you're likely to cause problems for other test routines.
       
