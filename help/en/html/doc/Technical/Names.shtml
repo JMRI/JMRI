@@ -63,28 +63,14 @@
       </ol><a name="type" id="type"></a>
 
       <h2>Items with names</h2>
-      There are lots of things that might need names:
-
-      <ul>
-        <li>Blocks (track segments)</li>
-        <li>Entry/exit destination points</li>
-        <li>Input sensors</li>
-        <li>Lights and other outputs</li>
-        <li>Logix</li>
-        <li>Memories</li>
-        <li>Power districts and sub-districts</li>
-        <li>Reporters</li>
-        <li>Routes</li>
-        <li>Sections</li>
-        <li>Signals and constituent parts</li>
-        <li>Turnouts</li>
-        <li>And others...</li>
-      </ul>
       
-      <p>Some of these are associated with a specific hardware
+      <p>
+      There are lots of things that might need names, such as
+      Turnouts, Sensors, and other layout elements.
+      Some of these are associated with a specific hardware
       device, e.g. a particular turnout. Others are more virtual,
       e.g. a route, which is a collection on control information
-      within the program.</p>
+      within the program. A list of named types follows below.</p>
 
       <h2>System and User Names</h2>
       
