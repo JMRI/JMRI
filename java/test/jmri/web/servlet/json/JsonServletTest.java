@@ -14,7 +14,6 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.mock.web.MockServletConfig;
@@ -46,8 +45,7 @@ public class JsonServletTest {
         MockServletConfig config = new MockServletConfig(context);
         MockHttpServletRequest request = new MockHttpServletRequest(context);
         MockHttpServletResponse response = new MockHttpServletResponse();
-        JsonServlet instance = Mockito.spy(new JsonServlet());
-        Mockito.doNothing().when(instance).superInit();
+        JsonServlet instance = new MockJsonServlet();
         instance.init(config);
         ObjectNode result = new ObjectMapper().createObjectNode();
         // test a schema valid message with validation on
@@ -81,5 +79,13 @@ public class JsonServletTest {
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+    }
+    
+    private static class MockJsonServlet extends JsonServlet {
+        
+        void superInit() {
+            // do nothing
+        }
+        
     }
 }
