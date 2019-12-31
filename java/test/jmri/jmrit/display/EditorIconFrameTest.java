@@ -75,7 +75,8 @@ public class EditorIconFrameTest {
     @Before
     public void setUp(){
        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
+       JUnitUtil.resetProfileManager();
+       JUnitUtil.initInternalSignalHeadManager();
        if(!GraphicsEnvironment.isHeadless()) {
           e = new EditorScaffold(inputString + " IconAdder test Editor");
           e.setVisible(true);
