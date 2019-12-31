@@ -58,11 +58,10 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     /** {@inheritDoc} */
     @Override
     public Reporter getReporter(@Nonnull String name) {
-        Reporter t = getByUserName(name);
-        if (t != null) {
-            return t;
+        Reporter r = getByUserName(name);
+        if (r != null) {
+            return r;
         }
-
         return getBySystemName(name);
     }
 

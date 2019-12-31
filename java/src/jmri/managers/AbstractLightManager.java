@@ -73,7 +73,9 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
     @Override
     @Nonnull
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("newLight: {};{}", systemName, (userName == null ? "null" : userName));
+        log.debug("newLight: {};{}",
+                ((systemName == null) ? "null" : systemName),
+                ((userName == null) ? "null" : userName));
         systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
         Light l;
