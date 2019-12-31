@@ -2,6 +2,11 @@ package jmri.web.servlet.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
+
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
@@ -9,9 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.util.JUnitUtil;
+import jmri.util.JUnitAppender;
 
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
@@ -30,7 +35,7 @@ public class JsonServletTest {
     @Test
     public void testCtor() {
         JsonServlet a = new JsonServlet();
-        Assert.assertNotNull(a);
+        assertNotNull(a);
     }
 
     /**
@@ -52,21 +57,27 @@ public class JsonServletTest {
         result.put("type", "pong");
         request.setAttribute("result", result);
         instance.doGet(request, response);
-        Assert.assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
-        Assert.assertEquals("Contains result", result.toString(), response.getContentAsString());
+        assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        assertEquals("Contains result", result.toString(), response.getContentAsString());
         // test a schema invalid message with validation on
+        response = new MockHttpServletResponse();
         result.put("type", "invalid-type");
         request.setAttribute("result", result);
         instance.doGet(request, response);
-        Assert.assertEquals("HTTP Internal Error", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, response.getStatus());
-        Assert.assertNotEquals("Contains result", result.toString(), response.getContentAsString());
+        assertEquals("HTTP Internal Error", HttpServletResponse.SC_INTERNAL_SERVER_ERROR, response.getStatus());
+        assertNotEquals("Does not contain result", result.toString(), response.getContentAsString());
+        JUnitAppender.assertWarnMessage("Errors validating {\"type\":\"invalid-type\"}");
+        JUnitAppender.assertWarnMessageStartingWith("JSON Validation Error: 1028");
+        JUnitAppender.assertWarnMessageStartingWith("JSON Validation Error: 1008");
+        JUnitAppender.assertWarnMessageStartingWith("JSON Validation Error: 1003");
         // test a schema invalid message with validation off
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(false);
+        response = new MockHttpServletResponse();
         result.put("type", "invalid-type");
         request.setAttribute("result", result);
         instance.doGet(request, response);
-        Assert.assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
-        Assert.assertEquals("Contains result", result.toString(), response.getContentAsString());
+        assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        assertEquals("Contains result", result.toString(), response.getContentAsString());
     }
 
     @Before
