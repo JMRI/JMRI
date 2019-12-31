@@ -376,14 +376,14 @@ public class NamedBeanComboBoxTest {
         assertEquals("IS1 text", "IS1", c.getText());
         assertEquals("IS1 validation is WARNING (not existing/validating)", Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         assertNull("IS1 is not selected (not existing/validating)", t.getSelectedItem());
-        assertFalse("IS1 is not valid (not existing/validating)", v);
+        assertTrue("IS1 is valid (not existing/validating)", v);
 
         c.setText("K ");
         v = c.getInputVerifier().verify(c); // manually force validation because not on AWT thread
         assertEquals("K text", "K ", c.getText());
         assertEquals("K validation is WARNING (validating)", Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         assertNull("No selection (no existing selection)", t.getSelectedItem());
-        assertFalse("K is not valid (validating)", v);
+        assertTrue("K is valid (validating)", v);
 
         // test with a matching bean and isValidatingInput() == false
         // should always match NONE
@@ -437,7 +437,7 @@ public class NamedBeanComboBoxTest {
         assertEquals("K text", "K ", c.getText());
         assertEquals("K validation is WARNING (validating)", Validation.Type.WARNING, ((JInputValidator) c.getInputVerifier()).getValidation().getType());
         assertEquals("IS1 is selected for K (pre-selected/validating)", s, t.getSelectedItem()); // selection did not change because of invalid input
-        assertTrue("K is not valid (validating)", v);
+        assertTrue("K is valid (validating)", v);
     }
 
     @Test
