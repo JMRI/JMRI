@@ -1654,7 +1654,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }   // setToolBarSide
 
     //
-    //
+    //setToolBarWide
     //
     private void setToolBarWide(boolean newToolBarIsWide) {
         //null if edit toolbar not setup yet...
@@ -1685,7 +1685,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }   // setToolBarWide
 
     //
-    //
+    //setupZoomMenu
     //
     private void setupZoomMenu(@Nonnull JMenuBar menuBar) {
         zoomMenu.setMnemonic(stringsToVTCodes.get(Bundle.getMessage("MenuZoomMnemonic")));
