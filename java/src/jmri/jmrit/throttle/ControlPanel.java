@@ -385,7 +385,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     /**
      * Get the value indicating what speed input we're displaying
-     * <p>
      */
     public int getDisplaySlider() {
         return _displaySlider;
@@ -940,7 +939,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     /**
      * Perform an emergency stop.
-     * <p>
      */
     public void stop() {
         if (this.throttle == null) {

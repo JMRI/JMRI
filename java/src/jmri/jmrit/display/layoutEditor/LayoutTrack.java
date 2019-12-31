@@ -132,7 +132,7 @@ public abstract class LayoutTrack {
      *
      * @param decorations to set
      */
-    public void setDecorations(@CheckForNull Map<String, String> decorations) {
+    public void setDecorations(@Nullable Map<String, String> decorations) {
         this.decorations = decorations;
     }
     protected Map<String, String> decorations = null;
