@@ -12,7 +12,7 @@ import jmri.server.json.JsonSocketService;
  * Factory interface for JSON services.
  * <p>
  * A JSON service is a service provided by the
- * {@link jmri.jmris.json.JsonServer}. This API allows JSON services to be
+ * {@link jmri.server.json.JsonServer}. This API allows JSON services to be
  * defined in a modular manner. The factory pattern is used since each
  * connection gets a unique instance of each service.
  *

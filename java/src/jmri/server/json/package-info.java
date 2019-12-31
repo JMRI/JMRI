@@ -264,7 +264,7 @@
  *
  * @since 4.3.4
  * @see jmri.web.servlet.json.JsonServlet
- * @see jmri.jmris.json.JsonServer
+ * @see jmri.server.json.JsonServer
  * @see jmri.spi.JsonServiceFactory
  */
 package jmri.server.json;
