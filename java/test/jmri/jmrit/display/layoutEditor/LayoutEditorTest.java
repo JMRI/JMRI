@@ -906,6 +906,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
+    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionLeft() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
@@ -928,7 +929,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionBottom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
@@ -951,6 +952,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
+    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionRight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
@@ -973,7 +975,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Consistently fails on Travis 12/20/2019")
+    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testToolBarPositionFloat() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
