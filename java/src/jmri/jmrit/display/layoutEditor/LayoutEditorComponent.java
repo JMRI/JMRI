@@ -127,7 +127,7 @@ class LayoutEditorComponent extends JComponent {
         g2.setStroke(narrow);
 
         // calculate the bounds for the scroll pane
-        JScrollPane scrollPane = layoutEditor.getPanelScrollPane();
+//        JScrollPane scrollPane = layoutEditor.getPanelScrollPane();
         // Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
         // log.info("  scrollBounds: " + scrollBounds);
 
