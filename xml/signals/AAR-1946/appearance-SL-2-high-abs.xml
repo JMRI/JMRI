@@ -57,6 +57,12 @@
         <authorinitials>KC</authorinitials>
         <revremark>Normalize all aspect names to not have hyphens</revremark>
     </revision>
+    <revision>
+      <revnumber>2.4</revnumber>
+      <date>2019-12-30</date>
+      <authorinitials>BM</authorinitials>
+      <revremark>Remove ourAspect values which are not supported by this mast type</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>AAR 1946</aspecttable>
@@ -162,7 +168,6 @@
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
