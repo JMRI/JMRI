@@ -24,6 +24,12 @@
         <authorinitials>JJC</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect values which cannot be displayed by this mast type</revremark>
+     </revision>    
   </revhistory>
 
   <aspecttable>CNJ 1974</aspecttable>
@@ -194,7 +200,6 @@
       <advancedAspect>Medium Clear</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
@@ -202,7 +207,6 @@
       <advancedAspect>Medium Approach Medium</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
@@ -210,7 +214,6 @@
       <advancedAspect>Medium Approach Slow</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
@@ -218,7 +221,6 @@
       <advancedAspect>Approach Slow</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
@@ -226,7 +228,6 @@
       <advancedAspect>Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
@@ -234,28 +235,24 @@
       <advancedAspect>Medium Approach</advancedAspect>
       <ourAspect>Approach Medium</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Clear</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Slow Approach</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Stop</ourAspect>
     </aspectMapping>
 
