@@ -327,6 +327,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                 for (String manufacturer : ctl.getManufacturers()) {
                     if (!connectionTypeLists.containsKey(manufacturer)) {
                         connectionTypeLists.put(manufacturer, ctl);
+                        log.debug("Added {} connectionTypeList", manufacturer);
                     } else {
                         log.debug("Need a proxy for {} from {} in {}", manufacturer, ctl.getClass().getName(), this);
                         ProxyConnectionTypeList proxy;
