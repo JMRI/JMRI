@@ -25,7 +25,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
       <h1>Hardware Support: ZIMO MX-1</h1><a name="hardware" id=
