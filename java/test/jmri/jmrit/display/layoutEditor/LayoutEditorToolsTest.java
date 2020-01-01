@@ -625,7 +625,7 @@ public class LayoutEditorToolsTest {
             layoutBlocks = InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanList();
 
             for (int i = 0; i < 5; i++) {
-                String toName = "TO" + i;
+                String toName = "IT" + i;
                 InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout(toName);
             }
             turnouts = InstanceManager.getDefault(TurnoutManager.class).getNamedBeanList();
@@ -638,7 +638,7 @@ public class LayoutEditorToolsTest {
             sensors = InstanceManager.getDefault(SensorManager.class).getNamedBeanList();
 
             for (int i = 0; i < 5; i++) {
-                String sName = "SH" + i;
+                String sName = "IH" + i;
                 String uName = "signal head " + i;
                 NamedBeanHandle<Turnout> nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnouts.get(i).getSystemName(), turnouts.get(i));
                 if (nbh != null) {
