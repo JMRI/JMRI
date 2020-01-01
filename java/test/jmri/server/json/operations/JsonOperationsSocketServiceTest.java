@@ -101,6 +101,7 @@ public class JsonOperationsSocketServiceTest {
         service = new JsonOperationsSocketService(connection, new JsonOperationsHttpService(mapper));
     }
 
+    @SuppressWarnings("deprecation")
     @After
     public void tearDown() {
         service = null;

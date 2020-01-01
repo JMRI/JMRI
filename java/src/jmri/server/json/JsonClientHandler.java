@@ -159,7 +159,8 @@ public class JsonClientHandler {
                     connection.setLocale(
                             Locale.forLanguageTag(data.path(LOCALE).asText(connection.getLocale().getLanguage())));
                     setVersion(data.path(VERSION).asText(connection.getVersion()), id);
-                    // since locale or version may have changed, ensure any response is using new version and locale
+                    // since locale or version may have changed, ensure any
+                    // response is using new version and locale
                     request = new JsonRequest(connection.getLocale(), connection.getVersion(), id);
                 }
                 if (services.get(type) != null) {

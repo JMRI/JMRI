@@ -60,6 +60,7 @@ public class JsonUtilHttpServiceTest extends JsonHttpServiceTestBase<JsonUtilHtt
         JUnitUtil.initZeroConfServiceManager();
     }
 
+    @SuppressWarnings("deprecation")
     @After
     @Override
     public void tearDown() throws Exception {

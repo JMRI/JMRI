@@ -51,11 +51,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide JSON formatted responses to requests for information
- * from the JMRI Web Server.
+ * Provide JSON formatted responses to requests for information from the JMRI
+ * Web Server.
  * <p>
- * See {@link jmri.server.json} for details on how this Servlet handles
- * JSON requests.
+ * See {@link jmri.server.json} for details on how this Servlet handles JSON
+ * requests.
  *
  * @author Randall Wood Copyright (C) 2012, 2013, 2016, 2019
  */
@@ -110,19 +110,18 @@ public class JsonServlet extends WebSocketServlet {
      * <li>{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}</li>
      * <li>[{"type":"sensor","data":{"name":"IS22","userName":"FarEast","comment":null,"inverted":false,"state":4}}]</li>
      * </ul>
-     * Note that data will vary for each type.
+     * Note that data will vary for each type. Note that if an array is returned
+     * when requesting a single object, the client must resolve the multiple
+     * objects in the array, since it is possible for plugins to JMRI to provide
+     * their own response, and JMRI is incapable of judging the correctness of
+     * the plugin's response.
      * 
-     * Note that if an array is returned when requesting a single object, the
-     * client must resolve the multiple objects in the array, since it is
-     * possible for plugins to JMRI to provide their own response, and JMRI is
-     * incapable of judging the correctness of the plugin's response.
-     * 
-     * @param request an HttpServletRequest object that contains the request the
-     *            client has made of the servlet
+     * @param request  an HttpServletRequest object that contains the request
+     *                 the client has made of the servlet
      * @param response an HttpServletResponse object that contains the response
-     *            the servlet sends to the client
+     *                 the servlet sends to the client
      * @throws java.io.IOException if an input or output error is detected when
-     *             the servlet handles the GET request
+     *                             the servlet handles the GET request
      */
     @Override
     protected void doGet(final HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -132,18 +131,18 @@ public class JsonServlet extends WebSocketServlet {
 
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String[] rest = path;
-        if (path.length >= 1 && jsonRequest.version.equals(path[0])) {
+        if (path.length > 1 && jsonRequest.version.equals(path[1])) {
             rest = Arrays.copyOfRange(path, 1, path.length);
         }
 
         if (request.getAttribute("result") != null) {
             JsonNode result = (JsonNode) request.getAttribute("result");
-            int code = result.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
+            // use HTTP error codes when possible
+            int code = result.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK);
             sendMessage(response, code, result, jsonRequest);
             return;
         }
-
-        String type = (rest.length > 1) ? URLDecoder.decode(rest[0], UTF8) : null;
+        String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
         if (type != null && !type.isEmpty()) {
             response.setContentType(UTF8_APPLICATION_JSON);
             InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
@@ -153,7 +152,8 @@ public class JsonServlet extends WebSocketServlet {
                 String value = URLDecoder.decode(entry.getValue()[0], UTF8);
                 log.debug("Setting parameter {} to {}", entry.getKey(), value);
                 try {
-                    parameters.setAll((ObjectNode) mapper.readTree(String.format("{\"%s\":%s}", entry.getKey(), value)));
+                    parameters
+                            .setAll((ObjectNode) mapper.readTree(String.format("{\"%s\":%s}", entry.getKey(), value)));
                 } catch (JsonParseException ex) {
                     log.error("Unable to parse JSON {\"{}\":{}}", entry.getKey(), value);
                 }
@@ -161,7 +161,7 @@ public class JsonServlet extends WebSocketServlet {
             JsonNode reply = null;
             try {
                 if (name == null) {
-                    if (services.get(type) != null) {
+                    if (services.get(jsonRequest.version).get(type) != null) {
                         ArrayList<JsonNode> lists = new ArrayList<>();
                         ArrayNode array = mapper.createArrayNode();
                         JsonException exception = null;
@@ -177,7 +177,8 @@ public class JsonServlet extends WebSocketServlet {
                                 if (exception != null) {
                                     throw exception;
                                 }
-                                reply = JsonHttpService.message(mapper, array, null, jsonRequest.id); // either empty array or object with empty data
+                                // either empty array or object with empty data
+                                reply = JsonHttpService.message(mapper, array, null, jsonRequest.id);
                                 break;
                             case 1:
                                 reply = lists.get(0);
@@ -204,7 +205,7 @@ public class JsonServlet extends WebSocketServlet {
                                 Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), jsonRequest.id);
                     }
                 } else {
-                    if (services.get(type) != null) {
+                    if (services.get(jsonRequest.version).get(type) != null) {
                         ArrayNode array = mapper.createArrayNode();
                         JsonException exception = null;
                         try {
@@ -238,7 +239,8 @@ public class JsonServlet extends WebSocketServlet {
             } catch (JsonException ex) {
                 reply = ex.getJsonMessage();
             }
-            int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
+            // use HTTP error codes when possible
+            int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK);
             sendMessage(response, code, reply, jsonRequest);
         } else {
             ServletUtil util = InstanceManager.getDefault(ServletUtil.class);
@@ -264,7 +266,7 @@ public class JsonServlet extends WebSocketServlet {
 
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String[] rest = path;
-        if (path.length >= 1 && jsonRequest.version.equals(path[0])) {
+        if (path.length >= 1 && jsonRequest.version.equals(path[1])) {
             rest = Arrays.copyOfRange(path, 1, path.length);
         }
 
@@ -296,7 +298,8 @@ public class JsonServlet extends WebSocketServlet {
                 }
             }
             if (type != null) {
-                // for historical reasons, set the name to POWER on a power request
+                // for historical reasons, set the name to POWER on a power
+                // request
                 if (type.equals(POWER)) {
                     name = POWER;
                 } else if (name == null) {
@@ -304,7 +307,7 @@ public class JsonServlet extends WebSocketServlet {
                 }
                 log.debug("POST operation for {}/{} with {}", type, name, data);
                 if (name != null) {
-                    if (services.get(type) != null) {
+                    if (services.get(jsonRequest.version).get(type) != null) {
                         log.debug("Using data: {}", data);
                         ArrayNode array = mapper.createArrayNode();
                         JsonException exception = null;
@@ -337,16 +340,19 @@ public class JsonServlet extends WebSocketServlet {
                     }
                 } else {
                     log.error("Name must be defined.");
-                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Name must be defined.", id); // Need to I18N
+                    // TODO: I18N
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Name must be defined.", id);
                 }
             } else {
                 log.warn("Type not specified.");
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified.", id); // Need to I18N
+                // TODO: I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified.", id);
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
         }
-        int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
+        // use HTTP error codes when possible
+        int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK);
         sendMessage(response, code, reply, jsonRequest);
     }
 
@@ -361,7 +367,7 @@ public class JsonServlet extends WebSocketServlet {
 
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String[] rest = path;
-        if (path.length >= 1 && jsonRequest.version.equals(path[0])) {
+        if (path.length >= 1 && jsonRequest.version.equals(path[1])) {
             rest = Arrays.copyOfRange(path, 1, path.length);
         }
 
@@ -376,17 +382,19 @@ public class JsonServlet extends WebSocketServlet {
                     data = data.path(DATA);
                 }
             } else {
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "PUT request must be a JSON object", jsonRequest.id); // need to I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "PUT request must be a JSON object",
+                        jsonRequest.id); // need to I18N
             }
             if (type != null) {
-                // for historical reasons, set the name to POWER on a power request
+                // for historical reasons, set the name to POWER on a power
+                // request
                 if (type.equals(POWER)) {
                     name = POWER;
                 } else if (name == null) {
                     name = data.path(NAME).asText();
                 }
                 if (name != null) {
-                    if (services.get(type) != null) {
+                    if (services.get(jsonRequest.version).get(type) != null) {
                         ArrayNode array = mapper.createArrayNode();
                         JsonException exception = null;
                         try {
@@ -413,7 +421,8 @@ public class JsonServlet extends WebSocketServlet {
                     }
                     if (reply == null) {
                         // not a creatable item
-                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, type + " is not a creatable type", jsonRequest.id); // need to I18N
+                        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, type + " is not a creatable type",
+                                jsonRequest.id); // need to I18N
                     }
                 } else {
                     log.warn("Type {} unknown.", type);
@@ -422,12 +431,14 @@ public class JsonServlet extends WebSocketServlet {
                 }
             } else {
                 log.warn("Type not specified.");
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified.", jsonRequest.id); // Need to I18N
+                // TODO: I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified.", jsonRequest.id);
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
         }
-        int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
+        // use HTTP error codes when possible
+        int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK);
         sendMessage(response, code, reply, jsonRequest);
     }
 
@@ -443,7 +454,7 @@ public class JsonServlet extends WebSocketServlet {
 
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
         String[] rest = path;
-        if (path.length >= 1 && jsonRequest.version.equals(path[0])) {
+        if (path.length >= 1 && jsonRequest.version.equals(path[1])) {
             rest = Arrays.copyOfRange(path, 1, path.length);
         }
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
@@ -452,7 +463,8 @@ public class JsonServlet extends WebSocketServlet {
         try {
             if (type != null) {
                 if (name == null) {
-                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "name must be specified", jsonRequest.id); // need to I18N
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "name must be specified",
+                            jsonRequest.id); // need to I18N
                 }
                 JsonNode data = mapper.createObjectNode();
                 if (request.getContentType().contains(APPLICATION_JSON)) {
@@ -466,12 +478,14 @@ public class JsonServlet extends WebSocketServlet {
                 }
             } else {
                 log.debug("Type not specified.");
-                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified.", jsonRequest.id); // Need to I18N
+                // TODO: I18N
+                throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Type must be specified.", jsonRequest.id);
             }
         } catch (JsonException ex) {
             reply = ex.getJsonMessage();
         }
-        int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK); // use HTTP error codes when possible
+        // use HTTP error codes when possible
+        int code = reply.path(DATA).path(CODE).asInt(HttpServletResponse.SC_OK);
         // only include a response body if something went wrong
         if (code != HttpServletResponse.SC_OK) {
             sendMessage(response, code, reply, jsonRequest);
@@ -486,16 +500,19 @@ public class JsonServlet extends WebSocketServlet {
      */
     private JsonRequest createJsonRequest(HttpServletRequest request) {
         int id = 0;
-        try {
-            id = Integer.parseInt(request.getParameter(ID));
-        } catch (NumberFormatException ex) {
-            id = 0;
+        String version = V5;
+        String idParameter = request.getParameter(ID);
+        if (idParameter != null) {
+            try {
+                id = Integer.parseInt(idParameter);
+            } catch (NumberFormatException ex) {
+                id = 0;
+            }
         }
 
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
-        String version = V5;
-        if (path.length >= 1 && VERSIONS.stream().anyMatch(v -> v.equals(path[0]))) {
-            version = path[0];
+        if (path.length > 1 && VERSIONS.stream().anyMatch(v -> v.equals(path[1]))) {
+            version = path[1];
         }
         return new JsonRequest(request.getLocale(), version, id);
     }
@@ -509,15 +526,16 @@ public class JsonServlet extends WebSocketServlet {
      * if the message is not schema valid.
      *
      * @param response the HTTP response
-     * @param code the HTTP response code
-     * @param message the message to send
-     * @param request the JSON request
+     * @param code     the HTTP response code
+     * @param message  the message to send
+     * @param request  the JSON request
      * @throws IOException if unable to send
      */
-    private void sendMessage(@Nonnull HttpServletResponse response, int code, @Nonnull JsonNode message, @Nonnull JsonRequest request) throws IOException {
+    private void sendMessage(@Nonnull HttpServletResponse response, int code, @Nonnull JsonNode message,
+            @Nonnull JsonRequest request) throws IOException {
         if (preferences.getValidateServerMessages()) {
             try {
-                InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(message, true,request);
+                InstanceManager.getDefault(JsonSchemaServiceCache.class).validateMessage(message, true, request);
             } catch (JsonException ex) {
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 response.getWriter().write(mapper.writeValueAsString(ex.getJsonMessage()));
