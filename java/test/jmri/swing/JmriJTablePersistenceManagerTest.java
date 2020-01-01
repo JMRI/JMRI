@@ -527,7 +527,6 @@ public class JmriJTablePersistenceManagerTest {
      * Test of getDirty method, of class JmriJTablePersistenceManager.
      */
     @Test
-    @SuppressWarnings("deprecation")
     public void testGetDirty() {
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
         JTable test = testTable("test");
@@ -545,7 +544,6 @@ public class JmriJTablePersistenceManagerTest {
      * JmriJTablePersistenceManager.
      */
     @Test
-    @SuppressWarnings("deprecation")
     public void testSetTableColumnPreferences() {
         JTable table = testTable("test");
         JmriJTablePersistenceManagerSpy instance = new JmriJTablePersistenceManagerSpy();
