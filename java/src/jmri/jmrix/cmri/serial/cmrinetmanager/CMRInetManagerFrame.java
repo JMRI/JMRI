@@ -11,8 +11,6 @@ import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.serialmon.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Frame for a table view to manage a CMRInet network.
@@ -29,16 +27,6 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     public int selNodeNum = 0;  // Address (ua) of selected Node
 
     protected int selectedNodeAddr = -1;  //c2
-
-    // node select pane items
-    JLabel nodeLabel = new JLabel(Bundle.getMessage("NodeBoxLabel")+" ");
-    JComboBox nodeSelBox = new JComboBox();
-
-    JLabel nodeNameText = new JLabel(Bundle.getMessage("NodeBoxLabel"));  //c2 rb.getString("NodeBoxLabel");
-    JComboBox editBox = new JComboBox();
-
-    // network controls panel
-    protected JPanel networkControlsPanel = null;
 
     // node table pane items
     protected JPanel pollListPanel = null;
@@ -60,7 +48,6 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     public CMRInetManagerFrame(CMRISystemConnectionMemo memo) {
         super();
 	    _memo = memo;
-        //addHelpMenu("package.jmri.jmrix.cmri.serial.cmrinetmanager.CMRInetManagerFrame", true); // duplicate, see initComponents()
     }
 
     protected javax.swing.JTextField pollIntervalField = new javax.swing.JTextField();
@@ -421,6 +408,6 @@ public class CMRInetManagerFrame extends jmri.util.JmriJFrame {
     private String[] nodeTypes = {"--","SMINI","SUSIC","CPNODE","PiNODE"};
     private String[] pollStatus = {"ERROR","IDLE","POLLING","TIMEOUT","INIT"};
 
-    private final static Logger log = LoggerFactory.getLogger(CMRInetManagerFrame.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CMRInetManagerFrame.class);
 
 }
