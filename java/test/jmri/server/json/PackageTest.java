@@ -52,7 +52,8 @@ import org.junit.runners.Suite.SuiteClasses;
     JsonServerActionTest.class,
     JsonServerPreferencesPanelTest.class,
     JsonServerPreferencesTest.class,
-    JsonServerTest.class
+    JsonServerTest.class,
+    JsonServerStartupActionFactoryTest.class
 })
 public class PackageTest {
 }
