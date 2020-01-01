@@ -3,11 +3,8 @@ package jmri.jmrit.logixng;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
 import java.io.StringWriter;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 import javax.annotation.CheckForNull;
@@ -289,11 +286,9 @@ public abstract class AbstractBaseTestBase {
             parent = parent.getParent();
         }
         if (parent != null) {
-//            ((MaleSocket)_baseMaleSocket.getParent()).setEnabled(false);
             ((MaleSocket)parent).setEnabled(false);
             Assert.assertFalse("_baseMaleSocket is not active", _baseMaleSocket.isActive());
             ((MaleSocket)parent).setEnabled(true);
-//            ((MaleSocket)_baseMaleSocket.getParent()).setEnabled(true);
         }
         
         Assert.assertTrue("_baseMaleSocket is active", _baseMaleSocket.isActive());

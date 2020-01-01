@@ -24,8 +24,8 @@ import org.slf4j.LoggerFactory;
  */
 public class Timer extends AbstractDigitalExpression {
 
-    private java.util.Timer _timer;
-    private TimerTask _timerTask;
+    private final java.util.Timer _timer;
+    private MyTimerTask _timerTask;
     private TimerType _timerType = TimerType.WAIT_ONCE_TRIG_ONCE;
     private boolean _listenersAreRegistered = false;
     private final AtomicReference<TimerStatus> _timerStatusRef = new AtomicReference<>(TimerStatus.NOT_STARTED);
@@ -85,7 +85,6 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public boolean evaluate() {
-//        System.out.format("Timer.evaluate(). _timerStatus: %s%n", _timerStatusRef.get().name());
         boolean result = false;
         switch (_timerType) {
             case WAIT_ONCE_TRIG_ONCE:
@@ -113,7 +112,6 @@ public class Timer extends AbstractDigitalExpression {
                 if (_timerStatusRef.get() == TimerStatus.NOT_STARTED) {
                     startTimer();
                 } else if (_timerStatusRef.get() == TimerStatus.FINISHED) {
-//                    _timerStatusRef.set(TimerStatus.STARTED);
                     startTimer();
                     result = true;
                 }
@@ -133,29 +131,47 @@ public class Timer extends AbstractDigitalExpression {
                 throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
         }
         
-//        System.out.format("Timer.evaluate(): result: %b%n", result);
         return result;
     }
 
     /** {@inheritDoc} */
     @Override
     public void reset() {
+        // stopTimer() will not return until the timer task is cancelled and stopped.
         stopTimer();
+        
         _onOrOff = false;
         _timerStatusRef.set(TimerStatus.NOT_STARTED);
         getConditionalNG().execute();
     }
     
-    private TimerTask getNewTimerTask() {
+    /**
+     * Get a new timer task.
+     * I had some concurrency errors in about 1 of 20 times of running TimerTest.
+     * The call _timerTask.cancel() return even if the task is still running,
+     * so we are not guaranteed that after the call to _timerTask.cancel(),
+     * the _timerTask is completed.
+     * This code ensures that we don't return from this method until _timerTask
+     * is cancelled and that it's not running any more. / Daniel Bergqvist
+     */
+    private MyTimerTask getNewTimerTask() {
+        final Timer timer = this;
         final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
         
-        if (c == null) throw new NullPointerException("getConditionalNG() returns null");
-        
-        return new TimerTask() {
+        return new MyTimerTask() {
             @Override
             public void run() {
+                synchronized(timer) {
+                    if (_stopTimer) return;
+                    _timerIsRunning = true;
+                }
+                
                 _timerStatusRef.set(TimerStatus.FINISHED);
                 c.execute();
+                
+                synchronized(timer) {
+                    _timerIsRunning = false;
+                }
             }
         };
     }
@@ -166,20 +182,6 @@ public class Timer extends AbstractDigitalExpression {
 
             _timerTask = getNewTimerTask();
             _timer.schedule(_timerTask, delay);
-/*            
-            try {
-                if (_timerTask != null) _timerTask.cancel();
-                
-                _timerTask = getNewTimerTask();
-                _timer.schedule(_timerTask, delay);
-            } catch (IllegalStateException e) {
-                _timerTask.cancel();
-                _timer.cancel();
-                _timerTask = getNewTimerTask();
-                _timer = new java.util.Timer("LogixNG ExpressionTimer timer thread", true);
-                _timer.schedule(_timerTask, _delayOff);
-            }
-*/            
         }
     }
     
@@ -204,10 +206,49 @@ public class Timer extends AbstractDigitalExpression {
         }
     }
     
+    /**
+     * Stop the timer.
+     * This method will not return until the timer task is cancelled and stopped.
+     * I had some concurrency errors in about 1 of 20 times of running TimerTest.
+     * The call _timerTask.cancel() return even if the task is still running,
+     * so we are not guaranteed that after the call to _timerTask.cancel(),
+     * the _timerTask is completed.
+     * This code ensures that we don't return from this method until _timerTask
+     * is cancelled and that it's not running any more. / Daniel Bergqvist
+     */
+    @SuppressWarnings("SleepWhileInLoop")
     private void stopTimer() {
+        int count = 1;
+        
+        if (_timerTask == null) return;
+        
         synchronized(this) {
-            if (_timerTask != null) _timerTask.cancel();
+            _timerTask._stopTimer = true;
+            _timerTask.cancel();
+
+            // If the timer task is not running, we don't have
+            // to wait for it to finish.
+            if (!_timerTask._timerIsRunning) return;
         }
+        
+        // Try max 50 times
+        while (count <= 50) {
+            synchronized(this) {
+                if (!_timerTask._timerIsRunning) {
+                    _timerTask = null;
+                    return;
+                }
+            }
+            
+            try {
+                Thread.sleep(20);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+            count++;
+        }
+        
+        throw new RuntimeException("Cannot stop timer");
     }
     
     @Override
@@ -265,6 +306,7 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public void unregisterListenersForThisClass() {
+        // stopTimer() will not return until the timer task is cancelled and stopped.
         stopTimer();
         _listenersAreRegistered = false;
     }
@@ -310,6 +352,13 @@ public class Timer extends AbstractDigitalExpression {
         STARTED,
         FINISHED,
         WAIT_FOR_RESET,
+    }
+    
+    
+    private static abstract class MyTimerTask extends TimerTask {
+        
+        boolean _timerIsRunning = false;
+        boolean _stopTimer = false;
     }
     
     

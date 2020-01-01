@@ -1,8 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions;
 
 import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.Category;
@@ -20,12 +18,9 @@ import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import jmri.jmrit.logixng.digital.expressions.Timer.TimerType;
 import jmri.util.JUnitAppender;
 import jmri.util.junit.annotations.ToDo;
-import jmri.util.junit.rules.RetryRule;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Rule;
 import org.junit.Test;
 
 /**
@@ -35,11 +30,6 @@ import org.junit.Test;
  */
 public class TimerTest extends AbstractDigitalExpressionTestBase {
 
-    // This test fail maybe 1 of 20 and I'm not sure why, so I have added
-    // a retry rule. /Daniel Bergqvist
-    @Rule
-    public RetryRule retryRule = new RetryRule(1); // allow 1 retry
-    
     private LogixNG _logixNG;
     private ConditionalNG _conditionalNG;
     private Timer _expressionTimer;
