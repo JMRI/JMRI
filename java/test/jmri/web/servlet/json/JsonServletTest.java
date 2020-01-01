@@ -89,24 +89,51 @@ public class JsonServletTest {
     }
 
     /**
-     * Test doGet() with a passed in expected result and ID parameter.
+     * Test doGet() with a passed in expected result and a good ID parameter.
      *
      * @throws java.io.IOException unexpected failure in test context
      * @throws javax.servlet.ServletException unexpected failure in test context
      */
     @Test
-    public void testDoGetResultWithId() throws IOException, ServletException {
+    public void testDoGetPowerWithGoodId() throws IOException, ServletException {
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        request.setRequestURI("/json/power");
         MockHttpServletResponse response = new MockHttpServletResponse();
         JsonServlet instance = new MockJsonServlet();
         instance.init(config);
-        ObjectNode result = new ObjectMapper().createObjectNode();
         // test a schema valid message with validation on
-        result.put("type", "pong");
-        request.setAttribute("result", result);
         request.addParameter("id", "42");
         instance.doGet(request, response);
         assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
-        assertEquals("Contains result", result.toString(), response.getContentAsString());
+        JsonNode node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is object", node.isObject());
+        assertEquals("Node type is list", JSON.LIST, node.path(JSON.TYPE).asText());
+        assertTrue("Node data is array", node.path(JSON.DATA).isArray());
+        assertEquals("Node ID is 42", 42, node.path(JSON.ID).asInt());
+        assertEquals("Node data has 1 entry", 1, node.path(JSON.DATA).size());
+    }
+
+    /**
+     * Test doGet() with a passed in expected result and a bad ID parameter.
+     *
+     * @throws java.io.IOException unexpected failure in test context
+     * @throws javax.servlet.ServletException unexpected failure in test context
+     */
+    @Test
+    public void testDoGetPowerWithBadId() throws IOException, ServletException {
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        request.setRequestURI("/json/power");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        JsonServlet instance = new MockJsonServlet();
+        instance.init(config);
+        // test a schema valid message with validation on
+        request.addParameter("id", "bad-parameter");
+        instance.doGet(request, response);
+        assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        JsonNode node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is array", node.isArray());
+        assertEquals("Array has 1 entry", 1, node.size());
+        JUnitAppender.assertErrorMessage("Unable to parse JSON {\"id\":bad-parameter}");
     }
 
     /**

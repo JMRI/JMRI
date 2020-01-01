@@ -14,7 +14,7 @@ import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 
-import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -101,9 +101,9 @@ public class JsonServlet extends WebSocketServlet {
     /**
      * Handle HTTP get requests for JSON data. Examples:
      * <ul>
-     * <li>/json/sensor/IS22 (return data for sensor with system name
+     * <li>/json/v5/sensor/IS22 (return data for sensor with system name
      * "IS22")</li>
-     * <li>/json/sensor (returns a list of all sensors known to JMRI)</li>
+     * <li>/json/v5/sensor (returns a list of all sensors known to JMRI)</li>
      * </ul>
      * sample responses:
      * <ul>
@@ -115,6 +115,12 @@ public class JsonServlet extends WebSocketServlet {
      * objects in the array, since it is possible for plugins to JMRI to provide
      * their own response, and JMRI is incapable of judging the correctness of
      * the plugin's response.
+     * <p>
+     * If the request includes a {@literal result} attribute, the content of the
+     * response will be solely the contents of that attribute. This is an aid to
+     * the development and testing of JMRI and clients, but is not considered a
+     * usable feature in production. This capability may be removed without
+     * notice if it is deemed too complex to maintain.
      * 
      * @param request  an HttpServletRequest object that contains the request
      *                 the client has made of the servlet
@@ -125,8 +131,7 @@ public class JsonServlet extends WebSocketServlet {
      */
     @Override
     protected void doGet(final HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        configureResponse(response);
         JsonRequest jsonRequest = createJsonRequest(request);
 
         String[] path = request.getRequestURI().substring(request.getContextPath().length()).split("/"); // NOI18N
@@ -135,6 +140,7 @@ public class JsonServlet extends WebSocketServlet {
             rest = Arrays.copyOfRange(path, 1, path.length);
         }
 
+        // echo the contents of result if present and abort further processing
         if (request.getAttribute("result") != null) {
             JsonNode result = (JsonNode) request.getAttribute("result");
             // use HTTP error codes when possible
@@ -142,6 +148,7 @@ public class JsonServlet extends WebSocketServlet {
             sendMessage(response, code, result, jsonRequest);
             return;
         }
+
         String type = (rest.length > 1) ? URLDecoder.decode(rest[1], UTF8) : null;
         if (type != null && !type.isEmpty()) {
             response.setContentType(UTF8_APPLICATION_JSON);
@@ -154,7 +161,7 @@ public class JsonServlet extends WebSocketServlet {
                 try {
                     parameters
                             .setAll((ObjectNode) mapper.readTree(String.format("{\"%s\":%s}", entry.getKey(), value)));
-                } catch (JsonParseException ex) {
+                } catch (JsonProcessingException ex) {
                     log.error("Unable to parse JSON {\"{}\":{}}", entry.getKey(), value);
                 }
             }
@@ -186,13 +193,9 @@ public class JsonServlet extends WebSocketServlet {
                             default:
                                 for (JsonNode list : lists) {
                                     if (list.isArray()) {
-                                        list.forEach((item) -> {
-                                            array.add(item);
-                                        });
+                                        list.forEach(array::add);
                                     } else if (list.path(DATA).isArray()) {
-                                        list.path(DATA).forEach((item) -> {
-                                            array.add(item);
-                                        });
+                                        list.path(DATA).forEach(array::add);
                                     }
                                 }
                                 reply = JsonHttpService.message(mapper, array, null, jsonRequest.id);
@@ -200,7 +203,7 @@ public class JsonServlet extends WebSocketServlet {
                         }
                     }
                     if (reply == null) {
-                        log.warn("Type {} unknown.", type);
+                        log.warn("Requested type {} unknown.", type);
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                                 Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), jsonRequest.id);
                     }
@@ -257,9 +260,7 @@ public class JsonServlet extends WebSocketServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType(UTF8_APPLICATION_JSON);
-        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        configureResponse(response);
         InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
 
         JsonRequest jsonRequest = createJsonRequest(request);
@@ -334,7 +335,7 @@ public class JsonServlet extends WebSocketServlet {
                         }
                     }
                     if (reply == null) {
-                        log.warn("Type {} unknown.", type);
+                        log.warn("Requested type {} unknown.", type);
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                                 Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), id);
                     }
@@ -358,9 +359,7 @@ public class JsonServlet extends WebSocketServlet {
 
     @Override
     protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType(UTF8_APPLICATION_JSON);
-        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        configureResponse(response);
         InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
 
         JsonRequest jsonRequest = createJsonRequest(request);
@@ -425,7 +424,7 @@ public class JsonServlet extends WebSocketServlet {
                                 jsonRequest.id); // need to I18N
                     }
                 } else {
-                    log.warn("Type {} unknown.", type);
+                    log.warn("Requested type {} unknown.", type);
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
                             Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), jsonRequest.id);
                 }
@@ -445,9 +444,7 @@ public class JsonServlet extends WebSocketServlet {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setContentType(UTF8_APPLICATION_JSON);
-        response.setHeader("Connection", "Keep-Alive"); // NOI18N
+        configureResponse(response);
         InstanceManager.getDefault(ServletUtil.class).setNonCachingHeaders(response);
 
         JsonRequest jsonRequest = createJsonRequest(request);
@@ -515,6 +512,17 @@ public class JsonServlet extends WebSocketServlet {
             version = path[1];
         }
         return new JsonRequest(request.getLocale(), version, id);
+    }
+
+    /**
+     * Configure common settings for the response.
+     * 
+     * @param response the response to configure
+     */
+    private void configureResponse(HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType(UTF8_APPLICATION_JSON);
+        response.setHeader("Connection", "Keep-Alive"); // NOI18N
     }
 
     /**
