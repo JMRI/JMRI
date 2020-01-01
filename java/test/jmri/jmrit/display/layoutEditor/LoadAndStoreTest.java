@@ -32,7 +32,7 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     @Before
     @Override
-    public void setUp() throws Exception {
+    public void setUp() {
         super.setUp();
         JUnitUtil.initLayoutBlockManager();
     }
