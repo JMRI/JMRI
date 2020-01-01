@@ -28,7 +28,8 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
                 JSON.SYSTEM_CONNECTION,
                 JSON.SYSTEM_CONNECTIONS,
                 JSON.CONFIG_PROFILE,
-                JSON.CONFIG_PROFILES
+                JSON.CONFIG_PROFILES,
+                JSON.VERSION
             };
     }
 
@@ -43,8 +44,7 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
             JSON.NETWORK_SERVICE,
             JSON.PANEL,
             JSON.PONG,
-            JSON.SYSTEM_CONNECTION,
-            JSON.VERSION};
+            JSON.SYSTEM_CONNECTION};
     }
 
     @Override
