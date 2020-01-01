@@ -619,6 +619,7 @@ public abstract class LayoutTrack {
      *
      * @return the list of Layout Connectivity objects
      */
+    @CheckReturnValue
     protected abstract List<LayoutConnectivity> getLayoutConnectivity();
 
     /**

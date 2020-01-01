@@ -10,6 +10,7 @@ import java.awt.event.*;
 import java.awt.geom.*;
 import java.util.*;
 import javax.annotation.CheckForNull;
+import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
 import javax.swing.*;
 import jmri.*;
@@ -1658,6 +1659,7 @@ public class LevelXing extends LayoutTrack {
      * {@inheritDoc}
      */
     @Override
+    @CheckReturnValue
     protected ArrayList<LayoutConnectivity> getLayoutConnectivity() {
         // nothing to see here... move along...
         return null;
