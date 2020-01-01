@@ -307,8 +307,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      *                   a default <code>Frame</code> is used
      * @return the validated sensor
      */
-    @CheckReturnValue
-    public Sensor validateSensor(@Nullable String sensorName, @Nullable Component openFrame) {
+    public Sensor validateSensor(String sensorName, Component openFrame) {
         //check if anything entered
         if ((sensorName == null) || sensorName.isEmpty()) {
             //no sensor name entered
