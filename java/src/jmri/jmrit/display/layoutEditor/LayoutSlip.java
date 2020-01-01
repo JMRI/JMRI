@@ -1666,18 +1666,17 @@ public class LayoutSlip extends LayoutTurnout {
                     && (getTurnoutBState() == tso.getTurnoutBState()));
         }
 
-    /**
-     * Hash on the header
-     */
-    @Override
-    public int hashCode() {
-        int result = 7;
-        result = (37 * result) + getTurnoutAState();
-        result = (37 * result) + getTurnoutBState();
+        /**
+         * Hash on the header
+         */
+        @Override
+        public int hashCode() {
+            int result = 7;
+            result = (37 * result) + getTurnoutAState();
+            result = (37 * result) + getTurnoutBState();
 
-        return result;
-    }
-
+            return result;
+        }
     }   // class TurnoutState
 
     /*
@@ -1846,7 +1845,6 @@ public class LayoutSlip extends LayoutTurnout {
      * {@inheritDoc}
      */
     @Override
-    @Nonnull
     protected List<LayoutConnectivity> getLayoutConnectivity() {
         List<LayoutConnectivity> results = new ArrayList<>();
 
