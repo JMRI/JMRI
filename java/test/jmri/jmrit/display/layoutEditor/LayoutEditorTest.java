@@ -23,11 +23,11 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  */
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+    @Rule   // 10 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(10);
 
-    @Rule
-    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
+    @Rule   // allow 3 retries
+    public RetryRule retryRule = new RetryRule(3);
 
     @Before
     @Override
