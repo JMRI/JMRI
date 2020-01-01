@@ -71,13 +71,14 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
         if ((curNode = (XBeeNode) tc.getNodeFromName(name)) == null) {
-            try {
-                curNode = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(name));
-            } catch (java.lang.NumberFormatException nfe) {
-                // we couldn't find the node
-                throw new IllegalArgumentException("Can't convert " +  // NOI18N
-                        systemName +
-                        " to XBee sensor address"); // NOI18N
+            if ((curNode = (XBeeNode) tc.getNodeFromAddress(name)) == null) {
+                try {
+                    curNode = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(name));
+                } catch (java.lang.NumberFormatException nfe) {
+                    // we couldn't find the node
+                    throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                            systemName + " to XBee sensor address"); // NOI18N
+                }
             }
         }
         int pin = pinFromSystemName(systemName);

@@ -42,6 +42,7 @@ abstract public class RfidSensorManager extends jmri.managers.AbstractSensorMana
 //        RfidSensor r = new RfidSensor(systemName, userName);
 //        return r;
 //    }
+
     @Override
     public void message(RfidMessage m) {
         log.warn("Unexpected message received: {}", m);
