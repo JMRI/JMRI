@@ -278,7 +278,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
                 for (int i = 0; i < descnode.jjtGetNumChildren(); i++) {
                     jmri.jmrix.srcp.parser.SimpleNode child
                             = (jmri.jmrix.srcp.parser.SimpleNode) descnode.jjtGetChild(i);
-                    log.debug("child node type {} value {}", child.toString(), (String) child.jjtGetValue());
+                    log.debug("child node type {} value {}", child.toString(), child.jjtGetValue());
                     if (child instanceof jmri.jmrix.srcp.parser.ASTdevicegroup) {
                         String DeviceType = (String) child.jjtGetValue();
                         switch (DeviceType) {
@@ -304,6 +304,9 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
                                 break;
                             case "TIME":
                                 setClockControl(new SRCPClockControl(this));
+                                break;
+                            default:
+                                log.warn("unexpected DeviceType");
                                 break;
                         }
                     }
