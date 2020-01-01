@@ -121,8 +121,8 @@
  * <strong>must</strong> be the system name, not the user name, of the requested
  * object (usually a {@link jmri.NamedBean}), except when creating an object
  * using a {@code put} method and the {@link jmri.Manager} for that class of
- * NamedBean supports creating a NamedBean without a system name. It is
- * generally safer to always use system names.
+ * NamedBean supports creating a NamedBean using an automatically generated
+ * system name. It is generally safer to always use system names.
  * </p>
  * <h2 id="versions">Versions</h2>
  * <p>
@@ -163,13 +163,25 @@
  * <dd>
  * <ul>
  * <li>Adds {@code /json/version} RESTful API endpoint to list JSON versions
- * supported by the running JMRI instance.</li>
+ * supported by the running JMRI instance. This endpoint is <em>not</em>
+ * versioned like other endpoints.</li>
+ * <li>Adds the {@code version} type the socket APIs to allow a client to query
+ * the protocol version currently in use on the socket over which the request
+ * was made.</li>
+ * <li>Adds the {@code version} property to {@code hello} objects to allow a
+ * client to specify a preferred version and the server to notify the client of
+ * the version in use.</li>
+ * <li>Allows RESTful API endpoints for version 5 to explicitly request a
+ * protocol version using {@code /json/v#/type/...} or implicitly expect the use
+ * of version 5 using {@code /json/type/...}. Versions 6 and newer will always
+ * require explicitly requiring the version in RESTful API endpoints.</li>
  * </ul>
  * </dd>
  * <dt>5.2.0 (JMRI 4.17.7)</dt>
  * <dd>
  * <ul>
- * <li>memory and block now return idTag and reporter values as json objects</li>
+ * <li>memory and block now return idTag and reporter values as json
+ * objects</li>
  * <li>for networkService, add userName and change name to mDNS type</li>
  * <li>Add configProfile.isNextProfile</li>
  * <li>several schema fixes</li>
