@@ -770,7 +770,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             //show/hide the help bar
             if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
-                floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
+                if (floatEditHelpPanel != null) {
+                    floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
+                }
             } else {
                 helpBarPanel.setVisible(isEditable() && getShowHelpBar());
             }
@@ -1631,7 +1633,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 if (editToolBarContainerPanel != null) {
                     editToolBarContainerPanel.setVisible(false);
                 }
-                floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
+                if (floatEditHelpPanel != null) {
+                    floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
+                }
             } else {
                 if (floatingEditToolBoxFrame != null) {
                     deletefloatingEditToolBoxFrame();
@@ -6638,7 +6642,9 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //these may not be set up yet...
         if (helpBarPanel != null) {
             if (toolBarSide.equals(ToolBarSide.eFLOAT)) {
-                floatEditHelpPanel.setVisible(editable && getShowHelpBar());
+                if (floatEditHelpPanel != null) {
+                    floatEditHelpPanel.setVisible(isEditable() && getShowHelpBar());
+                }
             } else {
                 helpBarPanel.setVisible(editable && getShowHelpBar());
             }
