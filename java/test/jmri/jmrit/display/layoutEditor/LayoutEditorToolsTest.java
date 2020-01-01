@@ -408,7 +408,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    //@Ignore("NPE during execution due to missing frame")
+    @Ignore("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtLevelXing() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
