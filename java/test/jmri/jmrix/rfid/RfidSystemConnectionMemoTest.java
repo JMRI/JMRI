@@ -42,7 +42,6 @@ public class RfidSystemConnectionMemoTest extends jmri.jmrix.SystemConnectionMem
         memo.setRfidTrafficController(tc);
         RfidSensorManager s = new RfidSensorManager(memo){
             @Override
-            @Nonnull
             protected Sensor createNewSensor(@Nonnull String systemName, String userName){
                return null;
             }

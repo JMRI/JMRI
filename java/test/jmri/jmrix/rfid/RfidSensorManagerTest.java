@@ -18,15 +18,14 @@ import javax.annotation.Nonnull;
  */
 public class RfidSensorManagerTest {
 
-    RfidTrafficController tc = null;
+    private RfidTrafficController tc = null;
 
     @Test
     public void testCtor() {
         RfidSensorManager c = new RfidSensorManager(new RfidSystemConnectionMemo()){
             @Override
-            @Nonnull
             protected Sensor createNewSensor(@Nonnull String systemName, String userName){
-               return null;
+                return null;
             }
             @Override
             public void message(RfidMessage m){}

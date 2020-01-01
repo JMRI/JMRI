@@ -130,7 +130,7 @@ public class AcelaAddress {
             return NameValidity.INVALID;
         }
         if (num >= 0) {
-            // This is a ALnnxxx address
+            // This is an ALnnxxx address
             return NameValidity.VALID;
         } else {
             log.debug("invalid Acela system name: {}", systemName);

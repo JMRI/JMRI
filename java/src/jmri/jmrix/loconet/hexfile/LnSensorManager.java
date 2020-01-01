@@ -26,6 +26,10 @@ public class LnSensorManager extends jmri.jmrix.loconet.LnSensorManager {
     }
 
     // LocoNet-specific methods
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Nonnull
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {

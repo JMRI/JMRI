@@ -26,11 +26,23 @@ public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager
         return (JMRIClientSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor t;
-        int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1)); // .length() only? TODO
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Can't convert " +  // NOI18N
+                    systemName.substring(getSystemPrefix().length() + 1) +
+                    " to JMRIClient sensor address"); // NOI18N
+        }
         t = new JMRIClientSensor(addr, getMemo());
         t.setUserName(userName);
         return t;

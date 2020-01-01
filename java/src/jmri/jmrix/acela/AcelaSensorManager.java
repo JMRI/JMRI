@@ -44,39 +44,44 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      * <p>
      * System name is normalized to ensure uniqueness.
-     *
-     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
     @Nonnull
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        // Validate the systemName
+        if (AcelaAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.INVALID) {
+            log.error("Invalid Sensor system Name format: {}", systemName);
+            throw new IllegalArgumentException("Invalid Sensor System Name format: " + systemName);
+        }
         Sensor s;
-        // TODO: validate the system name
         String sName = systemName;
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid Acela Sensor system name: {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Invalid Acela Sensor system name - " +  // NOI18N
+                    systemName);
         }
         // does this Sensor already exist
         s = getBySystemName(sName);
         if (s != null) {
-            log.error("Sensor with this name already exists: {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Acela Sensor with this name already exists - " +  // NOI18N
+                    systemName);
         }
         // check under alternate name
         String altName = AcelaAddress.convertSystemNameToAlternate(sName, getSystemPrefix());
         s = getBySystemName(altName);
         if (s != null) {
-            log.error("Sensor with name: '{}' already exists as: '{}'", systemName, altName);
-            return null;
+            throw new IllegalArgumentException("Acela Sensor with name  " +  // NOI18N
+                    systemName + " already exists as " + altName);
         }
         // check bit number
         int bit = AcelaAddress.getBitFromSystemName(sName, getSystemPrefix());
         if ((bit < AcelaAddress.MINSENSORADDRESS) || (bit > AcelaAddress.MAXSENSORADDRESS)) {
             log.error("Sensor bit number {} is outside the supported range {}-{}", bit, AcelaAddress.MINSENSORADDRESS, AcelaAddress.MAXSENSORADDRESS);
-            return null;
+            throw new IllegalArgumentException("Sensor bit number " +  // NOI18N
+                    Integer.toString(bit) + " is outside the supported range " + // NOI18N
+                    Integer.toString(AcelaAddress.MAXSENSORADDRESS) + "-" +
+                    Integer.toString(AcelaAddress.MAXSENSORADDRESS));
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
         if (userName == null) {
@@ -92,9 +97,9 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
             return s;
         }
         if (!node.hasActiveSensors) {
-            int newnodeaddress;
-            newnodeaddress = node.getNodeAddress();
-            log.warn("We got the wrong node: {}", newnodeaddress);
+            int newNodeAddress;
+            newNodeAddress = node.getNodeAddress();
+            log.warn("We got the wrong node: {}", newNodeAddress);
             return s;
         }
         // register this sensor with the Acela Node
@@ -219,7 +224,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * Method to register any orphan Sensors when a new Acela Node is created.
+     * Register any orphan Sensors when a new Acela Node is created.
      */
     @SuppressWarnings("deprecation") // needs careful unwinding for Set operations
     public void registerSensorsForNode(AcelaNode node) {

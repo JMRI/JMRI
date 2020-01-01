@@ -34,6 +34,9 @@ abstract public class RfidSensorManager extends jmri.managers.AbstractSensorMana
         super.dispose();
     }
 
+//    /**
+//     * {@inheritDoc}
+//     */
 //        @Nonnull
 //        public Sensor createNewSensor(@Nonnull String systemName, String userName) {
 //        RfidSensor r = new RfidSensor(systemName, userName);

@@ -72,11 +72,25 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * Assumes calling method has checked that a Sensor with this system
+     * name does not already exist.
+     *
+     * @throws IllegalArgumentException if the system name is not in a valid format
+     */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
-        int number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
+        int number = 0;
+        try {
+            number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                    systemName.substring(getSystemPrefix().length() + 1) +
+                    " to NCE sensor address"); // NOI18N
+        }
         Sensor s = new NceSensor(systemName);
         s.setUserName(userName);
 

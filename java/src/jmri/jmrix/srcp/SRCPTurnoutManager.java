@@ -13,8 +13,6 @@ import jmri.Turnout;
  */
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    //private int _bus = 0; // not used, if needed, get bus via {@link SRCPBusConnectionMemo#memo.getBus()}
-
     public SRCPTurnoutManager(SRCPBusConnectionMemo memo) {
         super(memo);
     }

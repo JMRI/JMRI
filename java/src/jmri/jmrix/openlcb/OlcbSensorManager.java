@@ -84,9 +84,14 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
         memo.getTrafficController().addCanListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
@@ -95,7 +100,6 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
             log.error(e.toString());
             throw e;
         }
-
         // OK, make
         OlcbSensor s = new OlcbSensor(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         s.setUserName(userName);

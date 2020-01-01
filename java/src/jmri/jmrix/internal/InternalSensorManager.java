@@ -27,9 +27,9 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     /**
-     * Create an internal (dummy) sensor object
+     * {@inheritDoc}
      *
-     * @return new null
+     * @return a new (dummy) Internal sensor
      */
     @Override
     @Nonnull

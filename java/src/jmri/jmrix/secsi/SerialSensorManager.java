@@ -56,39 +56,38 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * <p>
      * System name is normalized to ensure uniqueness.
      *
-     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
     @Nonnull
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor s;
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid Sensor system name - {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Invalid Secsi Sensor system name - " +  // NOI18N
+                    systemName);
         }
         // does this Sensor already exist
         s = getBySystemName(sName);
         if (s != null) {
-            log.error("Sensor with this name already exists - {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Secsi Sensor with this name already exists - " +  // NOI18N
+                    systemName);
         }
         // check under alternate name
         String altName = SerialAddress.convertSystemNameToAlternate(sName, getSystemPrefix());
         s = getBySystemName(altName);
         if (s != null) {
-            log.error("Sensor with name '{}' already exists as '{}'", systemName, altName);
-            return null;
+            throw new IllegalArgumentException("Secsi Sensor with name  " +  // NOI18N
+                    systemName + " already exists as " + altName);
         }
         // check bit number
         int bit = SerialAddress.getBitFromSystemName(sName, getSystemPrefix());
         if ((bit <= 0) || (bit >= SENSORSPERNODE)) {
-            log.error("Sensor bit number '{}' is outside the supported range, 1-{}",
-                    Integer.toString(bit), Integer.toString(SENSORSPERNODE - 1));
-            return null;
+            throw new IllegalArgumentException("Sensor bit number " +  // NOI18N
+                    Integer.toString(bit) + " is outside the supported range 1-" +
+                    Integer.toString(SENSORSPERNODE - 1));
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
         if (userName == null) {

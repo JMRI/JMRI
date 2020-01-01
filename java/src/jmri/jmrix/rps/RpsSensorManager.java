@@ -36,18 +36,23 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     }
 
     /**
-     * Create a new sensor if all checks are passed.
-     * System name is normalized to ensure uniqueness.
+     * {@inheritDoc}
+     * <p>
+     * System Name is normalized.
+     * Assumes calling method has checked that a Sensor with this system
+     * name does not already exist.
+     *
+     * @throws IllegalArgumentException if the system name is not in a valid format
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         try {
            RpsSensor r = new RpsSensor(systemName, userName, getSystemPrefix());
            Distributor.instance().addMeasurementListener(r);
            return r;
        } catch(java.lang.StringIndexOutOfBoundsException sioe){
-         throw new IllegalArgumentException("Invalid System Name: " + systemName);
+            throw new IllegalArgumentException("Invalid System Name: " + systemName);
        }
     }
 

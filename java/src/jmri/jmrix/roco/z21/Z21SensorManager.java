@@ -58,22 +58,24 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     // Z21 specific methods
+
     /**
-     * Create a new Sensor based on the system name. Assumes calling method has
-     * checked that a Sensor with this system name does not already exist.
+     * {@inheritDoc}
+     * <p>
+     * Assumes calling method has checked that a Sensor with this system
+     * name does not already exist.
      *
-     * @return null if the system name is not in a valid format
+     * @throws IllegalArgumentException if the system name is not in a valid format
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName)  throws IllegalArgumentException {
         if (systemName.contains(":")) {
             // check for CAN format.
             int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
             if (bitNum != -1) {
                 return new Z21CanSensor(systemName, userName, getMemo());
             } else {
-                log.warn("Invalid Sensor name: {} ", systemName);
                 throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
             }
         } else {
@@ -84,7 +86,6 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                 return new Z21RMBusSensor(systemName, userName,
                         getMemo().getTrafficController(), getSystemPrefix());
             } else {
-                log.warn("Invalid Sensor name: {} ", systemName);
                 throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
             }
         }

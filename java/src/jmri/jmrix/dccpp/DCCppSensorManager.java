@@ -56,6 +56,11 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 
     // DCCpp specific methods
 
+    /**
+     * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
     @Nonnull
     public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {

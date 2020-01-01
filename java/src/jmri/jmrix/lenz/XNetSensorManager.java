@@ -53,16 +53,17 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      * Assumes calling method has checked that a Sensor with this
      * system name does not already exist.
      *
-     * @return null if the system name is not in a valid format
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
     @Nonnull
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                    systemName +
+                    " to XNet sensor address"); // NOI18N
         }
         // normalize system name
         String sName = getSystemNamePrefix() + bitNum;

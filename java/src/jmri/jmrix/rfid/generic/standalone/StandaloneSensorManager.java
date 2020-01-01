@@ -37,6 +37,9 @@ public class StandaloneSensorManager extends RfidSensorManager {
         tc.addRfidListener(this);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Nonnull
     protected Sensor createNewSensor(@Nonnull String systemName, String userName) {

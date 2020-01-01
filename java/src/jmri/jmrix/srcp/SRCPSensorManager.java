@@ -13,8 +13,6 @@ import jmri.Sensor;
  */
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
-    //private int _bus = 0; // not used, if needed, get bus via {@link SRCPBusConnectionMemo#memo.getBus()}
-
     public SRCPSensorManager(SRCPBusConnectionMemo memo) {
         super(memo);
     }
@@ -39,11 +37,24 @@ public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
         return (SRCPBusConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor t;
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                    systemName.substring(getSystemPrefix().length() + 1) +
+                    " to SRCP sensor address"); // NOI18N
+        }
         t = new SRCPSensor(addr, getMemo());
         t.setUserName(userName);
 

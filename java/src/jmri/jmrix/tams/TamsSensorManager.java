@@ -66,13 +66,11 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
      * {@inheritDoc}
      * <p>
      * System name is normalized to ensure uniqueness.
-     *
-     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
     @Nonnull
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         TamsTrafficController tc = getMemo().getTrafficController();
         TamsSensor s = new TamsSensor(systemName, userName);
         log.debug("Creating new TamsSensor: {}", systemName);
@@ -90,8 +88,9 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     //log.debug("_ttams: {}", _ttams.toString());
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
-                return null;
+                throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                        systemName.substring(getSystemPrefix().length() + 1) +
+                        " into the Module and port format of nn:xx"); // NOI18N
             }
             Hashtable<Integer, TamsSensor> sensorList = _ttams.get(board);
             try {
@@ -100,8 +99,9 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
                     sensorList.put(channel, s);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
-                return null;
+                throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                        systemName.substring(getSystemPrefix().length() + 1) +
+                        " into the Module and port format of nn:xx"); // NOI18N
             }
             if ((board * 2) > maxSE) {//Check if newly defined board number is higher than what we know
                 maxSE = board * 2;//adjust xSE and inform Tams MC

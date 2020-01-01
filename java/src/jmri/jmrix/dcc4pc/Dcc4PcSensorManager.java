@@ -64,6 +64,9 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         return (Dcc4PcSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Nonnull
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {

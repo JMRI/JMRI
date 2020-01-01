@@ -107,12 +107,6 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         }
         // doesn't exist, make a new one
         s = createNewSensor(systemName, userName);
-
-        // if that failed, blame it on the input arguments
-        if (s == null) {
-            throw new IllegalArgumentException();
-        }
-
         // save in the maps
         register(s);
 
@@ -135,8 +129,9 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     }
 
     /**
-     * Internal method to invoke the factory, after all the logic for returning
-     * an existing Sensor has been invoked.
+     * Internal method to invoke the factory and create a new Sensor based on the system
+     * name and optional user name, after all the logic for returning an existing Sensor
+     * has been invoked.
      *
      * @param systemName the system name to use for the new Sensor
      * @param userName   the optional user name to use for the new Sensor

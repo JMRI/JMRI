@@ -51,13 +51,11 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      * <p>
      * System name is normalized to ensure uniqueness.
-     *
-     * @return null if sensor already exists by that name or an alternate
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
     @Nonnull
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String prefix = getSystemPrefix();
         log.debug("createNewSensor {} {}", systemName, userName);
         Sensor s;
@@ -65,28 +63,28 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
         String sName = SerialAddress.normalizeSystemName(systemName, prefix);
         if (sName.equals("")) {
             // system name is not valid
-            log.error("Invalid Sensor system name - {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Invalid Grapevine Sensor system name - " +  // NOI18N
+                    systemName);
         }
         // does this Sensor already exist
         s = getBySystemName(sName);
         if (s != null) {
-            log.error("Sensor with this name already exists - {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Grapevine Sensor with this name already exists - " +  // NOI18N
+                    systemName);
         }
         // check under alternate name
         String altName = SerialAddress.convertSystemNameToAlternate(sName, prefix);
         s = getBySystemName(altName);
         if (s != null) {
-            log.error("Sensor with name '{}' already exists as '{}'", systemName, altName);
-            return null;
+            throw new IllegalArgumentException("Grapevine Sensor with name  " +  // NOI18N
+                    systemName + " already exists as " + altName);
         }
         // check bit number
         int bit = SerialAddress.getBitFromSystemName(sName, prefix);
         if ((bit <= 0) || (bit >= SENSORSPERNODE)) {
-            log.error("Sensor bit number {} is outside the supported range 1-{}", Integer.toString(bit),
+            throw new IllegalArgumentException("Sensor bit number " +  // NOI18N
+                    Integer.toString(bit) + " is outside the supported range 1-" +
                     Integer.toString(SENSORSPERNODE - 1));
-            return null;
         }
         // Sensor system name is valid and Sensor doesn't exist, make a new one
         if (userName == null) {

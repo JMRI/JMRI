@@ -47,10 +47,12 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
 
     /**
      * {@inheritDoc}
+     *
+     * @throws IllegalArgumentException if the system name is not in a valid format
      */
     @Override
     @Nonnull
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {

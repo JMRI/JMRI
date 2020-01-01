@@ -61,24 +61,23 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     /**
      * {@inheritDoc}
-     *
-     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
     @Nonnull
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
         if ((curNode = (XBeeNode) tc.getNodeFromName(name)) == null) {
-            if ((curNode = (XBeeNode) tc.getNodeFromAddress(name)) == null) {
-                try {
-                    curNode = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(name));
-                } catch (java.lang.NumberFormatException nfe) {
-                    // if there was a number format exception, we couldn't
-                    // find the node.
-                    curNode = null;
-                }
+            try {
+                curNode = (XBeeNode) tc.getNodeFromAddress(Integer.parseInt(name));
+            } catch (java.lang.NumberFormatException nfe) {
+                // we couldn't find the node
+                throw new IllegalArgumentException("Can't convert " +  // NOI18N
+                        systemName +
+                        " to XBee sensor address"); // NOI18N
             }
         }
         int pin = pinFromSystemName(systemName);
@@ -88,7 +87,9 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
             return (XBeeSensor) curNode.getPinBean(pin);
         } else {
             log.debug("Failed to create sensor {}", systemName);
-            return null;
+            throw new IllegalArgumentException("Can't assign pin for " +  // NOI18N
+                    systemName +
+                    " XBee sensor"); // NOI18N
         }
     }
 

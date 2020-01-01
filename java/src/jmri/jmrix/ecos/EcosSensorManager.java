@@ -48,12 +48,14 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         return (EcosSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Nonnull
     public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         //int ports = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        Sensor s = new EcosSensor(systemName, userName);
-        return s;
+        return new EcosSensor(systemName, userName);
     }
 
     // to listen for status changes from Ecos system

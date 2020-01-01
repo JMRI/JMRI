@@ -42,10 +42,15 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
         return (MarklinSystemConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
     @Nonnull
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         MarklinSensor s = new MarklinSensor(systemName, userName);
         if (systemName.contains(":")) {
             int board = 0;
@@ -61,8 +66,9 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     tc.sendMarklinMessage(m, this);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
-                return null;
+                throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                        curAddress +
+                        " into the Module and port format of nn:xx"); // NOI18N
             }
             Hashtable<Integer, MarklinSensor> sensorList = _tmarklin.get(board);
             try {
@@ -71,8 +77,9 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     sensorList.put(channel, s);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
-                return null;
+                throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                        curAddress +
+                        " into the Module and port format of nn:xx"); // NOI18N
             }
         }
         return s;
