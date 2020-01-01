@@ -83,7 +83,6 @@ public class JsonClientHandlerTest {
         // ping request (triggers special paths in JsonClientHandler)
         instance.onMessage("{\"type\":\"ping\"}");
         message = connection.getMessage();
-        System.out.println(message);
         Assert.assertNotNull("Response provided", message);
         Assert.assertTrue("Response is an object", message.isObject());
         Assert.assertEquals("Response array contains one elements", 1, message.size());
