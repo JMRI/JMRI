@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+
+import jmri.InstanceManagerAutoDefault;
 import jmri.beans.PreferencesBean;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
@@ -22,7 +24,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Randall Wood Copyright (C) 2012, 2017
  */
-public class WebServerPreferences extends PreferencesBean {
+public class WebServerPreferences extends PreferencesBean implements InstanceManagerAutoDefault {
 
     // preferences elements
     public static final String DISALLOWED_FRAMES = "disallowedFrames"; // NOI18N
@@ -52,7 +54,7 @@ public class WebServerPreferences extends PreferencesBean {
     private int port = 12080;
     private boolean disableFrames = true;
     private boolean redirectFramesToPanels = true;
-    private final static Logger log = LoggerFactory.getLogger(WebServerPreferences.class);
+    private static final Logger log = LoggerFactory.getLogger(WebServerPreferences.class);
     private boolean useZeroConf = true;
 
     public WebServerPreferences(String fileName) {
@@ -176,9 +178,7 @@ public class WebServerPreferences extends PreferencesBean {
         Element df = child.getChild(DISALLOWED_FRAMES);
         if (df != null) {
             this.disallowedFrames.clear();
-            df.getChildren(FRAME).stream().forEach((f) -> {
-                this.disallowedFrames.add(f.getText().trim());
-            });
+            df.getChildren(FRAME).stream().forEach(f -> this.disallowedFrames.add(f.getText().trim()));
         }
     }
 
@@ -228,7 +228,7 @@ public class WebServerPreferences extends PreferencesBean {
             log.debug("Could not find Web Server preferences file. Normal if preferences have not been saved before.");
             throw ex;
         } catch (IOException | JDOMException ex) {
-            log.error("Exception while loading web server preferences: " + ex);
+            log.error("Exception while loading web server preferences:", ex);
             root = null;
         }
         if (root != null) {
@@ -251,16 +251,14 @@ public class WebServerPreferences extends PreferencesBean {
         sharedPreferences.putBoolean(REDIRECT_FRAMES, this.redirectFramesToPanels);
         try {
             Preferences node = sharedPreferences.node(DISALLOWED_FRAMES);
-            this.disallowedFrames.stream().forEach((frame) -> {
-                node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
-            });
+            this.disallowedFrames.stream().forEach(frame -> node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame));
             if (this.disallowedFrames.size() < node.keys().length) {
                 for (int i = node.keys().length - 1; i >= this.disallowedFrames.size(); i--) {
                     node.remove(Integer.toString(i));
                 }
             }
             sharedPreferences.sync();
-            setIsDirty(false);  //  Resets only when stored
+            setIsDirty(false); // Resets only when stored
         } catch (BackingStoreException ex) {
             log.error("Exception while saving web server preferences", ex);
         }
