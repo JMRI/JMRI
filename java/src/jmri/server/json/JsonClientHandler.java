@@ -67,8 +67,7 @@ public class JsonClientHandler {
     }
 
     public void onClose() {
-        services.values().parallelStream()
-                .forEach(set -> set.stream().forEach(JsonSocketService::onClose));
+        services.values().forEach(set -> set.stream().forEach(JsonSocketService::onClose));
         services.clear();
     }
 
