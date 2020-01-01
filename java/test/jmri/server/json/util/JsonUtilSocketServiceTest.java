@@ -46,8 +46,8 @@ public class JsonUtilSocketServiceTest {
     @Before
     public void setUp() throws IOException {
         JUnitUtil.setUp();
-        JUnitUtil.resetWindows(true, false); // list open windows when running
-                                             // tests
+        // list open windows when running tests
+        JUnitUtil.resetWindows(true, false);
         JUnitUtil.resetNodeIdentity();
         JUnitUtil.resetProfileManager(
                 new NullProfile("JsonUtilHttpServiceTest", "12345678", folder.newFolder(Profile.PROFILE)));

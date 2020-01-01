@@ -110,9 +110,10 @@ public class JsonClientHandler {
         String type = root.path(TYPE).asText();
         int id = root.path(ID).asInt(0);
         JsonNode data = root.path(DATA);
+        JsonRequest request = new JsonRequest(connection.getLocale(), connection.getVersion(), id);
         try {
             if (preferences.getValidateClientMessages()) {
-                schemas.validateMessage(root, false, new JsonRequest(connection.getLocale(), connection.getVersion(), id));
+                schemas.validateMessage(root, false, request);
             }
             if ((root.path(TYPE).isMissingNode() || type.equals(LIST)) && root.path(LIST).isValueNode()) {
                 type = root.path(LIST).asText();
@@ -144,7 +145,7 @@ public class JsonClientHandler {
             if (method.equals(LIST)) {
                 if (services.get(type) != null) {
                     for (JsonSocketService<?> service : services.get(type)) {
-                        service.onList(type, data, new JsonRequest(connection.getLocale(), connection.getVersion(), id));
+                        service.onList(type, data, request);
                     }
                     return;
                 } else {
@@ -158,10 +159,12 @@ public class JsonClientHandler {
                     connection.setLocale(
                             Locale.forLanguageTag(data.path(LOCALE).asText(connection.getLocale().getLanguage())));
                     setVersion(data.path(VERSION).asText(connection.getVersion()), id);
+                    // since locale or version may have changed, ensure any response is using new version and locale
+                    request = new JsonRequest(connection.getLocale(), connection.getVersion(), id);
                 }
                 if (services.get(type) != null) {
                     for (JsonSocketService<?> service : services.get(type)) {
-                        service.onMessage(type, data, method, new JsonRequest(connection.getLocale(), connection.getVersion(), id));
+                        service.onMessage(type, data, method, request);
                     }
                 } else {
                     log.warn("Requested type '{}' unknown.", type);
