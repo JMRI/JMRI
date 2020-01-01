@@ -161,6 +161,6 @@ public class ServletUtil implements InstanceManagerAutoDefault {
      * @return The complete title
      */
     public String getTitle(Locale locale, String title) {
-        return Bundle.getMessage(locale, "HtmlTitle", this.getRailroadName(false), title);
+        return String.format(Bundle.getMessage(locale, "HtmlTitle"), this.getRailroadName(false), title);
     }
 }
