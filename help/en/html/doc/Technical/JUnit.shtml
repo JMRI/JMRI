@@ -1144,6 +1144,10 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       Also, setting "<code>JMenuOperator.WaitPopupTimeout</code>" 
       and "<code>ComponentOperator.WaitComponentTimeout</code>" to a lower value from their
       defaults of 60000L (a minute) can speed work when you're trying to debug the cause of a timeout.
+      <p>
+      If you change a timeout, you <u>must</u> set it back to the <u>original</u>
+      value (which you had earlier saved) in your @After routine.  If you leave it
+      changed, you're likely to cause problems for other test routines.
       
       <a id="jemmyhints" name="jemmyhints"></a>
       <h4>Jemmy hints and issues</h4>
@@ -1181,7 +1185,13 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
             where the argument (in this example 20) is
             how many milliseconds the queue has to remain empty before 
             proceeding.  We're not sure what the best value is; see
-            <a href="https://github.com/JMRI/JMRI/issues/5321">Issue #5321</a> for some background discussion.
+            <a href="https://github.com/JMRI/JMRI/issues/5321">JMRI Issue #5321</a>
+            and 
+            <a> href="https://netbeans.org/bugzilla/show_bug.cgi?id=36665">NetBeans bug tracker 36665</a>
+            for some background discussion. Briefly, since things like 
+            flashing cursors fire Swing events,
+            the queue doesn't stay idle forever once the primary work is done.
+            A long wait-for-empty value may never occur.
       </ul>
       
       <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>
