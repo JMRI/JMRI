@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import jmri.Sensor;
 
 /**
- * Implement Sensor manager for SRCP systems.
+ * Implement SensorMmanager for SRCP systems.
  * <p>
  * System names are "DSnnn", where D is the user configurable system prefix,
  * nnn is the sensor number without padding.
@@ -13,11 +13,21 @@ import jmri.Sensor;
  */
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
-    private int _bus;
+    //private int _bus = 0; // not used, if needed, get bus via {@link SRCPBusConnectionMemo#memo.getBus()}
 
-    public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
+    public SRCPSensorManager(SRCPBusConnectionMemo memo) {
         super(memo);
-        _bus = bus;
+    }
+
+    /**
+     *
+     * @param memo the associated SystemConnectionMemo
+     * @param bus the bus ID configured for this connection
+     * @deprecated since 4.18 use {@link SRCPBusConnectionMemo#getBus()}
+     */
+    @Deprecated
+    public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
+        this(memo);
     }
 
     /**

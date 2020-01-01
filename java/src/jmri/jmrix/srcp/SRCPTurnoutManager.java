@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 import jmri.Turnout;
 
 /**
- * Implement turnout manager for SRCP systems.
+ * Implement TurnoutManager for SRCP systems.
  * <p>
  * System names are "DTnnn", where D is the user configurable system prefix,
  * nnn is the turnout number without padding.
@@ -13,11 +13,21 @@ import jmri.Turnout;
  */
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    private int _bus = 0;
+    //private int _bus = 0; // not used, if needed, get bus via {@link SRCPBusConnectionMemo#memo.getBus()}
 
-    public SRCPTurnoutManager(SRCPBusConnectionMemo memo, int bus) {
+    public SRCPTurnoutManager(SRCPBusConnectionMemo memo) {
         super(memo);
-        _bus = bus;
+    }
+
+    /**
+     *
+     * @param memo the associated SystemConnectionMemo
+     * @param bus the bus ID configured for this connection
+     * @deprecated since 4.18 use {@link SRCPBusConnectionMemo#getBus()}
+     */
+    @Deprecated
+    public SRCPTurnoutManager(SRCPBusConnectionMemo memo, int bus) {
+        this(memo);
     }
 
     /**
