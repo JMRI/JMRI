@@ -166,11 +166,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     /**
      * Validate the format of a system name, returning it unchanged if valid.
      * <p>
-     * Although further restrictions may be added by system-specific
-     * implementations, at a minimum, the implementation must consider a name
-     * that does not start with the System Name prefix for this manager to be
-     * invalid, and must consider a name that is the same as the System Name
-     * prefix to be invalid.
+     * This is a convenience form of {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}.
      * <p>
      * This method should not be overridden;
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
@@ -199,8 +195,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * Overriding implementations may rely on
      * {@link #validSystemNameFormat(java.lang.String)}, however they must
      * provide an actionable message in the thrown exception if that method does
-     * not return {@link NameValidity#VALID}. Implementations of
-     * this method <em>must not</em> throw an exception, log an error, or
+     * not return {@link NameValidity#VALID}. When overriding implementations
+     * of this method rely on validSystemNameFormat(), implementations of
+     * that method <em>must not</em> throw an exception, log an error, or
      * otherwise disrupt the user.
      *
      * @param name      the system name to validate
