@@ -623,10 +623,8 @@ public class LayoutEditorToolsTest {
                 String uName = "signal head " + i;
                 VirtualSignalHead signalHead = new VirtualSignalHead(sName,uName);
                 InstanceManager.getDefault(SignalHeadManager.class).register(signalHead);
-                }
             }
             signalHeads = InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanList();
-
         }
     }
 
