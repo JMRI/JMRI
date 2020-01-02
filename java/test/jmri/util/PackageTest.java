@@ -70,7 +70,6 @@ import org.junit.runners.Suite;
         PhysicalLocationTest.class,
         PortNameMapperTest.class,
         SerialUtilTest.class,
-        SystemNameComparatorTest.class,
         SystemTypeTest.class,
         TimerUtilTest.class,
         XmlFilenameFilterTest.class,

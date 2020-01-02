@@ -279,26 +279,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return getNamedBeanList().size(); // not efficient
     }
 
-    /**
-     * Implemented to support the Conditional combo box name list
-     * @since 4.9.3
-     * @return a sorted array of NX names
-     */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        List<String> nxList = getEntryExitList();
-        String[] arr = new String[nxList.size()];
-        int i = 0;
-        for (String nxRow : nxList) {
-            arr[i] = nxRow;
-            i++;
-        }
-        java.util.Arrays.sort(arr);
-        return arr;
-    }
-
     /** {@inheritDoc} */
     @Override
     @Nonnull

@@ -42,7 +42,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     // * The manager also maintains synchronized maps from SystemName -> NamedBean (_tsys) and UserName -> NamedBean (_tuser)
     //      These are not made available: get access through the manager calls
     //      These use regular HashMaps instead of some sorted form for efficiency
-    // * Caches for the String[] getSystemNameArray(), List<String> getSystemNameList() and List<E> getNamedBeanList() calls
+    // * Caches for the List<String> getSystemNameList() and List<E> getNamedBeanList() calls
 
     protected final SystemConnectionMemo memo;
     protected final TreeSet<E> _beans;
@@ -50,7 +50,6 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     protected final Hashtable<String, E> _tuser = new Hashtable<>();  // stores known E (NamedBean, i.e. Turnout) instances by user name
 
     // caches
-    private String[] cachedSystemNameArray = null;
     private ArrayList<String> cachedSystemNameList = null;
     private ArrayList<E> cachedNamedBeanList = null;
 
@@ -229,7 +228,6 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
         }
 
         // clear caches
-        cachedSystemNameArray = null;
         cachedSystemNameList = null;
         cachedNamedBeanList = null;
         
@@ -300,7 +298,6 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
         int position = getPosition(s);
 
         // clear caches
-        cachedSystemNameArray = null;
         cachedSystemNameList = null;
         cachedNamedBeanList = null;
 
@@ -374,20 +371,6 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     @Override
     @CheckReturnValue
     public int getObjectCount() { return _beans.size();}    
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");
-        if (log.isTraceEnabled()) log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
-
-        if (cachedSystemNameArray == null) {
-            cachedSystemNameArray = getSystemNameList().toArray(new String[_beans.size()]);
-        }
-        return cachedSystemNameArray;
-    }
 
     /** {@inheritDoc} */
     @Override

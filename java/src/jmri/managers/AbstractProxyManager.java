@@ -675,21 +675,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     @Nonnull
     @Override
     @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameArray");        
-        log.trace("Manager#getSystemNameArray() called", new Exception("traceback"));
-        
-        List<E> list = getNamedBeanList();
-        String[] retval = new String[list.size()];
-        int i = 0;
-        for (E e : list) retval[i++] = e.getSystemName();
-        return retval;
-    }
-
-    /** {@inheritDoc} */
-    @Nonnull
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
         // jmri.util.Log4JUtil.deprecationWarning(log, "getSystemNameList"); // used by configureXML
         List<E> list = getNamedBeanList();
