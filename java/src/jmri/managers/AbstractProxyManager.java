@@ -5,6 +5,7 @@ import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.util.*;
 import javax.annotation.CheckReturnValue;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.annotation.OverridingMethodsMustInvokeSuper;
 import jmri.*;
@@ -43,7 +44,6 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     protected int nMgrs() {
         // make sure internal present
         initInternal();
-
         return mgrs.size();
     }
 
@@ -215,6 +215,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
+    @CheckReturnValue
+    @CheckForNull
     public E getBySystemName(@Nonnull String systemName) {
         // System names can be matched to managers by system and type at front of name
         int index = matchTentative(systemName);
@@ -228,6 +230,8 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
+    @CheckReturnValue
+    @CheckForNull
     public E getByUserName(@Nonnull String userName) {
         for (Manager<E> m : this.mgrs) {
             E b = m.getByUserName(userName);
@@ -332,7 +336,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     /**
      * Find the index of a matching manager.
      *
-     * @param  systemName the system name
+     * @param  systemName the system name to find a manager for
      * @return the index of the matching manager, or -1 if there is no match,
      *         which is not considered an error
      */
@@ -349,7 +353,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * Find the index of a matching manager. Throws IllegalArgumentException if
      * there is no match, here considered to be an error that must be reported.
      *
-     * @param systemName the system name
+     * @param systemName the system name to find a manager for
      * @return the index of the matching manager
      */
     protected int match(String systemName) {

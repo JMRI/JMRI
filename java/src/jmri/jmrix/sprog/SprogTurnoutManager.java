@@ -1,6 +1,7 @@
 package jmri.jmrix.sprog;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 
 /**
@@ -21,6 +22,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public SprogSystemConnectionMemo getMemo() {
         return (SprogSystemConnectionMemo) memo;
     }
@@ -28,7 +30,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     // Sprog-specific methods
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1)); // multi char prefix
         Turnout t;
         if (getMemo().getSprogMode() == SprogConstants.SprogMode.OPS ) {
@@ -44,7 +46,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -52,7 +54,8 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, SprogConstants.MAX_ACC_DECODER_JMRI_ADDR, locale);
     }
 
@@ -71,7 +74,7 @@ public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
