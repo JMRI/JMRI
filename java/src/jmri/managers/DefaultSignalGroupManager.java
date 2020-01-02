@@ -163,7 +163,6 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
         deregister(s);
     }
 
-    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalGroups" : "BeanNameSignalGroup");

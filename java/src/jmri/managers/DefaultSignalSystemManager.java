@@ -20,8 +20,6 @@ import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Default implementation of a SignalSystemManager.
  * <p>
@@ -264,7 +262,6 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
     static class AspectFile extends XmlFile {
     }
 
-    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalSystems" : "BeanNameSignalSystem");

@@ -44,7 +44,7 @@ public class DefaultRailComManager extends DefaultIdTagManager
         if (systemName == null) {
             log.error("SystemName cannot be null. UserName was {}",
                     (userName == null ? "null" : userName));
-            throw new IllegalArgumentException("SystemName cannot be null. UserName was {}"
+            throw new IllegalArgumentException("SystemName cannot be null. UserName was "
                     + ((userName == null) ? "null" : userName));
         }
     }
