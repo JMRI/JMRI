@@ -19,6 +19,7 @@ Class <jmri\.jmrit\.symbolicprog\.SymbolicProgBundle> is not assignable to jmri\
 
 # For checkBundleNames
 Class <apps\.ConfigBundle> does not have simple name \'Bundle\'.*
+Class <jmri\.web\.servlet\.json\.JsonBundle> does not have simple name \'Bundle\'.*
 
 # For checkJmriPackageAwt
 Method <jmri\.ConditionalAction\.getListener\(\)> has return type <java\.awt\.event\.ActionListener>.*
