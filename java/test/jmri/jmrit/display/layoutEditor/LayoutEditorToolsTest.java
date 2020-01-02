@@ -36,14 +36,13 @@ public class LayoutEditorToolsTest {
     private static LayoutEditor layoutEditor = null;
     private static LayoutEditorTools let = null;
 
-  //these all have to contain the same number of elements
+    //these all have to contain the same number of elements
     private List<LayoutBlock> layoutBlocks;
     private List<Turnout> turnouts;
-    private List<Turnout> shTurnouts;
     private List<SignalHead> signalHeads;
     private List<Sensor> sensors;
 
-  private static LayoutTurnout layoutTurnout = null;
+    private static LayoutTurnout layoutTurnout = null;
     private static LayoutTurnout layoutTurnout2 = null;
     private static PositionablePoint positionablePoint1 = null;
     private static PositionablePoint positionablePoint2 = null;
@@ -146,7 +145,7 @@ public class LayoutEditorToolsTest {
         //SignalsError3 = Error - Turnout "{0}" is not drawn on the panel.\nPlease enter the name of a drawn turnout.
         Thread modalDialogOperatorThread0a = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("SignalsError3", turnouts[0].getSystemName()),
+                Bundle.getMessage("SignalsError3", turnouts.get(0).getSystemName()),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
@@ -166,7 +165,7 @@ public class LayoutEditorToolsTest {
 
         new EventTool().waitNoEvent(0);
 
-        jComboBoxOperator.selectItem(turnouts[0].getSystemName());
+        jComboBoxOperator.selectItem(turnouts.get(0).getSystemName());
     }
 
     ///@Test
@@ -217,7 +216,7 @@ public class LayoutEditorToolsTest {
 
     private void setupSetSignalsAtTurnoutWithDonePart3(JFrameOperator jFrameOperator) {
         setupSetSignalsAtTurnoutWithDonePart2(jFrameOperator);
-        layoutTurnout.setTurnout(turnouts[0].getSystemName()); //this should fix the "is not drawn on the panel" error
+        layoutTurnout.setTurnout(turnouts.get(0).getSystemName()); //this should fix the "is not drawn on the panel" error
     }
 
     ///@Test
@@ -363,9 +362,6 @@ public class LayoutEditorToolsTest {
         setupSetSignalsAtTurnoutWithDonePart7(jFrameOperator);
 
         testSetupSSL(0);    //test Throat Continuing SSL logic setup
-//        testSetupSSL(1);    //test Throat Diverging SSL logic setup
-//        testSetupSSL(2);    //test Continuing SSL logic setup
-//        testSetupSSL(3);    //test Diverging SSL logic setup
 
         //TODO: fix the other failure conditions (testing each one)
         //layoutBlocks[i].setOccupancySensorName(uName);
@@ -391,10 +387,7 @@ public class LayoutEditorToolsTest {
 
         setupSetSignalsAtTurnoutWithDonePart7(jFrameOperator);
 
-//        testSetupSSL(0);    //test Throat Continuing SSL logic setup
         testSetupSSL(1);    //test Throat Diverging SSL logic setup
-//        testSetupSSL(2);    //test Continuing SSL logic setup
-//        testSetupSSL(3);    //test Diverging SSL logic setup
 
         //TODO: fix the other failure conditions (testing each one)
         //layoutBlocks[i].setOccupancySensorName(uName);
@@ -420,10 +413,7 @@ public class LayoutEditorToolsTest {
 
         setupSetSignalsAtTurnoutWithDonePart7(jFrameOperator);
 
-//        testSetupSSL(0);    //test Throat Continuing SSL logic setup
-//        testSetupSSL(1);    //test Throat Diverging SSL logic setup
         testSetupSSL(2);    //test Continuing SSL logic setup
-//        testSetupSSL(3);    //test Diverging SSL logic setup
 
         //TODO: fix the other failure conditions (testing each one)
         //layoutBlocks[i].setOccupancySensorName(uName);
@@ -449,9 +439,6 @@ public class LayoutEditorToolsTest {
 
         setupSetSignalsAtTurnoutWithDonePart7(jFrameOperator);
 
-//        testSetupSSL(0);    //test Throat Continuing SSL logic setup
-//        testSetupSSL(1);    //test Throat Diverging SSL logic setup
-//        testSetupSSL(2);    //test Continuing SSL logic setup
         testSetupSSL(3);    //test Diverging SSL logic setup
 
         //TODO: fix the other failure conditions (testing each one)
@@ -580,7 +567,7 @@ public class LayoutEditorToolsTest {
         //InfoMessage4 = Cannot set up logic because block "{0}"\ndoesn''t have an occupancy sensor.
         Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
-                Bundle.getMessage("InfoMessage4", layoutBlocks[lbIndex[idx]].getUserName()),
+                Bundle.getMessage("InfoMessage4", layoutBlocks.get(lbIndex[idx]).getUserName()),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
@@ -745,7 +732,7 @@ public class LayoutEditorToolsTest {
         //SignalsError3 = Error - Turnout "{0}" is not drawn on the panel.\nPlease enter the name of a drawn turnout.
         Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
-                Bundle.getMessage("SignalsError3", turnouts[0].getSystemName()),
+                Bundle.getMessage("SignalsError3", turnouts.get(0).getSystemName()),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
@@ -769,7 +756,7 @@ public class LayoutEditorToolsTest {
         //select the turnout from the popup menu
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("turnout1ComboBox"));
-        jComboBoxOperator.selectItem(turnouts[0].getSystemName());
+        jComboBoxOperator.selectItem(turnouts.get(0).getSystemName());
     }
 
     ///@Test
@@ -804,7 +791,7 @@ public class LayoutEditorToolsTest {
     private void setupSetSignalsAtThroatToThroatTurnoutsWithDonePart3(JFrameOperator jFrameOperator) {
         setupSetSignalsAtThroatToThroatTurnoutsWithDonePart2(jFrameOperator);
         //fixes SignalsError3 = Error - Turnout "{0}" is not drawn on the panel.\nPlease enter the name of a drawn turnout.
-        layoutTurnout.setTurnout(turnouts[0].getSystemName());
+        layoutTurnout.setTurnout(turnouts.get(0).getSystemName());
     }
 
     ///@Test
@@ -859,11 +846,11 @@ public class LayoutEditorToolsTest {
                 0.0, 1.1, 1.2, layoutEditor);
         Assert.assertNotNull("LH turnout for testSetSignalsAtThroatToThroatTurnoutsWithDone", layoutTurnout2);
         layoutEditor.getLayoutTracks().add(layoutTurnout2);
-        layoutTurnout2.setTurnout(turnouts[1].getSystemName()); //this should fix the "is not drawn on the panel" error
+        layoutTurnout2.setTurnout(turnouts.get(1).getSystemName()); //this should fix the "is not drawn on the panel" error
 
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("turnout2ComboBox"));
-        jComboBoxOperator.selectItem(turnouts[1].getSystemName());
+        jComboBoxOperator.selectItem(turnouts.get(1).getSystemName());
 
         trackSegment = addNewTrackSegment(layoutTurnout, LayoutTrack.TURNOUT_A,
                 layoutTurnout2, LayoutTrack.TURNOUT_A, 1);
@@ -988,7 +975,7 @@ public class LayoutEditorToolsTest {
         //InfoMessage4 = Cannot set up logic because block "{0}"\ndoesn''t have an occupancy sensor.
         Thread modalDialogOperatorThread5 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
-                Bundle.getMessage("InfoMessage4", layoutBlocks[2].getUserName()),
+                Bundle.getMessage("InfoMessage4", layoutBlocks.get(2).getUserName()),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.pushNoBlock();
         JUnitUtil.waitFor(() -> {
@@ -1000,7 +987,7 @@ public class LayoutEditorToolsTest {
             new EventTool().waitNoEvent(0);
 
             JemmyUtil.waitAndCloseDialog(Bundle.getMessage("MessageTitle"),
-                    Bundle.getMessage("InfoMessage4", layoutBlocks[2].getUserName()),
+                    Bundle.getMessage("InfoMessage4", layoutBlocks.get(2).getUserName()),
                     Bundle.getMessage("ButtonOK"));  // NOI18N
         }
 
@@ -1010,9 +997,9 @@ public class LayoutEditorToolsTest {
     private void setupSetSignalsAtThroatToThroatTurnoutsWithDonePart7(JFrameOperator jFrameOperator) {
         setupSetSignalsAtThroatToThroatTurnoutsWithDonePart6(jFrameOperator);
         //fixes InfoMessage6 = Cannot set up logic because blocks have\nnot been defined around this item.
-        layoutTurnout.setLayoutBlock(layoutBlocks[0]);
-        layoutTurnout2.setLayoutBlock(layoutBlocks[1]);
-        trackSegment.setLayoutBlock(layoutBlocks[2]);
+        layoutTurnout.setLayoutBlock(layoutBlocks.get(0));
+        layoutTurnout2.setLayoutBlock(layoutBlocks.get(1));
+        trackSegment.setLayoutBlock(layoutBlocks.get(2));
     }
 
     ///@Test
@@ -1057,7 +1044,7 @@ public class LayoutEditorToolsTest {
         setupSetSignalsAtThroatToThroatTurnoutsWithDonePart7(jFrameOperator);
         //fixes InfoMessage4 = Cannot set up logic because block "{0}"\ndoesn''t have an occupancy sensor.
         //assign Occupancy Sensor to block
-        layoutBlocks[2].setOccupancySensorName(sensors[2].getUserName());
+        layoutBlocks.get(2).setOccupancySensorName(sensors.get(2).getUserName());
     }
 
     ///@Test
@@ -1258,52 +1245,46 @@ public class LayoutEditorToolsTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
-        JUnitUtil.initLayoutBlockManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalSignalHeadManager();
-
-        layoutBlocks = new ArrayList<>();
-        turnouts = new ArrayList<>();
-        signalHeads = new ArrayList<>();
-        sensors = new ArrayList<>();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
+
+            JUnitUtil.initLayoutBlockManager();
             JUnitUtil.initInternalTurnoutManager();
-            JUnitUtil.initInternalSensorManager();
             JUnitUtil.initInternalSignalHeadManager();
+            JUnitUtil.initInternalSensorManager();
 
             layoutEditor = new LayoutEditor();
             layoutEditor.setVisible(true);
 
             let = layoutEditor.getLETools();
 
-          for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5; i++) {
                 String sBlockName = "IB" + i;
                 String uBlockName = "Block " + i;
                 InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(sBlockName, uBlockName);
             }
-            layoutBlocks = InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanList();
+            layoutBlocks = new ArrayList<>((SortedSet<LayoutBlock>) InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet());
 
             for (int i = 0; i < 5; i++) {
                 String toName = "IT" + i;
                 InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout(toName);
             }
-            turnouts = InstanceManager.getDefault(TurnoutManager.class).getNamedBeanList();
+            turnouts = new ArrayList<>(InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet());
 
             for (int i = 0; i < 5; i++) {
                 String sName = "IS" + i;
                 String uName = "sensor " + i;
                 InstanceManager.getDefault(SensorManager.class).newSensor(sName, uName);
             }
-            sensors = InstanceManager.getDefault(SensorManager.class).getNamedBeanList();
+            sensors = new ArrayList<>(InstanceManager.getDefault(SensorManager.class).getNamedBeanSet());
 
             for (int i = 0; i < 5; i++) {
                 String sName = "IH" + i;
                 String uName = "signal head " + i;
-                VirtualSignalHead signalHead = new VirtualSignalHead(sName,uName);
+                VirtualSignalHead signalHead = new VirtualSignalHead(sName, uName);
                 InstanceManager.getDefault(SignalHeadManager.class).register(signalHead);
             }
-            signalHeads = InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanList();
+            signalHeads = new ArrayList<>(InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet());
         }
     }
 
