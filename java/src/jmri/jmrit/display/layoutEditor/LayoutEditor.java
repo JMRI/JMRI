@@ -38,7 +38,6 @@ import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;
 import jmri.util.*;
 import jmri.util.swing.*;
-import org.slf4j.*;
 
 /**
  * Provides a scrollable Layout Panel and editor toolbars (that can be hidden)
@@ -2313,8 +2312,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * translate entire layout by x and y amounts
      *
-     * @param xTranslation
-     * @param yTranslation
+     * @param xTranslation x translation distance
+     * @param yTranslation y translation distance
      */
     public void translate(float xTranslation, float yTranslation) {
         //here when all numbers read in - translation if entered
@@ -6146,6 +6145,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         putItem(l); // note: this calls unionToPanelBounds & setDirty()
     }
 
+    @CheckForNull
     SignalHead getSignalHead(@Nonnull String name) {
         SignalHead sh = InstanceManager.getDefault(SignalHeadManager.class).getBySystemName(name);
 
@@ -6550,6 +6550,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     private transient ConnectivityUtil conTools = null;
 
+    @Nonnull 
     public ConnectivityUtil getConnectivityUtil() {
         if (conTools == null) {
             conTools = new ConnectivityUtil(this);
@@ -6559,6 +6560,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private transient LayoutEditorTools tools = null;
 
+    @Nonnull 
     public LayoutEditorTools getLETools() {
         if (tools == null) {
             tools = new LayoutEditorTools(this);
@@ -6568,6 +6570,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private transient LayoutEditorAuxTools auxTools = null;
 
+    @Nonnull 
     public LayoutEditorAuxTools getLEAuxTools() {
         if (auxTools == null) {
             auxTools = new LayoutEditorAuxTools(this);
@@ -6577,6 +6580,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private transient LayoutTrackEditors layoutTrackEditors = null;
 
+    @Nonnull 
     public LayoutTrackEditors getLayoutTrackEditors() {
         if (layoutTrackEditors == null) {
             layoutTrackEditors = new LayoutTrackEditors(this);
@@ -6586,6 +6590,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private transient LayoutEditorChecks layoutEditorChecks = null;
 
+    @Nonnull 
     public LayoutEditorChecks getLEChecks() {
         if (layoutEditorChecks == null) {
             layoutEditorChecks = new LayoutEditorChecks(this);
@@ -6769,10 +6774,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      *
      * @return block default color as Color
      */
+    @Nonnull 
     public Color getDefaultTrackColorColor() {
         return defaultTrackColor;
     }
 
+    @Nonnull 
     public String getDefaultOccupiedTrackColor() {
         return ColorUtil.colorToColorName(defaultOccupiedTrackColor);
     }
@@ -6783,10 +6790,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      *
      * @return block default occupied color as Color
      */
+    @Nonnull 
     public Color getDefaultOccupiedTrackColorColor() {
         return defaultOccupiedTrackColor;
     }
 
+    @Nonnull 
     public String getDefaultAlternativeTrackColor() {
         return ColorUtil.colorToColorName(defaultAlternativeTrackColor);
     }
@@ -6797,18 +6806,22 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      *
      * @return block default alternetive color as Color
      */
+    @Nonnull 
     public Color getDefaultAlternativeTrackColorColor() {
         return defaultAlternativeTrackColor;
     }
 
+    @Nonnull 
     public String getDefaultTextColor() {
         return ColorUtil.colorToColorName(defaultTextColor);
     }
 
+    @Nonnull 
     public String getTurnoutCircleColor() {
         return ColorUtil.colorToColorName(turnoutCircleColor);
     }
 
+    @Nonnull 
     public String getTurnoutCircleThrownColor() {
         return ColorUtil.colorToColorName(turnoutCircleThrownColor);
     }
@@ -6900,11 +6913,12 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         setPanelBounds(panelBounds);
     }
 
+    @Nonnull
     public Rectangle2D getPanelBounds() {
         return new Rectangle2D.Double(0.0, 0.0, panelWidth, panelHeight);
     }
 
-    public void setPanelBounds(Rectangle2D newBounds) {
+    public void setPanelBounds(@Nonnull Rectangle2D newBounds) {
         // don't let origin go negative
         newBounds = newBounds.createIntersection(MathUtil.zeroToInfinityRectangle2D);
 
@@ -6928,6 +6942,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     // this will grow the panel bounds based on items added to the layout
+    @Nonnull
     public Rectangle2D unionToPanelBounds(@Nonnull Rectangle2D bounds) {
         Rectangle2D result = getPanelBounds();
 
@@ -6978,7 +6993,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * @param color new color for turnout circle.
      */
-    public void setTurnoutCircleColor(Color color) {
+    public void setTurnoutCircleColor(@CheckForNull Color color) {
         if (color == null) {
             turnoutCircleColor = getDefaultTrackColorColor();
         } else {
@@ -6990,7 +7005,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     /**
      * @param color new color for turnout circle.
      */
-    public void setTurnoutCircleThrownColor(Color color) {
+    public void setTurnoutCircleThrownColor(@CheckForNull Color color) {
         if (color == null) {
             turnoutCircleThrownColor = getDefaultTrackColorColor();
         } else {
@@ -7349,13 +7364,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //to use when (hit point-in-rect testing
     //
     //compute the control point rect at inPoint
-    public Rectangle2D layoutEditorControlRectAt(@Nonnull Point2D inPoint) {
+    public @Nonnull Rectangle2D layoutEditorControlRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - SIZE,
                 inPoint.getY() - SIZE, SIZE2, SIZE2);
     }
 
     //compute the turnout circle control rect at inPoint
-    public Rectangle2D layoutEditorControlCircleRectAt(@Nonnull Point2D inPoint) {
+    public @Nonnull Rectangle2D layoutEditorControlCircleRectAt(@Nonnull Point2D inPoint) {
         return new Rectangle2D.Double(inPoint.getX() - circleRadius,
                 inPoint.getY() - circleRadius, circleDiameter, circleDiameter);
     }
@@ -7365,7 +7380,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
      * is the 'target' pane where the layout is displayed
      */
     @Override
-    protected void paintTargetPanel(Graphics g) {
+    protected void paintTargetPanel(@Nonnull Graphics g) {
         // Nothing to do here
         // All drawing has been moved into LayoutEditorComponent
         // which calls draw.
@@ -7374,7 +7389,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     // get selection rectangle
-    protected Rectangle2D getSelectionRect() {
+    protected @Nonnull Rectangle2D getSelectionRect() {
         double selX = Math.min(selectionX, selectionX + selectionWidth);
         double selY = Math.min(selectionY, selectionY + selectionHeight);
         Rectangle2D result = new Rectangle2D.Double(selX, selY,
@@ -7446,60 +7461,60 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return getLayoutTracksOfClass(PositionablePoint);
     }
      */
-    private Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
+    private @Nonnull Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
         return layoutTrackList.stream()
                 .filter(layoutTrackClass::isInstance)
                 .map(layoutTrackClass::cast);
     }
 
-    public List<PositionablePoint> getPositionablePoints() {
+    public @Nonnull List<PositionablePoint> getPositionablePoints() {
         return getLayoutTracksOfClass(PositionablePoint.class)
                 .map(PositionablePoint.class::cast)
                 .collect(Collectors.toCollection(ArrayList<PositionablePoint>::new));
     }
 
-    public List<LayoutSlip> getLayoutSlips() {
+    public @Nonnull List<LayoutSlip> getLayoutSlips() {
         return getLayoutTracksOfClass(LayoutSlip.class)
                 .map(LayoutSlip.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutSlip>::new));
     }
 
-    public List<TrackSegment> getTrackSegments() {
+    public @Nonnull List<TrackSegment> getTrackSegments() {
         return getLayoutTracksOfClass(TrackSegment.class)
                 .map(TrackSegment.class::cast)
                 .collect(Collectors.toCollection(ArrayList<TrackSegment>::new));
     }
 
-    public List<LayoutTurnout> getLayoutTurnouts() {
+    public @Nonnull List<LayoutTurnout> getLayoutTurnouts() {
         return layoutTrackList.stream() // next line excludes LayoutSlips
                 .filter((o) -> (!(o instanceof LayoutSlip) && (o instanceof LayoutTurnout)))
                 .map(LayoutTurnout.class::cast).map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
 
-    public List<LayoutTurntable> getLayoutTurntables() {
+    public @Nonnull List<LayoutTurntable> getLayoutTurntables() {
         return getLayoutTracksOfClass(LayoutTurntable.class)
                 .map(LayoutTurntable.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurntable>::new));
     }
 
-    public List<LevelXing> getLevelXings() {
+    public @Nonnull List<LevelXing> getLevelXings() {
         return getLayoutTracksOfClass(LevelXing.class)
                 .map(LevelXing.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LevelXing>::new));
     }
 
-    public List<LayoutTrack> getLayoutTracks() {
+    public @Nonnull List<LayoutTrack> getLayoutTracks() {
         return layoutTrackList;
     }
 
-    public List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
+    public @Nonnull List<LayoutTurnout> getLayoutTurnoutsAndSlips() {
         return getLayoutTracksOfClass(LayoutTurnout.class)
                 .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
 
-    public List<LayoutShape> getLayoutShapes() {
+    public @Nonnull List<LayoutShape> getLayoutShapes() {
         return layoutShapes;
     }
 
@@ -7579,13 +7594,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     @Override
-    public String toString() {
+    public @Nonnull String toString() {
         return String.format("LayoutEditor: %s", getLayoutName());
     }
 
     @Override
     public void vetoableChange(
-            PropertyChangeEvent evt)
+            @Nonnull PropertyChangeEvent evt)
             throws PropertyVetoException {
         NamedBean nb = (NamedBean) evt.getOldValue();
 
@@ -7921,5 +7936,5 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //initialize logging
-    private transient final static Logger log = LoggerFactory.getLogger(LayoutEditor.class);
+    private transient final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditor.class);
 }
