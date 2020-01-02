@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.annotation.Nonnull;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -82,11 +83,13 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     @Override
+    @Nonnull
     public Iterable<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 
     @Override
+    @Nonnull
     public Iterable<Class<?>> getProvides() {
         Set<Class<?>> provides = new HashSet<>();
         provides.add(this.getClass());
@@ -212,6 +215,7 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
     }
 
     @Override
+    @Nonnull
     public List<Exception> getInitializationExceptions(Profile profile) {
         return new ArrayList<>(this.exceptions);
     }

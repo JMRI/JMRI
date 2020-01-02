@@ -1,6 +1,7 @@
 package jmri.jmrix.acela;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
@@ -25,6 +26,7 @@ public class AcelaLightManager extends AbstractLightManager {
     }
 
     @Override
+    @Nonnull
     public AcelaSystemConnectionMemo getMemo() {
         return (AcelaSystemConnectionMemo) memo;
     }
@@ -38,7 +40,7 @@ public class AcelaLightManager extends AbstractLightManager {
      * @return null if the system name is not in a valid format
      */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) {
         Light lgt = null;
         // check if the output bit is available
         int nAddress = -1;
@@ -72,7 +74,8 @@ public class AcelaLightManager extends AbstractLightManager {
      * {@value AcelaAddress#MAXOUTPUTADDRESS}.
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return super.validateIntegerSystemNameFormat(systemName,
                 AcelaAddress.MINOUTPUTADDRESS,
                 AcelaAddress.MAXOUTPUTADDRESS,
@@ -83,7 +86,7 @@ public class AcelaLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'L', getSystemPrefix()));
     }
 
@@ -94,7 +97,7 @@ public class AcelaLightManager extends AbstractLightManager {
      * else returns 'false'
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (AcelaAddress.validSystemNameConfig(systemName, 'L', getMemo()));
     }
 
@@ -105,7 +108,8 @@ public class AcelaLightManager extends AbstractLightManager {
      * alternate representation, else return ""
      */
     @Override
-    public String convertSystemNameToAlternate(String systemName) {
+    @Nonnull
+    public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return (AcelaAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 

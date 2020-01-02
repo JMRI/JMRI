@@ -22,14 +22,10 @@ public class ManageLocationsFrameTest extends jmri.util.JmriJFrameTestBase {
         jmri.util.JUnitUtil.setUp();
         ListeningSpot s = new ListeningSpot();
         ReporterManager rmgr = jmri.InstanceManager.getDefault(jmri.ReporterManager.class);
-        String[] reporterNameArray = rmgr.getSystemNameArray(); // deprecated, but we test until removed
-        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
-
-        Object[][] reporterTable = new Object[reporterNameArray.length][6];
+        Object[][] reporterTable = new Object[rmgr.getObjectCount()][6];
+        
         BlockManager bmgr = jmri.InstanceManager.getDefault(jmri.BlockManager.class);
-        String[] blockNameArray = bmgr.getSystemNameArray(); // deprecated, but we test until removed
-        jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
-        Object[][] blockTable = new Object[blockNameArray.length][6];
+        Object[][] blockTable = new Object[bmgr.getObjectCount()][6];
 
         LocationManager lmgr = InstanceManager.getDefault(LocationManager.class);
         List<Location> locations = lmgr.getLocationsByIdList();

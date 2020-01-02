@@ -49,7 +49,6 @@ public class PositionableShapeTest extends PositionableJComponentTest {
                     return null;
                 }
 
-                @SuppressWarnings("null")
                 @Override
                 protected Shape makeShape() {
                     // bogus body, not used in tests
