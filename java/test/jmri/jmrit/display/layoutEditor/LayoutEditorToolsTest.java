@@ -459,9 +459,6 @@ public class LayoutEditorToolsTest {
     @Test
     public void testGetHeadFromNameValid() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(SignalHeadManager.class).register(h);
-
         Assert.assertEquals("signal head for valid name", h, let.getHeadFromName("IH1"));
     }
 
@@ -491,8 +488,6 @@ public class LayoutEditorToolsTest {
     @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYIntAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
@@ -510,8 +505,6 @@ public class LayoutEditorToolsTest {
     @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtPointAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
         Point2D point = new Point2D.Double(150.0, 100.0);
         let.setSignalHeadOnPanel(0.D, "IH1", point);
@@ -530,8 +523,6 @@ public class LayoutEditorToolsTest {
     @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
@@ -549,32 +540,24 @@ public class LayoutEditorToolsTest {
     @Ignore("causes error on jenkins; exhausts failure retries")
     public void testGetSignalHeadIcon() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertNotNull("Signal head icon for panel", let.getSignalHeadIcon("IH1"));
     }
 
     @Test
     public void testIsHeadOnPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel", let.isHeadOnPanel(h));
     }
 
     @Test
     public void testIsHeadAssignedAnywhere() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertFalse("Signal head not on panel", let.isHeadAssignedAnywhere(h));
     }
 
     @Test
     public void testRemoveSignalHeadAssignment() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         //just verify this doesn't thrown an error.
         let.removeAssignment(h);
     }
@@ -583,8 +566,6 @@ public class LayoutEditorToolsTest {
     @Ignore("causes error on jenkins; exhausts failure retries")
     public void testInitializeBlockBossLogic() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        VirtualSignalHead h = new VirtualSignalHead("IH1");
-        InstanceManager.getDefault(SignalHeadManager.class).register(h);
         Assert.assertTrue("Signal head block boss logic started", let.initializeBlockBossLogic("IH1"));
     }
 
@@ -640,10 +621,8 @@ public class LayoutEditorToolsTest {
             for (int i = 0; i < 5; i++) {
                 String sName = "IH" + i;
                 String uName = "signal head " + i;
-                NamedBeanHandle<Turnout> nbh = jmri.InstanceManager.getDefault(jmri.NamedBeanHandleManager.class).getNamedBeanHandle(turnouts.get(i).getSystemName(), turnouts.get(i));
-                if (nbh != null) {
-                    SignalHead signalHead = new SingleTurnoutSignalHead(sName, uName, nbh, SignalHead.GREEN, SignalHead.RED);
-                    InstanceManager.getDefault(jmri.SignalHeadManager.class).register(signalHead);
+                VirtualSignalHead signalHead = new VirtualSignalHead(sName,uName);
+                InstanceManager.getDefault(SignalHeadManager.class).register(signalHead);
                 }
             }
             signalHeads = InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanList();
