@@ -24,6 +24,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
 
     /**
      * Ctor using a given system connection memo
+     * @param memo System Connection
      */
     public CbusTurnoutManager(CanSystemConnectionMemo memo) {
         super(memo);

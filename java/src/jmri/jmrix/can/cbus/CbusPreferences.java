@@ -1,9 +1,7 @@
 package jmri.jmrix.can.cbus;
 
-import java.util.Properties;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
-import jmri.InstanceManager;
 import jmri.beans.PreferencesBean;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;

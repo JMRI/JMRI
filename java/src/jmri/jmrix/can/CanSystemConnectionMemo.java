@@ -5,15 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 import javax.annotation.Nonnull;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.util.NamedBeanComparator;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -32,11 +30,11 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public CanSystemConnectionMemo() {
         super("M", DEFAULT_USERNAME);
-        register(); // registers general type
+        super.register(); // registers general type
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    private final jmri.jmrix.swing.ComponentFactory cf = null;
 
     protected TrafficController tm;
 
@@ -84,6 +82,9 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @SuppressWarnings("unchecked")
     @Override
     public <T> T get(Class<?> T) {
@@ -126,6 +127,9 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         }
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         if (manager == null) {
@@ -134,6 +138,9 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return manager.getActionModelResourceBundle();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
         return new NamedBeanComparator<>();
@@ -190,9 +197,13 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         String oldValue = m.get(option);
         if (value.equals(oldValue)) return;
         m.put(option, value);
-        // @todo When the connection options are changed, we need to mark the profile as dirty.
+        isDirty();
+        isRestartRequired();
     }
 
+    /**
+     * {@inheritDoc }
+     */
     @Override
     public void dispose() {
         if (manager != null) {

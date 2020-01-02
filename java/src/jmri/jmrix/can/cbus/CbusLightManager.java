@@ -25,6 +25,7 @@ public class CbusLightManager extends AbstractLightManager {
 
     /**
      * Ctor using a given system connection memo
+     * @param memo System Connection
      */
     public CbusLightManager(CanSystemConnectionMemo memo) {
         super(memo);

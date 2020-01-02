@@ -1,13 +1,10 @@
 package jmri.jmrix.can.cbus.node;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
     
 // import org.slf4j.Logger;
@@ -47,12 +44,12 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
         setBackupResult(BackupType.INCOMPLETE);
         _timeStamp = timeStamp;
         if (node.getParameters()!=null) {
-            setParameters(node.getParameters());
+            super.setParameters(node.getParameters());
         } else {
             setBackupResult(BackupType.COMPLETEDWITHERROR);
         }
         if (node.getNvArray()!=null) {
-            setNVs(node.getNvArray());
+            super.setNVs(node.getNvArray());
         } else {
             setBackupResult(BackupType.COMPLETEDWITHERROR);
         }
@@ -89,7 +86,7 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
      * Set the Backup Result
      * @param type Backup Type Enum
      */  
-    protected void setBackupResult(BackupType type) {
+    protected final void setBackupResult(BackupType type) {
         _backupType = type;
     }
 
@@ -97,7 +94,7 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
      * Get the Backup Result
      * @return enum
      */  
-    public BackupType getBackupResult() {
+    public final BackupType getBackupResult() {
         return _backupType;
     }
     
@@ -213,10 +210,7 @@ public class CbusNodeFromBackup extends CbusNode implements Comparable<CbusNodeF
             java.util.Collections.sort(this.getEventArray());
             java.util.Collections.sort(t.getEventArray());
         }
-        if (this.getEventArrayHash()!=t.getEventArrayHash()){
-            return false;
-        }
-        return true;
+        return this.getEventArrayHash() == t.getEventArrayHash();
     }
     
     /** 

@@ -31,16 +31,25 @@ public class CbusReporterManagerXml extends AbstractReporterManagerConfigXML {
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setStoreElementClass(Element reporters) {
         reporters.setAttribute("class", this.getClass().getName());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean load(Element shared, Element perNode) {
         // load individual reporters

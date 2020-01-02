@@ -20,6 +20,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
 
     /**
      * Ctor using a given system connection memo
+     * @param memo System Connection
      */
     public CbusSensorManager(CanSystemConnectionMemo memo) {
         super(memo);

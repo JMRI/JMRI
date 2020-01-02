@@ -69,7 +69,7 @@ public class CbusEventTableAction {
         int node = CbusMessage.getNodeNumber(m);
         int opc = CbusMessage.getOpcode(m);
         int row = _model.seeIfEventOnTable( node, event);
-        if (row<0) {
+        if (row<0 && event>-1) {
             _model.addEvent(node,event,0,CbusTableEvent.EvState.UNKNOWN,name,"",0,0,0,0);
             row = _model.seeIfEventOnTable( node, event );
         }

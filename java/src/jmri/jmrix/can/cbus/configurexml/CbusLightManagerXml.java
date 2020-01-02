@@ -18,16 +18,25 @@ public class CbusLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         super();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void setStoreElementClass(Element lights) {
         lights.setAttribute("class", "jmri.jmrix.can.cbus.configurexml.CbusLightManagerXml");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public boolean load(Element shared, Element perNode) {
         // load individual lights

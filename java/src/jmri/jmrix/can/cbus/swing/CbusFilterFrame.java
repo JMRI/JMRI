@@ -10,7 +10,6 @@ import javax.swing.WindowConstants;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusFilter;
-import jmri.jmrix.can.cbus.swing.CbusFilterPanel;
 import jmri.jmrix.can.cbus.swing.configtool.ConfigToolPane;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.util.JmriJFrame;
@@ -27,8 +26,8 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusFilterFrame extends JmriJFrame {
     
-    private CbusConsolePane _console;
-    private ConfigToolPane _evCap;
+    private final CbusConsolePane _console;
+    private final ConfigToolPane _evCap;
     private ArrayList<CbusFilterPanel> listFilters;
     private ArrayList<Integer> listMapped;
     private JPanel fPane;
@@ -84,14 +83,14 @@ public class CbusFilterFrame extends JmriJFrame {
      */
     @Override
     public void initComponents() {
-        listMapped = new ArrayList<Integer>();
+        listMapped = new ArrayList<>();
         for ( int k=0 ; (k < CbusFilter.CFMAXCATS + CbusFilter.CFMAX_NODES) ; k++){
             listMapped.add(-1);
         }
         
         getContentPane().setLayout(new GridLayout(1,0));
         setTitle(title());
-        listFilters = new ArrayList<CbusFilterPanel>();
+        listFilters = new ArrayList<>();
         _filter = new CbusFilter(this);
         
         // add items to GUI

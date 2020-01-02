@@ -1,17 +1,11 @@
 package jmri.jmrix.can.cbus.node;
 
-import static java.util.Comparator.comparing;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JButton;
-import javax.swing.JTextField;
 import jmri.jmrit.XmlFile;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
@@ -33,9 +27,9 @@ public class CbusNodeXml {
     
     public SimpleDateFormat xmlDateStyle = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss"); // NOI18N
     private int _nodeNum = 0;
-    private CbusNode _node;
+    private final CbusNode _node;
     private ArrayList<CbusNodeFromBackup> _backupInfos;
-    private CbusPreferences preferences;
+    private final CbusPreferences preferences;
     
     /**
      * Create a new CbusNodeXml
@@ -45,7 +39,7 @@ public class CbusNodeXml {
     public CbusNodeXml(CbusNode node) {
         _nodeNum = node.getNodeNumber();
         _node = node;
-        _backupInfos = new ArrayList<CbusNodeFromBackup>();
+        _backupInfos = new ArrayList<>();
         preferences = jmri.InstanceManager.getNullableDefault(CbusPreferences.class);
         doLoad();
         
@@ -130,13 +124,12 @@ public class CbusNodeXml {
                 _backupInfos.remove(i);
             }
         }
-        return;
     }
     
     /**
      * Full xml load
      */
-    protected void doLoad(){
+    protected final void doLoad(){
         CbusNodeBackupFile x = new CbusNodeBackupFile();
         File file = x.getFile(_node.getNodeNumber(),true);
         
@@ -398,6 +391,7 @@ public class CbusNodeXml {
     /**
      * Remove Node XML File
      * @param rotate if true, creates and rotates .bup files before delete, false just deletes the core node file
+     * @return true on success, else false
      */
     protected boolean removeNode( boolean rotate){
         CbusNodeBackupFile x = new CbusNodeBackupFile();
@@ -421,10 +415,7 @@ public class CbusNodeXml {
         } catch (IOException ex) {
             // the file might not exist
             log.debug("Backup Rotate failed {}",file);  // NOI18N
-        } catch (JDOMException ex) {
-            // file might not exist
-            log.debug("File invalid: {}", ex);  // NOI18N
-        } catch (NullPointerException ex){
+        } catch (JDOMException | NullPointerException ex) {
             // file might not exist
             log.debug("File invalid: {}", ex);  // NOI18N
         }
@@ -443,7 +434,7 @@ public class CbusNodeXml {
      * Reset the backup array for testing
      */
     protected void resetBupArray() {
-        _backupInfos = new ArrayList<CbusNodeFromBackup>();
+        _backupInfos = new ArrayList<>();
     }
 
     public static class CbusNodeBackupFile extends XmlFile {
@@ -482,7 +473,6 @@ public class CbusNodeXml {
             return getFile(nodeNum,false).delete();
         }
     }
-
 
     private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(CbusNodeXml.class);
 }
