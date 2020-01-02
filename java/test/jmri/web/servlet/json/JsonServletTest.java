@@ -260,7 +260,6 @@ public class JsonServletTest {
      *
      * @throws java.io.IOException unexpected failure in test context
      * @throws javax.servlet.ServletException unexpected failure in test context
-     * @throws JmriException unexpected failure in test context
      */
     @Test
     public void testGetV5noParameters() throws ServletException, IOException {

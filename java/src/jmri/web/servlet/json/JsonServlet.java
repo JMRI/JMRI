@@ -203,9 +203,9 @@ public class JsonServlet extends WebSocketServlet {
                         }
                     }
                     if (reply == null) {
-                        log.warn("Requested type {} unknown.", type);
+                        log.warn("Requested type '{}' unknown.", type);
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), jsonRequest.id);
+                                JsonBundle.getMessage(request.getLocale(), "ErrorUnknownType", type), jsonRequest.id);
                     }
                 } else {
                     if (services.get(jsonRequest.version).get(type) != null) {
@@ -236,7 +236,7 @@ public class JsonServlet extends WebSocketServlet {
                     if (reply == null) {
                         log.warn("Requested type '{}' unknown.", type);
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), jsonRequest.id);
+                                JsonBundle.getMessage(request.getLocale(), "ErrorUnknownType", type), jsonRequest.id);
                     }
                 }
             } catch (JsonException ex) {
@@ -335,14 +335,14 @@ public class JsonServlet extends WebSocketServlet {
                         }
                     }
                     if (reply == null) {
-                        log.warn("Requested type {} unknown.", type);
+                        log.warn("Requested type '{}' unknown.", type);
                         throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                                Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), id);
+                                JsonBundle.getMessage(request.getLocale(), "ErrorUnknownType", type), id);
                     }
                 } else {
                     log.error("Name must be defined.");
-                    // TODO: I18N
-                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "Name must be defined.", id);
+                    throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
+                            JsonBundle.getMessage(request.getLocale(), "ErrorMissingName"), id);
                 }
             } else {
                 log.warn("Type not specified.");
@@ -419,14 +419,15 @@ public class JsonServlet extends WebSocketServlet {
                         }
                     }
                     if (reply == null) {
-                        // not a creatable item
+                        // item cannot be created
+                        // TODO: I18N
                         throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, type + " is not a creatable type",
-                                jsonRequest.id); // need to I18N
+                                jsonRequest.id);
                     }
                 } else {
-                    log.warn("Requested type {} unknown.", type);
+                    log.warn("Requested type '{}' unknown.", type);
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
-                            Bundle.getMessage(request.getLocale(), "ErrorUnknownType", type), jsonRequest.id);
+                            JsonBundle.getMessage(request.getLocale(), "ErrorUnknownType", type), jsonRequest.id);
                 }
             } else {
                 log.warn("Type not specified.");
