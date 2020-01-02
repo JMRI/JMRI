@@ -464,15 +464,21 @@ public class JsonServlet extends WebSocketServlet {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, "name must be specified",
                             jsonRequest.id); // need to I18N
                 }
-                JsonNode data = mapper.createObjectNode();
-                if (request.getContentType().contains(APPLICATION_JSON)) {
-                    data = mapper.readTree(request.getReader());
-                    if (!data.path(DATA).isMissingNode()) {
-                        data = data.path(DATA);
+                if (services.get(jsonRequest.version).get(type) != null) {
+                    JsonNode data = mapper.createObjectNode();
+                    if (request.getContentType().contains(APPLICATION_JSON)) {
+                        data = mapper.readTree(request.getReader());
+                        if (!data.path(DATA).isMissingNode()) {
+                            data = data.path(DATA);
+                        }
                     }
-                }
-                for (JsonHttpService service : services.get(jsonRequest.version).get(type)) {
-                    service.doDelete(type, name, data, jsonRequest);
+                    for (JsonHttpService service : services.get(jsonRequest.version).get(type)) {
+                        service.doDelete(type, name, data, jsonRequest);
+                    }
+                } else {
+                    log.warn("Requested type '{}' unknown.", type);
+                    throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
+                            JsonBundle.getMessage(request.getLocale(), "ErrorUnknownType", type), jsonRequest.id);
                 }
             } else {
                 log.debug("Type not specified.");
