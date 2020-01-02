@@ -417,22 +417,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public int getObjectCount();
 
     /**
-     * Provide an array of system names.
-     * <p>
-     * Note: this is ordered by the underlying NamedBeans, not on the Strings
-     * themselves.
-     * <p>
-     * Note: this is not a live array; the contents don't stay up to date
-     *
-     * @return (slow) copy of system names in array form
-     * @deprecated 4.11.5 - use direct access via {@link #getNamedBeanSet()}
-     */
-    @Deprecated // 4.11.5
-    @CheckReturnValue
-    @Nonnull
-    public String[] getSystemNameArray();
-
-    /**
      * Provide an
      * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
      * system names.
