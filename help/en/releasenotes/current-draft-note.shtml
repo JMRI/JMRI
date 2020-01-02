@@ -1,7 +1,9 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>Fixed a problem introduced in JMRI 4.19.1 that 
+          prevented the function buttons in the on-screen throttles
+          from working on some types of computers.</li>
         </ul>
 
 	    <h4>Anyma DMX512</h4>
