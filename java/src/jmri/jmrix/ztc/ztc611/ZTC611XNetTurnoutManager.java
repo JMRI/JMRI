@@ -4,8 +4,6 @@ import jmri.Turnout;
 import jmri.jmrix.lenz.XNetAddress;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement turnout manager - Specific to ZTC ZTC611
  * <p>
@@ -22,7 +20,7 @@ public class ZTC611XNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager
 
     // XNet-specific methods
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
@@ -34,7 +32,7 @@ public class ZTC611XNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 

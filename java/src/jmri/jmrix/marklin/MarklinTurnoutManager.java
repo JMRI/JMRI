@@ -4,8 +4,6 @@ import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement turnout manager for Marklin systems.
  * <p>
@@ -25,14 +23,13 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public MarklinSystemConnectionMemo getMemo() {
         return (MarklinSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
@@ -46,7 +43,7 @@ public class MarklinTurnoutManager extends jmri.managers.AbstractTurnoutManager 
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 

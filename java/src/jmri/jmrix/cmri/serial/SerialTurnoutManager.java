@@ -1,7 +1,6 @@
 package jmri.jmrix.cmri.serial;
 
 import java.util.Locale;
-import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.JmriException;
 import jmri.Turnout;
@@ -27,7 +26,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public CMRISystemConnectionMemo getMemo() {
         return (CMRISystemConnectionMemo) memo;
@@ -37,7 +35,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = "";
         sName = getMemo().normalizeSystemName(systemName);
@@ -111,7 +109,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * machines.
      */
     @Override
-    public int askNumControlBits(@Nonnull String systemName) {
+    public int askNumControlBits(String systemName) {
 
         // ask user how many bits should control the turnout - 1 or 2
         int iNum = selectNumberOfControlBits();
@@ -158,7 +156,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * (normally in seconds).
      */
     @Override
-    public int askControlType(@Nonnull String systemName) {
+    public int askControlType(String systemName) {
         // ask if user wants 'steady state' output (stall motors, e.g., Tortoises) or 
         // 'pulsed' output (some turnout controllers).
         int iType = selectOutputType();
@@ -216,7 +214,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * Turnout format is more than a simple format.
      */
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
@@ -224,7 +222,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean isNumControlBitsSupported(@Nonnull String systemName) {
+    public boolean isNumControlBitsSupported(String systemName) {
         return true;
     }
 
@@ -232,7 +230,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean isControlTypeSupported(@Nonnull String systemName) {
+    public boolean isControlTypeSupported(String systemName) {
         return true;
     }
 
@@ -240,7 +238,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         int seperator = 0;
         String tmpSName;
 
@@ -298,7 +296,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         String tmpSName = "";
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -347,9 +345,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         return getMemo().validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
     
@@ -357,7 +354,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 

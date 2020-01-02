@@ -7,8 +7,6 @@ import jmri.managers.AbstractTurnoutManager;
 import jmri.util.PreferNumericComparator;
 import jmri.implementation.AbstractTurnout;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement a turnout manager for "Internal" (virtual) turnouts.
  *

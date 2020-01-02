@@ -64,9 +64,8 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      *
      * @return null if the system name is not in a valid format
      */
-    @Nonnull
     @Override
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         if (systemName.contains(":")) {
             // check for CAN format.
             int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
@@ -153,7 +152,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.VALID
                 ? NameValidity.VALID
                 : Z21CanBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix());
@@ -166,7 +165,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
 
     @Override
     @Nonnull
-    public synchronized String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public synchronized String createSystemName(String curAddress, @Nonnull String prefix) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 

@@ -8,7 +8,6 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -60,14 +59,13 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public EcosSystemConnectionMemo getMemo() {
         return (EcosSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
             addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
@@ -82,7 +80,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 

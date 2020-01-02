@@ -7,8 +7,6 @@ import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement turnout manager for Powerline systems.
  * <p>
@@ -84,7 +82,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
         if (sName.equals("")) {
@@ -111,9 +109,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         return tc.getAdapterMemo().getSerialAddress().validateSystemNameFormat(name, typeLetter(), locale);
     }
 
@@ -121,7 +118,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, typeLetter());
     }
 

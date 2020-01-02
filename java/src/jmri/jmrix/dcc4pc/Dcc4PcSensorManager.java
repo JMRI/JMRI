@@ -65,9 +65,8 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
         return (Dcc4PcSystemConnectionMemo) memo;
     }
 
-    @Nonnull
     @Override
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         Sensor s = new Dcc4PcSensor(systemName, userName);
         s.setUserName(userName);
         extractBoardID(systemName);
@@ -102,7 +101,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     // we want the system name to be in the format of board:input
     @Override
     @Nonnull
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, @Nonnull String prefix) throws JmriException {
         String iName;
         if (curAddress.contains(":")) {
             board = 0;
@@ -139,7 +138,7 @@ public class Dcc4PcSensorManager extends jmri.managers.AbstractSensorManager
     int channel;
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
 

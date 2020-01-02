@@ -5,8 +5,6 @@ import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement turnout manager for NCE systems.
  * <p>
@@ -24,14 +22,13 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public NceSystemConnectionMemo getMemo() {
         return (NceSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Turnout t = new NceTurnout(getMemo().getNceTrafficController(), getSystemPrefix(), addr);
         t.setUserName(userName);
@@ -73,7 +70,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
@@ -90,9 +87,8 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         return super.validateNmraAccessorySystemNameFormat(name, locale);
     }
 
@@ -100,7 +96,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 

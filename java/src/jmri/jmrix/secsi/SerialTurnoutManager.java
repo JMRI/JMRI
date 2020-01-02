@@ -6,8 +6,6 @@ import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement turnout manager for SECSI systems.
  * <p>
@@ -25,14 +23,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public SecsiSystemConnectionMemo getMemo() {
         return (SecsiSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sName.equals("")) {
@@ -64,9 +61,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
     }
 
@@ -74,7 +70,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), this.getSystemPrefix()));
     }
 

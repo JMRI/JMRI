@@ -8,8 +8,6 @@ import jmri.jmrix.AbstractMRReply;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Manage the NCE-specific Sensor implementation.
  * <p>
@@ -49,7 +47,6 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public NceSystemConnectionMemo getMemo() {
         return (NceSystemConnectionMemo) memo;
@@ -72,9 +69,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         super.dispose();
     }
 
-    @Nonnull
     @Override
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         int number = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
 
         Sensor s = new NceSensor(systemName);
@@ -349,13 +345,12 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
-    @Nonnull
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             // Sensor address is presented in the format AIU Cab Address:Pin Number On AIU
             // Should we be validating the values of aiucab address and pin number?
@@ -399,7 +394,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     int iName = 0;
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
 
@@ -435,9 +430,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         String parts[];
         int num;
         if (name.contains(":")) {
@@ -492,7 +486,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         if (super.validSystemNameFormat(systemName) == NameValidity.VALID) {
             try {
                 validateSystemNameFormat(systemName);

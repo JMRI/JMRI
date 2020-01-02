@@ -222,7 +222,8 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
      */
     protected String findParmValue(Element e, String name) {
         List<Element> l = e.getChildren("parameter");
-        for (Element n : l) {
+        for (int i = 0; i < l.size(); i++) {
+            Element n = l.get(i);
             if (n.getAttributeValue("name").equals(name)) {
                 return n.getTextTrim();
             }

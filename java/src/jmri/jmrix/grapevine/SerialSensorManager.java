@@ -3,8 +3,6 @@ package jmri.jmrix.grapevine;
 import java.util.Locale;
 import javax.annotation.CheckReturnValue;
 import javax.annotation.Nonnull;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -42,22 +40,19 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public GrapevineSystemConnectionMemo getMemo() {
         return (GrapevineSystemConnectionMemo) memo;
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
+     * Create a new sensor if all checks are passed.
      * System name is normalized to ensure uniqueness.
      *
      * @return null if sensor already exists by that name or an alternate
      */
     @Override
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    protected Sensor createNewSensor(String systemName, String userName) {
         String prefix = getSystemPrefix();
         log.debug("createNewSensor {} {}", systemName, userName);
         Sensor s;
@@ -108,9 +103,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /** {@inheritDoc} */
-    @Nonnull
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws jmri.JmriException {
+    public String createSystemName(String curAddress, String prefix) throws jmri.JmriException {
         String tmpSName = prefix + "S" + curAddress;
         // first, check validity
         try {
@@ -125,9 +119,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         return SerialAddress.validateSystemNameFormat(name, this, locale);
     }
 
@@ -135,7 +128,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix());
     }
 

@@ -61,7 +61,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
     }
 
     @Override
-    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    public Reporter createNewReporter(String systemName, String userName) {
         if (!systemName.matches(getSystemPrefix() + typeLetter() + "[" + 1 + "]")) {
             int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
             if (bitNum != -1) {

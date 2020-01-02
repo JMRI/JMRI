@@ -11,8 +11,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractTurnoutManager;
 import org.openlcb.OlcbInterface;
 
-import javax.annotation.Nonnull;
-
 /**
  * OpenLCB implementation of a TurnoutManager.
  * <p>
@@ -35,13 +33,11 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
 
-    @Nonnull
     @Override
     public List<NamedBeanPropertyDescriptor<?>> getKnownBeanProperties() {
         List<NamedBeanPropertyDescriptor<?>> l = new ArrayList<>();
@@ -79,7 +75,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
      * @return never null
      */
     @Override
-    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         OlcbTurnout t = new OlcbTurnout(getSystemPrefix(), addr, memo.get(OlcbInterface.class));
         t.setUserName(userName);
@@ -120,12 +116,12 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         // don't check for integer; should check for validity here
         try {
             validateAddressFormat(curAddress);
@@ -136,7 +132,7 @@ public class OlcbTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         // always return this (the current) name without change
         try {
             validateAddressFormat(curAddress);

@@ -2,8 +2,6 @@ package jmri.jmrix.zimo;
 
 import jmri.Turnout;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement turnout manager for Mx1 Turnouts.
  * <p>
@@ -21,14 +19,13 @@ public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public Mx1SystemConnectionMemo getMemo() {
         return (Mx1SystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Turnout t = new Mx1Turnout(addr, getMemo().getMx1TrafficController(), getSystemPrefix());
         t.setUserName(userName);
@@ -36,7 +33,7 @@ public class Mx1TurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 

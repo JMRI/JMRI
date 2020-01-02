@@ -2,8 +2,6 @@ package jmri.jmrix.srcp;
 
 import jmri.Turnout;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement turnout manager for SRCP systems.
  * <p>
@@ -24,14 +22,13 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public SRCPBusConnectionMemo getMemo() {
         return (SRCPBusConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         t = new SRCPTurnout(addr, getMemo());
@@ -41,7 +38,7 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 

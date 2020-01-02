@@ -33,7 +33,6 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public MqttSystemConnectionMemo getMemo() {
         return (MqttSystemConnectionMemo) memo;

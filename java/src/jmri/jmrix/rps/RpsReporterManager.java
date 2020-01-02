@@ -6,8 +6,6 @@ import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * RPS implementation of a ReporterManager.
  *
@@ -23,7 +21,6 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public RpsSystemConnectionMemo getMemo() {
         return (RpsSystemConnectionMemo) memo;
@@ -34,7 +31,7 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
      * System name is normalized to ensure uniqueness.
      */
     @Override
-    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    protected Reporter createNewReporter(String systemName, String userName) {
         log.debug(userName);
         RpsReporter r = new RpsReporter(systemName, userName, getSystemPrefix());
         Distributor.instance().addMeasurementListener(r);
@@ -59,9 +56,8 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         return getMemo().validateSystemNameFormat(name, this, locale);
     }
     
@@ -69,7 +65,7 @@ public class RpsReporterManager extends jmri.managers.AbstractReporterManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 

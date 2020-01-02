@@ -6,8 +6,6 @@ import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Manage the RPS-specific Sensor implementation.
  * <p>
@@ -24,7 +22,6 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public RpsSystemConnectionMemo getMemo() {
         return (RpsSystemConnectionMemo) memo;
@@ -40,9 +37,8 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * Create a new sensor if all checks are passed.
      * System name is normalized to ensure uniqueness.
      */
-    @Nonnull
     @Override
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         try {
            RpsSensor r = new RpsSensor(systemName, userName, getSystemPrefix());
            Distributor.instance().addMeasurementListener(r);
@@ -55,9 +51,8 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (!prefix.equals(getSystemPrefix())) {
             log.warn("prefix does not match memo.prefix");
             return null;
@@ -75,9 +70,8 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         return getMemo().validateSystemNameFormat(name, this, locale);
     }
     
@@ -85,7 +79,7 @@ public class RpsSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 

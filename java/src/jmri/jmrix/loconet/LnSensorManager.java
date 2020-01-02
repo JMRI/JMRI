@@ -7,8 +7,6 @@ import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Manage the LocoNet-specific Sensor implementation.
  * System names are "LSnnn", where L is the user configurable system prefix,
@@ -39,7 +37,6 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public LocoNetSystemConnectionMemo getMemo() {
         return (LocoNetSystemConnectionMemo) memo;
@@ -64,13 +61,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     // LocoNet-specific methods
-
-    /**
-     * {@inheritDoc}
-     */
-    @Nonnull
     @Override
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         return new LnSensor(systemName, userName, tc, getSystemPrefix());
     }
 
@@ -137,13 +129,12 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     private boolean busy = false;
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
-    @Nonnull
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             
             // NOTE: This format is deprecated in JMRI 4.17.4 on account the 
@@ -198,16 +189,15 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
@@ -226,7 +216,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName = "";
 

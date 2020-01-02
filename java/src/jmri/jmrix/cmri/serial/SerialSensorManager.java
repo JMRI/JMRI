@@ -1,16 +1,12 @@
 package jmri.jmrix.cmri.serial;
 
 import java.util.Locale;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractNode;
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
 
 /**
  * Manage the C/MRI serial-specific Sensor implementation.
@@ -49,7 +45,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public CMRISystemConnectionMemo getMemo() {
         return (CMRISystemConnectionMemo) memo;
@@ -57,12 +52,9 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
 
     /**
      * {@inheritDoc}
-     *
-     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
      */
     @Override
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
         String sName = getMemo().normalizeSystemName(systemName);
@@ -162,16 +154,15 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         String tmpSName = "";
         if (curAddress.contains(":")) {
             //Address format passed is in the form node:address
@@ -221,7 +212,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    public String getNextValidAddress(String curAddress, String prefix) {
         //If the hardware address passed does not already exist then this can
         //be considered the next valid address.
 
@@ -261,9 +252,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         return getMemo().validateSystemNameFormat(super.validateSystemNameFormat(systemName, locale), typeLetter(), locale);
     }
     
@@ -271,7 +261,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return getMemo().validSystemNameFormat(systemName, typeLetter());
     }
 

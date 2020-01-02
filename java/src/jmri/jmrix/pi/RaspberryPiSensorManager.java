@@ -2,8 +2,6 @@ package jmri.jmrix.pi;
 
 import jmri.Sensor;
 
-import javax.annotation.Nonnull;
-
 /**
  * Manage the RaspberryPi specific Sensor implementation.
  *
@@ -22,7 +20,6 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public RaspberryPiSystemConnectionMemo getMemo() {
         return (RaspberryPiSystemConnectionMemo) memo;
@@ -34,9 +31,8 @@ public class RaspberryPiSensorManager extends jmri.managers.AbstractSensorManage
         super.dispose();
     }
 
-    @Nonnull
     @Override
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         return new RaspberryPiSensor(systemName, userName);
     }
 

@@ -6,8 +6,6 @@ import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement LightManager for Maple serial systems.
  * <p>
@@ -28,7 +26,6 @@ public class SerialLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public MapleSystemConnectionMemo getMemo() {
         return (MapleSystemConnectionMemo) memo;
@@ -85,9 +82,8 @@ public class SerialLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         return SerialAddress.validateSystemNameFormat(name, this, locale);
     }
 
@@ -95,7 +91,7 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 

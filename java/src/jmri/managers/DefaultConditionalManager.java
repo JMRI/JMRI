@@ -305,7 +305,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
      *                  {@link #getNamedBeanSet}
      * @return a list of conditional system names regardless of parent Logix
      */
-    @Nonnull
     @Deprecated // 4.11.5
     @Override
     public List<String> getSystemNameList() {
@@ -356,7 +355,6 @@ public class DefaultConditionalManager extends AbstractManager<Conditional>
         return InstanceManager.getDefault(DefaultConditionalManager.class);
     }
 
-    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameConditionals" : "BeanNameConditional");

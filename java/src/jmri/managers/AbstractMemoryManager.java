@@ -68,23 +68,10 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     /** {@inheritDoc} */
     @Override
-    public Memory getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
+    public @Nonnull Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
+        log.debug("new Memory: {}; {}", systemName, userName); // NOI18N
+        Objects.requireNonNull(systemName, "Value of requested systemName cannot be null");
 
-    /** {@inheritDoc} */
-    @Override
-    public Memory getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    @Nonnull
-    public Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("new Memory: {}; {}", systemName, (userName == null ? "null" : userName)); // NOI18N
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
-                + ((userName == null) ? "null" : userName));  // NOI18N
         // return existing if there is one
         Memory s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
@@ -109,8 +96,15 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
         // doesn't exist, make a new one
         s = createNewMemory(systemName, userName);
+
+        // if that failed, blame it on the input arguments
+        if (s == null) {
+            throw new IllegalArgumentException();
+        }
+
         // save in the maps
         register(s);
+
         // Keep track of the last created auto system name
         updateAutoNumber(systemName);
 

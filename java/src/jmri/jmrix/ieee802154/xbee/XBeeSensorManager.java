@@ -9,15 +9,11 @@ import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
 import java.util.Locale;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
 
 /**
  * Manage the XBee specific Sensor implementation.
@@ -43,7 +39,6 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public XBeeConnectionMemo getMemo() {
         return (XBeeConnectionMemo) memo;
@@ -60,14 +55,8 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // XBee specific methods
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
-     */
     @Override
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
         if ((curNode = (XBeeNode) tc.getNodeFromName(name)) == null) {
@@ -83,11 +72,11 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
         }
         int pin = pinFromSystemName(systemName);
         if (curNode != null && !curNode.getPinAssigned(pin)) {
-            log.debug("Adding sensor to pin {}", pin);
+            log.debug("Adding sensor to pin " + pin);
             curNode.setPinBean(pin, new XBeeSensor(systemName, userName, tc));
             return (XBeeSensor) curNode.getPinBean(pin);
         } else {
-            log.debug("Failed to create sensor {}", systemName);
+            log.debug("Failed to create sensor " + systemName);
             return null;
         }
     }
@@ -95,9 +84,8 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         super.validateSystemNameFormat(name, locale);
         int pin = pinFromSystemName(name);
         if (pin < 0 || pin > 7) {
@@ -112,7 +100,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
             try {
@@ -195,13 +183,12 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     // for now, set this to false. multiple additions currently works
     // partially, but not for all possible cases.
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
-    @Nonnull
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         String encoderAddress = addressFromSystemName(prefix + typeLetter() + curAddress);
         int input = pinFromSystemName(prefix + typeLetter() + curAddress);
 
@@ -256,7 +243,7 @@ public class XBeeSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     @Override
-    public void deregister(@Nonnull jmri.Sensor s) {
+    public void deregister(jmri.Sensor s) {
         super.deregister(s);
         // remove the specified sensor from the associated XBee pin.
         String systemName = s.getSystemName();

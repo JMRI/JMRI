@@ -6,8 +6,6 @@ import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement turnout manager for Acela systems.
  * <p>
@@ -27,7 +25,6 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public AcelaSystemConnectionMemo getMemo() {
         return (AcelaSystemConnectionMemo) memo;
@@ -42,7 +39,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * @return null if the system name is not in a valid format
      */
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         Turnout trn = null;
         // check if the output bit is available
         int nAddress = -1;
@@ -75,9 +72,8 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * {@value AcelaAddress#MINOUTPUTADDRESS} to
      * {@value AcelaAddress#MAXOUTPUTADDRESS}.
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         return super.validateIntegerSystemNameFormat(systemName,
                 AcelaAddress.MINOUTPUTADDRESS,
                 AcelaAddress.MAXOUTPUTADDRESS,
@@ -88,7 +84,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (AcelaAddress.validSystemNameFormat(systemName, 'T', getSystemPrefix()));
     }
 
@@ -113,7 +109,7 @@ public class AcelaTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 

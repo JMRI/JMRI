@@ -3,8 +3,6 @@ package jmri.jmrix.jmriclient;
 import java.util.Locale;
 import jmri.Light;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement LightManager for JMRIClient systems
  * <p>
@@ -22,7 +20,6 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public JMRIClientSystemConnectionMemo getMemo() {
         return (JMRIClientSystemConnectionMemo) memo;
@@ -41,7 +38,7 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (systemName.startsWith(getSystemNamePrefix())
                 && Integer.parseInt(systemName.substring(getSystemNamePrefix().length())) > 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
@@ -49,9 +46,8 @@ public class JMRIClientLightManager extends jmri.managers.AbstractLightManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         return super.validateIntegerSystemNameFormat(name, 0, Integer.MAX_VALUE, locale);
     }
 

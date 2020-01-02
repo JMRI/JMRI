@@ -2,6 +2,7 @@ package jmri.managers;
 
 import java.util.Enumeration;
 import java.util.Objects;
+
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
@@ -68,13 +69,9 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
         }
     }
 
-    /** {@inheritDoc} */
-    @Override
-    public Sensor getBeanBySystemName(@Nonnull String key) {
-        return this.getBySystemName(key);
-    }
-    
-    /** {@inheritDoc} */
+    /** {@inheritDoc}
+     * Special handling for numeric argument, which is treated as the suffix of a new system name
+    */
     @Override
     public Sensor getBySystemName(@Nonnull String key) {
         if (isNumber(key)) {
@@ -85,17 +82,11 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
 
     /** {@inheritDoc} */
     @Override
-    public Sensor getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     @Nonnull
     public Sensor newSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
-        log.debug(" newSensor(\"{}\", \"{}\")", systemName, (userName == null ? "null" : userName));
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
-                + (userName == null ? "null" : userName));  // NOI18N
+        log.debug(" newSensor(\"{}\", \"{}\")", systemName, userName);
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
+
         systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
         Sensor s;
@@ -114,6 +105,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
             }
             return s;
         }
+
         // doesn't exist, make a new one
         s = createNewSensor(systemName, userName);
 
@@ -151,13 +143,12 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
      * @param userName   the user name to use for the new Sensor
      * @return a new Sensor
      */
-    @Nonnull
-    abstract protected Sensor createNewSensor(@Nonnull String systemName, String userName);
+    abstract protected Sensor createNewSensor(String systemName, String userName);
 
     /**
      * {@inheritDoc}
      * Note that this null implementation only needs be implemented in
-     * system-specific SensorManagers where readout of sensor status from the
+     * system-specific Sensor Managers where readout of sensor status from the
      * layout is possible.
      */
     @Override

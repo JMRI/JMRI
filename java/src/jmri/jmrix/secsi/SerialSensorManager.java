@@ -1,13 +1,9 @@
 package jmri.jmrix.secsi;
 
 import java.util.Locale;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.annotation.Nonnull;
 
 /**
  * Manage the system-specific SECSI Sensor implementation.
@@ -42,7 +38,6 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public SecsiSystemConnectionMemo getMemo() {
         return (SecsiSystemConnectionMemo) memo;
@@ -54,15 +49,11 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     /**
-     * {@inheritDoc}
-     * <p>
-     * System name is normalized to ensure uniqueness.
-     *
-     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
+     * Create a new sensor if all checks are passed. System name is normalized to
+     * ensure uniqueness.
      */
     @Override
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         Sensor s;
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
@@ -112,9 +103,8 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
     }
 
@@ -122,7 +112,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), this.getSystemPrefix()));
     }
 

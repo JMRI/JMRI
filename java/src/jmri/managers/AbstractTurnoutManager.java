@@ -52,7 +52,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     @Override
     @Nonnull
     public Turnout provideTurnout(@Nonnull String name) {
-        log.debug("provide turnout {}", name);
         Turnout result = getTurnout(name);
         if (result == null) {
             if (name.startsWith(getSystemPrefix() + typeLetter())) {
@@ -73,18 +72,6 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
             result = getBySystemName(name);
         }
         return result;
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Turnout getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Turnout getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
     }
 
     /** {@inheritDoc} */
@@ -125,6 +112,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
         // doesn't exist, make a new one
         s = createNewTurnout(systemName, userName);
+
         // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException("Unable to create turnout from " + systemName);
@@ -132,7 +120,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
         // Some implementations of createNewTurnout() register the new bean,
         // some don't. 
-        if (getBeanBySystemName(s.getSystemName()) == null) {
+        if (getBySystemName(s.getSystemName()) == null) {
             // save in the maps if successful
             register(s);
         }

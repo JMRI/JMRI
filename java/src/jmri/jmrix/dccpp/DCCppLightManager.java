@@ -6,8 +6,6 @@ import java.util.Locale;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement LightManager for DCC++ systems.
  * <p>
@@ -36,7 +34,6 @@ public class DCCppLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public DCCppSystemConnectionMemo getMemo() {
         return (DCCppSystemConnectionMemo) memo;
@@ -67,16 +64,15 @@ public class DCCppLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, MAX_TURNOUT_ADDRESS, locale);
     }
 

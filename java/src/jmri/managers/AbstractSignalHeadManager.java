@@ -57,18 +57,6 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
 
     /** {@inheritDoc} */
     @Override
-    public SignalHead getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public SignalHead getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalHeads" : "BeanNameSignalHead");

@@ -13,8 +13,6 @@ import jmri.jmrix.rfid.TimeoutRfidReporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Rfid implementation of a ReporterManager.
  * <p>
@@ -39,7 +37,7 @@ public class StandaloneReporterManager extends RfidReporterManager {
     }
 
     @Override
-    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    protected Reporter createNewReporter(String systemName, String userName) {
         log.debug("Create new Reporter: " + systemName);
         if (!systemName.matches(getSystemNamePrefix() + "[" + tc.getRange() + "]")) {
             log.warn("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());

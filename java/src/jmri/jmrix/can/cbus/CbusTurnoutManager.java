@@ -32,7 +32,6 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
@@ -55,7 +54,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    protected Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    protected Turnout createNewTurnout(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
@@ -76,7 +75,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
@@ -84,7 +83,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         // first, check validity
         try {
             validateAddressFormat(curAddress);
@@ -100,7 +99,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         String testAddr = curAddress;
         // make sure starting name is valid
         try {
@@ -134,9 +133,8 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         validateSystemNamePrefix(name, locale);
         try {
             validateAddressFormat(name.substring(getSystemNamePrefix().length()));
@@ -150,7 +148,7 @@ public class CbusTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         String addr;
         try {
             addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part

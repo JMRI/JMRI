@@ -7,8 +7,6 @@ import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement LightManager for Anyma dmx usb systems.
  * <p>
@@ -33,7 +31,6 @@ public class UsbLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public AnymaDMX_SystemConnectionMemo getMemo() {
         return (AnymaDMX_SystemConnectionMemo) memo;
@@ -80,7 +77,7 @@ public class UsbLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public Manager.NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public Manager.NameValidity validSystemNameFormat(String systemName) {
         log.debug("*    UsbLightManager.validSystemNameFormat() called");
         return getMemo().validSystemNameFormat(systemName, 'L');
     }
@@ -88,9 +85,8 @@ public class UsbLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, 512, locale);
     }
 

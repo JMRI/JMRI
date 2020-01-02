@@ -10,8 +10,6 @@ import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Objects;
-
 /**
  * Abstract partial implementation of a LightManager.
  * <p>
@@ -73,28 +71,13 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * {@inheritDoc}
      */
     @Override
-    @CheckForNull
-    public Light getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @CheckForNull
-    public Light getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     @Nonnull
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("newLight: {};{}", systemName, (userName == null ? "null" : userName));
+        log.debug("newLight: {};{}",
+                ((systemName == null) ? "null" : systemName),
+                ((userName == null) ? "null" : userName));
         systemName = validateSystemNameFormat(systemName);
+
         // return existing if there is one
         Light s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
@@ -113,12 +96,15 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
             }
             return s;
         }
+
         // doesn't exist, make a new one
         s = createNewLight(systemName, userName);
+
         // if that failed, blame it on the input arguments
         if (s == null) {
             throw new IllegalArgumentException("cannot create new light " + systemName);
         }
+
         // save in the maps
         register(s);
 

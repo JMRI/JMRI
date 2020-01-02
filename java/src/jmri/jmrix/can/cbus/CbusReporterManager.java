@@ -7,8 +7,6 @@ import jmri.managers.AbstractReporterManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement ReporterManager for CAN CBUS systems.
  * <p>
@@ -39,7 +37,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      * {@inheritDoc}
      */
     @Override
-    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    public Reporter createNewReporter(String systemName, String userName) {
         log.debug("ReporterManager create new CbusReporter: {}", systemName);
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Reporter t = new CbusReporter(addr, getMemo().getTrafficController(), getSystemPrefix());

@@ -2,8 +2,6 @@ package jmri.jmrix.xpa;
 
 import jmri.Turnout;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement turnout manager for Xpa+Modem connections to XpressNet Based
  * systems.
@@ -22,7 +20,6 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public XpaSystemConnectionMemo getMemo() {
         return (XpaSystemConnectionMemo) memo;
@@ -30,7 +27,7 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     // Xpa-specific methods
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Turnout t = new XpaTurnout(addr, getMemo());
         t.setUserName(userName);
@@ -38,7 +35,7 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 

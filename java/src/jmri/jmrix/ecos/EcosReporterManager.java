@@ -2,8 +2,6 @@ package jmri.jmrix.ecos;
 
 import jmri.Reporter;
 
-import javax.annotation.Nonnull;
-
 /**
  * EcosReporterManager implements the ReporterManager for ECoS
  *
@@ -19,7 +17,6 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public EcosSystemConnectionMemo getMemo() {
         return (EcosSystemConnectionMemo) memo;
@@ -31,7 +28,7 @@ public class EcosReporterManager extends jmri.managers.AbstractReporterManager {
     }
 
     @Override
-    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    public Reporter createNewReporter(String systemName, String userName) {
         Reporter r = new EcosReporter(systemName, userName);
         register(r);
         return r;

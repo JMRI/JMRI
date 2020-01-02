@@ -5,8 +5,6 @@ import jmri.NamedBean;
 import jmri.implementation.AbstractVariableLight;
 import jmri.util.PreferNumericComparator;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement a LightManager for "Internal" (virtual) lights.
  *
@@ -50,7 +48,6 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;

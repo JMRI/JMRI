@@ -8,10 +8,8 @@ import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
- * Implement turnout manager for XBee connections.
+ * Implement turnout manager for XBee connections
  *
  * @author Paul Bender Copyright (C) 2014
  */
@@ -27,7 +25,6 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public XBeeConnectionMemo getMemo() {
         return (XBeeConnectionMemo) memo;
@@ -36,12 +33,12 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     // for now, set this to false. Multiple additions currently works
     // partially, but not for all possible cases.
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return false;
     }
 
     @Override
-    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) {
         XBeeNode curNode = null;
         String name = addressFromSystemName(systemName);
         if ((curNode = (XBeeNode) tc.getNodeFromName(name)) == null) {
@@ -74,16 +71,15 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         return prefix + typeLetter() + curAddress;
     }
 
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         super.validateSystemNameFormat(name, locale);
         int pin = pinFromSystemName(name);
         int pin2 = pin2FromSystemName(name);
@@ -104,7 +100,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         if (tc.getNodeFromName(addressFromSystemName(systemName)) == null
                 && tc.getNodeFromAddress(addressFromSystemName(systemName)) == null) {
             try {
@@ -207,7 +203,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public void deregister(@Nonnull jmri.Turnout s) {
+    public void deregister(jmri.Turnout s) {
         super.deregister(s);
         // remove the specified turnout from the associated XBee pin.
         String systemName = s.getSystemName();
@@ -231,6 +227,7 @@ public class XBeeTurnoutManager extends AbstractTurnoutManager {
                 log.debug("Failed to removing turnout from pin " + pin);
             }
         }
+
     }
 
     /**

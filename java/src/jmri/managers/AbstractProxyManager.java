@@ -43,6 +43,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     protected int nMgrs() {
         // make sure internal present
         initInternal();
+
         return mgrs.size();
     }
 
@@ -167,11 +168,11 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     /** {@inheritDoc} */
     @Override
     public E getNamedBean(@Nonnull String name) {
-        E t = getBeanByUserName(name);
+        E t = getByUserName(name);
         if (t != null) {
             return t;
         }
-        return getBeanBySystemName(name);
+        return getBySystemName(name);
     }
 
     /**
@@ -214,22 +215,22 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanBySystemName(@Nonnull String systemName) {
+    public E getBySystemName(@Nonnull String systemName) {
         // System names can be matched to managers by system and type at front of name
         int index = matchTentative(systemName);
         if (index >= 0) {
             Manager<E> m = getMgr(index);
-            return m.getBeanBySystemName(systemName);
+            return m.getBySystemName(systemName);
         }
-        log.debug("getBeanBySystemName did not find manager from name {}, defer to default manager", systemName); // NOI18N
-        return getDefaultManager().getBeanBySystemName(systemName);
+        log.debug("getBySystemName did not find manager from name {}, defer to default manager", systemName); // NOI18N
+        return getDefaultManager().getBySystemName(systemName);
     }
 
     /** {@inheritDoc} */
     @Override
-    public E getBeanByUserName(@Nonnull String userName) {
+    public E getByUserName(@Nonnull String userName) {
         for (Manager<E> m : this.mgrs) {
-            E b = m.getBeanByUserName(userName);
+            E b = m.getByUserName(userName);
             if (b != null) {
                 return b;
             }
@@ -331,7 +332,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
     /**
      * Find the index of a matching manager.
      *
-     * @param  systemName the system name to find a manager for
+     * @param  systemName the system name
      * @return the index of the matching manager, or -1 if there is no match,
      *         which is not considered an error
      */
@@ -348,7 +349,7 @@ abstract public class AbstractProxyManager<E extends NamedBean> implements Proxy
      * Find the index of a matching manager. Throws IllegalArgumentException if
      * there is no match, here considered to be an error that must be reported.
      *
-     * @param systemName the system name to find a manager for
+     * @param systemName the system name
      * @return the index of the matching manager
      */
     protected int match(String systemName) {

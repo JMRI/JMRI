@@ -117,7 +117,7 @@ public class TamsTurnout extends AbstractTurnout
             return;
         }
         forwardCommandChangeToLayout(state);
-        log.debug("Setting to state " + state);
+        log.debug("Setting to state {}", state);
         newCommandedState(state);
     }
 

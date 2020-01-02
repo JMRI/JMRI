@@ -3,8 +3,6 @@ package jmri.jmrix.internal;
 import javax.annotation.Nonnull;
 import jmri.Reporter;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implementation of the InternalReporterManager interface.
  *
@@ -23,7 +21,7 @@ public class InternalReporterManager extends jmri.managers.AbstractReporterManag
      * @return new null
      */
     @Override
-    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+    protected Reporter createNewReporter(String systemName, String userName) {
         return new TrackReporter(systemName, userName);
     }
 

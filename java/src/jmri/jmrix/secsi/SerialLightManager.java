@@ -6,8 +6,6 @@ import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement LightManager for SECSI serial systems.
  * <p>
@@ -28,7 +26,6 @@ public class SerialLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public SecsiSystemConnectionMemo getMemo() {
         return (SecsiSystemConnectionMemo) memo;
@@ -60,9 +57,8 @@ public class SerialLightManager extends AbstractLightManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String systemName, Locale locale) {
         return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
     }
 
@@ -70,7 +66,7 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), this.getSystemPrefix()));
     }
 

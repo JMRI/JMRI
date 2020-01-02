@@ -1,10 +1,7 @@
 package jmri.jmrix.marklin;
 
 import java.util.Hashtable;
-import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
-
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
@@ -37,20 +34,13 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public MarklinSystemConnectionMemo getMemo() {
         return (MarklinSystemConnectionMemo) memo;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @return null if the system name is not in a valid format (TODO change that to throw an exception, Spotbugs)
-     */
     @Override
-    @SuppressFBWarnings(value = "NP_NONNULL_RETURN_VIOLATION", justification = "Null result signals input error, change to exception TODO")
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         MarklinSensor s = new MarklinSensor(systemName, userName);
         if (systemName.contains(":")) {
             int board = 0;
@@ -66,7 +56,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     tc.sendMarklinMessage(m, this);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
+                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
                 return null;
             }
             Hashtable<Integer, MarklinSensor> sensorList = _tmarklin.get(board);
@@ -76,16 +66,16 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
                     sensorList.put(channel, s);
                 }
             } catch (NumberFormatException ex) {
-                log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
+                log.error("Unable to convert " + curAddress + " into the Module and port format of nn:xx");
                 return null;
             }
         }
+
         return s;
     }
 
-    @Nonnull
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         if (!curAddress.contains(":")) {
             log.error("Unable to convert {} into the Module and port format of nn:xx", curAddress);
             JOptionPane.showMessageDialog(null, Bundle.getMessage("WarningModuleAddress"),
@@ -130,7 +120,7 @@ public class MarklinSensorManager extends jmri.managers.AbstractSensorManager
     int port = 0;
 
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
+    public String getNextValidAddress(String curAddress, String prefix) {
 
         String tmpSName;
 

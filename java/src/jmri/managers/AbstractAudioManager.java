@@ -88,11 +88,10 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
 
     /** {@inheritDoc} */
     @Override
-    @Nonnull
     public Audio newAudio(@Nonnull String systemName, String userName) throws AudioException {
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + (userName == null ? "null" : userName));  // NOI18N
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "+ ((userName == null) ? "null" : userName));  // NOI18N
 
-        log.debug("new Audio: {}; {}", systemName, (userName == null ? "null" : userName)); // NOI18N
+        log.debug("new Audio: {}; {}", systemName, userName); // NOI18N
  
         // is system name in correct format?
         if ((!systemName.startsWith("" + getSystemPrefix() + typeLetter() + Audio.BUFFER))
@@ -112,8 +111,7 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
         Audio s;
         if ((userName != null) && ((s = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
-                        userName, systemName, s.getSystemName());
+                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + s.getSystemName() + ")");
             }
             log.debug("Found existing Audio ({}). Returning existing (1).", s.getSystemName());  // NOI18N
             return s;
@@ -122,7 +120,8 @@ public abstract class AbstractAudioManager extends AbstractManager<Audio>
             if ((s.getUserName() == null) && (userName != null)) {
                 s.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found audio via system name ({}) with non-null user name ({})", systemName, userName); // NOI18N
+                log.warn("Found audio via system name (" + systemName
+                        + ") with non-null user name (" + userName + ")"); // NOI18N
             }
             log.debug("Found existing Audio ({}). Returning existing (2).", s.getSystemName());
             return s;

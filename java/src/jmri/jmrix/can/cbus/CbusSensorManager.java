@@ -8,8 +8,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Implement SensorManager for CAN CBUS systems.
  * <p>
@@ -30,7 +28,6 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
@@ -48,9 +45,8 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
+    public Sensor createNewSensor(String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
@@ -70,9 +66,8 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String createSystemName(String curAddress, String prefix) throws JmriException {
         // first, check validity
         try {
             validateAddressFormat(curAddress);
@@ -88,7 +83,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(@Nonnull String systemName) {
+    public boolean allowMultipleAdditions(String systemName) {
         return true;
     }
 
@@ -96,7 +91,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
+    public String getNextValidAddress(String curAddress, String prefix) throws JmriException {
         String testAddr = curAddress;
         // make sure starting name is valid
         try {
@@ -130,9 +125,8 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
     /**
      * {@inheritDoc}
      */
-    @Nonnull
     @Override
-    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
+    public String validateSystemNameFormat(String name, Locale locale) {
         validateSystemNamePrefix(name, locale);
         try {
             validateAddressFormat(name.substring(getSystemNamePrefix().length()));
@@ -146,7 +140,7 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
+    public NameValidity validSystemNameFormat(String systemName) {
         String addr;
         try {
             addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
