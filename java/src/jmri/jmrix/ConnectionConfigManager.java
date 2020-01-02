@@ -143,6 +143,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
     }
 
     @Override
+    @Nonnull
     public Set<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
@@ -326,6 +327,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
                 for (String manufacturer : ctl.getManufacturers()) {
                     if (!connectionTypeLists.containsKey(manufacturer)) {
                         connectionTypeLists.put(manufacturer, ctl);
+                        log.debug("Added {} connectionTypeList", manufacturer);
                     } else {
                         log.debug("Need a proxy for {} from {} in {}", manufacturer, ctl.getClass().getName(), this);
                         ProxyConnectionTypeList proxy;
@@ -375,6 +377,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
         }
 
         @Override
+        @Nonnull
         public String[] getAvailableProtocolClasses() {
             TreeSet<String> classes = new TreeSet<>();
             this.connectionTypeLists.stream().forEach((connectionTypeList) -> {
@@ -384,6 +387,7 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
         }
 
         @Override
+        @Nonnull
         public String[] getManufacturers() {
             TreeSet<String> manufacturers = new TreeSet<>();
             this.connectionTypeLists.stream().forEach((connectionTypeList) -> {
@@ -433,4 +437,5 @@ public class ConnectionConfigManager extends AbstractPreferencesManager implemen
             }
         }
     }
+
 }

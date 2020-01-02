@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.util.Log4JUtil;
@@ -38,6 +39,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public LocoNetSystemConnectionMemo getMemo() {
         return (LocoNetSystemConnectionMemo) memo;
     }
@@ -61,8 +63,13 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     // LocoNet-specific methods
+
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) {
         return new LnSensor(systemName, userName, tc, getSystemPrefix());
     }
 
@@ -129,12 +136,13 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     private boolean busy = false;
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         if (curAddress.contains(":")) {
             
             // NOTE: This format is deprecated in JMRI 4.17.4 on account the 
@@ -189,7 +197,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -197,7 +205,8 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
@@ -216,7 +225,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     }
 
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName = "";
 
