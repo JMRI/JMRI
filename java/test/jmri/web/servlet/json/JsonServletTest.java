@@ -14,12 +14,15 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 
 import jmri.InstanceManager;
+import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.managers.DefaultPowerManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
+import jmri.server.json.power.JsonPowerServiceFactory;
 import jmri.util.JUnitUtil;
+import jmri.web.servlet.ServletUtil;
 import jmri.util.JUnitAppender;
 
 import org.junit.After;
@@ -164,7 +167,7 @@ public class JsonServletTest {
      * @throws javax.servlet.ServletException unexpected failure in test context
      */
     @Test
-    public void testDoGetPowerVersion5() throws IOException, ServletException {
+    public void testDoGetPowerV5() throws IOException, ServletException {
         InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
         request.setRequestURI("/json/v5/power");
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -185,7 +188,7 @@ public class JsonServletTest {
      * @throws javax.servlet.ServletException unexpected failure in test context
      */
     @Test
-    public void testDoGetPowerVersion4() throws IOException, ServletException {
+    public void testDoGetPowerV4() throws IOException, ServletException {
         InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
         request.setRequestURI("/json/v4/power");
         MockHttpServletResponse response = new MockHttpServletResponse();
@@ -200,6 +203,77 @@ public class JsonServletTest {
         JUnitAppender.assertWarnMessage("Requested type 'v4' unknown.");
     }
 
+    /**
+     * Test doPost() with a request for power status with version 5 specified.
+     *
+     * @throws java.io.IOException unexpected failure in test context
+     * @throws javax.servlet.ServletException unexpected failure in test context
+     * @throws JmriException unexpected failure in test context
+     */
+    @Test
+    public void testDoPostPowerV5Content() throws IOException, ServletException, JmriException {
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        assertEquals(PowerManager.UNKNOWN, InstanceManager.getDefault(PowerManager.class).getPower());
+        request.setRequestURI("/json/v5/power");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        JsonServlet instance = new MockJsonServlet();
+        instance.init(config);
+        request.setContent("{\"state\":4}".getBytes(ServletUtil.UTF8));
+        // test a schema valid message with validation on
+        instance.doPost(request, response);
+        assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        JsonNode node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is object", node.isObject());
+        assertEquals("Object is power", JsonPowerServiceFactory.POWER, node.path(JSON.TYPE).asText());
+        assertEquals(PowerManager.OFF, InstanceManager.getDefault(PowerManager.class).getPower());
+    }
+
+    /**
+     * Test doPost() with a request for power status with version 5 specified.
+     *
+     * @throws java.io.IOException unexpected failure in test context
+     * @throws javax.servlet.ServletException unexpected failure in test context
+     * @throws JmriException unexpected failure in test context
+     */
+    @Test
+    public void testDoPostPowerV5Parameters() throws IOException, ServletException, JmriException {
+        InstanceManager.setDefault(PowerManager.class, new DefaultPowerManager());
+        assertEquals(PowerManager.UNKNOWN, InstanceManager.getDefault(PowerManager.class).getPower());
+        // content type must not be JSON to use parameters
+        request.setContentType("");
+        request.setRequestURI("/json/v5/power");
+        request.setParameter(JSON.STATE, "4");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        JsonServlet instance = new MockJsonServlet();
+        instance.init(config);
+        // test a schema valid message with validation on
+        instance.doPost(request, response);
+        assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        JsonNode node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is object", node.isObject());
+        assertEquals("Object is power", JsonPowerServiceFactory.POWER, node.path(JSON.TYPE).asText());
+        assertEquals(PowerManager.OFF, InstanceManager.getDefault(PowerManager.class).getPower());
+    }
+
+    /**
+     * Test doGet() with a request for nothing with version 5 specified.
+     *
+     * @throws java.io.IOException unexpected failure in test context
+     * @throws javax.servlet.ServletException unexpected failure in test context
+     * @throws JmriException unexpected failure in test context
+     */
+    @Test
+    public void testGetV5noParameters() throws ServletException, IOException {
+        request.setRequestURI("/json/v5");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        JsonServlet instance = new MockJsonServlet();
+        instance.init(config);
+        // test a schema valid message with validation on
+        instance.doGet(request, response);
+        assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        assertEquals("Content type is HTML", "text/html; charset=utf-8", response.getContentType());
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
@@ -211,6 +285,8 @@ public class JsonServletTest {
         // set default request URI to expected context path
         request.setContextPath("/json");
         request.setRequestURI(request.getContextPath());
+        request.setContentType(ServletUtil.APPLICATION_JSON);
+        request.setCharacterEncoding(ServletUtil.UTF8);
     }
 
     @After
