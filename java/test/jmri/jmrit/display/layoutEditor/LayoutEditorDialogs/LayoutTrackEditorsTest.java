@@ -871,7 +871,7 @@ public class LayoutTrackEditorsTest {
         block2.setUserName("Blk 2");
     }
 
-    @BeforeClass
+    ///@BeforeClass
     public static void setUpClass() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -884,7 +884,7 @@ public class LayoutTrackEditorsTest {
         }
     }
 
-    @AfterClass
+    ///@AfterClass
     public static void tearDownClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             //restore the default string matching comparator

@@ -1221,7 +1221,7 @@ public class LayoutEditorToolsTest {
     }
 
     //from here down is testing infrastructure
-    @BeforeClass
+    ///@BeforeClass
     public static void setUpClass() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -1234,7 +1234,7 @@ public class LayoutEditorToolsTest {
         }
     }
 
-    @AfterClass
+    ///@AfterClass
     public static void tearDownClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             //restore the default string matching comparator

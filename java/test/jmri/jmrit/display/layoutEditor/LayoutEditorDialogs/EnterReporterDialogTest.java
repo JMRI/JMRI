@@ -29,7 +29,7 @@ public class EnterReporterDialogTest {
 
     private static Operator.StringComparator stringComparator;
 
-    @BeforeClass
+    ///@BeforeClass
     public static void setUpClass() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -42,7 +42,7 @@ public class EnterReporterDialogTest {
         }
     }
 
-    @AfterClass
+    ///@AfterClass
     public static void tearDownClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             //restore the default string matching comparator
