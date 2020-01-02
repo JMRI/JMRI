@@ -133,15 +133,21 @@
  * support JSON version 5.3.1 and 5.4.0). A JMRI instance that supports multiple
  * versions of the JSON protocol will provide a JSON list of name/value pairs in
  * response to the HTTP query {@code http://localhost:12080/json/version}. No
- * Socket equivalent of this URL exists, since the first message in the socket
- * must specify the version to be used. The names are the supported versions in
- * {@code major.minor.patch} format and the values are the HTTP path component
- * ({@code "v" + major} (i.e "v5" for version 5.3.1)) for using that version.
- * (Web)Socket JSON clients should specify the required JSON version in the
- * {@code hello} message or in the WebSocket URL. If a requested version is not
- * specified, the JSON protocol 5.x.y will be used. If a JMRI instance does not
- * support JSON protocol 5, an error will be returned if the client does not
- * specify the JSON version to use.
+ * Socket equivalent of this URL exists, since the first message (a
+ * {@code hello} message) in the socket stream specifies the version to be used.
+ * The names are the supported versions in {@code major.minor.patch} format and
+ * the values are the HTTP path component ({@code "v" + major} (i.e "v5" for
+ * version 5.3.1)) for using that version. (Web)Socket JSON clients should
+ * specify the required JSON version in the {@code hello} message or in the
+ * WebSocket URL. If a requested version is not specified, the JSON protocol
+ * 5.x.y will be used. If a JMRI instance does not support JSON protocol 5, an
+ * error will be returned if the client does not specify the JSON version to
+ * use.
+ * <p>
+ * <strong>Note</strong> until support for using protocol version 5 is dropped,
+ * requesting an unsupported version will result in an error with code 404 or
+ * 400. Once support for protocol version 5 is dropped all requests for an
+ * unsupported version will result in an error with code 400.
  * </p>
  * <h2 id="history">Version History</h2>
  * <p>
@@ -156,8 +162,9 @@
  * including JSON protocol version 5.0.0, not 6.0.0, since 4.15.4 and 4.15.6 are
  * both between JMRI production releases 4.14 and 4.16).
  * <p>
- * Starting with 5.0.0, the JSON protocol version follows semantic version
- * rules, prior to that the version is just a major.minor version.
+ * Starting with 5.0.0, the JSON protocol version follows
+ * <a href="https://semver.org">semantic version rules</a>,
+ * prior to that the version is just a major.minor version.
  * <dl>
  * <dt>5.3.0 (JMRI 4.19.2)</dt>
  * <dd>
