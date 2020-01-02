@@ -103,14 +103,6 @@ public class WarrantManager extends AbstractManager<Warrant>
         return getBySystemName(name);
     }
 
-    public Warrant getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    public Warrant getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
     public Warrant provideWarrant(String name) {
         if (name == null || name.trim().length() == 0) {
             return null;

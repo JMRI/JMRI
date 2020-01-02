@@ -80,11 +80,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
 
     @Nonnull
     @Override
-    public String[] getSystemNameArray() {
-        return null;
-    }
-
-    @Override
     public String getClosedText() {
         return null;
     }
@@ -250,16 +245,6 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     @Override
     public int getXMLOrder() {
         return -1;
-    }
-
-    @Override
-    public Turnout getBeanBySystemName(@Nonnull String systemName) {
-        return null;
-    }
-
-    @Override
-    public Turnout getBeanByUserName(@Nonnull String userName) {
-        return null;
     }
 
     @Override

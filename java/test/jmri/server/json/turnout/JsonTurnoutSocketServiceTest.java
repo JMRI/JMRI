@@ -119,14 +119,14 @@ public class JsonTurnoutSocketServiceTest {
         assertEquals("Manager and message have same size", manager.getNamedBeanSet().size(), message.size());
         manager.register(turnout1);
         JUnitUtil.waitFor(() -> {
-            return manager.getBeanBySystemName("IT1") != null;
+            return manager.getBySystemName("IT1") != null;
         });
         message = connection.getMessage();
         assertNotNull("Message is not null", message);
         assertEquals("Manager and message have same size", manager.getNamedBeanSet().size(), message.size());
         manager.register(turnout2);
         JUnitUtil.waitFor(() -> {
-            return manager.getBeanBySystemName("IT2") != null;
+            return manager.getBySystemName("IT2") != null;
         });
         message = connection.getMessage();
         assertNotNull("Message is not null", message);
@@ -134,7 +134,7 @@ public class JsonTurnoutSocketServiceTest {
         assertNotNull("Turnout 2 exists", turnout2);
         manager.deleteBean(turnout2, "");
         JUnitUtil.waitFor(() -> {
-            return manager.getBeanBySystemName("IT2") == null;
+            return manager.getBySystemName("IT2") == null;
         });
         message = connection.getMessage();
         assertNotNull("Message is not null", message);

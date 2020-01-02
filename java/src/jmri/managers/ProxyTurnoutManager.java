@@ -64,26 +64,6 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
     public Turnout provide(@Nonnull String name) throws IllegalArgumentException { return provideTurnout(name); }
 
     /**
-     * Locate an instance based on a system name.
-     *
-     * @return requested Turnout object or null if none exists
-     */
-    @Override
-    public Turnout getBySystemName(@Nonnull String systemName) {
-        return super.getBeanBySystemName(systemName);
-    }
-
-    /**
-     * Locate an instance based on a user name.
-     *
-     * @return requested Turnout object or null if none exists
-     */
-    @Override
-    public Turnout getByUserName(@Nonnull String userName) {
-        return super.getBeanByUserName(userName);
-    }
-
-    /**
      * Get an instance with the specified system and user names. Note that
      * two calls with the same arguments will get the same instance; there is
      * only one Sensor object representing a given physical turnout and

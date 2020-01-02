@@ -323,7 +323,7 @@ public class LnSv2MessageContents {
                 break;
 
             case (SV_CMD_WRITE_ONE_REPLY):
-                returnString = Bundle.getMessage(locale, "SV2_WRITE_ONE_REPLY_INTERPRETED", 
+                returnString = Bundle.getMessage(locale, "SV2_WRITE_ONE_REPLY_INTERPRETED",
                         src,
                         dst,
                         sv_adr,
@@ -943,4 +943,5 @@ public class LnSv2MessageContents {
             return mt.getCmd();
         }
     }
+
 }

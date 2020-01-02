@@ -91,7 +91,6 @@ public abstract class AbstractSensorMgrTestBase extends AbstractProvidingManager
         Assert.assertEquals(0, l.getNamedBeanList().size());
         Assert.assertEquals(0, l.getNamedBeanSet().size());
         Assert.assertEquals(0, l.getSystemNameList().size());
-        Assert.assertEquals(0, l.getSystemNameArray().length);
         jmri.util.JUnitAppender.suppressWarnMessage("Manager#getSystemNameArray() is deprecated");
         Assert.assertEquals(0, l.getObjectCount());
     }
