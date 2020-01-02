@@ -64,7 +64,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager imple
             int board;
             int channel;
 
-            String curAddress = systemName.substring(getSystemPrefix().length() + 1);
+            String curAddress = systemName.substring(getSystemPrefix().length() + 1, systemName.length());
             int seperator = curAddress.indexOf(':');
             try {
                 board = Integer.parseInt(curAddress.substring(0, seperator));

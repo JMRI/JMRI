@@ -17,21 +17,21 @@ import org.junit.Test;
  */
 public class SystemConnectionMemoTest {
 
-    private SystemConnectionMemo t = null;
+    private SystemConnectionMemo m = null;
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists", t);
+        Assert.assertNotNull("exists", m);
     }
 
     @Test
     public void testGetConsistManagerNull() {
-        Assert.assertNull("null consist manager", t.get(jmri.ConsistManager.class));
+        Assert.assertNull("null consist manager", m.get(jmri.ConsistManager.class));
     }
 
     @Test
     public void testProvidesConsistManagerNull() {
-        Assert.assertFalse("null consist manager", t.provides(jmri.ConsistManager.class));
+        Assert.assertFalse("null consist manager", m.provides(jmri.ConsistManager.class));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class SystemConnectionMemoTest {
 
     @Test
     public void testGetConsistManagerWithAPM() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
+        SystemConnectionMemo m = new SystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -132,12 +132,12 @@ public class SystemConnectionMemoTest {
             }
 
         };
-        Assert.assertNotNull("consist manager", t.get(jmri.ConsistManager.class));
+        Assert.assertNotNull("consist manager", m.get(jmri.ConsistManager.class));
     }
 
     @Test
     public void testProvidesConsistManagerWithAPM() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
+        SystemConnectionMemo m = new SystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -165,14 +165,14 @@ public class SystemConnectionMemoTest {
                 return super.get(T);
             }
         };
-        Assert.assertTrue("null consist manager", t.provides(jmri.ConsistManager.class));
+        Assert.assertTrue("null consist manager", m.provides(jmri.ConsistManager.class));
     }
 
     @Test
     public void testSetGetOutputInterval() {
-        Assert.assertEquals("default interval in memo", t.getOutputInterval(), 250);
-        t.setOutputInterval(123);
-        Assert.assertEquals("new interval set in memo", t.getOutputInterval(), 123);
+        Assert.assertEquals("default interval in memo", m.getOutputInterval(), 250);
+        m.setOutputInterval(123);
+        Assert.assertEquals("new interval set in memo", m.getOutputInterval(), 123);
     }
 
     @Before
@@ -180,7 +180,7 @@ public class SystemConnectionMemoTest {
         JUnitUtil.setUp();
         JUnitUtil.initDebugCommandStation();
         JUnitUtil.initDebugProgrammerManager();
-        t = new SystemConnectionMemo("T", "Test") {
+        m = new SystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -195,7 +195,7 @@ public class SystemConnectionMemoTest {
 
     @After
     public void tearDown() {
-        t = null;
+        m = null;
         JUnitUtil.tearDown();
     }
 

@@ -18,8 +18,6 @@ import jmri.managers.AbstractAudioManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nonnull;
-
 /**
  * Provide the concrete implementation for the Internal Audio Manager.
  *

@@ -508,7 +508,7 @@ public abstract class AbstractManager<E extends NamedBean> implements Manager<E>
     }
 
     /**
-     * Inform all registered listeners of a vetoable change. If the
+     * Method to inform all registered listeners of a vetoable change. If the
      * propertyName is "CanDelete" ALL listeners with an interest in the bean
      * will throw an exception, which is recorded returned back to the invoking
      * method, so that it can be presented back to the user. However if a

@@ -2,8 +2,6 @@ package jmri.jmrix.roco.z21;
 
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.util.JUnitUtil;
-import org.junit.Assert;
-import org.junit.Test;
 import org.junit.After;
 import org.junit.Before;
 

@@ -17,7 +17,7 @@ import org.junit.Test;
  */
 abstract public class SystemConnectionMemoTestBase {
 
-    protected SystemConnectionMemo scm = null;
+    protected SystemConnectionMemo scm = null; // is set up in overriding test
 
     public void getTest(Class t) {
         if (scm.provides(t)) {
@@ -76,7 +76,7 @@ abstract public class SystemConnectionMemoTestBase {
 
     @Test
     public void testMultipleMemosSamePrefix() {
-        SystemConnectionMemo t = new SystemConnectionMemo("t", "test") {
+        SystemConnectionMemo m = new SystemConnectionMemo("t", "test") {
             @Override
             protected ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -87,9 +87,9 @@ abstract public class SystemConnectionMemoTestBase {
                 return null;
             }
         };
-        Assert.assertEquals("t", t.getSystemPrefix());
-        t.register();
-        Assert.assertTrue(InstanceManager.getList(SystemConnectionMemo.class).contains(t));
+        Assert.assertEquals("t", m.getSystemPrefix());
+        m.register();
+        Assert.assertTrue(InstanceManager.getList(SystemConnectionMemo.class).contains(m));
         Assert.assertFalse(scm.setSystemPrefix("t"));
         Assert.assertTrue(scm.setSystemPrefix("t2"));
         Assert.assertEquals("t2", scm.getSystemPrefix());

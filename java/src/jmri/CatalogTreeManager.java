@@ -3,8 +3,6 @@ package jmri;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import javax.annotation.Nonnull;
 
-import javax.annotation.Nonnull;
-
 /**
  * Locate a CatalogTree object representing some specific information.
  * <p>
