@@ -1702,7 +1702,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomInAccelerator), primary_modifier));
         zoomMenu.add(zoomInItem);
         zoomInItem.addActionListener((ActionEvent event) -> {
-            zoomIn();
+            setZoom(getZoom() * 1.1);
         });
 
         JMenuItem zoomOutItem = new JMenuItem(Bundle.getMessage("ZoomOut"));
@@ -1712,7 +1712,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomOutAccelerator), primary_modifier));
         zoomMenu.add(zoomOutItem);
         zoomOutItem.addActionListener((ActionEvent event) -> {
-            zoomOut();
+            setZoom(getZoom() / 1.1);
         });
 
         JMenuItem zoomFitItem = new JMenuItem(Bundle.getMessage("ZoomToFit"));
@@ -2035,14 +2035,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     public double getZoom() {
         return getPaintScale();
-    }
-
-    private double zoomIn() {
-        return setZoom(getZoom() * 1.1);
-    }
-
-    private double zoomOut() {
-        return setZoom(getZoom() / 1.1);
     }
 
     //
@@ -2419,7 +2411,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             lt.rotateCoords(90);
         }
 
-      for (LayoutShape ls : _layoutShapeSelection) {
+        for (LayoutShape ls : _layoutShapeSelection) {
             ls.setCoordsCenter(MathUtil.rotateDEG(ls.getCoordsCenter(), center, 90));
             ls.rotateCoords(90);
         }
@@ -2922,7 +2914,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //    }
     //    return result;
     //}
-
     //this is a method to iterate over a list of lists of items
     //calling the predicate tester.test on each one
     //and return the first one that matches
@@ -2942,7 +2933,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //    }
     //    return result;
     //}
-
     /**
      * Called by {@link #mousePressed} to determine if the mouse click was in a
      * turnout control location. If so, update selectedHitPointType and
@@ -6801,7 +6791,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //public Color getDefaultBackgroundColor() {
     //  return defaultBackgroundColor;
     //}
-
     @CheckForNull
     public String getDefaultTrackColor() {
         return ColorUtil.colorToColorName(defaultTrackColor);

@@ -3,30 +3,14 @@ package jmri.jmrit.display.layoutEditor;
 import static jmri.jmrit.XmlFile.newDocument;
 import static jmri.jmrit.XmlFile.xsltLocation;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import jmri.BasicRosterEntry;
-import jmri.Block;
-import jmri.BlockManager;
-import jmri.JmriException;
-import jmri.Path;
-import jmri.PowerManager;
-import jmri.jmrit.XmlFile;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
+import java.io.*;
+import java.util.*;
+import jmri.*;
+import jmri.jmrit.*;
+import jmri.jmrit.roster.*;
 import jmri.util.FileUtil;
-import org.jdom2.Attribute;
-import org.jdom2.DataConversionException;
-import org.jdom2.Document;
-import org.jdom2.Element;
-import org.jdom2.JDOMException;
-import org.jdom2.ProcessingInstruction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jdom2.*;
+import org.slf4j.*;
 
 /**
  * Handle saving/restoring block value information to XML files. This class

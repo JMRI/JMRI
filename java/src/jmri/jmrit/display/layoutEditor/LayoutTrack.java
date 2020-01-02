@@ -308,13 +308,13 @@ public abstract class LayoutTrack {
         String result;
         switch (turnoutState) {
             case Turnout.CLOSED:
-            result = Bundle.getMessage("TurnoutStateClosed");
+                result = Bundle.getMessage("TurnoutStateClosed");
                 break;
             case Turnout.THROWN:
-            result = Bundle.getMessage("TurnoutStateThrown");
+                result = Bundle.getMessage("TurnoutStateThrown");
                 break;
             default:
-            result = Bundle.getMessage("BeanStateUnknown");
+                result = Bundle.getMessage("BeanStateUnknown");
                 break;
         }
         return result;
@@ -335,18 +335,18 @@ public abstract class LayoutTrack {
      * Display the attached items that prevent removing the layout track item.
      *
      * @param itemList A list of the attached heads, masts and/or sensors.
-     * @param typeKey The object type such as Turnout, Level Crossing, etc.
+     * @param typeKey  The object type such as Turnout, Level Crossing, etc.
      */
     public void displayRemoveWarningDialog(@Nonnull List<String> itemList, @Nonnull String typeKey) {
         itemList.sort(null);
-        StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel",  // NOI18N
+        StringBuilder msg = new StringBuilder(Bundle.getMessage("MakeLabel", // NOI18N
                 Bundle.getMessage("DeleteTrackItem", Bundle.getMessage(typeKey))));  // NOI18N
         for (String item : itemList) {
             msg.append("\n    ").append(item);  // NOI18N
         }
         JOptionPane.showMessageDialog(layoutEditor,
                 msg.toString(),
-                Bundle.getMessage("WarningTitle"),  // NOI18N
+                Bundle.getMessage("WarningTitle"), // NOI18N
                 JOptionPane.WARNING_MESSAGE);
     }
 
@@ -396,10 +396,10 @@ public abstract class LayoutTrack {
     /**
      * find the hit (location) type for a point
      *
-     * @param hitPoint            the point
+     * @param hitPoint           the point
      * @param useRectangles      whether to use (larger) rectangles or (smaller)
      *                           circles for hit testing
-     * @param requireUnconnected  whether to only return hit types for free
+     * @param requireUnconnected whether to only return hit types for free
      *                           connections
      * @return the location type for the point (or NONE)
      * @since 7.4.3
@@ -659,7 +659,7 @@ public abstract class LayoutTrack {
     /**
      * return true if this connection type is disconnected
      *
-     * @param connectionType  the connection type to test
+     * @param connectionType the connection type to test
      * @return true if the connection for this connection type is free
      */
     public boolean isDisconnected(int connectionType) {

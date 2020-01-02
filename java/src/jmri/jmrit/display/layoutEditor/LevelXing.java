@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.*;
@@ -1425,8 +1424,8 @@ public class LevelXing extends LayoutTrack {
                     }
                     if (smSML != null) {
                         smSML.setConflictingLogic(signalMast, this);
-        }
-        }
+                    }
+                }
             }
             signalMasts.add(sm);
         }
@@ -1444,8 +1443,8 @@ public class LevelXing extends LayoutTrack {
                     }
                     if (smSML != null) {
                         smSML.removeConflictingLogic(signalMast, this);
-        }
-        }
+                    }
+                }
             }
         }
     }

@@ -4792,5 +4792,4 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlock.class);
-
 }

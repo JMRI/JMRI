@@ -3,22 +3,12 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
+import java.util.*;
+import javax.annotation.*;
+import javax.swing.*;
+import javax.swing.event.*;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A collection of tools to check various things on the layout editor panel.
@@ -220,12 +210,12 @@ public class LayoutEditorChecks {
         List<String> trackNames = new ArrayList<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
             if (layoutTrack != null) {
-            List<Integer> connections = layoutTrack.checkForFreeConnections();
-            if (!connections.isEmpty()) {
-                // add this track's name to the list of track names
-                trackNames.add(layoutTrack.getName());
+                List<Integer> connections = layoutTrack.checkForFreeConnections();
+                if (!connections.isEmpty()) {
+                    // add this track's name to the list of track names
+                    trackNames.add(layoutTrack.getName());
+                }
             }
-        }
         }
 
         // clear the "in progress..." menu item
@@ -287,11 +277,11 @@ public class LayoutEditorChecks {
         List<String> trackNames = new ArrayList<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
             if (layoutTrack != null) {
-            if (!layoutTrack.checkForUnAssignedBlocks()) {
-                // add this track to the list of un-assigned track names
-                trackNames.add(layoutTrack.getName());
+                if (!layoutTrack.checkForUnAssignedBlocks()) {
+                    // add this track to the list of un-assigned track names
+                    trackNames.add(layoutTrack.getName());
+                }
             }
-        }
         }
 
         // clear the "in progress..." menu item
@@ -351,8 +341,8 @@ public class LayoutEditorChecks {
         HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps = new HashMap<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
             if (layoutTrack != null) {
-            layoutTrack.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);
-        }
+                layoutTrack.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);
+            }
         }
 
         // clear the "in progress..." menu item

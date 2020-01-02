@@ -130,7 +130,6 @@ class LayoutEditorComponent extends JComponent {
 //        JScrollPane scrollPane = layoutEditor.getPanelScrollPane();
         // Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
         // log.info("  scrollBounds: " + scrollBounds);
-
         // Rectangle2D newClipBounds = SwingUtilities.convertRectangle(
         //        scrollPane.getParent(), scrollBounds, this);
 //        Rectangle2D newClipBounds = MathUtil.rectangleToRectangle2D(scrollPane.getVisibleRect());
@@ -142,11 +141,9 @@ class LayoutEditorComponent extends JComponent {
 //        int originX = (int) (scrollPane.getHorizontalScrollBar().getValue() / scale);
 //        int originY = (int) (scrollPane.getVerticalScrollBar().getValue() / scale);
         //log.info("  origin: {{}, {}}", originX, originY);
-
         //newClipBounds = new Rectangle2D.Double(originX, originY, width, height);
         //log.info("  newClipBounds: " + newClipBounds);
 //        g2.setClip(originX, originY, width, height);
-
         //draw horizontal lines
         for (int y = minY; y <= maxY; y += layoutEditor.gridSize1st) {
             startPt.setLocation(minX, y);

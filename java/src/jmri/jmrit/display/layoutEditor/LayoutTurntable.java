@@ -84,7 +84,6 @@ public class LayoutTurntable extends LayoutTrack {
     //
     // Accessor methods
     //
-
     /**
      * Get the radius for this turntable.
      *
@@ -450,6 +449,7 @@ public class LayoutTurntable extends LayoutTrack {
     public void setRayCoordsIndexed(Point2D point, int index) {
         setRayCoordsIndexed(point.getX(), point.getY(), index);
     }
+
     /**
      * Get the coordinates for a specified connection type.
      *
@@ -562,7 +562,6 @@ public class LayoutTurntable extends LayoutTrack {
     //
     // Modify coordinates methods
     //
-
     /**
      * Scale this LayoutTrack's coordinates by the x and y factors.
      *
@@ -577,7 +576,8 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
-     * Translate (2D move) this LayoutTrack's coordinates by the x and y factors.
+     * Translate (2D move) this LayoutTrack's coordinates by the x and y
+     * factors.
      *
      * @param xFactor the amount to translate X coordinates
      * @param yFactor the amount to translate Y coordinates
@@ -871,7 +871,7 @@ public class LayoutTurntable extends LayoutTrack {
          * constructor for RayTracks
          *
          * @param angleDEG its angle
-         * @param index its index
+         * @param index    its index
          */
         public RayTrack(double angleDEG, int index) {
             rayAngle = MathUtil.wrapPM360(angleDEG);
@@ -893,7 +893,6 @@ public class LayoutTurntable extends LayoutTrack {
         //
         // Accessor routines
         //
-
         /**
          * Set ray track disabled.
          *
