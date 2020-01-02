@@ -9,8 +9,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -219,11 +219,13 @@ public class LayoutEditorChecks {
         // check all tracks for free connections
         List<String> trackNames = new ArrayList<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
+            if (layoutTrack != null) {
             List<Integer> connections = layoutTrack.checkForFreeConnections();
             if (!connections.isEmpty()) {
                 // add this track's name to the list of track names
                 trackNames.add(layoutTrack.getName());
             }
+        }
         }
 
         // clear the "in progress..." menu item
@@ -284,10 +286,12 @@ public class LayoutEditorChecks {
         // check all tracks for un-assigned blocks
         List<String> trackNames = new ArrayList<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
+            if (layoutTrack != null) {
             if (!layoutTrack.checkForUnAssignedBlocks()) {
                 // add this track to the list of un-assigned track names
                 trackNames.add(layoutTrack.getName());
             }
+        }
         }
 
         // clear the "in progress..." menu item
@@ -346,7 +350,9 @@ public class LayoutEditorChecks {
         // collect all contiguous blocks
         HashMap<String, List<Set<String>>> blockNamesToTrackNameSetMaps = new HashMap<>();
         for (LayoutTrack layoutTrack : layoutEditor.getLayoutTracks()) {
+            if (layoutTrack != null) {
             layoutTrack.checkForNonContiguousBlocks(blockNamesToTrackNameSetMaps);
+        }
         }
 
         // clear the "in progress..." menu item

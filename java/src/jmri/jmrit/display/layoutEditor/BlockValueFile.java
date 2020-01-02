@@ -5,20 +5,20 @@ import static jmri.jmrit.XmlFile.xsltLocation;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 import jmri.BasicRosterEntry;
 import jmri.Block;
 import jmri.BlockManager;
+import jmri.JmriException;
 import jmri.Path;
+import jmri.PowerManager;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.FileUtil;
-import jmri.PowerManager;
-import jmri.JmriException;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
@@ -98,7 +98,7 @@ public class BlockValueFile extends XmlFile {
                             }
                             String sysName = bl.getAttribute("systemname").getValue();
                             // get Block - ignore entry if block not found
-                            Block b = blockManager.getBySystemName(sysName);
+                            Block b = blockManager.getBlock(sysName);
                             if (b != null) {
                                 // Block was found
                                 if (pass.equals("check") && b.getState() != Block.OCCUPIED) {
@@ -171,7 +171,7 @@ public class BlockValueFile extends XmlFile {
             Element values = new Element("blockvalues");
             for (int i = 0; i < blocks.size(); i++) {
                 String sname = blocks.get(i);
-                Block b = blockManager.getBySystemName(sname);
+                Block b = blockManager.getBlock(sname);
                 if (b != null) {
                     Object o = b.getValue();
                     if (o != null) {
