@@ -459,7 +459,7 @@ public class LayoutEditorToolsTest {
     @Test
     public void testGetHeadFromNameValid() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("signal head for valid name", h, let.getHeadFromName("IH1"));
+        Assert.assertEquals("signal head for valid name", signalHeads.get(1), let.getHeadFromName("IH1"));
     }
 
     @Test
@@ -488,52 +488,52 @@ public class LayoutEditorToolsTest {
     @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYIntAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
+        Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(signalHeads.get(1)));
         let.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(signalHeads.get(1)));
     }
 
     @Test
     @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtPointAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
         Point2D point = new Point2D.Double(150.0, 100.0);
         let.setSignalHeadOnPanel(0.D, "IH1", point);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
+        Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(signalHeads.get(1)));
         let.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(signalHeads.get(1)));
     }
 
     @Test
     @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
         let.setSignalHeadOnPanel(0.D, "IH1", 0, 0);
         //setSignalHeadOnPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(h));
+        Assert.assertTrue("Signal head on panel after set", let.isHeadOnPanel(signalHeads.get(1)));
         let.removeSignalHeadFromPanel("IH1");
         //removeSignalHeadFromPanel performs some GUI actions, so give
         //the AWT queue some time to clear.
         new QueueTool().waitEmpty(100);
-        Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(signalHeads.get(1)));
     }
 
     @Test
@@ -546,20 +546,20 @@ public class LayoutEditorToolsTest {
     @Test
     public void testIsHeadOnPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertFalse("Signal head not on panel", let.isHeadOnPanel(h));
+        Assert.assertFalse("Signal head not on panel", let.isHeadOnPanel(signalHeads.get(1)));
     }
 
     @Test
     public void testIsHeadAssignedAnywhere() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertFalse("Signal head not on panel", let.isHeadAssignedAnywhere(h));
+        Assert.assertFalse("Signal head not on panel", let.isHeadAssignedAnywhere(signalHeads.get(1)));
     }
 
     @Test
     public void testRemoveSignalHeadAssignment() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //just verify this doesn't thrown an error.
-        let.removeAssignment(h);
+        let.removeAssignment(signalHeads.get(1));
     }
 
     @Test
