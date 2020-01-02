@@ -1263,7 +1263,7 @@ public class LayoutEditorToolsTest {
                 String uBlockName = "Block " + i;
                 InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(sBlockName, uBlockName);
             }
-            layoutBlocks = new ArrayList<>((SortedSet<LayoutBlock>) InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet());
+            layoutBlocks = new ArrayList<>(InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet());
 
             for (int i = 0; i < 5; i++) {
                 String toName = "IT" + i;
