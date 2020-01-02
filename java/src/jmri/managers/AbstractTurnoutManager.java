@@ -5,7 +5,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrix.SystemConnectionMemo;
@@ -52,6 +51,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     @Override
     @Nonnull
     public Turnout provideTurnout(@Nonnull String name) {
+        log.debug("provide turnout {}", name);
         Turnout result = getTurnout(name);
         if (result == null) {
             if (name.startsWith(getSystemPrefix() + typeLetter())) {
@@ -92,51 +92,50 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         }
 
         // return existing if there is one
-        Turnout s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
+        Turnout t;
+        if ((userName != null) && ((t = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != t) {
                 log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
-                        userName, systemName, s.getSystemName());
+                        userName, systemName, t.getSystemName());
             }
-            return s;
+            return t;
         }
-        if ((s = getBySystemName(systemName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
+        if ((t = getBySystemName(systemName)) != null) {
+            if ((t.getUserName() == null) && (userName != null)) {
+                t.setUserName(userName);
             } else if (userName != null) {
                 log.warn("Found turnout via system name ({}) with non-null user name ({}). Turnout \"{} ({})\" cannot be used.",
-                        systemName, s.getUserName(), systemName, userName);
+                        systemName, t.getUserName(), systemName, userName);
             }
-            return s;
+            return t;
         }
 
         // doesn't exist, make a new one
-        s = createNewTurnout(systemName, userName);
-
+        t = createNewTurnout(systemName, userName);
         // if that failed, blame it on the input arguments
-        if (s == null) {
+        if (t == null) {
             throw new IllegalArgumentException("Unable to create turnout from " + systemName);
         }
 
         // Some implementations of createNewTurnout() register the new bean,
         // some don't. 
-        if (getBySystemName(s.getSystemName()) == null) {
+        if (getBySystemName(t.getSystemName()) == null) {
             // save in the maps if successful
-            register(s);
+            register(t);
         }
 
         try {
-            s.setStraightSpeed("Global");
+            t.setStraightSpeed("Global");
         } catch (jmri.JmriException ex) {
             log.error(ex.toString());
         }
 
         try {
-            s.setDivergingSpeed("Global");
+            t.setDivergingSpeed("Global");
         } catch (jmri.JmriException ex) {
             log.error(ex.toString());
         }
-        return s;
+        return t;
     }
 
     /** {@inheritDoc} */

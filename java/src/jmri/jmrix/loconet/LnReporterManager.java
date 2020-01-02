@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,6 +39,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public LocoNetSystemConnectionMemo getMemo() {
         return (LocoNetSystemConnectionMemo) memo;
     }
@@ -51,7 +53,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
     }
 
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         Reporter t;
         int addr = Integer.parseInt(systemName.substring(getSystemNamePrefix().length()));
         t = new LnReporter(addr, tc, getSystemPrefix());
@@ -65,7 +67,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 
@@ -73,7 +75,8 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(systemName, 1, 4096, locale);
     }
 
@@ -126,7 +129,7 @@ public class LnReporterManager extends jmri.managers.AbstractReporterManager imp
             default:
                 return;
         }
-        log.debug("Reporter[{}]",addr);
+        log.debug("Reporter[{}]", addr);
         LnReporter r = (LnReporter) provideReporter(getSystemNamePrefix() + addr); // NOI18N
         r.messageFromManager(l); // make sure it got the message
     }

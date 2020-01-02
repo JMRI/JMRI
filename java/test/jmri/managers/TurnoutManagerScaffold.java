@@ -12,7 +12,7 @@ import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
-import javax.annotation.Nonnull;
+import javax.annotation.*;
 
 /**
  * Dummy implementation of TurnoutManager for testing purposes.
@@ -61,31 +61,37 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     public int getObjectCount() { return -1;}    
 
     @Override
+    @Nonnull
     public java.util.List<String> getSystemNameList() {
         return null;
     }
 
     @Override
+    @Nonnull
     public java.util.List<Turnout> getNamedBeanList() {
         return null;
     }
 
     @Override
+    @CheckForNull
     public java.util.SortedSet<Turnout> getNamedBeanSet() {
         return null;
     }
 
     @Override
+    @CheckForNull
     public String getClosedText() {
         return null;
     }
 
     @Override
+    @CheckForNull
     public String getThrownText() {
         return null;
     }
 
     @Override
+    @CheckForNull
     public String[] getValidOperationTypes() {
         return null;
     }
@@ -112,11 +118,13 @@ public class TurnoutManagerScaffold implements TurnoutManager {
     }
 
     @Override
+    @Nonnull
     public Class<Turnout> getNamedBeanClass() {
         return Turnout.class;
     }
 
     @Override
+    @Nonnull
     public String makeSystemName(@Nonnull String s) {
         return null;
     }

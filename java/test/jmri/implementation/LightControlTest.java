@@ -899,4 +899,5 @@ public class LightControlTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LightControlTest.class);
+
 }

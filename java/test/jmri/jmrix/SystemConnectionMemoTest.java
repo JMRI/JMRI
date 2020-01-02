@@ -17,26 +17,26 @@ import org.junit.Test;
  */
 public class SystemConnectionMemoTest {
 
-    private SystemConnectionMemo m = null;
+    private SystemConnectionMemo _memo = null;
 
     @Test
     public void testCTor() {
-        Assert.assertNotNull("exists", m);
+        Assert.assertNotNull("exists", _memo);
     }
 
     @Test
     public void testGetConsistManagerNull() {
-        Assert.assertNull("null consist manager", m.get(jmri.ConsistManager.class));
+        Assert.assertNull("null consist manager", _memo.get(jmri.ConsistManager.class));
     }
 
     @Test
     public void testProvidesConsistManagerNull() {
-        Assert.assertFalse("null consist manager", m.provides(jmri.ConsistManager.class));
+        Assert.assertFalse("null consist manager", _memo.provides(jmri.ConsistManager.class));
     }
 
     @Test
     public void testGetConsistManagerWithCS() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
+        SystemConnectionMemo m = new SystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -65,7 +65,7 @@ public class SystemConnectionMemoTest {
             }
 
         };
-        Assert.assertNotNull("consist manager", t.get(jmri.ConsistManager.class));
+        Assert.assertNotNull("consist manager", m.get(jmri.ConsistManager.class));
     }
 
     @Test
@@ -170,9 +170,9 @@ public class SystemConnectionMemoTest {
 
     @Test
     public void testSetGetOutputInterval() {
-        Assert.assertEquals("default interval in memo", m.getOutputInterval(), 250);
-        m.setOutputInterval(123);
-        Assert.assertEquals("new interval set in memo", m.getOutputInterval(), 123);
+        Assert.assertEquals("default interval in memo", _memo.getOutputInterval(), 250);
+        _memo.setOutputInterval(123);
+        Assert.assertEquals("new interval set in memo", _memo.getOutputInterval(), 123);
     }
 
     @Before
@@ -180,7 +180,7 @@ public class SystemConnectionMemoTest {
         JUnitUtil.setUp();
         JUnitUtil.initDebugCommandStation();
         JUnitUtil.initDebugProgrammerManager();
-        m = new SystemConnectionMemo("T", "Test") {
+        _memo = new SystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
                 return null;
@@ -195,7 +195,7 @@ public class SystemConnectionMemoTest {
 
     @After
     public void tearDown() {
-        m = null;
+        _memo = null;
         JUnitUtil.tearDown();
     }
 

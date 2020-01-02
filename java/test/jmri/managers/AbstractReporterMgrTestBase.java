@@ -10,8 +10,8 @@ import org.junit.*;
  * is not itself a test class, e.g. should not be added to a suite. Instead,
  * this forms the base for test classes, including providing some common tests.
  *
- * @author	Bob Jacobsen 2003, 2006, 2008
- * @author      Paul Bender Copyright (C) 2016
+ * @author Bob Jacobsen 2003, 2006, 2008
+ * @author Paul Bender Copyright (C) 2016
  */
 public abstract class AbstractReporterMgrTestBase extends AbstractProvidingManagerTestBase<ReporterManager, Reporter> {
 
