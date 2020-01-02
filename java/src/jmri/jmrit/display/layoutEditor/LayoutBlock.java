@@ -312,7 +312,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @return the validated sensor
      */
     @CheckForNull
-    public Sensor validateSensor(@CheckForNull String sensorName, @Nonnull Component openFrame) {
+    public Sensor validateSensor(@CheckForNull String sensorName, @Nullable Component openFrame) {
         //check if anything entered
         if ((sensorName == null) || sensorName.isEmpty()) {
             //no sensor name entered
