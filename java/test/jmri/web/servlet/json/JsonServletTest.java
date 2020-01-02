@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.PowerManager;
+import jmri.SensorManager;
 import jmri.jmris.json.JsonServerPreferences;
 import jmri.managers.DefaultPowerManager;
 import jmri.server.json.JSON;
@@ -273,10 +275,131 @@ public class JsonServletTest {
         assertEquals("Content type is HTML", "text/html; charset=utf-8", response.getContentType());
     }
 
+    /**
+     * Test doGet() with a request for two sensors with version 5 specified.
+     *
+     * @throws java.io.IOException unexpected failure in test context
+     * @throws javax.servlet.ServletException unexpected failure in test context
+     */
+    @Test
+    public void testGetTwoSensorsV5() throws ServletException, IOException {
+        SensorManager manager = InstanceManager.getDefault(SensorManager.class);
+        manager.provide("IS1");
+        manager.provide("IS2");
+        // request list of sensors
+        request.setRequestURI("/json/v5/sensor");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        JsonServlet instance = new MockJsonServlet();
+        instance.init(config);
+        instance.doGet(request, response);
+        assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        JsonNode node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is array", node.isArray());
+        assertEquals("Array has 2 entries", 2, node.size());
+        assertEquals("Sensor 1", "IS1", node.path(0).path(JSON.DATA).path(JSON.NAME).asText());
+        assertEquals("Sensor 2", "IS2", node.path(1).path(JSON.DATA).path(JSON.NAME).asText());
+        // request sensor IS1
+        request.setRequestURI("/json/v5/sensor/IS1");
+        response = new MockHttpServletResponse();
+        instance.doGet(request, response);
+        assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is object", node.isObject());
+        assertEquals("Node has 2 entries", 2, node.size());
+        assertEquals("Sensor 1", "IS1", node.path(JSON.DATA).path(JSON.NAME).asText());
+        // request sensor IS3 (does not exist)
+        request.setRequestURI("/json/v5/sensor/IS3");
+        response = new MockHttpServletResponse();
+        instance.doGet(request, response);
+        assertEquals("HTTP Not Found", HttpServletResponse.SC_NOT_FOUND, response.getStatus());
+        node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is object", node.isObject());
+        assertEquals("Node is error", JsonException.ERROR, node.path(JSON.TYPE).asText());
+    }
+
+    /**
+     * Test creating, changing, and deleting a sensor with version 5 specified.
+     *
+     * @throws java.io.IOException unexpected failure in test context
+     * @throws javax.servlet.ServletException unexpected failure in test context
+     */
+    @Test
+    public void testGetCreateAndDeleteSensorV5() throws ServletException, IOException {
+        SensorManager manager = InstanceManager.getDefault(SensorManager.class);
+        // create sensor IS3
+        request.setRequestURI("/json/v5/sensor");
+        request.setContentType(ServletUtil.APPLICATION_JSON);
+        request.setCharacterEncoding(ServletUtil.UTF8);
+        request.setContent("{\"name\":\"IS3\"}".getBytes(ServletUtil.UTF8));
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        JsonServlet instance = new MockJsonServlet();
+        instance.init(config);
+        instance.doPut(request, response);
+        assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        JsonNode node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is object", node.isObject());
+        assertEquals("Object has 2 parameters", 2, node.size());
+        assertEquals("Sensor 3", "IS3", node.path(JSON.DATA).path(JSON.NAME).asText());
+        assertEquals("Unknown state", 0, node.path(JSON.DATA).path(JSON.STATE).asInt());
+        // modify sensor IS3
+        request.setRequestURI("/json/v5/sensor/IS3");
+        request.setContent("{\"state\":4}".getBytes(ServletUtil.UTF8));
+        response = new MockHttpServletResponse();
+        instance.doPost(request, response);
+        assertEquals("HTTP OK", HttpServletResponse.SC_OK, response.getStatus());
+        node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is object", node.isObject());
+        assertEquals("Object has 2 parameters", 2, node.size());
+        assertEquals("Sensor 3", "IS3", node.path(JSON.DATA).path(JSON.NAME).asText());
+        assertEquals("Thrown state", 4, node.path(JSON.DATA).path(JSON.STATE).asInt());
+        // delete sensor IS3
+        request.setRequestURI("/json/v5/sensor/IS3");
+        request.setContentType("");
+        response = new MockHttpServletResponse();
+        instance.doDelete(request, response);
+        assertEquals("HTTP Not Found", HttpServletResponse.SC_OK, response.getStatus());
+        assertEquals("HTTP content is empty", 0, response.getContentLength());
+        assertNull("No sensor", manager.getBySystemName("IS3"));
+    }
+
+    /**
+     * Test getting, changing, and deleting an unknown type with version 5 specified.
+     *
+     * @throws java.io.IOException unexpected failure in test context
+     * @throws javax.servlet.ServletException unexpected failure in test context
+     */
+    @Test
+    public void testV5ManipulateUnknownType() throws ServletException, IOException {
+        request.setRequestURI("/json/v5/invalid-type/invalid-name");
+        request.setContentType("");
+        MockHttpServletResponse response = new MockHttpServletResponse();
+        JsonServlet instance = new MockJsonServlet();
+        instance.init(config);
+        instance.doGet(request, response);
+        assertEquals("HTTP Not Found", HttpServletResponse.SC_NOT_FOUND, response.getStatus());
+        JsonNode node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is object", node.isObject());
+        assertEquals("Node is error", JsonException.ERROR, node.path(JSON.TYPE).asText());
+        JUnitAppender.assertWarnMessage("Requested type 'invalid-type' unknown.");
+        instance.doPost(request, response);
+        assertEquals("HTTP Not Found", HttpServletResponse.SC_NOT_FOUND, response.getStatus());
+        node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is object", node.isObject());
+        assertEquals("Node is error", JsonException.ERROR, node.path(JSON.TYPE).asText());
+        JUnitAppender.assertWarnMessage("Requested type 'invalid-type' unknown.");
+        instance.doDelete(request, response);
+        assertEquals("HTTP Not Found", HttpServletResponse.SC_NOT_FOUND, response.getStatus());
+        node = new ObjectMapper().readTree(response.getContentAsString());
+        assertTrue("Node is object", node.isObject());
+        assertEquals("Node is error", JsonException.ERROR, node.path(JSON.TYPE).asText());
+        JUnitAppender.assertWarnMessage("Requested type 'invalid-type' unknown.");
+    }
+
     @Before
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSensorManager();
         InstanceManager.getDefault(JsonServerPreferences.class).setValidateServerMessages(true);
         context = new MockServletContext();
         config = new MockServletConfig(context);
