@@ -216,13 +216,6 @@ public class NamedBeanHandleManager extends AbstractManager<NamedBean> implement
 
     @Override
     @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    @Nonnull
     @CheckReturnValue
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
