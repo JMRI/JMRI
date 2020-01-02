@@ -115,6 +115,7 @@
       <aspect>Stop and Proceed</aspect>
     </danger>
 	
+	<!-- This file doesn't define a Stop aspect and appearance.  Should it? It's rule 292 in the aspects file. -->
     <held>
       <aspect>Stop</aspect>
     </held>

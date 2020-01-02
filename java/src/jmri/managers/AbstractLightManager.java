@@ -71,24 +71,6 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * {@inheritDoc}
      */
     @Override
-    @CheckForNull
-    public Light getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    @CheckForNull
-    public Light getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    @Override
     @Nonnull
     public Light newLight(@Nonnull String systemName, @CheckForNull String userName) {
         log.debug("newLight: {};{}",
@@ -188,6 +170,7 @@ public abstract class AbstractLightManager extends AbstractManager<Light>
      * @return a string for the type of object handled by this manager
      */
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLights" : "BeanNameLight");
     }

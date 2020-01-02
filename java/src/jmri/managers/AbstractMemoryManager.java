@@ -68,18 +68,6 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     /** {@inheritDoc} */
     @Override
-    public Memory getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Memory getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
     public @Nonnull Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
         log.debug("new Memory: {}; {}", systemName, userName); // NOI18N
         Objects.requireNonNull(systemName, "Value of requested systemName cannot be null");
@@ -157,7 +145,7 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     @Override
     @Nonnull
-    public Memory provide(String name) throws IllegalArgumentException {
+    public Memory provide(@Nonnull String name) throws IllegalArgumentException {
         return provideMemory(name);
     }
 

@@ -18,6 +18,14 @@ public class DefaultRouteManagerTest extends AbstractProvidingManagerTestBase<jm
     public void testCTor() {
         Assert.assertNotNull("exists",l);
     }
+    
+    @Test
+    @Override
+    @Deprecated // 4.17.7, eventually should check for IR in which case remove this test to allow super implementation
+    public void testProvideEmpty() throws IllegalArgumentException {
+        l.provide("Foo"); // this should _NOT_ throw an IllegalArgumentException currently
+        jmri.util.JUnitAppender.assertWarnMessage("Invalid Route Name: Foo must start with IR");
+    }
 
     // The minimal setup for log4J
     @Before

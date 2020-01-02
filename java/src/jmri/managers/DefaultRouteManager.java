@@ -1,5 +1,6 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Route;
@@ -42,7 +43,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
-    public Route provideRoute(String systemName, String userName) {
+    @Nonnull
+    public Route provideRoute(@Nonnull String systemName, String userName) {
         log.debug("provideRoute({})", systemName);
         Route r;
         r = getByUserName(systemName);
@@ -67,11 +69,32 @@ public class DefaultRouteManager extends AbstractManager<Route>
     /**
      * {@inheritDoc}
      *
+     * Permit Route names without a "R" type letter. Marked as deprecated because this
+     * is temporary; it should be entirely removed once a migration is complete.
+     * @deprecated formally in 4.17.7
+     */
+    @Deprecated // 4.17.7
+    @Override
+    @Nonnull
+    public String validateSystemNameFormat(@javax.annotation.Nonnull String name, @javax.annotation.Nonnull java.util.Locale locale) 
+                        throws jmri.NamedBean.BadSystemNameException {
+        try {
+            validateSystemNamePrefix(name, locale);
+        } catch (jmri.NamedBean.BadSystemNameException e) {
+            jmri.util.Log4JUtil.warnOnce(log, "Invalid Route Name: {} must start with IR", name, new Exception("traceback"));
+        }
+        return name;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * Keep autostring in line with {@link #provideRoute(String, String)},
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
-    public Route newRoute(String userName) {
+    @Nonnull
+    public Route newRoute(@Nonnull String userName) {
         return provideRoute(getAutoSystemName(), userName);
     }
 
@@ -80,7 +103,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * invoking this.
      */
     @Override
-    public void deleteRoute(Route r) {
+    public void deleteRoute(@Nonnull Route r) {
         deregister(r);
     }
 
@@ -90,22 +113,12 @@ public class DefaultRouteManager extends AbstractManager<Route>
      * both fail, returns null.
      */
     @Override
-    public Route getRoute(String name) {
+    public Route getRoute(@Nonnull String name) {
         Route r = getByUserName(name);
         if (r != null) {
             return r;
         }
         return getBySystemName(name);
-    }
-
-    @Override
-    public Route getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    @Override
-    public Route getByUserName(String key) {
-        return _tuser.get(key);
     }
 
     /**
@@ -118,6 +131,7 @@ public class DefaultRouteManager extends AbstractManager<Route>
         return InstanceManager.getDefault(DefaultRouteManager.class);
     }
 
+    @Nonnull
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameRoutes" : "BeanNameRoute");
@@ -132,7 +146,8 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     @Override
-    public Route provide(String name) {
+    @Nonnull
+    public Route provide(@Nonnull String name) {
         return provideRoute(name, null);
     }
 

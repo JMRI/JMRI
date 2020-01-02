@@ -2,6 +2,7 @@ package jmri;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
 
@@ -119,14 +120,6 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
         return getBySystemName(name);
     }
 
-    public Transit getBySystemName(String key) {
-        return  _tsys.get(key);
-    }
-
-    public Transit getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
     /**
      * Remove an existing Transit.
      *
@@ -177,8 +170,8 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
         }
         return list;
     }
-
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");
     }
@@ -192,4 +185,5 @@ public class TransitManager extends AbstractManager<Transit> implements Instance
     }
 
     // private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(TransitManager.class);
+
 }

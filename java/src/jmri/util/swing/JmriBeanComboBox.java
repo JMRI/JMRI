@@ -167,7 +167,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         } else {
             for (int i = 0; i < nameList.size(); i++) {
                 String name = nameList.get(i);
-                NamedBean nBean = _manager.getBeanBySystemName(name);
+                NamedBean nBean = _manager.getBySystemName(name);
 
                 if (nBean != null) {
                     String uname = nBean.getUserName();
@@ -491,11 +491,11 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
         if (comboBoxText != null) {
 
             //try user name
-            result = uDaManager.getBeanByUserName(comboBoxText);
+            result = uDaManager.getByUserName(comboBoxText);
 
             if (null == result) {
                 //try system name
-                //note: don't use getBeanBySystemName here
+                //note: don't use getBySystemName here
                 //throws an IllegalArgumentException if text is invalid
                 result = uDaManager.getNamedBean(comboBoxText);
             }

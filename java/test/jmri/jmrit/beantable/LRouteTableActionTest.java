@@ -77,7 +77,6 @@ public class LRouteTableActionTest {
         new JFrameOperator(_lRouteTable._addFrame).dispose();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     @Ignore("Commented out in JUnit 3")
     public void testPrompt() {
