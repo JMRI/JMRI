@@ -2,6 +2,7 @@ package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.HashMap;
 import javax.annotation.Nonnull;
 import javax.swing.AbstractAction;
@@ -153,7 +154,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
      * Increments trailing digits of a system/user name (string) I.E. "Geo7"
      * returns "Geo8" Note: preserves leading zeros: "Geo007" returns "Geo008"
      * Also, if no trailing digits, appends "1": "Geo" returns "Geo1"
-     * 
+     *
      * @param name the system or user name string
      * @return the same name with trailing digits incremented by one
      */
@@ -215,7 +216,7 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
 
     /**
      * Configure the combo box listing managers.
-     * 
+     *
      * @param comboBox     the combo box to configure
      * @param manager      the current manager
      * @param managerClass the implemented manager class for the current
@@ -250,5 +251,37 @@ public abstract class AbstractTableAction<E extends NamedBean> extends AbstractA
         }
     }
 
+    /**
+     * Remove the Add panel prefixBox listener before disposal.
+     * The listener is created when the Add panel is defined.  It persists after the
+     * the Add panel has been disposed.  When the next Add is created, AbstractTableAction
+     * sets the default connection as the current selection.  This triggers validation before
+     * the new Add panel is created.
+     * <p>
+     * The listener is removed by the controlling table action before disposing of the Add
+     * panel after Close or Create.
+     * @param prefixBox The prefix combobox that might contain the listener.
+     */
+    protected void removePrefixBoxListener(ManagerComboBox<E> prefixBox) {
+        Arrays.asList(prefixBox.getActionListeners()).forEach((l) -> {
+            prefixBox.removeActionListener(l);
+        });
+    }
+
+    /**
+     * Display a warning to user about invalid entry. Needed as entry validation
+     * does not disable the Create button when full system name eg "LT1" is entered.
+     *
+     * @param curAddress address as entered in Add new... pane address field
+     * @param ex the exception that occurred
+     */
+    protected void displayHwError(String curAddress, Exception ex) {
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager .class).
+                showErrorMessage(Bundle.getMessage("ErrorTitle"),
+                        Bundle.getMessage("ErrorConvertHW", curAddress),"" + ex,"",
+                        true,false);
+    }
+
     private static final Logger log = LoggerFactory.getLogger(AbstractTableAction.class);
+
 }

@@ -1,6 +1,7 @@
 package jmri.jmrix.grapevine;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.managers.AbstractLightManager;
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public GrapevineSystemConnectionMemo getMemo() {
         return (GrapevineSystemConnectionMemo) memo;
     }
@@ -42,7 +44,7 @@ public class SerialLightManager extends AbstractLightManager {
      * digital output bit
      */
     @Override
-    public Light createNewLight(String systemName, String userName) {
+    public Light createNewLight(@Nonnull String systemName, @Nonnull String userName) {
         String prefix = getSystemPrefix();
         Light lgt = null;
         // Validate the systemName
@@ -62,7 +64,8 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return SerialAddress.validateSystemNameFormat(name, this, locale);
     }
 
@@ -70,7 +73,7 @@ public class SerialLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix());
     }
 
@@ -81,7 +84,7 @@ public class SerialLightManager extends AbstractLightManager {
      * configuration, else returns 'false'
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return (SerialAddress.validSystemNameConfig(systemName, 'L', getMemo().getTrafficController()));
     }
 
@@ -92,7 +95,8 @@ public class SerialLightManager extends AbstractLightManager {
      * alternate representation, else return ""
      */
     @Override
-    public String convertSystemNameToAlternate(String systemName) {
+    @Nonnull
+    public String convertSystemNameToAlternate(@Nonnull String systemName) {
         return (SerialAddress.convertSystemNameToAlternate(systemName, getSystemPrefix()));
     }
 

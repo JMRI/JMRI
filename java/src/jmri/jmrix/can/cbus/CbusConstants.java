@@ -176,6 +176,7 @@ public final class CbusConstants {
     public static final int CBUS_ASOF3 = 0xF9;
     public static final int CBUS_DDES = 0xFA;
     public static final int CBUS_DDRS = 0xFB;
+    public static final int CBUS_DDWS = 0xFC;
 
     public static final int CBUS_ARSON3 = 0xFD;
     public static final int CBUS_ARSOF3 = 0xFE;

@@ -68,11 +68,11 @@ public class CarRoads extends RollingStockAttribute implements InstanceManagerAu
      */
     @Override
     public int getMaxNameLength() {
-        if (maxNameLength == 0) {
-            getMaxNameSubStringLength();
-            log.info("Max road name ({}) length {}", maxName, maxNameLength);
+        if (maxNameSubStringLength == 0) {
+            super.getMaxNameSubStringLength();
+            log.info("Max road name ({}) length {}", maxName, maxNameSubStringLength);
         }
-        return maxNameLength;
+        return maxNameSubStringLength;
     }
 
     /**

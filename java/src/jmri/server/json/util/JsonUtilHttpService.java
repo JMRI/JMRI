@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -275,7 +276,6 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @return the JSON panel message.
      * @throws JsonException if panel not found
      */
-    @SuppressWarnings("null")
     public JsonNode getPanel(Locale locale, String name, int id) throws JsonException {
         ArrayNode an = getPanels(JSON.XML, id);
         for (JsonNode jn : an) { //loop through panels
@@ -308,7 +308,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                         name = "Switchboard";
                     }
                     ObjectNode data = this.mapper.createObjectNode();
-                    data.put(NAME, name + "/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
+                    data.put(NAME, name + "/" + title.replace(" ", "%20").replace("#", "%23")); // NOI18N
                     data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
                     data.put(USERNAME, title);
                     data.put(TYPE, type);
@@ -366,7 +366,6 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @return the JSON systemConnections message.
      * @throws JsonException if systemConnection not found
      */
-    @SuppressWarnings("null")
     public JsonNode getSystemConnection(Locale locale, String name, int id) throws JsonException {
         ArrayNode an = getSystemConnections(locale, id);
         for (JsonNode jn : an) { //loop through systemConnections
@@ -437,7 +436,7 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @param id message set by the client
      * @return the data for this profile as a JSON Node
      */
-    private JsonNode getConfigProfile(Profile p, ProfileManager pm, int id) {
+    private JsonNode getConfigProfile(@Nonnull Profile p, ProfileManager pm, int id) {
         boolean isActiveProfile = (p == pm.getActiveProfile());
         boolean isNextProfile = (p == pm.getNextActiveProfile());
         // isAutoStart is only possibly true for active profile

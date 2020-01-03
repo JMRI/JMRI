@@ -344,6 +344,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         showOpcCheckBox.setText(Bundle.getMessage("showOpcCheckbox"));
         showOpcCheckBox.setVisible(true);
         showOpcCheckBox.setToolTipText(Bundle.getMessage("showOpcCheckboxTip"));
+        showOpcCheckBox.setSelected(true);
         
         showOpcExtraCheckBox.setText(Bundle.getMessage("OpcExtraCheckbox"));
         showOpcExtraCheckBox.setVisible(true);
@@ -1266,7 +1267,7 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
         output.append(decode(m, m.isExtended(), m.getHeader()) + " ");
 
         if (showOpcExtraCheckBox.isSelected()) {
-            if (!m.isExtended()) {
+            if (!m.isExtended() && ( !CbusOpCodes.decodeopc(m).equals(Bundle.getMessage("OPC_RESERVED")) )) {
                 String cbusopc = "CTIP_" + decodeopc(m, m.isExtended(), m.getHeader());
                 output.append(Bundle.getMessage(cbusopc)+ " ");
             }

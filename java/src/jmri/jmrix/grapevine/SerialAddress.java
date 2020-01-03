@@ -1,6 +1,7 @@
 package jmri.jmrix.grapevine;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Manager.NameValidity;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -420,7 +421,7 @@ public class SerialAddress {
      * @param prefix     system connection prefix from memo
      * @return 'true' if system name has a valid format, else returns 'false'
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the System Name leader characters
         Matcher matcher = getAllPattern().matcher(systemName);
         if (!matcher.matches()) {

@@ -1,10 +1,11 @@
 package jmri.managers;
 
-import java.text.DecimalFormat;
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Manager;
+import jmri.SignalHead;
 import jmri.implementation.DefaultLogix;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -150,16 +151,6 @@ public class DefaultLogixManager extends AbstractManager<Logix>
         return getBySystemName(name);
     }
 
-    @Override
-    public Logix getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    @Override
-    public Logix getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
     /**
      * Support for loading Logixs in a disabled state to debug loops
      */
@@ -181,8 +172,17 @@ public class DefaultLogixManager extends AbstractManager<Logix>
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameLogixes" : "BeanNameLogix");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Logix> getNamedBeanClass() {
+        return Logix.class;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultLogixManager.class);

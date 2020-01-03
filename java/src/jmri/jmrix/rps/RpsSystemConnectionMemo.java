@@ -1,9 +1,11 @@
 package jmri.jmrix.rps;
 
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Manager.NameValidity;
@@ -38,6 +40,11 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     public void configureManagers() {
@@ -154,7 +161,7 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
      *
      * @return VALID if system name has a valid format, else return INVALID
      */
-    public NameValidity validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(getSystemPrefix() + type))) {
             // here if an illegal format 

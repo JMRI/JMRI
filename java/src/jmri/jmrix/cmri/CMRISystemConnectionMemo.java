@@ -1,5 +1,6 @@
 package jmri.jmrix.cmri;
 
+import java.util.Comparator;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
@@ -19,6 +20,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.SerialTurnoutManager;
 import jmri.jmrix.cmri.swing.CMRIComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Minimal SystemConnectionMemo for C/MRI systems.
@@ -338,7 +340,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * @param type       the device type
      * @return enum indicating current validity, which might be just as a prefix
      */
-    public NameValidity validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
             log.debug("invalid system prefix in CMRI system name: {}", systemName);
@@ -800,6 +802,11 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

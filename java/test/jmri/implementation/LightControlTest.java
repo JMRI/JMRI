@@ -8,15 +8,11 @@ import jmri.Timebase;
 import jmri.TimebaseRateException;
 import jmri.Turnout;
 import jmri.util.JUnitUtil;
-import org.junit.After;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.junit.*;
+
 /**
- * Tests for the LightControl class
+ * Tests for the LightControl class.
  *
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
@@ -153,7 +149,6 @@ public class LightControlTest {
         Assert.assertTrue(l1.equals(l2));
 
         Assert.assertNotNull("Has Hashcode", l1.hashCode());
-
     }
 
     @Test
@@ -236,7 +231,6 @@ public class LightControlTest {
 
         l.deactivateLight();
         l.dispose();
-
     }
 
     @Test
@@ -249,7 +243,6 @@ public class LightControlTest {
         l.addLightControl(lc);
         l.activateLight();
         JUnitAppender.assertErrorMessage("Light ILL1 is linked to a Sensor that does not exist:");
-
     }
 
     @Test
@@ -266,7 +259,6 @@ public class LightControlTest {
 
         lc.setControlTurnoutState(999);
         JUnitAppender.assertErrorMessageStartsWith("Incorrect Turnout State Set");
-
     }
 
     @Test
@@ -325,7 +317,6 @@ public class LightControlTest {
 
         l.deactivateLight();
         l.dispose();
-
     }
 
     @Test
@@ -585,7 +576,8 @@ public class LightControlTest {
 
     @Test
     public void testTimedSensorFollowing() throws jmri.JmriException {
-
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        
         l = InstanceManager.getDefault(jmri.LightManager.class).provideLight("L1");
         Sensor s = InstanceManager.getDefault(jmri.SensorManager.class).provideSensor("S2");
 
@@ -665,7 +657,6 @@ public class LightControlTest {
         Assert.assertEquals("Light still off", Light.OFF, l.getState());
 
         l.dispose();
-
     }
 
     @Test
@@ -678,7 +669,6 @@ public class LightControlTest {
         l.addLightControl(lc);
         l.activateLight();
         JUnitAppender.assertErrorMessage("Light ILL1 is linked to a Sensor that does not exist:");
-
     }
 
     @Test
@@ -710,7 +700,6 @@ public class LightControlTest {
 
         lc.setControlSensorSense(999);
         JUnitAppender.assertErrorMessage("Incorrect Sensor State Set");
-
     }
 
     @Test
@@ -780,7 +769,6 @@ public class LightControlTest {
 
         l.deactivateLight();
         l.dispose();
-
     }
 
     @Test
@@ -909,4 +897,5 @@ public class LightControlTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LightControlTest.class);
+
 }

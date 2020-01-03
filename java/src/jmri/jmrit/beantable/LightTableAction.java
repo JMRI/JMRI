@@ -474,7 +474,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
                 public JLabel updateLabel(String value, int row) {
                     if (iconHeight > 0) { // if necessary, increase row height;
                         log.debug("TODO adjust table row height for Lights?");
-                        //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5)); 
+                        //table.setRowHeight(row, Math.max(table.getRowHeight(), iconHeight - 5));
                     }
                     if (value.equals(Bundle.getMessage("StateOff")) && offIcon != null) {
                         label = new JLabel(offIcon);
@@ -1342,6 +1342,7 @@ public class LightTableAction extends AbstractTableAction<Light> {
         lightCreatedOrUpdated = false;
         // finally, get rid of the add/edit Frame
         if (addFrame != null) {
+            removePrefixBoxListener(prefixBox);
             addFrame.dispose();
             addFrame = null;
             create.removePropertyChangeListener(colorChangeListener);
@@ -1839,19 +1840,19 @@ public class LightTableAction extends AbstractTableAction<Light> {
             int offMin = (Integer) fastMinuteSpinner2.getValue(); // minutes
 
             g.setFastClockControlSchedule(onHour, onMin, offHour, offMin);
-            
+
             if (g.onOffTimesFaulty()) {
                 status1.setText(Bundle.getMessage("LightWarn11"));
                 status1.setForeground(Color.red);
                 return false;
             }
-            
+
             if (g.areFollowerTimesFaulty(currentList)) {
                 status1.setText(Bundle.getMessage("LightWarn12"));
                 status1.setForeground(Color.red);
                 return false;
             }
-            
+
         } else if (turnoutStatusControl.equals(typeBox.getSelectedItem())) {
             boolean error = false;
             Turnout t = null;

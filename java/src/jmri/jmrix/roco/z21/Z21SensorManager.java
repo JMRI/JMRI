@@ -58,21 +58,24 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
     }
 
     // Z21 specific methods
+
     /**
-     * Create a new Sensor based on the system name. Assumes calling method has
-     * checked that a Sensor with this system name does not already exist.
+     * {@inheritDoc}
+     * <p>
+     * Assumes calling method has checked that a Sensor with this system
+     * name does not already exist.
      *
-     * @return null if the system name is not in a valid format
+     * @throws IllegalArgumentException if the system name is not in a valid format
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName)  throws IllegalArgumentException {
         if (systemName.contains(":")) {
             // check for CAN format.
             int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
             if (bitNum != -1) {
                 return new Z21CanSensor(systemName, userName, getMemo());
             } else {
-                log.warn("Invalid Sensor name: {} ",systemName);
                 throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
             }
         } else {
@@ -83,7 +86,6 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                 return new Z21RMBusSensor(systemName, userName,
                         getMemo().getTrafficController(), getSystemPrefix());
             } else {
-                log.warn("Invalid Sensor name: {} ", systemName);
                 throw new IllegalArgumentException("Invalid Sensor name: " + systemName);
             }
         }
@@ -104,17 +106,17 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
                 int netID = (msg.getElement(4) & 0xFF) + ((msg.getElement(5) & 0xFF) << 8);
                 int msgPort = (msg.getElement(8) & 0xFF);
                 int address = (msg.getElement(6) & 0xFF) + ((msg.getElement(7) & 0xFF) << 8);
-                String sysName = Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),address,msgPort);
-                Z21CanSensor r = (Z21CanSensor) getBySystemName(sysName);
+                String systemName = Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),address,msgPort);
+                Z21CanSensor r = (Z21CanSensor) getBySystemName(systemName);
                 if (null == r) {
                     // try with the module's CAN network ID
-                    sysName = Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),netID, msgPort);
-                    r = (Z21CanSensor) getBySystemName(sysName);
+                    systemName = Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),netID, msgPort);
+                    r = (Z21CanSensor) getBySystemName(systemName);
                     if (null == r) {
-                        log.debug("Creating reporter {}", sysName);
+                        log.debug("Creating reporter {}", systemName);
                         // need to create a new one, and send the message on 
                         // to the newly created object.
-                        ((Z21CanSensor) provideSensor(sysName)).reply(msg);
+                        ((Z21CanSensor) provideSensor(systemName)).reply(msg);
                     }
                 }
             }
@@ -152,7 +154,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return Z21RMBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()) == NameValidity.VALID
                 ? NameValidity.VALID
                 : Z21CanBusAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix());
@@ -165,7 +167,7 @@ public class Z21SensorManager extends jmri.managers.AbstractSensorManager implem
 
     @Override
     @Nonnull
-    public synchronized String createSystemName(String curAddress, @Nonnull String prefix) throws JmriException {
+    public synchronized String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 

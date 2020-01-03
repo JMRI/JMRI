@@ -1,10 +1,13 @@
 package jmri.managers;
 
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
+
+import java.util.Objects;
 
 /**
  * Abstract partial implementation of a SignalHeadManager.
@@ -40,33 +43,31 @@ public class AbstractSignalHeadManager extends AbstractManager<SignalHead>
 
     /** {@inheritDoc} */
     @Override
-    public SignalHead getSignalHead(String name) {
-        if (name == null || name.length() == 0) {
+    public SignalHead getSignalHead(@Nonnull String name) {
+        Objects.requireNonNull(name, "SignalHead name cannot be null.");  // NOI18N
+        if (name.trim().length() == 0) {
             return null;
         }
         SignalHead t = getByUserName(name);
         if (t != null) {
             return t;
         }
-
         return getBySystemName(name);
     }
 
     /** {@inheritDoc} */
     @Override
-    public SignalHead getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public SignalHead getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalHeads" : "BeanNameSignalHead");
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<SignalHead> getNamedBeanClass() {
+        return SignalHead.class;
+    }
+
 }

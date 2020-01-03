@@ -183,14 +183,14 @@ public class LayoutTurnoutTest {
         Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.NONE));
         jmri.util.JUnitAppender.assertWarnMessage("Unhandled point type: 0");
 
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA1));
         Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA2));
         Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTA3));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTB));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTB1));
         Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTB2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTC));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTC1));
         Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTC2));
-        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTD));
+        Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTD1));
         Assert.assertNull(ltRH.getSignalHead(LayoutTurnout.POINTD2));
     }
 
@@ -1044,9 +1044,10 @@ public class LayoutTurnoutTest {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
-            jmri.util.JUnitUtil.resetInstanceManager();
-            jmri.util.JUnitUtil.initInternalTurnoutManager();
-            jmri.util.JUnitUtil.initInternalSensorManager();
+            JUnitUtil.resetInstanceManager();
+            JUnitUtil.initInternalTurnoutManager();
+            JUnitUtil.initInternalSensorManager();
+            JUnitUtil.initInternalSignalHeadManager();
             layoutEditor = new LayoutEditor();
         }
     }

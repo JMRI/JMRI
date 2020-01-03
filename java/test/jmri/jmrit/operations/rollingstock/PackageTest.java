@@ -10,7 +10,6 @@ import org.junit.runners.Suite;
         jmri.jmrit.operations.rollingstock.engines.PackageTest.class,
         BundleTest.class,
         RollingStockLoggerTest.class,
-        XmlTest.class,
 })
 
 /**

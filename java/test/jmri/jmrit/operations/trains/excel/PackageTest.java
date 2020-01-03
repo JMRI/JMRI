@@ -11,7 +11,6 @@ import org.junit.runners.Suite;
         SetupExcelProgramSwitchListFrameTest.class,
         TrainCustomManifestTest.class,
         TrainCustomSwitchListTest.class,
-        XmlTest.class,
         SetupExcelProgramFrameActionTest.class,
         SetupExcelProgramSwitchListFrameActionTest.class,
 })

@@ -7,6 +7,7 @@ import javax.annotation.CheckForNull;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
+import jmri.SignalHead;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,9 +44,9 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
     /** {@inheritDoc} */
     @Override
     public @Nonnull Memory provideMemory(@Nonnull String sName) {
-        Memory t = getMemory(sName);
-        if (t != null) {
-            return t;
+        Memory m = getMemory(sName);
+        if (m != null) {
+            return m;
         }
         if (sName.startsWith(getSystemNamePrefix())) {
             return newMemory(sName, null);
@@ -67,59 +68,47 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
 
     /** {@inheritDoc} */
     @Override
-    public Memory getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Memory getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public @Nonnull Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
-        log.debug("new Memory: {}; {}", systemName, userName); // NOI18N
-        Objects.requireNonNull(systemName, "Value of requested systemName cannot be null");
-
+    @Nonnull
+    public Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
+        log.debug("new Memory: {}; {}", systemName, (userName == null ? "null" : userName)); // NOI18N
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + ((userName == null) ? "null" : userName));  // NOI18N
         // return existing if there is one
-        Memory s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
-                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, s.getSystemName()); // NOI18N
+        Memory m;
+        if ((userName != null) && ((m = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != m) {
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})", userName, systemName, m.getSystemName()); // NOI18N
             }
-            return s;
+            return m;
         }
-        if ((s = getBySystemName(systemName)) != null) {
+        if ((m = getBySystemName(systemName)) != null) {
             // handle user name from request
             if (userName != null) {
                 // check if already on set in Object, might be inconsistent
-                if (!userName.equals(s.getUserName())) {
+                if (!userName.equals(m.getUserName())) {
                     // this is a problem
-                    log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"", systemName, userName, s.getUserName());
+                    log.warn("newMemory request for system name \"{}\" user name \"{}\" found memory with existing user name \"{}\"", systemName, userName, m.getUserName());
                 } else {
-                    s.setUserName(userName);
+                    m.setUserName(userName);
                 }
             }
-            return s;
+            return m;
         }
 
         // doesn't exist, make a new one
-        s = createNewMemory(systemName, userName);
+        m = createNewMemory(systemName, userName);
 
         // if that failed, blame it on the input arguments
-        if (s == null) {
+        if (m == null) {
             throw new IllegalArgumentException();
         }
 
         // save in the maps
-        register(s);
-
+        register(m);
         // Keep track of the last created auto system name
         updateAutoNumber(systemName);
 
-        return s;
+        return m;
     }
 
     /** {@inheritDoc} */
@@ -146,9 +135,17 @@ public abstract class AbstractMemoryManager extends AbstractManager<Memory>
         return Bundle.getMessage(plural ? "BeanNameMemories" : "BeanNameMemory");
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<Memory> getNamedBeanClass() {
+        return Memory.class;
+    }
+
     @Override
     @Nonnull
-    public Memory provide(String name) throws IllegalArgumentException {
+    public Memory provide(@Nonnull String name) throws IllegalArgumentException {
         return provideMemory(name);
     }
 

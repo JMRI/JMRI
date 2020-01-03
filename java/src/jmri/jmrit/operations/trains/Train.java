@@ -445,7 +445,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return minutes;
     }
 
-    protected int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
+    public int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
         int minutes = 0;
         if (!isTrainEnRoute()) {
             minutes += Integer.parseInt(getDepartureTimeMinute());
@@ -1001,7 +1001,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return types;
     }
 
-    protected String[] getCarTypeNames() {
+    public String[] getCarTypeNames() {
         List<String> list = new ArrayList<>();
         for (String type : _typeList) {
             if (InstanceManager.getDefault(CarTypes.class).containsName(type)) {
@@ -1015,7 +1015,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return types;
     }
 
-    protected String[] getLocoTypeNames() {
+    public String[] getLocoTypeNames() {
         List<String> list = new ArrayList<>();
         for (String type : _typeList) {
             if (InstanceManager.getDefault(EngineTypes.class).containsName(type)) {
