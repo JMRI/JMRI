@@ -1,20 +1,10 @@
 package jmri.jmrix.can.cbus.swing.simulator;
 
 import javax.swing.BoxLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.text.DefaultFormatter;
 import jmri.jmrix.can.cbus.simulator.CbusEventResponder;
 import jmri.util.swing.ComboBoxToolTipRenderer;
@@ -32,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class EvResponderPane extends JPanel {
     
-    private CbusEventResponder _evr;
+    private final CbusEventResponder _evr;
     private JComboBox<String> _selectMode;
     private int _mode;
     private ArrayList<String> tooltips;
@@ -55,13 +45,13 @@ public class EvResponderPane extends JPanel {
         JLabel _nodeLabel = new JLabel("<html><h3>" + Bundle.getMessage("CbusNode") + " : </h3></html>");
         _nodeLabel.setToolTipText(Bundle.getMessage("simNodeSelect"));
     
-        _selectMode = new JComboBox<String>();
+        _selectMode = new JComboBox<>();
         _selectMode.setEditable(false);
         
         ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
         _selectMode.setRenderer(renderer);
     
-        tooltips = new ArrayList<String>();
+        tooltips = new ArrayList<>();
         String getSelected="";
         
         for (int i = 0; i < _evr.evModes.size(); i++) {
@@ -74,17 +64,14 @@ public class EvResponderPane extends JPanel {
         }
         
         _selectMode.setSelectedItem(getSelected);
-        _selectMode.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String chosen = (String)_selectMode.getSelectedItem();
-                
-                for (int i = 0; i < _evr.evModes.size(); i++) {
-                    String option = _evr.evModes.get(i);
-                    if (option.equals(chosen)) {
-                        log.debug("chosen {} {}",i,chosen);
-                        _evr.setMode(i);
-                    }
+        _selectMode.addActionListener ((ActionEvent e) -> {
+            String chosen = (String)_selectMode.getSelectedItem();
+            
+            for (int i = 0; i < _evr.evModes.size(); i++) {
+                String option = _evr.evModes.get(i);
+                if (option.equals(chosen)) {
+                    log.debug("chosen {} {}",i,chosen);
+                    _evr.setMode(i);
                 }
             }
         });
@@ -95,13 +82,10 @@ public class EvResponderPane extends JPanel {
         JFormattedTextField field = (JFormattedTextField) comp.getComponent(0);
         DefaultFormatter formatter = (DefaultFormatter) field.getFormatter();
         formatter.setCommitsOnValidEdit(true);
-        _spinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int minmax = (Integer) _spinner.getValue();
-                log.debug("value {}",minmax);
-                _evr.setNode(minmax);
-            }
+        _spinner.addChangeListener((ChangeEvent e) -> {
+            int minmax = (Integer) _spinner.getValue();
+            log.debug("value {}",minmax);
+            _evr.setNode(minmax);
         });
         _spinner.setToolTipText(Bundle.getMessage("simNodeSelect"));
     

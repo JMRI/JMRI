@@ -1,19 +1,9 @@
 package jmri.jmrix.can.cbus.swing.simulator;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.JCheckBox;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JPanel;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
 import javax.swing.text.DefaultFormatter;
-
 import jmri.jmrix.can.cbus.simulator.CbusDummyCS;
 import jmri.jmrix.can.cbus.simulator.CbusDummyNode;
 import jmri.jmrix.can.cbus.simulator.CbusEventResponder;
@@ -120,51 +110,36 @@ public class DirectionPane extends JPanel {
     }
 
     private void setListeners(){
-        processIn.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ( _cs != null ) { _cs.setProcessIn(processIn.isSelected()); }
-                if ( _nd != null ) { _nd.setProcessIn(processIn.isSelected()); }
-                if ( _ev != null ) { _ev.setProcessIn(processIn.isSelected()); }
-            }
+        processIn.addActionListener ((ActionEvent e) -> {
+            if ( _cs != null ) { _cs.setProcessIn(processIn.isSelected()); }
+            if ( _nd != null ) { _nd.setProcessIn(processIn.isSelected()); }
+            if ( _ev != null ) { _ev.setProcessIn(processIn.isSelected()); }
         }); 
 
-        processOut.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ( _cs != null ) { _cs.setProcessOut(processOut.isSelected()); }
-                if ( _nd != null ) { _nd.setProcessOut(processOut.isSelected()); }
-                if ( _ev != null ) { _ev.setProcessOut(processOut.isSelected()); }                
-            }
+        processOut.addActionListener ((ActionEvent e) -> {
+            if ( _cs != null ) { _cs.setProcessOut(processOut.isSelected()); }
+            if ( _nd != null ) { _nd.setProcessOut(processOut.isSelected()); }
+            if ( _ev != null ) { _ev.setProcessOut(processOut.isSelected()); }
         });
 
-        sendIn.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ( _cs != null ) { _cs.setSendIn(sendIn.isSelected()); }
-                if ( _nd != null ) { _nd.setSendIn(sendIn.isSelected()); }
-                if ( _ev != null ) { _ev.setSendIn(sendIn.isSelected()); }  
-            }
+        sendIn.addActionListener ((ActionEvent e) -> {
+            if ( _cs != null ) { _cs.setSendIn(sendIn.isSelected()); }
+            if ( _nd != null ) { _nd.setSendIn(sendIn.isSelected()); }
+            if ( _ev != null ) { _ev.setSendIn(sendIn.isSelected()); }
         });
 
-        sendOut.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ( _cs != null ) { _cs.setSendOut(sendOut.isSelected()); }
-                if ( _nd != null ) { _nd.setSendOut(sendOut.isSelected()); }
-                if ( _ev != null ) { _ev.setSendOut(sendOut.isSelected()); }
-            }
+        sendOut.addActionListener ((ActionEvent e) -> {
+            if ( _cs != null ) { _cs.setSendOut(sendOut.isSelected()); }
+            if ( _nd != null ) { _nd.setSendOut(sendOut.isSelected()); }
+            if ( _ev != null ) { _ev.setSendOut(sendOut.isSelected()); }
         });
         
-        delaySpinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int newDelay;
-                newDelay = (Integer) delaySpinner.getValue();
-                if ( _cs != null ) { _cs.setDelay(newDelay); }
-                if ( _nd != null ) { _nd.setDelay(newDelay); }
-                if ( _ev != null ) { _ev.setDelay(newDelay); }
-            }
+        delaySpinner.addChangeListener((ChangeEvent e) -> {
+            int newDelay;
+            newDelay = (Integer) delaySpinner.getValue();
+            if ( _cs != null ) { _cs.setDelay(newDelay); }
+            if ( _nd != null ) { _nd.setDelay(newDelay); }
+            if ( _ev != null ) { _ev.setDelay(newDelay); }
         });
     }
 
