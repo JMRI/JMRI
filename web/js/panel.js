@@ -154,8 +154,8 @@ class Decoration {
         var $cps = $widget.controlpoints;   // get the control points
         var $cp0 = $cps[0];
         var $cpN = $cps[$cps.length - 1];
-        var cp0 = [Number($cp0.attributes.x.value), Number($cp0.attributes.y.value)];
-        var cpN = [Number($cpN.attributes.x.value), Number($cpN.attributes.y.value)];
+        var cp0 = $getLayoutPoint($cp0);
+        var cpN = $getLayoutPoint($cpN);
         this.startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(cp0, this.ep1);
         this.stopAngleRAD = (Math.PI / 2) - $computeAngleRAD2(this.ep2, cpN);
     }
@@ -578,7 +578,7 @@ class BridgeDecoration extends Decoration {
         var points = [[ep1[0], ep1[1]]];    // first point
         var $cps = $widget.controlpoints;   // get the control points
         $cps.each(function( idx, elem ) {   // control points
-            points.push([elem.attributes.x.value, elem.attributes.y.value]);
+            points.push($getLayoutPoint(elem));
         });
         points.push([ep2[0], ep2[1]]);  // last point
         var halfWidth = this.deckwidth / 2;
@@ -798,7 +798,7 @@ class TunnelDecoration extends Decoration {
         var points = [[ep1[0], ep1[1]]];    // first point
         var $cps = $widget.controlpoints;   // get the control points
         $cps.each(function( idx, elem ) {   // control points
-            points.push([elem.attributes.x.value, elem.attributes.y.value]);
+            points.push($getLayoutPoint(elem));
         });
         points.push([ep2[0], ep2[1]]);  // last point
         var halfWidth = this.floorwidth / 2;
@@ -1721,6 +1721,8 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     jmri.getSensor($widget["occupancysensorBD"]);
                                 break;
                             case "layoutturntable" :
+                                //jmri.log("#### Layout Turntable ####");
+                                $widget['raytracks'] = $(this).find('raytrack');
                                 //draw the turntable
                                 $drawTurntable($widget);
                                 break;
@@ -2034,7 +2036,7 @@ function $drawTrackSegmentBezier($widget) {
     var $cps = $widget.controlpoints;   // get the control points
     var points = [[ep1[0], ep1[1]]];    // first point
     $cps.each(function( idx, elem ) {   // control points
-        points.push([elem.attributes.x.value, elem.attributes.y.value]);
+        points.push($getLayoutPoint(elem));
     });
     points.push([ep2[0], ep2[1]]);  // last point
 
@@ -2190,17 +2192,25 @@ function $drawIcon($widget) {
 //draw a turntable (pass in widget)
 function $drawTurntable($widget) {
     //from jmri.jmrit.display.layoutEditor.layoutTurntable
+    //$logProperties($widget, true);
+
     $drawCircle($widget.xcen, $widget.ycen, $widget.radius);
-    var $raytracks = $(this).find('raytrack');
+
+    //get the center
     var $txcen = $widget.xcen * 1;
     var $tycen = $widget.ycen * 1;
-    $raytracks.each(function(i, item) {  //loop thru raytracks, calc and store end of ray point for each
+
+    //get the ray tracks
+    var $raytracks = $widget.raytracks;
+    //$logProperties($raytracks, true);
+    //loop thru raytracks, calc and store end of ray point for each
+    $raytracks.each(function(i, item) {
         var $t = [];
         //note: .5 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
         $t['ident'] = $widget.ident + ".5" + item.attributes['index'].value * 1;
         $angle = $toRadians(item.attributes['angle'].value);
-        $t['x'] = $txcen + (($widget.radius*1.25)*Math.sin($angle)); //from getRayCoordsIndexed()
-        $t['y'] = $tycen - (($widget.radius*1.25)*Math.cos($angle));
+        $t['x'] = $txcen + (($widget.radius * 1.25) * Math.sin($angle)); //from getRayCoordsIndexed()
+        $t['y'] = $tycen - (($widget.radius * 1.25) * Math.cos($angle));
         $gPts[$t.ident] = $t; //store the endpoint of this ray
         //draw the line from ray endpoint to turntable edge
         var $t1 = [];
@@ -2692,21 +2702,20 @@ function $drawLayoutShape($widget) {
 
         var shapeType = $widget.type;
 
-        var cnt = $pts.length;
         $pts.each(function(idx, $lsp) {  //loop thru points
             // this point
-            var p = $getLayoutShapePoint($lsp);
+            var p = $getLayoutPoint($lsp);
 
             // left point
-            var idxL = $wrapValue(idx - 1, 0, cnt);
+            var idxL = $wrapValue(idx - 1, 0, len);
             var $lspL = $pts[idxL];
-            var pL = $getLayoutShapePoint($lspL);
+            var pL = $getLayoutPoint($lspL);
             var midL = $point_midpoint(pL, p);
 
             // right point
-            var idxR = $wrapValue(idx + 1, 0, cnt);
+            var idxR = $wrapValue(idx + 1, 0, len);
             var $lspR = $pts[idxR];
-            var pR = $getLayoutShapePoint($lspR);
+            var pR = $getLayoutPoint($lspR);
             var midR = $point_midpoint(p, pR);
 
             var lspt = $lsp.attributes.type.value;  // Straight or Curve
@@ -2756,9 +2765,10 @@ function $drawLayoutShape($widget) {
     }   // if (len > 0)
 }
 
-function $getLayoutShapePoint($lsp) {
-    return [Number($lsp.attributes.x.value), Number($lsp.attributes.y.value)];
+function $getLayoutPoint($p) {
+    return [Number($p.attributes.x.value), Number($p.attributes.y.value)];
 }
+
 // wrap inValue around between minVal and maxVal
 function $wrapValue(inValue, minVal, maxVal) {
     var range = maxVal - minVal;
@@ -3463,7 +3473,7 @@ var $setWidgetState = function($id, $newState, data) {
         		$widget.widgetFamily=="icon" && data.value.type=="idTag") {
         	$widget.state = data.value.data.name;
         }
-        
+
         switch ($widget.widgetFamily) {
             case "icon" :
                	$reDrawIcon($widget)
@@ -3803,7 +3813,7 @@ var $drawAllIconWidgets = function() {
     });
 };
 
-function updateWidgets(name, state, data) {   
+function updateWidgets(name, state, data) {
 	//update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
         if (jmri_logging) jmri.log("updateWidgets(" + name + ", " + state + ", data);");
@@ -3988,7 +3998,7 @@ $(document).ready(function() {
             		if (value.type == "idTag") {
             			value = value.data.userName; //for idTags, use the value in userName instead
             		} else if (value.type == "reporter"){
-            			value = value.data.value;    //for reporters, use the value in data instead            		
+            			value = value.data.value;    //for reporters, use the value in data instead
             		}
             	}
                 updateWidgets(name, value, data);
@@ -4001,7 +4011,7 @@ $(document).ready(function() {
             		if (value.type == "idTag") {
             			value = value.data.userName; //for idTags, use the value in userName instead
             		} else if (value.type == "reporter"){
-            			value = value.data.value;    //for reporters, use the value in data instead            		
+            			value = value.data.value;    //for reporters, use the value in data instead
             		}
             	}
                 updateWidgets(name, value, data);
