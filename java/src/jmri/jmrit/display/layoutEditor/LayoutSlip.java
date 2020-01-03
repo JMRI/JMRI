@@ -1861,7 +1861,7 @@ public class LayoutSlip extends LayoutTurnout {
                 lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsC()));
                 results.add(lc);
             }
-            if ((type == DOUBLE_SLIP) && (lbB != lbD)) {
+            if (lbB != lbD) {
                 // have a BD block boundary, create a LayoutConnectivity
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbD, this);
                 lc = new LayoutConnectivity(lbB, lbD);
@@ -1877,7 +1877,7 @@ public class LayoutSlip extends LayoutTurnout {
                 lc.setDirection(Path.computeDirection(getCoordsA(), getCoordsD()));
                 results.add(lc);
             }
-            if (lbB != lbC) {
+            if ((type == DOUBLE_SLIP) && (lbB != lbC)) {
                 // have a BC block boundary, create a LayoutConnectivity
                 log.debug("Block boundary  ('{}'<->'{}') found at {}", lbB, lbC, this);
                 lc = new LayoutConnectivity(lbB, lbC);

@@ -1,10 +1,9 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li>JMRI 4.19.1 and later enforce the standard form of system names,
-                where the system is denoted by a single letter or a letter plus digits.
-                Some users of JMRI 4.18 or earlier might have incompatible values.
-                See warnings above.</li>
+          <li>Fixed a problem introduced in JMRI 4.19.1 that 
+          prevented the function buttons in the on-screen throttles
+          from working on some types of computers.</li>
         </ul>
 
 	    <h4>Anyma DMX512</h4>
@@ -264,7 +263,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2 Steam fix legacy function names</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -274,7 +273,7 @@
 
         <h4>TCS</h4>
             <ul>
-                <li>WOW fix bug in CV22</li>
+                <li></li>
             </ul>
 	    
 	    <h4>Team Digital</h4>
@@ -406,15 +405,7 @@
         </ul>
         <h4>Signal Systems</h4>
             <ul>
-                <li>Improved how the XML files defining a signal system
-                    are validated.  Unfortunately, some files are already inconsistent.
-                    Fixed a number of files with invisible appearance definitions
-                    by duplicating the appearance file (i.e. adding a -b version with
-                    the different appearances).  Temporarily commented out 
-                    some of the 
-                    <a href="http://jmri.org/xml/schema/appearancetable.xsd">schema checks</a>
-                    until the existing files can be resolved.
-                    </li>
+                <li></li>
             </ul>
 
         <h4>Signal Heads</h4>
@@ -492,6 +483,21 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+                calls in the various <code>Manager<code> classes
+                are no longer needed with Java 8 and have been deprecated for eventual
+                removal.  Their replacements are 
+                <code>getByUserName<code> and <code>getBySystemName<code> 
+                respectively.
+                If you use <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+                in script or Java code you've written, please 
+                switch to the new names.
+            </li>
+		    <li>The system names for Routes are required to start with "IO" to avoid
+		    	ambiguity or confusion with Reporters (the system names of which start
+		    	with "IR"). JMRI 4.19.2 or later should automatically rename Routes
+		    	correctly, but it is possible that references to those Routes will need
+		    	to be updated.
+			    </li>
         </ul>
 

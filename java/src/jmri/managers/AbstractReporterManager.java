@@ -44,9 +44,9 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     @Override
     @Nonnull
     public Reporter provideReporter(@Nonnull String sName) {
-        Reporter t = getReporter(sName);
-        if (t != null) {
-            return t;
+        Reporter r = getReporter(sName);
+        if (r != null) {
+            return r;
         }
         if (sName.startsWith(getSystemPrefix() + typeLetter())) {
             return newReporter(sName, null);
@@ -58,24 +58,11 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     /** {@inheritDoc} */
     @Override
     public Reporter getReporter(@Nonnull String name) {
-        Reporter t = getByUserName(name);
-        if (t != null) {
-            return t;
+        Reporter r = getByUserName(name);
+        if (r != null) {
+            return r;
         }
-
         return getBySystemName(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Reporter getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Reporter getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
     }
 
     /** {@inheritDoc} */
@@ -110,8 +97,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
     @Override
     @Nonnull
     public Reporter newReporter(@Nonnull String systemName, @CheckForNull String userName) {
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
-
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+               + ((userName == null) ? "null" : userName));  // NOI18N
         log.debug("new Reporter: {} {}", systemName, userName);
 
        // is system name in correct format?
@@ -127,7 +114,8 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         Reporter r;
         if ((userName != null) && ((r = getByUserName(userName)) != null)) {
             if (getBySystemName(systemName) != r) {
-                log.error("inconsistent user (" + userName + ") and system name (" + systemName + ") results; userName related to (" + r.getSystemName() + ")");
+                log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
+                        userName, systemName, r.getSystemName());
             }
             return r;
         }
@@ -135,8 +123,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
             if ((r.getUserName() == null) && (userName != null)) {
                 r.setUserName(userName);
             } else if (userName != null) {
-                log.warn("Found reporter via system name (" + systemName
-                        + ") with non-null user name (" + userName + ")");
+                log.warn("Found reporter via system name ({}}) with non-null user name ({}})", systemName, userName);
             }
             return r;
         }
@@ -147,7 +134,7 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
         // Some implementations of createNewReporter() registers the bean, some
         // don't. Check if the bean is registered and register it if it isn't
         // registered.
-        if (getBeanBySystemName(systemName) == null) {
+        if (getBySystemName(systemName) == null) {
             // save in the maps
             register(r);
         }
@@ -158,9 +145,9 @@ public abstract class AbstractReporterManager extends AbstractManager<Reporter>
      * Internal method to invoke the factory, after all the logic for returning
      * an existing method has been invoked.
      *
-     * @return Never null
+     * @return never null
      */
-    abstract protected Reporter createNewReporter(String systemName, String userName);
+    abstract protected Reporter createNewReporter(@Nonnull String systemName, String userName);
 
     /** {@inheritDoc} */
     @Override

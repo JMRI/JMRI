@@ -212,6 +212,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return ENTRYEXIT;
     }
 
+    /** {@inheritDoc} */
     public DestinationPoints getBySystemName(String systemName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUniqueId(systemName);
@@ -224,13 +225,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getBeanBySystemName(@Nonnull String systemName) {
-        return getBySystemName(systemName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public DestinationPoints getBeanByUserName(@Nonnull String userName) {
+    public DestinationPoints getByUserName(@Nonnull String userName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUserName(userName);
             if (pd != null) {
@@ -243,11 +238,11 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /** {@inheritDoc} */
     @Override
     public DestinationPoints getNamedBean(@Nonnull String name) {
-        DestinationPoints b = getBeanByUserName(name);
+        DestinationPoints b = getByUserName(name);
         if (b != null) {
             return b;
         }
-        return getBeanBySystemName(name);
+        return getBySystemName(name);
     }
 
     /** {@inheritDoc} */
@@ -282,26 +277,6 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     @CheckReturnValue
     public int getObjectCount() { 
         return getNamedBeanList().size(); // not efficient
-    }
-
-    /**
-     * Implemented to support the Conditional combo box name list
-     * @since 4.9.3
-     * @return a sorted array of NX names
-     */
-    @Override
-    @Nonnull
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        List<String> nxList = getEntryExitList();
-        String[] arr = new String[nxList.size()];
-        int i = 0;
-        for (String nxRow : nxList) {
-            arr[i] = nxRow;
-            i++;
-        }
-        java.util.Arrays.sort(arr);
-        return arr;
     }
 
     /** {@inheritDoc} */

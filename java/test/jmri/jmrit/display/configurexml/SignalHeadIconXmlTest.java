@@ -24,6 +24,7 @@ public class SignalHeadIconXmlTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

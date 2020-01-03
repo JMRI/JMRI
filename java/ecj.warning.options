@@ -144,8 +144,9 @@
 # Checks we will eventually put in place, but would be burdensome now
 #
 
-  # 14 outstanding items
+  # the common "if (debugFlag)" metaphor is flagged by these
 -warn:-deadCode
+-warn:-allDeadCode
 
   # missing synch in synchronized method override
   # 22 outstanding items
@@ -166,8 +167,6 @@
 
 -warn:-all-static-method
 -warn:-emptyBlock
-
--warn:-allDeadCode
 
   # flags methods that can be made static because they don't access data member
   # but that just seems distracting somehow

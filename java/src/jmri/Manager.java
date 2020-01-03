@@ -166,11 +166,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     /**
      * Validate the format of a system name, returning it unchanged if valid.
      * <p>
-     * Although further restrictions may be added by system-specific
-     * implementations, at a minimum, the implementation must consider a name
-     * that does not start with the System Name prefix for this manager to be
-     * invalid, and must consider a name that is the same as the System Name
-     * prefix to be invalid.
+     * This is a convenience form of {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}.
      * <p>
      * This method should not be overridden;
      * {@link #validateSystemNameFormat(java.lang.String, java.util.Locale)}
@@ -199,8 +195,9 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      * Overriding implementations may rely on
      * {@link #validSystemNameFormat(java.lang.String)}, however they must
      * provide an actionable message in the thrown exception if that method does
-     * not return {@link NameValidity#VALID}. Implementations of
-     * this method <em>must not</em> throw an exception, log an error, or
+     * not return {@link NameValidity#VALID}. When overriding implementations
+     * of this method rely on validSystemNameFormat(), implementations of
+     * that method <em>must not</em> throw an exception, log an error, or
      * otherwise disrupt the user.
      *
      * @param name      the system name to validate
@@ -420,22 +417,6 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public int getObjectCount();
 
     /**
-     * Provide an array of system names.
-     * <p>
-     * Note: this is ordered by the underlying NamedBeans, not on the Strings
-     * themselves.
-     * <p>
-     * Note: this is not a live array; the contents don't stay up to date
-     *
-     * @return (slow) copy of system names in array form
-     * @deprecated 4.11.5 - use direct access via {@link #getNamedBeanSet()}
-     */
-    @Deprecated // 4.11.5
-    @CheckReturnValue
-    @Nonnull
-    public String[] getSystemNameArray();
-
-    /**
      * Provide an
      * {@linkplain java.util.Collections#unmodifiableList unmodifiable} List of
      * system names.
@@ -489,6 +470,40 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
     public SortedSet<E> getNamedBeanSet();
 
     /**
+     * Deprecated form to locate an existing instance based on a system name.
+     *
+     * @param systemName System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     * @throws IllegalArgumentException if provided name is invalid
+     * @deprecated since 4.19.1
+     */
+    @CheckReturnValue
+    @CheckForNull
+    @Deprecated // 4.19.1
+    public default E getBeanBySystemName(@Nonnull String systemName) {
+        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanBySystemName");
+        return getBySystemName(systemName);
+    }
+
+    /**
+     * Deprecated form to locate an existing instance based on a user name.
+     *
+     * @param userName System Name of the required NamedBean
+     * @return requested NamedBean object or null if none exists
+     * @deprecated since 4.19.1
+     */
+    @CheckReturnValue
+    @CheckForNull
+    @Deprecated // 4.19.1
+    public default E getBeanByUserName(@Nonnull String userName) {
+        jmri.util.Log4JUtil.deprecationWarning(deprecatedManagerLogger, "getBeanByUserName");
+        return getByUserName(userName);
+    }
+
+    // needed for deprecationWarning call above
+    static final org.slf4j.Logger deprecatedManagerLogger = org.slf4j.LoggerFactory.getLogger(Manager.class);
+
+    /**
      * Locate an existing instance based on a system name.
      *
      * @param systemName System Name of the required NamedBean
@@ -497,7 +512,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @CheckReturnValue
     @CheckForNull
-    public E getBeanBySystemName(@Nonnull String systemName);
+    public E getBySystemName(@Nonnull String systemName);
 
     /**
      * Locate an existing instance based on a user name.
@@ -507,7 +522,7 @@ public interface Manager<E extends NamedBean> extends PropertyChangeProvider, Ve
      */
     @CheckReturnValue
     @CheckForNull
-    public E getBeanByUserName(@Nonnull String userName);
+    public E getByUserName(@Nonnull String userName);
 
     /**
      * Locate an existing instance based on a name.
