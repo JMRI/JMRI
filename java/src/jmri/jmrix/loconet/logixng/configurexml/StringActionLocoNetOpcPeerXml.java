@@ -90,7 +90,7 @@ public class StringActionLocoNetOpcPeerXml extends jmri.managers.configurexml.Ab
             if (charset != null) {
                 p.setCharset(charset);
             } else {
-                log.error("Charset " + charset + " is not found");
+                log.error("Charset " + charsetName.getTextTrim() + " is not found");
             }
         }
         
