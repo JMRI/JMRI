@@ -56,7 +56,7 @@ public class JsonSchemaHttpService extends JsonHttpService {
                         ArrayNode schemas = this.mapper.createArrayNode();
                         Set<JsonNode> dedup = new HashSet<>();
                         for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class)
-                                .getServices(name)) {
+                                .getServices(name, request.version)) {
                             if (server == null || server) {
                                 this.doSchema(schemas, dedup, service, name, true, request);
                             }
@@ -76,13 +76,13 @@ public class JsonSchemaHttpService extends JsonHttpService {
                     }
                 }
             case JSON.TYPE:
-                if (InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes().contains(name)) {
+                if (InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes(request.version).contains(name)) {
                     ObjectNode payload = this.mapper.createObjectNode();
                     payload.put(JSON.NAME, name);
                     payload.put(JSON.SERVER,
-                            InstanceManager.getDefault(JsonSchemaServiceCache.class).getServerTypes().contains(name));
+                            InstanceManager.getDefault(JsonSchemaServiceCache.class).getServerTypes(request.version).contains(name));
                     payload.put(JSON.CLIENT,
-                            InstanceManager.getDefault(JsonSchemaServiceCache.class).getClientTypes().contains(name));
+                            InstanceManager.getDefault(JsonSchemaServiceCache.class).getClientTypes(request.version).contains(name));
                     return message(JSON.TYPE, payload, request.id);
                 } else {
                     throw new JsonException(HttpServletResponse.SC_NOT_FOUND,
@@ -105,7 +105,7 @@ public class JsonSchemaHttpService extends JsonHttpService {
         if (JSON.TYPE.equals(type)) {
             ArrayNode array = this.mapper.createArrayNode();
             JsonNode data = this.mapper.createObjectNode();
-            for (String name : InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes()) {
+            for (String name : InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes(request.version)) {
                 array.add(this.doGet(type, name, data, request));
             }
             return message(array, request.id);

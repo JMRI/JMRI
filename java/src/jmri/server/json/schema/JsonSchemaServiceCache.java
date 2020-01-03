@@ -30,12 +30,12 @@ import jmri.spi.JsonServiceFactory;
  */
 public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
 
-    private Map<String, Set<JsonHttpService>> services = null;
+    private Map<String, Map<String, Set<JsonHttpService>>> services = new HashMap<>();
     private SchemaValidatorsConfig config = new SchemaValidatorsConfig();
-    private final Set<String> clientTypes = new HashSet<>();
-    private final Set<String> serverTypes = new HashSet<>();
-    private final Map<String, JsonSchema> clientSchemas = new HashMap<>();
-    private final Map<String, JsonSchema> serverSchemas = new HashMap<>();
+    private final Map<String, Set<String>> clientTypes = new HashMap<>();
+    private final Map<String, Set<String>> serverTypes = new HashMap<>();
+    private final Map<String, Map<String, JsonSchema>> clientSchemas = new HashMap<>();
+    private final Map<String, Map<String, JsonSchema>> serverSchemas = new HashMap<>();
     private final ObjectMapper mapper = new ObjectMapper();
 
     public JsonSchemaServiceCache() {
@@ -52,10 +52,71 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
         config.setUriMappings(map);
     }
 
+    /**
+     * Get the services known to this cache that support a specific JSON type.
+     * 
+     * @param type    the JSON type requested
+     * @param version the JSON protocol version requested
+     * @return the supporting services or an empty set if none
+     * @throws NullPointerException if version is not a known version
+     */
+    @Nonnull
+    public synchronized Set<JsonHttpService> getServices(@Nonnull String type, @Nonnull String version) {
+        cacheServices(version);
+        return services.get(version).getOrDefault(type, new HashSet<>());
+    }
+
+    /**
+     * Get the services known to this cache that support a specific JSON type
+     * for version 5 of the JSON protocol.
+     * 
+     * @param type the JSON type requested
+     * @return the supporting services or an empty set if none
+     * @deprecated since 4.19.2; use {@link #getServices(String, String)}
+     *             instead
+     */
+    @Deprecated
     @Nonnull
     public synchronized Set<JsonHttpService> getServices(@Nonnull String type) {
-        cacheServices();
-        return services.getOrDefault(type, new HashSet<>());
+        return getServices(type, JSON.V5);
+    }
+
+    /**
+     * Get all types of JSON messages.
+     *
+     * @param version the JSON protocol version
+     * @return the union of the results from {@link #getClientTypes()} and
+     *         {@link #getServerTypes()}
+     */
+    @Nonnull
+    public synchronized Set<String> getTypes(String version) {
+        Set<String> set = getClientTypes(version);
+        set.addAll(getServerTypes(version));
+        return set;
+    }
+
+    /**
+     * Get the types of JSON messages expected from clients.
+     *
+     * @param version the JSON protocol version
+     * @return the message types
+     */
+    @Nonnull
+    public synchronized Set<String> getClientTypes(String version) {
+        cacheServices(version);
+        return new HashSet<>(clientTypes.get(version));
+    }
+
+    /**
+     * Get the types of JSON messages this application sends.
+     *
+     * @param version the JSON protocol version
+     * @return the message types
+     */
+    @Nonnull
+    public synchronized Set<String> getServerTypes(String version) {
+        cacheServices(version);
+        return new HashSet<>(serverTypes.get(version));
     }
 
     /**
@@ -63,35 +124,36 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      *
      * @return the union of the results from {@link #getClientTypes()} and
      *         {@link #getServerTypes()}
+     * @deprecated since 4.19.2; use {@link #getTypes(String)} instead
      */
+    @Deprecated
     @Nonnull
     public synchronized Set<String> getTypes() {
-        cacheServices();
-        Set<String> set = getClientTypes();
-        set.addAll(getServerTypes());
-        return set;
+        return getTypes(JSON.V5);
     }
 
     /**
      * Get the types of JSON messages expected from clients.
      *
      * @return the message types
+     * @deprecated since 4.19.2; use {@link #getClientTypes(String)} instead
      */
+    @Deprecated
     @Nonnull
     public synchronized Set<String> getClientTypes() {
-        cacheServices();
-        return new HashSet<>(clientTypes);
+        return getClientTypes(JSON.V5);
     }
 
     /**
      * Get the types of JSON messages this application sends.
      *
      * @return the message types
+     * @deprecated since 4.19.2; use {@link #getServerTypes(String)} instead
      */
+    @Deprecated
     @Nonnull
     public synchronized Set<String> getServerTypes() {
-        cacheServices();
-        return new HashSet<>(serverTypes);
+        return getServerTypes(JSON.V5);
     }
 
     /**
@@ -171,16 +233,16 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     }
 
     private synchronized JsonSchema getSchema(@Nonnull String type, boolean server,
-            @Nonnull Map<String, JsonSchema> map, @Nonnull JsonRequest request) throws JsonException {
-        cacheServices();
-        JsonSchema result = map.get(type);
+            @Nonnull Map<String, Map<String, JsonSchema>> map, @Nonnull JsonRequest request) throws JsonException {
+        cacheServices(request.version);
+        JsonSchema result = map.computeIfAbsent(request.version, v -> new HashMap<>()).get(type);
         if (result == null) {
-            for (JsonHttpService service : getServices(type)) {
+            for (JsonHttpService service : getServices(type, request.version)) {
                 log.debug("Processing {} with {}", type, service);
                 result = JsonSchemaFactory.getInstance()
                         .getSchema(service.doSchema(type, server, request).path(JSON.DATA).path(JSON.SCHEMA), config);
                 if (result != null) {
-                    map.put(type, result);
+                    map.get(request.version).put(type, result);
                     break;
                 }
             }
@@ -203,7 +265,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     public void validateMessage(@Nonnull JsonNode message, boolean server, @Nonnull JsonRequest request)
             throws JsonException {
         log.trace("validateMessage(\"{}\", \"{}\", \"{}\", ...)", message, server, request);
-        Map<String, JsonSchema> map = server ? serverSchemas : clientSchemas;
+        Map<String, Map<String, JsonSchema>> map = server ? serverSchemas : clientSchemas;
         validateJsonNode(message, JSON.JSON, server, map, request);
         if (message.isArray()) {
             for (JsonNode item : message) {
@@ -246,15 +308,16 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * Validate a JSON data object against the schema for JSON messages and
      * data.
      *
-     * @param type   the type of data object
-     * @param data   the data object to validate
-     * @param server true if message is from the JSON server; false otherwise
+     * @param type    the type of data object
+     * @param data    the data object to validate
+     * @param server  true if message is from the JSON server; false otherwise
      * @param request the JSON request
      * @throws JsonException if the message does not validate
      */
-    public void validateData(@Nonnull String type, @Nonnull JsonNode data, boolean server, @Nonnull JsonRequest request) throws JsonException {
+    public void validateData(@Nonnull String type, @Nonnull JsonNode data, boolean server, @Nonnull JsonRequest request)
+            throws JsonException {
         log.trace("validateData(\"{}\", \"{}\", \"{}\", \"{}\", ...)", type, data, server, request);
-        Map<String, JsonSchema> map = server ? serverSchemas : clientSchemas;
+        Map<String, Map<String, JsonSchema>> map = server ? serverSchemas : clientSchemas;
         if (data.isArray()) {
             for (JsonNode item : data) {
                 validateData(type, item, server, request);
@@ -276,7 +339,9 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
      * @param id     the id to be included with any exceptions reported to
      *               clients
      * @throws JsonException if the message does not validate
-     * @deprecated since 4.19.2; use {@link #validateData(String, JsonNode, boolean, JsonRequest)} instead
+     * @deprecated since 4.19.2; use
+     *             {@link #validateData(String, JsonNode, boolean, JsonRequest)}
+     *             instead
      */
     @Deprecated
     public void validateData(@Nonnull String type, @Nonnull JsonNode data, boolean server, @Nonnull Locale locale,
@@ -285,7 +350,7 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     }
 
     private void validateJsonNode(@Nonnull JsonNode node, @Nonnull String type, boolean server,
-            @Nonnull Map<String, JsonSchema> map, @Nonnull JsonRequest request) throws JsonException {
+            @Nonnull Map<String, Map<String, JsonSchema>> map, @Nonnull JsonRequest request) throws JsonException {
         log.trace("validateJsonNode(\"{}\", \"{}\", \"{}\", ...)", node, type, server);
         Set<ValidationMessage> errors = null;
         try {
@@ -303,25 +368,28 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
         }
     }
 
-    private void cacheServices() {
-        if (services == null) {
-            services = new HashMap<>();
+    private void cacheServices(String version) {
+        Set<String> versionedClientTypes = clientTypes.computeIfAbsent(version, v -> new HashSet<>());
+        Set<String> versionedServerTypes = serverTypes.computeIfAbsent(version, v -> new HashSet<>());
+        Map<String, Set<JsonHttpService>> versionedServices =
+                services.computeIfAbsent(version, v -> new HashMap<>());
+        if (versionedServices.isEmpty()) {
             for (JsonServiceFactory<?, ?> factory : ServiceLoader.load(JsonServiceFactory.class)) {
                 JsonHttpService service = factory.getHttpService(mapper, JSON.V5);
                 for (String type : factory.getTypes(JSON.V5)) {
-                    Set<JsonHttpService> set = services.computeIfAbsent(type, v -> new HashSet<>());
-                    clientTypes.add(type);
-                    serverTypes.add(type);
+                    Set<JsonHttpService> set = versionedServices.computeIfAbsent(type, v -> new HashSet<>());
+                    versionedClientTypes.add(type);
+                    versionedServerTypes.add(type);
                     set.add(service);
                 }
                 for (String type : factory.getSentTypes(JSON.V5)) {
-                    Set<JsonHttpService> set = services.computeIfAbsent(type, v -> new HashSet<>());
-                    serverTypes.add(type);
+                    Set<JsonHttpService> set = versionedServices.computeIfAbsent(type, v -> new HashSet<>());
+                    versionedServerTypes.add(type);
                     set.add(service);
                 }
                 for (String type : factory.getReceivedTypes(JSON.V5)) {
-                    Set<JsonHttpService> set = services.computeIfAbsent(type, v -> new HashSet<>());
-                    clientTypes.add(type);
+                    Set<JsonHttpService> set = versionedServices.computeIfAbsent(type, v -> new HashSet<>());
+                    versionedClientTypes.add(type);
                     set.add(service);
                 }
             }

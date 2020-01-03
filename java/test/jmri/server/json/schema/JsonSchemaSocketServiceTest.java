@@ -222,7 +222,7 @@ public class JsonSchemaSocketServiceTest {
         Assert.assertNotNull("Message is not null", message);
         Assert.assertTrue("Result is array", message.isArray());
         Assert.assertEquals("Result contains all types",
-                InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes().size(), message.size());
+                InstanceManager.getDefault(JsonSchemaServiceCache.class).getTypes(JSON.V5).size(), message.size());
     }
 
 }
