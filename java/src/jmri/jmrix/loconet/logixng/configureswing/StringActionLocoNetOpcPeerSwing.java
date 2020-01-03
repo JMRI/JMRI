@@ -51,7 +51,7 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
     
     
     private void updateCharsetCombobox() {
-        _charset.removeAll();
+        _charset.removeAllItems();
         
         if (_charsetIncludeAll.isSelected()) {
             Charset.availableCharsets().values().forEach((charset) -> {
@@ -266,10 +266,10 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
         
         try {
             action.setManufacturerID(Integer.parseUnsignedInt(_manufacturerID.getText()));
-            action.setManufacturerID(Integer.parseUnsignedInt(_developerID.getText()));
-            action.setManufacturerID(Integer.parseUnsignedInt(_sourceAddress.getText()));
-            action.setManufacturerID(Integer.parseUnsignedInt(_destAddress.getText()));
-            action.setManufacturerID(Integer.parseUnsignedInt(_svAddress.getText()));
+            action.setDeveloperID(Integer.parseUnsignedInt(_developerID.getText()));
+            action.setSourceAddress(Integer.parseUnsignedInt(_sourceAddress.getText()));
+            action.setDestAddress(Integer.parseUnsignedInt(_destAddress.getText()));
+            action.set_SV_Address(Integer.parseUnsignedInt(_svAddress.getText()));
         } catch (NumberFormatException e) {
             throw e;
         }
