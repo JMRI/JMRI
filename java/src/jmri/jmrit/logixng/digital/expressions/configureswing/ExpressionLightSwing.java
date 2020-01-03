@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions.configureswing;
 
+import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JComboBox;
@@ -67,9 +68,9 @@ public class ExpressionLightSwing extends AbstractExpressionSwing {
     
     /** {@inheritDoc} */
     @Override
-    public boolean validate(@Nonnull StringBuilder errorMessage) {
+    public boolean validate(@Nonnull List<String> errorMessages) {
         if (1==0) {
-            errorMessage.append("An error");
+            errorMessages.add("An error");
             return false;
         }
         return true;

@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.swing;
 
+import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
@@ -40,10 +41,11 @@ public interface SwingConfiguratorInterface {
      * The parameter errorMessage is used to give the error message in case of
      * an error. The caller must ensure that errorMessage.length() is zero.
      * 
-     * @param errorMessage the error message in case of an error
+     * @param errorMessages the error messages in case of an error
      * @return true if data in the form is valid, false otherwise
      */
-    public boolean validate(@Nonnull StringBuilder errorMessage);
+    public boolean validate(@Nonnull List<String> errorMessages);
+//    public boolean validate(@Nonnull StringBuilder errorMessage);
     
     /**
      * Create a new system name.

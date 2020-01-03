@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.digital.expressions.configureswing;
 
+import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
@@ -21,7 +22,7 @@ public class AndSwing extends AbstractExpressionSwing {
     
     /** {@inheritDoc} */
     @Override
-    public boolean validate(@Nonnull StringBuilder errorMessage) {
+    public boolean validate(@Nonnull List<String> errorMessages) {
         return true;
     }
     

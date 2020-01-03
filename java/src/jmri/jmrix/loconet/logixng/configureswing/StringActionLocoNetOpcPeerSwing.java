@@ -5,6 +5,8 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.BoxLayout;
@@ -15,6 +17,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
 import javax.swing.text.NumberFormatter;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
@@ -22,6 +25,8 @@ import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.StringActionManager;
 import jmri.jmrit.logixng.string.actions.configureswing.AbstractActionSwing;
 import jmri.jmrix.loconet.logixng.StringActionLocoNetOpcPeer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
@@ -44,6 +49,20 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
     private final JLabel _charsetIncludeAllLabel = new JLabel(Bundle.getMessage("CharsetIncludeAll") + ":");  // NOI18N
     private final JLabel _charsetLabel = new JLabel(Bundle.getMessage("Charset") + ":");  // NOI18N
     
+    
+    private void updateCharsetCombobox() {
+        _charset.removeAll();
+        
+        if (_charsetIncludeAll.isSelected()) {
+            Charset.availableCharsets().values().forEach((charset) -> {
+                _charset.addItem(charset);
+            });
+        } else {
+            _charset.addItem(StandardCharsets.ISO_8859_1);
+            _charset.addItem(StandardCharsets.US_ASCII);
+            _charset.addItem(StandardCharsets.UTF_8);
+        }
+    }
     
     @Override
     protected void createPanel(Base object) {
@@ -82,19 +101,17 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
             _charsetIncludeAll.setSelected(action.getShowAllCharsets());
         }
         
-        if (_charsetIncludeAll.isSelected()) {
-            Charset.availableCharsets().values().forEach((charset) -> {
-                _charset.addItem(charset);
-            });
-        } else {
-            _charset.addItem(StandardCharsets.ISO_8859_1);
-            _charset.addItem(StandardCharsets.US_ASCII);
-            _charset.addItem(StandardCharsets.UTF_8);
-        }
+        updateCharsetCombobox();
         
         if (action != null) {
             _charset.setSelectedItem(action.getCharset());
         }
+        
+        _charsetIncludeAll.addChangeListener((ChangeEvent e) -> {
+            Charset currentCharset = (Charset)_charset.getSelectedItem();
+            updateCharsetCombobox();
+            _charset.setSelectedItem(currentCharset);
+        });
         
         JPanel p;
         p = new JPanel();
@@ -213,10 +230,26 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
 */        
     }
     
+    private boolean validate(String value, String errorMessage, @Nonnull List<String> errorMessages) {
+        try {
+            Integer.parseUnsignedInt(value);
+        } catch (NumberFormatException e) {
+            errorMessages.add(Bundle.getMessage(errorMessage));
+            return false;
+        }
+        return true;
+    }
+    
     /** {@inheritDoc} */
     @Override
-    public boolean validate(@Nonnull StringBuilder errorMessage) {
-        return true;
+    public boolean validate(@Nonnull List<String> errorMessages) {
+        boolean result = true;
+        result &= validate(_manufacturerID.getText(), "ErrorManufacturerID_BadValue", errorMessages); // NOI18N
+        result &= validate(_developerID.getText(), "ErrorDeveloperID_BadValue", errorMessages); // NOI18N
+        result &= validate(_sourceAddress.getText(), "ErrorSourceAddressBadValue", errorMessages); // NOI18N
+        result &= validate(_destAddress.getText(), "ErrorDestAddressBadValue", errorMessages); // NOI18N
+        result &= validate(_svAddress.getText(), "ErrorSV_Address_BadValue", errorMessages); // NOI18N
+        return result;
     }
     
     /** {@inheritDoc} */
@@ -229,7 +262,19 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
     /** {@inheritDoc} */
     @Override
     public void updateObject(@Nonnull Base object) {
-        // Do nothing
+        StringActionLocoNetOpcPeer action = (StringActionLocoNetOpcPeer)object;
+        
+        try {
+            action.setManufacturerID(Integer.parseUnsignedInt(_manufacturerID.getText()));
+            action.setManufacturerID(Integer.parseUnsignedInt(_developerID.getText()));
+            action.setManufacturerID(Integer.parseUnsignedInt(_sourceAddress.getText()));
+            action.setManufacturerID(Integer.parseUnsignedInt(_destAddress.getText()));
+            action.setManufacturerID(Integer.parseUnsignedInt(_svAddress.getText()));
+        } catch (NumberFormatException e) {
+            throw e;
+        }
+        action.setShowAllCharsets(_charsetIncludeAll.isSelected());
+        action.setCharset((Charset) _charset.getSelectedItem());
     }
     
     /** {@inheritDoc} */
@@ -241,5 +286,8 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
     @Override
     public void dispose() {
     }
+    
+    
+    private final static Logger log = LoggerFactory.getLogger(StringActionLocoNetOpcPeerSwing.class);
     
 }
