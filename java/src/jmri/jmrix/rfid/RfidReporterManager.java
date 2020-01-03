@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid;
 
+import javax.annotation.Nonnull;
 import jmri.managers.AbstractReporterManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +24,13 @@ abstract public class RfidReporterManager extends AbstractReporterManager implem
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public RfidSystemConnectionMemo getMemo() {
         return (RfidSystemConnectionMemo) memo;
     }
     @Override
     public void message(RfidMessage m) {
-        log.warn("Unexpected message received: " + m);
+        log.warn("Unexpected message received: {}", m);
     }
 
     private static final Logger log = LoggerFactory.getLogger(RfidReporterManager.class);

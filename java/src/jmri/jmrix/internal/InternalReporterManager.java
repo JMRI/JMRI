@@ -16,12 +16,12 @@ public class InternalReporterManager extends jmri.managers.AbstractReporterManag
     }
 
     /**
-     * Create an internal TrackReporter object
+     * {@inheritDoc}
      *
-     * @return new null
+     * @return an internal Reporter of class TrackReporter object with the given name
      */
     @Override
-    protected Reporter createNewReporter(String systemName, String userName) {
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
         return new TrackReporter(systemName, userName);
     }
 
@@ -38,4 +38,5 @@ public class InternalReporterManager extends jmri.managers.AbstractReporterManag
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;
     }
+
 }

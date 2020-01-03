@@ -256,4 +256,5 @@ public class ConnectionConfigManagerTest {
             return this.getClass().getName();
         }
     }
+
 }
