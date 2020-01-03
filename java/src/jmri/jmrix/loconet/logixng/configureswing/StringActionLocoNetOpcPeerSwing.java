@@ -35,8 +35,7 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
     private JFormattedTextField _svAddress;
     private final JCheckBox _charsetIncludeAll = new JCheckBox();
     private final JComboBox<Charset> _charset = new JComboBox<>();
-//    private final JLabel _sysNameLabel = new JLabel(Bundle.getMessage("SystemName") + ":");  // NOI18N
-//    private final JLabel _userNameLabel = new JLabel(Bundle.getMessage("UserName") + ":");   // NOI18N
+    
     private final JLabel _manufacturerIDLabel = new JLabel(Bundle.getMessage("ManufacturerID") + ":");  // NOI18N
     private final JLabel _developerIDLabel = new JLabel(Bundle.getMessage("DeveloperID") + ":");  // NOI18N
     private final JLabel _sourceAddressLabel = new JLabel(Bundle.getMessage("SourceAddress") + ":");  // NOI18N
@@ -48,6 +47,8 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
     
     @Override
     protected void createPanel(Base object) {
+        StringActionLocoNetOpcPeer action = (StringActionLocoNetOpcPeer)object;
+        
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
@@ -72,6 +73,15 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
         _destAddress = new JFormattedTextField(formatter);
         _svAddress = new JFormattedTextField(formatter);
         
+        if (action != null) {
+            _manufacturerID.setText(Integer.toString(action.getManufacturerID()));
+            _developerID.setText(Integer.toString(action.getDeveloperID()));
+            _sourceAddress.setText(Integer.toString(action.getSourceAddress()));
+            _destAddress.setText(Integer.toString(action.getDestAddress()));
+            _svAddress.setText(Integer.toString(action.get_SV_Address()));
+            _charsetIncludeAll.setSelected(action.getShowAllCharsets());
+        }
+        
         if (_charsetIncludeAll.isSelected()) {
             Charset.availableCharsets().values().forEach((charset) -> {
                 _charset.addItem(charset);
@@ -80,6 +90,10 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
             _charset.addItem(StandardCharsets.ISO_8859_1);
             _charset.addItem(StandardCharsets.US_ASCII);
             _charset.addItem(StandardCharsets.UTF_8);
+        }
+        
+        if (action != null) {
+            _charset.setSelectedItem(action.getCharset());
         }
         
         JPanel p;

@@ -63,6 +63,7 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
     private int _destAddress = 256;         // FIX LATER !!!
     private int _svAddress = 20;           // FIX LATER !!!
     
+    private boolean _showAllCharsets = false;   // This is used by StringActionLocoNetOpcPeerSwing
     private Charset _charset = StandardCharsets.ISO_8859_1;
     private LocoNetSystemConnectionMemo lm;
     private LnTrafficController tc;
@@ -112,6 +113,14 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
     
     public int get_SV_Address() {
         return _svAddress;
+    }
+    
+    public void setShowAllCharsets(boolean showAllCharsets) {
+        _showAllCharsets = showAllCharsets;
+    }
+    
+    public boolean getShowAllCharsets() {
+        return _showAllCharsets;
     }
     
     public void setCharset(Charset charset) {

@@ -492,6 +492,10 @@ public final class LogixNGEditor {
                             deletePressed();
                         } else if (key.equals("chgUname")) {         // NOI18N
                             LogixNG x = _logixNG_Manager.getBySystemName(lgxName);
+                            if (x == null) {
+                                log.error("Found no logixNG for name {} when changing user name (2)", lgxName);
+                                return;
+                            }
                             x.setUserName(value);
                             beanTableDataModel.fireTableDataChanged();
                         }
