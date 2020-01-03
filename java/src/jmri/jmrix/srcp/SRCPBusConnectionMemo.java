@@ -39,13 +39,13 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
         //this.et.setSystemConnectionMemo(this);
         _bus = bus;
         register();
-        log.debug("Created SRCPBusConnectionMemo for bus " + bus);
+        log.debug("Created SRCPBusConnectionMemo for bus {}", bus);
         et.addSRCPListener(this);
         et.sendSRCPMessage(new SRCPMessage("GET " + bus + " DESCRIPTION\n"), null);
         configured = false;
     }
 
-    jmri.jmrix.swing.ComponentFactory cf = null;
+    private jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
      * Provides access to the TrafficController for this particular connection.
@@ -76,13 +76,13 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
               }
            }
         }
-        log.debug("Manager configuration complete for bus " + _bus );
+        log.debug("Manager configuration complete for bus {}", _bus );
     }
 
     /**
      * package protected function to get the bus associated with this memo.
      *
-     * @return integer bus number.
+     * @return integer bus number
      */
     int getBus() {
         return _bus;
@@ -264,7 +264,7 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY", justification="Notify passing reply event, not state")
     public void reply(jmri.jmrix.srcp.parser.SimpleNode n) {
-        log.debug("SimpleNode Reply called with " + n.toString());
+        log.debug("SimpleNode Reply called with {}", n.toString());
         reply(new SRCPReply(n));
         if (n.jjtGetChild(1) instanceof ASTinfo) {
             jmri.jmrix.srcp.parser.SimpleNode infonode
@@ -278,28 +278,36 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
                 for (int i = 0; i < descnode.jjtGetNumChildren(); i++) {
                     jmri.jmrix.srcp.parser.SimpleNode child
                             = (jmri.jmrix.srcp.parser.SimpleNode) descnode.jjtGetChild(i);
-                    log.debug("child node type " + child.toString()
-                            + " value " + (String) child.jjtGetValue());
+                    log.debug("child node type {} value {}", child.toString(), child.jjtGetValue());
                     if (child instanceof jmri.jmrix.srcp.parser.ASTdevicegroup) {
                         String DeviceType = (String) child.jjtGetValue();
-                        if (DeviceType.equals("FB")) {
-                            setSensorManager(new jmri.jmrix.srcp.SRCPSensorManager(this, _bus));
-                            jmri.InstanceManager.setSensorManager(getSensorManager());
-
-                        } else if (DeviceType.equals("GA")) {
-                            setTurnoutManager(new jmri.jmrix.srcp.SRCPTurnoutManager(this, _bus));
-                            jmri.InstanceManager.setTurnoutManager(getTurnoutManager());
-                        } else if (DeviceType.equals("SM")) {
-                            setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer(this), this));
-                            jmri.InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
-                        } else if (DeviceType.equals("POWER")) {
-                            setPowerManager(new jmri.jmrix.srcp.SRCPPowerManager(this, _bus));
-                            jmri.InstanceManager.store(getPowerManager(), jmri.PowerManager.class);
-                        } else if (DeviceType.equals("GL")) {
-                            setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager(this));
-                            jmri.InstanceManager.setThrottleManager(getThrottleManager());
-                        } else if (DeviceType.equals("TIME")) {
-                            setClockControl(new jmri.jmrix.srcp.SRCPClockControl(this));
+                        switch (DeviceType) {
+                            case "FB":
+                                setSensorManager(new SRCPSensorManager(this));
+                                InstanceManager.setSensorManager(getSensorManager());
+                                break;
+                            case "GA":
+                                setTurnoutManager(new SRCPTurnoutManager(this));
+                                InstanceManager.setTurnoutManager(getTurnoutManager());
+                                break;
+                            case "SM":
+                                setProgrammerManager(new SRCPProgrammerManager(new SRCPProgrammer(this), this));
+                                InstanceManager.store(getProgrammerManager(), GlobalProgrammerManager.class);
+                                break;
+                            case "POWER":
+                                setPowerManager(new SRCPPowerManager(this, _bus));
+                                InstanceManager.store(getPowerManager(), PowerManager.class);
+                                break;
+                            case "GL":
+                                setThrottleManager(new SRCPThrottleManager(this));
+                                InstanceManager.setThrottleManager(getThrottleManager());
+                                break;
+                            case "TIME":
+                                setClockControl(new SRCPClockControl(this));
+                                break;
+                            default:
+                                log.warn("unexpected DeviceType");
+                                break;
                         }
                     }
                 }
@@ -314,6 +322,3 @@ public class SRCPBusConnectionMemo extends jmri.jmrix.SystemConnectionMemo imple
     private final static Logger log = LoggerFactory.getLogger(SRCPBusConnectionMemo.class);
 
 }
-
-
-

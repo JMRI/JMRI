@@ -237,18 +237,6 @@ public class QsiTrafficController implements QsiInterface, Runnable {
         controller = null;
     }
 
-    /**
-     * static function returning the QsiTrafficController instance to use.
-     *
-     * @return The registered QsiTrafficController instance for general use, if
-     *         need be creating one.
-     * deprecated since 4.5.1
-     */
-    @Deprecated
-    static public QsiTrafficController instance() {
-        return null;
-    }
-
     // data members to hold the streams
     DataInputStream istream = null;
     OutputStream ostream = null;

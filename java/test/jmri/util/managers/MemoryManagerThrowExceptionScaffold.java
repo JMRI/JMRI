@@ -22,12 +22,14 @@ public class MemoryManagerThrowExceptionScaffold extends DefaultMemoryManager {
     
     /** {@inheritDoc} */
     @Override
-    protected Memory createNewMemory(String systemName, String userName) {
+    @Nonnull
+    protected Memory createNewMemory(@Nonnull String systemName, @CheckForNull String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Memory provideMemory(@Nonnull String name) {
         throw new IllegalArgumentException("Illegal argument");
     }
@@ -46,12 +48,13 @@ public class MemoryManagerThrowExceptionScaffold extends DefaultMemoryManager {
     
     /** {@inheritDoc} */
     @Override
-    public Memory getByUserName(String key) {
+    public Memory getByUserName(@Nonnull String key) {
         throw new IllegalArgumentException("Illegal argument");
     }
     
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Memory newMemory(@Nonnull String systemName, @CheckForNull String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }

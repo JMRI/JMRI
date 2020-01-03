@@ -49,9 +49,9 @@ public class AcelaTurnout extends AbstractTurnout {
     }
 
     /**
-     * Sets up system dependent instance variables and sets system independent
-     * instance variables to default values Note: most instance variables are in
-     * AbstractLight.java
+     * Set up system dependent instance variables and set system independent
+     * instance variables to default values.
+     * Note: most instance variables are in AbstractTurnout.java
      */
     private void initializeTurnout(String systemName) {
         // Extract the Bit from the name

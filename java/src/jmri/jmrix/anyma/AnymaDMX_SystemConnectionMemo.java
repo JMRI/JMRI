@@ -10,7 +10,6 @@ import jmri.NamedBean;
 import jmri.Manager.NameValidity;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.util.NamedBeanComparator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -177,7 +176,7 @@ public class AnymaDMX_SystemConnectionMemo extends SystemConnectionMemo {
      *
      * @return enum indicating current validity, which might be just as a prefix
      */
-    public NameValidity validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         log.debug("* validSystemNameFormat('{}', '{}')", systemName, type);
         NameValidity result = NameValidity.INVALID; // assume failure (pessimist!)
 

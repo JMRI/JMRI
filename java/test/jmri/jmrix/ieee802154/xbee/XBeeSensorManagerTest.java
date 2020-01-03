@@ -19,9 +19,7 @@ import org.junit.Test;
 import jmri.Sensor;
 
 /**
- * XBeeSensorManagerTest.java
- * <p>
- * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
+ * Tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
  *
  * @author	Paul Bender Copyright (C) 2012,2016
  */

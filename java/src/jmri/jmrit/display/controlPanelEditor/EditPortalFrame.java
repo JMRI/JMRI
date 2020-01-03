@@ -229,8 +229,6 @@ public class EditPortalFrame extends EditFrame implements ListSelectionListener 
         }
     }
 
-    @SuppressWarnings("fallthrough")
-    @SuppressFBWarnings(value = "SF_SWITCH_FALLTHROUGH")
     private void deletePortal() {
         String name = _portalName.getText();
         if (name == null || name.length() == 0) {
