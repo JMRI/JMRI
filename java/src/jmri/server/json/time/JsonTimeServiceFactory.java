@@ -26,7 +26,7 @@ public class JsonTimeServiceFactory implements JsonServiceFactory<JsonTimeHttpSe
     }
 
     @Override
-    public JsonTimeSocketService getSocketService(JsonConnection connection) {
+    public JsonTimeSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonTimeSocketService(connection);
     }
 

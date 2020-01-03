@@ -32,7 +32,7 @@ public class JsonOperationsServiceFactory implements JsonServiceFactory<JsonOper
     }
 
     @Override
-    public JsonOperationsSocketService getSocketService(JsonConnection connection) {
+    public JsonOperationsSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonOperationsSocketService(connection);
     }
 

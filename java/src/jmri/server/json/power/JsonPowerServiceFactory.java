@@ -25,7 +25,7 @@ public class JsonPowerServiceFactory implements JsonServiceFactory<JsonPowerHttp
     }
 
     @Override
-    public JsonPowerSocketService getSocketService(JsonConnection connection) {
+    public JsonPowerSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonPowerSocketService(connection);
     }
 

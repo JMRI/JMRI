@@ -20,7 +20,7 @@ public class JsonSchemaServiceFactory implements JsonServiceFactory<JsonSchemaHt
     }
 
     @Override
-    public JsonSchemaSocketService getSocketService(JsonConnection connection) {
+    public JsonSchemaSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonSchemaSocketService(connection);
     }
 

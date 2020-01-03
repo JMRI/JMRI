@@ -23,7 +23,7 @@ public class JsonSensorServiceFactory implements JsonServiceFactory<JsonSensorHt
     }
 
     @Override
-    public JsonSensorSocketService getSocketService(JsonConnection connection) {
+    public JsonSensorSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonSensorSocketService(connection);
     }
 

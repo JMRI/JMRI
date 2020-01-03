@@ -27,12 +27,13 @@ public class JsonServiceFactoryTest {
     @Test
     public void testJsonServiceFactories() {
         JsonConnection connection = new JsonMockConnection((DataOutputStream) null);
+        @SuppressWarnings("rawtypes")
         ServiceLoader<JsonServiceFactory> loader = ServiceLoader.load(JsonServiceFactory.class);
         Assert.assertTrue("Json Services exist", loader.iterator().hasNext());
         loader.forEach((factory) -> {
             JSON.VERSIONS.forEach(version -> {
                 // verify factory is well behaved
-                JsonSocketService<?> socket = factory.getSocketService(connection);
+                JsonSocketService<?> socket = factory.getSocketService(connection, version);
                 JsonHttpService http = factory.getHttpService(connection.getObjectMapper(), version);
                 Assert.assertNotNull("Create Socket service", socket);
                 Assert.assertNotNull("Create HTTP service", http);

@@ -23,7 +23,7 @@ public class JsonLayoutBlockServiceFactory implements JsonServiceFactory<JsonLay
     }
 
     @Override
-    public JsonLayoutBlockSocketService getSocketService(JsonConnection connection) {
+    public JsonLayoutBlockSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonLayoutBlockSocketService(connection);
     }
 

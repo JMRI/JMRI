@@ -21,7 +21,7 @@ public class JsonTurnoutServiceFactory implements JsonServiceFactory<JsonTurnout
     }
 
     @Override
-    public JsonTurnoutSocketService getSocketService(JsonConnection connection) {
+    public JsonTurnoutSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonTurnoutSocketService(connection);
     }
 

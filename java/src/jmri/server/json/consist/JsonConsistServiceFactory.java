@@ -19,7 +19,7 @@ public class JsonConsistServiceFactory implements JsonServiceFactory<JsonConsist
     }
 
     @Override
-    public JsonConsistSocketService getSocketService(JsonConnection connection) {
+    public JsonConsistSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonConsistSocketService(connection);
     }
 

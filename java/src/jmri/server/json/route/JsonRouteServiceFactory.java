@@ -22,7 +22,7 @@ public class JsonRouteServiceFactory implements JsonServiceFactory<JsonRouteHttp
     }
 
     @Override
-    public JsonRouteSocketService getSocketService(JsonConnection connection) {
+    public JsonRouteSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonRouteSocketService(connection);
     }
 

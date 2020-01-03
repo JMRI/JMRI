@@ -56,7 +56,7 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
     }
 
     @Override
-    public JsonUtilSocketService getSocketService(JsonConnection connection) {
+    public JsonUtilSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonUtilSocketService(connection);
     }
 

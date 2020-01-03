@@ -208,7 +208,7 @@ public class JsonClientHandler {
         onClose(); // dispose of any existing objects
         ServiceLoader.load(JsonServiceFactory.class)
                 .forEach(factory -> {
-                    JsonSocketService<?> service = factory.getSocketService(connection);
+                    JsonSocketService<?> service = factory.getSocketService(connection, version);
                     Arrays.stream(factory.getTypes(version)).forEach(type -> {
                         HashSet<JsonSocketService<?>> set = services.get(type);
                         if (set == null) {

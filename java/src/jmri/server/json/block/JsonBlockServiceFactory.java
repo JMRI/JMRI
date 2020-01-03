@@ -23,7 +23,7 @@ public class JsonBlockServiceFactory implements JsonServiceFactory<JsonBlockHttp
     }
 
     @Override
-    public JsonBlockSocketService getSocketService(JsonConnection connection) {
+    public JsonBlockSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonBlockSocketService(connection);
     }
 

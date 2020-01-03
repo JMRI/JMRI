@@ -22,7 +22,7 @@ public class JsonSignalMastServiceFactory implements JsonServiceFactory<JsonSign
     }
 
     @Override
-    public JsonSignalMastSocketService getSocketService(JsonConnection connection) {
+    public JsonSignalMastSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonSignalMastSocketService(connection);
     }
 

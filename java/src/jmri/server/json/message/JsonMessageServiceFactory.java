@@ -25,7 +25,7 @@ public class JsonMessageServiceFactory implements JsonServiceFactory<JsonMessage
     }
 
     @Override
-    public JsonMessageSocketService getSocketService(JsonConnection connection) {
+    public JsonMessageSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonMessageSocketService(connection);
     }
 

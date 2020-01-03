@@ -22,7 +22,7 @@ public class JsonLightServiceFactory implements JsonServiceFactory<JsonLightHttp
     }
 
     @Override
-    public JsonLightSocketService getSocketService(JsonConnection connection) {
+    public JsonLightSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonLightSocketService(connection);
     }
 

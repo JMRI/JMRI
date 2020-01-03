@@ -21,7 +21,7 @@ public class JsonTestServiceFactory implements JsonServiceFactory<JsonTestHttpSe
     }
 
     @Override
-    public JsonTestSocketService getSocketService(JsonConnection connection) {
+    public JsonTestSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonTestSocketService(connection);
     }
 

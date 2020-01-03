@@ -78,10 +78,11 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * WebSocket or raw socket.
      *
      * @param connection The connection for this service to respond to
+     * @param version The JSON protocol version major component identifier
      * @return A service or null if the service does not support sockets
      */
     @Nonnull
-    public S getSocketService(JsonConnection connection);
+    public S getSocketService(@Nonnull JsonConnection connection, @Nonnull String version);
 
     /**
      * Create a JSON HTTP service.
@@ -91,7 +92,7 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
      * @return A servlet or null if the service does not support HTTP
      */
     @Nonnull
-    public H getHttpService(ObjectMapper mapper, String version);
+    public H getHttpService(@Nonnull ObjectMapper mapper, @Nonnull String version);
 
     /**
      * Get the service type(s) for services created by this factory respond to.
@@ -147,6 +148,20 @@ public interface JsonServiceFactory<H extends JsonHttpService, S extends JsonSoc
     @Nonnull
     public default String[] getReceivedTypes() {
         return getReceivedTypes(JSON.V5);
+    }
+
+    /**
+     * Create a JSON service for the given connection. This connection can be a
+     * WebSocket or raw socket.
+     *
+     * @param connection The connection for this service to respond to
+     * @return A service or null if the service does not support sockets
+     * @deprecated since 4.19.2; use {@link #getSocketService(JsonConnection, String)} instead
+     */
+    @Deprecated
+    @Nonnull
+    public default S getSocketService(JsonConnection connection) {
+        return getSocketService(connection, JSON.V5);
     }
 
     /**

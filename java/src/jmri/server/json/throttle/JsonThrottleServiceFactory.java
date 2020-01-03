@@ -19,7 +19,7 @@ public class JsonThrottleServiceFactory implements JsonServiceFactory<JsonThrott
     }
 
     @Override
-    public JsonThrottleSocketService getSocketService(JsonConnection connection) {
+    public JsonThrottleSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonThrottleSocketService(connection);
     }
 

@@ -18,7 +18,7 @@ public class JsonRosterServiceFactory implements JsonServiceFactory<JsonRosterHt
     }
 
     @Override
-    public JsonRosterSocketService getSocketService(JsonConnection connection) {
+    public JsonRosterSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonRosterSocketService(connection);
     }
 

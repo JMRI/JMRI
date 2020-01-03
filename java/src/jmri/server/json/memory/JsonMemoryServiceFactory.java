@@ -22,7 +22,7 @@ public class JsonMemoryServiceFactory implements JsonServiceFactory<JsonMemoryHt
     }
 
     @Override
-    public JsonMemorySocketService getSocketService(JsonConnection connection) {
+    public JsonMemorySocketService getSocketService(JsonConnection connection, String version) {
         return new JsonMemorySocketService(connection);
     }
 

@@ -22,7 +22,7 @@ public class JsonIdTagServiceFactory implements JsonServiceFactory<JsonIdTagHttp
     }
 
     @Override
-    public JsonIdTagSocketService getSocketService(JsonConnection connection) {
+    public JsonIdTagSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonIdTagSocketService(connection);
     }
 

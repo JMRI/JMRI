@@ -21,7 +21,7 @@ public class JsonReporterServiceFactory implements JsonServiceFactory<JsonReport
     }
 
     @Override
-    public JsonReporterSocketService getSocketService(JsonConnection connection) {
+    public JsonReporterSocketService getSocketService(JsonConnection connection, String version) {
         return new JsonReporterSocketService(connection);
     }
 
