@@ -31,7 +31,7 @@ public class StringActionMemorySwing extends AbstractActionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
 //        StringActionMemory action = (StringActionMemory)object;
         
         panel = new JPanel();

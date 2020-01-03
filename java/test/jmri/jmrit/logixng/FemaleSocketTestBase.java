@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.concurrent.atomic.AtomicBoolean;
+import javax.swing.JPanel;
 import jmri.NamedBean;
 import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 import jmri.jmrit.logixng.swing.SwingTools;
@@ -457,7 +458,7 @@ public abstract class FemaleSocketTestBase {
             for (Class<? extends Base> clazz : entry.getValue()) {
                 // The class SwingToolsTest does not have a swing configurator
                 SwingConfiguratorInterface iface = SwingTools.getSwingConfiguratorForClass(clazz);
-                iface.getConfigPanel();
+                iface.getConfigPanel(new JPanel());
                 Base obj = iface.createNewObject(iface.getAutoSystemName(), null);
                 Assert.assertEquals("category is correct for "+obj.getShortDescription(), entry.getKey(), obj.getCategory());
             }

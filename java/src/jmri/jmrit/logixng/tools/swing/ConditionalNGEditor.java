@@ -43,6 +43,7 @@ import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.Category;
@@ -507,33 +508,31 @@ public final class ConditionalNGEditor extends JmriJFrame {
             edit = new JButton(Bundle.getMessage("ButtonOK"));  // NOI18N
             panel5.add(edit);
             edit.addActionListener((ActionEvent e) -> {
-                editSwingConfiguratorInterface.updateObject(femaleSocket.getConnectedSocket().getObject());
-//                if (_addUserName.getText().isEmpty()) {
-//                    socket = editSwingConfiguratorInterface.createNewObject(_systemName.getText());
-//                } else {
-//                    socket = editSwingConfiguratorInterface.createNewObject(_systemName.getText(), _addUserName.getText());
-//                }
-//                try {
-//                    femaleSocket.connect(socket);
-//                } catch (SocketAlreadyConnectedException ex) {
-//                    throw new RuntimeException(ex);
-//                }
-                editSwingConfiguratorInterface.dispose();
-                editLogixNGFrame.dispose();
-                editLogixNGFrame = null;
-                for (TreeModelListener l : femaleSocketTreeModel.listeners) {
-                    TreeModelEvent tme = new TreeModelEvent(
-                            femaleSocket,
-                            path.getPath()
-                    );
-//                    TreeModelEvent tme = new TreeModelEvent(
-//                            femaleSocket,
-//                            path.getPath(),
-//                            indices_of_inserted_items,
-//                            inserted_items
-//                    );
-                    l.treeNodesChanged(tme);
-//                    l.treeStructureChanged(tme);
+                List<String> errorMessages = new ArrayList<>();
+                if (editSwingConfiguratorInterface.validate(errorMessages)) {
+                    Base object = femaleSocket.getConnectedSocket().getObject();
+                    ((NamedBean)object).setUserName(_addUserName.getText());
+                    editSwingConfiguratorInterface.updateObject(femaleSocket.getConnectedSocket().getObject());
+                    editSwingConfiguratorInterface.dispose();
+                    editLogixNGFrame.dispose();
+                    editLogixNGFrame = null;
+                    for (TreeModelListener l : femaleSocketTreeModel.listeners) {
+                        TreeModelEvent tme = new TreeModelEvent(
+                                femaleSocket,
+                                path.getPath()
+                        );
+                        l.treeNodesChanged(tme);
+                    }
+                } else {
+                    StringBuilder errorMsg = new StringBuilder();
+                    for (String s : errorMessages) {
+                        if (errorMsg.length() > 0) errorMsg.append("<br>");
+                        errorMsg.append(s);
+                    }
+                    JOptionPane.showMessageDialog(null,
+                            Bundle.getMessage("ValidateErrorMessage", errorMsg),
+                            Bundle.getMessage("ValidateErrorTitle"),
+                            JOptionPane.ERROR_MESSAGE);
                 }
             });
 //            edit.setToolTipText(Bundle.getMessage("EditButtonHint"));  // NOI18N
@@ -629,24 +628,22 @@ public final class ConditionalNGEditor extends JmriJFrame {
             panel32.add(message2);
         }
         
-//        connectableClasses = femaleSocket.getConnectableClasses();
-//        maleSocketClass = connectableClasses.get(Category.ITEM).get(0);
+        // set up create and cancel buttons
+        JPanel panel5 = new JPanel();
+        panel5.setLayout(new FlowLayout());
         
-//        swingConfiguratorInterface = SwingTools.getSwingConfiguratorForClass(maleSocketClass);
+        // Get panel for the item
         JPanel panel33;
         if (femaleSocket.isConnected()) {
-            panel33 = swingConfiguratorInterface.getConfigPanel(femaleSocket.getConnectedSocket().getObject());
+            panel33 = swingConfiguratorInterface.getConfigPanel(femaleSocket.getConnectedSocket().getObject(), panel5);
         } else {
-            panel33 = swingConfiguratorInterface.getConfigPanel();
+            panel33 = swingConfiguratorInterface.getConfigPanel(panel5);
         }
         panel3.add(panel31);
         panel3.add(panel32);
         panel3.add(panel33);
         contentPanel.add(panel3);
-
-        // set up create and cancel buttons
-        JPanel panel5 = new JPanel();
-        panel5.setLayout(new FlowLayout());
+        
         // Cancel
         JButton cancel = new JButton(Bundle.getMessage("ButtonCancel"));    // NOI18N
         panel5.add(cancel);

@@ -16,7 +16,7 @@ import jmri.jmrit.logixng.digital.actions.DoStringAction;
 public class DoStringActionSwing extends AbstractActionSwing {
 
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         panel = new JPanel();
     }
     

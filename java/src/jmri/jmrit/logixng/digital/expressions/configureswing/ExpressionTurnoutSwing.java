@@ -33,7 +33,7 @@ public class ExpressionTurnoutSwing extends AbstractExpressionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         if ((object != null) && !(object instanceof ExpressionTurnout)) {
             throw new IllegalArgumentException("object must be an ExpressionTurnout but is a: "+object.getClass().getName());
         }

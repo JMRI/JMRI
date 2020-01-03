@@ -31,7 +31,7 @@ public class AnalogExpressionMemorySwing extends AbstractExpressionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
 //        AnalogExpressionMemory action = (AnalogExpressionMemory)object;
         
         panel = new JPanel();

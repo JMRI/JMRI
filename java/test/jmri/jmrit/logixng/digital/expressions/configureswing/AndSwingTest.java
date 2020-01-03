@@ -30,7 +30,7 @@ public class AndSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         AndSwing t = new AndSwing();
-        JPanel panel = t.getConfigPanel();
+        JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
     
@@ -39,9 +39,9 @@ public class AndSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new AndSwing().getConfigPanel());
+            null != new AndSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new AndSwing().getConfigPanel(new And("IQDE1", null)));
+            null != new AndSwing().getConfigPanel(new And("IQDE1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

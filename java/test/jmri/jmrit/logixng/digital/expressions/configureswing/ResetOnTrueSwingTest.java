@@ -32,7 +32,7 @@ public class ResetOnTrueSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         ResetOnTrueSwing t = new ResetOnTrueSwing();
-        JPanel panel = t.getConfigPanel();
+        JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
     
@@ -41,9 +41,9 @@ public class ResetOnTrueSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new ResetOnTrueSwing().getConfigPanel());
+            null != new ResetOnTrueSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ResetOnTrueSwing().getConfigPanel(new ResetOnTrue("IQDE1", null)));
+            null != new ResetOnTrueSwing().getConfigPanel(new ResetOnTrue("IQDE1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

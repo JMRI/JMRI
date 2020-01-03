@@ -17,7 +17,7 @@ import jmri.jmrix.loconet.logixng.AnalogActionLocoNet_OPC_PEER;
 public class AnalogActionLocoNetOpcPeerSwing extends AbstractActionSwing {
 
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         panel = new JPanel();
     }
     

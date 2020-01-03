@@ -1,5 +1,6 @@
 package jmri.jmrit.logixng.string.expressions.configureswing;
 
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import javax.swing.JPanel;
 import jmri.InstanceManager;
@@ -16,19 +17,19 @@ public abstract class AbstractExpressionSwing implements SwingConfiguratorInterf
     
     /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel() throws IllegalArgumentException {
-        createPanel(null);
+    public JPanel getConfigPanel(@Nonnull JPanel buttonPanel) throws IllegalArgumentException {
+        createPanel(null, buttonPanel);
         return panel;
     }
     
     /** {@inheritDoc} */
     @Override
-    public JPanel getConfigPanel(@Nonnull Base object) throws IllegalArgumentException {
-        createPanel(object);
+    public JPanel getConfigPanel(@Nonnull Base object, @Nonnull JPanel buttonPanel) throws IllegalArgumentException {
+        createPanel(object, buttonPanel);
         return panel;
     }
     
-    protected abstract void createPanel(Base object);
+    protected abstract void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel);
     
     /** {@inheritDoc} */
     @Override

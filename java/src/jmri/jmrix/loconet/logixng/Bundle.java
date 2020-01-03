@@ -24,7 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class Bundle extends jmri.jmrix.loconet.Bundle {
 
     @CheckForNull
-    private static final String name = "jmri.jmrix.loconet.logixng.LogixNG_LogoNetBundle";
+    private static final String name = "jmri.jmrix.loconet.logixng.LogixNG_LocoNetBundle";
 
     //
     // below here is boilerplate to be copied exactly

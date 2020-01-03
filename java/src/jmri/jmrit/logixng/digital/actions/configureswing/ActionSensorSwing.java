@@ -31,7 +31,7 @@ public class ActionSensorSwing extends AbstractActionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionSensor action = (ActionSensor)object;
         
         panel = new JPanel();

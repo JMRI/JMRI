@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.actions.configureswing;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JPanel;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.digital.actions.IfThenElse;
 import org.junit.After;
@@ -29,9 +30,9 @@ public class IfThenElseSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new IfThenElseSwing().getConfigPanel());
+            null != new IfThenElseSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new IfThenElseSwing().getConfigPanel(new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION)));
+            null != new IfThenElseSwing().getConfigPanel(new IfThenElse("IQDA1", null, IfThenElse.Type.TRIGGER_ACTION), new JPanel()));
     }
     
     // The minimal setup for log4J

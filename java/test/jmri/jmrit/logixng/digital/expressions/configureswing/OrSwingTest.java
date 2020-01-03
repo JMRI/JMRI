@@ -30,7 +30,7 @@ public class OrSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         OrSwing t = new OrSwing();
-        JPanel panel = t.getConfigPanel();
+        JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
     
@@ -39,9 +39,9 @@ public class OrSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new OrSwing().getConfigPanel());
+            null != new OrSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new OrSwing().getConfigPanel(new Or("IQDE1", null)));
+            null != new OrSwing().getConfigPanel(new Or("IQDE1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

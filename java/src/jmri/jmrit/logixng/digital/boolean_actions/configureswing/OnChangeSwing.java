@@ -19,7 +19,7 @@ public class OnChangeSwing extends AbstractBooleanActionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         panel = new JPanel();
     }
     

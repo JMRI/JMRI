@@ -16,7 +16,7 @@ import jmri.jmrit.logixng.digital.actions.ActionListenOnBeans;
 public class ActionListenOnBeansSwing extends AbstractActionSwing {
 
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         panel = new JPanel();
     }
     

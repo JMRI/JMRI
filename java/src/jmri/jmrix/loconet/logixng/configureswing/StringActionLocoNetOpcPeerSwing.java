@@ -1,6 +1,7 @@
 package jmri.jmrix.loconet.logixng.configureswing;
 
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
@@ -65,7 +66,7 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
     }
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         StringActionLocoNetOpcPeer action = (StringActionLocoNetOpcPeer)object;
         
         panel = new JPanel();
@@ -163,6 +164,20 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
         _charset.setToolTipText(Bundle.getMessage("CharsetHint"));    // NOI18N
 //        _discoverButton.setToolTipText(Bundle.getMessage("DiscoverHint"));    // NOI18N
         panel.add(p);
+        
+        
+        // Add button
+        // Cancel
+        JButton discover = new JButton(Bundle.getMessage("ButtonDiscover"));    // NOI18N
+        buttonPanel.add(discover);
+        discover.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Show discover dialog
+            }
+        });
+//        cancel.setToolTipText(Bundle.getMessage("CancelLogixButtonHint"));      // NOI18N
+        discover.setToolTipText("DiscoverButtonHint");      // NOI18N
         
 /*        
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -288,6 +303,6 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
     }
     
     
-    private final static Logger log = LoggerFactory.getLogger(StringActionLocoNetOpcPeerSwing.class);
+//    private final static Logger log = LoggerFactory.getLogger(StringActionLocoNetOpcPeerSwing.class);
     
 }

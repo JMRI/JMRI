@@ -30,7 +30,7 @@ public class HoldSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         HoldSwing t = new HoldSwing();
-        JPanel panel = t.getConfigPanel();
+        JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
     
@@ -39,9 +39,9 @@ public class HoldSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new HoldSwing().getConfigPanel());
+            null != new HoldSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new HoldSwing().getConfigPanel(new Hold("IQDE1", null)));
+            null != new HoldSwing().getConfigPanel(new Hold("IQDE1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

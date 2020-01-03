@@ -9,7 +9,6 @@ import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalActionManager;
 import jmri.jmrit.logixng.MaleSocket;
 import jmri.jmrit.logixng.digital.actions.ShutdownComputer;
-import jmri.jmrit.logixng.swing.SwingConfiguratorInterface;
 
 /**
  * Configures an ActionTurnout object with a Swing JPanel.
@@ -20,7 +19,7 @@ public class ShutdownComputerSwing extends AbstractActionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         panel = new JPanel();
     }
     

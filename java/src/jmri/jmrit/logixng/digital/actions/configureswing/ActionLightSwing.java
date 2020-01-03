@@ -31,7 +31,7 @@ public class ActionLightSwing extends AbstractActionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionLight action = (ActionLight)object;
         
         panel = new JPanel();

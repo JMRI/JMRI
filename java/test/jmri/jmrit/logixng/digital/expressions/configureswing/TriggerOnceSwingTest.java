@@ -32,7 +32,7 @@ public class TriggerOnceSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         TriggerOnceSwing t = new TriggerOnceSwing();
-        JPanel panel = t.getConfigPanel();
+        JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
     
@@ -41,9 +41,9 @@ public class TriggerOnceSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new TriggerOnceSwing().getConfigPanel());
+            null != new TriggerOnceSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new TriggerOnceSwing().getConfigPanel(new TriggerOnce("IQDE1", null)));
+            null != new TriggerOnceSwing().getConfigPanel(new TriggerOnce("IQDE1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

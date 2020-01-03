@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.actions.configureswing;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JPanel;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.digital.actions.ShutdownComputer;
 import org.junit.After;
@@ -29,9 +30,9 @@ public class ShutdownComputerSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new ShutdownComputerSwing().getConfigPanel());
+            null != new ShutdownComputerSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ShutdownComputerSwing().getConfigPanel(new ShutdownComputer("IQDA1", null, 0)));
+            null != new ShutdownComputerSwing().getConfigPanel(new ShutdownComputer("IQDA1", null, 0), new JPanel()));
     }
     
     // The minimal setup for log4J

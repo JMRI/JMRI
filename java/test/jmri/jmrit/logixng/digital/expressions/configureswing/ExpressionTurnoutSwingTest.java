@@ -30,7 +30,7 @@ public class ExpressionTurnoutSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         ExpressionTurnoutSwing t = new ExpressionTurnoutSwing();
-        JPanel panel = t.getConfigPanel();
+        JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
     
@@ -39,9 +39,9 @@ public class ExpressionTurnoutSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new ExpressionTurnoutSwing().getConfigPanel());
+            null != new ExpressionTurnoutSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ExpressionTurnoutSwing().getConfigPanel(new ExpressionTurnout("IQDE1", null)));
+            null != new ExpressionTurnoutSwing().getConfigPanel(new ExpressionTurnout("IQDE1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

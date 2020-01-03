@@ -30,7 +30,7 @@ public class FalseSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         FalseSwing t = new FalseSwing();
-        JPanel panel = t.getConfigPanel();
+        JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
     
@@ -39,9 +39,9 @@ public class FalseSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new FalseSwing().getConfigPanel());
+            null != new FalseSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new FalseSwing().getConfigPanel(new False("IQDE1", null)));
+            null != new FalseSwing().getConfigPanel(new False("IQDE1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

@@ -30,7 +30,7 @@ public class AntecedentSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         AntecedentSwing t = new AntecedentSwing();
-        JPanel panel = t.getConfigPanel();
+        JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
     
@@ -39,9 +39,9 @@ public class AntecedentSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new AntecedentSwing().getConfigPanel());
+            null != new AntecedentSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new AntecedentSwing().getConfigPanel(new Antecedent("IQDE1", null)));
+            null != new AntecedentSwing().getConfigPanel(new Antecedent("IQDE1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

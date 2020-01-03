@@ -31,7 +31,7 @@ public class ActionTurnoutSwing extends AbstractActionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         ActionTurnout action = (ActionTurnout)object;
         
         panel = new JPanel();

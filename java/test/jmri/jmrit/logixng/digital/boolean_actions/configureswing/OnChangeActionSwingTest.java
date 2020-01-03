@@ -2,6 +2,7 @@ package jmri.jmrit.logixng.digital.boolean_actions.configureswing;
 
 import jmri.jmrit.logixng.digital.boolean_actions.configureswing.OnChangeSwing;
 import java.awt.GraphicsEnvironment;
+import javax.swing.JPanel;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.digital.boolean_actions.OnChange;
 import org.junit.After;
@@ -30,9 +31,9 @@ public class OnChangeActionSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new OnChangeSwing().getConfigPanel());
+            null != new OnChangeSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new OnChangeSwing().getConfigPanel(new OnChange("IQDB1", null, OnChange.ChangeType.CHANGE)));
+            null != new OnChangeSwing().getConfigPanel(new OnChange("IQDB1", null, OnChange.ChangeType.CHANGE), new JPanel()));
     }
     
     // The minimal setup for log4J

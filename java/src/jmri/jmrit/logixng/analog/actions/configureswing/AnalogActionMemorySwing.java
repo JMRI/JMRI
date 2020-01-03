@@ -31,7 +31,7 @@ public class AnalogActionMemorySwing extends AbstractActionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
 //        AnalogActionMemory action = (AnalogActionMemory)object;
         
         panel = new JPanel();

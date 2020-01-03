@@ -33,7 +33,7 @@ public class ExpressionLightSwing extends AbstractExpressionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         if ((object != null) && !(object instanceof ExpressionLight)) {
             throw new IllegalArgumentException("object must be an ExpressionLight but is a: "+object.getClass().getName());
         }

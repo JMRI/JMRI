@@ -16,7 +16,7 @@ import jmri.jmrit.logixng.digital.expressions.Timer;
 public class TimerSwing extends AbstractExpressionSwing {
 
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         panel = new JPanel();
     }
     

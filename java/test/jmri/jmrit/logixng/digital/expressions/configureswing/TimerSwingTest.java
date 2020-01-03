@@ -30,7 +30,7 @@ public class TimerSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         TimerSwing t = new TimerSwing();
-        JPanel panel = t.getConfigPanel();
+        JPanel panel = t.getConfigPanel(new JPanel());
         Assert.assertNotNull("exists",panel);
     }
     
@@ -39,9 +39,9 @@ public class TimerSwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new TimerSwing().getConfigPanel());
+            null != new TimerSwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new TimerSwing().getConfigPanel(new Timer("IQDE1", null)));
+            null != new TimerSwing().getConfigPanel(new Timer("IQDE1", null), new JPanel()));
     }
     
     // The minimal setup for log4J

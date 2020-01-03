@@ -33,7 +33,7 @@ public class ExpressionSensorSwing extends AbstractExpressionSwing {
     
     
     @Override
-    protected void createPanel(Base object) {
+    protected void createPanel(@CheckForNull Base object, @Nonnull JPanel buttonPanel) {
         if ((object != null) && !(object instanceof ExpressionSensor)) {
             throw new IllegalArgumentException("object must be an ExpressionSensor but is a: "+object.getClass().getName());
         }

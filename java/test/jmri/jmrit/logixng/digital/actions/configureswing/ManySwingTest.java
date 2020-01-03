@@ -1,6 +1,7 @@
 package jmri.jmrit.logixng.digital.actions.configureswing;
 
 import java.awt.GraphicsEnvironment;
+import javax.swing.JPanel;
 import jmri.util.JUnitUtil;
 import jmri.jmrit.logixng.digital.actions.Many;
 import org.junit.After;
@@ -29,9 +30,9 @@ public class ManySwingTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         
         Assert.assertTrue("panel is not null",
-            null != new ManySwing().getConfigPanel());
+            null != new ManySwing().getConfigPanel(new JPanel()));
         Assert.assertTrue("panel is not null",
-            null != new ManySwing().getConfigPanel(new Many("IQDA1", null)));
+            null != new ManySwing().getConfigPanel(new Many("IQDA1", null), new JPanel()));
     }
     
     // The minimal setup for log4J
