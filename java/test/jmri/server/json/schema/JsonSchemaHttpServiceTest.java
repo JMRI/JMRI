@@ -70,7 +70,7 @@ public class JsonSchemaHttpServiceTest extends JsonHttpServiceTestBase<JsonSchem
             JsonNode result = ex.getJsonMessage();
             assertTrue("Is an object", result.isObject());
             assertEquals("Is an error", JsonException.ERROR, result.path(JSON.TYPE).asText());
-            assertEquals("Is error type 405", 405, result.path(JSON.DATA).path(JsonException.CODE));
+            assertEquals("Is error type 405", 405, result.path(JSON.DATA).path(JsonException.CODE).asInt());
         }
     }
 
