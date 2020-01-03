@@ -1,6 +1,7 @@
 package jmri.jmrix.tmcc;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
@@ -27,12 +28,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public TmccSystemConnectionMemo getMemo() {
         return (TmccSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         // validate the system name
         String sName = validateSystemNameFormat(systemName);
         // does this turnout already exist?
@@ -66,12 +68,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
 
     // Turnout address format is more than a simple number.
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public String createSystemName(String curAddress, String prefix) throws JmriException {
+    public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         try {
             return makeSystemName(curAddress);
         } catch (IllegalArgumentException ex) {
@@ -83,7 +85,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return validateIntegerSystemNameFormat(name, 1, 99, locale);
     }
 
@@ -91,7 +94,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager implements Seri
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         NameValidity validity = super.validSystemNameFormat(systemName);
         if (validity == NameValidity.VALID) {
             int num;

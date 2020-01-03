@@ -175,18 +175,6 @@ public class BlockManager extends AbstractManager<Block> implements ProvidingMan
 
     @CheckReturnValue
     @CheckForNull
-    public Block getBySystemName(@Nonnull String key) {
-        return _tsys.get(key);
-    }
-
-    @CheckReturnValue
-    @CheckForNull
-    public Block getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
-    }
-
-    @CheckReturnValue
-    @CheckForNull
     public Block getByDisplayName(@Nonnull String key) {
         // First try to find it in the user list.
         // If that fails, look it up in the system list

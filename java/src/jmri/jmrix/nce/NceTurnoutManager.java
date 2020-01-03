@@ -1,6 +1,7 @@
 package jmri.jmrix.nce;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,12 +24,13 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public NceSystemConnectionMemo getMemo() {
         return (NceSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Turnout t = new NceTurnout(getMemo().getNceTrafficController(), getSystemPrefix(), addr);
         t.setUserName(userName);
@@ -46,7 +48,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
         // validate the system Name leader characters
         if ((!systemName.startsWith(getSystemPrefix())) || (!systemName.startsWith(getSystemPrefix() + "T"))) {
             // here if an illegal nce light system name
-            log.error("illegal character in header field of nce turnout system name: " + systemName);
+            log.error("illegal character in header field of nce turnout system name: {}", systemName);
             return (0);
         }
         // name must be in the NLnnnnn format (N is user configurable)
@@ -56,21 +58,21 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
                         getSystemPrefix().length() + 1, systemName.length())
                     );
         } catch (NumberFormatException e) {
-            log.debug("illegal character in number field of system name: " + systemName);
+            log.debug("illegal character in number field of system name: {}", systemName);
             return (0);
         }
         if (num <= 0) {
-            log.error("invalid nce turnout system name: " + systemName);
+            log.error("invalid nce turnout system name: {}", systemName);
             return (0);
         } else if (num > 4096) {
-            log.warn("bit number out of range in nce turnout system name: " + systemName);
+            log.warn("bit number out of range in nce turnout system name: {}", systemName);
             return (0);
         }
         return (num);
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -88,7 +90,8 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return super.validateNmraAccessorySystemNameFormat(name, locale);
     }
 
@@ -96,7 +99,7 @@ public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager impl
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (getBitFromSystemName(systemName) != 0) ? NameValidity.VALID : NameValidity.INVALID;
     }
 

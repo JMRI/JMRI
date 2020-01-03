@@ -1,5 +1,6 @@
 package jmri.jmrix.rfid.merg.concentrator;
 
+import javax.annotation.Nonnull;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -37,10 +38,10 @@ public class ConcentratorReporterManager extends RfidReporterManager {
     }
 
     @Override
-    protected Reporter createNewReporter(String systemName, String userName) {
-        log.debug("Create new Reporter: " + systemName);
+    protected Reporter createNewReporter(@Nonnull String systemName, String userName) {
+        log.debug("Create new Reporter: {}", systemName);
         if (!systemName.matches(getSystemNamePrefix() + "[" + tc.getRange() + "]")) {
-            log.warn("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
+            log.warn("Invalid Reporter name: {}} - out of supported range {}", systemName, tc.getRange());
             throw new IllegalArgumentException("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
         }
         TimeoutRfidReporter r;
@@ -52,7 +53,7 @@ public class ConcentratorReporterManager extends RfidReporterManager {
     @Override
     public void message(RfidMessage m) {
         if (m.toString().equals(new ConcentratorMessage(tc.getAdapterMemo().getProtocol().initString(), 0).toString())) {
-            log.info("Sent init string: " + m);
+            log.info("Sent init string: {}", m);
         } else {
             super.message(m);
         }
@@ -67,11 +68,11 @@ public class ConcentratorReporterManager extends RfidReporterManager {
 
     private void processReply(ConcentratorReply r) {
         if (!tc.getAdapterMemo().getProtocol().isValid(r)) {
-            log.warn("Invalid message - skipping " + r);
+            log.warn("Invalid message - skipping {}", r);
             return;
         }
         if (!r.isInRange()) {
-            log.warn("Invalid concentrator reader range - skipping " + r);
+            log.warn("Invalid concentrator reader range - skipping {}", r);
             return;
         }
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(tc.getAdapterMemo().getProtocol().getTag(r));

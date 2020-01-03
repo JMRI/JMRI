@@ -4,13 +4,12 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * This class provides tests for the Z21 Reporter Manager's ability to create
+ * This class provides tests for the Z21ReporterManager's ability to create
  * Z21Reporter objects.  There is only one Z21Reporter object possible, so 
  * some tests pulled down.
  *
  * @author Paul Bender Copyright (C) 2016
  **/
-
 public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTestBase {
 
     private Z21SystemConnectionMemo memo;
@@ -24,13 +23,13 @@ public class Z21ReporterManagerTest extends jmri.managers.AbstractReporterMgrTes
    @Test
    public void testAutomaticCreateFromRailComReply(){
        Z21ReporterManager zr = (Z21ReporterManager) l;
-       zr.enableInternalReporterCreationFromMessages();  // defautls to disabled.
+       zr.enableInternalReporterCreationFromMessages();  // defaults to disabled
        byte msg[]={(byte)0x11,(byte)0x00,(byte)0x88,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x01,(byte)0x00,(byte)0x00,(byte)0x00,(byte)0x05,(byte)0x06,(byte)0x07,(byte)0x08};
        Z21Reply reply = new Z21Reply(msg,17);
-       Assert.assertNull("No reporter before message",zr.getReporter("ZR1"));
+       Assert.assertNull("No reporter before message", zr.getReporter("ZR1"));
        jmri.util.ThreadingUtil.runOnLayout( () -> { zr.reply(reply); });
        JUnitUtil.waitFor( ()-> { return zr.getReporter("ZR1") != null; },"wait for reporter creation");
-       Assert.assertNotNull("Reporter Created via message",zr.getReporter("ZR1"));
+       Assert.assertNotNull("Reporter Created via message", zr.getReporter("ZR1"));
    }
 
    @Before

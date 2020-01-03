@@ -383,10 +383,10 @@ public class Maintenance {
         justification = "null return for normal (no error) case is easy to check, and this is a really wierd array")
     // This should probably return an instance of a custom type rather than a bunch of string names
     static private String[] checkForOneTypeAndNames( @Nonnull Manager<? extends NamedBean> manager, @Nonnull String type, @Nonnull String beanName) {
-        NamedBean bean = manager.getBeanBySystemName(beanName);
+        NamedBean bean = manager.getBySystemName(beanName);
         if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
 
-        bean = manager.getBeanByUserName(beanName);
+        bean = manager.getByUserName(beanName);
         if (bean != null) return new String[]{type, bean.getUserName(), bean.getSystemName(), Integer.toString(bean.getNumPropertyChangeListeners())};
 
         return null;

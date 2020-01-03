@@ -23,7 +23,13 @@
         <date>2017-03-16</date>
         <authorinitials>GPM</authorinitials>
         <revremark>Original Edition</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Add missing 'Approach Slow' aspect definition</revremark>
+    </revision>
   </revhistory>
   
   <aspecttable>SOU 1981</aspecttable>
@@ -121,7 +127,6 @@
 	
 	<aspectMapping>
 	  <advancedAspect>Diverging Route Clear (Slow)</advancedAspect>
-	  <ourAspect>Approach Slow</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
