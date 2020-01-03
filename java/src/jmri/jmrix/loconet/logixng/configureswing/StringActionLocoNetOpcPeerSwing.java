@@ -15,6 +15,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
+import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -34,8 +35,11 @@ import org.slf4j.LoggerFactory;
  */
 public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
 
+    private NumberFormatter formatter7bits;
+    private NumberFormatter formatter16bits;
     private JFormattedTextField _manufacturerID;
     private JFormattedTextField _developerID;
+    private JFormattedTextField _serialNumber;
     private JFormattedTextField _sourceAddress;
     private JFormattedTextField _destAddress;
     private JFormattedTextField _svAddress;
@@ -44,6 +48,7 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
     
     private final JLabel _manufacturerIDLabel = new JLabel(Bundle.getMessage("ManufacturerID") + ":");  // NOI18N
     private final JLabel _developerIDLabel = new JLabel(Bundle.getMessage("DeveloperID") + ":");  // NOI18N
+    private final JLabel _serialNumberLabel = new JLabel(Bundle.getMessage("SerialNumber") + ":");  // NOI18N
     private final JLabel _sourceAddressLabel = new JLabel(Bundle.getMessage("SourceAddress") + ":");  // NOI18N
     private final JLabel _destAddressLabel = new JLabel(Bundle.getMessage("DestAddress") + ":");  // NOI18N
     private final JLabel _svAddressLabel = new JLabel(Bundle.getMessage("SV_Address") + ":");  // NOI18N
@@ -73,32 +78,54 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         
         NumberFormat format = NumberFormat.getInstance();
-        NumberFormatter formatter = new NumberFormatter(format) {
+        
+        formatter7bits = new NumberFormatter(format) {
             @Override
             public Object stringToValue(String text) throws ParseException {
                 if (text.isEmpty()) return null;
                 else return super.stringToValue(text);
             }
         };
-        formatter.setValueClass(Integer.class);
-        formatter.setMinimum(0);
-        formatter.setMaximum(Integer.MAX_VALUE);
-        formatter.setAllowsInvalid(false);
+        formatter7bits.setValueClass(Integer.class);
+        formatter7bits.setMinimum(0);
+        formatter7bits.setMaximum(0x7F);
+        formatter7bits.setAllowsInvalid(false);
         // If you want the value to be committed on each keystroke instead of focus lost
-        formatter.setCommitsOnValidEdit(true);
+        formatter7bits.setCommitsOnValidEdit(true);
         
-        _manufacturerID = new JFormattedTextField(formatter);
-        _developerID = new JFormattedTextField(formatter);
-        _sourceAddress = new JFormattedTextField(formatter);
-        _destAddress = new JFormattedTextField(formatter);
-        _svAddress = new JFormattedTextField(formatter);
+        formatter16bits = new NumberFormatter(format) {
+            @Override
+            public Object stringToValue(String text) throws ParseException {
+                if (text.isEmpty()) return null;
+                else return super.stringToValue(text);
+            }
+        };
+        formatter16bits.setValueClass(Integer.class);
+        formatter16bits.setMinimum(0);
+        formatter16bits.setMaximum(0xFFFF);
+        formatter16bits.setAllowsInvalid(false);
+        // If you want the value to be committed on each keystroke instead of focus lost
+        formatter16bits.setCommitsOnValidEdit(true);
+        
+        _manufacturerID = new JFormattedTextField(formatter7bits);
+        _developerID = new JFormattedTextField(formatter7bits);
+        _serialNumber = new JFormattedTextField(formatter16bits);
+        _sourceAddress = new JFormattedTextField(formatter7bits);
+        _destAddress = new JFormattedTextField(formatter16bits);
+        _svAddress = new JFormattedTextField(formatter16bits);
         
         if (action != null) {
-            _manufacturerID.setText(Integer.toString(action.getManufacturerID()));
-            _developerID.setText(Integer.toString(action.getDeveloperID()));
-            _sourceAddress.setText(Integer.toString(action.getSourceAddress()));
-            _destAddress.setText(Integer.toString(action.getDestAddress()));
-            _svAddress.setText(Integer.toString(action.get_SV_Address()));
+            try {
+                _manufacturerID.setText(formatter16bits.valueToString(action.getManufacturerID()));
+                _developerID.setText(formatter16bits.valueToString(action.getDeveloperID()));
+                _serialNumber.setText(formatter16bits.valueToString(action.getSerialNumber()));
+                _sourceAddress.setText(formatter16bits.valueToString(action.getSourceAddress()));
+                _destAddress.setText(formatter16bits.valueToString(action.getDestAddress()));
+                _svAddress.setText(formatter16bits.valueToString(action.get_SV_Address()));
+            } catch (ParseException e) {
+                // if we are here, we have a runtime error.
+                throw new RuntimeException(e);
+            }
             _charsetIncludeAll.setSelected(action.getShowAllCharsets());
         }
         
@@ -127,14 +154,16 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
         c.gridy = 1;
         p.add(_developerIDLabel, c);
         c.gridy = 2;
-        p.add(_sourceAddressLabel, c);
+        p.add(_serialNumberLabel, c);
         c.gridy = 3;
-        p.add(_destAddressLabel, c);
+        p.add(_sourceAddressLabel, c);
         c.gridy = 4;
-        p.add(_svAddressLabel, c);
+        p.add(_destAddressLabel, c);
         c.gridy = 5;
-        p.add(_charsetIncludeAllLabel, c);
+        p.add(_svAddressLabel, c);
         c.gridy = 6;
+        p.add(_charsetIncludeAllLabel, c);
+        c.gridy = 7;
         p.add(_charsetLabel, c);
         
         c.gridx = 1;
@@ -146,23 +175,25 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
         c.gridy = 1;
         p.add(_developerID, c);
         c.gridy = 2;
-        p.add(_sourceAddress, c);
+        p.add(_serialNumber, c);
         c.gridy = 3;
-        p.add(_destAddress, c);
+        p.add(_sourceAddress, c);
         c.gridy = 4;
-        p.add(_svAddress, c);
+        p.add(_destAddress, c);
         c.gridy = 5;
-        p.add(_charsetIncludeAll, c);
+        p.add(_svAddress, c);
         c.gridy = 6;
+        p.add(_charsetIncludeAll, c);
+        c.gridy = 7;
         p.add(_charset, c);
         
         _manufacturerID.setToolTipText(Bundle.getMessage("ManufacturerIDHint"));    // NOI18N
         _developerID.setToolTipText(Bundle.getMessage("DeveloperIDHint"));    // NOI18N
+        _serialNumber.setToolTipText(Bundle.getMessage("SerialNumberHint"));    // NOI18N
         _sourceAddress.setToolTipText(Bundle.getMessage("SourceAddressHint"));    // NOI18N
         _destAddress.setToolTipText(Bundle.getMessage("DestAddressHint"));    // NOI18N
         _svAddress.setToolTipText(Bundle.getMessage("SV_AddressHint"));    // NOI18N
         _charset.setToolTipText(Bundle.getMessage("CharsetHint"));    // NOI18N
-//        _discoverButton.setToolTipText(Bundle.getMessage("DiscoverHint"));    // NOI18N
         panel.add(p);
         
         
@@ -244,11 +275,21 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
         panel.add(panel_AA);
 */        
     }
-    
+/*    
     private boolean validate(String value, String errorMessage, @Nonnull List<String> errorMessages) {
         try {
             Integer.parseUnsignedInt(value);
         } catch (NumberFormatException e) {
+            errorMessages.add(Bundle.getMessage(errorMessage));
+            return false;
+        }
+        return true;
+    }
+*/    
+    private boolean validate(AbstractFormatter formatter, String value, String errorMessage, @Nonnull List<String> errorMessages) {
+        try {
+            formatter.stringToValue(value);
+        } catch (ParseException e) {
             errorMessages.add(Bundle.getMessage(errorMessage));
             return false;
         }
@@ -259,11 +300,12 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
     @Override
     public boolean validate(@Nonnull List<String> errorMessages) {
         boolean result = true;
-        result &= validate(_manufacturerID.getText(), "ErrorManufacturerID_BadValue", errorMessages); // NOI18N
-        result &= validate(_developerID.getText(), "ErrorDeveloperID_BadValue", errorMessages); // NOI18N
-        result &= validate(_sourceAddress.getText(), "ErrorSourceAddressBadValue", errorMessages); // NOI18N
-        result &= validate(_destAddress.getText(), "ErrorDestAddressBadValue", errorMessages); // NOI18N
-        result &= validate(_svAddress.getText(), "ErrorSV_Address_BadValue", errorMessages); // NOI18N
+        result &= validate(formatter7bits, _manufacturerID.getText(), "ErrorManufacturerID_BadValue", errorMessages); // NOI18N
+        result &= validate(formatter7bits, _developerID.getText(), "ErrorDeveloperID_BadValue", errorMessages); // NOI18N
+        result &= validate(formatter16bits, _serialNumber.getText(), "ErrorSerialNumber_BadValue", errorMessages); // NOI18N
+        result &= validate(formatter7bits, _sourceAddress.getText(), "ErrorSourceAddressBadValue", errorMessages); // NOI18N
+        result &= validate(formatter16bits, _destAddress.getText(), "ErrorDestAddressBadValue", errorMessages); // NOI18N
+        result &= validate(formatter16bits, _svAddress.getText(), "ErrorSV_Address_BadValue", errorMessages); // NOI18N
         return result;
     }
     
@@ -280,13 +322,26 @@ public class StringActionLocoNetOpcPeerSwing extends AbstractActionSwing {
         StringActionLocoNetOpcPeer action = (StringActionLocoNetOpcPeer)object;
         
         try {
+            action.setManufacturerID((int) formatter7bits.stringToValue(_manufacturerID.getText()));
+            action.setDeveloperID((int) formatter7bits.stringToValue(_developerID.getText()));
+            action.setSerialNumber((int) formatter16bits.stringToValue(_serialNumber.getText()));
+            action.setSourceAddress((int) formatter7bits.stringToValue(_sourceAddress.getText()));
+            action.setDestAddress((int) formatter16bits.stringToValue(_destAddress.getText()));
+            action.set_SV_Address((int) formatter16bits.stringToValue(_svAddress.getText()));
+/*            
             action.setManufacturerID(Integer.parseUnsignedInt(_manufacturerID.getText()));
             action.setDeveloperID(Integer.parseUnsignedInt(_developerID.getText()));
             action.setSourceAddress(Integer.parseUnsignedInt(_sourceAddress.getText()));
             action.setDestAddress(Integer.parseUnsignedInt(_destAddress.getText()));
             action.set_SV_Address(Integer.parseUnsignedInt(_svAddress.getText()));
-        } catch (NumberFormatException e) {
-            throw e;
+*/            
+//        } catch (NumberFormatException e) {
+        } catch (ParseException e) {
+            // If we are here, the panel is probably not validated and we
+            // have a runtime error.
+            // Or, the panel is validated, but there is an error in the
+            // validation check, so we have a runtime error.
+            throw new RuntimeException(e);
         }
         action.setShowAllCharsets(_charsetIncludeAll.isSelected());
         action.setCharset((Charset) _charset.getSelectedItem());

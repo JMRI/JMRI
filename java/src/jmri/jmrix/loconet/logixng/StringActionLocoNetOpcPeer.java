@@ -58,6 +58,7 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
     // "Files" in the file LocoNet Hackers DeveloperId List_v??.html
     private int _manufacturerID = 13;   // Default to NMRA DIY DCC ManufacturerId of 13
     private int _developerID = 17;      // Default to the developer ID of Daniel Bergqvist, 17.
+    private int _serialNumber = 0;
     
     private int _sourceAddress = 0x00;
     private int _destAddress = 256;         // FIX LATER !!!
@@ -89,6 +90,14 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
     
     public int getDeveloperID() {
         return _developerID;
+    }
+    
+    public void setSerialNumber(int serialNumber) {
+        _serialNumber = serialNumber;
+    }
+    
+    public int getSerialNumber() {
+        return _serialNumber;
     }
     
     public void setSourceAddress(int address) {
