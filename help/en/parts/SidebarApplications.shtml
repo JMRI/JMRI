@@ -1,6 +1,6 @@
 <!-- SidebarApplications.shtml -->
 <!-- This is the common sidebar definition for Tools pages, originally made from help/en/html/apps/Sidebar.shtml -->
-		<dt><h3>Applications</h3></dt>
+		<dt><h3><a href="/help/en/html/apps/">Applications</a></h3></dt>
 		<dd>
 		  <ul>
 			<li><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></li>

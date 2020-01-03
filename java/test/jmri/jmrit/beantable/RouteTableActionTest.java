@@ -76,8 +76,8 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
 
 
         Route chk105 = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("Route 105");  // NOI18N
-        Assert.assertNotNull("Verify IR105 Added", chk105);  // NOI18N
-        Assert.assertEquals("Verify system name prefix", "IR105", chk105.getSystemName());  // NOI18N
+        Assert.assertNotNull("Verify IO105 Added", chk105);  // NOI18N
+        Assert.assertEquals("Verify system name prefix", "IO105", chk105.getSystemName());  // NOI18N
 
         addFrame.dispose();
         JUnitUtil.dispose(f);
@@ -124,10 +124,10 @@ public class RouteTableActionTest extends AbstractTableActionBase<Route> {
         jmri.util.swing.JemmyUtil.pressButton(new JFrameOperator(f2),Bundle.getMessage("ButtonCancel"));
         
         //retrieve the expected route for verification
-        Route chkRoute = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("IR:AUTO:0001");  // NOI18N
+        Route chkRoute = jmri.InstanceManager.getDefault(jmri.RouteManager.class).getRoute("IO:AUTO:0001");  // NOI18N
         Assert.assertEquals("Verify no additional routes were created", 1, tbl.getRowCount());  // NOI18N
-        Assert.assertNotNull("Verify IR:AUTO:0001 Added", chkRoute);  // NOI18N
-        Assert.assertEquals("Verify system name didn't change", "IR:AUTO:0001", chkRoute.getSystemName());  // NOI18N
+        Assert.assertNotNull("Verify IO:AUTO:0001 Added", chkRoute);  // NOI18N
+        Assert.assertEquals("Verify system name didn't change", "IO:AUTO:0001", chkRoute.getSystemName());  // NOI18N
         Assert.assertEquals("Verify user name is TestRouteUserName", "TestRouteUserName", chkRoute.getUserName());  // NOI18N
         
         JUnitUtil.dispose(f2);

@@ -137,7 +137,7 @@
   </blocks>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
     <route userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED">
-      <systemName>IR1</systemName>
+      <systemName>IO1</systemName>
       <userName>random route 1</userName>
       <routeOutputTurnout systemName="IT1" state="THROWN" />
       <routeOutputTurnout systemName="IT2" state="CLOSED" />

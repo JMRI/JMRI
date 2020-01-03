@@ -63,6 +63,7 @@ public class LayoutEditorToolsTest {
     }
 
     ///@Test
+    @Ignore("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
@@ -1292,13 +1293,17 @@ public class LayoutEditorToolsTest {
     public void tearDown() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.dispose(layoutEditor);
-            layoutEditor = null;
-            let = null;
-            layoutBlocks = null;
-            turnouts = null;
-            signalHeads = null;
-            sensors = null;
         }
+        let = null;
+        layoutEditor = null;
+        layoutBlocks.stream().forEach(LayoutBlock::dispose);
+        layoutBlocks = null;
+        turnouts.stream().forEach(Turnout::dispose);
+        turnouts = null;
+        signalHeads.stream().forEach(SignalHead::dispose);
+        signalHeads = null;
+        sensors.stream().forEach(Sensor::dispose);
+        sensors = null;
         JUnitUtil.tearDown();
     }
 //
