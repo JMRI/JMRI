@@ -1,26 +1,23 @@
 package jmri.jmrit.logixng.digital.implementation;
 
+import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.jmrit.logixng.Base;
 import jmri.jmrit.logixng.DigitalExpressionManager;
 import jmri.jmrit.logixng.FemaleSocket;
 import jmri.jmrit.logixng.FemaleSocketFactory;
 import jmri.jmrit.logixng.FemaleSocketListener;
-import jmri.jmrit.logixng.MaleSocket;
 
 /**
  *
  */
 public class DefaultFemaleDigitalExpressionSocketFactory implements FemaleSocketFactory {
 
+    @Nonnull
     @Override
-    public FemaleSocket create(Base parent, FemaleSocketListener listener) {
-        return InstanceManager.getDefault(DigitalExpressionManager.class).createFemaleSocket(parent, listener, getNewSocketName(parent));
-    }
-
-    @Override
-    public MaleSocket getBeanBySystemName(String systemName) {
-        throw new UnsupportedOperationException("Not supported.");
+    public FemaleSocket create(@Nonnull Base parent, @Nonnull FemaleSocketListener listener) {
+        return InstanceManager.getDefault(DigitalExpressionManager.class)
+                .createFemaleSocket(parent, listener, getNewSocketName(parent));
     }
 
     public String getNewSocketName(Base parent) {

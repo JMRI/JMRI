@@ -157,7 +157,7 @@ public class Or extends AbstractDigitalExpression implements FemaleSocketListene
                     if (socketSystemName != null) {
                         MaleSocket maleSocket =
                                 InstanceManager.getDefault(DigitalExpressionManager.class)
-                                        .getBeanBySystemName(socketSystemName);
+                                        .getBySystemName(socketSystemName);
                         if (maleSocket != null) {
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();

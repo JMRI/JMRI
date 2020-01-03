@@ -151,7 +151,7 @@ public class DoStringAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(StringExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
                         _stringExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
@@ -174,7 +174,7 @@ public class DoStringAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(StringActionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
                         _stringActionSocket.connect(maleSocket);
                         maleSocket.setup();

@@ -280,7 +280,7 @@ public class IfThenElse extends AbstractDigitalAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
                         _ifExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
@@ -301,7 +301,7 @@ public class IfThenElse extends AbstractDigitalAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalActionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     _thenActionSocket.disconnect();
                     if (maleSocket != null) {
                         _thenActionSocket.connect(maleSocket);
@@ -323,7 +323,7 @@ public class IfThenElse extends AbstractDigitalAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalActionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     _elseActionSocket.disconnect();
                     if (maleSocket != null) {
                         _elseActionSocket.connect(maleSocket);

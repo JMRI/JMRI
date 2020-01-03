@@ -158,7 +158,7 @@ public class Many extends AbstractDigitalAction
                     if (socketSystemName != null) {
                         MaleSocket maleSocket =
                                 InstanceManager.getDefault(DigitalActionManager.class)
-                                        .getBeanBySystemName(socketSystemName);
+                                        .getBySystemName(socketSystemName);
                         if (maleSocket != null) {
                             ae._socket.connect(maleSocket);
                             maleSocket.setup();

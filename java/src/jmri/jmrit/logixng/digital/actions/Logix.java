@@ -172,7 +172,7 @@ public class Logix extends AbstractDigitalAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
                         _expressionSocket.connect(maleSocket);
                         maleSocket.setup();
@@ -193,7 +193,7 @@ public class Logix extends AbstractDigitalAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalBooleanActionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     _actionSocket.disconnect();
                     if (maleSocket != null) {
                         _actionSocket.connect(maleSocket);

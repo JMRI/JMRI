@@ -137,7 +137,7 @@ public class TriggerOnce extends AbstractDigitalExpression implements FemaleSock
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
                         _childExpression.connect(maleSocket);
                         maleSocket.setup();

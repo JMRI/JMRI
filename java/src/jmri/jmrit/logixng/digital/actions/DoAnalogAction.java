@@ -151,7 +151,7 @@ public class DoAnalogAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(AnalogExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
                         _analogExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
@@ -174,7 +174,7 @@ public class DoAnalogAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(AnalogActionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
                         _analogActionSocket.connect(maleSocket);
                         maleSocket.setup();

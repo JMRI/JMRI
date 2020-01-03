@@ -146,7 +146,7 @@ public class Many extends AbstractAnalogAction
                     if (socketSystemName != null) {
                         MaleSocket maleSocket =
                                 InstanceManager.getDefault(AnalogActionManager.class)
-                                        .getBeanBySystemName(socketSystemName);
+                                        .getBySystemName(socketSystemName);
                         if (maleSocket != null) {
                             ae._socket.connect(maleSocket);
                             maleSocket.setup();

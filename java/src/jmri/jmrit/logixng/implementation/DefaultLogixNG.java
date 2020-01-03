@@ -168,7 +168,7 @@ public class DefaultLogixNG extends AbstractNamedBean
                 if (systemName != null) {
                     entry._conditionalNG =
                             InstanceManager.getDefault(ConditionalNG_Manager.class)
-                                    .getBeanBySystemName(systemName);
+                                    .getBySystemName(systemName);
                     if (entry._conditionalNG != null) {
                         entry._conditionalNG.setup();
                     } else {

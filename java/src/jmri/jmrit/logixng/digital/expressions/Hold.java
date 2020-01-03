@@ -157,7 +157,7 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
                         _holdExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
@@ -178,7 +178,7 @@ public class Hold extends AbstractDigitalExpression implements FemaleSocketListe
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     _triggerExpressionSocket.disconnect();
                     if (maleSocket != null) {
                         _triggerExpressionSocket.connect(maleSocket);

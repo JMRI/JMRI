@@ -150,7 +150,7 @@ public class ActionTimer extends AbstractDigitalAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalActionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     _actionSocket.disconnect();
                     if (maleSocket != null) {
                         _actionSocket.connect(maleSocket);

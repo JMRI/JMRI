@@ -14,15 +14,9 @@ public interface FemaleSocketFactory {
      * 
      * @param parent the parent of this object
      * @param listener the listener of the female socket
+     * @return the female socket
      */
-    public FemaleSocket create(Base parent, FemaleSocketListener listener);
-    
-    /**
-     * Get a named bean by system name.
-     * The bean must be wrapped in a male socket.
-     */
-    @CheckReturnValue
-    @CheckForNull
-    public MaleSocket getBeanBySystemName(@Nonnull String systemName);
+    @Nonnull
+    public FemaleSocket create(@Nonnull Base parent, @Nonnull FemaleSocketListener listener);
     
 }

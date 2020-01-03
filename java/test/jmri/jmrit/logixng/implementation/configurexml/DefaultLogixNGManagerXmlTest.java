@@ -75,7 +75,7 @@ public class DefaultLogixNGManagerXmlTest {
         e2 = new Element("logixng");
         String systemName = "IQ1001";
         Assert.assertNotNull("bean exists",
-                InstanceManager.getDefault(LogixNG_Manager.class).getBeanBySystemName(systemName));
+                InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName(systemName));
         e2.addContent(new Element("systemName").addContent(systemName));
         e.addContent(e2);
         b.loadLogixNGs(e);
@@ -89,7 +89,7 @@ public class DefaultLogixNGManagerXmlTest {
         e2.setAttribute("enabled", "");
         e.addContent(e2);
         b.loadLogixNGs(e);
-        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBeanBySystemName("IQ1003");
+        LogixNG logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ1003");
         Assert.assertNotNull("bean is not null", logixNG);
         Assert.assertFalse("bean is not enabled", logixNG.isEnabled());
         
@@ -102,7 +102,7 @@ public class DefaultLogixNGManagerXmlTest {
         e2.setAttribute("enabled", "invalid value");
         e.addContent(e2);
         b.loadLogixNGs(e);
-        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBeanBySystemName("IQ1004");
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ1004");
         Assert.assertNotNull("bean is not null", logixNG);
         Assert.assertFalse("bean is not enabled", logixNG.isEnabled());
         
@@ -115,7 +115,7 @@ public class DefaultLogixNGManagerXmlTest {
         e2.setAttribute("enabled", "yes");
         e.addContent(e2);
         b.loadLogixNGs(e);
-        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBeanBySystemName("IQ1005");
+        logixNG = InstanceManager.getDefault(LogixNG_Manager.class).getBySystemName("IQ1005");
         Assert.assertNotNull("bean is not null", logixNG);
         Assert.assertTrue("bean is enabled", logixNG.isEnabled());
         

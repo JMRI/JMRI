@@ -293,7 +293,9 @@ public class DefaultConditionalNG extends AbstractBase
             
             if (_socketSystemName != null) {
                 try {
-                    MaleSocket maleSocket = InstanceManager.getDefault(DigitalActionManager.class).getBeanBySystemName(_socketSystemName);
+                    MaleSocket maleSocket =
+                            InstanceManager.getDefault(DigitalActionManager.class)
+                                    .getBySystemName(_socketSystemName);
                     if (maleSocket != null) {
                         _femaleActionSocket.connect(maleSocket);
                         maleSocket.setup();

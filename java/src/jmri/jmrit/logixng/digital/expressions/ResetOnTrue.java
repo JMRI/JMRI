@@ -160,7 +160,7 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     if (maleSocket != null) {
                         _primaryExpressionSocket.connect(maleSocket);
                         maleSocket.setup();
@@ -181,7 +181,7 @@ public class ResetOnTrue extends AbstractDigitalExpression implements FemaleSock
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     _secondaryExpressionSocket.disconnect();
                     if (maleSocket != null) {
                         _secondaryExpressionSocket.connect(maleSocket);

@@ -292,7 +292,7 @@ public class ActionThrottle extends AbstractDigitalAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(AnalogExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     _locoAddressSocket.disconnect();
                     if (maleSocket != null) {
                         _locoAddressSocket.connect(maleSocket);
@@ -314,7 +314,7 @@ public class ActionThrottle extends AbstractDigitalAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(AnalogExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     _locoSpeedSocket.disconnect();
                     if (maleSocket != null) {
                         _locoSpeedSocket.connect(maleSocket);
@@ -336,7 +336,7 @@ public class ActionThrottle extends AbstractDigitalAction
                 if (socketSystemName != null) {
                     MaleSocket maleSocket =
                             InstanceManager.getDefault(DigitalExpressionManager.class)
-                                    .getBeanBySystemName(socketSystemName);
+                                    .getBySystemName(socketSystemName);
                     _locoDirectionSocket.disconnect();
                     if (maleSocket != null) {
                         _locoDirectionSocket.connect(maleSocket);

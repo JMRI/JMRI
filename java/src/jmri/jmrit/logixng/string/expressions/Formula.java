@@ -216,7 +216,7 @@ public class Formula extends AbstractStringExpression implements FemaleSocketLis
                     if (socketSystemName != null) {
                         MaleSocket maleSocket =
                                 InstanceManager.getDefault(StringExpressionManager.class)
-                                        .getBeanBySystemName(socketSystemName);
+                                        .getBySystemName(socketSystemName);
                         if (maleSocket != null) {
                             ee._socket.connect(maleSocket);
                             maleSocket.setup();
