@@ -631,19 +631,19 @@ public class LayoutEditorToolsTest {
     @After
     public void tearDown() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
+            layoutBlocks.stream().forEach(LayoutBlock::dispose);
+            turnouts.stream().forEach(Turnout::dispose);
+            signalHeads.stream().forEach(SignalHead::dispose);
+            sensors.stream().forEach(Sensor::dispose);
             EditorFrameOperator operator = new EditorFrameOperator(layoutEditor);
             operator.closeFrameWithConfirmations();
             JUnitUtil.dispose(layoutEditor);
         }
         let = null;
         layoutEditor = null;
-        layoutBlocks.stream().forEach(LayoutBlock::dispose);
         layoutBlocks = null;
-        turnouts.stream().forEach(Turnout::dispose);
         turnouts = null;
-        signalHeads.stream().forEach(SignalHead::dispose);
         signalHeads = null;
-        sensors.stream().forEach(Sensor::dispose);
         sensors = null;
         JUnitUtil.tearDown();
     }
