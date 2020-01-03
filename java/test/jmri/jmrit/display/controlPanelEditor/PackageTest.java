@@ -12,6 +12,7 @@ import org.junit.runners.Suite;
     ControlPanelEditorActionTest.class,
     PortalIconTest.class,
     PortalListTest.class,
+    SchemaTest.class,
     LengthPanelTest.class,
     CircuitBuilderTest.class,
     EditPortalFrameTest.class,

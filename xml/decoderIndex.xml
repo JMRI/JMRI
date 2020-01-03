@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.17.8ish+jake+20191218T1552Z+R5bf1220c9e on Wed Dec 18 07:52:23 PST 2019-->
-  <decoderIndex version="986">
+  <!--Written by JMRI version 4.19.1ish+jake+20191225T2237Z+Rdaf4668949 on Wed Dec 25 14:37:59 PST 2019-->
+  <decoderIndex version="988">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -33236,7 +33236,8 @@
         <model model="73510" />
       </family>
       <family name="Mini-Function Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_73900.xml">
-        <model model="73900" />
+        <model model="73800" productID="73800" maxTotalCurrent="0.6A" />
+        <model model="73900" productID="73900" maxTotalCurrent="0.6A" />
       </family>
       <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_73xx5.xml">
         <!-- to be checked by hardware owner -->

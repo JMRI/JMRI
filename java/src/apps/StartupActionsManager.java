@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ServiceLoader;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
@@ -137,6 +138,7 @@ public class StartupActionsManager extends AbstractPreferencesManager {
     }
 
     @Override
+    @Nonnull
     public Set<Class<? extends PreferencesManager>> getRequires() {
         Set<Class<? extends PreferencesManager>> requires = super.getRequires();
         requires.add(ManagerDefaultSelector.class);

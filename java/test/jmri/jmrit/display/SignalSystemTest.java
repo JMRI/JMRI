@@ -32,7 +32,7 @@ public class SignalSystemTest {
         
         // load file
         InstanceManager.getDefault(ConfigureManager.class)
-                .load(new java.io.File("java/test/jmri/jmrit/display/verify/SimplePanel_OBlocks-DB1969.xml"));
+                .load(new java.io.File("java/test/jmri/jmrit/display/valid/SimplePanel_OBlocks-DB1969.xml"));
 
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
@@ -105,7 +105,7 @@ public class SignalSystemTest {
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).setStabilisedSensor("IS_ROUTING_DONE");
 
         InstanceManager.getDefault(ConfigureManager.class)
-                .load(new java.io.File("java/test/jmri/jmrit/display/verify/AA1UPtest.xml"));
+                .load(new java.io.File("java/test/jmri/jmrit/display/valid/AA1UPtest.xml"));
 
         InstanceManager.getDefault(jmri.LogixManager.class).activateAllLogixs();
         InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();

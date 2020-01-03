@@ -340,7 +340,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
      * @param type       the device type
      * @return enum indicating current validity, which might be just as a prefix
      */
-    public NameValidity validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         int offset = checkSystemPrefix(systemName);
         if (offset < 1) {
             log.debug("invalid system prefix in CMRI system name: {}", systemName);

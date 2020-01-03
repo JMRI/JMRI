@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.Nonnull;
 import jmri.Light;
 import jmri.NamedBean;
 import jmri.implementation.AbstractVariableLight;
@@ -20,7 +21,7 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
      * Create and return an internal (no layout connection) Light
      */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) {
         return new AbstractVariableLight(systemName, userName) {
 
             @Override
@@ -39,7 +40,7 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
             }
 
             @Override
-            public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
+            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
                 return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
         };
@@ -49,22 +50,23 @@ public class InternalLightManager extends jmri.managers.AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;
     }
 
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public boolean supportsVariableLights(String systemName) {
+    public boolean supportsVariableLights(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

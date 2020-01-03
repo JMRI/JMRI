@@ -3,7 +3,6 @@ package jmri.managers;
 import java.util.Objects;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrix.SystemConnectionMemo;
@@ -38,7 +37,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public Turnout provideTurnout(@Nonnull String name) {
+        log.debug("provide turnout {}", name);
         Turnout result = getTurnout(name);
         if (result == null) {
             if (name.startsWith(getSystemPrefix() + typeLetter())) {
@@ -63,21 +64,9 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
-    public Turnout getBySystemName(@Nonnull String name) {
-        return _tsys.get(name);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public Turnout getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
-    /** {@inheritDoc} */
-    @Override
+    @Nonnull
     public Turnout newTurnout(@Nonnull String systemName, @CheckForNull String userName) {
         Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
-
         // add normalize? see AbstractSensor
         log.debug("newTurnout: {};{}", systemName, userName);
 
@@ -91,55 +80,55 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         }
 
         // return existing if there is one
-        Turnout s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(systemName) != s) {
+        Turnout t;
+        if ((userName != null) && ((t = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != t) {
                 log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
-                        userName, systemName, s.getSystemName());
+                        userName, systemName, t.getSystemName());
             }
-            return s;
+            return t;
         }
-        if ((s = getBySystemName(systemName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
+        if ((t = getBySystemName(systemName)) != null) {
+            if ((t.getUserName() == null) && (userName != null)) {
+                t.setUserName(userName);
             } else if (userName != null) {
                 log.warn("Found turnout via system name ({}) with non-null user name ({}). Turnout \"{} ({})\" cannot be used.",
-                        systemName, s.getUserName(), systemName, userName);
+                        systemName, t.getUserName(), systemName, userName);
             }
-            return s;
+            return t;
         }
 
         // doesn't exist, make a new one
-        s = createNewTurnout(systemName, userName);
-
+        t = createNewTurnout(systemName, userName);
         // if that failed, blame it on the input arguments
-        if (s == null) {
+        if (t == null) {
             throw new IllegalArgumentException("Unable to create turnout from " + systemName);
         }
 
         // Some implementations of createNewTurnout() register the new bean,
         // some don't. 
-        if (getBeanBySystemName(s.getSystemName()) == null) {
+        if (getBySystemName(t.getSystemName()) == null) {
             // save in the maps if successful
-            register(s);
+            register(t);
         }
 
         try {
-            s.setStraightSpeed("Global");
+            t.setStraightSpeed("Global");
         } catch (jmri.JmriException ex) {
             log.error(ex.toString());
         }
 
         try {
-            s.setDivergingSpeed("Global");
+            t.setDivergingSpeed("Global");
         } catch (jmri.JmriException ex) {
             log.error(ex.toString());
         }
-        return s;
+        return t;
     }
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTurnouts" : "BeanNameTurnout");
     }
@@ -154,12 +143,14 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getClosedText() {
         return Bundle.getMessage("TurnoutStateClosed");
     }
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getThrownText() {
         return Bundle.getMessage("TurnoutStateThrown");
     }
@@ -209,7 +200,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /**
      * Internal method to invoke the factory, after all the logic for returning
-     * an existing method has been invoked.
+     * an existing Turnout has been invoked.
      *
      * @return never null
      */
@@ -217,6 +208,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String[] getValidOperationTypes() {
         if (jmri.InstanceManager.getNullableDefault(jmri.CommandStation.class) != null) {
             return new String[]{"Sensor", "Raw", "NoFeedback"};
@@ -255,6 +247,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
     public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         // If the hardware address passed does not already exist then this can
         // be considered the next valid address.
+        log.debug("getNextValid for address {}", curAddress);
         String tmpSName = "";
         try {
             tmpSName = createSystemName(curAddress, prefix);
@@ -266,6 +259,7 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
 
         Turnout t = getBySystemName(tmpSName);
         if (t == null) {
+            log.debug("address {} not in use", tmpSName);
             return curAddress;
         }
 
@@ -301,8 +295,8 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
         }
     }
 
-    String defaultClosedSpeed = "Normal";
-    String defaultThrownSpeed = "Restricted";
+    private String defaultClosedSpeed = "Normal";
+    private String defaultThrownSpeed = "Restricted";
 
     /** {@inheritDoc} */
     @Override
