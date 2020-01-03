@@ -91,35 +91,10 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
 
     public JsonNode doPost(LayoutBlock layoutBlock, JsonNode data, String name, String type, JsonRequest request) throws JsonException {
         postNamedBean(layoutBlock, data, name, type, request); // throws JsonException if layoutBlock == null
-        Color color;
+        setBlockTrackColor(layoutBlock, TRACK_COLOR, type, data, request);
+        setBlockTrackColor(layoutBlock, OCCUPIED_COLOR, type, data, request);
+        setBlockTrackColor(layoutBlock, EXTRA_COLOR, type, data, request);
         String string = "";
-        try {
-            string = data.path(TRACK_COLOR).asText();
-            color = (!data.path(TRACK_COLOR).isMissingNode() ? ColorUtil.stringToColor(string) : null);
-            if (color != null) {
-                layoutBlock.setBlockTrackColor(color);
-            }
-        } catch (IllegalArgumentException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, JsonException.ERROR_BAD_PROPERTY_VALUE, string, TRACK_COLOR, type), request.id);
-        }
-        try {
-            string = data.path(OCCUPIED_COLOR).asText();
-            color = (!data.path(OCCUPIED_COLOR).isMissingNode() ? ColorUtil.stringToColor(string) : null);
-            if (color != null) {
-                layoutBlock.setBlockTrackColor(color);
-            }
-        } catch (IllegalArgumentException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, JsonException.ERROR_BAD_PROPERTY_VALUE, string, OCCUPIED_COLOR, type), request.id);
-        }
-        try {
-            string = data.path(EXTRA_COLOR).asText();
-            color = (!data.path(EXTRA_COLOR).isMissingNode() ? ColorUtil.stringToColor(string) : null);
-            if (color != null) {
-                layoutBlock.setBlockTrackColor(color);
-            }
-        } catch (IllegalArgumentException ex) {
-            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, JsonException.ERROR_BAD_PROPERTY_VALUE, string, EXTRA_COLOR, type), request.id);
-        }
         if (!data.path(MEMORY).isMissingNode()) {
             string = !data.path(MEMORY).isNull() ? data.path(MEMORY).asText() : null;
             if (string != null) {
@@ -146,6 +121,19 @@ public class JsonLayoutBlockHttpService extends JsonNonProvidedNamedBeanHttpServ
         }
         layoutBlock.setUseExtraColor(data.path(USE_EXTRA_COLOR).asBoolean(layoutBlock.getUseExtraColor()));
         return doGet(layoutBlock, name, type, request);
+    }
+
+    private void setBlockTrackColor(LayoutBlock layoutBlock, String key, String type, JsonNode data, JsonRequest request) throws JsonException {
+        String value = "";
+        try {
+            value = data.path(key).asText();
+            Color color = (!data.path(key).isMissingNode() ? ColorUtil.stringToColor(value) : null);
+            if (color != null) {
+                layoutBlock.setBlockTrackColor(color);
+            }
+        } catch (IllegalArgumentException ex) {
+            throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, JsonException.ERROR_BAD_PROPERTY_VALUE, value, key, type), request.id);
+        }
     }
 
     @Override
