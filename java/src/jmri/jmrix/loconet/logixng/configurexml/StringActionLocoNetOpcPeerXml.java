@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet.logixng.configurexml;
 
+import java.nio.charset.Charset;
 import jmri.InstanceManager;
 import jmri.MemoryManager;
 import jmri.NamedBeanHandle;
@@ -34,7 +35,13 @@ public class StringActionLocoNetOpcPeerXml extends jmri.managers.configurexml.Ab
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
         
         storeCommon(p, element);
-
+        
+        element.addContent(new Element("manufacturerID").addContent(Integer.toString(p.getManufacturerID())));
+        element.addContent(new Element("developerID").addContent(Integer.toString(p.getDeveloperID())));
+        element.addContent(new Element("sourceAddress").addContent(Integer.toString(p.getSourceAddress())));
+        element.addContent(new Element("destAddress").addContent(Integer.toString(p.getDestAddress())));
+        element.addContent(new Element("svAddress").addContent(Integer.toString(p.get_SV_Address())));
+        element.addContent(new Element("charset").addContent(p.getCharset().name()));
 //        NamedBeanHandle memory = p.getMemory();
 //        if (memory != null) {
 //            element.addContent(new Element("memory").addContent(memory.getName()));
@@ -42,53 +49,57 @@ public class StringActionLocoNetOpcPeerXml extends jmri.managers.configurexml.Ab
         
         return element;
     }
-/*
-    Element addLightElement(NamedBeanHandle<Light> to, String which) {
-        Element el = new Element("lightname");
-        el.setAttribute("defines", which);
-        el.addContent(to.getName());
-        return el;
-    }
-
-    Element addLightElement(Light to) {
-        String user = to.getUserName();
-        String sys = to.getSystemName();
-
-        Element el = new Element("light");
-        el.setAttribute("systemName", sys);
-        if (user != null) {
-            el.setAttribute("userName", user);
-        }
-
-        return el;
-    }
-*/
+    
     @Override
     public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {     // Test class that inherits this class throws exception
-//        List<Element> l = shared.getChildren("lightname");
-/*        
-        if (l.size() == 0) {
-            l = shared.getChildren("light");  // older form
-        }
-        NamedBeanHandle<Light> low = loadLight(l.get(0));
-        NamedBeanHandle<Light> high = loadLight(l.get(1));
-*/        
         // put it together
         String sys = getSystemName(shared);
         String uname = getUserName(shared);
-        StringActionLocoNetOpcPeer h = new StringActionLocoNetOpcPeer(sys, uname);
-
-        loadCommon(h, shared);
-
+        StringActionLocoNetOpcPeer p = new StringActionLocoNetOpcPeer(sys, uname);
+        
+        loadCommon(p, shared);
+        
+        Element numberElement = shared.getChild("manufacturerID");
+        if (numberElement != null) {
+            p.setManufacturerID(Integer.parseInt(numberElement.getTextTrim()));
+        }
+        
+        numberElement = shared.getChild("developerID");
+        if (numberElement != null) {
+            p.setDeveloperID(Integer.parseInt(numberElement.getTextTrim()));
+        }
+        
+        numberElement = shared.getChild("sourceAddress");
+        if (numberElement != null) {
+            p.setSourceAddress(Integer.parseInt(numberElement.getTextTrim()));
+        }
+        
+        numberElement = shared.getChild("destAddress");
+        if (numberElement != null) {
+            p.setDestAddress(Integer.parseInt(numberElement.getTextTrim()));
+        }
+        
+        numberElement = shared.getChild("svAddress");
+        if (numberElement != null) {
+            p.set_SV_Address(Integer.parseInt(numberElement.getTextTrim()));
+        }
+        
+        Element charsetName = shared.getChild("charset");
+        if (charsetName != null) {
+            Charset charset = Charset.availableCharsets().get(charsetName.getTextTrim());
+            if (charset != null) {
+                p.setCharset(charset);
+            } else {
+                log.error("Charset " + charset + " is not found");
+            }
+        }
+        
 //        Element memoryName = shared.getChild("memory");
 //        if (memoryName != null) {
 //            h.setMemory(InstanceManager.getDefault(MemoryManager.class).getMemory(memoryName.getTextTrim()));
 //        }
-
-        // this.checkedNamedBeanReference()
-        // <T extends NamedBean> T checkedNamedBeanReference(String name, @Nonnull T type, @Nonnull Manager<T> m) {
-
-        InstanceManager.getDefault(StringActionManager.class).registerAction(h);
+        
+        InstanceManager.getDefault(StringActionManager.class).registerAction(p);
         return true;
     }
     

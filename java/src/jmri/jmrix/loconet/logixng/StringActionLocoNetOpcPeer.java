@@ -4,6 +4,8 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyVetoException;
 import java.beans.VetoableChangeListener;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Locale;
 import javax.annotation.CheckForNull;
@@ -48,8 +50,7 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
         implements LocoNetListener {
 //        implements VetoableChangeListener {
 
-//    private NamedBeanHandle<Memory> _memoryHandle;
-    
+    // FIX THIS LATER!!! IT'S HARDCODED NOW.
     // When sending OPC_PEER messages on the LocoNet, an unique manufacturer ID
     // is needed, OR, a unique developer ID while using NMRA DIY DCC ManufacturerId of 13.
     // Please do not use developer ID of 17 if you develop your own LocoNet device.
@@ -58,17 +59,16 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
     private int _manufacturerID = 13;   // Default to NMRA DIY DCC ManufacturerId of 13
     private int _developerID = 17;      // Default to the developer ID of Daniel Bergqvist, 17.
     
-    // FIX THIS LATER!!! IT'S HARDCODED NOW.
+    private int _sourceAddress = 0x00;
+    private int _destAddress = 256;         // FIX LATER !!!
+    private int _svAddress = 20;           // FIX LATER !!!
+    
+    private Charset _charset = StandardCharsets.ISO_8859_1;
     private LocoNetSystemConnectionMemo lm;
     private LnTrafficController tc;
     
-//    private String _stringToSend;
     private int _index = -1;    // Index in string to send. -1 if not sending.
-    private int _sourceAddress = 0x00;
-    private int _destAddress = 256;         // FIX LATER !!!
-    private int _sv_address = 20;           // FIX LATER !!!
     private byte[] _dataToSend;
-//    private int _numCharsToSend = 8;        // This MUST be a multiple of 3.
     
     public StringActionLocoNetOpcPeer(String sys, String user) {
         super(sys, user);
@@ -107,11 +107,19 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
     }
     
     public void set_SV_Address(int address) {
-        _sv_address = address;
+        _svAddress = address;
     }
     
     public int get_SV_Address() {
-        return _sv_address;
+        return _svAddress;
+    }
+    
+    public void setCharset(Charset charset) {
+        _charset = charset;
+    }
+    
+    public Charset getCharset() {
+        return _charset;
     }
     
 /*    
@@ -179,9 +187,12 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
             
             LocoNetMessage l;
             
-            int D1 = 32;    // 32 is space
-            int D2 = 32;
-            int D3 = 32;
+            int D1 = 0;     // 0 is end of string for asciiz strings
+            int D2 = 0;
+            int D3 = 0;
+//            int D1 = 32;    // 32 is space
+//            int D2 = 32;
+//            int D3 = 32;
             
             if (_dataToSend.length > _index) D1 = _dataToSend[_index];
             if (_dataToSend.length > _index+1) D2 = _dataToSend[_index+1];
@@ -195,7 +206,7 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
                     _sourceAddress,
                     LnSv2MessageContents.SV_CMD_WRITE_FOUR,
                     _destAddress,
-                    _sv_address,
+                    _svAddress,
                     D1,
                     D2,
                     D3,
@@ -220,18 +231,10 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
         // We cannot send the string if we don't have any LocoNet connection
         if (tc == null) return;
         
-        // The length of the string to send must be a multiple of 3
-//        if (value.isEmpty()) value = "   ";                 // Three spaces
-//        else if (value.length() % 3 == 1) value += "  ";    // Add two spaces
-//        else if (value.length() % 3 == 2) value += ' ';     // Add one space
-        
-//        _stringToSend = value;
-        _dataToSend = value.getBytes("ISO-8859-1");
+        _dataToSend = value.getBytes(_charset);
+//        _dataToSend = value.getBytes("ISO-8859-1");
         _index = 0;
         sendString();
-//        if (_memoryHandle != null) {
-//            _memoryHandle.getBean().setValue(value);
-//        }
     }
 /*
     @Override
@@ -328,19 +331,16 @@ public class StringActionLocoNetOpcPeer extends AbstractStringAction
 
     @Override
     public void message(LocoNetMessage msg) {
-        System.out.format("Receive LocoNet message: %s, %s%n", msg.toString(), msg.getClass().getName());
+//        System.out.format("Receive LocoNet message: %s, %s%n", msg.toString(), msg.getClass().getName());
         
         // We don't care if we don't have anything to send.
         if (_index == -1) return;
         
         if (msg.getOpCode() == LnConstants.OPC_PEER_XFER) {
-            System.out.format("aaa%n");
             LnSv2MessageContents lnSV2Message = new LnSv2MessageContents(msg);
-            System.out.format("Receive LocoNet message: %d, %d - %d, %d%n", lnSV2Message.getDestAddr(), _destAddress, lnSV2Message.getSVNum(), _sv_address);
+//            System.out.format("Receive LocoNet message: %d, %d - %d, %d%n", lnSV2Message.getDestAddr(), _destAddress, lnSV2Message.getSVNum(), _sv_address);
             if (lnSV2Message.getDestAddr() == _destAddress
-                    && lnSV2Message.getSVNum() == _sv_address) {
-                
-                System.out.format("bbb%n");
+                    && lnSV2Message.getSVNum() == _svAddress) {
                 
                 // If the highest bit of D4 is set, we are finished.
                 if (lnSV2Message.getSv2D4() >= 0x80) _index = -1;
