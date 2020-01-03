@@ -346,6 +346,8 @@ public abstract class JsonHttpService {
      *                       not a type handled by this service, this must be
      *                       thrown with an error code of 500 and the localized
      *                       message ERROR_UNKNOWN_TYPE
+     * @deprecated since 4.19.2; use
+     *             {@link #doSchema(String, boolean, JsonRequest)} instead
      */
     @Deprecated
     @Nonnull
@@ -356,7 +358,7 @@ public abstract class JsonHttpService {
 
     /**
      * Helper to make implementing
-     * {@link #doSchema(String, boolean, Locale, int)} easier. Throws a
+     * {@link #doSchema(String, boolean, JsonRequest)} easier. Throws a
      * JsonException based on an IOException or NullPointerException if unable
      * to read the schemas as resources.
      *
@@ -389,7 +391,7 @@ public abstract class JsonHttpService {
 
     /**
      * Helper to make implementing
-     * {@link #doSchema(String, boolean, Locale, int)} easier.
+     * {@link #doSchema(String, boolean, JsonRequest)} easier.
      *
      * @param type   the type for which a schema is requested
      * @param server true if the schema is for a message from the server; false
