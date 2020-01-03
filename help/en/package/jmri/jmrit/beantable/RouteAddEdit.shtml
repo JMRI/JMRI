@@ -31,7 +31,9 @@
 
       <p>The first thing you must do when creating a route is name
       it. In the box labeled "System Name" enter a unique name for
-      your Route. You can optionally enter a more descriptive name
+      your Route. If the system name does not start with "IO", "IO"
+      will be prepended to the system name when the Route is created.
+      You can optionally enter a more descriptive name
       in the "User Name" box.</p>
 
       <p>The radio button below the "User Name" allows you to show

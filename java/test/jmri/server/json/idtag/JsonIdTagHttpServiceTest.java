@@ -158,9 +158,9 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
         IdTagManager manager = InstanceManager.getDefault(IdTagManager.class);
         manager.provide("ID1");
         // delete an idTag
-        assertNotNull(manager.getBeanBySystemName("ID1"));
+        assertNotNull(manager.getBySystemName("ID1"));
         service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
-        assertNull(manager.getBeanBySystemName("ID1"));
+        assertNull(manager.getBySystemName("ID1"));
         manager.provide("ID1").addPropertyChangeListener(new PropertyChangeListener() {
 
             @Override
@@ -169,7 +169,7 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
             }
         }, "ID1", "Test Listener");
         // delete an idTag with a named listener ref
-        assertNotNull(manager.getBeanBySystemName("ID1"));
+        assertNotNull(manager.getBySystemName("ID1"));
         try {
             // first attempt should fail on conflict
             service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);
@@ -180,10 +180,10 @@ public class JsonIdTagHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<I
             assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }
-        assertNotNull(manager.getBeanBySystemName("ID1"));
+        assertNotNull(manager.getBySystemName("ID1"));
         // will throw if prior catch failed
         service.doDelete(JsonIdTag.IDTAG, "ID1", message, locale, 0);
-        assertNull(manager.getBeanBySystemName("ID1"));
+        assertNull(manager.getBySystemName("ID1"));
         try {
             // deleting again should throw an exception
             service.doDelete(JsonIdTag.IDTAG, "ID1", NullNode.getInstance(), locale, 0);

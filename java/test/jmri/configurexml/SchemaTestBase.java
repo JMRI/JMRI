@@ -33,6 +33,28 @@ public class SchemaTestBase {
         this.file = file;
         this.pass = pass;
     }
+    
+    /**
+     * Configure for handling I/O checks:
+     * <ul>
+     * <li> Files in the load subdirectory will be loaded and stored
+     * <li> Files in the valid subdirectory will be checked for schema validity
+     * <li> Files in the invalid subdirectory will be checked for schema _in_validity
+     * </ul>
+     * @param path the path to this directory
+     * @return the list of files to process
+     */
+    static protected Iterable<Object[]> setTestFilesBelowThisPath(String path) {
+        ArrayList<Object[]> files = new ArrayList<>();
+        // the following are just tested for schema pass/fail, not load/store
+        files.addAll(getFiles(new File(path+"/valid"), true, true));
+        files.addAll(getFiles(new File(path+"/invalid"), true, false));
+        // also tested for load/store
+        files.addAll(getFiles(new File(path+"/load"), true, true));
+
+        Assert.assertTrue("There should be something here; misconfigured?", files.size() > 0);
+        return files;    
+    }
 
     @Test
     public void validate() {

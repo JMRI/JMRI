@@ -276,7 +276,6 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @return the JSON panel message.
      * @throws JsonException if panel not found
      */
-    @SuppressWarnings("null")
     public JsonNode getPanel(Locale locale, String name, int id) throws JsonException {
         ArrayNode an = getPanels(JSON.XML, id);
         for (JsonNode jn : an) { //loop through panels
@@ -367,7 +366,6 @@ public class JsonUtilHttpService extends JsonHttpService {
      * @return the JSON systemConnections message.
      * @throws JsonException if systemConnection not found
      */
-    @SuppressWarnings("null")
     public JsonNode getSystemConnection(Locale locale, String name, int id) throws JsonException {
         ArrayNode an = getSystemConnections(locale, id);
         for (JsonNode jn : an) { //loop through systemConnections

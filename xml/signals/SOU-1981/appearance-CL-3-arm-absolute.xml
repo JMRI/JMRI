@@ -24,6 +24,12 @@
         <authorinitials>GPM</authorinitials>
         <revremark>Original Edition</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>update "ourAspect" to values which mast supports.</revremark>
+    </revision>
   </revhistory>
   
   <aspecttable>SOU 1981</aspecttable>
@@ -245,10 +251,12 @@
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	
+	<!-- The following references the "Restricted Proceed" aspect, which is undefined here-->
 	<aspectMapping>
 	  <advancedAspect>Restricted Proceed</advancedAspect>
 	  <ourAspect>Approach</ourAspect>
-	  <ourAspect>Diverging Route Approach</ourAspect>
+	  <ourAspect>Diverging Route Approach (Medium)</ourAspect>
+	  <ourAspect>Diverging Route Approach (Slow)</ourAspect>
 	  <ourAspect>Restricted Proceed</ourAspect>
 	</aspectMapping>
 	

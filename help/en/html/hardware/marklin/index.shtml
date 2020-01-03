@@ -23,7 +23,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
       <h1>Hardware Support: M&auml;rklin Command Station 2

@@ -161,7 +161,7 @@ public class RpsSystemConnectionMemo extends SystemConnectionMemo {
      *
      * @return VALID if system name has a valid format, else return INVALID
      */
-    public NameValidity validSystemNameFormat(String systemName, char type) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName, char type) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(getSystemPrefix() + type))) {
             // here if an illegal format 
