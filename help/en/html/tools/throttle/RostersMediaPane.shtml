@@ -28,7 +28,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h2>Setting Roster Media</h2><img src=

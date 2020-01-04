@@ -32,6 +32,7 @@ public class SignalHeadIconTest extends PositionableIconTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
 
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new EditorScaffold();

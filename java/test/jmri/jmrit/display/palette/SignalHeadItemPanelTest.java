@@ -34,6 +34,7 @@ public class SignalHeadItemPanelTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

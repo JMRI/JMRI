@@ -522,7 +522,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     protected void registerBeanListener(Manager beanManager, String sysName) {
-        NamedBean b = beanManager.getBeanBySystemName(sysName);
+        NamedBean b = beanManager.getBySystemName(sysName);
         if (b == null) {
             log.debug("No bean by name {}", sysName);
             return;

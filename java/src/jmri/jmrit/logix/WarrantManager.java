@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 
 import jmri.InstanceManager;
@@ -100,14 +101,6 @@ public class WarrantManager extends AbstractManager<Warrant>
             return r;
         }
         return getBySystemName(name);
-    }
-
-    public Warrant getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    public Warrant getByUserName(String key) {
-        return _tuser.get(key);
     }
 
     public Warrant provideWarrant(String name) {
@@ -338,6 +331,7 @@ public class WarrantManager extends AbstractManager<Warrant>
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameWarrants" : "BeanNameWarrant");
     }

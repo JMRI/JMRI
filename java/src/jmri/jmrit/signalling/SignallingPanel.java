@@ -2053,7 +2053,6 @@ public class SignallingPanel extends JmriPanel {
         }
 
         // Methods to display STATE_COLUMN (aspect) ComboBox in the Signal Mast Manual Table
-        // Derived from the SignalMastJTable class (deprecated since 4.5.5):
         // All row values are in terms of the Model, not the Table as displayed.
 
         /**

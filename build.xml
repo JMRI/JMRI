@@ -315,10 +315,6 @@
         <exclude name="jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class" />
         <exclude name="jmri/jmris/srcp/parser/SRCPParserTreeConstants.class" />
         <exclude name="jmri/jmrit/audio/AudioSource.class" />
-        <exclude name="jmri/jmrit/operations/locations/Xml.class" />
-        <exclude name="jmri/jmrit/operations/rollingstock/cars/Xml.class"/>
-        <exclude name="jmri/jmrit/operations/rollingstock/engines/Xml.class" />
-        <exclude name="jmri/jmrit/operations/trains/Xml.class" />
         <exclude name="jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class" />
         <!-- Exclude deprecated classes. -->
         <exclude name="jmri/jmrix/loconet/AbstractAlmImplementation.class" />
@@ -459,6 +455,9 @@
             <fileset file="session.log"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
+        <!-- Eclipse artifacts -->
+        <delete dir=".apt_generated"/>
+        <delete dir=".apt_generated_tests"/>
     </target>
 
     <!-- end of utility targets -->

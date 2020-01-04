@@ -1,10 +1,8 @@
 package jmri.jmrit.logix;
 
-import java.beans.PropertyChangeListener;
 import javax.annotation.Nonnull;
 import jmri.InstanceManagerAutoDefault;
 import jmri.ProvidingManager;
-import jmri.SignalSystem;
 import jmri.managers.AbstractManager;
 
 /**
@@ -39,15 +37,15 @@ public class OBlockManager extends AbstractManager<OBlock>
     }
 
     /**
-     * Create a new OBlock if it does not exist Returns null if a
-     * OBlock with the same systemName or userName already exists, or if there
-     * is trouble creating a new OBlock.
+     * Create a new OBlock if it does not exist.
      *
      * @param systemName System name
      * @param userName   User name
-     * @return newly created OBlock
+     * @return newly created OBlock, or null if an OBlock with the same
+     * systemName or userName already exists, or if there
+     * is trouble creating a new OBlock
      */
-    public OBlock createNewOBlock(String systemName, String userName) {
+    public OBlock createNewOBlock(@Nonnull String systemName, String userName) {
         // Check that OBlock does not already exist
         OBlock r;
         if (userName != null && (userName.trim().length() > 0)) {
@@ -74,14 +72,14 @@ public class OBlockManager extends AbstractManager<OBlock>
     }
 
     /**
-     * Get an existing OBlock. First looks up assuming that name is a
-     * User Name. If this fails looks up assuming that name is a System Name. If
-     * both fail, returns null.
+     * Get an existing OBlock by a given name. First looks up assuming that name
+     * is a User Name. If this fails looks up assuming that name is a System Name.
+     * If both fail, returns null.
      *
      * @param name OBlock name
-     * @return OBlock, if found
+     * @return the OBlock, oe null if not found
      */
-    public OBlock getOBlock(String name) {
+    public OBlock getOBlock(@Nonnull String name) {
         OBlock r = getByUserName(name);
         if (r != null) {
             return r;
@@ -89,22 +87,14 @@ public class OBlockManager extends AbstractManager<OBlock>
         return getBySystemName(name);
     }
 
-    public OBlock getBySystemName(String name) {
-        return _tsys.get(name);
-    }
-
-    public OBlock getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
     @Override
-    public OBlock provide(String name) throws IllegalArgumentException {
+    public OBlock provide(@Nonnull String name) throws IllegalArgumentException {
         return provideOBlock(name);
     }
 
     @Nonnull
-    public OBlock provideOBlock(String name) throws IllegalArgumentException {
-        if (name == null || name.length() == 0) {
+    public OBlock provideOBlock(@Nonnull String name) throws IllegalArgumentException {
+        if (name.trim().length() == 0) {
             throw new IllegalArgumentException("name \"" + name + "\" invalid");
         }
         OBlock ob = getByUserName(name);
@@ -121,6 +111,7 @@ public class OBlockManager extends AbstractManager<OBlock>
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameOBlocks" : "BeanNameOBlock");
     }

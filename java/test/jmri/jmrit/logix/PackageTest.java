@@ -5,7 +5,6 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
-//		Something wrong in the xsd files?  maybe using -2-9-6 version?
         SchemaTest.class,
         OBlockTest.class,
         OBlockManagerTest.class,

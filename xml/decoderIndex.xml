@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder-4-15-2.xsd">
-  <!--Written by JMRI version 4.17.7ish+jake+20191205T1447Z+R4cc1a80a99 on Thu Dec 05 06:49:13 PST 2019-->
-  <decoderIndex version="984">
+  <!--Written by JMRI version 4.19.1ish+jake+20191225T2237Z+Rdaf4668949 on Wed Dec 25 14:37:59 PST 2019-->
+  <decoderIndex version="988">
     <mfgList nmraListDate="2019-02-26" updated="2019-11-17" lastadd="225,166">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -18730,286 +18730,68 @@
       <family name="Tsunami2 Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Tsunami2 Steam decoders" file="SoundTraxx_Tsu2_Steam.xml">
         <model model="TSU-1100 Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="272" comment="Model 884001">
           <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| ">
-            <label xml:lang="it">Fischio| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamo| ">
-            <label xml:lang="it">Dynamo| </label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Cylinder|Cocks">
-            <label xml:lang="it">Cilindro|Cazzi</label>
-          </output>
-          <output name="10" label="Water|Stop">
-            <label xml:lang="it">Acqua|Stop</label>
-          </output>
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brakes|" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
         <model model="TSU-1100 Steam-2" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="315" comment="Model 884006">
           <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Whistle| ">
-            <label xml:lang="it">Fischio| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Dynamo| ">
-            <label xml:lang="it">Dynamo| </label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Cylinder|Cocks">
-            <label xml:lang="it">Cilindro|Cazzi</label>
-          </output>
-          <output name="10" label="Water|Stop">
-            <label xml:lang="it">Acqua|Stop</label>
-          </output>
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="|" />
-          <!-- Not used for for this decoder -->
-          <output name="14" label="Brakes|" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="27" width="10.5" height="5" units="mm" />
         </model>
         <model model="TSU-2200 Steam" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="273" comment="Model 884002">
           <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-2200 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="2A" connector="9pin" productID="316" comment="Model 884007">
           <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-21PNEM Steam" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="274" comment="Model 884003">
           <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-21PNEM Steam-2" numOuts="6" numFns="30" maxMotorCurrent="1A" connector="21MTC" productID="317" comment="Model 884008">
           <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="30.5" width="15.5" height="6.5" units="mm" />
         </model>
         <model model="TSU-4400 Steam" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="275" comment="Model 884005">
           <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
         <model model="TSU-4400 Steam-2" numOuts="6" numFns="30" maxMotorCurrent="4A" connector="other" productID="318" comment="Model 884009">
           <versionCV lowVersionID="71" />
-          <output name="3" label="  FX3  " />
-          <output name="4" label="  FX4  " />
-          <output name="5" label="Airhorn| ">
-            <label xml:lang="it">Tromba| </label>
-          </output>
-          <output name="6" label="Bell| ">
-            <label xml:lang="it">Campana| </label>
-          </output>
-          <output name="7" label="Pneum|Doors">
-            <label xml:lang="it">Porte|Pneum</label>
-          </output>
-          <output name="8" label="Short|Horn">
-            <label xml:lang="it">Breve|Tromba</label>
-          </output>
-          <output name="9" label="Pantograph| ">
-            <label xml:lang="it">Pantografo| </label>
-          </output>
-          <output name="10" label="General|Service" />
-          <output name="11" label="Dimming| ">
-            <label xml:lang="it">Smorzam| </label>
-          </output>
-          <output name="12" label="Mute| ">
-            <label xml:lang="it">Silenzio| </label>
-          </output>
-          <output name="13" label="Stop|Bell">
-            <label xml:lang="it">Fermare|Campana</label>
-          </output>
-          <output name="14" label="Ind/Train|Brake" />
-          <output name="15" label="Coupler| ">
-            <label xml:lang="it">Accoppiatore| </label>
-          </output>
           <size length="35" width="18" height="6" units="mm" />
         </model>
+        <output name="3" label="  FX3  " />
+        <output name="4" label="  FX4  " />
+        <output name="5" label="Whistle| ">
+          <label xml:lang="it">Fischio| </label>
+        </output>
+        <output name="6" label="Bell| ">
+          <label xml:lang="it">Campana| </label>
+        </output>
+        <output name="7" label="Dynamo| ">
+          <label xml:lang="it">Dynamo| </label>
+        </output>
+        <output name="8" label="Short|Whistle">
+          <label xml:lang="it">Breve|Tromba</label>
+        </output>
+        <output name="9" label="Cylinder|Cocks">
+          <label xml:lang="it">Cilindro|Cazzi</label>
+        </output>
+        <output name="10" label="Water|Stop">
+          <label xml:lang="it">Acqua|Stop</label>
+        </output>
+        <output name="11" label="Dimming| ">
+          <label xml:lang="it">Smorzam| </label>
+        </output>
+        <output name="12" label="Mute| ">
+          <label xml:lang="it">Silenzio| </label>
+        </output>
+        <output name="13" label="|" />
+        <!-- Not used for for this decoder -->
+        <output name="14" label="Brakes| " />
+        <output name="15" label="Coupler| ">
+          <label xml:lang="it">Accoppiatore| </label>
+        </output>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -33454,7 +33236,8 @@
         <model model="73510" />
       </family>
       <family name="Mini-Function Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_73900.xml">
-        <model model="73900" />
+        <model model="73800" productID="73800" maxTotalCurrent="0.6A" />
+        <model model="73900" productID="73900" maxTotalCurrent="0.6A" />
       </family>
       <family name="IntelliDrive2" mfg="Uhlenbrock Elektronik" comment="Decoders not sorted (necessarily) in numerical order" file="Uhlenbrock_73xx5.xml">
         <!-- to be checked by hardware owner -->

@@ -30,7 +30,6 @@ import org.junit.Test;
  *
  * @author	Bob Jacobsen
  * @author B. Milhaupt Copyright (C) 2018
- *
  */
 public class LocoNetMessageTest {
 
