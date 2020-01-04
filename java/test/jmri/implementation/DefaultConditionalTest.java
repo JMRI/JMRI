@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.Timer;
 import jmri.*;
 import jmri.jmrit.Sound;
+import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
@@ -803,20 +804,21 @@ public class DefaultConditionalTest {
 
     // The minimal setup for log4J
     @Before
-    public void setUp() throws Exception {
-        jmri.util.JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
-        jmri.util.JUnitUtil.initLogixManager();
-        jmri.util.JUnitUtil.initIdTagManager();
+    public void setUp(){
+        JUnitUtil.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initIdTagManager();
     }
 
     @After
-    public void tearDown() throws Exception {
-        jmri.util.JUnitUtil.tearDown();
+    public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
     }
 
     

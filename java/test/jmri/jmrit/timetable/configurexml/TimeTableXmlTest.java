@@ -53,6 +53,7 @@ public class TimeTableXmlTest {
         } catch (NoSuchFieldException | IllegalArgumentException | IllegalAccessException x) {
             Assert.fail("Failed to reset TimeTableXml static fileLocation " + x);
         }
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.resetWindows(false,false);
+        JUnitUtil.tearDown();
     }
 }

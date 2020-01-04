@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2004, 2007 All rights reserved -->
-<!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -8778,8 +8777,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -8942,8 +8941,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -9106,8 +9105,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -9270,8 +9269,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -9434,8 +9433,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -9598,8 +9597,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -9762,8 +9761,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -9926,8 +9925,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -10090,8 +10089,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -10254,8 +10253,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -10418,8 +10417,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -10582,8 +10581,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -10746,8 +10745,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -10910,8 +10909,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -11074,8 +11073,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -11238,8 +11237,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -11402,8 +11401,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -11566,8 +11565,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -11730,8 +11729,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -11894,8 +11893,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -12058,8 +12057,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -12222,8 +12221,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -12386,8 +12385,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -12550,8 +12549,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -12714,8 +12713,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -12878,8 +12877,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -13042,8 +13041,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -13206,8 +13205,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -13370,8 +13369,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -13534,8 +13533,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -13698,8 +13697,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -13862,8 +13861,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -14026,8 +14025,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -14190,8 +14189,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -14354,8 +14353,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -14518,8 +14517,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -14682,8 +14681,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -14846,8 +14845,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -15010,8 +15009,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -15174,8 +15173,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -15338,8 +15337,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -15502,8 +15501,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -15666,8 +15665,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -15830,8 +15829,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -15994,8 +15993,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -16158,8 +16157,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -16322,8 +16321,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>
@@ -16486,8 +16485,8 @@
                 <text xml:lang="cs"> </text>
        	</label>
        	<label>
-                <text>The delay time is n × 0.128 ms.</text>
-                <text xml:lang="cs">Délka zpoždění je n × 0,128 ms.</text>
+                <text>The delay time is n × 0.128 s.</text>
+                <text xml:lang="cs">Délka zpoždění je n × 0,128 s.</text>
        	</label>
        	<label>
                 <text>The length of delay 255 is the end of the scenario.</text>

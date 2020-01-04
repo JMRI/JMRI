@@ -53,7 +53,7 @@ public class CbusDummyCS implements CanListener {
         memo = sysmemo;
         if (memo != null) {
             tc = memo.getTrafficController();
-            tc.addCanListener(this);
+            addTc(tc);
         }
         init();
     }

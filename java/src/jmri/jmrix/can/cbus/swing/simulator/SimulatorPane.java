@@ -54,10 +54,7 @@ public class SimulatorPane extends jmri.jmrix.can.swing.CanPanel {
 
     @Override
     public String getTitle() {
-        if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("MenuItemNetworkSim"));
-        }
-        return Bundle.getMessage("MenuItemNetworkSim");
+        return prependConnToString(Bundle.getMessage("MenuItemNetworkSim"));
     }
 
     public SimulatorPane() {

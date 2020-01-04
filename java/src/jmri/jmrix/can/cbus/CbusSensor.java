@@ -62,7 +62,7 @@ public class CbusSensor extends AbstractSensor implements CanListener {
                 return;
         }
         // connect
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     /**

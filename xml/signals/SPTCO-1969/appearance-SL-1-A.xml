@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="/xml/XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -35,6 +35,12 @@
       <date>2015-05-20</date>
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
+    </revision>
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Fix incorrect ourAspect in aspectmappings</revremark>
     </revision>
   </revhistory>
   <aspecttable>SPTCO-1969</aspecttable>
@@ -123,7 +129,6 @@
       <advancedAspect>Block Signal Yellow over Green</advancedAspect>
       <ourAspect>Approach Medium - Flashing Yellow</ourAspect>
       <ourAspect>Restricting</ourAspect>
-      <ourAspect>Home Signal Red over Lunar</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Approach Signal Yellow</advancedAspect>

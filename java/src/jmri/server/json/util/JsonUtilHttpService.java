@@ -24,6 +24,7 @@ import java.util.Locale;
 import java.util.Objects;
 
 import javax.annotation.CheckForNull;
+import javax.annotation.Nonnull;
 import javax.servlet.http.HttpServletResponse;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -81,14 +82,26 @@ public class JsonUtilHttpService extends JsonHttpService {
                 return this.getNetworkService(locale, name, id);
             case JSON.NODE:
                 return this.getNode(locale, id);
+            case JSON.PANEL:
             case JSON.PANELS:
-                return this.getPanels(id);
+                if (name == null) {
+                    return this.getPanels(id);
+                }
+                return this.getPanel(locale, name, id);
             case JSON.RAILROAD:
                 return this.getRailroad(locale, id);
+            case JSON.SYSTEM_CONNECTION:
             case JSON.SYSTEM_CONNECTIONS:
-                return this.getSystemConnections(locale, id);
+                if (name == null) {
+                    return this.getSystemConnections(locale, id);
+                }
+                return this.getSystemConnection(locale, name, id);
+            case JSON.CONFIG_PROFILE:
             case JSON.CONFIG_PROFILES:
-                return this.getConfigProfiles(locale, id);
+                if (name == null) {
+                    return this.getConfigProfiles(locale, id);
+                }   
+                return this.getConfigProfile(locale, name, id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
                         Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
@@ -100,10 +113,16 @@ public class JsonUtilHttpService extends JsonHttpService {
         switch (type) {
             case JSON.METADATA:
                 return this.getMetadata(locale, id);
+            case JSON.NETWORK_SERVICE:
             case JSON.NETWORK_SERVICES:
                 return this.getNetworkServices(locale, id);
+            case JSON.PANEL:
+            case JSON.PANELS:
+                return this.getPanels(id);
+            case JSON.SYSTEM_CONNECTION:
             case JSON.SYSTEM_CONNECTIONS:
                 return this.getSystemConnections(locale, id);
+            case JSON.CONFIG_PROFILE:
             case JSON.CONFIG_PROFILES:
                 return this.getConfigProfiles(locale, id);
             default:
@@ -207,7 +226,8 @@ public class JsonUtilHttpService extends JsonHttpService {
 
     private JsonNode getNetworkService(ZeroConfService service, int id) {
         ObjectNode data = mapper.createObjectNode();
-        data.put(JSON.NAME, service.getName());
+        data.put(JSON.NAME, service.getType());
+        data.put(JSON.USERNAME, service.getName());
         data.put(JSON.PORT, service.getServiceInfo().getPort());
         data.put(JSON.TYPE, service.getType());
         Enumeration<String> pe = service.getServiceInfo().getPropertyNames();
@@ -247,6 +267,25 @@ public class JsonUtilHttpService extends JsonHttpService {
         data.set(JSON.FORMER_NODES, nodes);
         return message(JSON.NODE, data, id);
     }
+    /**
+     * return a JSON {@link jmri.server.json.JSON#NODE} message containing the
+     *   requested panel details
+     * @param locale  the client's Locale
+     * @param name   panel name to return
+     * @param id     message id set by client
+     * @return the JSON panel message.
+     * @throws JsonException if panel not found
+     */
+    public JsonNode getPanel(Locale locale, String name, int id) throws JsonException {
+        ArrayNode an = getPanels(JSON.XML, id);
+        for (JsonNode jn : an) { //loop through panels
+            if (jn.get("data").get("name").textValue().equals(name)) { //check data.name for a match
+                return message(JSON.PANEL, jn.get("data"), id);                
+            }
+        }
+        throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JSON.PANEL, name), id);
+    }
+
 
     public ObjectNode getPanel(Editor editor, String format, int id) {
         if (editor.getAllowInFrameServlet()) {
@@ -269,7 +308,7 @@ public class JsonUtilHttpService extends JsonHttpService {
                         name = "Switchboard";
                     }
                     ObjectNode data = this.mapper.createObjectNode();
-                    data.put(NAME, name + "/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
+                    data.put(NAME, name + "/" + title.replace(" ", "%20").replace("#", "%23")); // NOI18N
                     data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
                     data.put(USERNAME, title);
                     data.put(TYPE, type);
@@ -280,7 +319,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         return null;
     }
 
-    public JsonNode getPanels(String format, int id) {
+    public ArrayNode getPanels(String format, int id) {
         ArrayNode root = mapper.createArrayNode();
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor,
         // SwitchboardEditor)
@@ -299,12 +338,12 @@ public class JsonUtilHttpService extends JsonHttpService {
         return root;
     }
 
-    public JsonNode getPanels(int id) {
+    public ArrayNode getPanels(int id) {
         return this.getPanels(JSON.XML, id);
     }
 
     /**
-     * Send a JSON {@link jmri.server.json.JSON#NODE} message containing the
+     * return a JSON {@link jmri.server.json.JSON#NODE} message containing the
      * Railroad from the Railroad Name preferences.
      *
      * @param locale the client's Locale
@@ -318,6 +357,28 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     /**
+     * return a JSON {@link jmri.server.json.JSON#NODE} message containing the
+     *   requested systemConnection details
+     *  
+     * @param locale the client's Locale.
+     * @param name   system connection name to return
+     * @param id     message id set by client
+     * @return the JSON systemConnections message.
+     * @throws JsonException if systemConnection not found
+     */
+    public JsonNode getSystemConnection(Locale locale, String name, int id) throws JsonException {
+        ArrayNode an = getSystemConnections(locale, id);
+        for (JsonNode jn : an) { //loop through systemConnections
+            if (jn.get("data").get("name").textValue().equals(name)) { //check data.name for a match
+                return message(JSON.SYSTEM_CONNECTION, jn.get("data"), id);                
+            }
+        }
+        throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JSON.SYSTEM_CONNECTION, name), id);
+    }
+
+    /**
+     * return a JSON array containing the defined system connections
+     * 
      * @param locale the client's Locale.
      * @param id     message id set by client
      * @return the JSON systemConnections message.
@@ -329,8 +390,8 @@ public class JsonUtilHttpService extends JsonHttpService {
             if (!config.getDisabled()) {
                 ObjectNode data = mapper.createObjectNode();
                 data.put(JSON.NAME, config.getConnectionName());
-                data.put(JSON.MFG, config.getManufacturer());
                 data.put(JSON.PREFIX, config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
+                data.put(JSON.MFG, config.getManufacturer());
                 data.put(JSON.DESCRIPTION, Bundle.getMessage(locale, "ConnectionSucceeded", config.getConnectionName(),
                         config.name(), config.getInfo()));
                 prefixes.add(config.getAdapter().getSystemConnectionMemo().getSystemPrefix());
@@ -367,6 +428,50 @@ public class JsonUtilHttpService extends JsonHttpService {
     }
 
     /**
+     * return a JSON {@link jmri.server.json.JSON#NODE} message containing the
+     *   requested Config Profile details
+     *  
+     * @param p profile to retrieve
+     * @param pm profilemanager to use
+     * @param id message set by the client
+     * @return the data for this profile as a JSON Node
+     */
+    private JsonNode getConfigProfile(@Nonnull Profile p, ProfileManager pm, int id) {
+        boolean isActiveProfile = (p == pm.getActiveProfile());
+        boolean isNextProfile = (p == pm.getNextActiveProfile());
+        // isAutoStart is only possibly true for active profile
+        boolean isAutoStart = (isActiveProfile && pm.isAutoStartActiveProfile());
+        ObjectNode data = mapper.createObjectNode();
+        data.put(JSON.USERNAME, p.getName());
+        data.put(JSON.UNIQUE_ID, p.getUniqueId());
+        data.put(JSON.NAME, p.getId());
+        data.put(JSON.IS_ACTIVE_PROFILE, isActiveProfile);
+        data.put(JSON.IS_AUTO_START, isAutoStart);
+        data.put(JSON.IS_NEXT_PROFILE, isNextProfile);
+        return message(JSON.CONFIG_PROFILE, data, id);
+    }
+
+    /**
+     * find and return the data for a single config profile
+     * 
+     * @param locale the client's Locale.
+     * @param name requested configProfile name
+     * @param id     message id set by client
+     * @return the JSON configProfiles message.
+     * @throws JsonException if the requested configProfile is not found
+     */
+    public JsonNode getConfigProfile(Locale locale, String name, int id) throws JsonException {
+        ProfileManager pm = ProfileManager.getDefault();
+        for (Profile p : pm.getProfiles()) {
+            if (p.getId().equals(name)) {
+                return getConfigProfile(p, pm, id);
+            }
+        }
+        throw new JsonException(404, Bundle.getMessage(locale, JsonException.ERROR_OBJECT, JSON.CONFIG_PROFILE, name), id);
+    }
+
+    /**
+     * return JSON array of all config profiles
      * @param locale the client's Locale.
      * @param id     message id set by client
      * @return the JSON configProfiles message.
@@ -376,16 +481,7 @@ public class JsonUtilHttpService extends JsonHttpService {
         ProfileManager pm = ProfileManager.getDefault();
         for (Profile p : pm.getProfiles()) {
             if (p != null) {
-                boolean isActiveProfile = (p == pm.getActiveProfile());
-                // isAutoStart is only possibly true for active profile
-                boolean isAutoStart = (isActiveProfile && pm.isAutoStartActiveProfile());
-                ObjectNode data = mapper.createObjectNode();
-                data.put(JSON.USERNAME, p.getName());
-                data.put(JSON.UNIQUE_ID, p.getUniqueId());
-                data.put(JSON.NAME, p.getId());
-                data.put(JSON.IS_ACTIVE_PROFILE, isActiveProfile);
-                data.put(JSON.IS_AUTO_START, isAutoStart);
-                root.add(message(JSON.CONFIG_PROFILE, data, id));
+                root.add(getConfigProfile(p, pm, id));
             }
         }
         return root;

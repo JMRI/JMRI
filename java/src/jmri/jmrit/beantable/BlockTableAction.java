@@ -192,7 +192,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                 if (col == DIRECTIONCOL) {
                     return jmri.Path.decodeDirection(b.getDirection());
                 } else if (col == CURVECOL) {
-                    JComboBox<String> c = new JComboBox<String>(curveOptions);
+                    JComboBox<String> c = new JComboBox<>(curveOptions);
                     if (b.getCurvature() == Block.NONE) {
                         c.setSelectedItem(0);
                     } else if (b.getCurvature() == Block.GRADUAL) {
@@ -219,7 +219,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     if (!speedList.contains(speed)) {
                         speedList.add(speed);
                     }
-                    JComboBox<String> c = new JComboBox<String>(speedList);
+                    JComboBox<String> c = new JComboBox<>(speedList);
                     c.setEditable(true);
                     c.setSelectedItem(speed);
                     return c;
@@ -236,7 +236,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     }
                 } else if (col == SENSORCOL) {
                     Sensor sensor = b.getSensor();
-                    JComboBox<String> c = new JComboBox<String>(sensorList);
+                    JComboBox<String> c = new JComboBox<>(sensorList);
                     String name = "";
                     if (sensor != null) {
                         name = sensor.getDisplayName();
@@ -245,7 +245,7 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     return c;
                 } else if (col == REPORTERCOL) {
                     Reporter reporter = b.getReporter();
-                    JComboBox<String> rs = new JComboBox<String>(reporterList);
+                    JComboBox<String> rs = new JComboBox<>(reporterList);
                     String name = "";
                     if (reporter != null) {
                         name = reporter.getDisplayName();
@@ -318,13 +318,11 @@ public class BlockTableAction extends AbstractTableAction<Block> {
                     Reporter r = jmri.InstanceManager.getDefault(jmri.ReporterManager.class).getReporter(strReporter);
                     b.setReporter(r);
                     fireTableRowsUpdated(row, row);
-                    return;
                 } else if (col == SENSORCOL) {
                     @SuppressWarnings("unchecked")
                     String strSensor = (String) ((JComboBox<String>) value).getSelectedItem();
                     b.setSensor(strSensor);
                     fireTableRowsUpdated(row, row);
-                    return;
                 } else if (col == CURRENTREPCOL) {
                     boolean boo = ((Boolean) value);
                     b.setReportingCurrent(boo);

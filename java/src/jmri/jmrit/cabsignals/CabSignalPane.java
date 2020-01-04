@@ -216,7 +216,7 @@ public class CabSignalPane extends jmri.util.swing.JmriPanel implements CabSigna
         locoRosterBox.setVisible(true);
         locoSelectContainer.add(locoRosterBox);
 
-        addLocoButton.setText(Bundle.getMessage("AddButtonText"));
+        addLocoButton.setText(Bundle.getMessage("ButtonAddText"));
         addLocoButton.setVisible(true);
         addLocoButton.setToolTipText(Bundle.getMessage("AddButtonToolTip"));
         addLocoButton.addActionListener((ActionEvent e) -> {

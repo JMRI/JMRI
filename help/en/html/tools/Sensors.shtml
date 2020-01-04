@@ -18,12 +18,11 @@
 <body>
   <div id="container">
     <!--#include virtual="/Header" -->
-
     <div id="mBody">
-      <!--#include virtual="Sidebar" -->
-
+      <!--#include virtual="Sidebar.shtml" -->
       <div id="mainContent">
-        <h1>JMRI: Sensors Documentation</h1>
+
+      <h1>JMRI: Sensors Documentation</h1>
 
         <h2>What are Sensors?</h2>
 
@@ -125,7 +124,7 @@
         setup etc. To store this information on disk, allowing to
         <a href="../../package/jmri/jmrit/display/PanelMenuHelp.shtml">reload
         it</a> next time you run JMRI, use <b>Store Configuration...</b>
-        in the <b>File</b> menu at the top of the Sensors Table (or
+        in the <b>File</b> menu at the top of the Sensor Table (or
         other tables from the Tools menu), or select <b>Store
         Panel...</b> in the <b>Panel</b> menu.</p>
 

@@ -43,11 +43,11 @@ public class ConsistToolScaffold extends JFrameOperator {
 
    // push loco specific buttons at the top.
    public void pushAddButton(){
-        new JButtonOperator(this,Bundle.getMessage("AddButtonText")).push();
+        new JButtonOperator(this, Bundle.getMessage("ButtonAddText")).push();
    }
 
    public void pushResetButton(){
-        new JButtonOperator(this,Bundle.getMessage("ButtonReset")).push();
+        new JButtonOperator(this, Bundle.getMessage("ButtonReset")).push();
    }
 
    // fill out the loco address field

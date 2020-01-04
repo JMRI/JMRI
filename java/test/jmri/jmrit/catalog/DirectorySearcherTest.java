@@ -40,6 +40,7 @@ public class DirectorySearcherTest {
 
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

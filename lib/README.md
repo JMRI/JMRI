@@ -115,7 +115,7 @@ After that, add and commit the additional files that were created within lib/
 - see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
 - JavaDoc http://www.javadoc.io/doc/com.fasterxml.jackson.core/jackson-databind/2.10.0
 
-##### json-schema-validator-1.0.10.jar
+##### json-schema-validator-1.0.28.jar
 - JSON Schema validation library
 - from https://github.com/networknt/json-schema-validator/releases
 

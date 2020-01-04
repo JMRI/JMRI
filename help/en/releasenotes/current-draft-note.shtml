@@ -1,7 +1,9 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>Fixed a problem introduced in JMRI 4.19.1 that 
+          prevented the function buttons in the on-screen throttles
+          from working on some types of computers.</li>
         </ul>
 
 	    <h4>Anyma DMX512</h4>
@@ -51,12 +53,7 @@
 
         <h4>LocoNet</h4>
             <ul>
-                <li><span class="since">Since <a href="jmri4.17.5.shtml">JMRI 4.17.5</a></span>
-                    Automatically refresh the slot information when the DCS240/DCS210/DCS52 
-                    "Loco Reset" feature is executed as a result of pressing the 
-                    "Loco Reset" button.  This feature is active only when the 
-                    JMRI connection is configured for DCS240, DCS210, or DCS52 
-                    acting as the command station.</li>
+                <li></li>
             </ul>
 
         <h4>Maple</h4>
@@ -269,6 +266,11 @@
                 <li></li>
             </ul>
 
+        <h4>TAMS</h4>
+            <ul>
+                <li></li>
+            </ul>
+
         <h4>TCS</h4>
             <ul>
                 <li></li>
@@ -393,12 +395,7 @@
     <h3>Scripting</h3>
         <a id="Scripting" name="Scripting"></a>
         <ul>
-            <li>jmri_bindings.py is no longer needed by JMRI to inject default bindings into
-              Jython/Python scripts.</li>
-            <li>Jython has been upgraded to version 2.7.1.</li>
-            <li>JMRI's scripting support now defaults to the UTF-8 character encoding for all
-              script files on all platforms. This may require that some scripts be re-saved
-              using UTF-8.</li>
+            <li></li>
         </ul>
 
     <h3>Signals</h3>
@@ -456,10 +453,7 @@
    <h3>Tracker</h3>
         <a id="Tr" name="Tr"></a>
         <ul>
-            <li>A Tracker help page is added.</li>
-            <li>Tracking can be done with intermediate cars unequippted to draw current.</li>
-            <li>Tracker can recover occupation lost due to poor electrical contact.</li>
-            <li>Tracking can be followed through dark OBlocks.</li>
+            <li></li>
         </ul>
 
    <h3>Warrants</h3>
@@ -489,15 +483,23 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li><strong>Windows Only</strong> The JMRI installer removes the existing
-                <em>lib</em> folder from a JMRI installation when upgrading JMRI. The
-                existing lib folder contents are retained in the backup folder.
-                <strong>This means that any files you have added to the <em>lib</em>
-                    folder will be removed.</strong></li>
-            <li>Added basic support for developer architecture checks via
-                <a href="https://www.archunit.org">ArchUnit</a>,
-                see the 
-                <a href="http://jmri.org/help/en/html/doc/Technical/IntroStructure.shtml">Introduction to JMRI Library Structure</a>
-                page.</li>
+            <li>Petr Sidlo added a Pragotron clock, which is digital clock
+            found in many European train stations.</li>
+            <li>The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+                calls in the various <code>Manager<code> classes
+                are no longer needed with Java 8 and have been deprecated for eventual
+                removal.  Their replacements are 
+                <code>getByUserName<code> and <code>getBySystemName<code> 
+                respectively.
+                If you use <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+                in script or Java code you've written, please 
+                switch to the new names.
+            </li>
+		    <li>The system names for Routes are required to start with "IO" to avoid
+		    	ambiguity or confusion with Reporters (the system names of which start
+		    	with "IR"). JMRI 4.19.2 or later should automatically rename Routes
+		    	correctly, but it is possible that references to those Routes will need
+		    	to be updated.
+			    </li>
         </ul>
 

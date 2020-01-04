@@ -21,9 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Protrak Grapevine System</h1><a name=
       "hardware" id="hardware"></a>
 

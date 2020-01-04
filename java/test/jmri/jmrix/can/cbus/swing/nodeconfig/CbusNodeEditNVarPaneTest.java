@@ -26,11 +26,10 @@ public class CbusNodeEditNVarPaneTest {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         NodeConfigToolPane mainpane = new NodeConfigToolPane();
         
-        CbusNodeEditNVarPane t = new CbusNodeEditNVarPane(mainpane);
+        t = new CbusNodeEditNVarPane(mainpane);
         Assert.assertNotNull("exists",t);
         
         mainpane = null;
-        t = null;
     }
     
     @Test
@@ -45,7 +44,7 @@ public class CbusNodeEditNVarPaneTest {
         mainpane.initComponents(memo);
         
         
-        CbusNodeEditNVarPane t = new CbusNodeEditNVarPane(mainpane);
+        t = new CbusNodeEditNVarPane(mainpane);
         Assert.assertNotNull("exists",t);
         
         t.initComponents(memo);
@@ -60,11 +59,11 @@ public class CbusNodeEditNVarPaneTest {
         nodeToEdit = null;
         
         mainpane = null;
-        t = null;
     }
 
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
+    private CbusNodeEditNVarPane t;
 
     @Before
     public void setUp() {
@@ -77,7 +76,7 @@ public class CbusNodeEditNVarPaneTest {
 
     @After
     public void tearDown() {
-
+        t = null;
         memo = null;
         tcis = null;
     }

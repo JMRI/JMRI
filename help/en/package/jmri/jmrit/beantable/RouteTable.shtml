@@ -16,15 +16,15 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>The Route Table</h1>
 
       <p>A Route consists of one or more Turnouts or Sensors that
       you would like to control. Before creating a Route, you
       should first add some Turnouts or Sensors by using either the
-      Turnout Table or Sensors Table. These tables can be found
+      Turnout Table or Sensor Table. These tables can be found
       under the main menu "Tools -&gt; Tables".</p>
 
       <p>Once you have some Turnouts or Sensors set up, use the

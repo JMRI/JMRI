@@ -22,6 +22,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial Version</revremark>
     </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect values which cannot be displayed by this mast type</revremark>
+     </revision>    
   </revhistory>
   <aspecttable>CSX-2014-Chessie</aspecttable>
   <name>Triple head 3-3-1 med/lim/fast junction color light high signal</name>
@@ -148,7 +154,6 @@
       <ourAspect>Clear</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
@@ -156,14 +161,12 @@
       <ourAspect>Clear</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Limited Clear</advancedAspect>
       <ourAspect>Approach Limited</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
-      <ourAspect>Medium Approach Medium</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>
@@ -177,7 +180,6 @@
       <ourAspect>Clear</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
     <aspectMapping>

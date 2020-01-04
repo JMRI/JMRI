@@ -52,6 +52,9 @@ public class TrackerTest {
     @Test
     public void testMultipleStartBlocks() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/IndicatorDemoTest.xml");
         InstanceManager.getDefault(ConfigureManager.class).load(f);
@@ -96,8 +99,9 @@ public class TrackerTest {
         occupied = TkrWest.getBlocksOccupied();
         Assert.assertEquals("TkrWest Blocks Occupied", 3, occupied.size());
 
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
         panel.dispose();
+        _OBlockMgr.dispose();
     }        
 
     // The minimal setup for log4J
@@ -107,10 +111,12 @@ public class TrackerTest {
         jmri.util.JUnitUtil.resetInstanceManager();
         JUnitUtil.initConfigureManager();
         JUnitUtil.initOBlockManager();
+        JUnitUtil.initDebugThrottleManager();
     }
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();
     }
 

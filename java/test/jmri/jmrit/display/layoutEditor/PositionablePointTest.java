@@ -21,7 +21,7 @@ import org.junit.Test;
  */
 public class PositionablePointTest {
 
-    private static LayoutEditor le = null;
+    private LayoutEditor le = null;
 
     @Test
     public void testCtor() {
@@ -382,33 +382,21 @@ public class PositionablePointTest {
         jmri.util.JUnitAppender.assertErrorMessage("Attempt to assign more than allowed number of connections");
     }
 
-    // from here down is testing infrastructure
-    @BeforeClass
-    public static void beforeClass() {
+    @Before
+    public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
             le = new LayoutEditor();
         }
     }
 
-    @AfterClass
-    public static void afterClass() {
+    @After
+    public void tearDown() {
         if (le != null) {
             JUnitUtil.dispose(le);
         }
         le = null;
-        JUnitUtil.tearDown();
-    }
-
-    @Before
-    public void setUp() throws Exception {
-        JUnitUtil.setUp();
-        jmri.util.JUnitUtil.resetProfileManager();
-    }
-
-    @After
-    public void tearDown() throws Exception {
         JUnitUtil.tearDown();
     }
 }

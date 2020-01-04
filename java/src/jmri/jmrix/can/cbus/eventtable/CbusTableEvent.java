@@ -44,7 +44,8 @@ public class CbusTableEvent extends CbusEvent {
     }
     
     /**
-     * Get the last-seen date time
+     * Get the last-seen date time.
+     * @return The last time the event was heard on the network
      */    
     protected Date getDate(){
         return _timestamp;

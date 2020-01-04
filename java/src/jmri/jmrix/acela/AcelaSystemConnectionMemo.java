@@ -1,9 +1,13 @@
 package jmri.jmrix.acela;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.util.NamedBeanComparator;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,8 +33,8 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
         InstanceManager.store(this, AcelaSystemConnectionMemo.class); // also register as specific type
 
         // create and register the AcelaComponentFactory for the GUI
-        InstanceManager.store(cf = new jmri.jmrix.acela.swing.AcelaComponentFactory(this), 
-         jmri.jmrix.swing.ComponentFactory.class);
+        InstanceManager.store(cf = new jmri.jmrix.acela.swing.AcelaComponentFactory(this),
+                jmri.jmrix.swing.ComponentFactory.class);
         log.debug("Created AcelaSystemConnectionMemo");
     }
 
@@ -103,17 +107,17 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
 
     @SuppressWarnings("unchecked")
     @Override
-    public <T> T get(Class<?> T) {
+    public <T> T get(Class<?> type) {
         if (getDisabled()) {
             return null;
         }
-        if (T.equals(jmri.SensorManager.class)) {
+        if (type.equals(jmri.SensorManager.class)) {
             return (T) getSensorManager();
         }
-        if (T.equals(jmri.TurnoutManager.class)) {
+        if (type.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
         }
-        if (T.equals(jmri.LightManager.class)) {
+        if (type.equals(jmri.LightManager.class)) {
             return (T) getLightManager();
         }
         return null; // nothing by default
@@ -158,6 +162,11 @@ public class AcelaSystemConnectionMemo extends SystemConnectionMemo {
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.acela.AcelaActionListBundle");
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

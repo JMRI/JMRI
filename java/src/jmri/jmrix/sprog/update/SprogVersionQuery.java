@@ -121,7 +121,7 @@ public class SprogVersionQuery implements SprogListener {
                 listener.notifyVersion(ver);
                 versionListeners.remove(listener);
             } catch (Exception e) {
-                log.warn("notify: During dispatch to " + listener + "\nException " + e);
+                log.warn("notify: During dispatch to {}", listener, e);
             }
         }
     }

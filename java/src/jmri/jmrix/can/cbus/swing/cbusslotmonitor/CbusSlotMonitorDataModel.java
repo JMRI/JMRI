@@ -63,7 +63,7 @@ public class CbusSlotMonitorDataModel extends javax.swing.table.AbstractTableMod
 
         // connect to the CanInterface
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        addTc(tc);
         tablefeedback = new TextAreaFIFO(MAX_LINES);
         
     }

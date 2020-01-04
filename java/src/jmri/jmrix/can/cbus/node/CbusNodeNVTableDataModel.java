@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of Cbus Node Variables
+ * Table data model for display of CBUS Node Variables
  *
  * @author Steve Young (c) 2019
  * 
@@ -194,9 +194,11 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
             }
             
             newNVs[(row+1)] = newval;
-            fireTableCellUpdated(row,col);
-            fireTableCellUpdated(row,NV_SELECT_HEX_COLUMN);
-            fireTableCellUpdated(row,NV_SELECT_BIT_COLUMN);
+            ThreadingUtil.runOnGUIEventually( ()->{ 
+                fireTableCellUpdated(row,col);
+                fireTableCellUpdated(row,NV_SELECT_HEX_COLUMN);
+                fireTableCellUpdated(row,NV_SELECT_BIT_COLUMN);
+            });
         }
     }
     
@@ -218,6 +220,9 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
         
         resetNewNvs();
         nodeOfInterest.setNodeNVTable(this);
+        ThreadingUtil.runOnGUIEventually( ()->{ 
+            fireTableDataChanged();
+        });
         
     }
     
@@ -227,11 +232,8 @@ public class CbusNodeNVTableDataModel extends javax.swing.table.AbstractTableMod
      * @return true if dirty, else false
      */
     public boolean isSingleNvDirty( int nvToCheck ) {
-        if ( ( (int) getValueAt(nvToCheck,NV_CURRENT_VAL_COLUMN) ) != (
-            (int) getValueAt(nvToCheck,NV_SELECT_COLUMN) ) ) {
-            return true;
-        }
-        return false;
+        return ( (int) getValueAt(nvToCheck,NV_CURRENT_VAL_COLUMN) ) != (
+                (int) getValueAt(nvToCheck,NV_SELECT_COLUMN) );
     }
     
     /**

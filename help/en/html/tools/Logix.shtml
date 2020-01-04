@@ -23,11 +23,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI: Logix Documentation</h1>
 
       <p>Logix&trade; provide a powerful capability for JMRI to

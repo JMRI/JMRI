@@ -29,10 +29,11 @@ public class CbusNodeEditNVarPane extends JPanel implements TableModelListener {
     private JButton saveNvButton;
     private JButton resetNvButton;
     private CbusNode nodeOfInterest;
-    private NodeConfigToolPane _mainPane;
+    private final NodeConfigToolPane _mainPane;
 
     /**
      * Create a new instance of CbusNodeEditNVarPane.
+     * @param main the NodeConfigToolPane this is a component of
      */
     protected CbusNodeEditNVarPane( NodeConfigToolPane main ) {
         super();

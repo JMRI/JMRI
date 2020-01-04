@@ -46,6 +46,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Updated for PRR 1956</revremark>
      </revision>    
+    <revision>
+        <revnumber>1.4</revnumber>
+        <date>2019-12-304</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect value of Approach Medium account it cannot be displayed by this mast type</revremark>
+     </revision>    
   </revhistory>
   <aspecttable>PRR 1956</aspecttable>
   <name>Double position light pot signal</name>
@@ -140,7 +146,7 @@
 
     <aspectMapping>
       <advancedAspect>Medium Clear</advancedAspect>
-      <ourAspect>Approach Medium</ourAspect>
+      <ourAspect>Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 
@@ -172,7 +178,6 @@
     <aspectMapping>
       <advancedAspect>Caution</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
@@ -192,7 +197,6 @@
     <aspectMapping>
       <advancedAspect>Permissive Block</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
@@ -200,7 +204,6 @@
     <aspectMapping>
       <advancedAspect>Restricting</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
@@ -208,7 +211,6 @@
     <aspectMapping>
       <advancedAspect>Stop and Proceed</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
@@ -216,7 +218,6 @@
     <aspectMapping>
       <advancedAspect>Stop</advancedAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Medium Approach</ourAspect>
       <ourAspect>Slow Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>

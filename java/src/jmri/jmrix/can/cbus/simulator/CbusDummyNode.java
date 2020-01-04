@@ -39,7 +39,7 @@ public class CbusDummyNode extends CbusNode {
         memo = sysmemo;
         if (memo != null) {
             tc = memo.getTrafficController();
-            tc.addCanListener(this);
+            addTc(tc);
         }
         setDummyType(manufacturer, nodeType);
         setCanId(canId);

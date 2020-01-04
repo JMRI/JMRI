@@ -3,6 +3,10 @@ package jmri.jmrit.display.controlPanelEditor;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,6 +25,7 @@ import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import jmri.BeanSetting;
+import jmri.InstanceManager;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
@@ -30,6 +35,8 @@ import jmri.jmrit.display.Positionable;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
+import jmri.jmrit.logix.PortalManager;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -80,10 +87,12 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         panel.add(new JLabel(Bundle.getMessage("PathTitle", _homeBlock.getDisplayName())));
         pathPanel.add(panel);
 
-        _pathListModel = new PathListModel();
+        _pathListModel = new PathListModel(this);
         _pathList = new JList<>();
         _pathList.setModel(_pathListModel);
         _pathList.addListSelectionListener(this);
+        _homeBlock.addPropertyChangeListener(_pathListModel);
+        
         _pathList.setCellRenderer(new PathCellRenderer());
         _pathList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         pathPanel.add(new JScrollPane(_pathList));
@@ -198,7 +207,13 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         }
     }
 
-    class PathListModel extends AbstractListModel<OPath> {
+    class PathListModel extends AbstractListModel<OPath> implements PropertyChangeListener {
+
+        EditFrame _parent;
+
+        PathListModel(EditFrame parent) {
+            _parent = parent;
+        }
 
         @Override
         public int getSize() {
@@ -211,7 +226,13 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         }
 
         public void dataChange() {
-//            _currentPath = null;
+            fireContentsChanged(this, 0, 0);
+        }
+
+        public void propertyChange(PropertyChangeEvent e) {
+            if (e.getPropertyName().equals("deleted")) {
+                _parent.closingEvent(true);
+            }
             fireContentsChanged(this, 0, 0);
         }
     }
@@ -344,9 +365,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
                 } else {
                     ((IndicatorTrack) selection).setStatus(Sensor.INACTIVE);
                     ((IndicatorTrack) selection).removePath(TEST_PATH);
-                    if (log.isDebugEnabled()) {
-                        log.debug("removePath TEST_PATH");
-                    }
+                    log.debug("removePath TEST_PATH");
                 }
             } else if (okPath(selection)) {
                 _pathGroup.add(selection);
@@ -719,11 +738,11 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             } else {
                 if (pos instanceof IndicatorTrack) {
                     ((IndicatorTrack) pos).removePath(name);
-                } else {
+/*                } else {
                     PortalIcon pi = (PortalIcon) pos;
                     //                   pi.setStatus(PortalIcon.VISIBLE);
                     Portal p = pi.getPortal();
-                    p.removePath(path);
+                    p.removePath(path);*/
                 }
             }
         }
@@ -738,9 +757,10 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
         if (path == null) {
             return;
         }
-        _homeBlock.removePath(path);
-        clearListSelection();
-        _pathListModel.dataChange();
+        if (_homeBlock.removeOPath(path)) {
+            clearListSelection();
+            _pathListModel.dataChange();
+        }
     }
 
     @Override
@@ -766,6 +786,7 @@ public class EditCircuitPaths extends EditFrame implements ListSelectionListener
             int oldState = _homeBlock.getState();
             int newState = oldState | OBlock.ALLOCATED;
             _homeBlock.pseudoPropertyChange("state", oldState, newState);
+            _homeBlock.removePropertyChangeListener(_pathListModel);
         }// else...  Don't clear current selections, if continuing to edit
     }
 

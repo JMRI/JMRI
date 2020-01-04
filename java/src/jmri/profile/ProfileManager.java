@@ -16,7 +16,6 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 import javax.annotation.Nonnull;
-import javax.annotation.CheckForNull;
 
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -215,7 +214,7 @@ public class ProfileManager extends Bean {
     }
 
     @CheckForNull
-    protected Profile getNextActiveProfile() {
+    public Profile getNextActiveProfile() {
         return this.nextActiveProfile;
     }
 

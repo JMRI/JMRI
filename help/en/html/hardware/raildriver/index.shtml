@@ -1,11 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
-
   <title>JMRI Hardware Support - RailDriver Throttle</title>
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -21,20 +19,21 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: RailDriver Throttle</h1>
 
       <p>JMRI support for RailDriver is evolving rapidly, so check
       back here or on the <a href=
       "https://groups.io/g/jmriusers">JMRI
       users group</a> for changes.<br>
-      <a href="RailDriver.gif"><img src="RailDriver.gif" align=
-      "right" width="389" height="236" alt=
-      "RailDriver line drawing"></a> <a name="hardware" id=
-      "hardware"></a></p>
+      <a href="images/RailDriver.gif"><img src="images/RailDriver.gif"
+      align="right" width="389" height="236" alt=
+      "RailDriver line drawing"></a> </p>
 
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <p>JMRI allows you to use a <a href=
@@ -115,15 +114,16 @@
 
       <p>Eventually, we'd like to make a more detailed simulation
       available by connecting the rest of the controls, and adding
-      a detailed model of the trains braking and acceleration.
-      <a name="documentation" id="documentation"></a></p>
+      a detailed model of the trains braking and acceleration.</p>
 
+      <a name="documentation" id="documentation"></a>
       <h2>Documentation</h2>
 
       <h3>JMRI Help</h3>
 
       <p>For technical information on Raildriver, please see the
       <a href="details.shtml">Details Help page</a>.</p>
+
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->
   </div><!-- closes #mBody-->

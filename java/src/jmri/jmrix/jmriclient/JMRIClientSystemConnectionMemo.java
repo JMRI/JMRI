@@ -1,12 +1,15 @@
 package jmri.jmrix.jmriclient;
 
+import java.util.Comparator;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.LightManager;
+import jmri.NamedBean;
 import jmri.PowerManager;
 import jmri.ReporterManager;
 import jmri.SensorManager;
 import jmri.TurnoutManager;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active and provide general
@@ -187,6 +190,11 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     protected ResourceBundle getActionModelResourceBundle() {
         //No actions that can be loaded at startup
         return null;
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     @Override

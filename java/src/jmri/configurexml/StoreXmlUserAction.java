@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Store the JMRI user-level information as XML.
- * <p>
+ * <P>
  * Note that this does not store preferences, configuration, or tool information
  * in the file. This is not a complete store! See {@link jmri.ConfigureManager}
  * for information on the various types of information stored in configuration
@@ -34,8 +34,6 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        //TODO: Add code to set default save file name to name of currently loaded config/panel
-        // (need to setSelectedFile)
         JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         userFileChooser.setApproveButtonText(Bundle.getMessage("ButtonSave")); // is in jmri.NBBundle
@@ -67,5 +65,4 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
 
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(StoreXmlUserAction.class);
-
 }

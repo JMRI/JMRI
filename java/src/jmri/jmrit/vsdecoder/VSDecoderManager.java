@@ -112,7 +112,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     private float distance_rest_new = 0.0f; // Block distance to go, copy
 
     private float xPosi;
-    static final int max_decoder = 4; // For now only four locos allowed (arbitrary)
+    public static final int max_decoder = 4; // For now only four locos allowed (arbitrary)
     private int remove_index;
     boolean is_tunnel = false;
     boolean geofile_ok = false;
@@ -220,7 +220,7 @@ public class VSDecoderManager implements PropertyChangeListener {
                 managerFrame = new VSDManagerFrame();
             }
         } else {
-            log.warn("Virtual Sound Decoder Manager is already running"); // VSDManagerFrameTitle?
+            log.warn("Virtual Sound Decoder Manager is already running");
         }
         return managerFrame;
     }
@@ -520,7 +520,7 @@ public class VSDecoderManager implements PropertyChangeListener {
     }
 
     protected void registerBeanListener(Manager beanManager, String sysName) {
-        NamedBean b = beanManager.getBeanBySystemName(sysName);
+        NamedBean b = beanManager.getBySystemName(sysName);
         if (b == null) {
             log.debug("No bean by name {}", sysName);
             return;
@@ -593,6 +593,9 @@ public class VSDecoderManager implements PropertyChangeListener {
                 stopSoundPositionTimer(v);
             }
         }
+        // Empty the timertable
+        timertable.clear();
+
         // Empty the DecoderTable
         decodertable.clear();
         /*
@@ -658,7 +661,6 @@ public class VSDecoderManager implements PropertyChangeListener {
                 // Note this assumes there is only one VSDManagerFrame open at a time.
                 shutdownDecoders();
                 if (managerFrame != null) {
-                    managerFrame.dispose();
                     managerFrame = null;
                 }
             }
@@ -921,7 +923,8 @@ public class VSDecoderManager implements PropertyChangeListener {
     public void loadProfiles(VSDFile vf) {
         Element root;
         String pname;
-        if ((root = vf.getRoot()) == null) {
+        root = vf.getRoot();
+        if (root == null) {
             return;
         }
 

@@ -1,20 +1,19 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-
     <title>
  	JMRI: CI Status
     </title>
-
 <!--#include virtual="/Style.shtml" -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
-  <div id="mBody">
-    <!--#include virtual="Sidebar.shtml" --> <!-- select the local or global Sidebar file -->
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
-	    <h1>CI Status</h1>
+      <h1>CI Status</h1>
 		
 		<table>
 		<tr><td align="right">
@@ -200,12 +199,18 @@
             </td>
 
             <td>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/">HTML Scan</a>
+                    <br><a href='http://jmri.tagadab.com/jenkins/job/Development/job/HTML%20Scan/'><img src='http://jmri.tagadab.com/jenkins/buildStatus/icon?job=Development%2FHTML+Scan'></a>
+                    <br>
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/lastBuild/warnings25Result/NORMAL/">
+                    <img src="http://builds.jmri.org/jenkins/job/Development/job/HTML%20Scan/warnings4/trendGraph/png?url=PRIORITY">
+                </a>
             </td>
         </tr>
 
         <tr>
             <td>
-                <a href="hhttp://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2011/">JDK 11 build</a> - Java warnings
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2011/">JDK 11 build</a> - Java warnings
                     <br><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2011/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%2011' title="JDK 11"></a>
                     <br>
                 <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%2011/lastBuild/warnings10Result/">
@@ -214,7 +219,7 @@
             </td>
 
             <td>
-                <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JRE%209.0.4/">Java 9 build</a> - Java warnings
+                <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4//">Java 9 build</a> - Java warnings
                     <br><a href='http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/'><img src='http://builds.jmri.org/jenkins/buildStatus/icon?job=Development/VersionChecks/JDK%209.0.4' title="JDK 9"></a>
                     <br>
                 <a href="http://builds.jmri.org/jenkins/job/Development/job/VersionChecks/job/JDK%209.0.4/lastBuild/">

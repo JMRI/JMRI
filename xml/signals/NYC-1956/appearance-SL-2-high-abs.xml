@@ -44,6 +44,13 @@
         <authorinitials>JDL</authorinitials>
         <revremark>added aspect mapping to Held Aspect</revremark>
     </revision>
+
+    <revision>
+        <revnumber>2.3</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Removed unsupported ourAspect values from aspectmappings</revremark>
+    </revision>
     
   </revhistory>
 
@@ -172,7 +179,6 @@
       <advancedAspect>Advance Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Limited Clear</ourAspect>
-      <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Slow-Clear</ourAspect>
     </aspectMapping>
         
@@ -287,7 +293,6 @@
       <advancedAspect>Held</advancedAspect>
       <ourAspect>Limited-Approach</ourAspect>
       <ourAspect>Approach</ourAspect>
-      <ourAspect>Medium-Approach</ourAspect>
       <ourAspect>Restricting</ourAspect>
     </aspectMapping>
 

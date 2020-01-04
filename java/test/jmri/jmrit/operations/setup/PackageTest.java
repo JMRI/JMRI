@@ -41,7 +41,6 @@ import org.junit.runners.Suite;
         PrintOptionPanelTest.class,
         RestoreDialogTest.class,
         SetupTest.class,
-        XmlTest.class,
         BackupFilesActionTest.class,
         LoadDemoActionTest.class,
         ManageBackupsActionTest.class,
