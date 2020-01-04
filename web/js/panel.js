@@ -1763,15 +1763,19 @@ function processPanelXML($returnedData, $success, $xhr) {
                                     var state = item.attributes.turnoutstate.value;
                                     //jmri.log("$drawTurntable ray #" + i + " turnout: '" + turnout + "', state: " + state);
                                     ///jmri.log("$drawTurntable-ray # " + i + " rayID: " + rayID);
-
                                     //add an empty, but clickable, div to the panel and position it over the turnout circle
                                     var $hoverText = " title='" + turnout + "' alt='" + turnout + "'";
-                                    $("#panel-area").append("<div id=" + rayID + " class='" + $widget.classes + "' " + $hoverText + "></div>");
-                                    $("#panel-area>#" + rayID).css(
-                                        {position: 'absolute', left: ($t.x - $cr) + 'px', top: ($t.y - $cr) + 'px', zIndex: 3,
-                                            width: $cd + 'px', height: $cd + 'px'});
-
-                                    //setup notifications
+                                    var $style = " style='width:" + $cd + "px;height:" + $cd + "px;border:1px solid #000;'";
+                                    var $append = "<div id=" + rayID + " class='" + $widget.classes + $style + $hoverText + "></div>";
+                                    $("#panel-area").append($append);
+                                    $("#panel-area>#" + rayID).css({
+                                        position: 'absolute',
+                                        left: ($t.x - $cr) + 'px',
+                                        top: ($t.y - $cr) + 'px',
+                                        zIndex: 3,
+                                        width: $cd + 'px',
+                                        height: $cd + 'px'
+                                    });                                    //setup notifications
                                     jmri.getTurnout(turnout);
 
                                     // add turnout to whereUsed array (as $widget + 'r')
@@ -4303,3 +4307,4 @@ function getNextSlipState(slipWidget) {
     //jmri.log("  result:" + result);
     return result;
 }   // function getNextSlipState(slipWidget)
+
