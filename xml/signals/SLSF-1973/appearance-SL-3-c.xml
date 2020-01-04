@@ -3,7 +3,7 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable-no-check.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -44,6 +44,13 @@
         <authorinitials>PAB</authorinitials>
         <revremark>fix image links</revremark>
     </revision>    
+    <revision>
+        <revnumber>5</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Fix a typo in aspectmappings</revremark>
+    </revision>
+
   </revhistory>
 
   <aspecttable>SLSF</aspecttable>
@@ -121,6 +128,15 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-c.gif</imagelink>
     </appearance>
 
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 291</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule291.gif</imagelink>
+    </appearance>
+
   </appearances>
 
         <specificappearances><!-- Start of Specific Appearances list -->
@@ -162,7 +178,7 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
 
     <aspectMapping>
      <advancedAspect>Diverging Clear</advancedAspect>
-     <ourAspect>Approace Medium</ourAspect>
+     <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
     <aspectMapping>

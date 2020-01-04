@@ -3,7 +3,7 @@
 
 <aspecttable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://localhost/xml/schema/aspecttable.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/aspecttable.xsd"
 >
   <name>DanishSimplified</name>
   <date>2015</date>

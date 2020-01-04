@@ -3,7 +3,7 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable-no-check.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -23,6 +23,12 @@
         <date>2016-07-28</date>
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
+    </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Correct 'held' specific appearance</revremark>
     </revision>    
   </revhistory>
 
@@ -115,9 +121,8 @@
       <aspect>Stop and Proceed</aspect>
     </danger>
 	
-	<!-- This file doesn't define a Stop aspect and appearance.  Should it? It's rule 292 in the aspects file. -->
     <held>
-      <aspect>Stop</aspect>
+      <aspect>Stop and Proceed</aspect>
     </held>
 	
 	<dark>
