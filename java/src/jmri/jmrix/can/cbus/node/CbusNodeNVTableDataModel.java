@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.node;
 
 import java.util.Arrays;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.util.ThreadingUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

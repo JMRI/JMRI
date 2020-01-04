@@ -1,7 +1,9 @@
 package jmri.jmrix.grapevine;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
+
+import javax.annotation.Nonnull;
+
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;
