@@ -472,6 +472,10 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
                 jmri.jmrit.lcdclock.LcdClockFrame h = new jmri.jmrit.lcdclock.LcdClockFrame();
                 h.setVisible(true);
                 break;
+            case PRAGOTRON_CLOCK:
+                jmri.jmrit.pragotronclock.PragotronClockFrame p = new jmri.jmrit.pragotronclock.PragotronClockFrame();
+                p.setVisible(true);
+                break;
             default:
                 log.debug("initializeClock() called with invalid startClockOption: " + startClockOption);
         }

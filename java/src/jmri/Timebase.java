@@ -171,6 +171,7 @@ public interface Timebase extends NamedBean {
     public static final int NIXIE_CLOCK = 0x01;
     public static final int ANALOG_CLOCK = 0x02;
     public static final int LCD_CLOCK = 0x04;
+    public static final int PRAGOTRON_CLOCK = 0x08;
 
     /**
      * Initialize hardware clock at start up after all options are set up.
