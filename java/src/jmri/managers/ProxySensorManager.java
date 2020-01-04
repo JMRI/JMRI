@@ -4,7 +4,6 @@ import javax.annotation.Nonnull;
 
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.SignalHead;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

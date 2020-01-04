@@ -1,6 +1,5 @@
 package jmri.jmrix.oaktree;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.Sensor;

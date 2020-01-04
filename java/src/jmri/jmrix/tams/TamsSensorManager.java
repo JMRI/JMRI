@@ -1,6 +1,5 @@
 package jmri.jmrix.tams;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Hashtable;
 import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;

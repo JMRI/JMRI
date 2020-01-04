@@ -7,7 +7,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import javax.swing.*;
 import javax.swing.event.*;
 import jmri.jmrix.can.CanMessage;

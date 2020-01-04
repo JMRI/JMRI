@@ -11,10 +11,6 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 
-import jmri.InstanceManager;
-import jmri.NamedBean;
-import jmri.NamedBeanHandle;
-import jmri.NamedBeanHandleManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.CoordinateEdit;
 import jmri.jmrit.display.Editor;

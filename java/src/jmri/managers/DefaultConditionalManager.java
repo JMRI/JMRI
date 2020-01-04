@@ -13,7 +13,6 @@ import jmri.Conditional;
 import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.Logix;
-import jmri.SignalHead;
 import jmri.implementation.DefaultConditional;
 import jmri.implementation.SensorGroupConditional;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;

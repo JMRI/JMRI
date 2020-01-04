@@ -9,8 +9,6 @@ import jmri.Manager;
 import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.configurexml.ConfigXmlManager;
-import jmri.configurexml.JmriConfigureXmlException;
-import jmri.configurexml.XmlAdapter;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractSignalHeadManager;
 import org.jdom2.Element;

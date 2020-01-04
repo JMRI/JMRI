@@ -15,7 +15,6 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
-import jmri.SignalHead;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrix.SystemConnectionMemo;

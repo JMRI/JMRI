@@ -9,7 +9,6 @@ import com.digi.xbee.api.io.IOMode;
 import com.digi.xbee.api.io.IOSample;
 import com.digi.xbee.api.listeners.IIOSampleReceiveListener;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.JmriException;

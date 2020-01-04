@@ -2,7 +2,6 @@ package jmri.jmrit.display.layoutEditor;
 
 import jmri.jmrit.display.SignalHeadIcon;
 import jmri.util.JUnitUtil;
-import jmri.util.junit.annotations.ToDo;
 import org.junit.*;
 
 import java.awt.*;

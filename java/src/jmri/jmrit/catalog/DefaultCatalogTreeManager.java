@@ -1,13 +1,11 @@
 package jmri.jmrit.catalog;
 
-import java.util.Objects;
 import java.util.Set;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceInitializer;
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
-import jmri.SignalSystem;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;

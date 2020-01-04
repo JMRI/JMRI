@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.LinkedList;

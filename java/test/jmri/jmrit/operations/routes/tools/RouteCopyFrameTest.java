@@ -7,7 +7,6 @@ import org.junit.Assume;
 import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.routes.tools.RouteCopyFrame;
 import jmri.util.JUnitUtil;
 
 /**

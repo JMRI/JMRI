@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.routes.tools.ExportRoutesAction;
 
 /**
  *

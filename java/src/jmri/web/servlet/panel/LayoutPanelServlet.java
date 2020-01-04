@@ -1,6 +1,5 @@
 package jmri.web.servlet.panel;
 
-import edu.umd.cs.findbugs.annotations.NonNull;
 import java.awt.Color;
 import java.util.List;
 

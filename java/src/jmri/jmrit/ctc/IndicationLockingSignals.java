@@ -5,7 +5,6 @@ package jmri.jmrit.ctc;
 
 import java.util.ArrayList;
 import jmri.InstanceManager;
-import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;

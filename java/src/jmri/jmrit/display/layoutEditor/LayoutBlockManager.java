@@ -15,7 +15,6 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
-import jmri.SignalSystem;
 import jmri.Turnout;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;

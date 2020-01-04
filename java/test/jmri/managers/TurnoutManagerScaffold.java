@@ -2,10 +2,8 @@ package jmri.managers;
 
 import java.beans.PropertyChangeListener;
 import java.beans.VetoableChangeListener;
-import java.util.Comparator;
 
 import jmri.JmriException;
-import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;

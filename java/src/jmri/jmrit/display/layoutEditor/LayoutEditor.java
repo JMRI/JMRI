@@ -32,7 +32,6 @@ import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.dispatcher.*;
 import jmri.jmrit.display.*;
-import jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.*;
 import jmri.jmrit.display.panelEditor.PanelEditor;
 import jmri.jmrit.entryexit.AddEntryExitPairAction;
 import jmri.swing.NamedBeanComboBox;

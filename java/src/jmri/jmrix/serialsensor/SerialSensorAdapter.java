@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.TooManyListenersException;
@@ -14,7 +13,6 @@ import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.jmrix.AbstractSerialPortController;
 import jmri.jmrix.SystemConnectionMemo;
-import jmri.util.NamedBeanComparator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

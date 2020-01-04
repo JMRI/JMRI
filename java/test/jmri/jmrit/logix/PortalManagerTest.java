@@ -9,7 +9,6 @@ import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;

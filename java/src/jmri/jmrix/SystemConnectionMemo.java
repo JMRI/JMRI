@@ -3,7 +3,6 @@ package jmri.jmrix;
 import apps.startup.StartupActionModelUtil;
 
 import java.util.Comparator;
-import java.util.Enumeration;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import javax.annotation.Nonnull;
