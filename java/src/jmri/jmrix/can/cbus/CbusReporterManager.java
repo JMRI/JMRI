@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.managers.AbstractReporterManager;
@@ -27,6 +28,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
@@ -35,7 +37,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      * {@inheritDoc}
      */
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         log.debug("ReporterManager create new CbusReporter: {}", systemName);
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
         Reporter t = new CbusReporter(addr, getMemo().getTrafficController(), getSystemPrefix());
@@ -49,7 +51,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      * Checks for reporter number between 0 and 65535
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         // name must be in the MSnnnnn format (M is user configurable); no + or ; or - for Reporter address
         log.debug("Checking system name: {}", systemName);
         if ( systemName == null ) {
@@ -84,7 +86,7 @@ public class CbusReporterManager extends AbstractReporterManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

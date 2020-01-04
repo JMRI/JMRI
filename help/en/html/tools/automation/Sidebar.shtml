@@ -1,64 +1,17 @@
 <!-- Sidebar -->
 	  <hr class="hide">
-	  <div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">JMRI is...</div>
+	 <div id="side"> <!-- Block of text on left side of page -->
+	    
+	    <div style="text-align: center">JMRI&reg; is...</div>
 	    <dl>
-
-		<dt><h3><a href="../scripting/index.shtml">Scripting</a></h3></dt>
-		<dd>Information on writing scripts to control JMRI in more detail:
-		    <ul>
-		    <li><a href="../scripting/Start.shtml">Introduction</a>
-		    <li><a href="../scripting/Python.shtml">The Language</a>
-		    <li><a href="../scripting/Examples.shtml">Examples</a>
-		    <li><a href="../scripting/ex_set_turnouts.shtml">Example: Setting Turnouts</a>
-		    <li><a href="../scripting/FAQ.shtml">Frequently Asked Questions (FAQs)</a>
-		    <li><a href="../scripting/Jynstruments.shtml">Jynstruments to modify the GUI</a>
-		    </ul>
-		</dd>
-
-		<dt><h3><a href="../index.shtml">Tools</a></h3></dt>
-		<dd>The general objects available to control your layout.
-		    <ul>
-				<li><a href="../Turnouts.shtml">Turnouts</a>
-				<li><a href="../Lights.shtml">Lights</a>
-				<li><a href="../Sensors.shtml">Sensors</a>
-				<li><a href="../throttle/ThrottleMain.shtml">Throttles</a>
-				<li><a href="../consisttool/ConsistTool.shtml">Consisting</a>
-				<li><a href="../signaling/index.shtml">Signaling</a>
-				<li><a href="../Blocks.shtml">Blocks</a>
-				<li><a href="../Reporters.shtml">Reporters</a>
-				<li><a href="../Memories.shtml">Memory Variables</a>
-				<li><a href="../Routes.shtml">Routes</a>
-				<li><a href="../LRoutes.shtml">LRoutes</a>
-		        <li><a href="../Sections.shtml">Sections</a>
-		        <li><a href="../Transits.shtml">Transits</a>
-				<li><a href="../Logix.shtml">Logix</a>
-				<li><a href="../fastclock/index.shtml">Fast Clocks</a>
-				<li><a href="../speedometer/index.shtml">Speedometer</a>
-				<li><a href="../Audio.shtml">Audio</a>
-				<li><a href="../IdTags.shtml">ID Tags</a>
-				<li><a href="../TimeTable.shtml">Timetable</a>
-		
-		    <li><a href="../index.shtml#systemSpecificTools">System-specific...</a>
-		    </ul>
-		</dd>
-
-  	    <dt><h3>Layout Automation</h3></dt>
-		<dd>Other tools for JMRI Automation:
-		    <ul>
-		    <li><a href="../signaling/index.shtml">Signaling</a>
-            <li><a href="../EntryExit.shtml">Entry Exit (NX)</a>
-            <li><a href="../../../package/jmri/jmrit/logix/Warrant.shtml">Warrants</a>
-            <li><a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
-            <li><a href="../Routes.shtml">Routes</a>
-		    <li><a href="../fastclock/index.shtml">Fast Clocks</a>
-		    <li><a href="../uss/index.shtml">USS CTC</a>
-		    <li><a href="../scripting/index.shtml">Scripting</a>
-		    </ul>
-		</dd>
+	    
+	    <!-- Sections in different order than in Tools generic sidebar  -->
+           <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+           <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
+           <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
 
 	    </dl>
-
+	 
 	</div> <!-- closes #side -->
 
 <!-- /Sidebar -->

@@ -17,7 +17,6 @@ import org.junit.runners.Suite;
         AutomationsTableFrameTest.class,
         AutomationsTableFrameTest.class,
         AutomationsTableModelTest.class,
-        XmlTest.class, 
         AutomationTest.class,
         AutomationResetActionTest.class,
 })

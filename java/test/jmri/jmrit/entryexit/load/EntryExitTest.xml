@@ -454,7 +454,7 @@
   </layoutblocks>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
     <route userName="Turnouts">
-      <systemName>IR:AUTO:0001</systemName>
+      <systemName>IO:AUTO:0001</systemName>
       <userName>Turnouts</userName>
       <routeOutputTurnout systemName="IT101" state="CLOSED" />
       <routeOutputTurnout systemName="IT102" state="CLOSED" />
@@ -463,13 +463,13 @@
       <routeSensor systemName="Reset" mode="onActive" />
     </route>
     <route userName="Sensors">
-      <systemName>IR:AUTO:0002</systemName>
+      <systemName>IO:AUTO:0002</systemName>
       <userName>Sensors</userName>
       <routeOutputSensor systemName="Reset" state="INACTIVE" />
       <routeSensor systemName="Reset" mode="onActive" />
     </route>
     <route userName="Block Detectors">
-      <systemName>IR:AUTO:0003</systemName>
+      <systemName>IO:AUTO:0003</systemName>
       <userName>Block Detectors</userName>
       <routeOutputSensor systemName="BD-AW" state="INACTIVE" />
       <routeOutputSensor systemName="BD-AE" state="INACTIVE" />
@@ -488,7 +488,7 @@
       <routeSensor systemName="Reset" mode="onActive" />
     </route>
     <route userName="NX Sensors">
-      <systemName>IR:AUTO:0004</systemName>
+      <systemName>IO:AUTO:0004</systemName>
       <userName>NX Sensors</userName>
       <routeOutputSensor systemName="NX-Alpha-EB" state="INACTIVE" />
       <routeOutputSensor systemName="NX-AW" state="INACTIVE" />

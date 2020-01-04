@@ -46,21 +46,6 @@ public class JmriUserPreferencesManagerTest {
     private final String strClass = JmriUserPreferencesManagerTest.class.getName();
 
     @Test
-    public void testGetInstance() {
-        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
-        Assert.assertNotNull(JmriUserPreferencesManager.getInstance());
-        Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getInstance());
-        Assert.assertEquals(JmriUserPreferencesManager.getDefault(), JmriUserPreferencesManager.getInstance());
-    }
-
-    @Test
-    public void testGetDefault() {
-        Assert.assertFalse(InstanceManager.containsDefault(UserPreferencesManager.class));
-        Assert.assertNotNull(JmriUserPreferencesManager.getDefault());
-        Assert.assertEquals(InstanceManager.getDefault(UserPreferencesManager.class), JmriUserPreferencesManager.getDefault());
-    }
-
-    @Test
     public void testAllowSave() {
         UserPreferencesManager m = new JmriUserPreferencesManager();
         m.setSaveAllowed(false);

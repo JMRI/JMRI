@@ -1,16 +1,34 @@
 <?xml version="1.0"?>
 <catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
  
-    <system systemId="http://jmri.org/xml/DTD/layout-config.dtd"
-            uri="DTD/layout-config.dtd"/>
+    <!--
+        This file provides a local XML catalog for systems
+        who need it to provide access to schema and 
+        DTD files.
+        
+        It should be updated when new Schema or DTD files are added.
+        
+        To check schema (tcsh shell):
+            cd xml
+            foreach x ( `ls schema` )
+            grep -q $x catalog.xml || echo $x
+            end
+    -->
+
     <system systemId="http://jmri.org/xml/schema/JMRIschema.xsd"
             uri="schema/JMRIschema.xsd"/>
     <system systemId="http://jmri.org/xml/schema/appearancetable.xsd"
             uri="schema/appearancetable.xsd"/>
     <system systemId="http://jmri.org/xml/schema/aspecttable.xsd"
             uri="schema/aspecttable.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/auxiliary-configuration.xsd"
+            uri="schema/auxiliary-configuration.xsd"/>
     <system systemId="http://jmri.org/xml/schema/decoder.xsd"
             uri="schema/decoder.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/decoder-4-13-3.xsd"
+            uri="schema/decoder-4-13-3.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/decoder-4-15-2.xsd"
+            uri="schema/decoder-4-15-2.xsd"/>
     <system systemId="http://jmri.org/xml/schema/defaultPanelIcons.xsd"
             uri="schema/defaultPanelIcons.xsd"/>
     <system systemId="http://jmri.org/xml/schema/docbook/docbook.xsd"
@@ -25,16 +43,40 @@
             uri="schema/docbook/xml.xsd"/>
     <system systemId="http://jmri.org/xml/schema/guinode.xsd"
             uri="schema/guinode.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/idtags.xsd"
+            uri="schema/idtags.xsd"/>
     <system systemId="http://jmri.org/xml/schema/layout-2-9-6.xsd"
             uri="schema/layout-2-9-6.xsd"/>
     <system systemId="http://jmri.org/xml/schema/layout.xsd"
             uri="schema/layout.xsd"/>
     <system systemId="http://jmri.org/xml/schema/locomotive-config.xsd"
             uri="schema/locomotive-config.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/mfginfo.xsd"
+            uri="schema/mfginfo.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/names-4-19-1.xsd"
+            uri="schema/names-4-19-1.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/nmra_mfg_list-4-19-1.xsd"
+            uri="schema/nmra_mfg_list-4-19-1.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/node-identity-config.xsd"
+            uri="schema/node-identity-config.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/panelfile.xsd"
+            uri="schema/panelfile.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/profile.xsd"
+            uri="schema/profile.xsd"/>
     <system systemId="http://jmri.org/xml/schema/programmer.xsd"
             uri="schema/programmer.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/roster.xsd"
+            uri="schema/roster.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/scale.xsd"
+            uri="schema/scale.xsd"/>
     <system systemId="http://jmri.org/xml/schema/speedtable.xsd"
             uri="schema/speedtable.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/speedometer-3-9-3.xsd"
+            uri="schema/speedometer-3-9-3.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/speedometer.xsd"
+            uri="schema/speedometer.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/timetable.xsd"
+            uri="schema/timetable.xsd"/>
     <system systemId="http://jmri.org/xml/schema/types/audio-2-9-6.xsd"
             uri="schema/types/audio-2-9-6.xsd"/>
     <system systemId="http://jmri.org/xml/schema/types/audio.xsd"
@@ -111,6 +153,8 @@
             uri="schema/types/signalmasts-2-9-6.xsd"/>
     <system systemId="http://jmri.org/xml/schema/types/signalmasts.xsd"
             uri="schema/types/signalmasts.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/types/switchboardeditor.xsd"
+            uri="schema/types/switchboardeditor.xsd"/>
     <system systemId="http://jmri.org/xml/schema/types/timebase.xsd"
             uri="schema/types/timebase.xsd"/>
     <system systemId="http://jmri.org/xml/schema/types/transits-2-9-6.xsd"
@@ -125,9 +169,17 @@
             uri="schema/types/userpreferences.xsd"/>
     <system systemId="http://jmri.org/xml/schema/types/warrants-2-9-6.xsd"
             uri="schema/types/warrants-2-9-6.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/vsdecoder/vsdecoder-config.xsd"
+            uri="schema/vsdecoder/vsdecoder-config.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/vsdecoder/vsdecoder-prefs.xsd"
+            uri="schema/vsdecoder/vsdecoder-prefs.xsd"/>
     <system systemId="http://jmri.org/xml/schema/types/warrants.xsd"
             uri="schema/types/warrants.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/xmlio.xsd"
+            uri="schema/types/xmlio.xsd"/>
  
+    <system systemId="http://jmri.org/xml/DTD/layout-config.dtd"
+            uri="DTD/layout-config.dtd"/>
     <system systemId="/xml/DTD/rpsfile.dtd"
             uri="DTD/rpsfile.dtd"/>
     

@@ -1693,8 +1693,7 @@ public class TurnoutTableAction extends AbstractTableAction<Turnout> {
             try {
                 curAddress = InstanceManager.getDefault(TurnoutManager.class).getNextValidAddress(curAddress, prefix);
             } catch (jmri.JmriException ex) {
-                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                        showErrorMessage(Bundle.getMessage("ErrorTitle"), Bundle.getMessage("ErrorConvertHW", curAddress), "" + ex, "", true, false);
+                displayHwError(curAddress, ex);
                 // directly add to statusBarLabel (but never called?)
                 statusBarLabel.setText(Bundle.getMessage("ErrorConvertHW", curAddress));
                 statusBarLabel.setForeground(Color.red);

@@ -81,7 +81,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
 
     private void removeListenersFromRemovedBeans() {
         for (LayoutBlock layoutBlock : new HashSet<>(layoutBlockListeners.keySet())) {
-            if (InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(layoutBlock.getSystemName()) == null) {
+            if (InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(layoutBlock.getSystemName()) == null) {
                 layoutBlockListeners.remove(layoutBlock);
             }
         }
