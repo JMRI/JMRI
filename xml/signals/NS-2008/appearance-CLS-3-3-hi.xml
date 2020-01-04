@@ -2,7 +2,7 @@
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable-no-check.xsd"
+  xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd"
 >
   <copyright xmlns="http://docbook.org/ns/docbook">
     <year>2012</year>
