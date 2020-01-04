@@ -48,7 +48,7 @@ import org.junit.runners.Suite;
         TrackNodeTest.class,
         TrackSegmentTest.class,
         TransitCreationToolTest.class,
-        //jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.PackageTest.class,
+        jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.PackageTest.class,
         jmri.jmrit.display.layoutEditor.blockRoutingTable.PackageTest.class,
         jmri.jmrit.display.layoutEditor.configurexml.PackageTest.class
 })
