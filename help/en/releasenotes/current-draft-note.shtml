@@ -483,6 +483,8 @@
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Petr Sidlo added a Pragotron clock, which is digital clock
+            found in many European train stations.</li>
             <li>The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
                 calls in the various <code>Manager<code> classes
                 are no longer needed with Java 8 and have been deprecated for eventual
