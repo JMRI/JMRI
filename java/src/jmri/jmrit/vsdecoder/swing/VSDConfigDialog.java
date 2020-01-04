@@ -256,7 +256,6 @@ public class VSDConfigDialog extends JDialog {
         this.add(cbPanel);
         this.pack();
         this.setVisible(true);
-
     }
 
     public void cancelButtonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -266,31 +265,35 @@ public class VSDConfigDialog extends JDialog {
     /**
      * Handle the "Close" (or "OK") button action
      */
-    public void closeButtonActionPerformed(java.awt.event.ActionEvent ae) {
-        if (profileComboBox.getSelectedItem() != null) {
+    private void closeButtonActionPerformed(java.awt.event.ActionEvent ae) {
+        if (profileComboBox.getSelectedItem() == null) {
             config.setProfileName(profileComboBox.getSelectedItem().toString());
+            JOptionPane.showMessageDialog(null, "Please select a valid Profile");
+            rosterSaveButton.setEnabled(false);
+            closeButton.setEnabled(false);
         } else {
-            config.setProfileName("");
-        }
-        config.setLocoAddress(addressSelector.getAddress());
-        if (rosterSelector.getSelectedRosterEntries().length > 0) {
-            config.setRosterEntry(rosterSelector.getSelectedRosterEntries()[0]);
-        } else {
-            config.setRosterEntry(null);
-        }
+            config.setProfileName(profileComboBox.getSelectedItem().toString());
+            log.debug("Profile item selected: {}", config.getProfileName());
 
-        firePropertyChange(CONFIG_PROPERTY, null, config);
-        dispose();
+            config.setLocoAddress(addressSelector.getAddress());
+            if (rosterSelector.getSelectedRosterEntries().length > 0) {
+                config.setRosterEntry(rosterSelector.getSelectedRosterEntries()[0]);
+            } else {
+                config.setRosterEntry(null);
+            }
+
+            firePropertyChange(CONFIG_PROPERTY, null, config);
+            dispose();
+        }
     }
 
     // class NullComboBoxItem
     //
     // little object to insert into profileComboBox when it's empty
     static class NullProfileBoxItem {
-
         @Override
         public String toString() {
-            return (Bundle.getMessage("NoLocoSelectedText"));
+            return Bundle.getMessage("NoLocoSelectedText");
         }
     }
 
@@ -304,20 +307,25 @@ public class VSDConfigDialog extends JDialog {
     /**
      * rosterItemSelectAction()
      *
-     * ActionEventListener function for rosterSelector Chooses a RosterEntry
-     * from the list and loads its relevant info.
+     * ActionEventListener function for rosterSelector
+     * Chooses a RosterEntry from the list and loads its relevant info.
+     * If all VSD Infos are provided, close the Config Dialog.
      */
     private void rosterItemSelectAction(ActionEvent e) {
         if (rosterSelector.getSelectedRosterEntries().length != 0) {
-            log.debug("Roster Entry selected...");
+            log.debug("Roster Entry selected... {}", rosterSelector.getSelectedRosterEntries()[0]);
             setRosterEntry(rosterSelector.getSelectedRosterEntries()[0]);
             enableProfileStuff(true);
-            // undo the close button enable if there's no profile selected
-            // (this would be when selecting a RosterEntry that doesn't have
-            // predefined VSD info.
+
+            log.debug("profile ComboBox selected item: {}", profileComboBox.getSelectedItem());
+            // undo the close button enable if there's no profile selected (this would
+            // be when selecting a RosterEntry that doesn't have predefined VSD info)
             if ((profileComboBox.getSelectedIndex() == -1)
                     || (profileComboBox.getSelectedItem() instanceof NullProfileBoxItem)) {
+                rosterSaveButton.setEnabled(false);
                 closeButton.setEnabled(false);
+            } else {
+                closeButton.doClick(); // All done
             }
         }
     }
@@ -335,12 +343,15 @@ public class VSDConfigDialog extends JDialog {
             String profile = profileComboBox.getSelectedItem().toString();
             String path = VSDecoderManager.instance().getProfilePath(profile);
             if (path == null) {
-                log.debug("Path not selected.  Ignore Save button press.");
+                log.warn("Path not selected.  Ignore Save button press.");
                 return;
             } else {
                 r.setOpen(true);
                 r.putAttribute("VSDecoder_Path", path);
                 r.putAttribute("VSDecoder_Profile", profile);
+                if (r.getAttribute("VSDecoder_LaunchThrottle") == null) {
+                    r.putAttribute("VSDecoder_LaunchThrottle", "no");
+                }
                 int value = JOptionPane.showConfirmDialog(null,
                         MessageFormat.format(Bundle.getMessage("UpdateRoster"),
                                 new Object[]{r.titleString()}),
@@ -350,15 +361,15 @@ public class VSDConfigDialog extends JDialog {
                 }
                 r.setOpen(false);
             }
-
-            // Need to write RosterEntry to file.
         }
     }
 
     private void profileComboBoxActionPerformed(java.awt.event.ActionEvent evt) {
         // if there's also an Address entered, then enable the OK button.
-        if (addressSelector.getAddress() != null) {
+        if (addressSelector.getAddress() != null &&
+                !(profileComboBox.getSelectedItem() instanceof NullProfileBoxItem)) {
             closeButton.setEnabled(true);
+            rosterSaveButton.setEnabled(true);
         }
     }
 
@@ -397,7 +408,6 @@ public class VSDConfigDialog extends JDialog {
         // There's got to be a more efficient way to do this.
         // Most of this is about merging the new array list with
         // the entries already in the ComboBox.
-
         if (s == null) {
             return;
         }
@@ -406,7 +416,9 @@ public class VSDConfigDialog extends JDialog {
         // Pull all of the existing names from the Profile ComboBox
         ArrayList<String> ce_list = new ArrayList<>();
         for (int i = 0; i < profileComboBox.getItemCount(); i++) {
-            ce_list.add(profileComboBox.getItemAt(i).toString());
+            if (!(profileComboBox.getItemAt(i) instanceof NullProfileBoxItem)) {
+                ce_list.add(profileComboBox.getItemAt(i).toString());
+            }
         }
 
         // Cycle through the list provided as "s" and add only
@@ -431,8 +443,8 @@ public class VSDConfigDialog extends JDialog {
                 log.debug("Trying to set the ProfileComboBox to this Profile: {}", profile);
                 if (profile != null) {
                     profileComboBox.setSelectedItem(profile);
+                    rosterSaveButton.setEnabled(true);
                 }
-                rosterSaveButton.setEnabled(true);
             }
         }
     }
@@ -441,31 +453,37 @@ public class VSDConfigDialog extends JDialog {
      * setRosterEntry()
      *
      * Respond to the user choosing an entry from the rosterSelector
+     * Launch a JMRI throttle (optional)
      */
-    public void setRosterEntry(RosterEntry entry) {
-        String vsd_path;
-        String vsd_profile;
-
+    private void setRosterEntry(RosterEntry entry) {
         // Update the roster entry local var.
         rosterEntry = entry;
 
-        // Get VSD info from Roster.
-        vsd_path = rosterEntry.getAttribute("VSDecoder_Path");
-        vsd_profile = rosterEntry.getAttribute("VSDecoder_Profile");
+        // Get VSD info from Roster
+        String vsd_path = rosterEntry.getAttribute("VSDecoder_Path");
+        String vsd_launch_throttle = rosterEntry.getAttribute("VSDecoder_LaunchThrottle");
 
-        log.debug("Roster entry: profile: {}, path: {}", vsd_profile, vsd_path);
+        log.debug("Roster entry path: {}, LaunchThrottle: {}", vsd_path, vsd_launch_throttle);
 
         // If the roster entry has VSD info stored, load it.
         if (vsd_path == null || vsd_path.isEmpty()) {
-            JOptionPane.showMessageDialog(null,
-                    "No VSD info found in Roster Media - couldn't load VSD File. Use the \"Save to Roster\" button to add the VSD info.");
+            log.warn("No VSD Path found for Roster Entry \"{}\". Use the \"Save to Roster\" button to add the VSD info.",
+                    rosterEntry.getId());
         } else {
             // Load the indicated VSDecoder Profile and update the Profile combo box
             // This will trigger a PROFILE_LIST_CHANGE event from the VSDecoderManager.
-            LoadVSDFileAction.loadVSDFile(vsd_path);
+            boolean is_loaded = LoadVSDFileAction.loadVSDFile(vsd_path);
+
+            if (is_loaded && vsd_launch_throttle != null && vsd_launch_throttle.equals("yes")) {
+                // Launch a JMRI Throttle (if setup by the Roster media attribut).
+                jmri.jmrit.throttle.ThrottleFrame tf = 
+                        InstanceManager.getDefault(jmri.jmrit.throttle.ThrottleFrameManager.class).createThrottleFrame();
+                tf.toFront();
+                tf.getAddressPanel().setRosterEntry(Roster.getDefault().entryFromTitle(rosterEntry.getId()));
+            }
         }
 
-        // Set the Address box from the Roster entry
+        // Set the Address box from the Roster entry.
         // Do this after the VSDecoder create, so it will see the change.
         addressSelector.setAddress(entry.getDccLocoAddress());
         addressSelector.setEnabled(true);
