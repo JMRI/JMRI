@@ -22,15 +22,17 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
+</head>
 
 <body>
-  <div id="mBody">
+<!--#include virtual="/Header.shtml" -->
+<div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
-      <h1>JMRI Code: Unit testing with JUnit</h1>
+
+    <h1>JMRI Code: Unit testing with JUnit</h1>
 
       <ul>
         <li><a href="#Introduction">Introduction</a></li>
@@ -82,8 +84,8 @@
             <li><a href="#J4rules">JUnit4 Rules</a></li>
             <li style="list-style: none">
                 <ul>
-                <li><a href="#TimeoutRule">Timeout rule</a>
-                <li><a href="#RetryRule">RetryRule</a>
+                <li><a href="#TimeoutRule">Timeout rule</a></li>
+                <li><a href="#RetryRule">RetryRule</a></li>
                 </ul>
             </li>
             <li><a href="#control">Controlling JUnit4 Tests</a></li>
@@ -181,22 +183,10 @@
             <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
         <dt>jmri.skipjythontests</dt>
             <dd>If true, JUnit tests will skip running the jython/tests scripts.</dd>
-        <dt>jmri.log4jconfigfilename</dt>
-            <dd>Override the default "tests.lcf" logging control file name.</dd>
-        <dt>jmri.demo</dt>
-            <dd>When set true, leave certain windows open to demonstrate their capability</dd>
         <dt>jmri.migrationtests</dt>
             <dd>When set true, run some extra tests; usually used during code migration,
                 where not everything is right yet but you want to be able to include
                 tests for individual running.  </dd>
-        <dt>jmri.shutdownmanager</dt>
-            <dd>When set, use the specified class as the default ShutDownManager. The specified class
-              must implement the jmri.ShutDownManager interface and have a public default constructor.
-            </dd>
-        <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
-            <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
-                This can be useful if i.e. the CI tests are hanging, and you can't figure out which
-                test class is the problem.</dd>
         <dt>jmri.util.JUnitUtil.checkSetUpTearDownSequence</dt>
             <dd>If true, check for whether JUnitUtil.setUp() and JUnitUtil.teardown() follow each other
                 int the proper sequence. Print a message if not.  (This slows execution a 
@@ -216,6 +206,50 @@
     
       For more on setting these, see the 
       <a href="StartUpScripts.shtml#prop">start-up scripts page</a>.
+
+    <h3><a name="testcontrols" id="testcontrols">Controlling Test Operation</a></h3>
+    There are a number of 
+    environmental variables that can be used to modify standard behaviour
+    in ways that make testing easier.
+      <dl>
+        <dt>jmri.demo</dt>
+            <dd>When set to "true", this tells certain tests to leave windows
+                open so that they can be used as demos or manual tests. The 
+                default is "false", clean up at the end of the test.</dd>
+        <dt>jmri.log4jconfigfilename</dt>
+            <dd>Override the default "tests.lcf" logging control file name.</dd>
+        <dt>jmri.jmrit.audio.DefaultAudioManager.implementation</dt>
+            <dd>When set, use the specified class for the AudioFactory implementation.
+                Setting it to <code>jmri.jmrit.audio.NullAudioFactory</code> will 
+                recreate the audio environment on the CI machines, which have no 
+                audio hardware available.
+            </dd>
+        <dt>jmri.log4jconfigfilename</dt>
+            <dd>Override the default "tests.lcf" logging control file name.</dd>
+        <dt>jmri.shutdownmanager</dt>
+            <dd>When set, use the specified class as the default ShutDownManager. The specified class
+              must implement the jmri.ShutDownManager interface and have a public default constructor.
+              This is used in our standard testing infrastructure(s) to ensure that a mocked
+              test-compatible ShutDownManager is available.
+            </dd>
+        <dt>jmri.skipTestsRequiringSeparateRunning</dt>
+            <dd>When set to "true", this skips running certain tests that should be run
+            separately (not in the long series of tests we use for CI running) 
+            because they behave intermittently when run as part of the main test sequence.  
+            The <code>scripts/run_flagged_tests_separately</code> file
+            runs these test classes separately.</dd>
+        <dt>jmri.skipschematests</dt>
+            <dd>If true, JUnit tests will skip checking the schema of all the test XML files.</dd>
+        <dt>jmri.util.JUnitUtil.printSetUpTearDownNames</dt>
+            <dd>If true, JUnit tests will print out each JUnitUtil.setUp() and JUnitUtil.teardown() call.
+                This can be useful if i.e. the CI tests are hanging, and you can't figure out which
+                test class is the problem.</dd>
+
+     </dl>
+    
+      For more on setting these, see the 
+      <a href="StartUpScripts.shtml#prop">start-up scripts page</a>.
+
     
       <h3><a name="I18N" id="I18N">A Note on Internationalization (I18N)</a></h3>
       
@@ -608,7 +642,6 @@
     JUnitUtil.resetInstanceManager();
     JUnitUtil.resetProfileManager();
     JUnitUtil.initConfigureManager();
-    JUnitUtil.initShutDownManager();
 
     JUnitUtil.initDebugCommandStation();
     
@@ -628,6 +661,52 @@
     JUnitUtil.tearDown();
 </pre>
 
+      <h4>Working with a Timebase</h4>
+      
+      During testing, your code might need a ShutDownManager.  There
+      are several points to consider:
+      <ul>
+      <li>If you leave any ShutDownActions in the ShutDownManager at the end
+            of your test, warnings will be issued during the @After
+            processing.  You should remove (and check for correctness)
+            any items that were queued as shutdown items.
+      <li>As a temporary bypass when that check was added, the
+            JUnitUtil.clearShutDownManager() method was added.
+            This clears the ShutDownManager without issuing warnings,
+            but also without doing any checks.
+            You should only use this temporarily, hence it's marked
+            as deprecated to flag that.
+      <li>When running JUnit tests within the JMRI build infrastructure,
+            a request via InstanceManager.getDefault(..) for a 
+            ShutDownManager will get a mock one for testing.
+            A request via InstanceManager.getNullableDefault(..)
+            will get a null.  If you want InstanceManager.getNullableDefault(..)
+            to return a manager, you must call
+            JUnitUtil.initShutDownManager() in the @Before routine
+            to create the mock manager before the getNullableDefault(..) request.
+      </ul>
+      
+        <h4>Working with a Timebase</h4>
+        
+        A simple, internal Timebase is provided by default 
+        when one is requested from the InstanceManager.
+        You don't have to prepare one in advance.
+        But please note that simple Timebase is initialized to
+        Right Now, and starts in a running state.  To get consistent
+        results from your tests, you should instead set it to 
+        a consistent time (so e.g. AM/PM branches always go the same way)
+        and to not be running (so that results don't vary with run time).
+        To do that:
+
+<pre style="font-family: monospace;">
+    Timebase clock = InstanceManager.getDefault(jmri.Timebase.class);
+    clock.setRun(false);
+    clock.setTime(java.time.Instant.EPOCH);  // just a specific time
+</pre>
+
+        After this, when you code picks up a Timebase instance,
+        it'll get this properly prepared one.
+    
       <h3><a name="RunningListeners" id="RunningListeners">Working
       with Listeners</a></h3>
       JMRI is a multi-threaded application.
@@ -868,7 +947,7 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       to your test class.  This will modify how JUnit4 
       handles errors during all of the tests in that class.
 
-    <h3><a id="control" name="control"></a>Tools for Controlling JUnit4 tests</H3>
+    <h3><a id="control" name="control"></a>Tools for Controlling JUnit4 tests</h3>
       <ul>
 
         <li><a href=
@@ -1065,6 +1144,10 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
       Also, setting "<code>JMenuOperator.WaitPopupTimeout</code>" 
       and "<code>ComponentOperator.WaitComponentTimeout</code>" to a lower value from their
       defaults of 60000L (a minute) can speed work when you're trying to debug the cause of a timeout.
+      <p>
+      If you change a timeout, you <u>must</u> set it back to the <u>original</u>
+      value (which you had earlier saved) in your @After routine.  If you leave it
+      changed, you're likely to cause problems for other test routines.
       
       <a id="jemmyhints" name="jemmyhints"></a>
       <h4>Jemmy hints and issues</h4>
@@ -1102,7 +1185,13 @@ setenv JMRI_OPTIONS -Djmri.util.JUnitUtil.checkRemnantThreads=true
             where the argument (in this example 20) is
             how many milliseconds the queue has to remain empty before 
             proceeding.  We're not sure what the best value is; see
-            <a href="https://github.com/JMRI/JMRI/issues/5321">Issue #5321</a> for some background discussion.
+            <a href="https://github.com/JMRI/JMRI/issues/5321">JMRI Issue #5321</a>
+            and 
+            <a> href="https://netbeans.org/bugzilla/show_bug.cgi?id=36665">NetBeans bug tracker 36665</a>
+            for some background discussion. Briefly, since things like 
+            flashing cursors fire Swing events,
+            the queue doesn't stay idle forever once the primary work is done.
+            A long wait-for-empty value may never occur.
       </ul>
       
       <h3><a id="jfcunit" name="jfcunit">Using JFCUnit</a></h3>

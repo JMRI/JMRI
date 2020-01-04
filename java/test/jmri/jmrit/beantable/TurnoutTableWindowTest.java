@@ -93,6 +93,7 @@ public class TurnoutTableWindowTest {
         Assert.assertEquals("name content", "1", hwAddressField.getText());
 
         cbo.selectItem("Internal");
+        jtfo.setText("1");
         Assert.assertEquals("Selected system item", internal, cbo.getSelectedItem()); // this connection type is always available
 
         // Find the Add Create button
@@ -166,6 +167,7 @@ public class TurnoutTableWindowTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

@@ -88,6 +88,7 @@ public class WarrantFrame extends WarrantRoute {
     JFormattedTextField _TTPtextField = new JFormattedTextField();
     JCheckBox    _noRampBox = new JCheckBox();
     JCheckBox    _shareRouteBox = new JCheckBox();
+    JCheckBox    _addTracker = new JCheckBox();
     JCheckBox    _runETOnlyBox = new JCheckBox();
     JRadioButton _eStop = new JRadioButton(Bundle.getMessage("EStop"), false);
     JRadioButton _halt = new JRadioButton(Bundle.getMessage("Halt"), false);
@@ -155,8 +156,10 @@ public class WarrantFrame extends WarrantRoute {
             ThrottleSetting ts = new ThrottleSetting(tList.get(i));
             _throttleCommands.add(ts);
         }
-       _shareRouteBox.setSelected(warrant.getShareRoute());
+        _shareRouteBox.setSelected(warrant.getShareRoute());
         _warrant.setShareRoute(warrant.getShareRoute());
+        _addTracker.setSelected(warrant.getAddTracker());
+        _warrant.setAddTracker(warrant.getAddTracker());
         _noRampBox.setSelected(warrant.getNoRamp());
         _warrant.setNoRamp(warrant.getNoRamp());
         _runETOnlyBox.setSelected(warrant.getRunBlind());
@@ -561,6 +564,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
         panel.add(makeTextBoxPanel(_shareRouteBox, "ShareRoute", "ToolTipShareRoute"));
+        panel.add(makeTextBoxPanel(_addTracker, "AddTracker", "ToolTipAddTracker"));
         panel.add(makeTextBoxPanel(_noRampBox, "NoRamping", "ToolTipNoRamping"));
         panel.add(makeTextBoxPanel(_runETOnlyBox, "RunETOnly", "ToolTipRunETOnly"));
 
@@ -920,6 +924,9 @@ public class WarrantFrame extends WarrantRoute {
         }
 
         msg = _warrant.checkRoute();
+        if (msg == null) {
+            msg = _warrant.checkforTrackers();
+        }
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("LearnError", msg),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -983,6 +990,7 @@ public class WarrantFrame extends WarrantRoute {
     private void runTrain() {
         _warrant.setTrainName(getTrainName());
         _warrant.setShareRoute(_shareRouteBox.isSelected());
+        _warrant.setAddTracker(_addTracker.isSelected());
         _warrant.setNoRamp(_noRampBox.isSelected());
         String msg = checkTrainId();
         if (msg == null) {
@@ -1023,13 +1031,17 @@ public class WarrantFrame extends WarrantRoute {
         
         msg = _warrant.setRunMode(Warrant.MODE_RUN, _speedUtil.getDccAddress(), null,
                 _throttleCommands, _runETOnlyBox.isSelected());
+        if (msg == null) {
+            msg = _warrant.checkforTrackers();
+        }
         if (msg != null) {
             clearWarrant();
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             setStatusText(msg, Color.red);
             return;
-        }
+        } else
+        
         msg = _warrant.checkStartBlock();
         if (msg != null) {
             if (msg.equals("warnStart")) {
@@ -1285,7 +1297,11 @@ public class WarrantFrame extends WarrantRoute {
         long endTime = System.currentTimeMillis();
         long time = endTime - _startTime;
         _startTime = endTime;
-        _throttleCommands.add(new ThrottleSetting(time, cmd, value, bName, _speed));
+        ThrottleSetting ts = new ThrottleSetting(time, cmd, value, bName, _speed);
+        if (log.isDebugEnabled()) {
+            log.debug("setThrottleCommand= {}", ts.toString());
+        }
+        _throttleCommands.add(ts);
         _commandModel.fireTableDataChanged();
 
         scrollCommandTable(_commandModel.getRowCount());
@@ -1358,6 +1374,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runETOnlyBox.isSelected());
         _warrant.setShareRoute(_shareRouteBox.isSelected());
+        _warrant.setAddTracker(_addTracker.isSelected());
         _warrant.setNoRamp(_noRampBox.isSelected());
         _warrant.setUserName(_userNameBox.getText());
 
@@ -1597,8 +1614,6 @@ public class WarrantFrame extends WarrantRoute {
                         ts.setCommand("Wait Sensor");
                     } else if ("RUN WARRANT".equals(cmd)) {
                         ts.setCommand("Run Warrant");
-                    } else if ("START TRACKER".equals(cmd)) {
-                        ts.setCommand("Start Tracker");
                     } else {
                         msg = Bundle.getMessage("badCommand", (String) value);
                     }

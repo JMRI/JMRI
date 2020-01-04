@@ -1,6 +1,7 @@
 package jmri.jmrit.vsdecoder;
 
 import java.awt.GraphicsEnvironment;
+import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -42,6 +43,9 @@ public class VSDecoderPaneTest extends jmri.util.swing.JmriPanelTest {
         VSDecoderPane t = new VSDecoderPane(vf);
         Assert.assertEquals("title", Bundle.getMessage("WindowTitle"), t.getTitle());
         JUnitUtil.dispose(vf);
+
+        // this created an audio manager, clean that up
+        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
 
     @Test
@@ -67,7 +71,6 @@ public class VSDecoderPaneTest extends jmri.util.swing.JmriPanelTest {
     @After
     @Override
     public void tearDown() {
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         JUnitUtil.tearDown();
     }
 

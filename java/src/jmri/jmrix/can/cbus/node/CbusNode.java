@@ -96,7 +96,7 @@ public class CbusNode implements CanListener {
         _infoPanes = new CopyOnWriteArraySet<CbusNodeInfoPane>();
         if (memo != null) {
             tc = memo.getTrafficController();
-            tc.addCanListener(this);
+            addTc(tc);
         }
         send = new CbusSend(memo);
         

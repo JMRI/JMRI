@@ -21,7 +21,7 @@ public class SensorIconXml extends PositionableLabelXml {
     static final HashMap<String, String> _nameMap = new HashMap<String, String>();
 
     public SensorIconXml() {
-        // map previous store names to actual localized names
+        // map previous store names to property key names
         _nameMap.put("active", "SensorStateActive");
         _nameMap.put("inactive", "SensorStateInactive");
         _nameMap.put("unknown", "BeanStateUnknown");

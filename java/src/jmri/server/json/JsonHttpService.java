@@ -217,7 +217,7 @@ public abstract class JsonHttpService {
             }
         } catch (
                 IOException |
-                NullPointerException ex) {
+                IllegalArgumentException ex) {
             throw new JsonException(500, ex, id);
         }
         return this.doSchema(type, server, schema, id);
@@ -233,11 +233,9 @@ public abstract class JsonHttpService {
      * @param schema the schema for a response object of type
      * @param id     the message id set by the client
      * @return a JSON Schema valid for the type
-     * @throws JsonException if an error occurs preparing schema
      */
     @Nonnull
-    protected final JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull JsonNode schema, int id)
-            throws JsonException {
+    protected final JsonNode doSchema(@Nonnull String type, boolean server, @Nonnull JsonNode schema, int id) {
         ObjectNode data = mapper.createObjectNode();
         data.put(JSON.NAME, type);
         data.put(JSON.SERVER, server);

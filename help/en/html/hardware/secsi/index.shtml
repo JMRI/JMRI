@@ -12,9 +12,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: TracTronics SECSI System</h1>
       JMRI can
       connect to TracTronics SECSI system Nodes. <a name=

@@ -11,7 +11,7 @@ checks:
       threshold: 250 # CodeClimate default
   method-complexity:
     config:
-      threshold: 5 # CodeClimate default
+      threshold: 20 # AKA Cognitive Complexity. 5 is CodeClimate default
   method-count:
     config:
       threshold: 20 # CodeClimate default
@@ -26,11 +26,13 @@ checks:
       threshold: 4 # CodeClimate default
   similar-code:
     config:
-      threshold: # language-specific defaults. an override will affect all languages.
+      threshold: 40 # language-specific defaults. an override will affect all languages.
+                    # Java default is documented at 40, but seems smaller
       exclude_patterns:
       - "**/Bundle.java"
   identical-code:
     config:
-      threshold: # language-specific defaults. an override will affect all languages.
+      threshold: 40 # language-specific defaults. an override will affect all languages.
+                    # Java default is documented at 40, but seems smaller
       exclude_patterns:
       - "**/Bundle.java"

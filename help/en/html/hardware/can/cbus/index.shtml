@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
   <meta name="keywords" content="MERG CBUS supports JMRI help support">
-  <title>JMRI Hardware Support - MERG CBUS Main Support</title><!-- Style -->
+  <title>JMRI Hardware Support - MERG CBUS Main Support</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -14,14 +15,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
      <h1>JMRI Hardware Support: MERG CBUS Main Support Page</h1>
       <ul class="snav">
         <li><a href="#documentation">JMRI Documentation</a></li>
@@ -385,7 +388,7 @@
         width="500" height="215" alt="JMRI MERG CONNECTION DCC DEFAULT PREFERENCES" align=
         "right">
       
-        <p>DCC is not a requirement for MERG CBUS or JMRI. Many DC layouts use 
+        <p>DCC is not a requirement for MERG CBUS or JMRI.<br>Many DC layouts use 
         MERG CBUS + JMRI for route setting, signalling and track occupancy purposes.
         </p>
       
@@ -484,7 +487,7 @@
       
       <h3>Connecting a MERG DCC Command Station ( CANCMD , CANCSB etc. )</h3>
         
-        <p>On JMRI startup, the CBUS Node Manager will by default search for command stations.</p>
+        <p>On JMRI startup, the CBUS Node Manager can search for command stations.</p>
         <p>If a command station responds then it will be added to the node table. </p>
         
         <p>A command station found at startup will also enable the Track Current Meter, 
@@ -532,13 +535,6 @@
       for some layouts <a href="../../../../../../xml/signals/LMS-1932/index.shtml">LMS 1932</a> or <a 
       href="../../../../../../xml/signals/GWR-1931/index.shtml">GWR 1931</a> may be more appropriate.</p>
       
-        <p>Once you've got basic signalling setup, you can customise your layout with things like 
-        the UK East Coast Main Line flashing green aspects.
-        <br>Add JMRI Logix to listen for the correct conditions to display the aspect and send events to the layout.
-        </p>
-      
-      
-      
       <h3>Sending JMRI Controlled Signal Logic to your layout</h3>
       
         <img src="images/web/signal-mast-turnout-contolled-400x454.png"
@@ -549,38 +545,29 @@
         signal control modules, this is just one approach. </p>
         
         <ul>
-        <li>Add all aspects to the signal in question to the Turnout Table, eg
-            <br>Signal1Red : Hardware address : <code>+N256E412</code> ( Set Node to whatever your JMRI node is, only uses the ON event )
-            <br>Signal1Flashing Precautionary : Hardware address : <code>+N256E416</code>
+        <li>Add all aspects to the signal in question to the Turnout Table.
+            <br>eg. Signal 1 Red : <code>+N256E412</code> ( only uses the ON event )
+            <br>eg. Signal 1 Flashing Precautionary : <code>+N256E416</code> ( only uses the ON event )
             <br>Signals which can only display 2 aspects ( eg a Servo controlling a semaphore signal ) 
-            can be setup with 1 MERG CBUS event, using the ON and OFF status, eg Signal5RedGreen : <code>+N256E418;-N256E418</code> .
-        </li>
-        
-        <li>It's also worth creating an internal turnout named something like DummySignalOutput.
-        <br>You can use this output for signals which have not yet been installed with CAN events but may have in future.
+            can be setup with 1 MERG CBUS event, using the standard ON and OFF event status.
         </li>
 
-        <li>Add the Signal Mast via the Signal Mast Table</li>
-        <li>Specify type : Turnout Controlled</li>
-        <li>Specify which turnout ( aka JMRI message output ) you 
-        wish to show to show for each aspect, eg. Signal1Red Thrown.
-        </li>
-        
-        <li> 
-        For virtual signal masts which are not yet physically installed on your layout, 
-        use the DummySignalOutput internal turnout created earlier.
+        <li>Add a Signal Mast via the <a href="../../../../package/jmri/jmrit/beantable/SignalMastTable.shtml"
+			title="JMRI Signal Mast Table">Signal Mast Table</a></li>
+        <li>Specify type : <a href="../../../../package/jmri/jmrit/beantable/SignalMastAddEdit.shtml#turnoutCtl"
+			title="Turnout Controlled Signal Mast">Turnout Controlled</a></li>
+        <li>Specify which Turnout output you wish to show to show for each aspect,
+		eg. Signal 1 Red Thrown.
         </li>
         </ul>
     
-        <p>With this approach, you can easily add and edit which MERG CBUS events are sent 
-        from a JMRI controlled signal without editing or re-creating the underlying signal logic.</p>
-        <p>It also ensures that only 1 MERG CBUS message is sent for flashing aspects, 
+        <p>This ensures that only 1 MERG CBUS message is sent for flashing aspects, 
         specify this flashing in the module board, not JMRI!  
         Some Signal Mast types send 1 MERG CBUS message for each flash.
         <br>A layout with 20 quad aspect signals could send 40 odd cbus events every 0.5seconds, 4,800 events per minute. 
         This could make network diagnosis awkward, although very unlikely to swamp a MERG CBUS network.</p>
         <p>As stated previously, this is just one approach. 
-        There are may ways of interfacing JMRI with MERG CBUS signalling systems.</p>
+        There are other methods of interfacing JMRI with MERG CBUS signalling systems.</p>
         
         
         <hr>

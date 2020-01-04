@@ -37,7 +37,9 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
     public void tearDown() {
         tcis = null;
         r = null;
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
     
     @Test
@@ -116,7 +118,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         r5.reply(m2);
         Assert.assertEquals("r5 state set ok after incorrect msgs",IdTag.SEEN,r5.getState());
         
-        Assert.assertEquals("r4 state set CBUS_ACDAT",IdTag.UNSEEN,r4.getState());
+        Assert.assertEquals("r4 state unseen",IdTag.UNSEEN,r4.getState());
         
         CanMessage m3 = new CanMessage(tcis.getCanid());
         m3.setNumDataElements(8);
@@ -131,8 +133,7 @@ public class CbusReporterTest extends jmri.implementation.AbstractReporterTestBa
         
         r4.message(m3);
         
-        Assert.assertEquals("r4 state set CBUS_ACDAT",IdTag.UNSEEN,r4.getState());
-        
+        Assert.assertEquals("r4 seen after CBUS_ACDAT outgoing message",IdTag.SEEN,r4.getState());
         
         r.dispose();
     }

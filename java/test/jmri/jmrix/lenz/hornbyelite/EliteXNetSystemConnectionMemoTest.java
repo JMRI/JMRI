@@ -69,6 +69,7 @@ public class EliteXNetSystemConnectionMemoTest extends jmri.jmrix.SystemConnecti
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
     }
 

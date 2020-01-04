@@ -10,11 +10,7 @@ import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 
-import org.junit.Assert;
-import org.junit.Assume;
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.junit.*;
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
@@ -81,7 +77,6 @@ public class LRouteTableActionTest {
         new JFrameOperator(_lRouteTable._addFrame).dispose();
     }
 
-    @SuppressWarnings("unchecked")
     @Test
     @Ignore("Commented out in JUnit 3")
     public void testPrompt() {
@@ -161,11 +156,12 @@ public class LRouteTableActionTest {
         }
     }
 
-    @Before
+    @After
     public void tearDown() throws Exception {
         // now close action window
         if (_lRouteTable.f != null) {
-            new JFrameOperator(_lRouteTable.f).dispose();
+            _lRouteTable.f.dispose();
         }
+        JUnitUtil.tearDown();
     }
 }

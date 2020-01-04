@@ -31,6 +31,7 @@ public class MemoryItemPanelTest {
         MemoryItemPanel t = new MemoryItemPanel(ip, "IM01", "", tableModel, editor);
         Assert.assertNotNull("exists", t);
         JUnitUtil.dispose(ip);
+        JUnitUtil.dispose(editor);
     }
 
     // The minimal setup for log4J

@@ -11,7 +11,7 @@ import org.junit.runners.Suite;
    BundleTest.class,
 })
 /**
- * Tests for the jmri.jmrix.secsi.serialdriver package.
+ * Tests for the jmri.jmrix.oaktree.serialdriver package.
  *
  * @author Paul Bender Copyright (C) 2016
  */

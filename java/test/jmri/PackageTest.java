@@ -5,6 +5,7 @@ import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
 @Suite.SuiteClasses({
+    ArchitectureTest.class,
     AnalogIOTest.class,
     BeanSettingTest.class,
     BundleTest.class,
@@ -71,8 +72,7 @@ import org.junit.runners.Suite;
     TurnoutOperationManagerTest.class,
     EntryPointTest.class,
     NamedBeanPropertyDescriptorTest.class,
-    BooleanPropertyDescriptorTest.class,
-    RunCucumberTest.class,})
+    BooleanPropertyDescriptorTest.class})
 
 /**
  * Invoke complete set of tests for the Jmri package

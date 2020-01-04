@@ -21,10 +21,12 @@
 
 </head>
 
+<body>
 <!--#include virtual="/Header" -->
-<!--#include virtual="Sidebar" -->
-
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>JMRI:FAQ Git</h1>
 
@@ -76,15 +78,15 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	est appel&#233;  &quot;origin&quot;. Vous pouvez avoir plusieurs remotes d&#233;finis.
 	<p>
 	Via l'outil ligne de commande git vous pouvez faire ceci par la commande:
-	blockquote>
+	<blockquote>
 		<code>$ git remote set-url --push origin https://github.com/<em>username</em>/JMRI.git</code>
 	</blockquote>
 	o&#249; <code>username</code> est votre nom utilisateur github. Vous pouvez v&#233;rifier
 	l'&#233;tat actuel des r&#233;pertoires  push et pull avec: 
 	<blockquote>
 		<code>$ git remote -v</code></br>
-		<code>origin    https://github.com/JMRI/JMRI.git (fetch)</code><br/>
-		<code>origin    https://github.com/<em>username</em>/JMRI.git (push)</code><br/>
+		<code>origin    https://github.com/JMRI/JMRI.git (fetch)</code><br>
+		<code>origin    https://github.com/<em>username</em>/JMRI.git (push)</code><br>
 	</blockquote>
 
 	Ceci dit que, par d&#233;faut,  fetches et pulls viennent du 
@@ -115,16 +117,16 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	Au lieu d'avoir de multiples r&#233;pertoires de travail, vous avez un simple r&#233;pertoire qui a &#233;t&#233;  
 	&quot;clon&#233;&quot; depuis le r&#233;f&#233;rentiel principal. Si vous faites un petit changement individuel,
 	vous pouvez travailler directement sur la branche &quot;master&quot; en son sein. Si non,
-	voir ci-dessous: <A href="#branch"> Branchement</a>.
+	voir ci-dessous: <a href="#branch"> Branchement</a>.
 	<p>
 	Pour comprendre Git, il est bon de connaitre les <em>places</em> vari&#233;s dans votre
 	r&#233;pertoire git local:
 	<ul>
-		<li> Le contenu depuis le r&#233;pertoire &quot;remote&quot;,  qui vit sous le r&#233;pertoire cach&#233; <code>.git/</code> ,</li>
-		<li> La zone &quot;staging&quot; ( appel&#233;e aussi &quot;index&quot; ou &quot;cache&quot; ), et </li>
-		<li> La &quot;branche&quot; nomm&#233;e que vous utilis&#233;e, qui est dans</li>
-		<li> L'arbre de travail</li>.
-	</ul
+		<li>Le contenu depuis le r&#233;pertoire &quot;remote&quot;,  qui vit sous le r&#233;pertoire cach&#233; <code>.git/</code> ,</li>
+		<li>La zone &quot;staging&quot; ( appel&#233;e aussi &quot;index&quot; ou &quot;cache&quot; ), et </li>
+		<li>La &quot;branche&quot; nomm&#233;e que vous utilis&#233;e, qui est dans</li>
+		<li>L'arbre de travail.</li>
+	</ul>
 
 	<p> Quand vous <i>clonez</i> un r&#233;pertoire git, vous cr&#233;ez une structure r&#233;pertoire qui contient
 	tous ces &#233;l&#233;ments. &#193; moins que vous arr&#234;tiez, l'arbre de travail commence rempli avec le contenu
@@ -138,7 +140,8 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	structure r&#233;pertoire <code>.git/</code>.
 	<p>
  	Quand vous <em>pull</em> ou <em>push</em>, vous dites &#225; Git de synchroniser votre contenu 
-	<code.git/</code> avec avec celui du r&#233;pertoire distant dont vous avez initialement clon&#233; le contenu.
+	<code>git/</code> avec avec celui du r&#233;pertoire distant dont vous avez initialement clon&#233; le
+	contenu.
 	<p>
 	La documentation suivante devrait vous aider &#225; d&#233;marrer en utilisant soit la ligne de commande git ou GitHub Desktop:
 
@@ -151,45 +154,46 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
  
 		<li> Clonez le r&#233;f&#233;rentiel JMRI sur votre syst&#232;me local ( ou actualisez le ):
 		      <blockquote>
-			      <code>$ git clone https://github.com/JMRI/JMRI.git   </code><br/>
-		      ou <br/>
-			      <code>$ git fetch                                    </code><br/>
-			      <code>$ git diff ...origin                           </code><br/>
-			      <code>$ git merge origin/master                      <br/>
-			      Auto-merging ... files ...	<br/>
-				CONFLICT (content): Merge conflict in <em>some_file</em><br/>
-			      &#201;chec Fusion Automatique; corriger les conflits et soumettez le r&#233;sultat.<br/>
-			      $ vi <em>some_file</em> # Le fichier a des conflits marqu&#233;s, &#233;diter le pour correction...<br/>
-			      $ git add <em>some_file</em><br/>
-			      $ git commit -m &quot;Merged master fixed conflict&quot;<br/>
-			      $ git merge origin/master                      </code><br/>
-		      ou <br/>
-			      <code>$ git pull https://github.com/JMRI/JMRI.git    </code><br/>
+			      <code>$ git clone https://github.com/JMRI/JMRI.git   </code><br>
+		      ou <br>
+			      <code>$ git fetch                                    </code><br>
+			      <code>$ git diff ...origin                           </code><br>
+			      <code>$ git merge origin/master                      <br>
+			      Auto-merging ... files ...	<br>
+				CONFLICT (content): Merge conflict in <em>some_file</em><br>
+			      &#201;chec Fusion Automatique; corriger les conflits et soumettez le r&#233;sultat.<br>
+			      $ vi <em>some_file</em> # Le fichier a des conflits marqu&#233;s, &#233;diter le pour correction...<br>
+			      $ git add <em>some_file</em><br>
+			      $ git commit -m &quot;Merged master fixed conflict&quot;<br>
+			      $ git merge origin/master                      </code><br>
+		      ou <br>
+			      <code>$ git pull https://github.com/JMRI/JMRI.git    </code><br>
 		      </blockquote> 
 	      <li>Faites vos changement localement, testez les, etc.
 		      <blockquote>
-			      <code>$ git add <i>newfile</i>                       </code><br/>
-			      <code>$ git rm <i>newfile</i>                        </code><br/>
-			      <code>$ git add .                                    </code><br/>
-		      <br/>
-			      <code>$ git status                                   </code><br/>
-		      <br/>
-			      <code>$ git fetch                                    </code><br/>
-			      <code>$ git merge                                    </code><br/>
-		      <br/>
+			      <code>$ git add <i>newfile</i>                       </code><br>
+			      <code>$ git rm <i>newfile</i>                        </code><br>
+			      <code>$ git add .                                    </code><br>
+		      <br>
+			      <code>$ git status                                   </code><br>
+		      <br>
+			      <code>$ git fetch                                    </code><br>
+			      <code>$ git merge                                    </code><br>
+		      <br>
 		      </blockquote>
 	      <li>Rendez vos changements disponibles pour la communaut&#233;
 		      <blockquote>
-			      <code>$ git commit -m <i>&quot;commit message&quot;</i>       </code><br/>
-			      or <br/>
-			      <code>$ git commit -a -m <i>&quot;commit message&quot;</i>    </code><br/>
+			      <code>$ git commit -m <i>&quot;commit message&quot;</i>       </code><br>
+			      or <br>
+			      <code>$ git commit -a -m <i>&quot;commit message&quot;</i>    </code><br>
 		      </blockquote>
 	      </ul>
       </li>
       <li>Utilisation de GitHub Desktop
 	      <ul>
 	      <li>Clonez le r&#233;f&#233;rentiel JMRI sur votre syst&#232;me local en choisissant un &#233;l&#233;ment de l'onglet "Clone" dans le fichier &gt;Clone repository.. menu et cliquez "Clone":<br>  
-		<a href="images/GhDtCloneDialog.png"><img c="images/GhDtCloneDialog.png" width="267" height="184" alt="GitHub Desktop PR dialog"></a>
+		<a href="images/GhDtCloneDialog.png"><img src="images/GhDtCloneDialog.png" width="267" height="184"
+		alt="GitHub Desktop PR dialog"></a>
 		</li>
 		<li>Faites vos changement localement, testez les, etc.<br>
 		Quand tout cela fonctionne, <em>soumettez</em> votre modification &#225; votre r&#233;f&#233;rentiel JMRI local en retournant &#225; l'application GitHub Desktop, examinez tous les changements constat&#233;s par le programme, 
@@ -254,20 +258,20 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 			<ul>
 			<li>Pour cr&#233;er une branche appel&#233;e ;<em>branchname</em>&quot;, vous faites <br>
 			<blockquote>
-		      <code>git checkout -b <em>nomdebranche</em></code><br/>
+		      <code>git checkout -b <em>nomdebranche</em></code><br>
 		      </blockquote>
 
 			Le &quot;-b&quot; dit de cr&#233;er la branche. Pour basculer sur une branche existante, il suffit 
-			d'oublier cette option:<br/>
+			d'oublier cette option:<br>
 
 			<blockquote>
-		      <code>git checkout <em>nomdebranche</em></code><br/>
+		      <code>git checkout <em>nomdebranche</em></code><br>
 		      </blockquote>
 
 			Pour voir toutes les branches actuelles, faire </br>
 
 		      <blockquote>
-		      <code>git branch</code><br/>
+		      <code>git branch</code><br>
 		      </blockquote>
 					</li>
 					<li>
@@ -276,24 +280,24 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 			votre branche &#225; jour en fusionnant ces changements avec votre branche</br>
 		      <blockquote>
 		      <code>
-		      git checkout <em>branchname</em><br/>
+		      git checkout <em>branchname</em><br>
 		      git merge -m&quot;merging in current contents of master&quot; master
-		      </code><br/>
+		      </code><br>
 		      </blockquote>
 
 			( Si vous omettez l'option de message, vous pouvez &#234;tre invit&#233; &#225; en ajouter un dans un &#233;diteur ) Si des 
 			modifications ont &#233;t&#233; collect&#233;es et fusionn&#233;es, vous pouvez ensuite les soumettre &#225; votre branche:
 		      <blockquote>
-		      <code>git commit -a</code><br/>
+		      <code>git commit -a</code><br>
 		      </blockquote>
 					</li>
 					<li>	
-		      <p>Lorsque vous avez termin&#233;, fusionner vos modifications dans la ligne commune de d&#233;veloppement avec <br/>
+		      <p>Lorsque vous avez termin&#233;, fusionner vos modifications dans la ligne commune de d&#233;veloppement avec <br>
 	
 		      <blockquote>
 		      <code>
-		      git checkout master<br/>
-		      git merge -m&quot;merging to master&quot; <em>branchname</em><br/>
+		      git checkout master<br>
+		      git merge -m&quot;merging to master&quot; <em>branchname</em><br>
 		      git commit -a
 		      </code>
 		      </blockquote>
@@ -303,7 +307,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 
 		      <blockquote>
 		      <code>
-		      git checkout master<br/>
+		      git checkout master<br>
 		      git branch -d branchname
 		      </code>
 		      </blockquote>
@@ -340,9 +344,9 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
       <li>Arnie le soumet au repertoire local,et ensuite le met sur son r&#233;pertoire GitHub.
 	<blockquote>
       <code>
-      git checkout arnie-great-tool<br/>
-      (work on changes)<br/>
-      git commit -m"Added support for the Frobnab 2000"<br/>
+      git checkout arnie-great-tool<br>
+      (work on changes)<br>
+      git commit -m"Added support for the Frobnab 2000"<br>
       git push
       </code>
       </blockquote>
@@ -350,7 +354,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
       <li>Bill peut ensuite le r&#233;cup&#233;rer depuis le r&#233;pertoire d'Arnie
 	 <blockquote>
       <code>
-      git pull https://github.com/arnie/JMRI.git arnie-great-tool<br/>
+      git pull https://github.com/arnie/JMRI.git arnie-great-tool<br>
       git checkout arnie-great-tool
       </code>
       </blockquote>
@@ -361,21 +365,21 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	&#225; l'envers:
 	<blockquote>
       <code>
-      git commit -m"Fixed a bug in sternerstat handling"<br/>
+      git commit -m"Fixed a bug in sternerstat handling"<br>
       git push
       </code>
       </blockquote>
   	Puis Arnie peut fusionner ces changements dans sa propre copie avec:
  	<blockquote>
       <code>
-      git checkout arnie-great-tool<br/>
+      git checkout arnie-great-tool<br>
       git pull https://github.com/bill/JMRI.git arnie-great-tool
       </code>
       </blockquote>
       </ol>
     </dd>
     
-    <dt id="share">La r&#233;solution d'un conflit de fusion</dt>
+    <dt>La r&#233;solution d'un conflit de fusion</dt>
       <dd>
 			Il est pas rare que deux personnes ou plus ont des id&#233;es sur la m&#234;me partie du programme ou le site Web JMRI, chacun faisant des soumissions et
 			et des PRs pour des parties des m&#234;mes fichiers. S'ils ont travaill&#233; sur diff&#233;rentes lignes de texte ou de code dans un fichier, GitHub sait comment combiner
@@ -409,7 +413,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	<li>Appveyor fonctionne sur Windows; Il saute les tests de fin de ligne, ce n'est pas fiable sur Windows.
 	    Pour un gain de temps, il saute beaucoup de de tests de formats XML
 	    ( Travis les couvres de toute fa&#231;on ).
-	<ul>
+	</ul>
 	Pour ajouter ceux-ci &#225; votre r&#233;pertore personnel:
 	<ul>
 	<li>Pour Travis aller &#225;
@@ -425,7 +429,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	</ul>
 	A partir de l&#225;, en "poussant" &#225; votre propre r&#233;f&#233;rentiel va ex&#233;cuter les tests. Vous recevrez 
 	un email lorsque les tests sont termin&#233;s, ou vous pouvez v&#233;rifier sur le web.
-
+	</dd>
 	<dt id="lineends">Manipulation des Fins de Ligne</dt>
 	<dd>
 	Mac et Linux utilise un caract&#232;re LF &#225; la fin de chaque ligne; Windows utilise la paire CRLF.
@@ -457,15 +461,15 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 			l'expertise de Git de le faire pour vous et n'oubliez de les remercier.
 			</ol>
 	<p>Les maintenanciers qui rencontre un PR actualis&#233; avec une &#233;tiquette CRLF voudront v&#233;rifier que tous 
-	les fichiers dans le PR <u>ne montrent pas</u> toutes les lignes chang&#233;es. Si elles le sont, m&#234;me si elles ont 
-	la fin de ligne LF correcte, le PR ne pourra pas &#234;tre fusionn&#233;.</p>  
+	les fichiers dans le PR <i>ne montrent pas</i> toutes les lignes chang&#233;es. Si elles le sont, m&#234;me si
+	elles ont la fin de ligne LF correcte, le PR ne pourra pas &#234;tre fusionn&#233;.</p>
 	<p>Beaucoup d'<a href="XmlEditors.shtml">&#201;diteurs XML</a> ont un R&#233;glage des Pr&#233;f&#233;rences pour les fins de ligne.<br>
 	Par exemple, dans Expresso cochez que les Line Ending sont param&#233;tr&#233;es pour <strong> Unix (LF)</strong>
 	avant de d&#233;marrer l'&#233;dition de fichier JMRI:<br>
 	<a href="images/EspressoPrefsLF.png"><img src="images/EspressoPrefsLF.png" width="226" height="219" alt="Espresso LF Preference setting"></a>
 	</p>
-	<dd
-	<dt  id="testPR">Test d'un Pull Request</dt>	
+	</dd>
+	<dt id="testPR">Test d'un Pull Request</dt>
 	<dd>
 	<p>Les Pull requests sont juste un cas particulier d'une branche. Si vous voulez les tester
 	avant de les fusionner dans un master, vous pouvez les apporter dans votre r&#233;pertoire local
@@ -484,29 +488,29 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
         <u>user</u> wants to merge <u>3</u> commits into JMRI:master from <u>user</u>:<u>branch</u>
         </blockquote>
         <a href="images/GitHubPRbranchInfo.png"><img src="images/GitHubPRbranchInfo.png" width="446" height="114" alt="GitHub Web branch screen"></a>
-
+			</li>
 	 <li>Ensuite, pousser cette branche sur votre propre machine avec la commande:
 	 <pre><code>
         git fetch https://github.com/<u>user</u>/JMRI.git <u>branch</u>:<u>local-branch</u>
         </code></pre>
 	o&#249; vous avez remplacer chaque valeur soulign&#233;e:
 	<ul>
-		<li> Changez "user" par le nom utilisateur GitHub correcte
-		<li>Changez "branch" par le nom de branche dans le pull request ( c'est OK si c'est par ex: master )
+		<li> Changez "user" par le nom utilisateur GitHub correcte</li>
+		<li>Changez "branch" par le nom de branche dans le pull request ( c'est OK si c'est par ex: master )</li>
 		<li>changez "local-branch" par ce que vous voulez appeler la branche sur votre propre machine.
 		<em>Celle-ci ne doit pas d&#233;j&#225; exist&#233;</em>.Quelque chose comme "ma-branche-utilisateur" Vous rappellera 
 		de qui est le d&#233;p&#244;t dont vous l'avez tir&#233;, tout en marquant les changements ult&#233;rieurs comme les v&#244;tres 
 		si vous les partagez plus tard avec quelqu'un d'autre.
 		( Il est recommand&#233; que vous d&#233;marriez vos noms de branches avec
-		votre propre nom, cela simplifie tout sorte s d'op&#233;rations )
-        </ul>
-        <li>>La branche existe manitenant dans votre machine, Et vous pouvez juste vous d&#233;placer vers elle:	
+		votre propre nom, cela simplifie tout sorte s d'op&#233;rations )</li>
+        </ul></li>
+        <li>La branche existe manitenant dans votre machine, Et vous pouvez juste vous d&#233;placer vers elle:
         <pre><code>
         git checkout <u>local-branch</u>
         </code></pre>	  
 	  puis compler, tester, etc, comme vous le voulez. Vous pouvez m&#234;me soumettre et partager les changements
 	  si vous le d&#233;sirez, parce que c'est maintenant votre propre branche de d&#233;veloppement: Elle a commenc&#233; &#225; 
-	  une autre personne, mais c'est maintenant la votre.
+	  une autre personne, mais c'est maintenant la votre.</li>
 	</ul>
 	</dd>
 
@@ -537,7 +541,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	      <li>Il est maintenant dans votre r&#233;pertoire sur	une branche	qui lui est propre, o&#249; vous pouvez o&#249; vous pouvez tester des choses comme d'habitude
 
 		<li>Quand vous &#234;tes satisfait, poussez le contenu soumis de votre r&#233;pertoire local vers votre r&#233;pertoire GitHub
-		( (En supposant que la configuration par d&#233;faut, o&#249; & quot; pousser & quot; va &#225; votre 
+		( En supposant que la configuration par d&#233;faut, o&#249; &quot; pousser &quot; va &#225; votre
 		propre d&#233;p&#244;t sur GitHub) avec 
 	      <blockquote>
 	      <code>git push origin patch-NNNN</code>
@@ -555,8 +559,8 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	      pour actualiser votre r&#233;pertoire local avec le patch sur votre master local via
 		<blockquote>
 	      <code>
-	      git checkout master<br/>
-	      git merge patch-NNNN<br/>
+	      git checkout master<br>
+	      git merge patch-NNNN<br>
 	      </code>
 	      </blockquote>
 	      </ol>L'avantage de cette approche est qu'elle vous permet de garder votre propre travail s&#233;par&#233; 
@@ -585,8 +589,8 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 
 			<li>V&#233;rifiez l'&#233;tat et sauvez la sortie. Double v&#233;rification qu'ils n'y aient pas de conflits de montr&#233;s.
 		      <blockquote>
-			      <code>$ svn status</code><br/><br/>
-			      save a copy to reference later ...<br/><br/>
+			      <code>$ svn status</code><br><br>
+			      save a copy to reference later ...<br><br>
 			      <code>$ svn status &gt; saved-status.txt</code>
 		      </blockquote>
 
@@ -606,7 +610,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 		      <code>$ git checkout tags/svn-30001</code>
 		      </blockquote>
 			Ceci d&#233;finit votre copie de travail pour qu'elle soit exactement la m&#234;me que le dernier contenu de SVN,
-			la m&#234;me que la base pour le <code> svn diff </code> vous avez pris plus t&#244;t.<br/> 
+			la m&#234;me que la base pour le <code> svn diff </code> vous avez pris plus t&#244;t.<br>
 
 			<li>Appliquez les changements que vous avez fait dans SVN dans le nouvel arbre Git
 			<blockquote>
@@ -628,18 +632,18 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 			<blockquote>
 		      <code>$ git status</code>
 		      </blockquote>
-			Vous devez voir la m&#234;me liste de fichiers chang&#233;s que l'&quot;&#233;tat SVN&quot; vous avez ex&#233;cut&#233; plus t&#244;t. <br/>
+			Vous devez voir la m&#234;me liste de fichiers chang&#233;s que l'&quot;&#233;tat SVN&quot; vous avez ex&#233;cut&#233; plus t&#244;t. <br>
 
 			<li><code>git stash save</code>
 
 			<li><code>git checkout master</code>
 
-			<li><code>git stash pop</code><br/><br/>
+			<li><code>git stash pop</code><br><br>
 				Selon la progression dans Git, 
 			des conflits pourraient appara&#236;tre. Si oui, vous devez les r&#233;soudre ici.
 
-		      </ol>  
-	      <p> Maintenant vous pouvez d&#233;marrer le d&#233;veloppement, sans avoir perdu quoique ce soit.<p>
+		    </ol>
+	      <p>Maintenant vous pouvez d&#233;marrer le d&#233;veloppement, sans avoir perdu quoique ce soit.</p>
 
 	</dd>
 
@@ -648,7 +652,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 	      <p>Quand JMRI utilisait &#225; l'origine CVS, nous utilisions des lignes comme:
 
 		<code>
-	      # La ligne suivante est maintenue par CVS, SVP ne la changz pas<br/>
+	      # La ligne suivante est maintenue par CVS, SVP ne la changz pas<br>
 	      # $Revision$
 	      </code>
 
@@ -657,18 +661,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 		que les utilisateurs &#233;taient susceptibles de modifier et soumettre de nouveau pour l'inclusion.
 
 		<p>
-		Mais avec Git
-		<!--
-			il n'y a pas de fa&#231;on de maintenir ceci automatiquement,
-			http://thomas-cokelaer.info/blog/2014/12/moving-from-svn-to-git-id-equivalent/
-
-		  see .git/info/attributes
-		  # see man gitattributes
-		  # expands $Id$ but not $Revision$ $Author$
-		  *.xml ident
-	      -->
-
-		il y a moins de besoin pour ces derniers.
+		Mais avec Git il y a moins de besoin pour ces derniers.
 		Donc, nous supprimons ces lignes.
 		Si lors de travaux sur un fichier vous en voyez, habituellement 
 		dans l'en t&#234;te, vous pouvez les effacer.</p>
@@ -676,8 +669,7 @@ pour de plus amples informations sue la maintenance du code JMRI.</p>
 
 </dl>
 
-  <!--#include virtual="/Footer" -->
-
+  	<!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
  </div> <!-- closes #mBody-->
 

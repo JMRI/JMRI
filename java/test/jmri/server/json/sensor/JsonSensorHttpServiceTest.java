@@ -164,9 +164,9 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
         }
         manager.newSensor("IS1", null);
         // delete existing bean (no named listener)
-        assertNotNull(manager.getBeanBySystemName("IS1"));
+        assertNotNull(manager.getBySystemName("IS1"));
         service.doDelete(service.getType(), "IS1", message, locale, 42);
-        assertNull(manager.getBeanBySystemName("IS1"));
+        assertNull(manager.getBySystemName("IS1"));
         Sensor sensor = manager.newSensor("IS1", null);
         assertNotNull(sensor);
         sensor.addPropertyChangeListener(new PropertyChangeListener() {
@@ -186,10 +186,10 @@ public class JsonSensorHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<
             assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }
-        assertNotNull(manager.getBeanBySystemName("IS1"));
+        assertNotNull(manager.getBySystemName("IS1"));
         // will throw if prior catch failed
         service.doDelete(service.getType(), "IS1", message, locale, 0);
-        assertNull(manager.getBeanBySystemName("IS1"));
+        assertNull(manager.getBySystemName("IS1"));
         try {
             // deleting again should throw an exception
             service.doDelete(service.getType(), "IS1", NullNode.getInstance(), locale, 0);

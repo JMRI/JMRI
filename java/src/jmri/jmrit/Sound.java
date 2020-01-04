@@ -19,8 +19,6 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Provide simple way to load and play sounds in JMRI.
@@ -45,7 +43,6 @@ public class Sound {
     private boolean streamingStop = false;
     private AtomicReference<Clip> clipRef = new AtomicReference<>();
     private boolean autoClose = true;
-    private final static Logger log = LoggerFactory.getLogger(Sound.class);
 
     /**
      * Create a Sound object using the media file at path
@@ -154,7 +151,9 @@ public class Sound {
         }
     }
     
+    /** {@inheritDoc} */
     @Override
+    @SuppressWarnings("deprecation") // finalize deprecated in Java 9, but not yet removed
     public void finalize() throws Throwable {
         try {
             if (!streaming) {
@@ -308,7 +307,7 @@ public class Sound {
                             + buffer[index + 5] * 256
                             + buffer[index + 6] * 256 * 256
                             + buffer[index + 7] * 256 * 256 * 256;
-                    System.out.println("index now " + index);
+                    log.debug("index now {}", index);
                 }
             }
             log.error("Didn't find fmt chunk");
@@ -361,6 +360,7 @@ public class Sound {
             this.url = url;
         }
 
+        /** {@inheritDoc} */
         @Override
         public void run() {
             // Note: some of the following is based on code from 
@@ -383,7 +383,7 @@ public class Sound {
                                     format.getFrameRate(), true);  // big endian
                     // update stream and format details
                     stream = AudioSystem.getAudioInputStream(newFormat, stream);
-                    System.out.println("Converted Audio format: " + newFormat);
+                    log.info("Converted Audio format: {}", newFormat);
                     format = newFormat;
                     log.debug("new converted Audio format: " + format);
                 }
@@ -460,4 +460,6 @@ public class Sound {
         }
 
     }
+
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(Sound.class);
 }

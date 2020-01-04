@@ -50,7 +50,7 @@ public class CbusAllocateNodeNumber implements CanListener {
         // connect to the CanInterface
         tc = memo.getTrafficController();
         
-        tc.addCanListener(this);
+        addTc(tc);
         send = new CbusSend(memo);
         
         baseNodeNum = 256;

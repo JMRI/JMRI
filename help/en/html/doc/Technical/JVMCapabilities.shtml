@@ -19,13 +19,14 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
   <!-- /Style -->
-</head><!--#include virtual="/Header.shtml" -->
+</head>
 
 <body>
+  <!--#include virtual="/Header.shtml" -->
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Java Version-Specific Features</h1>
       <p>This page
       contains information about the compatibility and features of
@@ -205,6 +206,9 @@
       system will have updated to this Java version; many will be
       using an older one. 
 
+      <p>JMRI development requires Java 8u101 or later.  8u101 contains a certificate
+      change that's needed to link to some remote Javadocs.
+      
       <p><a href=
       "http://www.oracle.com/technetwork/java/javase/config-417990.html">
       Oracle's page on Java 1.7 requirements</a> says "Note:
@@ -218,12 +222,12 @@
       JMRI's 
       <a href="http://jmri.org/install/WindowsNew.shtml">Windows installation page</a>
       keeps updated information on this.
-      Several JMRI users have reporter that Java 1.8_151 is the last one that 
+      Several JMRI users have reported that Java 1.8_151 is the last one that 
       can be cleanly installed and run on XP.  See
       the
       <a href="https://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html">Java download archive page</a>
       for links to that.</p>
-              
+
       <p>As of April 18, 2018, the
       the <a href="https://java.com/en/download/release_notice.jsp">Oracle Java 8 page</a> was saying:
 <blockquote cite="https://java.com/en/download/release_notice.jsp">
@@ -238,9 +242,9 @@
         <li><a href="http://www.oracle.com/technetwork/java/javaseproducts/documentation/jdk10certconfig-4417031.html">Java 10</a></li>
       </ul>
 
-    <p><a href="http://openjdk.java.net/projects/jdk/11/">Oracle Java 11</a>, 
+    <p><a href="http://openjdk.java.net/projects/jdk/11/">Java 11</a>, 
         made available in September 2018, 
-        will be a "Long Term Support" release.  Java 9 and 10 will not be.
+        will be a "Long Term Support" release.  Java 9, 10, 12 and 13 will not be.
 
       <P>Java 11 only runs on 64-bit Windows versions (no 32-bit).
 

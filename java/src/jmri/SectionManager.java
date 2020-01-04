@@ -1,9 +1,10 @@
 package jmri;
 
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.managers.AbstractManager;
@@ -16,9 +17,9 @@ import org.slf4j.LoggerFactory;
  * This doesn't have a "new" interface, since Sections are independently
  * implemented, instead of being system-specific.
  * <p>
- * Note that Section system names must begin with IY, and be followed by a
- * string, usually, but not always, a number. This is enforced when a Section is
- * created.
+ * Note that Section system names must begin with system prefix and type character,
+ * usually IY, and be followed by a string, usually, but not always, a number. This
+ * is enforced when a Section is created.
  * <br>
  * <hr>
  * This file is part of JMRI.
@@ -51,8 +52,13 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         return 'Y';
     }
 
+    @Override
+    public Class<Section> getNamedBeanClass() {
+        return Section.class;
+    }
+
     /**
-     * Method to create a new Section if the Section does not exist.
+     * Create a new Section if the Section does not exist.
      *
      * @param systemName the desired system name
      * @param userName   the desired user name
@@ -60,15 +66,16 @@ public class SectionManager extends AbstractManager<Section> implements Instance
      *         userName already exists, or if there is trouble creating a new
      *         Section.
      */
-    public Section createNewSection(String systemName, String userName) {
+    public Section createNewSection(@Nonnull String systemName, String userName) {
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
         // check system name
-        if ((systemName == null) || (systemName.length() < 1)) {
+        if (systemName.length() < 1) {
             // no valid system name entered, return without creating
             return null;
         }
         String sysName = systemName;
-        if ((sysName.length() < 2) || (!sysName.substring(0, 2).equals("IY"))) {
-            sysName = "IY" + sysName;
+        if (!sysName.startsWith(getSystemNamePrefix())) {
+            sysName = makeSystemName(sysName);
         }
         // Check that Section does not already exist
         Section y;
@@ -86,33 +93,16 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         y = new Section(sysName, userName);
         // save in the maps
         register(y);
-        /*The following keeps trace of the last created auto system name.
-         currently we do not reuse numbers, although there is nothing to stop the
-         user from manually recreating them*/
-        if (systemName.startsWith("IY:AUTO:")) {
-            try {
-                int autoNumber = Integer.parseInt(systemName.substring(8));
-                if (autoNumber > lastAutoSectionRef) {
-                    lastAutoSectionRef = autoNumber;
-                }
-            } catch (NumberFormatException e) {
-                log.warn("Auto generated SystemName " + systemName + " is not in the correct format");
-            }
-        }
+
+        // Keep track of the last created auto system name
+        updateAutoNumber(systemName);
+
         return y;
     }
 
     public Section createNewSection(String userName) {
-        int nextAutoSectionRef = lastAutoSectionRef + 1;
-        StringBuilder b = new StringBuilder("IY:AUTO:");
-        String nextNumber = paddedNumber.format(nextAutoSectionRef);
-        b.append(nextNumber);
-        return createNewSection(b.toString(), userName);
+        return createNewSection(getAutoSystemName(), userName);
     }
-
-    DecimalFormat paddedNumber = new DecimalFormat("0000");
-
-    int lastAutoSectionRef = 0;
 
     /**
      * Remove an existing Section.
@@ -126,12 +116,12 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     }
 
     /**
-     * Get an existing Section. First looks up assuming that name is a User
-     * Name. If this fails looks up assuming that name is a System Name.
+     * Get an existing Section. First look up assuming that name is a User
+     * Name. If this fails look up assuming that name is a System Name.
      *
      * @param name the name to find; user names are searched for a match first,
      *             followed by system names
-     * @return the found section of null if no matching section found
+     * @return the found section of null if no matching Section found
      */
     public Section getSection(String name) {
         Section y = getByUserName(name);
@@ -141,16 +131,8 @@ public class SectionManager extends AbstractManager<Section> implements Instance
         return getBySystemName(name);
     }
 
-    public Section getBySystemName(String key) {
-        return _tsys.get(key);
-    }
-
-    public Section getByUserName(String key) {
-        return _tuser.get(key);
-    }
-
     /**
-     * Validates all Sections.
+     * Validate all Sections.
      *
      * @param frame   ignored
      * @param lePanel the panel containing sections to validate
@@ -177,7 +159,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     }
 
     /**
-     * Checks direction sensors in SSL for signals.
+     * Check direction sensors in SSL for signals.
      *
      * @param lePanel the panel containing direction sensors
      * @return the number or errors; 0 if no errors; -1 if the panel is null; -2
@@ -203,7 +185,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     }
 
     /**
-     * Removes direction sensors from SSL for all signals.
+     * Remove direction sensors from SSL for all signals.
      *
      * @param lePanel the panel containing direction sensors
      * @return the number or errors; 0 if no errors; -1 if the panel is null; -2
@@ -240,7 +222,7 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     }
 
     /**
-     * Initialize all blocking sensors that exist - sets them to 'ACTIVE'
+     * Initialize all blocking sensors that exist - set them to 'ACTIVE'.
      */
     public void initializeBlockingSensors() {
         for (Section s : getNamedBeanSet()) {
@@ -258,9 +240,11 @@ public class SectionManager extends AbstractManager<Section> implements Instance
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSections" : "BeanNameSection");
     }
 
     private final static Logger log = LoggerFactory.getLogger(SectionManager.class);
+
 }

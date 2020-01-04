@@ -1,10 +1,10 @@
 <!-- Sidebar -->
 <!-- This is the common sidebar definition for apps/SoundPro pages -->
-<!-- Updated  by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
+<!-- Updated by Herv&#233; BLOREC <bzh56420@yahoo.fr> on 2016-07-04 -->
 <hr class="hide">
 <div id="side"> <!-- Block of text on left side of page -->
 
-<dl class="toc">
+<dl>
 
 <<dt><h3>SoundPro&trade; Info</h3></dt>
 <dd>
@@ -16,8 +16,8 @@
 <dt><h3>Autres Applications</h3></dt>
 <dd>
 		<ul>
-	<li><a href="../../tools/Audio.shtml">D&#233;tail du paquet Audio</a>
-	<li><a href="../../../package/jmri/jmrit/beantable/AudioTable.shtml">Tableau Audio</a>
+	<li><a href="../../tools/Audio.shtml">D&#233;tail du paquet Audio</a></li>
+	<li><a href="../../../package/jmri/jmrit/beantable/AudioTable.shtml">Tableau Audio</a></li>
 	</ul>
 </dd>
 
@@ -36,24 +36,24 @@
 <dd>JMRI fournit des outils puissants pour travailler avec
 r&#233;seau.
 	<ul>
-		<li><dfn><a href="../../tools/Turnouts.shtml">Aiguillages</a></dfn>
-		<li><dfn><a href="../../tools/Lights.shtml">Lumi&#232;res</a></dfn>
-		<li><dfn><a href="../../tools/Sensors.shtml">Capteurs</a></dfn>
-		<li><dfn><a href="../../tools/throttle/ThrottleMain.shtml">R&#233;gulateurs</a></dfn>
-		<li><dfn><a href="../../tools/consisttool/ConsistTool.shtml">Couplage</a></dfn>
-		<li><dfn><a href="../../tools/Blocks.shtml">Cantons</a></dfn>
-		<li><dfn><a href="../../tools/Reporters.shtml">Rapports</a></dfn>
-		<li><dfn><a href="../../tools/Memories.shtml">Variables de M&#233;moire</a></dfn>
-		<li><dfn><a href="../../tools/Routes.shtml">Itin&#233;raires</a></dfn>
-		<li><dfn><a href="../../tools/LRoutes.shtml">LIn&#233;raires</a></dfn>
-    <li><dfn><a href="../../tools/Sections.shtml">Sections</a></dfn>
-		<li><dfn><a href="../../tools/Logix.shtml">Logix</a></dfn>
-		<li><dfn><a href="../../tools/fastclock/index.shtml">Horloges Rapides</a></dfn>
-		<li><dfn><a href="../../tools/speedometer/index.shtml">Mesureur de Vitesse</a></dfn>
-		<li><dfn><a href="../../tools/Audio.shtml">Audio</a></dfn>
-		<li><dfn><a href="../../tools/IdTags.shtml">&#201;tiquettes ID</a></dfn>
+		<li><a href="../../tools/Turnouts.shtml">Aiguillages</a></li>
+		<li><a href="../../tools/Lights.shtml">Lumi&#232;res</a></li>
+		<li><a href="../../tools/Sensors.shtml">Capteurs</a></li>
+		<li><a href="../../tools/throttle/ThrottleMain.shtml">R&#233;gulateurs</a></li>
+		<li><a href="../../tools/consisttool/ConsistTool.shtml">Couplage</a></li>
+		<li><a href="../../tools/Blocks.shtml">Cantons</a></li>
+		<li><a href="../../tools/Reporters.shtml">Rapports</a></li>
+		<li><a href="../../tools/Memories.shtml">Variables de M&#233;moire</a></li>
+		<li><a href="../../tools/Routes.shtml">Itin&#233;raires</a></li>
+		<li><a href="../../tools/LRoutes.shtml">LIn&#233;raires</a></li>
+        <li><a href="../../tools/Sections.shtml">Sections</a></li>
+		<li><a href="../../tools/Logix.shtml">Logix</a></li>
+		<li><a href="../../tools/fastclock/index.shtml">Horloges Rapides</a></li>
+		<li><a href="../../tools/speedometer/index.shtml">Mesureur de Vitesse</a></li>
+		<li><a href="../../tools/Audio.shtml">Audio</a></li>
+		<li><a href="../../tools/IdTags.shtml">&#201;tiquettes ID</a></li>
 		
-		<li><dfn><a href="../../tools/index.shtml#systemSpecificTools">Syst&#232;me sp&#233;cifique...</a></dfn>
+		<li><a href="../../tools/index.shtml#systemSpecificTools">Syst&#232;me sp&#233;cifique...</a>
 	</ul>
 </dd>
 
@@ -62,11 +62,11 @@ r&#233;seau.
 de votre r&#233;seau, depuis un simple contr&#244;le de croisement
 &#224; la circulation des trains en toile de fond.
     <ul>
-    <li><dfn><a href="../../tools/signaling/index.shtml">Signalisation</a></dfn>
-    <li><dfn><a href="../../tools/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></dfn>
-    <li><dfn><a href="../../tools/Routes.shtml">Itin&#233;raires</a></dfn>
-    <li><dfn><a href="../../tools/fastclock/index.shtml">Horloges Rapides</a></dfn>
-    <li><dfn><a href="../../tools/scripting/index.shtml">Script</a></dfn>
+    <li><a href="../../tools/signaling/index.shtml">Signalisation</a></li>
+    <li><a href="../../tools/EntryExit.shtml">Entr&#233;e Sortie (NX)</a></li>
+    <li><a href="../../tools/Routes.shtml">Itin&#233;raires</a></li>
+    <li><a href="../../tools/fastclock/index.shtml">Horloges Rapides</a></li>
+    <li><a href="../../tools/scripting/index.shtml">Script</a></li>
  	
     </ul>
 </dd>

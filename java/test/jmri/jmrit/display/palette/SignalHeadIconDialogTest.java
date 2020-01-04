@@ -28,6 +28,7 @@ public class SignalHeadIconDialogTest {
         SignalHeadItemPanel sip = new SignalHeadItemPanel(df,"IS01","",tableModel,editor);  // NOI18N
         SignalHeadIconDialog t = new SignalHeadIconDialog("SignalHead","SignalHead",sip,null); // NOI18N
         Assert.assertNotNull("exists",t); // NOI18N
+        JUnitUtil.dispose(t);
         JUnitUtil.dispose(df);
     }
 
@@ -36,6 +37,7 @@ public class SignalHeadIconDialogTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

@@ -1,5 +1,6 @@
 package jmri.jmrit.vsdecoder;
 
+import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -16,6 +17,9 @@ public class SteamSoundTest {
     public void testCTor() {
         SteamSound t = new SteamSound("test");
         Assert.assertNotNull("exists",t);
+    
+        // this created an audio manager, clean that up
+        InstanceManager.getDefault(jmri.AudioManager.class).cleanup();
     }
 
     // The minimal setup for log4J
@@ -26,7 +30,6 @@ public class SteamSoundTest {
 
     @After
     public void tearDown() {
-        jmri.util.JUnitAppender.suppressWarnMessage("Initialised Null audio system - no sounds will be available.");
         JUnitUtil.tearDown();
     }
 

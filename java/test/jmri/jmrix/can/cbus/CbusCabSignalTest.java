@@ -32,7 +32,6 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
         JUnitUtil.initDefaultSignalMastManager();
         JUnitUtil.initSignalMastLogicManager();
         InstanceManager.setDefault(jmri.jmrit.display.PanelMenu.class,new jmri.jmrit.display.PanelMenu());
-        JUnitUtil.initShutDownManager();
 
         // prepare the cab signal
         CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
@@ -45,7 +44,9 @@ public class CbusCabSignalTest extends jmri.implementation.DefaultCabSignalTest 
     @After
     @Override
     public void tearDown() {
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusCabSignalTest.class);

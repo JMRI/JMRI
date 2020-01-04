@@ -1,0 +1,17 @@
+<!-- Sidebar -->
+	  <hr class="hide">
+	 <div id="side"> <!-- Block of text on left side of page -->
+	    
+	    <div style="text-align: center">JMRI&reg; is...</div>
+	    <dl>
+	    
+	    <!-- Sections in different order than in Tools generic sidebar  -->
+           <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+           <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
+           <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+
+	    </dl>
+	 
+	</div> <!-- closes #side -->
+
+<!-- /Sidebar -->

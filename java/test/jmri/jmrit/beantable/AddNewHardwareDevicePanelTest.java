@@ -16,8 +16,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.SensorManager;
-import jmri.jmrix.internal.InternalSensorManager;
-import jmri.managers.ProxySensorManager;
 import jmri.swing.ManagerComboBox;
 import jmri.swing.SystemNameValidator;
 import jmri.util.JUnitUtil;

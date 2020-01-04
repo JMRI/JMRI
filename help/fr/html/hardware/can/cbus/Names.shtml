@@ -3,8 +3,8 @@
 
 <html lang="fr">
 <head>
-<!-- UpDated  by Blorec Herv&#233;  2017-01-19-->
-<title>JMRI Hardware Support - CBUS - Naming</title>
+<!-- Updated by Blorec Herv&#233;  2017-01-19-->
+<title>JMRI Mat&#233;riel - CBUS - D&#233;signation</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -17,8 +17,10 @@
 
 <body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-<div id="mainContent">
+<div id="mBody">
+    <!--#include virtual="Sidebar" -->
+    <div id="mainContent">
+        <!-- Page Body -->
 
 <h1>Structure Mat&#233;riel: CBUS - D&#233;signation</h1>
 <p>

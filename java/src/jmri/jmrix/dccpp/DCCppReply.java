@@ -11,7 +11,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author Paul Bender Copyright (C) 2004
  * @author Mark Underwood Copyright (C) 2015
-  *
+ * @author Harald Barth Copyright (C) 2019
+ *
  * Based on XNetReply
  */
 
@@ -304,6 +305,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
                     r.myRegex = DCCppConstants.CURRENT_REPLY_REGEX;
                 } else if (s.matches(DCCppConstants.CURRENT_REPLY_NAMED_REGEX)) {
                     r.myRegex = DCCppConstants.CURRENT_REPLY_NAMED_REGEX;
+                }
+                return(r);
+            case DCCppConstants.MAXNUMSLOTS_REPLY:
+                if (s.matches(DCCppConstants.MAXNUMSLOTS_REPLY_REGEX)) {
+                    r.myRegex = DCCppConstants.MAXNUMSLOTS_REPLY_REGEX;
                 }
                 return(r);
             case DCCppConstants.WRITE_EEPROM_REPLY:

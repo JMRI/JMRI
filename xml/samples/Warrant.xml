@@ -3673,7 +3673,7 @@
       <path pathName="Main000" blockName="OB0" fromPortal="Blk0 to Dark000" toPortal="Main0-1" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT0" set="4" />
       </path>
-      <portal systemName="IP1" portalName="Main0-1">
+      <portal portalName="Main0-1">
         <fromBlock blockName="OB1">
           <path pathName="Main" blockName="OB1" />
           <path pathName="South Yard" blockName="OB1" />
@@ -3685,7 +3685,7 @@
         </toBlock>
         <toSignal signalName="IH0" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP2" portalName="Blk0 to Dark00">
+      <portal portalName="Blk0 to Dark00">
         <fromBlock blockName="OB0">
           <path pathName="Main00" blockName="OB0" />
         </fromBlock>
@@ -3693,7 +3693,7 @@
           <path pathName="main00" blockName="OB00" />
         </toBlock>
       </portal>
-      <portal systemName="IP3" portalName="Blk0 to Dark000">
+      <portal portalName="Blk0 to Dark000">
         <fromBlock blockName="OB0">
           <path pathName="Main000" blockName="OB0" />
         </fromBlock>
@@ -3705,7 +3705,7 @@
     <oblock systemName="OB00" userName="Blk 00" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>Blk 00</userName>
       <path pathName="main00" blockName="OB00" toPortal="Blk0 to Dark00" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP2" portalName="Blk0 to Dark00">
+      <portal portalName="Blk0 to Dark00">
         <fromBlock blockName="OB0">
           <path pathName="Main00" blockName="OB0" />
         </fromBlock>
@@ -3717,7 +3717,7 @@
     <oblock systemName="OB000" userName="Blk000" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>Blk000</userName>
       <path pathName="main000" blockName="OB000" toPortal="Blk0 to Dark000" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP3" portalName="Blk0 to Dark000">
+      <portal portalName="Blk0 to Dark000">
         <fromBlock blockName="OB0">
           <path pathName="Main000" blockName="OB0" />
         </fromBlock>
@@ -3735,7 +3735,7 @@
       <path pathName="South Yard" blockName="OB1" fromPortal="Main0-1" toPortal="SouthYard1-24" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT1" set="4" />
       </path>
-      <portal systemName="IP1" portalName="Main0-1">
+      <portal portalName="Main0-1">
         <fromBlock blockName="OB1">
           <path pathName="Main" blockName="OB1" />
           <path pathName="South Yard" blockName="OB1" />
@@ -3747,7 +3747,7 @@
         </toBlock>
         <toSignal signalName="IH0" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP4" portalName="Main1-2">
+      <portal portalName="Main1-2">
         <fromBlock blockName="OB1">
           <path pathName="Main" blockName="OB1" />
         </fromBlock>
@@ -3758,7 +3758,7 @@
         </toBlock>
         <toSignal signalName="IH2A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP5" portalName="SouthYard1-24">
+      <portal portalName="SouthYard1-24">
         <fromBlock blockName="OB24">
           <path pathName="South Yard Spur" blockName="OB24" />
           <path pathName="South Yard Siding" blockName="OB24" />
@@ -3784,7 +3784,7 @@
         <setting turnout="IT10" set="4" />
         <setting turnout="IT10A" set="4" />
       </path>
-      <portal systemName="IP6" portalName="NorthSiding2-10">
+      <portal portalName="NorthSiding2-10">
         <fromBlock blockName="OB2">
           <path pathName="North Siding" blockName="OB2" />
         </fromBlock>
@@ -3796,7 +3796,7 @@
         </toBlock>
         <toSignal signalName="IH10A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP7" portalName="NorthSiding10-11">
+      <portal portalName="NorthSiding10-11">
         <fromBlock blockName="OB10">
           <path pathName="NorthSiding" blockName="OB10" />
         </fromBlock>
@@ -3805,7 +3805,7 @@
           <path pathName="NorthSiding" blockName="OB11" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="NorthUpper10-11">
+      <portal portalName="NorthUpper10-11">
         <fromBlock blockName="OB10">
           <path pathName="NorthUpperSiding" blockName="OB10" />
         </fromBlock>
@@ -3814,7 +3814,7 @@
           <path pathName="NorthUpperSiding" blockName="OB11" />
         </toBlock>
       </portal>
-      <portal systemName="IP9" portalName="TopByPass10-18">
+      <portal portalName="TopByPass10-18">
         <fromBlock blockName="OB10">
           <path pathName="North Bypass" blockName="OB10" />
         </fromBlock>
@@ -3833,7 +3833,7 @@
       <path pathName="NorthUpperSiding" blockName="OB11" fromPortal="NorthUpper10-11" toPortal="NorthSiding11-5" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT11" set="4" />
       </path>
-      <portal systemName="IP7" portalName="NorthSiding10-11">
+      <portal portalName="NorthSiding10-11">
         <fromBlock blockName="OB10">
           <path pathName="NorthSiding" blockName="OB10" />
         </fromBlock>
@@ -3842,7 +3842,7 @@
           <path pathName="NorthSiding" blockName="OB11" />
         </toBlock>
       </portal>
-      <portal systemName="IP8" portalName="NorthUpper10-11">
+      <portal portalName="NorthUpper10-11">
         <fromBlock blockName="OB10">
           <path pathName="NorthUpperSiding" blockName="OB10" />
         </fromBlock>
@@ -3851,7 +3851,7 @@
           <path pathName="NorthUpperSiding" blockName="OB11" />
         </toBlock>
       </portal>
-      <portal systemName="IP10" portalName="NorthSiding11-5">
+      <portal portalName="NorthSiding11-5">
         <fromBlock blockName="OB11">
           <path pathName="NorthSiding" blockName="OB11" />
           <path pathName="NorthUpperSiding" blockName="OB11" />
@@ -3867,7 +3867,7 @@
       <userName>Block 12</userName>
       <sensor systemName="IS12" />
       <path pathName="SouthSiding" blockName="OB12" fromPortal="SouthSiding4-12" toPortal="SouthSiding12-6" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP11" portalName="SouthSiding4-12">
+      <portal portalName="SouthSiding4-12">
         <fromBlock blockName="OB4">
           <path pathName="South Siding" blockName="OB4" />
         </fromBlock>
@@ -3877,7 +3877,7 @@
         </toBlock>
         <toSignal signalName="IH12B" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP12" portalName="SouthSiding12-6">
+      <portal portalName="SouthSiding12-6">
         <fromBlock blockName="OB12">
           <path pathName="SouthSiding" blockName="OB12" />
         </fromBlock>
@@ -3897,7 +3897,7 @@
       <path pathName="Branch Upper" blockName="OB13" fromPortal="NorthBranch7-13" toPortal="NorthBranchUpper13-14" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT13" set="4" />
       </path>
-      <portal systemName="IP13" portalName="NorthBranch7-13">
+      <portal portalName="NorthBranch7-13">
         <fromBlock blockName="OB13">
           <path pathName="Branch Lower" blockName="OB13" />
           <path pathName="Branch Upper" blockName="OB13" />
@@ -3908,7 +3908,7 @@
         </toBlock>
         <toSignal signalName="IH7C" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP14" portalName="NorthBranchLower13-14">
+      <portal portalName="NorthBranchLower13-14">
         <fromBlock blockName="OB13">
           <path pathName="Branch Lower" blockName="OB13" />
         </fromBlock>
@@ -3916,7 +3916,7 @@
           <path pathName="Lower" blockName="OB14" />
         </toBlock>
       </portal>
-      <portal systemName="IP15" portalName="NorthBranchUpper13-14">
+      <portal portalName="NorthBranchUpper13-14">
         <fromBlock blockName="OB13">
           <path pathName="Branch Upper" blockName="OB13" />
         </fromBlock>
@@ -3946,7 +3946,7 @@
         <setting turnout="IT14" set="4" />
         <setting turnout="IT14A" set="4" />
       </path>
-      <portal systemName="IP14" portalName="NorthBranchLower13-14">
+      <portal portalName="NorthBranchLower13-14">
         <fromBlock blockName="OB13">
           <path pathName="Branch Lower" blockName="OB13" />
         </fromBlock>
@@ -3954,7 +3954,7 @@
           <path pathName="Lower" blockName="OB14" />
         </toBlock>
       </portal>
-      <portal systemName="IP15" portalName="NorthBranchUpper13-14">
+      <portal portalName="NorthBranchUpper13-14">
         <fromBlock blockName="OB13">
           <path pathName="Branch Upper" blockName="OB13" />
         </fromBlock>
@@ -3962,7 +3962,7 @@
           <path pathName="Low to Middle" blockName="OB14" />
         </toBlock>
       </portal>
-      <portal systemName="IP16" portalName="NorthBranch14-15">
+      <portal portalName="NorthBranch14-15">
         <fromBlock blockName="OB15">
           <path pathName="North Branch Middle Siding" blockName="OB15" />
           <path pathName="North Branch to Top Siding" blockName="OB15" />
@@ -3972,7 +3972,7 @@
           <path pathName="Top to Middle" blockName="OB14" />
         </toBlock>
       </portal>
-      <portal systemName="IP17" portalName="NorthBranch14-19">
+      <portal portalName="NorthBranch14-19">
         <fromBlock blockName="OB14">
           <path pathName="Lower" blockName="OB14" />
           <path pathName="Top to  Lower" blockName="OB14" />
@@ -3981,7 +3981,7 @@
           <path pathName="North Branch Siding" blockName="OB19" />
         </toBlock>
       </portal>
-      <portal systemName="IP18" portalName="NorthBranchTop14-15">
+      <portal portalName="NorthBranchTop14-15">
         <fromBlock blockName="OB15">
           <path pathName="North ByPass to Top Siding" blockName="OB15" />
         </fromBlock>
@@ -3989,7 +3989,7 @@
           <path pathName="Top" blockName="OB14" />
         </toBlock>
       </portal>
-      <portal systemName="IP19" portalName="TopByPass18-14">
+      <portal portalName="TopByPass18-14">
         <fromBlock blockName="OB14">
           <path pathName="Top" blockName="OB14" />
           <path pathName="Top to Middle" blockName="OB14" />
@@ -4012,7 +4012,7 @@
       <path pathName="North ByPass to Top Siding" blockName="OB15" fromPortal="NorthBranchTop14-15" toPortal="NorthBranch15-17" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT15" set="2" />
       </path>
-      <portal systemName="IP16" portalName="NorthBranch14-15">
+      <portal portalName="NorthBranch14-15">
         <fromBlock blockName="OB15">
           <path pathName="North Branch Middle Siding" blockName="OB15" />
           <path pathName="North Branch to Top Siding" blockName="OB15" />
@@ -4022,7 +4022,7 @@
           <path pathName="Top to Middle" blockName="OB14" />
         </toBlock>
       </portal>
-      <portal systemName="IP18" portalName="NorthBranchTop14-15">
+      <portal portalName="NorthBranchTop14-15">
         <fromBlock blockName="OB15">
           <path pathName="North ByPass to Top Siding" blockName="OB15" />
         </fromBlock>
@@ -4030,7 +4030,7 @@
           <path pathName="Top" blockName="OB14" />
         </toBlock>
       </portal>
-      <portal systemName="IP20" portalName="NorthBranch15-16">
+      <portal portalName="NorthBranch15-16">
         <fromBlock blockName="OB16">
           <path pathName="Spur" blockName="OB16" />
         </fromBlock>
@@ -4038,7 +4038,7 @@
           <path pathName="North Branch Middle Siding" blockName="OB15" />
         </toBlock>
       </portal>
-      <portal systemName="IP21" portalName="NorthBranch15-17">
+      <portal portalName="NorthBranch15-17">
         <fromBlock blockName="OB17">
           <path pathName="Top Siding" blockName="OB17" />
         </fromBlock>
@@ -4052,7 +4052,7 @@
       <userName>Block 16</userName>
       <sensor systemName="IS16" />
       <path pathName="Spur" blockName="OB16" fromPortal="NorthBranch15-16" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP20" portalName="NorthBranch15-16">
+      <portal portalName="NorthBranch15-16">
         <fromBlock blockName="OB16">
           <path pathName="Spur" blockName="OB16" />
         </fromBlock>
@@ -4065,7 +4065,7 @@
       <userName>Block 17</userName>
       <sensor systemName="IS17" />
       <path pathName="Top Siding" blockName="OB17" fromPortal="NorthBranch15-17" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP21" portalName="NorthBranch15-17">
+      <portal portalName="NorthBranch15-17">
         <fromBlock blockName="OB17">
           <path pathName="Top Siding" blockName="OB17" />
         </fromBlock>
@@ -4079,7 +4079,7 @@
       <userName>Block 18</userName>
       <sensor systemName="IS18" />
       <path pathName="ByPass" blockName="OB18" fromPortal="TopByPass10-18" toPortal="TopByPass18-14" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP9" portalName="TopByPass10-18">
+      <portal portalName="TopByPass10-18">
         <fromBlock blockName="OB10">
           <path pathName="North Bypass" blockName="OB10" />
         </fromBlock>
@@ -4088,7 +4088,7 @@
           <path pathName="ByPass" blockName="OB18" />
         </toBlock>
       </portal>
-      <portal systemName="IP19" portalName="TopByPass18-14">
+      <portal portalName="TopByPass18-14">
         <fromBlock blockName="OB14">
           <path pathName="Top" blockName="OB14" />
           <path pathName="Top to Middle" blockName="OB14" />
@@ -4103,7 +4103,7 @@
       <userName>Block 19</userName>
       <sensor systemName="IS19" />
       <path pathName="North Branch Siding" blockName="OB19" toPortal="NorthBranch14-19" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP17" portalName="NorthBranch14-19">
+      <portal portalName="NorthBranch14-19">
         <fromBlock blockName="OB14">
           <path pathName="Lower" blockName="OB14" />
           <path pathName="Top to  Lower" blockName="OB14" />
@@ -4122,7 +4122,7 @@
       <path pathName="North Siding" blockName="OB2" fromPortal="Main1-2" toPortal="NorthSiding2-10" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT2" set="4" />
       </path>
-      <portal systemName="IP4" portalName="Main1-2">
+      <portal portalName="Main1-2">
         <fromBlock blockName="OB1">
           <path pathName="Main" blockName="OB1" />
         </fromBlock>
@@ -4133,7 +4133,7 @@
         </toBlock>
         <toSignal signalName="IH2A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP6" portalName="NorthSiding2-10">
+      <portal portalName="NorthSiding2-10">
         <fromBlock blockName="OB2">
           <path pathName="North Siding" blockName="OB2" />
         </fromBlock>
@@ -4145,7 +4145,7 @@
         </toBlock>
         <toSignal signalName="IH10A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP22" portalName="Main2-3">
+      <portal portalName="Main2-3">
         <fromBlock blockName="OB3">
           <path pathName="Main" blockName="OB3" />
         </fromBlock>
@@ -4165,7 +4165,7 @@
       <path pathName="Reversed" blockName="OB20" fromPortal="ReverseLower" toPortal="Main9-20" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT20" set="4" />
       </path>
-      <portal systemName="IP23" portalName="ReverseUpper">
+      <portal portalName="ReverseUpper">
         <fromBlock blockName="OB20">
           <path pathName="Main" blockName="OB20" />
         </fromBlock>
@@ -4175,7 +4175,7 @@
         </toBlock>
         <toSignal signalName="IH21A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP24" portalName="ReverseLower">
+      <portal portalName="ReverseLower">
         <fromBlock blockName="OB20">
           <path pathName="Reversed" blockName="OB20" />
         </fromBlock>
@@ -4185,7 +4185,7 @@
         </toBlock>
         <toSignal signalName="IH21B" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP25" portalName="Main9-20">
+      <portal portalName="Main9-20">
         <fromBlock blockName="OB9">
           <path pathName="Main" blockName="OB9" />
           <path pathName="South Yard" blockName="OB9" />
@@ -4202,7 +4202,7 @@
       <userName>ReverseLoop</userName>
       <sensor systemName="IS21" />
       <path pathName="Reverse" blockName="OB21" fromPortal="ReverseUpper" toPortal="ReverseLower" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP23" portalName="ReverseUpper">
+      <portal portalName="ReverseUpper">
         <fromBlock blockName="OB20">
           <path pathName="Main" blockName="OB20" />
         </fromBlock>
@@ -4212,7 +4212,7 @@
         </toBlock>
         <toSignal signalName="IH21A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP24" portalName="ReverseLower">
+      <portal portalName="ReverseLower">
         <fromBlock blockName="OB20">
           <path pathName="Reversed" blockName="OB20" />
         </fromBlock>
@@ -4232,7 +4232,7 @@
       <path pathName="Spur" blockName="OB22" fromPortal="SouthYard22-25" toPortal="SouthYard22-9" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT22" set="2" />
       </path>
-      <portal systemName="IP26" portalName="SouthYard22-9">
+      <portal portalName="SouthYard22-9">
         <fromBlock blockName="OB9">
           <path pathName="South Yard" blockName="OB9" />
         </fromBlock>
@@ -4243,7 +4243,7 @@
         </toBlock>
         <toSignal signalName="IH22A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP27" portalName="SouthYard22-23">
+      <portal portalName="SouthYard22-23">
         <fromBlock blockName="OB22">
           <path pathName="South Yard" blockName="OB22" />
         </fromBlock>
@@ -4252,7 +4252,7 @@
           <path pathName="South Yard Bottom Siding" blockName="OB23" />
         </toBlock>
       </portal>
-      <portal systemName="IP28" portalName="SouthYard22-25">
+      <portal portalName="SouthYard22-25">
         <fromBlock blockName="OB22">
           <path pathName="Spur" blockName="OB22" />
         </fromBlock>
@@ -4270,7 +4270,7 @@
       <path pathName="South Yard Bottom Siding" blockName="OB23" fromPortal="SouthYard23-29" toPortal="SouthYard22-23" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT23" set="4" />
       </path>
-      <portal systemName="IP27" portalName="SouthYard22-23">
+      <portal portalName="SouthYard22-23">
         <fromBlock blockName="OB22">
           <path pathName="South Yard" blockName="OB22" />
         </fromBlock>
@@ -4279,7 +4279,7 @@
           <path pathName="South Yard Bottom Siding" blockName="OB23" />
         </toBlock>
       </portal>
-      <portal systemName="IP29" portalName="SouthYard23-29">
+      <portal portalName="SouthYard23-29">
         <fromBlock blockName="OB23">
           <path pathName="South Yard Bottom Siding" blockName="OB23" />
         </fromBlock>
@@ -4287,7 +4287,7 @@
           <path pathName="South Yard Bottom Siding" blockName="OB29" />
         </toBlock>
       </portal>
-      <portal systemName="IP30" portalName="SouthYard23-27">
+      <portal portalName="SouthYard23-27">
         <fromBlock blockName="OB23">
           <path pathName="South Yard Top Siding" blockName="OB23" />
         </fromBlock>
@@ -4305,7 +4305,7 @@
       <path pathName="South Yard Siding" blockName="OB24" fromPortal="SouthYard1-24" toPortal="SouthYard24-28" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT24" set="2" />
       </path>
-      <portal systemName="IP5" portalName="SouthYard1-24">
+      <portal portalName="SouthYard1-24">
         <fromBlock blockName="OB24">
           <path pathName="South Yard Spur" blockName="OB24" />
           <path pathName="South Yard Siding" blockName="OB24" />
@@ -4316,7 +4316,7 @@
         </toBlock>
         <toSignal signalName="IH1C" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP31" portalName="SouthYard24-26">
+      <portal portalName="SouthYard24-26">
         <fromBlock blockName="OB24">
           <path pathName="South Yard Spur" blockName="OB24" />
         </fromBlock>
@@ -4324,7 +4324,7 @@
         <toBlock blockName="OB26" />
         <toSignal signalName="IH26A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP32" portalName="SouthYard24-28">
+      <portal portalName="SouthYard24-28">
         <fromBlock blockName="OB24">
           <path pathName="South Yard Siding" blockName="OB24" />
         </fromBlock>
@@ -4340,7 +4340,7 @@
       <userName>Block 25</userName>
       <sensor systemName="IS25" />
       <path pathName="Spur" blockName="OB25" toPortal="SouthYard22-25" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP28" portalName="SouthYard22-25">
+      <portal portalName="SouthYard22-25">
         <fromBlock blockName="OB22">
           <path pathName="Spur" blockName="OB22" />
         </fromBlock>
@@ -4352,7 +4352,7 @@
     <oblock systemName="OB26" userName="Block 26" length="0.0" units="false" curve="0" permissive="false" speedNotch="">
       <userName>Block 26</userName>
       <sensor systemName="IS26" />
-      <portal systemName="IP31" portalName="SouthYard24-26">
+      <portal portalName="SouthYard24-26">
         <fromBlock blockName="OB24">
           <path pathName="South Yard Spur" blockName="OB24" />
         </fromBlock>
@@ -4365,7 +4365,7 @@
       <userName>Block 27</userName>
       <sensor systemName="IS27" />
       <path pathName="South Yard Top Siding" blockName="OB27" fromPortal="SouthYard27-31" toPortal="SouthYard23-27" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP30" portalName="SouthYard23-27">
+      <portal portalName="SouthYard23-27">
         <fromBlock blockName="OB23">
           <path pathName="South Yard Top Siding" blockName="OB23" />
         </fromBlock>
@@ -4373,7 +4373,7 @@
           <path pathName="South Yard Top Siding" blockName="OB27" />
         </toBlock>
       </portal>
-      <portal systemName="IP33" portalName="SouthYard27-31">
+      <portal portalName="SouthYard27-31">
         <fromBlock blockName="OB27">
           <path pathName="South Yard Top Siding" blockName="OB27" />
         </fromBlock>
@@ -4395,7 +4395,7 @@
       <path pathName="Top Spur" blockName="OB28" fromPortal="SouthYard28-30" toPortal="SouthYard28-33" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT28" set="2" />
       </path>
-      <portal systemName="IP32" portalName="SouthYard24-28">
+      <portal portalName="SouthYard24-28">
         <fromBlock blockName="OB24">
           <path pathName="South Yard Siding" blockName="OB24" />
         </fromBlock>
@@ -4406,7 +4406,7 @@
         </toBlock>
         <toSignal signalName="IH28A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP34" portalName="SouthYard28-30">
+      <portal portalName="SouthYard28-30">
         <fromBlock blockName="OB28">
           <path pathName="Top Spur" blockName="OB28" />
         </fromBlock>
@@ -4416,7 +4416,7 @@
         </toBlock>
         <toSignal signalName="IH30" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP35" portalName="SouthYard28-32">
+      <portal portalName="SouthYard28-32">
         <fromBlock blockName="OB32">
           <path pathName="South Yard Top Siding" blockName="OB32" />
         </fromBlock>
@@ -4425,7 +4425,7 @@
         </toBlock>
         <toSignal signalName="IH28B" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP36" portalName="SouthYard28-33">
+      <portal portalName="SouthYard28-33">
         <fromBlock blockName="OB33">
           <path pathName="South Yard Bottom Siding" blockName="OB33" />
         </fromBlock>
@@ -4440,7 +4440,7 @@
       <userName>Block 29</userName>
       <sensor systemName="IS29" />
       <path pathName="South Yard Bottom Siding" blockName="OB29" fromPortal="SouthYard23-29" toPortal="SouthYard29-31" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP29" portalName="SouthYard23-29">
+      <portal portalName="SouthYard23-29">
         <fromBlock blockName="OB23">
           <path pathName="South Yard Bottom Siding" blockName="OB23" />
         </fromBlock>
@@ -4448,7 +4448,7 @@
           <path pathName="South Yard Bottom Siding" blockName="OB29" />
         </toBlock>
       </portal>
-      <portal systemName="IP37" portalName="SouthYard29-31">
+      <portal portalName="SouthYard29-31">
         <fromBlock blockName="OB29">
           <path pathName="South Yard Bottom Siding" blockName="OB29" />
         </fromBlock>
@@ -4461,7 +4461,7 @@
       <userName>Block 3</userName>
       <sensor systemName="IS3" />
       <path pathName="Main" blockName="OB3" fromPortal="Main2-3" toPortal="Main3-4" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP22" portalName="Main2-3">
+      <portal portalName="Main2-3">
         <fromBlock blockName="OB3">
           <path pathName="Main" blockName="OB3" />
         </fromBlock>
@@ -4471,7 +4471,7 @@
         </toBlock>
         <toSignal signalName="IH2B" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP38" portalName="Main3-4">
+      <portal portalName="Main3-4">
         <fromBlock blockName="OB3">
           <path pathName="Main" blockName="OB3" />
         </fromBlock>
@@ -4487,7 +4487,7 @@
       <userName>Block 30</userName>
       <sensor systemName="IS30" />
       <path pathName="Spur" blockName="OB30" toPortal="SouthYard28-30" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP34" portalName="SouthYard28-30">
+      <portal portalName="SouthYard28-30">
         <fromBlock blockName="OB28">
           <path pathName="Top Spur" blockName="OB28" />
         </fromBlock>
@@ -4510,7 +4510,7 @@
       <path pathName="South Yard Crossover" blockName="OB31" fromPortal="SouthYard31-33" toPortal="SouthYard27-31" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT31" set="4" />
       </path>
-      <portal systemName="IP33" portalName="SouthYard27-31">
+      <portal portalName="SouthYard27-31">
         <fromBlock blockName="OB27">
           <path pathName="South Yard Top Siding" blockName="OB27" />
         </fromBlock>
@@ -4519,7 +4519,7 @@
           <path pathName="South Yard Crossover" blockName="OB31" />
         </toBlock>
       </portal>
-      <portal systemName="IP37" portalName="SouthYard29-31">
+      <portal portalName="SouthYard29-31">
         <fromBlock blockName="OB29">
           <path pathName="South Yard Bottom Siding" blockName="OB29" />
         </fromBlock>
@@ -4527,7 +4527,7 @@
           <path pathName="South Yard Bottom Siding" blockName="OB31" />
         </toBlock>
       </portal>
-      <portal systemName="IP39" portalName="SouthYard31-33">
+      <portal portalName="SouthYard31-33">
         <fromBlock blockName="OB31">
           <path pathName="South Yard Bottom Siding" blockName="OB31" />
           <path pathName="South Yard Crossover" blockName="OB31" />
@@ -4536,7 +4536,7 @@
           <path pathName="South Yard Bottom Siding" blockName="OB33" />
         </toBlock>
       </portal>
-      <portal systemName="IP40" portalName="SouthYard31-32">
+      <portal portalName="SouthYard31-32">
         <fromBlock blockName="OB31">
           <path pathName="South Yard Top Siding" blockName="OB31" />
         </fromBlock>
@@ -4549,7 +4549,7 @@
       <userName>Block 32</userName>
       <sensor systemName="IS32" />
       <path pathName="South Yard Top Siding" blockName="OB32" fromPortal="SouthYard31-32" toPortal="SouthYard28-32" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP35" portalName="SouthYard28-32">
+      <portal portalName="SouthYard28-32">
         <fromBlock blockName="OB32">
           <path pathName="South Yard Top Siding" blockName="OB32" />
         </fromBlock>
@@ -4558,7 +4558,7 @@
         </toBlock>
         <toSignal signalName="IH28B" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP40" portalName="SouthYard31-32">
+      <portal portalName="SouthYard31-32">
         <fromBlock blockName="OB31">
           <path pathName="South Yard Top Siding" blockName="OB31" />
         </fromBlock>
@@ -4571,7 +4571,7 @@
       <userName>Block 33</userName>
       <sensor systemName="IS33" />
       <path pathName="South Yard Bottom Siding" blockName="OB33" fromPortal="SouthYard31-33" toPortal="SouthYard28-33" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP36" portalName="SouthYard28-33">
+      <portal portalName="SouthYard28-33">
         <fromBlock blockName="OB33">
           <path pathName="South Yard Bottom Siding" blockName="OB33" />
         </fromBlock>
@@ -4581,7 +4581,7 @@
         </toBlock>
         <toSignal signalName="IH28D" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP39" portalName="SouthYard31-33">
+      <portal portalName="SouthYard31-33">
         <fromBlock blockName="OB31">
           <path pathName="South Yard Bottom Siding" blockName="OB31" />
           <path pathName="South Yard Crossover" blockName="OB31" />
@@ -4600,7 +4600,7 @@
       <path pathName="South Siding" blockName="OB4" fromPortal="Main3-4" toPortal="SouthSiding4-12" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT4" set="4" />
       </path>
-      <portal systemName="IP11" portalName="SouthSiding4-12">
+      <portal portalName="SouthSiding4-12">
         <fromBlock blockName="OB4">
           <path pathName="South Siding" blockName="OB4" />
         </fromBlock>
@@ -4610,7 +4610,7 @@
         </toBlock>
         <toSignal signalName="IH12B" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP38" portalName="Main3-4">
+      <portal portalName="Main3-4">
         <fromBlock blockName="OB3">
           <path pathName="Main" blockName="OB3" />
         </fromBlock>
@@ -4621,7 +4621,7 @@
         </toBlock>
         <toSignal signalName="IH4A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP41" portalName="Main4-5">
+      <portal portalName="Main4-5">
         <fromBlock blockName="OB4">
           <path pathName="Main" blockName="OB4" />
         </fromBlock>
@@ -4641,7 +4641,7 @@
       <path pathName="North Siding" blockName="OB5" fromPortal="NorthSiding11-5" toPortal="Main5-6" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT5" set="4" />
       </path>
-      <portal systemName="IP10" portalName="NorthSiding11-5">
+      <portal portalName="NorthSiding11-5">
         <fromBlock blockName="OB11">
           <path pathName="NorthSiding" blockName="OB11" />
           <path pathName="NorthUpperSiding" blockName="OB11" />
@@ -4652,7 +4652,7 @@
         </toBlock>
         <toSignal signalName="IH5C" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP41" portalName="Main4-5">
+      <portal portalName="Main4-5">
         <fromBlock blockName="OB4">
           <path pathName="Main" blockName="OB4" />
         </fromBlock>
@@ -4662,7 +4662,7 @@
         </toBlock>
         <toSignal signalName="IH5B" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP42" portalName="Main5-6">
+      <portal portalName="Main5-6">
         <fromBlock blockName="OB6">
           <path pathName="Main" blockName="OB6" />
         </fromBlock>
@@ -4683,7 +4683,7 @@
       <path pathName="South Siding" blockName="OB6" fromPortal="SouthSiding12-6" toPortal="Main6-7" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT6" set="4" />
       </path>
-      <portal systemName="IP12" portalName="SouthSiding12-6">
+      <portal portalName="SouthSiding12-6">
         <fromBlock blockName="OB12">
           <path pathName="SouthSiding" blockName="OB12" />
         </fromBlock>
@@ -4693,7 +4693,7 @@
         </toBlock>
         <toSignal signalName="IH6C" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP42" portalName="Main5-6">
+      <portal portalName="Main5-6">
         <fromBlock blockName="OB6">
           <path pathName="Main" blockName="OB6" />
         </fromBlock>
@@ -4704,7 +4704,7 @@
         </toBlock>
         <toSignal signalName="IH5A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP43" portalName="Main6-7">
+      <portal portalName="Main6-7">
         <fromBlock blockName="OB6">
           <path pathName="Main" blockName="OB6" />
           <path pathName="South Siding" blockName="OB6" />
@@ -4726,7 +4726,7 @@
       <path pathName="North Branch" blockName="OB7" fromPortal="Main6-7" toPortal="NorthBranch7-13" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT7" set="4" />
       </path>
-      <portal systemName="IP13" portalName="NorthBranch7-13">
+      <portal portalName="NorthBranch7-13">
         <fromBlock blockName="OB13">
           <path pathName="Branch Lower" blockName="OB13" />
           <path pathName="Branch Upper" blockName="OB13" />
@@ -4737,7 +4737,7 @@
         </toBlock>
         <toSignal signalName="IH7C" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP43" portalName="Main6-7">
+      <portal portalName="Main6-7">
         <fromBlock blockName="OB6">
           <path pathName="Main" blockName="OB6" />
           <path pathName="South Siding" blockName="OB6" />
@@ -4749,7 +4749,7 @@
         </toBlock>
         <toSignal signalName="IH7B" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP44" portalName="Main7-8">
+      <portal portalName="Main7-8">
         <fromBlock blockName="OB7">
           <path pathName="Main" blockName="OB7" />
         </fromBlock>
@@ -4764,7 +4764,7 @@
       <userName>Block 8</userName>
       <sensor systemName="IS9" />
       <path pathName="Main" blockName="OB8" fromPortal="Main7-8" toPortal="Main8-9" fromDirection="0" toDirection="0" length="0.0" />
-      <portal systemName="IP44" portalName="Main7-8">
+      <portal portalName="Main7-8">
         <fromBlock blockName="OB7">
           <path pathName="Main" blockName="OB7" />
         </fromBlock>
@@ -4774,7 +4774,7 @@
         </toBlock>
         <toSignal signalName="IH8A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP45" portalName="Main8-9">
+      <portal portalName="Main8-9">
         <fromBlock blockName="OB8">
           <path pathName="Main" blockName="OB8" />
         </fromBlock>
@@ -4794,7 +4794,7 @@
       <path pathName="South Yard" blockName="OB9" fromPortal="SouthYard22-9" toPortal="Main9-20" fromDirection="0" toDirection="0" length="0.0">
         <setting turnout="IT9" set="4" />
       </path>
-      <portal systemName="IP25" portalName="Main9-20">
+      <portal portalName="Main9-20">
         <fromBlock blockName="OB9">
           <path pathName="Main" blockName="OB9" />
           <path pathName="South Yard" blockName="OB9" />
@@ -4806,7 +4806,7 @@
         </toBlock>
         <toSignal signalName="IH20A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP26" portalName="SouthYard22-9">
+      <portal portalName="SouthYard22-9">
         <fromBlock blockName="OB9">
           <path pathName="South Yard" blockName="OB9" />
         </fromBlock>
@@ -4817,7 +4817,7 @@
         </toBlock>
         <toSignal signalName="IH22A" signalDelay="0.0" />
       </portal>
-      <portal systemName="IP45" portalName="Main8-9">
+      <portal portalName="Main8-9">
         <fromBlock blockName="OB8">
           <path pathName="Main" blockName="OB8" />
         </fromBlock>
@@ -8054,5 +8054,5 @@
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.3.3ish-201601220434-jake-Rb70bb3c on Thu Jan 21 20:35:49 PST 2016 $Id$-->
+  <!--Written by JMRI version 4.3.3ish-201601220434-jake-Rb70bb3c on Thu Jan 21 20:35:49 PST 2016 -->
 </layout-config>

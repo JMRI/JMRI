@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.NamedBean;
+import jmri.SignalHead;
 import jmri.SignalSystem;
 import jmri.SignalSystemManager;
 import jmri.implementation.DefaultSignalSystem;
@@ -264,6 +265,14 @@ public class DefaultSignalSystemManager extends AbstractManager<SignalSystem>
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalSystems" : "BeanNameSignalSystem");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<SignalSystem> getNamedBeanClass() {
+        return SignalSystem.class;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManager.class);

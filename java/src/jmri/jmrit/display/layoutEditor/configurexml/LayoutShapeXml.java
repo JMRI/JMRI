@@ -32,35 +32,37 @@ public class LayoutShapeXml extends AbstractXmlAdapter {
      */
     @Override
     public Element store(Object o) {
-
         LayoutShape s = (LayoutShape) o;
+        Element element = null;
 
-        Element element = new Element("layoutShape");
+        if (s.getNumberPoints() > 0) {
+            element = new Element("layoutShape");
 
-        // include attributes
-        element.setAttribute("ident", s.getName());
-        element.setAttribute("type", "" + s.getType().getName());
-        element.setAttribute("level", "" + s.getLevel());
-        element.setAttribute("linewidth", "" + s.getLineWidth());
-        element.setAttribute("lineColor", ColorUtil.colorToHexString(s.getLineColor()));
-        element.setAttribute("fillColor", ColorUtil.colorToHexString(s.getFillColor()));
+            // include attributes
+            element.setAttribute("ident", s.getName());
+            element.setAttribute("type", "" + s.getType().getName());
+            element.setAttribute("level", "" + s.getLevel());
+            element.setAttribute("linewidth", "" + s.getLineWidth());
+            element.setAttribute("lineColor", ColorUtil.colorToHexString(s.getLineColor()));
+            element.setAttribute("fillColor", ColorUtil.colorToHexString(s.getFillColor()));
 
-        Element elementPoints = new Element("points");
-        ArrayList<LayoutShape.LayoutShapePoint> shapePoints = s.getPoints();
-        for (LayoutShape.LayoutShapePoint p : shapePoints) {
-            Element elementPoint = new Element("point");
+            Element elementPoints = new Element("points");
+            ArrayList<LayoutShape.LayoutShapePoint> shapePoints = s.getPoints();
+            for (LayoutShape.LayoutShapePoint p : shapePoints) {
+                Element elementPoint = new Element("point");
 
-            elementPoint.setAttribute("type", "" + p.getType().getName());
+                elementPoint.setAttribute("type", "" + p.getType().getName());
 
-            Point2D pt = p.getPoint();
-            elementPoint.setAttribute("x", "" + pt.getX());
-            elementPoint.setAttribute("y", "" + pt.getY());
+                Point2D pt = p.getPoint();
+                elementPoint.setAttribute("x", "" + pt.getX());
+                elementPoint.setAttribute("y", "" + pt.getY());
 
-            elementPoints.addContent(elementPoint);
+                elementPoints.addContent(elementPoint);
+            }
+            element.addContent(elementPoints);
+
+            element.setAttribute("class", getClass().getName());
         }
-        element.addContent(elementPoints);
-
-        element.setAttribute("class", getClass().getName());
         return element;
     }
 

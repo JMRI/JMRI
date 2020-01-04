@@ -21,9 +21,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>DCC++ Turnouts and Outputs</h1>
 
       <a name="types" id="types"></a><h2>Types of DCC++ Turnout Control</h2>

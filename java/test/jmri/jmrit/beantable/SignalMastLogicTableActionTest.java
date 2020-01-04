@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Paul Bender Copyright (C) 2017
  * @author Egbert Broerse Copyright (C) 2019
  */
-public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
+public class SignalMastLogicTableActionTest extends AbstractTableActionBase<SignalMastLogic> {
 
     @Test
     public void testCTor() {
@@ -271,6 +271,7 @@ public class SignalMastLogicTableActionTest extends AbstractTableActionBase {
     @Override
     @After
     public void tearDown() {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

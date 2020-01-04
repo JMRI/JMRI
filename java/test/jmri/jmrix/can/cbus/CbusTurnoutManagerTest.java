@@ -240,8 +240,8 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         }
         Turnout t = l.provideTurnout(name.toUpperCase());
         Assert.assertNotNull(t);
-        Assert.assertNotEquals(t, l.getBeanBySystemName(name));
-        Assert.assertNull(l.getBeanBySystemName(name));
+        Assert.assertNotEquals(t, l.getBySystemName(name));
+        Assert.assertNull(l.getBySystemName(name));
     }
 
     @Test
@@ -367,7 +367,9 @@ public class CbusTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     public void tearDown() {
         l.dispose();
         memo.dispose();
+        JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         JUnitUtil.tearDown();
+
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusTurnoutManagerTest.class);

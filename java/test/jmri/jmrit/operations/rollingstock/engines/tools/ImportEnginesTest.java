@@ -38,6 +38,7 @@ public class ImportEnginesTest extends OperationsTestCase {
     @Test
     public void testReadFile() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         JUnitOperationsUtil.initOperationsData();
@@ -120,6 +121,7 @@ public class ImportEnginesTest extends OperationsTestCase {
     @Test
     public void testImportEnginesWithLocations() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         EngineManager emanager = InstanceManager.getDefault(EngineManager.class);
         JUnitOperationsUtil.initOperationsData();

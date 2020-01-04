@@ -32,6 +32,7 @@ public class SpeedoConsoleActionTest {
         // then close the frame.
         JFrameOperator fo = new JFrameOperator(f);
         fo.requestClose();
+        JUnitUtil.dispose(f);
     }
 
 

@@ -1,5 +1,6 @@
 package jmri.jmrix.jmriclient;
 
+import javax.annotation.Nonnull;
 import jmri.Reporter;
 
 /**
@@ -20,17 +21,18 @@ public class JMRIClientReporterManager extends jmri.managers.AbstractReporterMan
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public JMRIClientSystemConnectionMemo getMemo() {
         return (JMRIClientSystemConnectionMemo) memo;
     }
 
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
-        Reporter t;
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
+        Reporter r;
         int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
-        t = new JMRIClientReporter(addr, getMemo());
-        t.setUserName(userName);
-        return t;
+        r = new JMRIClientReporter(addr, getMemo());
+        r.setUserName(userName);
+        return r;
     }
 
 }

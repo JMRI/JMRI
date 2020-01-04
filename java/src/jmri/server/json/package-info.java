@@ -139,6 +139,17 @@
  * Starting with 5.0.0, the JSON protocol version follows semantic version
  * rules, prior to that the version is just a major.minor version.
  * <dl>
+ * <dt>5.2.0 (JMRI 4.17.7)</dt>
+ * <dd>
+ * <ul>
+ * <li>memory and block now return idTag and reporter values as json objects</li>
+ * <li>for networkService, add userName and change name to mDNS type</li>
+ * <li>Add configProfile.isNextProfile</li>
+ * <li>several schema fixes</li>
+ * <li>reporter.report now supports Reportable data</li>
+ * <li>fix systemConnection, configProfile, panel to return single item for name</li>
+ * </ul>
+ * </dd>
  * <dt>5.1.0 (JMRI 4.17.4)</dt>
  * <dd>
  * <ul>

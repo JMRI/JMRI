@@ -1,12 +1,6 @@
 package jmri.jmrit.mailreport;
 
-import java.awt.Dimension;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
-import java.awt.HeadlessException;
-import java.awt.Insets;
-import java.awt.Toolkit;
+import java.awt.*;
 import java.io.File;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -14,7 +8,10 @@ import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
+
 import javax.swing.JFrame;
+
+import apps.gui.GuiLafPreferencesManager;
 import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionConfigManager;
@@ -22,6 +19,7 @@ import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.JmriInsets;
+import jmri.util.JmriJFrame;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
@@ -98,6 +96,8 @@ public class ReportContext {
 
         File panel = jmri.configurexml.LoadXmlUserAction.getCurrentFile();
         addString("Current panel file: " + (panel == null ? "[none]" : panel.getPath()) + "   ");
+        
+        addString("Locale: " + InstanceManager.getDefault(GuiLafPreferencesManager.class).getLocale());
 
         //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
@@ -201,21 +201,14 @@ public class ReportContext {
         }
 
         // look at context
-        //Rectangle virtualBounds = new Rectangle();
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             addString("Environment max bounds: " + ge.getMaximumWindowBounds());
 
             try {
-                GraphicsDevice[] gs = ge.getScreenDevices();
-                for (GraphicsDevice gd : gs) {
-                    GraphicsConfiguration[] gc = gd.getConfigurations();
-                    for (int i = 0; i < gc.length; i++) {
-                        addString("bounds[" + i + "] = " + gc[i].getBounds());
-                        // virtualBounds = virtualBounds.union(gc[i].getBounds());
-                    }
-                    addString("Device: " + gd.getIDstring() + " bounds = " + gd.getDefaultConfiguration().getBounds()
-                            + " " + gd.getDefaultConfiguration().toString());
+                for (JmriJFrame.ScreenDimensions sd: JmriJFrame.getScreenDimensions()) {
+                    addString("Device: " + sd.getGraphicsDevice().getIDstring() + " bounds = " + sd.getBounds());
+                    addString("Device: " + sd.getGraphicsDevice().getIDstring() + " insets = " + sd.getInsets());
                 }
             } catch (HeadlessException ex) {
                 addString("Exception getting device bounds " + ex.getMessage());

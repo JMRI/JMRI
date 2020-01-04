@@ -27,8 +27,8 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
     @Override
     public void testMisses() {
         // try to get nonexistant turnouts
-        Assert.assertTrue(null == l.getByUserName("foo"));
-        Assert.assertTrue(null == l.getBySystemName("bar"));
+        Assert.assertNull(l.getByUserName("foo"));
+        Assert.assertNull(l.getBySystemName("bar"));
     }
 
     @Test
@@ -118,7 +118,7 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
         Assert.assertNotNull(l.getBySystemName("LT21"));
         Assert.assertNotNull(l.getByUserName("my name"));
     }
-    
+
         @Test
     public void testOpcLongAck() {
         Assert.assertEquals("Check no outbound messages", 0, lnis.outbound.size());
@@ -151,13 +151,11 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTestBa
 
         jmri.util.JUnitUtil.fasterWaitFor(() -> {return 1 < lnis.outbound.size();});
         Assert.assertEquals("Check an outbound message", 1, lnis.outbound.size());
-        
+
         Assert.assertEquals("Check outbound message opcode", LnConstants.OPC_SW_REQ, lnis.outbound.get(0).getOpCode());
         Assert.assertEquals("Check outbound message byte 1", 0x00, lnis.outbound.get(0).getElement(1));
         Assert.assertEquals("Check outbound message byte 2", 0x20, lnis.outbound.get(0).getElement(2));
     }
-
-
 
     private LocoNetInterfaceScaffold lnis;
     private LocoNetSystemConnectionMemo memo;
