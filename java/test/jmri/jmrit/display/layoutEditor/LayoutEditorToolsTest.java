@@ -223,7 +223,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart4() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -349,7 +349,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7a() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -375,7 +375,7 @@ public class LayoutEditorToolsTest {
     }   //testSetSignalsAtTurnoutWithDonePart7a
 
     @Test
-    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7b() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -401,7 +401,7 @@ public class LayoutEditorToolsTest {
     }   //testSetSignalsAtTurnoutWithDonePart7b
 
     @Test
-    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7c() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -427,7 +427,7 @@ public class LayoutEditorToolsTest {
     }   //testSetSignalsAtTurnoutWithDonePart7c
 
     @Test
-    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7d() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -677,7 +677,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnouts() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
@@ -1103,7 +1103,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    //@Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYIntAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -1120,7 +1120,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    //@Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtPointAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -1138,7 +1138,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    //@Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
