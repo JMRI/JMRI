@@ -5,8 +5,11 @@ import java.awt.geom.Point2D;
 import java.util.*;
 import java.util.logging.*;
 import javax.annotation.*;
+import java.util.stream.Collectors;
+import javax.swing.JComboBox;
 import jmri.*;
 import jmri.implementation.*;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
@@ -1246,8 +1249,9 @@ public class LayoutEditorToolsTest {
     @Before
     public void setUp() throws Exception {
         JUnitUtil.setUp();
+        JUnitUtil.resetProfileManager();
+
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
 
             JUnitUtil.initLayoutBlockManager();
             JUnitUtil.initInternalTurnoutManager();
@@ -1264,47 +1268,53 @@ public class LayoutEditorToolsTest {
                 String uBlockName = "Block " + i;
                 InstanceManager.getDefault(LayoutBlockManager.class).createNewLayoutBlock(sBlockName, uBlockName);
             }
-            layoutBlocks = new ArrayList<>(InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet());
+            layoutBlocks = InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet().stream().collect(Collectors.toList());
 
-            for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < 5; i++) {
                 String toName = "IT" + i;
                 InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout(toName);
             }
-            turnouts = new ArrayList<>(InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet());
+            turnouts = InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().stream().collect(Collectors.toList());
 
-            for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < 5; i++) {
                 String sName = "IS" + i;
                 String uName = "sensor " + i;
-                InstanceManager.getDefault(SensorManager.class).newSensor(sName, uName);
+                InstanceManager.getDefault(SensorManager.class).provideSensor(sName).setUserName(uName);
             }
-            sensors = new ArrayList<>(InstanceManager.getDefault(SensorManager.class).getNamedBeanSet());
+            sensors = InstanceManager.getDefault(SensorManager.class).getNamedBeanSet().stream().collect(Collectors.toList());
 
-            for (int i = 0; i < 5; i++) {
+          for (int i = 0; i < 5; i++) {
                 String sName = "IH" + i;
                 String uName = "signal head " + i;
                 VirtualSignalHead signalHead = new VirtualSignalHead(sName, uName);
                 InstanceManager.getDefault(SignalHeadManager.class).register(signalHead);
             }
-            signalHeads = new ArrayList<>(InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet());
+            signalHeads = InstanceManager.getDefault(SignalHeadManager.class).getNamedBeanSet().stream().collect(Collectors.toList());
         }
     }
 
     @After
     public void tearDown() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
+            layoutBlocks.stream().forEach(LayoutBlock::dispose);
+            turnouts.stream().forEach(Turnout::dispose);
+            signalHeads.stream().forEach(SignalHead::dispose);
+            sensors.stream().forEach(Sensor::dispose);
+
+            layoutBlocks = null;
+            turnouts = null;
+            signalHeads = null;
+            sensors = null;
+
+            EditorFrameOperator operator = new EditorFrameOperator(layoutEditor);
+            operator.closeFrameWithConfirmations();
             JUnitUtil.dispose(layoutEditor);
+
+            let = null;
+            layoutEditor = null;
+
+          JUnitUtil.tearDown();
         }
-        let = null;
-        layoutEditor = null;
-        layoutBlocks.stream().forEach(LayoutBlock::dispose);
-        layoutBlocks = null;
-        turnouts.stream().forEach(Turnout::dispose);
-        turnouts = null;
-        signalHeads.stream().forEach(SignalHead::dispose);
-        signalHeads = null;
-        sensors.stream().forEach(Sensor::dispose);
-        sensors = null;
-        JUnitUtil.tearDown();
     }
 //
     //private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LayoutEditorToolsTest.class);
