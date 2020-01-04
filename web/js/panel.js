@@ -94,7 +94,7 @@ var DOUBLE_SLIP = 8;
 
 var jmri = null;
 
-var jmri_logging = true;
+var jmri_logging = false;
 
 //
 //  debug functions
@@ -1491,8 +1491,14 @@ function processPanelXML($returnedData, $success, $xhr) {
                             var $cr = $gPanel.turnoutcirclesize * SIZE;  //turnout circle radius
                             var $cd = $cr * 2;
                             $("#panel-area>#" + $widget.id).css(
-                                {position: 'absolute', left: ($widget.x - $cr) + 'px', top: ($widget.y - $cr) + 'px', zIndex: 3,
-                                    width: $cd + 'px', height: $cd + 'px'});
+                            {
+                                position: 'absolute',
+                                left: ($widget.x - $cr) + 'px',
+                                top: ($widget.y - $cr) + 'px',
+                                zIndex: 3,
+                                width: $cd + 'px',
+                                height: $cd + 'px'
+                            });
                             if (typeof $widget["systemName"] === "undefined")
                                 $widget["systemName"] = $widget.name;
                             jmri.getTurnout($widget["systemName"]);
@@ -1724,23 +1730,24 @@ function processPanelXML($returnedData, $success, $xhr) {
                             //jmri.log("#### Layout Turntable ####");
                             $widget['id'] = $widget.ident;
                             $widget['name'] = $widget.ident;
-                            $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
+                            $widget['safeName'] = $safeName($widget.name); //add a html-safe version of name
                             $widget.jsonType = "turnout"; // JSON object type
                             $gWidgets[$widget.id] = $widget; //store widget in persistent array
 
                             if ($widget.turnoutControlled == "yes") {
-                                $widget.classes += " " + $widget.jsonType + " clickable "; //make it clickable
-                                // if (!$('#'+$widget.id).hasClass('clickable')) {
-                                //     $('#'+$widget.id).addClass("clickable");
-                                //     $('#'+$widget.id).bind(UPEVENT, $handleClick);
-                                // }
+                                $widget.classes += " " + $widget.jsonType + " clickable"; //make it clickable
+                                if (!$('#' + $widget.id).hasClass('clickable')) {
+                                    $('#' + $widget.id).addClass("clickable");
+                                    $('#' + $widget.id).bind(UPEVENT, $handleClick);
+                                }
                             }
 
                             //get the center
                             var $txcen = $widget.xcen * 1;
                             var $tycen = $widget.ycen * 1;
 
-                            var $tr = $widget.radius * 1;                   //turntable circle radius
+                            var $tr = $widget.radius * 1; //turntable circle radius
+                            var $td = $tr * 2;
 
                             var $cr = $gPanel.turnoutcirclesize * SIZE; //turnout circle radius
                             var $cd = $cr * 2;
@@ -1749,10 +1756,9 @@ function processPanelXML($returnedData, $success, $xhr) {
                             $widget['raytracks'] = $(this).find('raytrack');
                             $widget.raytracks.each(function(i, item) {
                                 //$logProperties(item, true);
-                                //note: .5 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
+                                //note:the 50 offset is due to TrackSegment.java TURNTABLE_RAY_OFFSET
                                 var rayID = $widget.ident + "." + (50 + item.attributes.index.value * 1);
-                                var $t = [];
-                                $t['ident'] = rayID;
+                                var $t = {ident:rayID};
                                 var $angle = $toRadians(item.attributes.angle.value);
                                 $t['x'] = $txcen + (($tr + $cr) * Math.sin($angle));
                                 $t['y'] = $tycen - (($tr + $cr) * Math.cos($angle));
@@ -1761,35 +1767,34 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 if (isDefined(item.attributes.turnout)) {
                                     var turnout = item.attributes.turnout.value;
                                     var state = item.attributes.turnoutstate.value;
-                                    //jmri.log("$drawTurntable ray #" + i + " turnout: '" + turnout + "', state: " + state);
-                                    ///jmri.log("$drawTurntable-ray # " + i + " rayID: " + rayID);
                                     //add an empty, but clickable, div to the panel and position it over the turnout circle
-                                    var $hoverText = " title='" + turnout + "' alt='" + turnout + "'";
-                                    var $style = " style='width:" + $cd + "px;height:" + $cd + "px;border:1px solid #000;'";
-                                    var $append = "<div id=" + rayID + " class='" + $widget.classes + $style + $hoverText + "></div>";
-                                    $("#panel-area").append($append);
-                                    $("#panel-area>#" + rayID).css({
-                                        position: 'absolute',
-                                        left: ($t.x - $cr) + 'px',
-                                        top: ($t.y - $cr) + 'px',
-                                        zIndex: 3,
-                                        width: $cd + 'px',
-                                        height: $cd + 'px'
-                                    });                                    //setup notifications
+                                    $("#panel-area").append("<div " +
+                                            "id='" + rayID + "' " +
+                                            "class='" + $widget.classes + "' " +
+                                            "style='position:absolute;" +
+                                            "left:" + ($t.x - $cr) + "px;" +
+                                            "top: " + ($t.y - $cr) + "px;" +
+                                            "z-index: 3;" +
+                                            "width:" + $cd + "px;" +
+                                            "height:" + $cd + "px;' " +
+                                            "title='" + turnout + "(" + state + ")' " +
+                                            "alt='" + turnout + "'" +
+                                            "></div>");
+                                    //setup notifications
                                     jmri.getTurnout(turnout);
 
                                     // add turnout to whereUsed array (as $widget + 'r')
-                                    if (!(turnout in whereUsed)) {  //set where-used for this new turnout
-                                       whereUsed[turnout] = new Array();
+                                    if (!(turnout in whereUsed)) { //set where-used for this new turnout
+                                        whereUsed[turnout] = new Array();
                                     }
-                                    whereUsed[turnout][whereUsed[turnout].length] = rayID;
+                                    whereUsed[turnout].push(rayID);
                                 }
                             });
 
                             //draw the turntable
                             $drawTurntable($widget);
                             break;
-                        case "backgroundColor" :  //set background color of the panel itself
+                        case "backgroundColor": //set background color of the panel itself
                             $("#panel-area").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
                             break;
                         case "layoutShape" :
@@ -1880,7 +1885,6 @@ function $handleClick(e) {
 
     e.stopPropagation();
     e.preventDefault(); //prevent double-firing (touch + click)
-    var $widget = $gWidgets[this.id];
 
     // if (null == $widget) {
     //     $logProperties(this);
@@ -1890,7 +1894,7 @@ function $handleClick(e) {
     if (this.className.startsWith('layoutSlip ')) {
         if (this.id.startsWith("SL") && (this.id.endsWith("r") || this.id.endsWith("l"))) {
             var slipID = this.id.slice(0, -1);
-            $widget = $gWidgets[slipID];
+            var $widget = $gWidgets[slipID];
 
             if (this.id.endsWith("l")) {
                 $widget["side"] = "left";
@@ -1925,16 +1929,35 @@ function $handleClick(e) {
         } else {
             jmri.log("$handleClick(e): unknown slip widget " + this.id);
             $logProperties(this);
-        }
+        }   // special case for layoutSlips
+    } else if (this.className.startsWith('layoutturntable ')) {
+        var $rayID = this.id;
+        var $turntableID = $rayID.split(".")[0];
+        var $widget = $gWidgets[$turntableID];
+        $widget.raytracks.each(function(i, item) {
+            //$logProperties(item, true);
+            //note:offset 50 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
+            var rayID = $turntableID + "." + (50 + item.attributes.index.value * 1);
+            if (rayID == $rayID) {
+                if (isDefined(item.attributes.turnout)) {
+                    var turnout = item.attributes.turnout.value;
+                    var state = item.attributes.turnoutstate.value;
+                    var $newState = (state == 'thrown') ? THROWN : CLOSED;
+                    //jmri.log("sendElementChange(" + $widget.jsonType + ", " + turnout + ", " + $newState + ")");
+                    sendElementChange($widget.jsonType, turnout, $newState);
+                }
+            }
+        });
     } else {
+        var $widget = $gWidgets[this.id];
         var $newState = $getNextState($widget);  //determine next state from current state
         sendElementChange($widget.jsonType, $widget.systemName, $newState);
         //also send new state to related turnout
-        if (typeof $widget.turnoutB !== "undefined") {
+        if (isDefined($widget.turnoutB)) {
             sendElementChange($widget.jsonType, $widget.turnoutB, $newState);
         }
         //used for crossover, layoutTurnout type 5
-        if (typeof $widget.secondturnoutname !== "undefined") {
+        if (isDefined($widget.secondturnoutname)) {
         	//invert 2nd turnout if requested
         	if ($widget.secondturnoutinverted == "true") {
         		$newState = ($newState==CLOSED ? THROWN : CLOSED);
@@ -2253,23 +2276,23 @@ function $drawIcon($widget) {
 }
 
 //draw a turntable (pass in widget)
+//from jmri.jmrit.display.layoutEditor.layoutTurntable
 function $drawTurntable($widget) {
-    //from jmri.jmrit.display.layoutEditor.layoutTurntable
     //$logProperties($widget, true);
 
     //get the center
     var $txcen = $widget.xcen * 1;
     var $tycen = $widget.ycen * 1;
 
-    var $tr = $widget.radius * 1;                   //turntable circle radius
+    var $tr = $widget.radius * 1; //turntable circle radius
     var $cr = $gPanel.turnoutcirclesize * SIZE; //turnout circle radius
     //var $cd = $cr * 2;
 
+    //the fraction that $cr is of ($tr + $cr)
+    //(used to draw ray tracks from circle to ray end point (control circle))
     var f = $cr / ($tr + $cr);
 
-    $drawCircle($txcen, $tycen, $tr);
-
-    //loop thru raytracks, calc and store end of ray point for each
+    //loop thru raytracks drawing each one (and control circles if it has a turnout)
     $widget.raytracks.each(function(i, item) {
         //$logProperties(item, true);
         var rayID = $widget.ident + "." + (50 + item.attributes.index.value * 1);
@@ -2287,7 +2310,34 @@ function $drawTurntable($widget) {
             //draw the turnout control circle
             $drawCircle($t.x, $t.y, $cr, $gPanel.turnoutcirclecolor, 1);
         }
+        if (isDefined($widget.activeRayID)) {
+            var drawFlag = false;
+            if (isDefined(item.attributes.turnout)) {
+                var turnout = item.attributes.turnout.value;
+                if (turnout == $widget.activeRayTurnout) {
+                    var state = item.attributes.turnoutstate.value;
+                    if (state.toUpperCase() == $widget.activeRayState) {
+                        drawFlag = true;
+                    }
+                }
+            }
+            var $angle = $toRadians(item.attributes.angle.value);
+            var $t1 = [];
+            $t1['x'] = $txcen + ($tr * Math.sin($angle));
+            $t1['y'] = $tycen - ($tr * Math.cos($angle));
+            var $t2 = [];
+            $t2['x'] = $txcen - ($tr * Math.sin($angle));
+            $t2['y'] = $tycen + ($tr * Math.cos($angle));
+            if (drawFlag) {
+                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.defaulttrackcolor, $gPanel.sidetrackwidth);
+            } else {
+                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.backgroundcolor, $gPanel.sidetrackwidth);
+            }
+        }
     });
+
+    $drawCircle($txcen, $tycen, $tr, $gPanel.defaulttrackcolor, $gPanel.mainlinetrackwidth);
+    $drawCircle($txcen, $tycen, $tr / 4, $gPanel.defaulttrackcolor, $gPanel.sidetrackwidth);
 }   //$drawTurntable
 
 //draw a LevelXing (pass in widget)
@@ -3516,6 +3566,17 @@ var $setWidgetState = function($id, $newState, data) {
 
             // set $id to slip id
             $id = slipID;
+        } else if ($id.startsWith("TUR")) {
+            //jmri.log("$setWidgetState(" + $id + ", " + $newState + ", " + data + ")");
+            //$logProperties(data, true);
+
+            var turntableID = $id.split(".")[0];
+            $widget = $gWidgets[turntableID];
+            $widget['activeRayID'] = $id;
+            $widget['activeRayTurnout'] = data.name;
+            $widget['activeRayState'] = turnoutStateToString($newState);
+            $drawTurntable($widget);
+            return;
         } else {
             if (jmri_logging) {
             	jmri.log("$setWidgetState unknown $id: '" + $id + "'.");
