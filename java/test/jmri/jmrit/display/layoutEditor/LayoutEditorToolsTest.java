@@ -57,14 +57,14 @@ public class LayoutEditorToolsTest {
         Assert.assertNotNull("exists", let);
     }
 
-    ///@Test
+    @Test
     public void testHitEndBumper() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //we haven't done anything, so reachedEndBumper should return false.
         Assert.assertFalse("reached end bumper", let.reachedEndBumper());
     }
 
-    ///@Test
+    @Test
     @Ignore("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -76,7 +76,7 @@ public class LayoutEditorToolsTest {
         JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"));
     }
 
-    ///@Test
+    @Test
     @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart1() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -127,7 +127,7 @@ public class LayoutEditorToolsTest {
         Assert.assertNotNull("positionablePoint3 for testSetSignalsAtTurnoutWithDone", positionablePoint3);
     }   //setupSetSignalsAtTurnoutWithDone
 
-    ///@Test
+    @Test
     @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -171,7 +171,7 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator.selectItem(turnouts.get(0).getSystemName());
     }
 
-    ///@Test
+    @Test
     @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart3() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -222,7 +222,7 @@ public class LayoutEditorToolsTest {
         layoutTurnout.setTurnout(turnouts.get(0).getSystemName()); //this should fix the "is not drawn on the panel" error
     }
 
-    ///@Test
+    @Test
     //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart4() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -264,7 +264,7 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
     }
 
-    ///@Test
+    @Test
     @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart5() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -306,7 +306,7 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
     }
 
-    ///@Test
+    @Test
     @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart6() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -348,7 +348,7 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
     }
 
-    ///@Test
+    @Test
     //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7a() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -374,7 +374,7 @@ public class LayoutEditorToolsTest {
         jFrameOperator.waitClosed();    //make sure the dialog closed
     }   //testSetSignalsAtTurnoutWithDonePart7a
 
-    ///@Test
+    @Test
     //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7b() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -400,7 +400,7 @@ public class LayoutEditorToolsTest {
         jFrameOperator.waitClosed();    //make sure the dialog closed
     }   //testSetSignalsAtTurnoutWithDonePart7b
 
-    ///@Test
+    @Test
     //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7c() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -426,7 +426,7 @@ public class LayoutEditorToolsTest {
         jFrameOperator.waitClosed();    //make sure the dialog closed
     }   //testSetSignalsAtTurnoutWithDonePart7c
 
-    ///@Test
+    @Test
     //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart7d() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -617,7 +617,7 @@ public class LayoutEditorToolsTest {
         positionablePoint3.setType(PositionablePoint.ANCHOR);
     }   //testSetupSSL
 
-    ///@Test
+    @Test
     public void testSetSignalsAtTurnoutWithCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -633,7 +633,7 @@ public class LayoutEditorToolsTest {
         JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"), Bundle.getMessage("ButtonCancel"));
     }
 
-    ///@Test
+    @Test
     @Ignore("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtTurnoutFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -649,7 +649,7 @@ public class LayoutEditorToolsTest {
         JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTurnout"));
     }
 
-    ///@Test
+    @Test
     @Ignore("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtLevelXing() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -660,7 +660,7 @@ public class LayoutEditorToolsTest {
         JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtLevelXing"));
     }
 
-    ///@Test
+    @Test
     @Ignore("causes error on jenkins; exhausts failure retries")
     public void testSetSignalsAtLevelXingFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -676,7 +676,7 @@ public class LayoutEditorToolsTest {
         JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtLevelXing"));
     }
 
-    ///@Test
+    @Test
     //@Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnouts() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -688,7 +688,7 @@ public class LayoutEditorToolsTest {
         JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"), Bundle.getMessage("ButtonCancel"));
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart1() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -716,7 +716,7 @@ public class LayoutEditorToolsTest {
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
     }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart1
 
-    ///@Test
+    @Test
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart2() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -762,7 +762,7 @@ public class LayoutEditorToolsTest {
         jComboBoxOperator.selectItem(turnouts.get(0).getSystemName());
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart3() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -797,7 +797,7 @@ public class LayoutEditorToolsTest {
         layoutTurnout.setTurnout(turnouts.get(0).getSystemName());
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart4() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -859,7 +859,7 @@ public class LayoutEditorToolsTest {
                 layoutTurnout2, LayoutTrack.TURNOUT_A, 1);
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart5() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -900,7 +900,7 @@ public class LayoutEditorToolsTest {
         }
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart6() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -959,7 +959,7 @@ public class LayoutEditorToolsTest {
         } while (!allLogicCheckBoxOperator.isSelected());
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart7() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -1005,7 +1005,7 @@ public class LayoutEditorToolsTest {
         trackSegment.setLayoutBlock(layoutBlocks.get(2));
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtThroatToThroatTurnoutsWithDonePart8() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -1050,7 +1050,7 @@ public class LayoutEditorToolsTest {
         layoutBlocks.get(2).setOccupancySensorName(sensors.get(2).getUserName());
     }
 
-    ///@Test
+    @Test
     public void testSetSignalsAtThroatToThroatTurnoutsWithCancel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -1062,25 +1062,25 @@ public class LayoutEditorToolsTest {
         JemmyUtil.waitAndCloseFrame(Bundle.getMessage("SignalsAtTToTTurnout"), Bundle.getMessage("ButtonCancel"));
     }
 
-    ///@Test
+    @Test
     public void testGetHeadFromNameNullName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull("null signal head for null name", let.getHeadFromName(null));
     }
 
-    ///@Test
+    @Test
     public void testGetHeadFromNameEmptyName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNull("null signal head for empty name", let.getHeadFromName(""));
     }
 
-    ///@Test
+    @Test
     public void testGetHeadFromNameValid() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertEquals("signal head for valid name", signalHeads.get(1), let.getHeadFromName("IH1"));
     }
 
-    ///@Test
+    @Test
     @Ignore("causes error on jenkins; exhausts failure retries")
     public void testRemoveSignalHeadFromPanelNameNullName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -1088,21 +1088,21 @@ public class LayoutEditorToolsTest {
         let.removeSignalHeadFromPanel(null);
     }
 
-    ///@Test
+    @Test
     public void testRemoveSignalHeadFromPanelEmptyName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this test verifies there is no exception
         let.removeSignalHeadFromPanel("");
     }
 
-    ///@Test
+    @Test
     public void testFinalizeBlockBossLogicNullInput() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this test verifies there is no exception
         let.finalizeBlockBossLogic();
     }
 
-    ///@Test
+    @Test
     //@Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYIntAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -1119,7 +1119,7 @@ public class LayoutEditorToolsTest {
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(signalHeads.get(1)));
     }
 
-    ///@Test
+    @Test
     //@Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtPointAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -1137,7 +1137,7 @@ public class LayoutEditorToolsTest {
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(signalHeads.get(1)));
     }
 
-    ///@Test
+    @Test
     //@Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -1154,33 +1154,33 @@ public class LayoutEditorToolsTest {
         Assert.assertFalse("Signal head not on panel after remove", let.isHeadOnPanel(signalHeads.get(1)));
     }
 
-    ///@Test
+    @Test
     @Ignore("causes error on jenkins; exhausts failure retries")
     public void testGetSignalHeadIcon() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertNotNull("Signal head icon for panel", let.getSignalHeadIcon("IH1"));
     }
 
-    ///@Test
+    @Test
     public void testIsHeadOnPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel", let.isHeadOnPanel(signalHeads.get(1)));
     }
 
-    ///@Test
+    @Test
     public void testIsHeadAssignedAnywhere() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel", let.isHeadAssignedAnywhere(signalHeads.get(1)));
     }
 
-    ///@Test
+    @Test
     public void testRemoveSignalHeadAssignment() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //just verify this doesn't thrown an error.
         let.removeAssignment(signalHeads.get(1));
     }
 
-    ///@Test
+    @Test
     @Ignore("causes error on jenkins; exhausts failure retries")
     public void testInitializeBlockBossLogic() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -1224,7 +1224,7 @@ public class LayoutEditorToolsTest {
     }
 
     //from here down is testing infrastructure
-    ///@BeforeClass
+    @BeforeClass
     public static void setUpClass() throws Exception {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
@@ -1237,7 +1237,7 @@ public class LayoutEditorToolsTest {
         }
     }
 
-    ///@AfterClass
+    @AfterClass
     public static void tearDownClass() throws Exception {
         if (!GraphicsEnvironment.isHeadless()) {
             //restore the default string matching comparator
