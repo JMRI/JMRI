@@ -17,8 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Dave Duchamp Copyright (C) 2004
  */
-public class DefaultRouteManager extends AbstractManager<Route>
-        implements RouteManager {
+public class DefaultRouteManager extends AbstractManager<Route> implements RouteManager {
 
     public DefaultRouteManager(InternalSystemConnectionMemo memo) {
         super(memo);
@@ -33,14 +32,11 @@ public class DefaultRouteManager extends AbstractManager<Route>
 
     @Override
     public char typeLetter() {
-        return 'R';
+        return 'O';
     }
 
     /**
      * {@inheritDoc}
-     *
-     * Keep autostring in line with {@link #newRoute(String)},
-     * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
     @Nonnull
@@ -68,29 +64,9 @@ public class DefaultRouteManager extends AbstractManager<Route>
 
     /**
      * {@inheritDoc}
-     *
-     * Permit Route names without a "R" type letter. Marked as deprecated because this
-     * is temporary; it should be entirely removed once a migration is complete.
-     * @deprecated formally in 4.17.7
-     */
-    @Deprecated // 4.17.7
-    @Override
-    @Nonnull
-    public String validateSystemNameFormat(@javax.annotation.Nonnull String name, @javax.annotation.Nonnull java.util.Locale locale) 
-                        throws jmri.NamedBean.BadSystemNameException {
-        try {
-            validateSystemNamePrefix(name, locale);
-        } catch (jmri.NamedBean.BadSystemNameException e) {
-            jmri.util.Log4JUtil.warnOnce(log, "Invalid Route Name: {} must start with IR", name, new Exception("traceback"));
-        }
-        return name;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * Keep autostring in line with {@link #provideRoute(String, String)},
-     * {@link #getSystemPrefix()} and {@link #typeLetter()}
+     * <p>
+     * Calls {@link #provideRoute(String, String)} with the result of
+     * {@link #getAutoSystemName()} as the system name.
      */
     @Override
     @Nonnull
@@ -122,9 +98,10 @@ public class DefaultRouteManager extends AbstractManager<Route>
     }
 
     /**
-     * 
      * @return the default instance of DefaultRouteManager
-     * @deprecated since 4.17.3; use {@link jmri.InstanceManager#getDefault(java.lang.Class)} instead
+     * @deprecated since 4.17.3; use
+     *             {@link jmri.InstanceManager#getDefault(java.lang.Class)}
+     *             instead
      */
     @Deprecated
     public static DefaultRouteManager instance() {

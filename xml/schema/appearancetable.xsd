@@ -36,6 +36,9 @@
             <jmri:class>jmri.jmrit.beantable.signalmast.AddSignalMastPanel</jmri:class>
         </xs:appinfo>
         <xs:documentation>
+        This schema describes the appearance information for a single JMRI signal mast
+        definition.
+        
         We allow unlimited extension at the end of the appearancetable element
         for the purposes of automatically-created documentation, 
         but only the aspecttable, name and appearances elements are used by the
@@ -277,23 +280,17 @@
         <xs:field xpath="."/>
     </xs:key>
 
-<!-- the following consistency check is commented out because too many of the existing files fail it -->
-<!-- 
     <xs:keyref name="specificAppearancesAspectExists" refer="appearanceAspectName">
       <xs:annotation><xs:documentation>The specificAppearancesAspectExists check constrains each specificappearances aspect element to refer to an existing appearance aspectname. </xs:documentation></xs:annotation>
       <xs:selector xpath="./specificappearances/*/aspect"/>
       <xs:field xpath="."/>
     </xs:keyref>
- -->
 
-<!-- the following consistency check is commented out because too many of the existing files fail it -->
-<!-- 
     <xs:keyref name="aspecMappingOurAspectExists" refer="appearanceAspectName">
       <xs:annotation><xs:documentation>The aspecMappingOurAspectExists check constrains each ourAspect element to refer to an existing appearance aspectname.</xs:documentation></xs:annotation>
       <xs:selector xpath="./aspectMappings/aspectMapping/ourAspect"/>
       <xs:field xpath="."/>
     </xs:keyref>
- -->
 
   </xs:element>
   
