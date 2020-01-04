@@ -204,7 +204,7 @@ public class ConsistFile extends XmlFile implements PropertyChangeListener {
         for (int i = 0; i < addressList.size(); i++) {
             DccLocoAddress locoaddress = addressList.get(i);
             Element eng = new Element("loco");
-            eng.setAttribute("dccLocoAddress", "" + locoaddress.getNumber());
+            eng.setAttribute(DCCLOCOADDRESS, "" + locoaddress.getNumber());
             eng.setAttribute(LONGADDRESS, locoaddress.isLongAddress() ? "yes" : "no");
             eng.setAttribute(LOCODIR, consist.getLocoDirection(locoaddress) ? NORMAL : REVERSE);
             int position = consist.getPosition(locoaddress);
