@@ -3,7 +3,7 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable-no-check.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -126,6 +126,15 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>lunar</show>
       <reference>Rule 288</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule288-c.gif</imagelink>
+    </appearance>
+
+    <appearance>
+      <aspectname>Stop</aspectname>
+      <show>red</show>
+      <show>red</show>
+      <show>red</show>
+      <reference>Rule 291</reference>
+      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-3-high/rule291.gif</imagelink>
     </appearance>
 
   </appearances>
