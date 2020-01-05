@@ -57,6 +57,15 @@ public class JemmyUtil {
     }
 
     /**
+     * push the JButton
+     *
+     * @param comp the JButton
+     */
+    public static void enterPushAndLeave(JButton comp) {
+        new JButtonOperator(comp).push();
+    }
+
+    /**
      * click the JButton
      *
      * @param comp the JButton
