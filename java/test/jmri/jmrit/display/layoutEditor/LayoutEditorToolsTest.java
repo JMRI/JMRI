@@ -39,10 +39,10 @@ public class LayoutEditorToolsTest {
     private static LayoutEditorTools let = null;
 
     //these all have to contain the same number of elements
-    private List<LayoutBlock> layoutBlocks;
-    private List<Turnout> turnouts;
-    private List<SignalHead> signalHeads;
-    private List<Sensor> sensors;
+    private List<LayoutBlock> layoutBlocks = null;
+    private List<Turnout> turnouts = null;
+    private List<SignalHead> signalHeads = null;
+    private List<Sensor> sensors = null;
 
     private static LayoutTurnout layoutTurnout = null;
     private static LayoutTurnout layoutTurnout2 = null;
@@ -54,18 +54,19 @@ public class LayoutEditorToolsTest {
     @Test
     public void testCtor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("exists", let);
+        Assert.assertNotNull("let null", let);
     }
 
     @Test
     public void testHitEndBumper() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assert.assertNotNull("let null", let);
         //we haven't done anything, so reachedEndBumper should return false.
         Assert.assertFalse("reached end bumper", let.reachedEndBumper());
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnout() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this causes a "set Signal Heads Turnout" dialog to be (re)displayed.
@@ -77,7 +78,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart1() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -92,14 +93,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //SignalsError1 = Error - No turnout name was entered. Please enter a turnout name or cancel.
-        Thread modalDialogOperatorThread0 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("SignalsError1"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread0.isAlive());
-        }, "modalDialogOperatorThread0 finished");
+            return !(modalDialogOperatorThread1.isAlive());
+        }, "modalDialogOperatorThread1 finished");
 
         //now close this dialog
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
@@ -146,14 +147,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //SignalsError3 = Error - Turnout "{0}" is not drawn on the panel.\nPlease enter the name of a drawn turnout.
-        Thread modalDialogOperatorThread0a = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("SignalsError3", turnouts.get(0).getSystemName()),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread0a.isAlive());
-        }, "modalDialogOperatorThread0a finished");
+            return !(modalDialogOperatorThread2.isAlive());
+        }, "modalDialogOperatorThread2 finished");
 
         //now close this dialog
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
@@ -172,7 +173,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart3() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
@@ -204,14 +205,14 @@ public class LayoutEditorToolsTest {
          */
         //pressing "Done" should display a dialog
         //SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
-        Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread3 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("SignalsError5"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread1.isAlive());
-        }, "modalDialogOperatorThread1 finished");
+            return !(modalDialogOperatorThread3.isAlive());
+        }, "modalDialogOperatorThread3 finished");
 
         //now close this dialog
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
@@ -240,14 +241,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
-        Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("SignalsError5"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread2.isAlive());
-        }, "modalDialogOperatorThread2 finished");
+            return !(modalDialogOperatorThread4.isAlive());
+        }, "modalDialogOperatorThread4 finished");
 
         new EventTool().waitNoEvent(0);
 
@@ -261,7 +262,7 @@ public class LayoutEditorToolsTest {
         //select signal head for this combobox
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("throatContinuingSignalHeadComboBox"));
-        jComboBoxOperator.selectItem(1);  //TODO:fix hardcoded index
+        jComboBoxOperator.selectItem(signalHeads.get(0).getSystemName());
     }
 
     @Test
@@ -284,14 +285,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
-        Thread modalDialogOperatorThread3 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread5 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("SignalsError5"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread3.isAlive());
-        }, "modalDialogOperatorThread3 finished");
+            return !(modalDialogOperatorThread5.isAlive());
+        }, "modalDialogOperatorThread5 finished");
 
         //now close this dialog
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
@@ -303,7 +304,7 @@ public class LayoutEditorToolsTest {
         //select signal head for this combobox
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("throatDivergingSignalHeadComboBox"));
-        jComboBoxOperator.selectItem(2);  //TODO:fix hardcoded index
+        jComboBoxOperator.selectItem(signalHeads.get(1).getSystemName());
     }
 
     @Test
@@ -324,14 +325,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
-        Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread6 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("SignalsError5"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread4.isAlive());
-        }, "modalDialogOperatorThread4 finished");
+            return !(modalDialogOperatorThread6.isAlive());
+        }, "modalDialogOperatorThread6 finished");
 
         new EventTool().waitNoEvent(0);
 
@@ -345,7 +346,7 @@ public class LayoutEditorToolsTest {
         //select signal head for this combobox
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("continuingSignalHeadComboBox"));
-        jComboBoxOperator.selectItem(3);  //TODO:fix hardcoded index
+        jComboBoxOperator.selectItem(signalHeads.get(2).getSystemName());
     }
 
     @Test
@@ -458,7 +459,7 @@ public class LayoutEditorToolsTest {
         //select signal head for this combobox
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("divergingSignalHeadComboBox"));
-        jComboBoxOperator.selectItem(4); //TODO:fix hardcoded index
+        jComboBoxOperator.selectItem(signalHeads.get(3).getSystemName());
     }
 
     /*
@@ -634,7 +635,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -650,7 +651,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtLevelXing() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -661,7 +662,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtLevelXingFromMenu() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         ThreadingUtil.runOnLayoutEventually(() -> {
@@ -677,7 +678,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtThroatToThroatTurnouts() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this causes a "set Signal Heads at throat to throat Turnout" dialog to be (re)displayed.
@@ -702,14 +703,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //SignalsError1 = Error - No turnout name was entered. Please enter a turnout name or cancel.
-        Thread modalDialogOperatorThread0 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("SignalsError1"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread0.isAlive());
-        }, "modalDialogOperatorThread0 finished");
+            return !(modalDialogOperatorThread1.isAlive());
+        }, "modalDialogOperatorThread1 finished");
 
         new EventTool().waitNoEvent(0);
 
@@ -733,14 +734,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //SignalsError3 = Error - Turnout "{0}" is not drawn on the panel.\nPlease enter the name of a drawn turnout.
-        Thread modalDialogOperatorThread1 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("SignalsError3", turnouts.get(0).getSystemName()),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread1.isAlive());
-        }, "modalDialogOperatorThread1 finished");
+            return !(modalDialogOperatorThread2.isAlive());
+        }, "modalDialogOperatorThread2 finished");
 
         new EventTool().waitNoEvent(0);
 
@@ -759,6 +760,7 @@ public class LayoutEditorToolsTest {
         //select the turnout from the popup menu
         JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                 jFrameOperator, new NameComponentChooser("turnout1ComboBox"));
+        new EventTool().waitNoEvent(0);
         jComboBoxOperator.selectItem(turnouts.get(0).getSystemName());
     }
 
@@ -779,14 +781,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //SignalsError18 = Error - This tool requires two turnouts (RH, LH, or WYE) \nconnected throat-to-throat by a single track segment.
-        Thread modalDialogOperatorThread2 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread3 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("SignalsError18"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread2.isAlive());
-        }, "modalDialogOperatorThread2 finished");
+            return !(modalDialogOperatorThread3.isAlive());
+        }, "modalDialogOperatorThread3 finished");
 
         JemmyUtil.waitAndCloseFrame(jFrameOperator);
     }   //testSetSignalsAtThroatToThroatTurnoutsWithDonePart3
@@ -826,14 +828,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //SignalsError5 = Error - Signal head name was not entered. Please enter\na signal head name for required positions or cancel.
-        Thread modalDialogOperatorThread3 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("ErrorTitle"),
                 Bundle.getMessage("SignalsError5"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread3.isAlive());
-        }, "modalDialogOperatorThread3 finished");
+            return !(modalDialogOperatorThread4.isAlive());
+        }, "modalDialogOperatorThread4 finished");
 
         new EventTool().waitNoEvent(0);
 
@@ -896,7 +898,7 @@ public class LayoutEditorToolsTest {
         for (String name : names) {
             JComboBoxOperator jComboBoxOperator = new JComboBoxOperator(
                     jFrameOperator, new NameComponentChooser(name));
-            jComboBoxOperator.selectItem(idx++);  //TODO:fix hardcoded index
+            jComboBoxOperator.selectItem(signalHeads.get(idx++).getSystemName());
         }
     }
 
@@ -926,14 +928,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //InfoMessage6 = Cannot set up logic because blocks have\nnot been defined around this item.
-        Thread modalDialogOperatorThread4 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread6 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
                 Bundle.getMessage("InfoMessage6"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.pushNoBlock();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread4.isAlive());
-        }, "modalDialogOperatorThread4 finished");
+            return !(modalDialogOperatorThread6.isAlive());
+        }, "modalDialogOperatorThread6 finished");
 
         for (int idx = 0; idx < 3; idx++) {
             new EventTool().waitNoEvent(0);
@@ -976,14 +978,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //InfoMessage4 = Cannot set up logic because block "{0}"\ndoesn''t have an occupancy sensor.
-        Thread modalDialogOperatorThread5 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread7 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
                 Bundle.getMessage("InfoMessage4", layoutBlocks.get(2).getUserName()),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.pushNoBlock();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread5.isAlive());
-        }, "modalDialogOperatorThread5 finished");
+            return !(modalDialogOperatorThread7.isAlive());
+        }, "modalDialogOperatorThread7 finished");
 
         //close three InfoMessage4 dialogs
         for (int idx = 0; idx < 3; idx++) {
@@ -1022,14 +1024,14 @@ public class LayoutEditorToolsTest {
 
         //pressing "Done" should display a dialog
         //InfoMessage7 = Cannot set up logic because all connections\nhave not been defined around this item.
-        Thread modalDialogOperatorThread6 = JemmyUtil.createModalDialogOperatorThread(
+        Thread modalDialogOperatorThread8 = JemmyUtil.createModalDialogOperatorThread(
                 Bundle.getMessage("MessageTitle"),
                 Bundle.getMessage("InfoMessage7"),
                 Bundle.getMessage("ButtonOK"));  // NOI18N
         doneButtonOperator.push();
         JUnitUtil.waitFor(() -> {
-            return !(modalDialogOperatorThread6.isAlive());
-        }, "modalDialogOperatorThread1 finished");
+            return !(modalDialogOperatorThread8.isAlive());
+        }, "modalDialogOperatorThread8 finished");
 
         //three more times
         for (int idx = 0; idx < 3; idx++) {
@@ -1077,11 +1079,13 @@ public class LayoutEditorToolsTest {
     @Test
     public void testGetHeadFromNameValid() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertEquals("signal head for valid name", signalHeads.get(1), let.getHeadFromName("IH1"));
+        for (SignalHead sh : signalHeads) {
+            Assert.assertEquals("signal head for valid name", sh, let.getHeadFromName(sh.getSystemName()));
+        }
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testRemoveSignalHeadFromPanelNameNullName() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //this test verifies there is no exception
@@ -1103,7 +1107,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYIntAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -1120,7 +1124,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtPointAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -1138,7 +1142,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("Consistently fails on AppVeyor and Windows 12/20/2019")
+    ///@Ignore("Fails on AppVeyor and Windows 12/20/2019")
     public void testSetSignalHeadOnPanelAtXYDoubleAndRemove() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertFalse("Signal head not on panel before set", let.isHeadOnPanel(signalHeads.get(1)));
@@ -1155,33 +1159,42 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testGetSignalHeadIcon() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertNotNull("Signal head icon for panel", let.getSignalHeadIcon("IH1"));
+        Assert.assertNotNull("let null", let);
+        for (SignalHead sh : signalHeads) {
+            Assert.assertNotNull("Signal head icon for panel", let.getSignalHeadIcon(sh.getSystemName()));
+        }
     }
 
     @Test
     public void testIsHeadOnPanel() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertFalse("Signal head not on panel", let.isHeadOnPanel(signalHeads.get(1)));
+        for (SignalHead sh : signalHeads) {
+            Assert.assertFalse("Signal head not on panel", let.isHeadOnPanel(sh));
+        }
     }
 
     @Test
     public void testIsHeadAssignedAnywhere() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        Assert.assertFalse("Signal head not on panel", let.isHeadAssignedAnywhere(signalHeads.get(1)));
+        for (SignalHead sh : signalHeads) {
+            Assert.assertFalse("Signal head not on panel", let.isHeadAssignedAnywhere(sh));
+        }
     }
 
     @Test
     public void testRemoveSignalHeadAssignment() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         //just verify this doesn't thrown an error.
-        let.removeAssignment(signalHeads.get(1));
+        for (SignalHead sh : signalHeads) {
+            let.removeAssignment(sh);
+        }
     }
 
     @Test
-    @Ignore("causes error on jenkins; exhausts failure retries")
+    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testInitializeBlockBossLogic() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assert.assertTrue("Signal head block boss logic started", let.initializeBlockBossLogic("IH1"));
@@ -1269,20 +1282,20 @@ public class LayoutEditorToolsTest {
             }
             layoutBlocks = InstanceManager.getDefault(LayoutBlockManager.class).getNamedBeanSet().stream().collect(Collectors.toList());
 
-          for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5; i++) {
                 String toName = "IT" + i;
                 InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout(toName);
             }
             turnouts = InstanceManager.getDefault(TurnoutManager.class).getNamedBeanSet().stream().collect(Collectors.toList());
 
-          for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 5; i++) {
                 String sName = "IS" + i;
                 String uName = "sensor " + i;
                 InstanceManager.getDefault(SensorManager.class).provideSensor(sName).setUserName(uName);
             }
             sensors = InstanceManager.getDefault(SensorManager.class).getNamedBeanSet().stream().collect(Collectors.toList());
 
-          for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < 8; i++) {
                 String sName = "IH" + i;
                 String uName = "signal head " + i;
                 VirtualSignalHead signalHead = new VirtualSignalHead(sName, uName);
@@ -1312,7 +1325,7 @@ public class LayoutEditorToolsTest {
             let = null;
             layoutEditor = null;
 
-          JUnitUtil.tearDown();
+            JUnitUtil.tearDown();
         }
     }
 //

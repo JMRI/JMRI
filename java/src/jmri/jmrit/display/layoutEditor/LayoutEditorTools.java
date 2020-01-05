@@ -267,12 +267,11 @@ public class LayoutEditorTools {
             JLabel throatContinuingLabel = new JLabel(
                     Bundle.getMessage("MakeLabel", throatContinuingString));
             panel21.add(throatContinuingLabel);
-            panel21.add(throatContinuingSignalHeadComboBox);
+            throatContinuingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
             throatContinuingSignalHeadComboBox.setName("throatContinuingSignalHeadComboBox");
             throatContinuingLabel.setLabelFor(throatContinuingSignalHeadComboBox);
-            throatContinuingSignalHeadComboBox.setName("throatContinuingSignalHeadComboBox");
+            panel21.add(throatContinuingSignalHeadComboBox);
             theContentPane.add(panel21);
-            throatContinuingSignalHeadComboBox.setToolTipText(Bundle.getMessage("SignalHeadNameHint"));
 
             JPanel panel22 = new JPanel(new FlowLayout());
             panel22.add(new JLabel("   "));

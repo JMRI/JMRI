@@ -313,18 +313,4 @@ public class LayoutEditorChecksTest {
         }
         JUnitUtil.tearDown();
     }
-
-    @Before
-    public void setUp() {
-        if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.setUp();
-        }
-    }
-
-    @After
-    public void tearDown() throws Exception {
-        if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.tearDown();
-        }
-    }
 }
