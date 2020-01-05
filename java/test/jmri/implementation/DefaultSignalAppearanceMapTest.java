@@ -129,6 +129,7 @@ public class DefaultSignalAppearanceMapTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();        
+        JUnitUtil.initInternalSignalHeadManager();
         h1 = new DefaultSignalHead("IH1", "head1") {
             @Override
             protected void updateOutput() {
