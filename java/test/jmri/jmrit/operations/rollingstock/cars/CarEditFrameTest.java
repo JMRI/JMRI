@@ -63,7 +63,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("roadNumNG"), Bundle.getMessage("ButtonOK"));
 
         // test number too long
-        StringBuffer sb = new StringBuffer("A");
+        StringBuilder sb = new StringBuilder("A");
         for (int i = 0; i < Control.max_len_string_road_number; i++) {
             sb.append(i);
         }
@@ -887,16 +887,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.initComponents();
 
         // should cause add road dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load = new Thread(() -> {
+            f.load(c1);
         });
         load.setName("load edit frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -911,16 +908,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse(InstanceManager.getDefault(CarRoads.class).containsName("TEST_ROAD"));
 
         // now answer yes to add road
-        Thread load2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load2 = new Thread(() -> {
+            f.load(c1);
         });
         load2.setName("load edit frame"); // NOI18N
         load2.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load2.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -950,16 +944,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.initComponents();
 
         // should cause add type dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load = new Thread(() -> {
+            f.load(c1);
         });
         load.setName("load edit frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -974,16 +965,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse(InstanceManager.getDefault(CarTypes.class).containsName("TEST_TYPE"));
 
         // now answer yes to add type
-        Thread load2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load2 = new Thread(() -> {
+            f.load(c1);
         });
         load2.setName("load edit frame"); // NOI18N
         load2.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load2.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -1013,16 +1001,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.initComponents();
 
         // should cause add length dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load = new Thread(() -> {
+            f.load(c1);
         });
         load.setName("load edit frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -1037,16 +1022,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse(InstanceManager.getDefault(CarLengths.class).containsName("123"));
 
         // now answer yes to add length
-        Thread load2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load2 = new Thread(() -> {
+            f.load(c1);
         });
         load2.setName("load edit frame"); // NOI18N
         load2.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load2.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -1076,16 +1058,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.initComponents();
 
         // should cause add owner dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load = new Thread(() -> {
+            f.load(c1);
         });
         load.setName("load edit frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -1100,16 +1079,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse(InstanceManager.getDefault(CarOwners.class).containsName("TEST_OWNER"));
 
         // now answer yes to add owner
-        Thread load2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load2 = new Thread(() -> {
+            f.load(c1);
         });
         load2.setName("load edit frame"); // NOI18N
         load2.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load2.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -1139,16 +1115,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.initComponents();
 
         // should cause add color dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load = new Thread(() -> {
+            f.load(c1);
         });
         load.setName("load edit frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -1163,16 +1136,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse(InstanceManager.getDefault(CarColors.class).containsName("TEST_COLOR"));
 
         // now answer yes to add color
-        Thread load2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load2 = new Thread(() -> {
+            f.load(c1);
         });
         load2.setName("load edit frame"); // NOI18N
         load2.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load2.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -1202,16 +1172,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.initComponents();
 
         // should cause add load dialog to appear
-        Thread load = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load = new Thread(() -> {
+            f.load(c1);
         });
         load.setName("load edit frame"); // NOI18N
         load.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 
@@ -1226,16 +1193,13 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse(InstanceManager.getDefault(CarLoads.class).containsName(c1.getTypeName(), "TEST_LOAD"));
 
         // now answer yes to add load
-        Thread load2 = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                f.load(c1);
-            }
+        Thread load2 = new Thread(() -> {
+            f.load(c1);
         });
         load2.setName("load edit frame"); // NOI18N
         load2.start();
 
-        jmri.util.JUnitUtil.waitFor(() -> {
+        JUnitUtil.waitFor(() -> {
             return load2.getState().equals(Thread.State.WAITING);
         }, "wait for prompt");
 

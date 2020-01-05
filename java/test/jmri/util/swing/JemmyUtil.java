@@ -59,10 +59,19 @@ public class JemmyUtil {
     /**
      * push the JButton
      *
-     * @param comp the JButton
+     * @param comp the JButton to push
      */
     public static void enterPushAndLeave(JButton comp) {
         new JButtonOperator(comp).push();
+    }
+
+    /**
+     * push the JCheckBox
+     *
+     * @param comp the JCheckBox to push
+     */
+    public static void enterPushAndLeave(JCheckBox comp) {
+        new JCheckBoxOperator(comp).push();
     }
 
     /**
