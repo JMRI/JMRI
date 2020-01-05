@@ -23,13 +23,13 @@ import org.junit.rules.*;
  * @author Dan Boudreau Copyright (C) 2009
  */
 public class CarEditFrameTest extends OperationsTestCase {
-    
+
     @Rule
     public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
 
     @Rule
     public RetryRule retryRule = new RetryRule(2); // allow 2 retries
-    
+
     @Test
     public void testClearRoadNumber() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
@@ -419,7 +419,7 @@ public class CarEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("not utility", c6.isUtility());
         JemmyUtil.enterClickAndLeave(f.saveButton);
         // need to push the "No" button in the dialog window to close
-        JemmyUtil.pressDialogButton(f,MessageFormat.format(
+        JemmyUtil.pressDialogButton(f, MessageFormat.format(
                 Bundle.getMessage("carModifyAllType"), new Object[]{Bundle.getMessage("Caboose")}),
                 Bundle.getMessage("ButtonNo"));
         Assert.assertTrue("now utility", c6.isUtility());
@@ -487,7 +487,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         Assert.assertFalse("window closed", f.isVisible());
     }
-    
+
     @Test
     @Ignore("AppVeyor:giving up after 3 failures. 12/31/2019")
     public void testSaveExistingCar() {
@@ -506,10 +506,10 @@ public class CarEditFrameTest extends OperationsTestCase {
         // change road number for this car to an existing car
         f.roadNumberTextField.setText("X20002");
         JemmyUtil.enterClickAndLeave(f.saveButton);
-        
+
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carCanNotUpdate"),
                 new Object[]{car.getTypeName()}), Bundle.getMessage("ButtonOK"));
- 
+
         JUnitUtil.dispose(f);
     }
 
@@ -790,7 +790,7 @@ public class CarEditFrameTest extends OperationsTestCase {
 
         // dialog requesting to make all cars in kernel to have the same location and track
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carPartKernel"),
-                        new Object[]{car.getKernelName()}), Bundle.getMessage("ButtonNo"));
+                new Object[]{car.getKernelName()}), Bundle.getMessage("ButtonNo"));
 
         Assert.assertEquals("kernel", k, car.getKernel());
         Assert.assertEquals("order", 2, car.getBlocking());
@@ -807,25 +807,24 @@ public class CarEditFrameTest extends OperationsTestCase {
         f.groupComboBox.setSelectedItem("Test_Kernel");
         JemmyUtil.enterClickAndLeave(f.fredCheckBox);
         JemmyUtil.enterClickAndLeave(f.saveButton);
-        
+
         // dialog requesting to make all cars in kernel to have the same location and track
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carPartKernel"),
-                        new Object[]{car.getKernelName()}), Bundle.getMessage("ButtonYes"));
-
+                new Object[]{car.getKernelName()}), Bundle.getMessage("ButtonYes"));
 
         Assert.assertEquals("kernel", k, car.getKernel());
         Assert.assertEquals("order", 2, car.getBlocking());
         Assert.assertTrue(car.getKernel().isLead(car));
         Assert.assertEquals("Track", "NI Yard", car2.getTrackName());
-        
+
         // change the car's load
         f.loadComboBox.setSelectedItem("L");
         JemmyUtil.enterClickAndLeave(f.saveButton);
-        
+
         // dialog requesting to make all cars in kernel have the same load
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle.getMessage("carPartKernel"),
-                        new Object[]{car.getKernelName()}), Bundle.getMessage("ButtonYes"));
-        
+                new Object[]{car.getKernelName()}), Bundle.getMessage("ButtonYes"));
+
         Assert.assertEquals("Load", "L", car.getLoadName());
         Assert.assertEquals("Load", "L", car2.getLoadName());
 
