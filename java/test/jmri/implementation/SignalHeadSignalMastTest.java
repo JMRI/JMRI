@@ -213,6 +213,7 @@ public class SignalHeadSignalMastTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        JUnitUtil.initInternalSignalHeadManager();
         InstanceManager.getDefault(jmri.SignalHeadManager.class).register(
                 new DefaultSignalHead("IH1") {
                     @Override
