@@ -43,7 +43,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
         // create one siding tracks
         f.trackNameTextField.setText("new siding track");
         f.trackLengthTextField.setText("1223");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("new siding track", null);
         Assert.assertNotNull("new siding track", t);
@@ -55,7 +55,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
         // create a second siding
         f.trackNameTextField.setText("2nd siding track");
         f.trackLengthTextField.setText("9999");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         t = l.getTrackByName("2nd siding track", null);
         Assert.assertNotNull("2nd siding track", t);
@@ -65,7 +65,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
         Assert.assertEquals("all roads", Track.ALL_ROADS, t.getRoadOption());
 
         // test error, try to create track with same name
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         // error dialogue should have appeared
         JemmyUtil.pressDialogButton(f, MessageFormat.format(Bundle
@@ -88,7 +88,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
 
         f.trackNameTextField.setText("3rd siding track");
         f.trackLengthTextField.setText("1010");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("3rd siding track", null);
         Assert.assertNotNull("3rd siding track", t);
@@ -100,7 +100,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.westCheckBox);
         JemmyUtil.enterClickAndLeave(f.northCheckBox);
 
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("only south", Track.SOUTH, t.getTrainDirections());
 
@@ -118,10 +118,10 @@ public class SidingEditFrameTest extends OperationsTestCase {
 
         f.trackNameTextField.setText("3rd siding track");
         f.trackLengthTextField.setText("1010");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         // create the schedule edit frame
-        JemmyUtil.enterClickAndLeave(f.editScheduleButton);
+        JemmyUtil.enterPushAndLeave(f.editScheduleButton);
 
         // confirm schedule add frame creation
         JmriJFrame sef = JmriJFrame.getFrame(Bundle.getMessage("TitleScheduleAdd", "3rd siding track"));
@@ -143,25 +143,25 @@ public class SidingEditFrameTest extends OperationsTestCase {
         // create three siding tracks
         f.trackNameTextField.setText("new siding track");
         f.trackLengthTextField.setText("1223");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("2nd siding track");
         f.trackLengthTextField.setText("9999");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("3rd siding track");
         f.trackLengthTextField.setText("1010");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         // deselect east, west and north check boxes
         JemmyUtil.enterClickAndLeave(f.eastCheckBox);
         JemmyUtil.enterClickAndLeave(f.westCheckBox);
         JemmyUtil.enterClickAndLeave(f.northCheckBox);
 
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         // create the schedule edit frame
-        JemmyUtil.enterClickAndLeave(f.editScheduleButton);
+        JemmyUtil.enterPushAndLeave(f.editScheduleButton);
 
         // confirm schedule add frame creation
         JmriJFrame sef = JmriJFrame.getFrame(Bundle.getMessage("TitleScheduleAdd", "3rd siding track"));
@@ -199,20 +199,20 @@ public class SidingEditFrameTest extends OperationsTestCase {
         // create track
         f.trackNameTextField.setText("Train test siding track");
         f.trackLengthTextField.setText("1234");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         // Don't allow train to service car type "Boxcar"
         trainA.deleteTypeName("Boxcar");
 
         // save button
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
         
         // confirm no error dialogue
         Assert.assertTrue(f.isActive());
         
         // specify train pickups using the exclude option
         JemmyUtil.enterClickAndLeave(f.excludeTrainPickup);
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
@@ -220,7 +220,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
         trainA.addTypeName("Boxcar");
 
         // save button
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         // confirm no error dialogue
         Assert.assertTrue(f.isActive());
@@ -231,7 +231,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
         rloc.setPickUpAllowed(false);
 
         // save button
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
@@ -246,7 +246,7 @@ public class SidingEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
         // save button
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         // confirm no error dialogue
         Assert.assertTrue(f.isActive());
@@ -255,34 +255,34 @@ public class SidingEditFrameTest extends OperationsTestCase {
         route.addLocation(lManager.getLocationByName("Test Loc A"));
 
         // save button
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
 
         // train direction default when creating a route is north 
         JemmyUtil.enterClickAndLeave(f.northCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         // confirm no error dialogue
         Assert.assertTrue(f.isActive());
 
         // try 0 moves
         rloc.setMaxCarMoves(0);
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));
 
         // restore move count
         rloc.setMaxCarMoves(5);
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
         Assert.assertTrue(f.isActive());
 
         // try having the train skip the location
         trainA.addTrainSkipsLocation(rloc.getId());
 
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         // error dialogue should have appeared
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ErrorStrandedCar"), Bundle.getMessage("ButtonOK"));

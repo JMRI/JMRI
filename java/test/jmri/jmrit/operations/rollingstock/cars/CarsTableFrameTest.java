@@ -255,14 +255,14 @@ public class CarsTableFrameTest extends OperationsTestCase {
 
         // test find text field
         ctf.findCarTextBox.setText("*2");
-        JemmyUtil.enterClickAndLeave(ctf.findButton);
+        JemmyUtil.enterPushAndLeave(ctf.findButton);
         // table is sorted by type, cars with number 2 are in the first and last rows
         Assert.assertEquals("find car by number 1st", 0, ctf.carsTable.getSelectedRow());
-        JemmyUtil.enterClickAndLeave(ctf.findButton);
+        JemmyUtil.enterPushAndLeave(ctf.findButton);
         Assert.assertEquals("find car by number 2nd", 4, ctf.carsTable.getSelectedRow());
 
         // create the CarEditFrame
-        JemmyUtil.enterClickAndLeave(ctf.addButton);
+        JemmyUtil.enterPushAndLeave(ctf.addButton);
 
         JUnitUtil.dispose(ctf);
     }

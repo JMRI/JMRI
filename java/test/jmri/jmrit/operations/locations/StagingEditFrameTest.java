@@ -38,7 +38,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
         // create one staging tracks
         f.trackNameTextField.setText("new staging track");
         f.trackLengthTextField.setText("34");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
         Track t = l.getTrackByName("new staging track", null);
         Assert.assertNotNull("new staging track", t);
         Assert.assertEquals("staging track length", 34, t.getLength());
@@ -50,7 +50,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
         // add a second track
         f.trackNameTextField.setText("2nd staging track");
         f.trackLengthTextField.setText("3456");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         t = l.getTrackByName("2nd staging track", null);
         Assert.assertNotNull("2nd staging track", t);
@@ -62,7 +62,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
         // add a third track
         f.trackNameTextField.setText("3rd staging track");
         f.trackLengthTextField.setText("1");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         JUnitUtil.dispose(f);
 
@@ -86,7 +86,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
 
         f.trackNameTextField.setText("4th staging track");
         f.trackLengthTextField.setText("12");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         Track t = l.getTrackByName("4th staging track", null);
         Assert.assertNotNull("4th staging track", t);
@@ -98,7 +98,7 @@ public class StagingEditFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.westCheckBox);
         JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         Assert.assertEquals("only east", Track.EAST, t.getTrainDirections());
 
@@ -116,26 +116,26 @@ public class StagingEditFrameTest extends OperationsTestCase {
         // create four staging tracks
         f.trackNameTextField.setText("new staging track");
         f.trackLengthTextField.setText("34");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("2nd staging track");
         f.trackLengthTextField.setText("3456");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("3rd staging track");
         f.trackLengthTextField.setText("1");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         f.trackNameTextField.setText("4th staging track");
         f.trackLengthTextField.setText("12");
-        JemmyUtil.enterClickAndLeave(f.addTrackButton);
+        JemmyUtil.enterPushAndLeave(f.addTrackButton);
 
         // deselect east, west and south check boxes
         JemmyUtil.enterClickAndLeave(f.northCheckBox);
         JemmyUtil.enterClickAndLeave(f.westCheckBox);
         JemmyUtil.enterClickAndLeave(f.southCheckBox);
 
-        JemmyUtil.enterClickAndLeave(f.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrackButton);
 
         JUnitUtil.dispose(f);
 

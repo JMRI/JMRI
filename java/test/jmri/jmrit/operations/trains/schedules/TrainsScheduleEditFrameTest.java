@@ -31,16 +31,16 @@ public class TrainsScheduleEditFrameTest extends OperationsTestCase {
         Assert.assertNotNull("frame exists", f);
 
         f.addTextBox.setText("A New Day");
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
 
         Assert.assertNotNull("Train schedule manager exists", tsm);
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 
-        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        JemmyUtil.enterPushAndLeave(f.deleteButton);
 
         Assert.assertNull("A new Day schedule does not exist", tsm.getScheduleByName("A New Day"));
 
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterPushAndLeave(f.replaceButton);
 
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 

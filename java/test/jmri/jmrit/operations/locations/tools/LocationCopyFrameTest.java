@@ -37,7 +37,7 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         Assert.assertNotNull("exists",t);
         t.setVisible(true);
         
-        JemmyUtil.enterClickAndLeave(t.copyButton);
+        JemmyUtil.enterPushAndLeave(t.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(t, MessageFormat.format(Bundle
@@ -46,7 +46,7 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         // enter a name for the new track
         t.loctionNameTextField.setText("Test location name");
         
-        JemmyUtil.enterClickAndLeave(t.copyButton);
+        JemmyUtil.enterPushAndLeave(t.copyButton);
         
         // error dialog window show appear
         JemmyUtil.pressDialogButton(t, MessageFormat.format(Bundle
@@ -57,7 +57,7 @@ public class LocationCopyFrameTest  extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(t.moveRollingStockCheckBox);
         JemmyUtil.enterClickAndLeave(t.deleteTrackCheckBox);
         
-        JemmyUtil.enterClickAndLeave(t.copyButton);
+        JemmyUtil.enterPushAndLeave(t.copyButton);
         
         LocationManager lmanager = InstanceManager.getDefault(LocationManager.class);
         Location loc = lmanager.getLocationByName("Test location name");

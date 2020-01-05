@@ -64,7 +64,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
         // test options
         JemmyUtil.enterClickAndLeave(f.buildNormalCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", false, t.isSendCarsToTerminalEnabled());
@@ -73,7 +73,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
         JemmyUtil.enterClickAndLeave(f.sendToTerminalCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
@@ -82,7 +82,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
         JemmyUtil.enterClickAndLeave(f.returnStagingCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
@@ -92,7 +92,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
         JemmyUtil.enterClickAndLeave(f.allowLocalMovesCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
@@ -101,7 +101,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
         JemmyUtil.enterClickAndLeave(f.allowThroughCarsCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
@@ -124,14 +124,14 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.builtDateAfter);
 
         f.builtAfterTextField.setText("1956");
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("train car built after", "1956", t.getBuiltStartYear());
 
         JemmyUtil.enterClickAndLeave(f.builtDateBefore);
 
         f.builtBeforeTextField.setText("2010");
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("train car built before", "2010", t.getBuiltEndYear());
 
@@ -139,20 +139,20 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
         f.builtAfterTextField.setText("1888");
         f.builtBeforeTextField.setText("2000");
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("train car built after range", "1888", t.getBuiltStartYear());
         Assert.assertEquals("train car built before range", "2000", t.getBuiltEndYear());
 
         JemmyUtil.enterClickAndLeave(f.builtDateAll);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("train car built after all", "", t.getBuiltStartYear());
         Assert.assertEquals("train car built before all", "", t.getBuiltEndYear());
 
         // test optional loco and caboose changes
         JemmyUtil.enterClickAndLeave(f.change1Engine);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         // clear dialogue box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
@@ -165,7 +165,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         f.modelEngine1Box.setSelectedItem("FT");
         f.roadEngine1Box.setSelectedItem("UP");
 
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("loco 1 change", Train.CHANGE_ENGINES, t.getSecondLegOptions());
         Assert.assertEquals("loco 1 departure name", "Test Train Location A", t
@@ -179,7 +179,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         f.routePickup1Box.setSelectedIndex(0);
         String roadNames[] = Bundle.getMessage("carRoadNames").split(",");
         f.roadCaboose1Box.setSelectedItem(roadNames[2]);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         // clear dialogue box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
@@ -187,14 +187,14 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("caboose 1 change", Train.ADD_CABOOSE, t.getSecondLegOptions());
 
         f.routePickup1Box.setSelectedIndex(2);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("caboose 1 road", roadNames[2], t.getSecondLegCabooseRoad());
 
         JemmyUtil.enterClickAndLeave(f.helper1Service);
 
         f.routePickup1Box.setSelectedIndex(0);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         // clear dialogue box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
@@ -203,7 +203,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
         f.routePickup1Box.setSelectedIndex(2); // Should be "Test Train Location B"
         f.routeDrop1Box.setSelectedIndex(3); // Should be "Test Train Location C"
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Helper 1 start location name", "Test Train Location B", t
                 .getSecondLegStartLocationName());
@@ -211,13 +211,13 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
                 .getSecondLegEndLocationName());
 
         JemmyUtil.enterClickAndLeave(f.none1);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("none 1", 0, t.getSecondLegOptions());
 
         // now do the second set of locos and cabooses
         JemmyUtil.enterClickAndLeave(f.change2Engine);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         // clear dialogue box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
@@ -230,7 +230,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         f.modelEngine2Box.setSelectedItem("FT");
         f.roadEngine2Box.setSelectedItem("UP");
 
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("loco 2 change", Train.CHANGE_ENGINES, t.getThirdLegOptions());
         Assert.assertEquals("loco 2 departure name", "Test Train Location A", t
@@ -243,7 +243,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
         f.routePickup2Box.setSelectedIndex(0);
         f.roadCaboose2Box.setSelectedItem(roadNames[2]);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         // clear dialogue box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
@@ -251,14 +251,14 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
         Assert.assertEquals("caboose 2 change", Train.ADD_CABOOSE, t.getThirdLegOptions());
 
         f.routePickup2Box.setSelectedIndex(2);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("caboose 2 road", roadNames[2], t.getThirdLegCabooseRoad());
 
         JemmyUtil.enterClickAndLeave(f.helper2Service);
 
         f.routePickup2Box.setSelectedIndex(0);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         // clear dialogue box
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotSave"), Bundle.getMessage("ButtonOK"));
@@ -267,7 +267,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
 
         f.routePickup2Box.setSelectedIndex(2); // Should be "Test Train Location B"
         f.routeDrop2Box.setSelectedIndex(3); // Should be "Test Train Location C"
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Helper 2 start location name", "Test Train Location B", t
                 .getThirdLegStartLocationName());
@@ -275,7 +275,7 @@ public class TrainEditBuildOptionsFrameTest extends OperationsTestCase {
                 .getThirdLegEndLocationName());
 
         JemmyUtil.enterClickAndLeave(f.none2);
-        JemmyUtil.enterClickAndLeave(f.saveTrainButton);
+        JemmyUtil.enterPushAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("none 2", 0, t.getThirdLegOptions());
 

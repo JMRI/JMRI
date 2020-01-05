@@ -42,7 +42,7 @@ public class TrainManifestOptionFrameTest extends OperationsTestCase {
         Assert.assertTrue(t.isShowing());
         
         t.railroadNameTextField.setText("test railroad name");
-        JemmyUtil.enterClickAndLeave(t.saveButton);
+        JemmyUtil.enterPushAndLeave(t.saveButton);
         
         Assert.assertEquals("test railroad name", train.getRailroadName());
         

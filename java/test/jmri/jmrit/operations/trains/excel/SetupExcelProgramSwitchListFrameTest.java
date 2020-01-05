@@ -33,7 +33,7 @@ public class SetupExcelProgramSwitchListFrameTest extends OperationsTestCase {
         f.initComponents();
         Assert.assertTrue(f.isShowing());
         
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
         
         // abort find file
         JemmyUtil.pressDialogButton(Bundle.getMessage("FindDesiredExcelFile"), "Cancel");
@@ -50,7 +50,7 @@ public class SetupExcelProgramSwitchListFrameTest extends OperationsTestCase {
         f.initComponents();
         Assert.assertTrue(f.isShowing());
         
-        JemmyUtil.enterClickAndLeave(f.testButton);
+        JemmyUtil.enterPushAndLeave(f.testButton);
         
         // kill dialog
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("ManifestCreatorNotFound"), Bundle.getMessage("ButtonOK"));
@@ -70,7 +70,7 @@ public class SetupExcelProgramSwitchListFrameTest extends OperationsTestCase {
         f.fileNameTextField.setText("Test File Name");
         //toggle create manifest checkbox
         JemmyUtil.enterClickAndLeave(f.generateCheckBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         
         // confirm save
         Assert.assertTrue(Setup.isGenerateCsvSwitchListEnabled());
