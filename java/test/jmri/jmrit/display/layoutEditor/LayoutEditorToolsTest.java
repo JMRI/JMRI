@@ -173,7 +173,7 @@ public class LayoutEditorToolsTest {
     }
 
     @Test
-    ///@Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
     public void testSetSignalsAtTurnoutWithDonePart3() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
