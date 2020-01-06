@@ -2,11 +2,9 @@ package jmri.jmrit.vsdecoder;
 
 import java.awt.event.ActionEvent;
 import java.awt.GraphicsEnvironment;
-import java.io.File;
 import javax.swing.AbstractAction;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,25 +52,14 @@ public class VSDecoderCreationAction extends AbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        String fp = null, fn = null;
-        JFrame tf = null;
-        if (_useNewGUI == true) {
+        String fp;
+        String fn;
+        JFrame tf;
+
+        if (_useNewGUI) {
             tf = VSDecoderManager.instance().provideManagerFrame(); // headless will return null
         } else {
             tf = new VSDecoderFrame(); // old GUI
-        }
-
-        // Handle Auto-Load
-        if (VSDecoderManager.instance().getVSDecoderPreferences().isAutoLoadingDefaultVSDFile() && !GraphicsEnvironment.isHeadless()) {
-            // Force load of a VSD file
-            fp = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFilePath();
-            fn = VSDecoderManager.instance().getVSDecoderPreferences().getDefaultVSDFileName();
-            if (fn.isEmpty()) {
-                JOptionPane.showMessageDialog(null, "Cannot auto-load VSD File - file name missing - check your VSD Preferences value",
-                        Bundle.getMessage("VSDFileError"), JOptionPane.ERROR_MESSAGE);
-            } else {
-                LoadVSDFileAction.loadVSDFile(fp + File.separator + fn);
-            }
         }
 
         if (tf != null) {
