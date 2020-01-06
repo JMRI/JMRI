@@ -803,6 +803,17 @@ public final class MathUtil {
     }
 
     /**
+     * rectangle2DToString return a string to represent a rectangle
+     * @param r the rectangle2D
+     * @return the string
+     */
+    @Nonnull
+    public static String rectangle2DToString(@Nonnull Rectangle2D r) {
+        return String.format("{%.2f, %.2f, %.2f, %.2f}",
+                r.getMinX(), r.getMinY(), r.getWidth(), r.getHeight());
+    }
+
+    /**
      * Convert Rectangle to Rectangle2D.
      *
      * @param r the Rectangle
@@ -1177,8 +1188,8 @@ public final class MathUtil {
     /**
      * Draw a Bezier curve
      *
-     * @param g2 the Graphics2D context to draw to
-     * @param p  the control points
+     * @param g2           the Graphics2D context to draw to
+     * @param p            the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1192,8 +1203,8 @@ public final class MathUtil {
     /**
      * Fill a Bezier curve.
      *
-     * @param g2 the Graphics2D context to draw to
-     * @param p  the control points
+     * @param g2           the Graphics2D context to draw to
+     * @param p            the control points
      * @param displacement right/left to draw a line parallel to the Bezier
      * @return the length of the Bezier curve
      */
@@ -1233,7 +1244,8 @@ public final class MathUtil {
      * @param p2 the second point on the first line
      * @param p3 the first point on the second line
      * @param p4 the second point on the second line
-     * @return the intersection point of the two lines or null if one doesn't exist
+     * @return the intersection point of the two lines or null if one doesn't
+     *         exist
      */
     @CheckReturnValue
     public static Point2D intersect(
@@ -1262,5 +1274,4 @@ public final class MathUtil {
     }
 
     // private transient final static Logger log = LoggerFactory.getLogger(MathUtil.class);
-
 }
