@@ -3,7 +3,7 @@
 
 <appearancetable
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable-no-check.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/appearancetable.xsd"
 >
 
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -23,7 +23,14 @@
         <date>2018-08-10</date>
         <authorinitials>JJC</authorinitials>
         <revremark>Initial version</revremark>
-    </revision>    
+    </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect values which cannot be displayed by this mast type</revremark>
+     </revision>    
+
   </revhistory>
 
   <aspecttable>CNJ 1974</aspecttable>
@@ -110,13 +117,11 @@
     <aspectMapping>
       <advancedAspect>Advance Approach Medium</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Medium Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
       <advancedAspect>Approach Limited</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Medium Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>
@@ -147,7 +152,6 @@
     <aspectMapping>
       <advancedAspect>Advance Approach</advancedAspect>
       <ourAspect>Clear</ourAspect>
-      <ourAspect>Medium Clear</ourAspect>
       <ourAspect>Approach Medium</ourAspect>
     </aspectMapping>
 
