@@ -19,7 +19,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-      <!--#include virtual="Sidebar" -->
+      <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h2>JMRI: Utils USS CTC Tools</h2>

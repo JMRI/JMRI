@@ -86,11 +86,11 @@ public abstract class AbstractProvidingManagerTestBase<T extends ProvidingManage
         f1.set(e2, e1.getSystemName());
 
         // Remove bean if it's already registered
-        if (l.getBeanBySystemName(e1.getSystemName()) != null) {
+        if (l.getBySystemName(e1.getSystemName()) != null) {
             l.deregister(e1);
         }
         // Remove bean if it's already registered
-        if (l.getBeanBySystemName(e2.getSystemName()) != null) {
+        if (l.getBySystemName(e2.getSystemName()) != null) {
             l.deregister(e2);
         }
 

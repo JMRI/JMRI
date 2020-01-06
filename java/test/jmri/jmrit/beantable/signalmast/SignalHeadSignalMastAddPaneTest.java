@@ -52,6 +52,7 @@ public class SignalHeadSignalMastAddPaneTest extends AbstractSignalMastAddPaneTe
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

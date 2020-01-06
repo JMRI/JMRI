@@ -75,7 +75,7 @@ public class JsonSignalHeadSocketService extends JsonSocketService<JsonSignalHea
     private void removeListenersFromRemovedBeans() {
         SignalHeadManager manager = InstanceManager.getDefault(SignalHeadManager.class);
         for (String name : new HashSet<>(beanListeners.keySet())) {
-            if (manager.getBeanBySystemName(name) == null) {
+            if (manager.getBySystemName(name) == null) {
                 beanListeners.remove(name);
             }
         }

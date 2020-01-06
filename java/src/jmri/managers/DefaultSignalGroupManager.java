@@ -5,10 +5,8 @@ import java.net.URISyntaxException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.annotation.Nonnull;
 import jmri.InstanceManager;
-
 import jmri.Manager;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
@@ -48,7 +46,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     }
 
     @Override
-    public SignalGroup getSignalGroup(String name) {
+    public SignalGroup getSignalGroup(@Nonnull String name) {
         SignalGroup t = getByUserName(name);
         if (t != null) {
             return t;
@@ -58,12 +56,12 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     }
 
     @Override
-    public SignalGroup getBySystemName(String key) {
+    public SignalGroup getBySystemName(@Nonnull String key) {
         return _tsys.get(key);
     }
 
     @Override
-    public SignalGroup getByUserName(String key) {
+    public SignalGroup getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
@@ -74,7 +72,8 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
      * {@link #getSystemPrefix()} and {@link #typeLetter()}
      */
     @Override
-    public SignalGroup provideSignalGroup(String systemName, String userName) {
+    @Nonnull
+    public SignalGroup provideSignalGroup(@Nonnull String systemName, String userName) {
         log.debug("provideGroup({})", systemName);
         SignalGroup r;
         r = getByUserName(systemName);
@@ -116,7 +115,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
      */
     @Nonnull
     @Override
-    public SignalGroup newSignaGroupWithUserName(String userName) {
+    public SignalGroup newSignaGroupWithUserName(@Nonnull String userName) {
         return provideSignalGroup(getAutoSystemName(), userName);
     }
 
@@ -164,6 +163,7 @@ public class DefaultSignalGroupManager extends AbstractManager<SignalGroup>
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalGroups" : "BeanNameSignalGroup");
     }

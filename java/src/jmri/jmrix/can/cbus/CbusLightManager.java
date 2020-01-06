@@ -34,6 +34,7 @@ public class CbusLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public CanSystemConnectionMemo getMemo() {
         return (CanSystemConnectionMemo) memo;
     }
@@ -59,7 +60,7 @@ public class CbusLightManager extends AbstractLightManager {
      * @return never null
      */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         // first, check validity
         try {
@@ -80,7 +81,7 @@ public class CbusLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
@@ -88,7 +89,8 @@ public class CbusLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         validateSystemNamePrefix(name, locale);
         try {
             validateAddressFormat(name.substring(getSystemNamePrefix().length()));
@@ -102,7 +104,7 @@ public class CbusLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         String addr;
         try {
             addr = systemName.substring(getSystemPrefix().length() + 1); // get only the address part
@@ -124,7 +126,7 @@ public class CbusLightManager extends AbstractLightManager {
      * @param address the hardware address to check
      * @throws IllegalArgumentException when delimiter is not found
      */
-    void validateAddressFormat(String address) throws IllegalArgumentException {
+    void validateAddressFormat(@Nonnull String address) throws IllegalArgumentException {
         String newAddress = CbusAddress.validateSysName(address);
         log.debug("validated system name {}", newAddress);
     }
@@ -133,7 +135,7 @@ public class CbusLightManager extends AbstractLightManager {
      * {@inheritDoc}
      */
     @Override
-    public boolean validSystemNameConfig(String systemName) {
+    public boolean validSystemNameConfig(@Nonnull String systemName) {
         String addr = systemName.substring(getSystemPrefix().length() + 1);
         try {
             validateAddressFormat(addr);

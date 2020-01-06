@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.19.1-SNAPSHOT</version>
+    <version>4.19.2-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -24,7 +24,7 @@
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.26</openlcb.version>
         <netbeans.version>RELEASE110</netbeans.version>
-        <jacoco.version>0.8.2</jacoco.version>
+        <jacoco.version>0.8.5</jacoco.version>
         <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
@@ -279,6 +279,11 @@
         </filters>
 
         <plugins>
+            <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.4.10</version>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
@@ -668,19 +673,10 @@
                                 <File>jmri/util/web/BrowserFactory.class</File>
                                 <!-- pure interfaces and classes of constants -->
                                 <File>jmri/AddressedProgrammerManager.class</File>
-                                <File>jmri/PhysicalLocationReporter.class</File>
                                 <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
                                 <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
                                 <File>jmri/jmrit/audio/AudioSource.class</File>
-                                <File>jmri/jmrit/operations/locations/Xml.class</File>
-                                <File>jmri/jmrit/operations/rollingstock/cars/Xml.class</File>
-                                <File>jmri/jmrit/operations/rollingstock/engines/Xml.class</File>
-                                <File>jmri/jmrit/operations/trains/Xml.class</File>
-                                <File>jmri/jmrit/ussctc/Lock.class</File>
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
-                                <File>jmri/server/json/roster/JsonRoster.class</File>
-                                <File>jmri/server/json/reporter/JsonReporter.class</File>
-                                <File>jmri/server/json/signalmast/JsonSignalMast.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                                 <!-- Exclude files meant to check SpotBugs. -->
@@ -718,8 +714,8 @@
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
-                                            <value>COVEREDCOUNT</value>
-                                            <minimum>1</minimum>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.00001</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -767,6 +763,26 @@
                     </execution>
                 </executions>
             </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<filesets>
+						<!-- cleanup behind Eclipse -->
+						<fileset>
+							<directory>.apt_generated</directory>
+							<followSymlinks>false</followSymlinks>
+							<useDefaultExcludes>true</useDefaultExcludes>
+						</fileset>
+						<fileset>
+							<directory>.apt_generated_tests</directory>
+							<followSymlinks>false</followSymlinks>
+							<useDefaultExcludes>true</useDefaultExcludes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
         </plugins>
         <pluginManagement>
             <plugins>

@@ -22,7 +22,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
       <h1>Hardware Support: IEEE_802.15.4</h1>

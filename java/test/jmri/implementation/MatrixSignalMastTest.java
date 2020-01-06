@@ -20,9 +20,9 @@ public class MatrixSignalMastTest {
     @Test
     public void testSetup() {
         // provide 3 turnouts:
-        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
-        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
-        Turnout it13 = InstanceManager.turnoutManagerInstance().provideTurnout("13");
+        Turnout it11 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("11");
+        Turnout it12 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("12");
+        Turnout it13 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("13");
 
         Assert.assertEquals("it11 before", Turnout.UNKNOWN, it11.getCommandedState());
         Assert.assertEquals("it12 before", Turnout.UNKNOWN, it12.getCommandedState());
@@ -33,9 +33,9 @@ public class MatrixSignalMastTest {
     @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testCtor1() {
         // provide 3 turnouts:
-        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
-        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
-        Turnout it13 = InstanceManager.turnoutManagerInstance().provideTurnout("13");
+        Turnout it11 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("11");
+        Turnout it12 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("12");
+        Turnout it13 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("13");
 
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
         m.setBitNum(3);
@@ -45,7 +45,7 @@ public class MatrixSignalMastTest {
 
         Assert.assertEquals("system name", "IF$xsm:basic:one-low($0001)-3t", m.getSystemName());
         Assert.assertEquals("user name", "user", m.getUserName());
-        //System.out.println(it11.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)); //debug
+        // log.debug(it11.getDisplayName(DisplayOptions.USERNAME_SYSTEMNAME)); // debug
         Assert.assertEquals("output2", "IT12", m.outputsToBeans.get("output2").getName());
     }
 
@@ -66,9 +66,9 @@ public class MatrixSignalMastTest {
     @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testLit() {
         // provide 3 turnouts:
-        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
-        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
-        Turnout it13 = InstanceManager.turnoutManagerInstance().provideTurnout("13");
+        Turnout it11 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("11");
+        Turnout it12 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("12");
+        Turnout it13 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("13");
 
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
         m.setBitNum(3);
@@ -90,7 +90,7 @@ public class MatrixSignalMastTest {
         Assert.assertTrue(m.getLit());
 
         m.setLit(false);
-        Assert.assertTrue(!m.getLit());
+        Assert.assertFalse(m.getLit());
 
         m.setLit(true);
         Assert.assertTrue(m.getLit());
@@ -100,9 +100,9 @@ public class MatrixSignalMastTest {
     @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testAspects() {
         // provide 3 turnouts:
-        Turnout it11 = InstanceManager.turnoutManagerInstance().provideTurnout("11");
-        Turnout it12 = InstanceManager.turnoutManagerInstance().provideTurnout("12");
-        Turnout it13 = InstanceManager.turnoutManagerInstance().provideTurnout("13");
+        Turnout it11 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("11");
+        Turnout it12 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("12");
+        Turnout it13 = InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout("13");
 
         MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
         m.setBitNum(3);
@@ -126,7 +126,7 @@ public class MatrixSignalMastTest {
         m.setMatrixMastCommandDelay(0);
         // wait for outputs and outputbits to be set
 
-        //log.debug(java.util.Arrays.toString(m.getBitsForAspect("Stop")));
+        // log.debug(java.util.Arrays.toString(m.getBitsForAspect("Stop")));
         Assert.assertEquals("check bitarray for Stop", "[0, 0, 1]", java.util.Arrays.toString(m.getBitsForAspect("Stop")));
 
         m.setAspect("Clear");

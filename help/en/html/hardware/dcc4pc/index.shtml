@@ -22,7 +22,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
     <p>The DCC4PC hardware is a combined block occupancy detector and RailComm reader built into one. 

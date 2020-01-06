@@ -1,0 +1,33 @@
+<!-- Sidebar -->
+<!-- This is the common sidebar definition for html/apps/TrainCrew page(s) -->
+
+<hr class="hide">
+<div id="side"> <!-- Block of text on left side of page -->
+<div style="text-align: center">JMRI&reg; is...</div>
+
+<dl>
+    <dt><h3>TrainCrew Links</h3></dt>
+    <dd>
+    <ul>
+        <li><a href="http://traincrew.conrail1285.com">TrainCrew home</a></li>
+        <li><a href="https://github.com/ekapus/TrainCrew">TrainCrew GitHub</a></li>
+    </ul>
+    </dd>
+
+<dt><h3>The Apps</h3></dt>
+<dd>
+	<ul>
+        <li><a href="../DecoderPro/index.shtml">DecoderPro&reg;</a></li>
+        <li><a href="../PanelPro/index.shtml">PanelPro&trade;</a></li>
+        <li><a href="../DispatcherPro/index.shtml">DispatcherPro&trade;</a></li>
+        <li><a href="../../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></li>
+        <li><a href="../SoundPro/SoundPro.shtml">SoundPro</a></li>
+        <li><a href="../ManifestCreator/index.shtml">Manifest Creator</a></li>
+        <li class="here"><a href="../TrainCrew/index.shtml">TrainCrew</a></li>
+	</ul>
+</dd>
+
+</dl>
+
+</div>  <!-- closes #side -->
+<!-- /Sidebar -->

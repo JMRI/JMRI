@@ -21,7 +21,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="../SidebarUp" -->
+    <!--#include virtual="../SidebarUp.shtml" -->
     <div id="mainContent">
 
       <img src="http://www.modbus.org/images/logo_new.jpg" alt=

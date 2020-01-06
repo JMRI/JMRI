@@ -2660,20 +2660,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     /**
      * Dispose of the editor.
-     *
-     * @param clear true to discard Positionables; false to retain Positionables
-     *              for future use
-     * @deprecated since 4.11.5. use {@link #dispose()} instead.
-     */
-    @Deprecated // 4.11.5
-    public void dispose(boolean clear) {
-        log.debug("Editor delete and dispose done. clear= {}", clear);
-        jmri.util.Log4JUtil.deprecationWarning(log, "dispose(boolean )");        
-        dispose();
-    }
-
-    /**
-     * Dispose of the editor.
      */
     @Override
     public void dispose() {

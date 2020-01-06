@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.annotation.Nonnull;
 import javax.swing.ToolTipManager;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -125,11 +126,13 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     @Override
+    @Nonnull
     public Iterable<Class<? extends PreferencesManager>> getRequires() {
         return new HashSet<>();
     }
 
     @Override
+    @Nonnull
     public Iterable<Class<?>> getProvides() {
         Set<Class<?>> provides = new HashSet<>();
         provides.add(this.getClass());
@@ -575,6 +578,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesManager
     }
 
     @Override
+    @Nonnull
     public List<Exception> getInitializationExceptions(Profile profile) {
         return new ArrayList<>(this.exceptions);
     }

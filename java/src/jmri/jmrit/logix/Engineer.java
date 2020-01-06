@@ -272,10 +272,6 @@ public class Engineer extends Thread implements java.beans.PropertyChangeListene
                         setSensor(ts.getBeanSystemName(), ts.getValue());
                     } else if (_currentCommand.equals("WAIT SENSOR")) {
                         getSensor(ts.getBeanSystemName(), ts.getValue());
-                    } else if (_currentCommand.equals("START TRACKER")) {
-                        ThreadingUtil.runOnLayout(() -> {
-                            _warrant.startTracker();
-                        });
                     } else if (_currentCommand.equals("RUN WARRANT")) {
                         runWarrant(ts);
                     } else if (_runOnET && _currentCommand.equals("NOOP")) {    // let warrant know engineer expects entry into dark block

@@ -99,7 +99,7 @@ public class TrackerTest {
         occupied = TkrWest.getBlocksOccupied();
         Assert.assertEquals("TkrWest Blocks Occupied", 3, occupied.size());
 
-        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 0 Editor");
+        ControlPanelEditor panel = (ControlPanelEditor) jmri.util.JmriJFrame.getFrame("Indicator Demo 1 Editor");
         panel.dispose();
         _OBlockMgr.dispose();
     }        

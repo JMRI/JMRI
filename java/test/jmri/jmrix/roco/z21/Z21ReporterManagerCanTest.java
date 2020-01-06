@@ -5,7 +5,7 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * This class provides tests for the Z21 Reporter Manager's ability to create
+ * This class provides tests for the Z21ReporterManager's ability to create
  * Z21CanReporter objects.  
  *
  * @author Paul Bender Copyright (C) 2016

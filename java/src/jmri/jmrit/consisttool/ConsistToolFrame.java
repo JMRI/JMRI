@@ -646,7 +646,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
        for(RosterEntry entry:roster){
             DccLocoAddress address = entry.getDccLocoAddress();
             CvTableModel  cvTable = new CvTableModel(_status, null);  // will hold CV objects
-            entry.readFile();  // read, but don’t yet process
+            entry.readFile();  // read, but don't yet process
 
             entry.loadCvModel(null, cvTable);
             CvValue cv19Value = cvTable.getCvByNumber("19");

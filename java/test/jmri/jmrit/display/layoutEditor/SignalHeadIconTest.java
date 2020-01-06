@@ -36,6 +36,7 @@ public class SignalHeadIconTest extends jmri.jmrit.display.SignalHeadIconTest {
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
+        JUnitUtil.initInternalSignalHeadManager();
         if (!GraphicsEnvironment.isHeadless()) {
             editor = new LayoutEditor();
             shi = new SignalHeadIcon(editor);

@@ -152,6 +152,7 @@ public class ThrottleFrameTest {
     @Test
     public void testStopButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
 
         to.setAddressValue(new DccLocoAddress(42, false));
         to.setSpeedSlider(28);
@@ -167,6 +168,8 @@ public class ThrottleFrameTest {
     @Test
     public void testEStopButton() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
+        Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
+
         frame.setExtendedState(frame.getExtendedState() | java.awt.Frame.MAXIMIZED_BOTH);
         panel.toFront();
 

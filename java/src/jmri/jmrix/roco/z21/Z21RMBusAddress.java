@@ -7,6 +7,8 @@ import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Utility Class supporting parsing and testing of addresses for Z21 RMBus  
  * <p>
@@ -84,7 +86,7 @@ public class Z21RMBusAddress {
      *
      * @return VALID if system name has a valid format, else return INVALID
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix + type))) {
             // here if an illegal format 

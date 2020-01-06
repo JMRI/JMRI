@@ -1,5 +1,6 @@
 package jmri.jmrit.catalog;
 
+import java.util.Objects;
 import java.util.Set;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
@@ -15,10 +16,12 @@ import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Provide the concrete implementation for the Internal CatalogTree Manager.
  * <p>
- * Control of the systemName is internal so the more casual approach of
+ * Control of the systemName is internal so the more casual approach like that of
  * SignalHeadManager is used rather than the ProxyManager style.
  *
  * @author Pete Cressman Copyright (C) 2009
@@ -55,17 +58,16 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     }
 
     @Override
-    public CatalogTree getCatalogTree(String name) {
+    public CatalogTree getCatalogTree(@Nonnull String name) {
         CatalogTree t = getByUserName(name);
         if (t != null) {
             return t;
         }
-
         return getBySystemName(name);
     }
 
     @Override
-    public CatalogTree getBySystemName(String key) {
+    public CatalogTree getBySystemName(@Nonnull String key) {
         if (log.isDebugEnabled()) {
             log.debug("getBySystemName: systemName= {}", key);
             CatalogTree tree = _tsys.get(key);
@@ -78,43 +80,43 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     }
 
     @Override
-    public CatalogTree getByUserName(String key) {
+    public CatalogTree getByUserName(@Nonnull String key) {
         return _tuser.get(key);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-    public CatalogTree newCatalogTree(String sysName, String userName) {
-        log.debug("new CatalogTree: systemName= {}, userName= {}", sysName, userName);
-        if (sysName == null) {
-            log.error("SystemName cannot be null. UserName= {}", userName);
+    public CatalogTree newCatalogTree(@Nonnull String systemName, String userName) {
+        log.debug("new CatalogTree: systemName= {}, userName= {}", systemName, (userName != null ? userName : "null"));
+        if (systemName.length() == 0) {
+            log.error("Empty systemName!");
             return null;
         }
-
         // return existing if there is one
-        CatalogTree s;
-        if ((userName != null) && ((s = getByUserName(userName)) != null)) {
-            if (getBySystemName(sysName) != s) {
+        CatalogTree t;
+        if ((userName != null) && ((t = getByUserName(userName)) != null)) {
+            if (getBySystemName(systemName) != t) {
                 log.error("inconsistent user ({}) and system name ({}) results; userName related to ({})",
-                        userName, sysName, s.getSystemName());
+                        userName, systemName, t.getSystemName());
             }
-            return s;
+            return t;
         }
-        if ((s = getBySystemName(sysName)) != null) {
-            if ((s.getUserName() == null) && (userName != null)) {
-                s.setUserName(userName);
+        if ((t = getBySystemName(systemName)) != null) {
+            if ((t.getUserName() == null) && (userName != null)) {
+                t.setUserName(userName);
             } else if (userName != null) {
                 log.warn("Found memory via system name ({}) with non-null userName ({})",
-                        sysName, userName);
+                        systemName, userName);
             }
-            return s;
+            return t;
         }
-
         // doesn't exist, make a new one
-        s = createNewCatalogTree(sysName, userName);
-
+        t = createNewCatalogTree(systemName, userName);
         // save in the maps
-        register(s);
-        return s;
+        register(t);
+        return t;
     }
 
     /**
@@ -132,13 +134,13 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
      *   NX... - index for files stored in XML config file
      * </pre>
      *
-     * @param systemName system name for catalog tree
+     * @param systemName system name for catalog tree, never null/empty
      * @param userName   user name for catalog tree
      * @return the new catalog tree or null if unable to create
      */
-    protected CatalogTree createNewCatalogTree(String systemName, String userName) {
-        if (systemName == null || systemName.length() == 0) {
-            log.error("Null systemName!");
+    protected CatalogTree createNewCatalogTree(@Nonnull String systemName, String userName) {
+        if (systemName.length() == 0) {
+            log.error("Empty systemName!");
             return null;
         }
         if (userName == null || userName.length() == 0) {
@@ -180,6 +182,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameCatalogs" : "BeanNameCatalog");
     }
@@ -232,11 +235,9 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
                 };
                 sdm.register(_shutDownTask);
             }
-        } else {
-            if (_shutDownTask != null) {
-                sdm.deregister(_shutDownTask);
-                _shutDownTask = null;
-            }
+        } else if (_shutDownTask != null) {
+            sdm.deregister(_shutDownTask);
+            _shutDownTask = null;
         }
     }
 
@@ -246,6 +247,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
+        @Nonnull
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
             if (type.equals(CatalogTreeManager.class)) {
                 return new DefaultCatalogTreeManager();
@@ -254,6 +256,7 @@ public class DefaultCatalogTreeManager extends AbstractManager<CatalogTree> impl
         }
 
         @Override
+        @Nonnull
         public Set<Class<?>> getInitalizes() {
             Set<Class<?>> set = super.getInitalizes();
             set.add(CatalogTreeManager.class);

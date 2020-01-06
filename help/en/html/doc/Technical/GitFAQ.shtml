@@ -1160,16 +1160,7 @@
           that users are likely to edit and submit back for
           inclusion.</p>
 
-          <p>But with Git, <!-- 
-                  there's really no good way to maintain these automatically,
-                  http://thomas-cokelaer.info/blog/2014/12/moving-from-svn-to-git-id-equivalent/
- 
-                  see .git/info/attributes
-                  # see man gitattributes
-                  # expands $Id$ but not $Revision$ $Author$
-                  *.xml ident
-              -->
-           there's less need for these. So we'll be removing these
+          <p>But with Git, there's less need for these. So we'll be removing these
           lines as time allows. If you're working on a file and
           happen to see one, usually in the header, you can just
           delete it (if it has somebody's name, you might want to
