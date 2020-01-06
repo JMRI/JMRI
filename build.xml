@@ -455,6 +455,9 @@
             <fileset file="session.log"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
+        <!-- Eclipse artifacts -->
+        <delete dir=".apt_generated"/>
+        <delete dir=".apt_generated_tests"/>
     </target>
 
     <!-- end of utility targets -->

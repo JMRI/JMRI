@@ -1,0 +1,5 @@
+codecov:
+  ci:
+    - !appveyor # ignore CI builds by AppVeyor
+
+# see https://docs.codecov.io/docs/codecov-yaml#section-default-yaml for defaults
