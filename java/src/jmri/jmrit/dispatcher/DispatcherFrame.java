@@ -1529,7 +1529,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
      * @return the allocated section or null if not successful
      */
     public AllocatedSection allocateSection(AllocationRequest ar, Section ns) {
-//        log.debug("{}: Checking Section [{}]", ar.getActiveTrain().getTrainName(), (ns != null ? ns.getDisplayName() : "auto"));
+        log.trace("{}: Checking Section [{}]", ar.getActiveTrain().getTrainName(), (ns != null ? ns.getDisplayName() : "auto"));
         AllocatedSection as = null;
         Section nextSection = null;
         int nextSectionSeqNo = 0;
@@ -2242,18 +2242,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
                         // allow this train to start
                         at.setStarted();
                         delayedTrains.remove(i);
-//                        if (_AutoAllocate) {
-//                            autoAllocate.scanAllocationRequestList(allocationRequests);
-//                        }
                     }
                 }
             } else if (at.getStarted() && at.getStatus() == ActiveTrain.READY && at.reachedRestartPoint()) {
                 if (isFastClockTimeGE(at.getRestartDepartHr(), at.getRestartDepartMin())) {
                     at.restart();
                     delayedTrains.remove(i);
-//                    if (_AutoAllocate) {
-//                        autoAllocate.scanAllocationRequestList(allocationRequests);
-//                    }
                 }
             }
         }

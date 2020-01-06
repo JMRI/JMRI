@@ -271,7 +271,6 @@ public class AutoActiveTrain implements ThrottleListener {
             return false;
         }
         // request a throttle for automatic operation, throttle returned via callback below
-        log.debug("{}: requesting throttle address={}", _activeTrain.getTrainName(), _address);
         useSpeedProfile = false;
         boolean ok;
         DccLocoAddress addressForRequest = new DccLocoAddress(
@@ -285,11 +284,15 @@ public class AutoActiveTrain implements ThrottleListener {
                         useSpeedProfile = true;
                     }
                 }
+                log.debug("{}: requested roster entry '{}', address={}, use speed profile={}", 
+                        _activeTrain.getTrainName(), re.getId(), _address, useSpeedProfile);
             } else {
                 ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this, false);
+                log.debug("{}: requested throttle address={}, roster entry not found", _activeTrain.getTrainName(), _address);
             }
         } else {
             ok = InstanceManager.throttleManagerInstance().requestThrottle(addressForRequest, this, false);
+            log.debug("{}: requested throttle address={}", _activeTrain.getTrainName(), _address);
         }
         if (!ok) {
             log.warn("Throttle for locomotive address {} could not be setup.", _address);
@@ -307,14 +310,14 @@ public class AutoActiveTrain implements ThrottleListener {
             javax.swing.JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(Bundle.getMessage(
                     "Error28"), new Object[]{_activeTrain.getTrainName()}), Bundle.getMessage("MessageTitle"),
                     javax.swing.JOptionPane.INFORMATION_MESSAGE);
-            log.warn("null throttle returned for train  {}during automatic initialization.", _activeTrain.getTrainName());
+            log.warn("null throttle returned for train '{}' during automatic initialization.", _activeTrain.getTrainName());
             _activeTrain.setMode(ActiveTrain.DISPATCHED);
             return;
         }
-        log.debug("{}: New AutoEngineer, address={}, length={}, factor={}",
+        log.debug("{}: New AutoEngineer, address={}, length={}, factor={}, useSpeedProfile={}",
                 _activeTrain.getTrainName(),
                 _throttle.getLocoAddress(),
-                getMaxTrainLength(), _speedFactor);
+                getMaxTrainLength(), _speedFactor, _useSpeedProfile);
         _autoEngineer = new AutoEngineer();
         new Thread(_autoEngineer, "Auto Engineer " + _address).start();
         _activeTrain.setMode(ActiveTrain.AUTOMATIC);
@@ -435,9 +438,7 @@ public class AutoActiveTrain implements ThrottleListener {
      */
     protected void handleSectionOccupancyChange(AllocatedSection as) {
         if (!isInAllocatedList(as)) {
-            if (log.isDebugEnabled()) {
-                log.debug("Unexpected occupancy change notification - Section " + as.getSection().getSystemName());
-            }
+            log.debug("Unexpected occupancy change notification - Section {}", as.getSection().getSystemName());
             return;
         }
         if (as.getSection().getOccupancy() == Section.OCCUPIED) {
@@ -522,7 +523,7 @@ public class AutoActiveTrain implements ThrottleListener {
                 return;
             }
         } else if (b.getState() == Block.UNOCCUPIED) {
-            log.trace("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
+            log.debug("{}: handleBlockStateChange to UNOCCUPIED - Section {}, Block {}, speed {}", _activeTrain.getTrainName(),
                     as.getSection().getSystemName(), b.getUserName(), _targetSpeed);
             if (_stoppingByBlockOccupancy && (b == _stoppingBlock)) {
                 log.trace("{}: setStopNow by block occupancy from Block unoccupied, Block= {}", _activeTrain.getTrainName(), b.getSystemName());
@@ -550,7 +551,7 @@ public class AutoActiveTrain implements ThrottleListener {
         } else {
             _forward = !_activeTrain.isTransitReversed();
         }
-        log.trace("flipping direction was [{}] now [{}]",_forward,oldFwd);
+        log.debug("flipping direction was [{}] now [{}]",_forward,oldFwd);
     }
 
     protected AllocatedSection getCurrentAllocatedSection() {
@@ -681,14 +682,10 @@ public class AutoActiveTrain implements ThrottleListener {
                         }
                     }
                 });
-                if (log.isDebugEnabled()) {
-                    log.debug("new current signal = {}", sh.getSystemName());
-                }
+                log.debug("new current signal = {}", sh.getSystemName());
                 setSpeedBySignal();
             } // Note: null signal head will result when exiting throat-to-throat blocks.
-            else if (log.isDebugEnabled()) {
-                log.debug("new current signal is null - sometimes OK");
-            }
+            log.debug("new current signal is null - sometimes OK");
         } else {
             //SignalMast
             SignalMast sm = null;
@@ -1105,8 +1102,7 @@ public class AutoActiveTrain implements ThrottleListener {
                     _currentAllocatedSection.getSectionName(), _currentAllocatedSection.getLength(), _maxTrainLength);
             // train will not fit comfortably in the Section, stop it immediately
             // stopping by speed profile uses block length to stop
-//            setTargetSpeedValue(0.01f);
-//            _activeTrain.setStatus(ActiveTrain.WAITING);
+            //TODO: don't stop immediately, slow to stop instead
             setStopNow();
         } else if (_resistanceWheels) {
             log.debug("{}: train will fit in [{}] ({}>={}), stop when prev block clears.", _activeTrain.getTrainName(), 

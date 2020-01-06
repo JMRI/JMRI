@@ -537,7 +537,7 @@ public class AutoAllocate {
                                 .getTransitSectionFromSectionAndSeq(curAS.getSection(),curSeq).isSafe())) {
                 // last allocated section exists and is not occupied but is a Passing point
                 // block further allocations till occupied.
-                log.debug("{}: not at end of safe allocations, [{}] not allocated", ar.getActiveTrain().getTrainName(),
+                log.trace("{}: not at end of safe allocations, [{}] not allocated", ar.getActiveTrain().getTrainName(),
                         ar.getSectionName());
                 return false;
             } else if (allocateBySafeSections) {
