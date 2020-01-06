@@ -25,6 +25,8 @@ public class LayoutTurntableTest {
     @Rule   //allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2);
 
+    private static Operator.StringComparator stringComparator = null;
+
     private static LayoutEditor layoutEditor = null;
     private static LayoutTurntable layoutTurntable = null;
 
@@ -722,6 +724,9 @@ public class LayoutTurntableTest {
         JUnitUtil.setUp();
         if (!GraphicsEnvironment.isHeadless()) {
             JUnitUtil.resetProfileManager();
+
+            stringComparator = Operator.getDefaultStringComparator();
+
             //set default string matching comparator to one that exactly matches and is case sensitive
             Operator.setDefaultStringComparator(new Operator.DefaultStringComparator(true, true));
 
@@ -746,6 +751,8 @@ public class LayoutTurntableTest {
             new QueueTool().waitEmpty();
             JUnitUtil.dispose(layoutEditor);
             layoutEditor = null;
+
+            Operator.setDefaultStringComparator(stringComparator);
         }
         JUnitUtil.tearDown();
     }

@@ -26,7 +26,7 @@ public class LevelXingTest {
     @Rule   //allow 2 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(2);
 
-    private static Operator.StringComparator stringComparator;
+    private static Operator.StringComparator stringComparator = null;
 
     private static LayoutEditor layoutEditor = null;
     private static LevelXing levelXing = null;

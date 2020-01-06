@@ -25,7 +25,7 @@ public class LayoutTrackEditorsTest {
     @Rule  //allow 3 retries of intermittent tests
     public RetryRule retryRule = new RetryRule(3);
 
-        private static Operator.StringComparator stringComparator;
+    private static Operator.StringComparator stringComparator = null;
 
     private String closedString = Bundle.getMessage("BeanStateClosed");
     private String thrownString = Bundle.getMessage("BeanStateThrown");

@@ -26,7 +26,7 @@ public class LayoutEditorChecksTest {
     @Rule   //allow 3 retries
     public RetryRule retryRule = new RetryRule(3);
 
-    private static Operator.StringComparator stringComparator;
+    private static Operator.StringComparator stringComparator = null;
 
     //LayoutEditorChecks Bundle Strings
     private String toolsMenuTitle = Bundle.getMessage("MenuTools");
