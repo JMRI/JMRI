@@ -8,7 +8,7 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: Signal Masts documentation</title>
-  <meta name="Author" content="Bob Jacobsen, Egbert B79roerse">
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
   <meta name="Date.Modified" content="20160323">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -69,7 +69,7 @@
         "images/SignalMastRepeaterPane.png" width="291" height="98"
         align="right">
         
-        <p>A Signal Mast Repeater enables one physical (or virutal) signal to 
+        <p>A Signal Mast Repeater enables one physical (or virtual) signal to 
             mimic another signal's aspect.</p>
         <p>This can be useful in a number of ways:</p>
         <ul>
