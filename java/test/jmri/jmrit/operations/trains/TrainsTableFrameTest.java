@@ -46,7 +46,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         TrainsTableFrame f = new TrainsTableFrame();
         f.setLocation(10, 20);
 
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         Assert.assertEquals("sort by name", TrainsTableModel.TIMECOLUMNNAME, f.getSortBy());
         Assert.assertTrue("Build Messages", tmanager.isBuildMessagesEnabled());
@@ -56,7 +56,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.showTime);
         JemmyUtil.enterClickAndLeave(f.buildMsgBox);
         JemmyUtil.enterClickAndLeave(f.buildReportBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         Assert.assertFalse("Build Messages 2", tmanager.isBuildMessagesEnabled());
         Assert.assertTrue("Build Report 2", tmanager.isBuildReportEnabled());
@@ -65,21 +65,21 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         JemmyUtil.enterClickAndLeave(f.showId);
         JemmyUtil.enterClickAndLeave(f.buildMsgBox);
         JemmyUtil.enterClickAndLeave(f.printPreviewBox);
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
 
         Assert.assertTrue("Build Messages 3", tmanager.isBuildMessagesEnabled());
         Assert.assertTrue("Build Report 3", tmanager.isBuildReportEnabled());
         Assert.assertTrue("Print Review 3", tmanager.isPrintPreviewEnabled());
 
         // create the TrainEditFrame
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
 
         // confirm panel creation
         JmriJFrame tef = JmriJFrame.getFrame(Bundle.getMessage("TitleTrainAdd"));
         Assert.assertNotNull("train edit frame", tef);
 
         // create the TrainSwichListEditFrame
-        JemmyUtil.enterClickAndLeave(f.switchListsButton);
+        JemmyUtil.enterPushAndLeave(f.switchListsButton);
 
         // confirm panel creation
         JmriJFrame tsle = JmriJFrame.getFrame(Bundle.getMessage("TitleSwitchLists"));
@@ -128,7 +128,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         // must disable build failure messages or thread lock
         tmanager.setBuildMessagesEnabled(false);
 
-        JemmyUtil.enterClickAndLeave(f.buildButton);
+        JemmyUtil.enterPushAndLeave(f.buildButton);
 
         // need to wait for builds to complete
         Thread build = JUnitUtil.getThreadByName("Build Trains");
@@ -176,7 +176,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         // must disable build failure messages or thread lock
         tmanager.setBuildMessagesEnabled(false);
 
-        JemmyUtil.enterClickAndLeave(ttf.buildButton);
+        JemmyUtil.enterPushAndLeave(ttf.buildButton);
 
         // need to wait for builds to complete
         Thread build = JUnitUtil.getThreadByName("Build Trains");
@@ -196,7 +196,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         }
         
         // dialog window asks if user wants to terminate train, answer no
-        JemmyUtil.enterClickAndLeave(ttf.terminateButton);
+        JemmyUtil.enterPushAndLeave(ttf.terminateButton);
 
         for (Train train : tmanager.getTrainsByNameList()) {
             JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
@@ -212,7 +212,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
         }
 
      // dialog window asks if user wants to terminate train, answer yes
-        JemmyUtil.enterClickAndLeave(ttf.terminateButton);
+        JemmyUtil.enterPushAndLeave(ttf.terminateButton);
 
         for (Train train : tmanager.getTrainsByNameList()) {
             JemmyUtil.pressDialogButton(MessageFormat.format(Bundle
@@ -247,7 +247,7 @@ public class TrainsTableFrameTest extends OperationsTestCase {
             Assert.assertFalse(train.getBuildFailed());
         }
 
-        JemmyUtil.enterClickAndLeave(f.terminateButton);
+        JemmyUtil.enterPushAndLeave(f.terminateButton);
 
         JUnitUtil.dispose(f);
     }

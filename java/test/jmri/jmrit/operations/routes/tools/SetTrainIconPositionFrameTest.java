@@ -43,7 +43,7 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         Assert.assertNotNull("exists", t);
 
         // no location selected
-        JemmyUtil.enterClickAndLeave(t.placeButton);
+        JemmyUtil.enterPushAndLeave(t.placeButton);
 
         // error dialog should appear
         JemmyUtil.pressDialogButton(t, Bundle.getMessage("NoLocationSelected"), Bundle.getMessage("ButtonOK"));
@@ -51,7 +51,7 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         // select location, no panel error
         t.locationBox.setSelectedIndex(1);
 
-        JemmyUtil.enterClickAndLeave(t.placeButton);
+        JemmyUtil.enterPushAndLeave(t.placeButton);
 
         // error dialog should appear
         JemmyUtil.pressDialogButton(t, Bundle.getMessage("PanelNotFound"), Bundle.getMessage("ButtonOK"));
@@ -69,7 +69,7 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         // modify spinner and update
         JSpinnerOperator so = new JSpinnerOperator(t.spinTrainIconSouthX);
         so.setValue(234);
-        JemmyUtil.enterClickAndLeave(t.applyButton);
+        JemmyUtil.enterPushAndLeave(t.applyButton);
 
         // confirm dialog should appear
         JemmyUtil.pressDialogButton(t,
@@ -81,7 +81,7 @@ public class SetTrainIconPositionFrameTest extends OperationsTestCase {
         Assert.assertEquals("icon position", 234, rl.getTrainIconX());
 
         so.setValue(567);
-        JemmyUtil.enterClickAndLeave(t.saveButton);
+        JemmyUtil.enterPushAndLeave(t.saveButton);
 
         // confirm dialog should appear
         JemmyUtil.pressDialogButton(t,

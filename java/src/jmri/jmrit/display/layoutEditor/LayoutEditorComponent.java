@@ -127,26 +127,23 @@ class LayoutEditorComponent extends JComponent {
         g2.setStroke(narrow);
 
         // calculate the bounds for the scroll pane
-        JScrollPane scrollPane = layoutEditor.getPanelScrollPane();
+//        JScrollPane scrollPane = layoutEditor.getPanelScrollPane();
         // Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
         // log.info("  scrollBounds: " + scrollBounds);
-
         // Rectangle2D newClipBounds = SwingUtilities.convertRectangle(
         //        scrollPane.getParent(), scrollBounds, this);
-        Rectangle2D newClipBounds = MathUtil.rectangle2DToRectangle(scrollPane.getVisibleRect());
-        log.debug("  newClipBounds: {}", newClipBounds);
-
-        double scale = layoutEditor.getZoom();
-        int width = (int) (newClipBounds.getWidth() / scale);
-        int height = (int) (newClipBounds.getHeight() / scale);
-        int originX = (int) (scrollPane.getHorizontalScrollBar().getValue() / scale);
-        int originY = (int) (scrollPane.getVerticalScrollBar().getValue() / scale);
+//        Rectangle2D newClipBounds = MathUtil.rectangleToRectangle2D(scrollPane.getVisibleRect());
+//        log.debug("  newClipBounds: {}", newClipBounds);
+//
+//        double scale = layoutEditor.getZoom();
+//        int width = (int) (newClipBounds.getWidth() / scale);
+//        int height = (int) (newClipBounds.getHeight() / scale);
+//        int originX = (int) (scrollPane.getHorizontalScrollBar().getValue() / scale);
+//        int originY = (int) (scrollPane.getVerticalScrollBar().getValue() / scale);
         //log.info("  origin: {{}, {}}", originX, originY);
-
         //newClipBounds = new Rectangle2D.Double(originX, originY, width, height);
         //log.info("  newClipBounds: " + newClipBounds);
-        g2.setClip(originX, originY, width, height);
-
+//        g2.setClip(originX, originY, width, height);
         //draw horizontal lines
         for (int y = minY; y <= maxY; y += layoutEditor.gridSize1st) {
             startPt.setLocation(minX, y);

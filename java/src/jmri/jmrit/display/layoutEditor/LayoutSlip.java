@@ -11,30 +11,14 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComboBox;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.Path;
-import jmri.SignalMast;
-import jmri.Turnout;
+import javax.annotation.*;
+import javax.swing.*;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LayoutSlip is a crossing of two straight tracks designed in such a way as
@@ -1666,18 +1650,17 @@ public class LayoutSlip extends LayoutTurnout {
                     && (getTurnoutBState() == tso.getTurnoutBState()));
         }
 
-    /**
-     * Hash on the header
-     */
-    @Override
-    public int hashCode() {
-        int result = 7;
-        result = (37 * result) + getTurnoutAState();
-        result = (37 * result) + getTurnoutBState();
+        /**
+         * Hash on the header
+         */
+        @Override
+        public int hashCode() {
+            int result = 7;
+            result = (37 * result) + getTurnoutAState();
+            result = (37 * result) + getTurnoutBState();
 
-        return result;
-    }
-
+            return result;
+        }
     }   // class TurnoutState
 
     /*

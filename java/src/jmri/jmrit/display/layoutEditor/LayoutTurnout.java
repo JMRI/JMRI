@@ -1,7 +1,5 @@
 package jmri.jmrit.display.layoutEditor;
 
-import static java.lang.Float.POSITIVE_INFINITY;
-
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Graphics2D;
@@ -2003,7 +2001,7 @@ public class LayoutTurnout extends LayoutTrack {
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
-        double distance, minDistance = POSITIVE_INFINITY;
+        double distance, minDistance = Double.POSITIVE_INFINITY;
 
         // check center coordinates
         if (!requireUnconnected) {
@@ -2883,7 +2881,7 @@ public class LayoutTurnout extends LayoutTrack {
                     popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                         @Override
                         public void actionPerformed(ActionEvent e) {
-                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
+                            LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                             layoutEditor.getLETools().setSensorsAtTurnoutFromMenu(
                                     LayoutTurnout.this,
                                     boundaryBetween,

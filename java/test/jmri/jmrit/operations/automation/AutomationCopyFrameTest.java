@@ -23,13 +23,13 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
 
         f.setVisible(true);
 
-        JemmyUtil.enterClickAndLeave(f.copyButton);
+        JemmyUtil.enterPushAndLeave(f.copyButton);
         // dialog window requesting name for automation should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
 
         // enter a name for the automation
         f.automationNameTextField.setText("Name of new automation");
-        JemmyUtil.enterClickAndLeave(f.copyButton);
+        JemmyUtil.enterPushAndLeave(f.copyButton);
         // dialog window requesting automation to copy should appear
         JemmyUtil.pressDialogButton(f, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
 
@@ -54,13 +54,13 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
 
         copyFrame.setVisible(true);
 
-        JemmyUtil.enterClickAndLeave(copyFrame.copyButton);
+        JemmyUtil.enterPushAndLeave(copyFrame.copyButton);
         // dialog window requesting name for automation should appear
         JemmyUtil.pressDialogButton(copyFrame, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
 
         // enter a name for the automation
         copyFrame.automationNameTextField.setText("Name of new automation 2");
-        JemmyUtil.enterClickAndLeave(copyFrame.copyButton);
+        JemmyUtil.enterPushAndLeave(copyFrame.copyButton);
 
         // dialog window requesting automation to copy should appear
         JemmyUtil.pressDialogButton(copyFrame, Bundle.getMessage("CanNotCopyAutomation"), Bundle.getMessage("ButtonOK"));
@@ -70,7 +70,7 @@ public class AutomationCopyFrameTest extends OperationsTestCase {
 
         //now select the automation to copy
         copyFrame.automationBox.setSelectedIndex(1);
-        JemmyUtil.enterClickAndLeave(copyFrame.copyButton);
+        JemmyUtil.enterPushAndLeave(copyFrame.copyButton);
 
         Automation copiedAutomation = manager.getAutomationByName("Name of new automation 2");
         Assert.assertNotNull(copiedAutomation);

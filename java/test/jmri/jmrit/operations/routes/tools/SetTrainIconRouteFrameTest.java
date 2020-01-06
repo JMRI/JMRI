@@ -50,7 +50,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         SetTrainIconRouteFrame t = new SetTrainIconRouteFrame(route);
         Assert.assertNotNull("exists",t);
         
-        JemmyUtil.enterClickAndLeave(t.placeButton);
+        JemmyUtil.enterPushAndLeave(t.placeButton);
 
         // error dialog should appear
         JemmyUtil.pressDialogButton(t, Bundle.getMessage("PanelNotFound"), Bundle.getMessage("ButtonOK"));
@@ -62,7 +62,7 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         // modify spinner and update
         JSpinnerOperator so = new JSpinnerOperator(t.spinTrainIconX);
         so.setValue(345);
-        JemmyUtil.enterClickAndLeave(t.applyButton);
+        JemmyUtil.enterPushAndLeave(t.applyButton);
         
         // confirmation dialog should appear      
         JemmyUtil.pressDialogButton(t, Bundle.getMessage("DoYouWantThisRoute"), Bundle.getMessage("ButtonYes"));
@@ -70,14 +70,14 @@ public class SetTrainIconRouteFrameTest extends OperationsTestCase {
         Assert.assertEquals("icon position", 345, rl.getTrainIconX());
         
         // Save changes
-        JemmyUtil.enterClickAndLeave(t.saveButton);
+        JemmyUtil.enterPushAndLeave(t.saveButton);
         
-        JemmyUtil.enterClickAndLeave(t.nextButton);
+        JemmyUtil.enterPushAndLeave(t.nextButton);
         
         // confirm next route location has been loaded
         Assert.assertEquals("spinner value for ", 75, t.spinTrainIconX.getValue());
         
-        JemmyUtil.enterClickAndLeave(t.previousButton);
+        JemmyUtil.enterPushAndLeave(t.previousButton);
         
         // confirm previous route location has been loaded
         Assert.assertEquals("spinner value for ", 345, t.spinTrainIconX.getValue());

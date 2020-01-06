@@ -28,7 +28,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "");
         f.addTextBox.setText("New Load");
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
         // new load should appear at start of list
         Assert.assertEquals("new load", "New Load", f.loadComboBox.getItemAt(0));
 
@@ -47,7 +47,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "");
         f.addTextBox.setText("A" + CarLoad.SPLIT_CHAR + "B");
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
         
         // error dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("canNotUseLoadName"), Bundle.getMessage("ButtonOK"));
@@ -74,7 +74,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         }
         
         f.addTextBox.setText(sb.toString());
-        JemmyUtil.enterClickAndLeave(f.addButton);
+        JemmyUtil.enterPushAndLeave(f.addButton);
         
         // error dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("canNotUseLoadName"), Bundle.getMessage("ButtonOK"));
@@ -101,7 +101,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         f.initComponents("Boxcar", "Test Load");
         f.addTextBox.setText("Replace Load");
         
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterPushAndLeave(f.replaceButton);
         
         // dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
@@ -130,7 +130,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         f.initComponents("Boxcar", "E");
         f.addTextBox.setText("Replace E");
         
-        JemmyUtil.enterClickAndLeave(f.replaceButton);
+        JemmyUtil.enterPushAndLeave(f.replaceButton);
         
         // dialog window should appear
         JemmyUtil.pressDialogButton(Bundle.getMessage("replaceAll"), Bundle.getMessage("ButtonYes"));
@@ -154,7 +154,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "Test Load");
-        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        JemmyUtil.enterPushAndLeave(f.deleteButton);
         
         Assert.assertFalse("exists", cl.containsName("Boxcar", "Test Load"));
 
@@ -179,7 +179,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         // add messages
         f.pickupCommentTextField.setText("test pickup message");
         f.dropCommentTextField.setText("test drop message");
-        JemmyUtil.enterClickAndLeave(f.saveButton);
+        JemmyUtil.enterPushAndLeave(f.saveButton);
         
         Assert.assertEquals("Empty", cl.getLoadType("Boxcar", "Test Load"));
         Assert.assertEquals("High", cl.getPriority("Boxcar", "Test Load"));
@@ -198,7 +198,7 @@ public class CarLoadEditFrameTest extends OperationsTestCase {
         
         CarLoadEditFrame f = new CarLoadEditFrame();
         f.initComponents("Boxcar", "L");
-        JemmyUtil.enterClickAndLeave(f.deleteButton);
+        JemmyUtil.enterPushAndLeave(f.deleteButton);
         
         // error dialog window should appear
         JemmyUtil.pressDialogButton(MessageFormat.format(Bundle

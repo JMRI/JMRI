@@ -1,26 +1,11 @@
 package jmri.jmrit.throttle;
 
 import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import jmri.DccLocoAddress;
-import jmri.jmrit.DccLocoAddressSelector;
 import jmri.util.swing.JemmyUtil;
 import org.netbeans.jemmy.ComponentChooser;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-import org.netbeans.jemmy.operators.JInternalFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
-import org.netbeans.jemmy.operators.JPopupMenuOperator;
-import org.netbeans.jemmy.operators.JTextFieldOperator;
-import org.netbeans.jemmy.operators.JToggleButtonOperator;
-import org.netbeans.jemmy.operators.JRadioButtonOperator;
-import org.netbeans.jemmy.operators.JSliderOperator;
-import org.netbeans.jemmy.operators.JSpinnerOperator;
-import org.netbeans.jemmy.util.NameComponentChooser;
+import org.netbeans.jemmy.operators.*;
 
 /*
  *  Helper class for operating the Throttle Frame.
@@ -39,22 +24,22 @@ public class ThrottleOperator extends JFrameOperator {
 
    // Address Panel Operations
    public JInternalFrameOperator getAddressPanelOperator(){
-       return new JInternalFrameOperator(this, 
+       return new JInternalFrameOperator(this,
 		       Bundle.getMessage("ThrottleMenuViewAddressPanel"));
    }
 
    private AddressPanel getAddressPanel(){
 	AddressPanel ap = (AddressPanel) findSubComponent(
-	       new ComponentChooser() { 
+	       new ComponentChooser() {
                   @Override
-       	          public boolean checkComponent(Component c) { 
-		      if (c instanceof AddressPanel ) 
-			   return true; 
-		      else return false; 
-	          } 
+       	          public boolean checkComponent(Component c) {
+		      if (c instanceof AddressPanel )
+			   return true;
+		      else return false;
+	          }
                   @Override
-	          public String getDescription() { 
-		      return "Find AddressSelector"; 
+	          public String getDescription() {
+		      return "Find AddressSelector";
 	          }
 	});
 	return ap;
@@ -109,7 +94,7 @@ public class ThrottleOperator extends JFrameOperator {
    public boolean releaseButtonEnabled(){
         return (new JButtonOperator(this,Bundle.getMessage("ButtonRelease"))).isEnabled();
    }
-   
+
    public boolean dispatchButtonEnabled(){
         return (new JButtonOperator(this,Bundle.getMessage("ButtonDispatch"))).isEnabled();
    }
@@ -131,18 +116,18 @@ public class ThrottleOperator extends JFrameOperator {
            (new JButtonOperator(jdo,Bundle.getMessage("ButtonNo"))).doClick();
         }
     }
-    
+
     // Steal / Share / Cancel dialogue operators
     public void answerStealShareQuestionSteal(){
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealShareRequestTitle"));
         new JButtonOperator(jdo,Bundle.getMessage("StealButton")).doClick();
     }
-    
+
     public void answerStealShareQuestionShare(){
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealShareRequestTitle"));
         new JButtonOperator(jdo,Bundle.getMessage("ShareButton")).doClick();
     }
-    
+
     public void answerStealShareQuestionCancel(){
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("StealShareRequestTitle"));
         new JButtonOperator(jdo,Bundle.getMessage("CancelButton")).doClick();
@@ -150,7 +135,7 @@ public class ThrottleOperator extends JFrameOperator {
 
    // Function panel operations
    public JInternalFrameOperator getFunctionPanelOperator(){
-       return new JInternalFrameOperator(this, 
+       return new JInternalFrameOperator(this,
 		       Bundle.getMessage("ThrottleMenuViewFunctionPanel"));
    }
 
@@ -160,22 +145,22 @@ public class ThrottleOperator extends JFrameOperator {
 
    public void pushAlt1Button(){
 	JToggleButton alt1Button = (JToggleButton) findSubComponent(
-	       new ComponentChooser() { 
+	       new ComponentChooser() {
                   @Override
-       	          public boolean checkComponent(Component c) { 
+       	          public boolean checkComponent(Component c) {
 		      if (c instanceof JToggleButton ) {
-			   if(((JToggleButton)c).getText().equals("*")){ 
-			      return true; 
+			   if(((JToggleButton)c).getText().equals("*")){
+			      return true;
 			   } else {
                               return false;
                            }
 		      } else {
 			return false;
                       }
-	          } 
+	          }
                   @Override
-	          public String getDescription() { 
-		      return "Find Function Button"; 
+	          public String getDescription() {
+		      return "Find Function Button";
 	          }
 	});
 	JemmyUtil.enterClickAndLeave(alt1Button);
@@ -183,22 +168,22 @@ public class ThrottleOperator extends JFrameOperator {
 
    public void pushAlt2Button(){
 	JToggleButton alt1Button = (JToggleButton) findSubComponent(
-	       new ComponentChooser() { 
+	       new ComponentChooser() {
                   @Override
-       	          public boolean checkComponent(Component c) { 
+       	          public boolean checkComponent(Component c) {
 		      if (c instanceof JToggleButton ) {
-			   if(((JToggleButton)c).getText().equals("#")){ 
-			      return true; 
+			   if(((JToggleButton)c).getText().equals("#")){
+			      return true;
 			   } else {
                               return false;
                            }
 		      } else {
 			return false;
                       }
-	          } 
+	          }
                   @Override
-	          public String getDescription() { 
-		      return "Find Function Button"; 
+	          public String getDescription() {
+		      return "Find Function Button";
 	          }
 	});
 	JemmyUtil.enterClickAndLeave(alt1Button);
@@ -206,22 +191,22 @@ public class ThrottleOperator extends JFrameOperator {
 
    public FunctionButton getFunctionButton(int function){
 	FunctionButton retval = (FunctionButton) findSubComponent(
-	       new ComponentChooser() { 
+	       new ComponentChooser() {
                   @Override
-       	          public boolean checkComponent(Component c) { 
+       	          public boolean checkComponent(Component c) {
 		      if (c instanceof FunctionButton ) {
-			   if(((FunctionButton)c).getIdentity()==function){ 
-			      return true; 
+			   if(((FunctionButton)c).getIdentity()==function){
+			      return true;
 			   } else {
                               return false;
                            }
 		      } else {
 			return false;
                       }
-	          } 
+	          }
                   @Override
-	          public String getDescription() { 
-		      return "Find Function Button"; 
+	          public String getDescription() {
+		      return "Find Function Button";
 	          }
 	});
         return retval;
@@ -240,12 +225,12 @@ public class ThrottleOperator extends JFrameOperator {
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("ButtonEditFunction"));
         (new JCheckBoxOperator(jdo,Bundle.getMessage("CheckBoxLockable"))).doClick();
         (new JButtonOperator(jdo,Bundle.getMessage("ButtonOK"))).doClick();
-        
+
    }
 
    // Control (Speed and Direction) panel operations
    public JInternalFrameOperator getControlPanelOperator(){
-       return new JInternalFrameOperator(this, 
+       return new JInternalFrameOperator(this,
 		       Bundle.getMessage("ThrottleMenuViewControlPanel"));
    }
 
@@ -306,7 +291,7 @@ public class ThrottleOperator extends JFrameOperator {
         JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("TitleEditSpeedControlPanel"));
         (new JRadioButtonOperator(jdo,Bundle.getMessage("ButtonDisplaySpeedSteps"))).doClick();
         (new JButtonOperator(jdo,Bundle.getMessage("ButtonOK"))).doClick();
-         
+
    }
 
    public void setSpeedSpinner(int i){

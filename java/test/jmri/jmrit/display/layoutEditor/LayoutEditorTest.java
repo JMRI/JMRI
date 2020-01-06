@@ -3,8 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.Toolkit;
 import java.io.File;
-import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
+import jmri.*;
 import jmri.jmrit.display.*;
 import jmri.util.*;
 import jmri.util.junit.rules.*;
@@ -23,11 +22,11 @@ import org.netbeans.jemmy.operators.JMenuOperator;
  */
 public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
 
-    @Rule
-    public Timeout globalTimeout = Timeout.seconds(10); // 10 second timeout for methods in this test class.
+    @Rule   // 10 second timeout for methods in this test class.
+    public Timeout globalTimeout = Timeout.seconds(10);
 
-    @Rule
-    public RetryRule retryRule = new RetryRule(3); // allow 3 retries
+    @Rule   // allow 3 retries
+    public RetryRule retryRule = new RetryRule(3);
 
     @Before
     @Override
@@ -840,18 +839,18 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         e.setHighlightSelectedBlock(true);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertTrue("le.getHighlightSelectedBlock after setHighlightSelectedBlock(true)", e.getHighlightSelectedBlock());
     }
 
     @Test
-    @Ignore("unreliable on CI servers")
+    ///@Ignore("unreliable on CI servers")
     public void testSetHighlightSelectedBlockFalse() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setHighlightSelectedBlock(false);
         // setHighlightSelectedBlock performs some GUI actions, so give
         // the AWT queue some time to clear.
-        new QueueTool().waitEmpty(100);
+        new EventTool().waitNoEvent(100);
         Assert.assertFalse("le.getHighlightSelectedBlock after setHighlightSelectedBlock(false)", e.getHighlightSelectedBlock());
     }
 
@@ -906,7 +905,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on Travis 12/20/2019")
     public void testToolBarPositionLeft() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
@@ -929,7 +928,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on Travis 12/20/2019")
     public void testToolBarPositionBottom() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
@@ -952,7 +951,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on Travis 12/20/2019")
     public void testToolBarPositionRight() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
@@ -975,7 +974,7 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     }
 
     @Test
-    @Ignore("Fails on AppVeyor, macOS and Windows 12/20/2019")
+    ///@Ignore("Fails on Travis 12/20/2019")
     public void testToolBarPositionFloat() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         e.setVisible(true);
@@ -988,8 +987,12 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
                 + Bundle.getMessage("ToolBarSide") + "/"
                 + Bundle.getMessage("ToolBarSideFloat"), "/");
 
+        new EventTool().waitNoEvent(200);
+
         // bring this window back to the front...
         jfo.activate();
+
+        new EventTool().waitNoEvent(200);
 
         //back to Top
         jmo.pushMenu(Bundle.getMessage("MenuOptions") + "/"

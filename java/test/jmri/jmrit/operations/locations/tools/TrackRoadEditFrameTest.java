@@ -56,14 +56,14 @@ public class TrackRoadEditFrameTest extends OperationsTestCase {
         Assert.assertTrue(tlef.isVisible());
 
         JemmyUtil.enterClickAndLeave(tlef.roadNameInclude);
-        JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(tlef.saveTrackButton);
 
         // error dialog window show appear
         JemmyUtil.pressDialogButton(tlef, Bundle.getMessage("ErrorNoRoads"), Bundle.getMessage("ButtonOK"));
 
         // only road "AA" is to be accepted
-        JemmyUtil.enterClickAndLeave(tlef.addRoadButton);
-        JemmyUtil.enterClickAndLeave(tlef.saveTrackButton);
+        JemmyUtil.enterPushAndLeave(tlef.addRoadButton);
+        JemmyUtil.enterPushAndLeave(tlef.saveTrackButton);
 
         Assert.assertTrue(track.acceptsRoadName("AA"));
 

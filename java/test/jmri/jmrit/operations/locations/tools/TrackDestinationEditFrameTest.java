@@ -53,7 +53,7 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         tdef.initComponents(track);       
         Assert.assertNotNull("exists",tdef);
         
-        JemmyUtil.enterClickAndLeave(tdef.checkDestinationsButton);       
+        JemmyUtil.enterPushAndLeave(tdef.checkDestinationsButton);       
         // the save should have opened a dialog window
         JemmyUtil.pressDialogButton(tdef, Bundle.getMessage("WarningCarMayNotMove"), "Cancel");
         
@@ -61,7 +61,7 @@ public class TrackDestinationEditFrameTest extends OperationsTestCase {
         Assert.assertFalse("Only cars with destinations", track.isOnlyCarsWithFinalDestinationEnabled());
         
         JemmyUtil.enterClickAndLeave(tdef.onlyCarsWithFD);
-        JemmyUtil.enterClickAndLeave(tdef.saveTrackButton); 
+        JemmyUtil.enterPushAndLeave(tdef.saveTrackButton); 
         
         Assert.assertTrue("Only cars with destinations", track.isOnlyCarsWithFinalDestinationEnabled());
         

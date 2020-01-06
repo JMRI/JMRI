@@ -197,33 +197,37 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * Accessor methods
      */
     // TODO: deprecate and just use getUserName() directly
+    @Nonnull
     public String getId() {
         return getUserName();
     }
 
+    @Nonnull
     public Color getBlockTrackColor() {
         return blockTrackColor;
     }
 
-    public void setBlockTrackColor(Color color) {
+    public void setBlockTrackColor(@Nonnull Color color) {
         blockTrackColor = color;
         JmriColorChooser.addRecentColor(color);
     }
 
+    @Nonnull
     public Color getBlockOccupiedColor() {
         return blockOccupiedColor;
     }
 
-    public void setBlockOccupiedColor(Color color) {
+    public void setBlockOccupiedColor(@Nonnull Color color) {
         blockOccupiedColor = color;
         JmriColorChooser.addRecentColor(color);
     }
 
+    @Nonnull
     public Color getBlockExtraColor() {
         return blockExtraColor;
     }
 
-    public void setBlockExtraColor(Color color) {
+    public void setBlockExtraColor(@Nonnull Color color) {
         blockExtraColor = color;
         JmriColorChooser.addRecentColor(color);
     }
@@ -265,21 +269,21 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      *
      * @param panel to keep track of
      */
-    public void addLayoutEditor(LayoutEditor panel) {
+    public void addLayoutEditor(@Nonnull LayoutEditor panel) {
         //add to the panels list if not already there
         if (!panels.contains(panel)) {
             panels.add(panel);
         }
     }
 
-    public void deleteLayoutEditor(LayoutEditor panel) {
+    public void deleteLayoutEditor(@Nonnull LayoutEditor panel) {
         //remove from the panels list if there
         if (panels.contains(panel)) {
             panels.remove(panel);
         }
     }
 
-    public boolean isOnPanel(LayoutEditor panel) {
+    public boolean isOnPanel(@Nonnull LayoutEditor panel) {
         //returns true if this Layout Block is used on panel
         return panels.contains(panel);
     }
@@ -307,7 +311,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      *                   a default <code>Frame</code> is used
      * @return the validated sensor
      */
-    public Sensor validateSensor(String sensorName, Component openFrame) {
+    @CheckForNull
+    public Sensor validateSensor(@CheckForNull String sensorName, @Nullable Component openFrame) {
         //check if anything entered
         if ((sensorName == null) || sensorName.isEmpty()) {
             //no sensor name entered
@@ -370,7 +375,8 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      * @param openFrame the frame to display any error dialog in
      * @return the memory
      */
-    public Memory validateMemory(String memName, Component openFrame) {
+    @CheckForNull
+    public Memory validateMemory(@CheckForNull String memName, Component openFrame) {
         //check if anything entered
         if ((memName == null) || memName.isEmpty()) {
             //no memory entered
@@ -474,7 +480,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      *
      * @param name for memory
      */
-    public void setMemoryName(String name) {
+    public void setMemoryName(@CheckForNull String name) {
         if ((name == null) || name.isEmpty()) {
             namedMemory = null;
             memoryName = "";
@@ -535,7 +541,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      *
      * @param name for senor to add
      */
-    public void setOccupancySensorName(String name) {
+    public void setOccupancySensorName(@CheckForNull String name) {
         if ((name == null) || name.isEmpty()) {
             if (occupancyNamedSensor != null) {
                 occupancyNamedSensor.getBean().removePropertyChangeListener(mBlockListener);
@@ -2907,7 +2913,7 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
      *
      * @param inBlockName to find in route
      */
-    public void printRoutes(String inBlockName) {
+    public void printRoutes(@Nonnull String inBlockName) {
         log.info("Routes for block " + this.getDisplayName());
         log.info("Our Block, Destination, Next Block, Hop Count, Direction, Metric");
         for (int i = 0; i < routes.size(); i++) {
@@ -4786,5 +4792,4 @@ public class LayoutBlock extends AbstractNamedBean implements PropertyChangeList
     }
 
     private final static Logger log = LoggerFactory.getLogger(LayoutBlock.class);
-
 }
