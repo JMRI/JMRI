@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Date;
 import javax.swing.Timer;
-import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusEvent;
 
 // import org.slf4j.Logger;
@@ -23,7 +22,7 @@ public class CbusEventRequestMonitorEvent extends CbusEvent {
     }
     
     private ActionListener eventFeedbackListener;
-    private CbusEventRequestDataModel _model;
+    private final CbusEventRequestDataModel _model;
     private Date _timestamp;
     private int _feedbackTimeout;
     private int _feedbackTotReqd;
@@ -51,10 +50,7 @@ public class CbusEventRequestMonitorEvent extends CbusEvent {
     }
     
     public Boolean matchesFeedback(int nn, int en) {
-        if ( (nn == _extraNode) && (en == _extraEvent) ) {
-            return true;
-        }
-        return false;
+        return (nn == _extraNode) && (en == _extraEvent);
     }
     
     protected Date getDate(){
@@ -130,17 +126,14 @@ public class CbusEventRequestMonitorEvent extends CbusEvent {
     private void startTheTimer(){
         
         final String _evName = this.toString();
-        eventFeedbackListener = new ActionListener(){
-            @Override
-            public void actionPerformed( ActionEvent e ){
-                _model.setValueAt(0, _model.eventRow( getNn(),getEn() ), 
+        eventFeedbackListener = (ActionEvent e) -> {
+            _model.setValueAt(0, _model.eventRow( getNn(),getEn() ), 
                     CbusEventRequestDataModel.FEEDBACKOUTSTANDING_COLUMN);
-                _model.setValueAt(CbusEventRequestMonitorEvent.FbState.LfbBad, _model.eventRow(getNn(),getEn()),
+            _model.setValueAt(CbusEventRequestMonitorEvent.FbState.LfbBad, _model.eventRow(getNn(),getEn()),
                     CbusEventRequestDataModel.LASTFEEDBACK_COLUMN);
-                _model.addToLog(3, Bundle.getMessage("FeedBackNotOK", _evName ) );
-                _timer.stop();
-                _timer = null;
-            }
+            _model.addToLog(3, Bundle.getMessage("FeedBackNotOK", _evName ) );
+            _timer.stop();
+            _timer = null;
         };
         _timer = new Timer( getFeedbackTimeout(), eventFeedbackListener);
         _timer.setRepeats( false );

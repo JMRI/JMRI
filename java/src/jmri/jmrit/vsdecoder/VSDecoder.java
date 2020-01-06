@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * generates sounds in responds to them.
  * <p>
  * Each VSDecoder implements exactly one Sound Profile (describes a particular
- * type of locomtive, say, an EMD GP7).
+ * type of locomotive, say, an EMD GP7).
  * <hr>
  * This file is part of JMRI.
  * <p>
@@ -134,12 +134,12 @@ public class VSDecoder implements PropertyChangeListener {
 
         if (log.isDebugEnabled()) {
             log.debug("VSDecoder Init Complete.  Audio Objects Created:");
-            for (String s : jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.SOURCE)) {
+            jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.SOURCE).forEach((s) -> {
                 log.debug("\tSource: {}", s);
-            }
-            for (String s : jmri.InstanceManager.getDefault(jmri.AudioManager.class).getSystemNameList(Audio.BUFFER)) {
+            });
+            jmri.InstanceManager.getDefault(jmri.AudioManager.class).getNamedBeanSet(Audio.BUFFER).forEach((s) -> {
                 log.debug("\tBuffer: {}", s);
-            }
+            });
         }
     }
 

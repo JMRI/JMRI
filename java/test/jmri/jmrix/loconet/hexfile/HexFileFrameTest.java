@@ -37,6 +37,7 @@ public class HexFileFrameTest {
         p.dispose();
         f.sourceThread.stop();
         f.sourceThread.join();
+        f.dispose();   
  }   
 
     // The minimal setup for log4J

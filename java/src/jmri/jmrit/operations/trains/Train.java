@@ -24,12 +24,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
@@ -421,7 +416,7 @@ public class Train implements java.beans.PropertyChangeListener {
                 if (foundRouteLocation) {
                     if (TrainCommon.splitString(rl.getName())
                             .equals(TrainCommon.splitString(routeLocation.getName()))) {
-                        minutes = minutes + calculateWorkTimeAtLocation(rl);
+                        minutes = minutes + getWorkTimeAtLocation(rl);
                     } else {
                         break; // done
                     }
@@ -432,7 +427,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return parseTime(minutes);
     }
 
-    private int calculateWorkTimeAtLocation(RouteLocation routeLocation) {
+    public int getWorkTimeAtLocation(RouteLocation routeLocation) {
         int minutes = 0;
         // departure?
         if (routeLocation == getTrainDepartsRouteLocation()) {
@@ -450,7 +445,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return minutes;
     }
 
-    protected int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
+    public int getExpectedTravelTimeInMinutes(RouteLocation routeLocation) {
         int minutes = 0;
         if (!isTrainEnRoute()) {
             minutes += Integer.parseInt(getDepartureTimeMinute());
@@ -497,7 +492,7 @@ public class Train implements java.beans.PropertyChangeListener {
                     continue;
                 }
                 // now add the work at the location
-                minutes = minutes + calculateWorkTimeAtLocation(rl);
+                minutes = minutes + getWorkTimeAtLocation(rl);
             }
         }
         return minutes;
@@ -1006,7 +1001,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return types;
     }
 
-    protected String[] getCarTypeNames() {
+    public String[] getCarTypeNames() {
         List<String> list = new ArrayList<>();
         for (String type : _typeList) {
             if (InstanceManager.getDefault(CarTypes.class).containsName(type)) {
@@ -1020,7 +1015,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return types;
     }
 
-    protected String[] getLocoTypeNames() {
+    public String[] getLocoTypeNames() {
         List<String> list = new ArrayList<>();
         for (String type : _typeList) {
             if (InstanceManager.getDefault(EngineTypes.class).containsName(type)) {

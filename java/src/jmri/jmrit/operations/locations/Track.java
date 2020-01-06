@@ -3,6 +3,12 @@ package jmri.jmrit.operations.locations;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.jdom2.Attribute;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.jmrit.operations.OperationsXml;
@@ -10,12 +16,7 @@ import jmri.jmrit.operations.locations.schedules.Schedule;
 import jmri.jmrit.operations.locations.schedules.ScheduleItem;
 import jmri.jmrit.operations.locations.schedules.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
-import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.*;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
@@ -26,10 +27,6 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.schedules.TrainSchedule;
 import jmri.jmrit.operations.trains.schedules.TrainScheduleManager;
-import org.jdom2.Attribute;
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents a location (track) on the layout Can be a spur, yard, staging, or
@@ -2195,7 +2192,7 @@ public class Track {
     }
 
     public boolean isLoadSwapEnabled() {
-        return (0 < (_loadOptions & SWAP_GENERIC_LOADS));
+        return (0 != (_loadOptions & SWAP_GENERIC_LOADS));
     }
 
     /**
@@ -2213,7 +2210,7 @@ public class Track {
     }
 
     public boolean isLoadEmptyEnabled() {
-        return (0 < (_loadOptions & EMPTY_GENERIC_LOADS));
+        return (0 != (_loadOptions & EMPTY_GENERIC_LOADS));
     }
 
     /**
@@ -2230,7 +2227,7 @@ public class Track {
     }
 
     public boolean isRemoveCustomLoadsEnabled() {
-        return (0 < (_loadOptions & EMPTY_CUSTOM_LOADS));
+        return (0 != (_loadOptions & EMPTY_CUSTOM_LOADS));
     }
 
     /**
@@ -2249,7 +2246,7 @@ public class Track {
     }
 
     public boolean isAddCustomLoadsEnabled() {
-        return (0 < (_loadOptions & GENERATE_CUSTOM_LOADS));
+        return (0 != (_loadOptions & GENERATE_CUSTOM_LOADS));
     }
 
     /**
@@ -2269,7 +2266,7 @@ public class Track {
     }
 
     public boolean isAddCustomLoadsAnySpurEnabled() {
-        return (0 < (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_SPUR));
+        return (0 != (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_SPUR));
     }
 
     /**
@@ -2289,7 +2286,7 @@ public class Track {
     }
 
     public boolean isAddCustomLoadsAnyStagingTrackEnabled() {
-        return (0 < (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK));
+        return (0 != (_loadOptions & GENERATE_CUSTOM_LOADS_ANY_STAGING_TRACK));
     }
 
     public void setBlockCarsEnabled(boolean enable) {
@@ -2306,7 +2303,7 @@ public class Track {
      * @return true if blocking is enabled.
      */
     public boolean isBlockCarsEnabled() {
-        return (0 < (_blockOptions & BLOCK_CARS));
+        return (0 != (_blockOptions & BLOCK_CARS));
     }
 
     public void setPool(Pool pool) {

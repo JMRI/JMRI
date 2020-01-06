@@ -1,6 +1,8 @@
 package jmri.jmrix.lenz;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
@@ -31,6 +33,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public XNetSystemConnectionMemo getMemo() {
         return (XNetSystemConnectionMemo) memo;
     }
@@ -45,18 +48,22 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     // XpressNet specific methods
 
     /**
-     * Create a new Sensor based on the system name.
+     * {@inheritDoc}
+     * <p>
      * Assumes calling method has checked that a Sensor with this
      * system name does not already exist.
      *
-     * @return null if the system name is not in a valid format
+     * @throws IllegalArgumentException when SystemName can't be converted
      */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         // check if the output bit is available
         int bitNum = XNetAddress.getBitFromSystemName(systemName, getSystemPrefix());
         if (bitNum == -1) {
-            return (null);
+            throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                    systemName +
+                    " to XNet sensor address"); // NOI18N
         }
         // normalize system name
         String sName = getSystemNamePrefix() + bitNum;
@@ -123,7 +130,8 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         if (name.contains(":")) {
             validateSystemNamePrefix(name, locale);
             String[] parts = name.substring(getSystemNamePrefix().length()).split(":");
@@ -169,17 +177,18 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (XNetAddress.validSystemNameFormat(systemName, 'S', getSystemPrefix()));
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     @Override
-    synchronized public String createSystemName(String curAddress, String prefix) throws JmriException {
+    @Nonnull
+    synchronized public String createSystemName(@Nonnull String curAddress, @Nonnull String prefix) throws JmriException {
         int encoderAddress = 0;
         int input = 0;
 
@@ -206,13 +215,13 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
         return prefix + typeLetter() + iName;
     }
 
-    int iName; // must synchronize to avoid race conditions.
+    private int iName; // must synchronize to avoid race conditions.
 
     /**
      * Does not enforce any rules on the encoder or input values.
      */
     @Override
-    synchronized public String getNextValidAddress(String curAddress, String prefix) {
+    synchronized public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
 
         String tmpSName = "";
 

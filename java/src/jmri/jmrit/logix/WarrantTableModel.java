@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -34,10 +33,7 @@ import org.slf4j.LoggerFactory;
  * @author Pete Cressman Copyright (C) 2009, 2010
  */
 
-class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // AbstractTableModel
-                                                                        // implements
-                                                                        // PropertyChangeListener
-{
+class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
     public static final int WARRANT_COLUMN = 0;
     public static final int ROUTE_COLUMN = 1;
     public static final int TRAIN_NAME_COLUMN = 2;
@@ -361,7 +357,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             return new JTextField(45).getPreferredSize().width;
         case EDIT_COLUMN:
         case DELETE_COLUMN:
-            return new JButton("DELETE").getPreferredSize().width;
+            return new JButton("Delete").getPreferredSize().width;
         default:
             // fall out
             break;

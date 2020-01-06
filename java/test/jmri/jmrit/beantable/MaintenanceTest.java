@@ -19,7 +19,7 @@ import org.netbeans.jemmy.operators.JFrameOperator;
 public class MaintenanceTest {
 
     @Rule
-    public Timeout globalTimeout = Timeout.seconds(1000);
+    public Timeout globalTimeout = Timeout.seconds(10);
 
     @Rule
     public RetryRule retryRule = new RetryRule(1); // allow 1 retry

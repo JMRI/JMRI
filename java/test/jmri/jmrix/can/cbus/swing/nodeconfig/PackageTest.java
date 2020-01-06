@@ -13,7 +13,6 @@ import org.junit.runners.Suite;
     CbusNodeFcuTablePaneTest.class,
     CbusNodeInfoPaneTest.class,
     CbusNodeNVEditTablePaneTest.class,
-    CbusNodeNVTablePaneTest.class,
     CbusNodeRestoreFcuFrameTest.class,
     CbusNodeSetupPaneTest.class,
     CbusNodeSingleEventEditTablePaneTest.class,

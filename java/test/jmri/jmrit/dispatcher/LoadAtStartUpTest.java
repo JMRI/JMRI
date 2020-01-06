@@ -17,6 +17,7 @@ import jmri.SensorManager;
 import jmri.SignalMastManager;
 import jmri.Throttle;
 import jmri.ThrottleManager;
+import jmri.jmrit.logix.WarrantPreferences;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;
@@ -31,12 +32,12 @@ import jmri.util.JUnitUtil;
 public class LoadAtStartUpTest {
 
     @Test
-    @SuppressWarnings("null")
     public void testShowAndClose() throws Exception {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
 
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
 
         // load layout file
         java.io.File f = new java.io.File("java/test/jmri/jmrit/dispatcher/DispatcherSMLLayout.xml");
@@ -189,6 +190,11 @@ public class LoadAtStartUpTest {
 
         Assert.assertTrue("All trains terminated", (d.getActiveTrainsList().isEmpty()));
 
+        JFrameOperator aw = new JFrameOperator("AutoTrains");
+
+        aw.requestClose();
+        dw.requestClose();
+
         // cleanup window
         JUnitUtil.dispose(d);
     }
@@ -204,6 +210,7 @@ public class LoadAtStartUpTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
     }

@@ -1,6 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
 "http://www.w3.org/TR/html4/strict.dtd">
-
 <html lang="en">
 <head>
   <meta name="generator" content=
@@ -14,11 +13,10 @@
 
 <body>
   <!--#include virtual="/Header.shtml" -->
-
   <div id="mBody">
     <!--#include virtual="Sidebar.shtml" -->
-
     <div id="mainContent">
+
       <h1>JMRI: Technical Information</h1>
 
       <p>You don't need to work with your own copy of the JMRI
@@ -271,7 +269,7 @@
         form, but you must give JMRI credit for their content.</li>
       </ul>
       <p>If you have any questions about this, please <a href=
-      "mailto:jmri@pacbell.net">contact us</a> directly.</p>
+      "mailto:jmri@jmri.net">contact us</a> directly.</p>
 
       <h2>Visualizations of JMRI Development Activity</h2>
 

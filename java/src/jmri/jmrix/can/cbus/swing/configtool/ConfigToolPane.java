@@ -5,27 +5,17 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.JToggleButton;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 import jmri.InstanceManager;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import jmri.jmrix.can.TrafficController;
+import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.swing.console.CbusConsolePane;
 import jmri.jmrix.can.cbus.swing.CbusEventHighlightFrame;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
-import jmri.jmrix.can.TrafficController;
-import jmri.jmrix.can.cbus.CbusMessage;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,7 +35,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     CbusEventRecorder[] recorders = new CbusEventRecorder[NRECORDERS];
     private CbusFilterFrame _filterFrame;
     private CbusEventHighlightFrame _highlightFrame;
-    private CbusConsolePane _console;
+    private final CbusConsolePane _console;
     protected JButton filterButton;
     protected JButton highlightButton;
     private JButton resetCaptureButton;
@@ -90,37 +80,22 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         filterButton.setToolTipText(Bundle.getMessage("TooltipFilter"));
         buttons.add(filterButton);
         
-        filterButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                filterButtonActionPerformed(e);
-            }
-        });
+        filterButton.addActionListener(this::filterButtonActionPerformed);
         
-        
+       
         highlightButton = new JButton(Bundle.getMessage("ButtonHighlight"));
         highlightButton.setVisible(true);
         highlightButton.setToolTipText(Bundle.getMessage("TooltipHighlighter"));
         buttons.add(highlightButton);
         
-        highlightButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                highlightButtonActionPerformed(e);
-            }
-        });
+        highlightButton.addActionListener(this::highlightButtonActionPerformed);
         
         resetCaptureButton = new JButton(Bundle.getMessage("ButtonResetCapture"));
         resetCaptureButton.setVisible(true);
         resetCaptureButton.setHorizontalAlignment(SwingConstants.RIGHT);
         buttons.add(resetCaptureButton);
         
-        resetCaptureButton.addActionListener(new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                resetCaptureButtonActionPerformed(e);
-            }
-        });
+        resetCaptureButton.addActionListener(this::resetCaptureButtonActionPerformed);
         
         p1.add(buttons);
         
@@ -142,7 +117,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                         InstanceManager.sensorManagerInstance().provideSensor(prefix + "S" + name); // S for Sensor
                     }
                 }
-                catch (Exception ex) {
+                catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(null, 
                         (ex.getMessage()), Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -164,7 +139,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
                         InstanceManager.turnoutManagerInstance().provideTurnout(prefix + "T" + name); // T for Turnout
                     }
                 }
-                catch (Exception ex) {
+                catch (IllegalArgumentException ex) {
                     JOptionPane.showMessageDialog(null, 
                         (ex.getMessage()), Bundle.getMessage("WarningTitle"),
                         JOptionPane.ERROR_MESSAGE);
@@ -206,7 +181,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         super.initComponents(memo);
         prefix = memo.getSystemPrefix();
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        addTc(tc);
         incrementInstance();
         init();
     }
@@ -214,7 +189,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     @Override
     public String getTitle() {
         if (memo != null) {
-            StringBuffer title = new StringBuffer(20);
+            StringBuilder title = new StringBuilder(20);
             title.append(memo.getUserName());
             title.append(" ");
             title.append(Bundle.getMessage("CapConfigTitle"));
@@ -243,14 +218,15 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         makeSensor.reply(m);
         makeTurnout.reply(m);
         makeLight.reply(m);
-        for (int i = 0; i < recorders.length; i++) {
-            if (recorders[i].waiting()) {
-                recorders[i].reply(m);
+        for (CbusEventRecorder recorder : recorders) {
+            if (recorder.waiting()) {
+                recorder.reply(m);
                 break;
             }
         }
     }
 
+    /** {@inheritDoc} */
     @Override
     public void message(jmri.jmrix.can.CanMessage m) {
         if ( m.isExtended() || m.isRtr() ) {
@@ -263,14 +239,15 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         makeSensor.message(m);
         makeTurnout.message(m);
         makeLight.message(m);
-        for (int i = 0; i < recorders.length; i++) {
-            if (recorders[i].waiting()) {
-                recorders[i].message(m);
+        for (CbusEventRecorder recorder : recorders) {
+            if (recorder.waiting()) {
+                recorder.message(m);
                 break;
             }
         }
     }
-
+    
+    /** {@inheritDoc} */
     @Override
     public String getHelpTarget() {
         return "package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame";
@@ -306,13 +283,13 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
     }
 
 
-    public void resetCaptureButtonActionPerformed(java.awt.event.ActionEvent e) {
-        for (int i = 0; i < recorders.length; i++) {
-            recorders[i].capture.setSelected(true);
+    public void resetCaptureButtonActionPerformed(ActionEvent e) {
+        for (CbusEventRecorder recorder : recorders) {
+            recorder.capture.setSelected(true);
         }
     }
 
-    public void filterButtonActionPerformed(java.awt.event.ActionEvent e) {
+    public void filterButtonActionPerformed(ActionEvent e) {
         // log.debug("Cbus Console filter button action performed");
         
         
@@ -336,7 +313,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         }
     }
 
-    public void highlightButtonActionPerformed(java.awt.event.ActionEvent e) {
+    public void highlightButtonActionPerformed(ActionEvent e) {
         // log.debug("Cbus Console filter button action performed");
         if ( _console != null ) {
             _console.highlightButton.doClick();
@@ -389,14 +366,11 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         MakeNamedBean(String name1, String name2) {
             // actions
             bc = new JButton(Bundle.getMessage("ButtonCreate"));
-            bc.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if (f2.getText().isEmpty()) {
-                        create(f1.getText());
-                    } else {
-                        create(f1.getText() + ";" + f2.getText());
-                    }
+            bc.addActionListener((ActionEvent e) -> {
+                if (f2.getText().isEmpty()) {
+                    create(f1.getText());
+                } else {
+                    create(f1.getText() + ";" + f2.getText());
                 }
             });
 
@@ -448,6 +422,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
         void create(String name) {
         }
 
+        /** {@inheritDoc} */
         @Override
         public void reply(jmri.jmrix.can.CanReply m) {
             int high = (_highlightFrame != null) ? _highlightFrame.highlight(m) : -1;
@@ -480,6 +455,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             }
         }
 
+        /** {@inheritDoc} */
         @Override
         public void message(jmri.jmrix.can.CanMessage m) {
             int high = (_highlightFrame != null) ? _highlightFrame.highlight(m) : -1;
@@ -528,6 +504,10 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             event.setDragEnabled(true);
             event.setBackground(Color.WHITE);
             capture.setSelected(true);
+            
+        }
+        
+        final void init() {
             event.addFocusListener(this);
         }
 
@@ -538,6 +518,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             return capture.isSelected();
         }
 
+        /** {@inheritDoc} */
         @Override
         public void reply(jmri.jmrix.can.CanReply m) {
             if (capture.isSelected()) {
@@ -552,6 +533,7 @@ public class ConfigToolPane extends jmri.jmrix.can.swing.CanPanel implements Can
             }
         }
 
+        /** {@inheritDoc} */
         @Override
         public void message(jmri.jmrix.can.CanMessage m) {
             if (capture.isSelected()) {

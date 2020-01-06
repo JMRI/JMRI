@@ -11,34 +11,8 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
-import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
+import javax.swing.*;
+import javax.swing.event.*;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusAddress;
@@ -631,10 +605,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
      */
     @Override
     public String getTitle() {
-        if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("MenuItemNodeConfig"));
-        }
-        return Bundle.getMessage("MenuItemNodeConfig");
+        return prependConnToString(Bundle.getMessage("MenuItemNodeConfig"));
     }
     
     /**
@@ -785,7 +756,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
             frame = topFrame;
         }
         
-        StringBuffer buf = new StringBuffer();
+        StringBuilder buf = new StringBuilder();
         buf.append("<html> ");
         buf.append( ("Please Confirm Write ") );
         buf.append( ("to <br>") );

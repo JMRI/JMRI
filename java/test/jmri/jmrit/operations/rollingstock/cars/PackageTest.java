@@ -14,7 +14,6 @@ import org.junit.runners.Suite;
         CarLoadsTest.class,
         KernelTest.class,
         CarManagerTest.class,
-        XmlTest.class,
         BundleTest.class,
         CarsTableFrameTest.class,
         CarEditFrameTest.class,

@@ -11,12 +11,10 @@ import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
-import java.util.List;
 import jmri.util.swing.TextAreaFIFO;
 import jmri.util.ThreadingUtil;
 
@@ -32,17 +30,17 @@ import jmri.util.ThreadingUtil;
 public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableModel implements CanListener {
 
     private boolean sessionConfirmDeleteRow=true; // display confirm popup
-    private int _defaultFeedback= 1;
+    private final int _defaultFeedback= 1;
     protected int _contype=0; // event table pane console message type
     protected String _context=null; // event table pane console text
-    private int _defaultfeedbackdelay = 4000;
-    static private int MAX_LINES = 500; // tablefeedback screen log size
+    private final int _defaultfeedbackdelay = 4000;
+    private static final int MAX_LINES = 500; // tablefeedback screen log size
     
     protected ArrayList<CbusEventRequestMonitorEvent> _mainArray;
-    private CbusNameService nameService;
+    private final CbusNameService nameService;
     protected TextAreaFIFO tablefeedback;
     // private CanSystemConnectionMemo _memo;
-    private TrafficController tc;
+    private final TrafficController tc;
     
     // column order needs to match list in column tooltips
     static public final int EVENT_COLUMN = 0; 
@@ -62,11 +60,11 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
 
     CbusEventRequestDataModel(CanSystemConnectionMemo memo, int row, int column) {
         
-        _mainArray = new ArrayList<CbusEventRequestMonitorEvent>();
+        _mainArray = new ArrayList<>();
         tablefeedback = new TextAreaFIFO(MAX_LINES);
         // _memo = memo;
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        addTc(tc);
         nameService = new CbusNameService();
     }
 
@@ -188,6 +186,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
 
     /**
     * Returns column class type.
+    * {@inheritDoc} 
     */
     @Override
     public Class<?> getColumnClass(int col) {
@@ -216,6 +215,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     
     /**
     * Boolean return to edit table cell or not
+    * {@inheritDoc} 
     * @return boolean
     */
     @Override
@@ -280,44 +280,48 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     @Override
     public void setValueAt(Object value, int row, int col) {
         // log.debug("427 set valueat called row: {} col: {}", row, col);
-        if (col == DELETE_BUTTON_COLUMN) {
-            buttonDeleteClicked(row);
-        }
-        else if (col == STATUS_REQUEST_BUTTON_COLUMN) {
-            _mainArray.get(row).sendEvent(CbusEventRequestMonitorEvent.EvState.REQUEST); // gui updates from outgoing msg
-        }
-        else if (col == LATEST_TIMESTAMP_COLUMN) {
-            _mainArray.get(row).setDate( new Date() );
-            updateGui(row, col);
-        }
-        else if (col == FEEDBACKREQUIRED_COLUMN) {
-            _mainArray.get(row).setFeedbackTotReqd( (int) value );
-            updateGui(row, col);
-        }
-        else if (col == FEEDBACKOUTSTANDING_COLUMN) {
-            _mainArray.get(row).setFeedbackOutstanding( (Integer) value );
-            updateGui(row, col);
-        }
-        else if (col == FEEDBACKEVENT_COLUMN) {
-            _mainArray.get(row).setExtraEvent( (int) value );
-            updateGui(row, col);
-        }        
-        else if (col == FEEDBACKNODE_COLUMN) {
-            _mainArray.get(row).setExtraNode( (int) value );
-            updateGui(row, col);
-        }
-        else if (col == FEEDBACKTIMEOUT_COLUMN) {
-            _mainArray.get(row).setFeedbackTimeout( (int) value );
-            updateGui(row, col);
-        }
-        else if (col == LASTFEEDBACK_COLUMN) {
-            _mainArray.get(row).setLastFb( (CbusEventRequestMonitorEvent.FbState) value );
-            updateGui(row, col);
+        switch (col) {
+            case DELETE_BUTTON_COLUMN:
+                buttonDeleteClicked(row);
+                break;
+            case STATUS_REQUEST_BUTTON_COLUMN:
+                _mainArray.get(row).sendEvent(CbusEventRequestMonitorEvent.EvState.REQUEST); // gui updates from outgoing msg
+                break;
+            case LATEST_TIMESTAMP_COLUMN:
+                _mainArray.get(row).setDate( new Date() );
+                updateGui(row, col);
+                break;
+            case FEEDBACKREQUIRED_COLUMN:
+                _mainArray.get(row).setFeedbackTotReqd( (int) value );
+                updateGui(row, col);
+                break;
+            case FEEDBACKOUTSTANDING_COLUMN:
+                _mainArray.get(row).setFeedbackOutstanding( (Integer) value );
+                updateGui(row, col);
+                break;
+            case FEEDBACKEVENT_COLUMN:
+                _mainArray.get(row).setExtraEvent( (int) value );
+                updateGui(row, col);
+                break;
+            case FEEDBACKNODE_COLUMN:
+                _mainArray.get(row).setExtraNode( (int) value );
+                updateGui(row, col);
+                break;
+            case FEEDBACKTIMEOUT_COLUMN:
+                _mainArray.get(row).setFeedbackTimeout( (int) value );
+                updateGui(row, col);
+                break;
+            case LASTFEEDBACK_COLUMN:
+                _mainArray.get(row).setLastFb( (CbusEventRequestMonitorEvent.FbState) value );
+                updateGui(row, col);
+                break;
+            default:
+                break;
         }
     }
     
     private void updateGui(int row, int col){
-        ThreadingUtil.runOnGUI( ()->{
+        ThreadingUtil.runOnGUIEventually( ()->{
             fireTableCellUpdated(row, col); 
         });
     }
@@ -326,7 +330,7 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
     // or incoming CanReply
     @Override
     public void message(CanMessage m) {
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
         int opc = CbusMessage.getOpcode(m);
@@ -336,16 +340,13 @@ public class CbusEventRequestDataModel extends javax.swing.table.AbstractTableMo
         else if (CbusOpCodes.isEventNotRequest(opc)) {
             processEvent( CbusMessage.getNodeNumber(m) , CbusMessage.getEvent(m) );
         }
-        else {
-            return;
-        }
     }
     
     // incoming cbus message
     // handled the same as outgoing
     @Override
     public void reply(CanReply r) {
-        if ( r.isExtended() || r.isRtr() ) {
+        if ( r.extendedOrRtr() ) {
             return;
         }
         CanMessage m = new CanMessage(r);

@@ -18,10 +18,7 @@ public class SchemaTest extends SchemaTestBase {
 
     @Parameters(name = "{0} (pass={1})")
     public static Iterable<Object[]> data() {
-        ArrayList<Object[]> files = new ArrayList<>();
-        // check that the schema passes useful constructs
-        files.addAll(getFiles(new File("java/test/jmri/jmrix/openlcb/configurexml/load"), true, true));
-        return files;
+        return setTestFilesBelowThisPath("java/test/jmri/jmrix/openlcb/configurexml");
     }
 
     public SchemaTest(File file, boolean pass) {

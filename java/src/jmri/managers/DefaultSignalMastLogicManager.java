@@ -15,6 +15,7 @@ import jmri.NamedBean;
 import jmri.Section;
 import jmri.SectionManager;
 import jmri.Sensor;
+import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;
@@ -448,6 +449,14 @@ public class DefaultSignalMastLogicManager
     @Override
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameSignalMastLogics" : "BeanNameSignalMastLogic");
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<SignalMastLogic> getNamedBeanClass() {
+        return SignalMastLogic.class;
     }
 
     private final static Logger log = LoggerFactory.getLogger(DefaultSignalMastLogicManager.class);

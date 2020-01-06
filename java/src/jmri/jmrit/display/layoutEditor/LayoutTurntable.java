@@ -12,25 +12,13 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.beans.*;
+import java.util.*;
 import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.NamedBeanHandle;
-import jmri.Turnout;
+import javax.swing.*;
+import jmri.*;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LayoutTurntable is a representation used by LayoutEditor to display a
@@ -135,7 +123,7 @@ public class LayoutTurntable extends LayoutTrack {
      * @param angle the angle
      * @return the RayTrack
      */
-    protected RayTrack addRay(double angle) {
+    public RayTrack addRay(double angle) {
         RayTrack rt = new RayTrack(angle, getNewIndex());
         rayList.add(rt);
         return rt;
@@ -220,7 +208,7 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     // should only be used by xml save code
-    protected ArrayList<RayTrack> getRayList() {
+    public ArrayList<RayTrack> getRayList() {
         return rayList;
     }
 
@@ -454,6 +442,15 @@ public class LayoutTurntable extends LayoutTrack {
     }
 
     /**
+     * Set the coordinates for the ray at this index.
+     *
+     * @param point the new coordinates
+     * @param index the index
+     */
+    public void setRayCoordsIndexed(Point2D point, int index) {
+        setRayCoordsIndexed(point.getX(), point.getY(), index);
+    }
+    /**
      * Get the coordinates for a specified connection type.
      *
      * @param locationType the connection type
@@ -573,9 +570,10 @@ public class LayoutTurntable extends LayoutTrack {
      * @param yFactor the amount to scale Y coordinates
      */
     @Override
-    public void scaleCoords(float xFactor, float yFactor) {
+    public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
+        radius *= Math.hypot(xFactor, yFactor);
     }
 
     /**
@@ -585,9 +583,20 @@ public class LayoutTurntable extends LayoutTrack {
      * @param yFactor the amount to translate Y coordinates
      */
     @Override
-    public void translateCoords(float xFactor, float yFactor) {
+    public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.add(center, factor);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void rotateCoords(double angleDEG) {
+        // rotate all rayTracks
+        for (RayTrack rayTrack : rayList) {
+            rayTrack.setAngle(rayTrack.getAngle() + angleDEG);
+        }
     }
 
     /**
@@ -599,7 +608,7 @@ public class LayoutTurntable extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -807,7 +816,7 @@ public class LayoutTurntable extends LayoutTrack {
      *
      * @param rayTrack the ray track
      */
-    protected void deleteRay(RayTrack rayTrack) {
+    public void deleteRay(RayTrack rayTrack) {
         TrackSegment t = null;
         if (rayTrack == null) {
             log.error("rayTrack is null!");
@@ -829,7 +838,7 @@ public class LayoutTurntable extends LayoutTrack {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove().
      */
-    void dispose() {
+    public void dispose() {
         if (popup != null) {
             popup.removeAll();
         }
@@ -842,7 +851,7 @@ public class LayoutTurntable extends LayoutTrack {
     /**
      * Remove this object from display and persistance.
      */
-    void remove() {
+    public void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }
@@ -856,7 +865,7 @@ public class LayoutTurntable extends LayoutTrack {
         return active;
     }
 
-    protected class RayTrack {
+    public class RayTrack {
 
         /**
          * constructor for RayTracks
@@ -1104,15 +1113,18 @@ public class LayoutTurntable extends LayoutTrack {
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
-        double radius = getRadius(), diameter = radius + radius;
+        double radius = getRadius(), diameter = 2.f * radius;
 
         if (isBlock && isMain) {
+            double radius2 = Math.max(radius / 4.f, trackWidth * 2);
+            double diameter2 = radius2 * 2.f;
             Stroke stroke = g2.getStroke();
             Color color = g2.getColor();
             // draw turntable circle - default track color, side track width
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.setColor(layoutEditor.getDefaultTrackColorColor());
             g2.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, diameter, diameter));
+            g2.draw(new Ellipse2D.Double(center.getX() - radius2, center.getY() - radius2, diameter2, diameter2));
             g2.setStroke(stroke);
             g2.setColor(color);
         }
@@ -1192,7 +1204,7 @@ public class LayoutTurntable extends LayoutTrack {
             if ((specificType == NONE) || (specificType == (TURNTABLE_RAY_OFFSET + j))) {
                 if (getRayConnectOrdered(j) == null) {
                     Point2D pt = getRayCoordsOrdered(j);
-                    g2.fill(layoutEditor.trackControlCircleAt(pt));
+                    g2.fill(trackControlCircleAt(pt));
                 }
             }
         }
@@ -1212,7 +1224,7 @@ public class LayoutTurntable extends LayoutTrack {
                     RayTrack rt = rayList.get(j);
                     if (!rt.isDisabled() && !(rt.isDisabledWhenOccupied() && rt.isOccupied())) {
                         Point2D pt = getRayCoordsOrdered(j);
-                        g2.draw(layoutEditor.trackControlCircleAt(pt));
+                        g2.draw(trackControlCircleAt(pt));
                     }
                 }
             }
@@ -1228,7 +1240,7 @@ public class LayoutTurntable extends LayoutTrack {
     protected void drawEditControls(Graphics2D g2) {
         Point2D pt = getCoordsCenter();
         g2.setColor(layoutEditor.getDefaultTrackColorColor());
-        g2.draw(layoutEditor.trackControlCircleAt(pt));
+        g2.draw(trackControlCircleAt(pt));
 
         for (int j = 0; j < getNumberRays(); j++) {
             pt = getRayCoordsOrdered(j);
@@ -1238,7 +1250,7 @@ public class LayoutTurntable extends LayoutTrack {
             } else {
                 g2.setColor(Color.green);
             }
-            g2.draw(layoutEditor.trackEditControlRectAt(pt));
+            g2.draw(layoutEditor.layoutEditorControlRectAt(pt));
         }
     }
 

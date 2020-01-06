@@ -167,6 +167,7 @@ public class JUnitUtil {
     
     static private boolean isLoggingInitialized = false;
     static private String initPrefsDir = null;
+
     /**
      * JMRI standard setUp for tests. This should be the first line in the {@code @Before}
      * annotated method.
@@ -885,15 +886,16 @@ public class JUnitUtil {
      * stopped all services it is managing.
      */
     public static void resetZeroConfServiceManager() {
-        ZeroConfServiceManager manager = InstanceManager.containsDefault(ZeroConfServiceManager.class)
-                ? InstanceManager.getDefault(ZeroConfServiceManager.class)
-                : null;
-        if (manager != null) {
-            manager.stopAll();
-            JUnitUtil.waitFor(() -> {
-                return (manager.allServices().isEmpty());
-            }, "Stopping all ZeroConf Services");
-        }
+        if (! InstanceManager.containsDefault(ZeroConfServiceManager.class)) return; // not present, don't create on by asking for it.
+
+        ZeroConfServiceManager manager = InstanceManager.getDefault(ZeroConfServiceManager.class);
+        manager.stopAll();
+        
+        JUnitUtil.waitFor(() -> {
+            return (manager.allServices().isEmpty());
+        }, "Stopping all ZeroConf Services");
+        
+        manager.dispose();
     }
 
     /**
@@ -921,8 +923,9 @@ public class JUnitUtil {
                 // we do not intend to remove this method soon but you should not use
                 // it in new code.
     public static void clearShutDownManager() {
-        ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
-        if (sm == null) return;
+        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
+
+        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
         while (list != null && list.size() > 0) {
             ShutDownTask task = list.get(0);
@@ -932,20 +935,21 @@ public class JUnitUtil {
     }
 
     /**
-     * Warns if the {@link jmri.ShutDownManager} was not left empty. Normally
-     * run as part of the 
-     * default end-of-test code.
+     * Errors if the {@link jmri.ShutDownManager} was not left empty. Normally
+     * run as part of the default end-of-test code. Considered an error so that
+     * CI will flag these and tests will be improved.
      *
      * @see #clearShutDownManager()
      * @see #initShutDownManager()
      */
     static void checkShutDownManager() {
-        ShutDownManager sm = InstanceManager.getNullableDefault(jmri.ShutDownManager.class);
-        if (sm == null) return;
+        if (!  InstanceManager.containsDefault(ShutDownManager.class)) return; // not present, stop (don't create)
+        
+        ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
         List<ShutDownTask> list = sm.tasks();
         while (list != null && !list.isEmpty()) {
             ShutDownTask task = list.get(0);
-            log.warn("Test {} left ShutDownTask registered: {}}", getTestClassName(), task.getName(), 
+            log.error("Test {} left ShutDownTask registered: {} (of type {})}", getTestClassName(), task.getName(), task.getClass(), 
                         Log4JUtil.shortenStacktrace(new Exception("traceback")));
             sm.deregister(task);
             list = sm.tasks();  // avoid ConcurrentModificationException
@@ -1286,7 +1290,10 @@ public class JUnitUtil {
         "JMRI Common Timer",
         "BluecoveAsynchronousShutdownThread", // from LocoNet BlueTooth implementation
         "Keep-Alive-Timer",                 // from "system" group
-        "process reaper"                    // observed in macOS JRE
+        "process reaper",                   // observed in macOS JRE
+        "SIGINT handler",                   // observed in JmDNS; clean shutdown takes time
+        "Multihomed mDNS.Timer",            // observed in JmDNS; clean shutdown takes time
+        "Direct Clip",                      // observed in macOS JRE, associated with javax.sound.sampled.AudioSystem
     }));
     static List<Thread> threadsSeen = new ArrayList<>();
 
@@ -1305,12 +1312,15 @@ public class JUnitUtil {
                 if (t.getState() == Thread.State.TERMINATED) return; // going away, just not cleaned up yet
                 String name = t.getName();
                 if (! (threadNames.contains(name)
+                     || name.startsWith("Timer-")  // we separately scan for JMRI-resident timers
                      || name.startsWith("RMI TCP Accept")
                      || name.startsWith("AWT-EventQueue")
                      || name.startsWith("Aqua L&F")
                      || name.startsWith("Image Fetcher ")
+                     || name.startsWith("Image Animator ")
                      || name.startsWith("JmDNS(")
                      || name.startsWith("SocketListener(")
+                     || ( t.getThreadGroup() != null && t.getThreadGroup().getName().contains("FailOnTimeoutGroup")) // JUnit timeouts
                      || name.startsWith("SocketListener(")
                      || (name.startsWith("SwingWorker-pool-1-thread-") && 
                             ( t.getThreadGroup() != null && 

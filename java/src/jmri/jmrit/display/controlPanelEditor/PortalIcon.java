@@ -37,7 +37,8 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     public static final String TO_ARROW = "toArrow";
     public static final String FROM_ARROW = "fromArrow";
 
-    private NamedBeanHandle<Portal> _portalHdl;
+//    private NamedBeanHandle<Portal> _portalHdl;
+    private Portal _portal;
     private String _status;
     private boolean _regular = true; // true when TO_ARROW shows entry into ToBlock
     private boolean _hide = false; // true when arrow should NOT show entry into ToBlock
@@ -115,10 +116,7 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     }
 
     public Portal getPortal() {
-        if (_portalHdl == null) {
-            return null;
-        }
-        return _portalHdl.getBean();
+        return _portal;
     }
 
     @SuppressFBWarnings(value="NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE", justification="Portals always have userNames")
@@ -126,20 +124,12 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
         if (portal == null) {
             return;
         }
-        if (_portalHdl != null) {
-            Portal port = getPortal();
-            if (port.equals(portal)) {
-                return;
-            } else {
-                port.removePropertyChangeListener(this);
-            }
+        if (_portal != null) {
+            _portal.removePropertyChangeListener(this);
         }
-        // Portals always have userNames
-        _portalHdl = InstanceManager.getDefault(NamedBeanHandleManager.class)
-                .getNamedBeanHandle(portal.getUserName(), portal);
-        portal.addPropertyChangeListener(this);
-        setName(portal.getName());
-        setToolTip(new ToolTip(portal.getDescription(), 0, 0));
+        _portal = portal;
+        _portal.addPropertyChangeListener(this);
+        setToolTip(new ToolTip(_portal.getDescription(), 0, 0));
     }
 
     public void setStatus(String status) {
@@ -158,11 +148,6 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
     public void remove() {
         ((ControlPanelEditor)_editor).getCircuitBuilder().deletePortalIcon(this);
         super.remove();
-    }
-
-    @Override
-    public NamedBean getNamedBean() {
-        return getPortal();
     }
 
     @Override
@@ -200,7 +185,8 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
 //        if (log.isDebugEnabled()) log.debug("Icon "+getPortal().getName()+" PropertyChange= "+e.getPropertyName()+
 //          " oldValue= "+e.getOldValue().toString()+" newValue= "+e.getNewValue().toString());
         if (source instanceof Portal) {
-            if ("Direction".equals(e.getPropertyName())) {
+            String propertyName = e.getPropertyName();
+            if ("Direction".equals(propertyName)) {
                 if (_hide) {
                     setStatus(HIDDEN);
                     return;
@@ -218,8 +204,10 @@ public class PortalIcon extends PositionableIcon implements PropertyChangeListen
                     default:
                         log.warn("Unhandled portal value: {}", e.getNewValue() );
                 }
-            } else if ("UserName".equals(e.getPropertyName())) {
+            } else if ("NameChange".equals(propertyName)) {
                 setName((String) e.getNewValue());
+            } else if ("portalDelete".equals(propertyName)) {
+                remove();
             }
         }
     }

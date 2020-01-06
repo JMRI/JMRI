@@ -164,8 +164,8 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
         tcm.setColumnVisible(tcm.getColumnByModelIndex(WarrantTableModel.MANUAL_RUN_COLUMN), false);
 
-        int rowHeight = comboEd.getComponent().getPreferredSize().height;
-        table.setRowHeight(rowHeight);
+//        int rowHeight = comboEd.getComponent().getPreferredSize().height;
+//        table.setRowHeight(rowHeight);
         table.setDragEnabled(true);
         table.setTransferHandler(new jmri.util.DnDTableExportHandler());
         _tablePane = new JScrollPane(table);

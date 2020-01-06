@@ -10,7 +10,8 @@ import org.junit.runners.Suite;
    InternalLightManagerXmlTest.class,
    InternalReporterManagerXmlTest.class,
    InternalSensorManagerXmlTest.class,
-   InternalTurnoutManagerXmlTest.class
+   InternalTurnoutManagerXmlTest.class,
+   LoadAndStoreTest.class
 })
 /**
  * Tests for the jmri.jmrix.internal.configurexml package.

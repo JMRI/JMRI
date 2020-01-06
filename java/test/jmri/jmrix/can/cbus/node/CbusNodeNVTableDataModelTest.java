@@ -18,27 +18,27 @@ public class CbusNodeNVTableDataModelTest {
     @Test
     public void testCTor() {
         
-        CbusNodeNVTableDataModel nodeModel = new CbusNodeNVTableDataModel(
+        t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
         
-        Assert.assertNotNull("exists",nodeModel);
-        
-        nodeModel = null;
+        Assert.assertNotNull("exists",t);
         
     }
     
     @Test
     public void testNodeNoNv() {
         
-        CbusNodeNVTableDataModel t = new CbusNodeNVTableDataModel(
+        t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
+        
+        Assert.assertEquals( "Column Count after construction", 7,t.getColumnCount() );
         
         CbusNode myNode = new CbusNode(memo,12345);
         
         t.setNode(myNode);
         
         Assert.assertTrue( t.getRowCount()== 0 );
-        Assert.assertTrue( t.getColumnCount()== 7 );
+        Assert.assertEquals( "Column Count", 7,t.getColumnCount() );
         
         for (int i = 0; i <t.getColumnCount(); i++) {
             Assert.assertFalse("column has name", t.getColumnName(i).isEmpty() );
@@ -48,14 +48,13 @@ public class CbusNodeNVTableDataModelTest {
         
         myNode.dispose();
         myNode = null;
-        t = null;
         
     }
     
     @Test
     public void testNodeWithNv() {
         
-        CbusNodeNVTableDataModel t = new CbusNodeNVTableDataModel(
+        t = new CbusNodeNVTableDataModel(
             memo, 3,CbusNodeNVTableDataModel.MAX_COLUMN);
         
         CbusNode myNode = new CbusNode(memo,12345);        
@@ -174,12 +173,12 @@ public class CbusNodeNVTableDataModelTest {
         
         myNode.dispose();
         myNode = null;
-        t = null;
     
     }
     
     private CanSystemConnectionMemo memo;
     private TrafficControllerScaffold tcis;
+    private CbusNodeNVTableDataModel t;
     
 
     // The minimal setup for log4J
@@ -195,7 +194,7 @@ public class CbusNodeNVTableDataModelTest {
 
     @After
     public void tearDown() {
-        
+        t = null;
         memo = null;
         tcis = null;
         

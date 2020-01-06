@@ -36,7 +36,7 @@ public class CbusNodeTrickleFetch implements CanListener {
         trickleTimeoutValue = timeoutValue;
         // connect to the CanInterface
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        addTc(tc);
         
         networkActive = false;
         // start timer

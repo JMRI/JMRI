@@ -8,23 +8,12 @@ import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Objects;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.*;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.swing.XTableColumnModel;
@@ -54,7 +43,7 @@ public class CbusNodeTablePane extends JPanel {
     public static final Color VERY_LIGHT_GREEN = new Color(165,255,164);
     public static final Color GOLD = new Color(255,204,51);
     
-    private DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm EEE d MMM");
+    private final DateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm EEE d MMM");
     
     public void initComponents(CanSystemConnectionMemo memo) {
         try {
@@ -84,7 +73,7 @@ public class CbusNodeTablePane extends JPanel {
                             java.awt.Point p = e.getPoint();
                             int index = columnModel.getColumnIndexAtX(p.x);
                             int realIndex = columnModel.getColumn(index).getModelIndex();
-                            return CbusNodeTableDataModel.columnToolTips[realIndex];    
+                            return CbusNodeTableDataModel.COLUMNTOOLTIPS[realIndex];    
                         } catch (RuntimeException e1) {
                             //catch null pointer exception if mouse is over an empty line
                         }
@@ -101,7 +90,7 @@ public class CbusNodeTablePane extends JPanel {
         
        // nodeTable.setAutoCreateRowSorter(true);
         
-        sorter = new TableRowSorter<CbusNodeTableDataModel>(nodeModel);
+        sorter = new TableRowSorter<>(nodeModel);
         nodeTable.setRowSorter(sorter);
         
         // prevent the TableColumnModel from being recreated and loosing custom cell renderers
@@ -162,7 +151,7 @@ public class CbusNodeTablePane extends JPanel {
                 f.setHorizontalAlignment(JTextField.CENTER);
                 f.setBorder( table.getBorder() );
                 
-                String string="";
+                String string;
                 if(arg1 != null){
                     string = arg1.toString();
                     try {

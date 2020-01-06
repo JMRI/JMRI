@@ -1,45 +1,31 @@
 package jmri.jmrit.timetable.swing;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
-import java.lang.StringBuilder;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.*;
 import javax.swing.colorchooser.AbstractColorChooserPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeExpansionListener;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.DefaultTreeSelectionModel;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
+import javax.swing.tree.*;
+
 import jmri.InstanceManager;
 import jmri.Scale;
 import jmri.ScaleManager;
-import jmri.UserPreferencesManager;
+import jmri.jmrit.operations.trains.tools.ExportTimetable;
+import jmri.jmrit.timetable.*;
+import jmri.jmrit.timetable.configurexml.TimeTableXml;
 import jmri.util.JmriJFrame;
 import jmri.util.swing.SplitButtonColorChooserPanel;
-
-import jmri.jmrit.timetable.*;
-import jmri.jmrit.timetable.configurexml.*;
 
 /**
  * Create and maintain timetables.
@@ -413,6 +399,11 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         impcsv.addActionListener((ActionEvent event) -> {
             importCsvPressed();
         });
+        
+        JMenuItem impopr = new JMenuItem(Bundle.getMessage("MenuImportOperations"));  // NOI18N
+        impopr.addActionListener((ActionEvent event) -> {
+            importFromOperationsPressed();
+        });
 
         JMenuItem expcsv = new JMenuItem(Bundle.getMessage("MenuExportCsv"));  // NOI18N
         expcsv.addActionListener((ActionEvent event) -> {
@@ -426,6 +417,7 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         ttMenu.addSeparator();
         ttMenu.add(impsgn);
         ttMenu.add(impcsv);
+        ttMenu.add(impopr);
         ttMenu.add(expcsv);
 
         JMenuBar menuBar = new JMenuBar();
@@ -2284,33 +2276,43 @@ public class TimeTableFrame extends jmri.util.JmriJFrame {
         int retVal = fileChooser.showOpenDialog(null);
         if (retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            try {
-                feedbackList = new TimeTableCsvImport().importCsv(file);
-            } catch (IOException ex) {
-                log.error("Import exception: {}", ex);  // NOI18N
-                JOptionPane.showMessageDialog(null,
-                        Bundle.getMessage("ImportCsvFailed", "CVS"),  // NOI18N
-                        Bundle.getMessage("ErrorTitle"),  // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (feedbackList.size() > 0) {
-                StringBuilder msg = new StringBuilder(Bundle.getMessage("ImportCsvErrors"));  // NOI18N
-                for (String feedback : feedbackList) {
-                    msg.append(feedback + "\n");
-                }
-                JOptionPane.showMessageDialog(null,
-                        msg.toString(),
-                        Bundle.getMessage("ErrorTitle"),  // NOI18N
-                        JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            savePressed();
-            JOptionPane.showMessageDialog(null,
-                    Bundle.getMessage("ImportCompleted", "CSV"),  // NOI18N
-                    Bundle.getMessage("MessageTitle"),  // NOI18N
-                    JOptionPane.INFORMATION_MESSAGE);
+            completeImport(file);
         }
+    }
+        
+    void completeImport(File file) {
+        try {
+            feedbackList = new TimeTableCsvImport().importCsv(file);
+        } catch (IOException ex) {
+            log.error("Import exception: {}", ex); // NOI18N
+            JOptionPane.showMessageDialog(null,
+                    Bundle.getMessage("ImportCsvFailed", "CVS"), // NOI18N
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        if (feedbackList.size() > 0) {
+            StringBuilder msg = new StringBuilder(Bundle.getMessage("ImportCsvErrors")); // NOI18N
+            for (String feedback : feedbackList) {
+                msg.append(feedback + "\n");
+            }
+            JOptionPane.showMessageDialog(null,
+                    msg.toString(),
+                    Bundle.getMessage("ErrorTitle"), // NOI18N
+                    JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        savePressed();
+        JOptionPane.showMessageDialog(null,
+                Bundle.getMessage("ImportCompleted", "CSV"), // NOI18N
+                Bundle.getMessage("MessageTitle"), // NOI18N
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    void importFromOperationsPressed() {
+        ExportTimetable ex = new ExportTimetable();
+        new ExportTimetable().writeOperationsTimetableFile();
+        completeImport(ex.getExportFile());
     }
 
     void exportCsvPressed() {

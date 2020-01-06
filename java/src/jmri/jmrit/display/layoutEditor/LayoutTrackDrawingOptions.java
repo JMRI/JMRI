@@ -1,18 +1,13 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.jmrit.display.layoutEditor;
 
 import java.awt.Color;
 import javax.annotation.Nonnull;
 import jmri.util.swing.JmriColorChooser;
 
-/******************************************************************************* 
+/*******************************************************************************
  * LayoutTrackDrawingOptions.
- * since 4.15.6 blockDefaultColor, blockOccupiedColor and blockAlternativeColor added here 
- * 
+ * since 4.15.6 blockDefaultColor, blockOccupiedColor and blockAlternativeColor added here
+ *
  * @author George Warner Copyright (c) 2017-2018
  */
 public class LayoutTrackDrawingOptions {

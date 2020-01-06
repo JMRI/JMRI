@@ -35,7 +35,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
 
     protected final HashMap<T, NamedBeanListener> beanListeners = new HashMap<>();
     protected final ManagerListener managerListener = new ManagerListener();
-    private final static Logger log = LoggerFactory.getLogger(JsonNamedBeanSocketService.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonNamedBeanSocketService.class);
 
     public JsonNamedBeanSocketService(JsonConnection connection, H service) {
         super(connection, service);
@@ -50,9 +50,9 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         T bean = null;
         // protect against a request made with a user name instead of a system name
         if (!method.equals(PUT)) {
-            bean = service.getManager().getBeanBySystemName(name);
+            bean = service.getManager().getBySystemName(name);
             if (bean == null) {
-                bean = service.getManager().getBeanByUserName(name);
+                bean = service.getManager().getByUserName(name);
                 if (bean != null) {
                     // set to warn so users can provide specific feedback to developers of JSON clients
                     log.warn("{} request for {} made with user name \"{}\"; should use system name", method, type, name);
@@ -70,7 +70,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
             case PUT:
                 JsonNode message = service.doPut(type, name, data, locale, id);
                 connection.sendMessage(message, id);
-                bean = service.getManager().getBeanBySystemName(message.path(DATA).path(NAME).asText());
+                bean = service.getManager().getBySystemName(message.path(DATA).path(NAME).asText());
                 break;
             case GET:
             default:
@@ -89,15 +89,13 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
 
     @Override
     public void onClose() {
-        beanListeners.values().stream().forEach((listener) -> {
-            listener.bean.removePropertyChangeListener(listener);
-        });
+        beanListeners.values().stream().forEach(listener -> listener.bean.removePropertyChangeListener(listener));
         beanListeners.clear();
         service.getManager().removePropertyChangeListener(managerListener);
     }
 
     protected void addListenerToBean(String name) {
-        addListenerToBean(service.getManager().getBeanBySystemName(name));
+        addListenerToBean(service.getManager().getBySystemName(name));
     }
 
     protected void addListenerToBean(T bean) {
@@ -110,7 +108,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
 
     protected void removeListenersFromRemovedBeans() {
         for (T bean : new HashSet<>(beanListeners.keySet())) {
-            if (service.getManager().getBeanBySystemName(bean.getSystemName()) == null) {
+            if (service.getManager().getBySystemName(bean.getSystemName()) == null) {
                 beanListeners.remove(bean);
             }
         }
@@ -143,18 +141,7 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
         @Override
         public void propertyChange(PropertyChangeEvent evt) {
             try {
-                try {
-                    // send the new list
-                    connection.sendMessage(service.doGetList(service.getType(),
-                            service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
-                    //child added or removed, reset listeners
-                    if (evt.getPropertyName().equals("length")) { // NOI18N
-                        removeListenersFromRemovedBeans();
-                    }
-                } catch (JsonException ex) {
-                    log.warn("json error sending {}: {}", service.getType(), ex.getJsonMessage());
-                    connection.sendMessage(ex.getJsonMessage(), 0);
-                }
+                handleChange(evt);
             } catch (IOException ex) {
                 // if we get an error, unregister as listener
                 log.debug("deregistering reportersListener due to IOException");
@@ -162,5 +149,19 @@ public class JsonNamedBeanSocketService<T extends NamedBean, H extends JsonNamed
             }
         }
 
+        private void handleChange(PropertyChangeEvent evt) throws IOException {
+            try {
+                // send the new list
+                connection.sendMessage(service.doGetList(service.getType(),
+                        service.getObjectMapper().createObjectNode(), getLocale(), 0), 0);
+                //child added or removed, reset listeners
+                if (evt.getPropertyName().equals("length")) { // NOI18N
+                    removeListenersFromRemovedBeans();
+                }
+            } catch (JsonException ex) {
+                log.warn("json error sending {}: {}", service.getType(), ex.getJsonMessage());
+                connection.sendMessage(ex.getJsonMessage(), 0);
+            }
+        }
     }
 }

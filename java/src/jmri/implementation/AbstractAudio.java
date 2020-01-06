@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import jmri.Audio;
+import jmri.InstanceManager;
 
 /**
  * Base implementation of the Audio class.
@@ -57,6 +58,12 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
      * cleanup routines.
      */
     abstract protected void cleanup();
+
+    @Override
+    public void dispose() {
+        InstanceManager.getDefault(jmri.AudioManager.class).deregister(this);
+        super.dispose();
+    }
 
     /**
      * Static method to round a float value to the specified number of decimal

@@ -8,35 +8,15 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
-import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSplitPane;
-import javax.swing.JTabbedPane;
-import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNode;
-import jmri.jmrix.can.cbus.node.CbusNodeEvent;
-import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNodeEventTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNodeFromBackup;
-import jmri.jmrix.can.cbus.node.CbusNodeFromFcuTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNodeNVTableDataModel;
+import jmri.jmrix.can.cbus.node.*;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.util.ThreadingUtil;
@@ -61,7 +41,7 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
     private CbusNodeTableDataModel nodeModel = null;
     private CanSystemConnectionMemo _memo;
     private NodeConfigToolPane mainpane;
-    private CbusNodeNVTablePane nodevarPane;
+    private CbusNodeNVEditTablePane nodevarPane;
     private CbusNodeEventTablePane nodeEventPane;
     public JSplitPane split;
     private CbusNodeInfoPane nodeinfoPane;
@@ -197,7 +177,8 @@ public class CbusNodeRestoreFcuFrame extends JmriJFrame {
         
         CbusNodeNVTableDataModel nodeNVModel = new CbusNodeNVTableDataModel(_memo, 5,
             CbusNodeNVTableDataModel.MAX_COLUMN); // controller, row, column
-        nodevarPane = new CbusNodeNVTablePane(nodeNVModel);
+        nodevarPane = new CbusNodeNVEditTablePane(nodeNVModel);
+        nodevarPane.setNonEditable();
         
         CbusNodeEventTableDataModel nodeEvModel = new CbusNodeEventTableDataModel( null, _memo, 10,
             CbusNodeEventTableDataModel.MAX_COLUMN); // controller, row, column

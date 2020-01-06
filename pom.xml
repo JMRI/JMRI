@@ -6,7 +6,7 @@
     <name>JMRI</name>
     <groupId>org.jmri</groupId>
     <artifactId>jmri</artifactId>
-    <version>4.17.6-SNAPSHOT</version>
+    <version>4.19.2-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <release.build_user>${user.name}</release.build_user>
@@ -24,15 +24,18 @@
         <jogamp.version>2.3.2</jogamp.version>
         <openlcb.version>0.7.26</openlcb.version>
         <netbeans.version>RELEASE110</netbeans.version>
+        <jacoco.version>0.8.5</jacoco.version>
+        <jacoco.reportDir>${basedir}/target/</jacoco.reportDir>
         <!-- test environment -->
         <jmri.path.program>${basedir}</jmri.path.program>
         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
-        <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
+        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
         <ant.version>1.10.1</ant.version>
         <ant.jvm.args></ant.jvm.args>
         <argLine>-Xmx1536m -Duser.language=en -Duser.region=US</argLine>
-        <surefire.version>2.20</surefire.version>
+        <surefire.version>2.22.0</surefire.version>
+        <failsafe.version>2.22.0</failsafe.version>
         <jqassistant.version>1.6.0</jqassistant.version>
     </properties>
     <scm>
@@ -227,6 +230,7 @@
                             <executable>scripts/tidy-check.sh</executable>
                             <arguments>
                                 <argument>help/en/*/*</argument>
+                                <argument>help/fr/*/*</argument>
                             </arguments>
                         </configuration>
                     </plugin>
@@ -276,9 +280,15 @@
 
         <plugins>
             <plugin>
+                <groupId>org.pitest</groupId>
+                <artifactId>pitest-maven</artifactId>
+                <version>1.4.10</version>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-antrun-plugin</artifactId>
-                <version>1.8</version>
+                <version>1.8</version><!--$NO-MVN-MAN-VER$-->
+                <!-- above line-end comment silences warning in Eclipse -->
                 <!--
                 <executions>
                     <execution>
@@ -394,11 +404,11 @@
                         <jmri.path.program>${basedir}</jmri.path.program>
                         <jmri.prefsdir>${basedir}/temp</jmri.prefsdir>
                         <jmri.shutdownmanager>jmri.util.MockShutDownManager</jmri.shutdownmanager>
-                        <jinput.plugins>net.bobis.jinput.hidraw.HidRawEnvironmentPlugin</jinput.plugins>
+                        <jinput.useDefaultPlugin>false</jinput.useDefaultPlugin><!-- don't load JInput during CI tests -->
                     </systemPropertyVariables>
                     <trimStackTrace>false</trimStackTrace>
                     <workingDirectory>${basedir}</workingDirectory>
-                    <argLine>@{argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                    <argLine>@{argLine} ${surefire.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
                     <useSystemClassLoader>true</useSystemClassLoader>
                     <useManifestOnlyJar>false</useManifestOnlyJar>
                     <!-- forkCount causes tests to run in forked JVMs.  The following the number with C says to fork the number multiplied by the number of cores available. -->
@@ -407,6 +417,21 @@
                     <reuseForks>false</reuseForks>
                     -->
                 </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>${failsafe.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <argLine>@{argLine} ${failsafe.argLine} -Djava.security.manager -Djava.security.policy=${basedir}/lib/security.policy</argLine>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -565,28 +590,68 @@
                     <links>
                         <link>http://docs.oracle.com/javase/8/docs/api/</link>
                         <link>http://java.sun.com/products/javacomm/reference/api/</link>
-                        <!-- <link>https://www.javadoc.io/doc/com.github.purejavacomm/purejavacomm/1.0.2.RELEASE</link> wrong format data -->
                         <link>http://www.jdom.org/docs/apidocs/</link>
                         <link>http://javacsv.sourceforge.net/</link>
-                        <link>http://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
+                        <link>https://static.javadoc.io/com.fasterxml.jackson.core/jackson-databind/${jackson.version}/</link>
                         <link>http://logging.apache.org/log4j/1.2/apidocs/</link>
                         <link>http://download.java.net/media/java3d/javadoc/1.3.2/</link>
-                        <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
                         <link>https://static.javadoc.io/org.openlcb/openlcb/${openlcb.version}/</link>
                         <link>https://commons.apache.org/proper/commons-lang/javadocs/api-release/</link>
+                        <link>https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/</link>
+                        <link>https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/</link>
+                        <link>https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/</link>
                     </links>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.2</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <id>prepare-agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
+                        <configuration>
+                            <append>true</append>
+                            <destFile>${jacoco.reportDir}/jacoco-unit.exec</destFile>
+                            <propertyName>surefire.argLine</propertyName>
+                         </configuration>
+                    </execution>
+                    <execution>
+                        <id>prepare-agent-integration</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>      
+                        <configuration>
+                            <append>true</append>
+                            <destFile>${jacoco.reportDir}/jacoco-it.exec</destFile>
+                            <propertyName>failsafe.argLine</propertyName>
+                         </configuration>
+                    </execution>
+                    <execution>
+                       <id>merge</id>
+                       <phase>post-integration-test</phase>
+                       <goals>
+                          <goal>merge</goal>
+                       </goals>
+                       <configuration>
+                           <fileSets>
+                              <fileSet>
+                                 <directory>${jacoco.reportDir}</directory>
+                                 <includes>
+                                   <File>**/*.exec</File>
+                                 </includes>
+                              </fileSet>
+                           </fileSets>
+                       </configuration>
+                    </execution> 
+                    <execution>
+                        <id>report</id>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>      
                     </execution>
                     <execution>
                         <id>default-check</id>
@@ -608,19 +673,10 @@
                                 <File>jmri/util/web/BrowserFactory.class</File>
                                 <!-- pure interfaces and classes of constants -->
                                 <File>jmri/AddressedProgrammerManager.class</File>
-                                <File>jmri/PhysicalLocationReporter.class</File>
                                 <File>jmri/jmris/simpleserver/parser/JmriServerParserTreeConstants.class</File>
                                 <File>jmri/jmris/srcp/parser/SRCPParserTreeConstants.class</File>
                                 <File>jmri/jmrit/audio/AudioSource.class</File>
-                                <File>jmri/jmrit/operations/locations/Xml.class</File>
-                                <File>jmri/jmrit/operations/rollingstock/cars/Xml.class</File>
-                                <File>jmri/jmrit/operations/rollingstock/engines/Xml.class</File>
-                                <File>jmri/jmrit/operations/trains/Xml.class</File>
-                                <File>jmri/jmrit/ussctc/Lock.class</File>
                                 <File>jmri/jmrix/srcp/parser/SRCPClientParserTreeConstants.class</File>
-                                <File>jmri/server/json/roster/JsonRoster.class</File>
-                                <File>jmri/server/json/reporter/JsonReporter.class</File>
-                                <File>jmri/server/json/signalmast/JsonSignalMast.class</File>
                                 <!-- deprecated classes -->
                                 <File>jmri/jmrix/loconet/AbstractAlmImplementation.class</File>
                                 <!-- Exclude files meant to check SpotBugs. -->
@@ -658,8 +714,8 @@
                                     <limits>
                                         <limit>
                                             <counter>LINE</counter>
-                                            <value>COVEREDCOUNT</value>
-                                            <minimum>1</minimum>
+                                            <value>COVEREDRATIO</value>
+                                            <minimum>0.00001</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
@@ -707,6 +763,26 @@
                     </execution>
                 </executions>
             </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<filesets>
+						<!-- cleanup behind Eclipse -->
+						<fileset>
+							<directory>.apt_generated</directory>
+							<followSymlinks>false</followSymlinks>
+							<useDefaultExcludes>true</useDefaultExcludes>
+						</fileset>
+						<fileset>
+							<directory>.apt_generated_tests</directory>
+							<followSymlinks>false</followSymlinks>
+							<useDefaultExcludes>true</useDefaultExcludes>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -825,12 +901,14 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.7.9</version>
+                <version>${jacoco.version}</version>
                 <reportSets>
                     <reportSet>
                         <reports>
                             <!-- select non-aggregate reports -->
-                            <report>report</report>
+                            <!-- <report>report</report>
+                            <report>report-integration</report> -->
+                            <report>report-aggregate</report>
                         </reports>
                     </reportSet>
                 </reportSets>
@@ -1224,7 +1302,7 @@
         <dependency>
             <groupId>com.networknt</groupId>
             <artifactId>json-schema-validator</artifactId>
-            <version>1.0.10</version>
+            <version>1.0.28</version>
         </dependency>
         <dependency>
             <groupId>org.eclipse.paho</groupId>

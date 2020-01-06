@@ -21,6 +21,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.Sensor;
+import jmri.SignalSystem;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockConnectivityTools;
@@ -211,6 +212,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return ENTRYEXIT;
     }
 
+    /** {@inheritDoc} */
     public DestinationPoints getBySystemName(String systemName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUniqueId(systemName);
@@ -223,13 +225,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getBeanBySystemName(String systemName) {
-        return getBySystemName(systemName);
-    }
-
-    /** {@inheritDoc} */
-    @Override
-    public DestinationPoints getBeanByUserName(String userName) {
+    public DestinationPoints getByUserName(@Nonnull String userName) {
         for (Source e : nxpair.values()) {
             DestinationPoints pd = e.getByUserName(userName);
             if (pd != null) {
@@ -241,15 +237,16 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public DestinationPoints getNamedBean(String name) {
-        DestinationPoints b = getBeanByUserName(name);
+    public DestinationPoints getNamedBean(@Nonnull String name) {
+        DestinationPoints b = getByUserName(name);
         if (b != null) {
             return b;
         }
-        return getBeanBySystemName(name);
+        return getBySystemName(name);
     }
 
     /** {@inheritDoc} */
+    @Nonnull
     @Override
     public SystemConnectionMemo getMemo() {
         return memo;
@@ -257,6 +254,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getSystemPrefix() {
         return memo.getSystemPrefix();
     }
@@ -269,7 +267,8 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public String makeSystemName(String s) {
+    @Nonnull
+    public String makeSystemName(@Nonnull String s) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
@@ -280,27 +279,9 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
         return getNamedBeanList().size(); // not efficient
     }
 
-    /**
-     * Implemented to support the Conditional combo box name list
-     * @since 4.9.3
-     * @return a sorted array of NX names
-     */
-    @Override
-    @Deprecated  // will be removed when superclass method is removed due to @Override
-    public String[] getSystemNameArray() {
-        List<String> nxList = getEntryExitList();
-        String[] arr = new String[nxList.size()];
-        int i = 0;
-        for (String nxRow : nxList) {
-            arr[i] = nxRow;
-            i++;
-        }
-        java.util.Arrays.sort(arr);
-        return arr;
-    }
-
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<String> getSystemNameList() {
         return getEntryExitList();
@@ -312,6 +293,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a list of Destination Point beans
      */
     @Override
+    @Nonnull
     @Deprecated  // will be removed when superclass method is removed due to @Override
     public List<DestinationPoints> getNamedBeanList() {
         List<DestinationPoints> beanList = new ArrayList<>();
@@ -330,6 +312,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
      * @return a list of Destination Point beans
      */
     @Override
+    @Nonnull
     public SortedSet<DestinationPoints> getNamedBeanSet() {
         TreeSet<DestinationPoints> beanList = new TreeSet<>(new jmri.util.NamedBeanComparator<>());
         for (Source e : nxpair.values()) {
@@ -343,13 +326,13 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
 
     /** {@inheritDoc} */
     @Override
-    public void register(DestinationPoints n) {
+    public void register(@Nonnull DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
     /** {@inheritDoc} */
     @Override
-    public void deregister(DestinationPoints n) {
+    public void deregister(@Nonnull DestinationPoints n) {
         throw new UnsupportedOperationException("Not supported yet.");  // NOI18N
     }
 
@@ -951,7 +934,7 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     /**
      * Create a list of sensors that have the layout block as either
      * facing or protecting.
-     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutTrackEditors#hasNxSensorPairs}.
+     * Called by {@link jmri.jmrit.display.layoutEditor.LayoutEditorDialogs.LayoutTrackEditors#hasNxSensorPairs}.
      * @since 4.11.2
      * @param layoutBlock The layout block to be checked.
      * @return the a list of sensors affected by the layout block or an empty list.
@@ -1422,13 +1405,22 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     }
 
     @Override
-    public void deleteBean(DestinationPoints bean, String property) throws PropertyVetoException {
+    public void deleteBean(@Nonnull DestinationPoints bean, @Nonnull String property) throws PropertyVetoException {
 
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameTransits" : "BeanNameTransit");  // NOI18N
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Class<DestinationPoints> getNamedBeanClass() {
+        return DestinationPoints.class;
     }
 
     /** {@inheritDoc} */
@@ -1447,4 +1439,5 @@ public class EntryExitPairs implements jmri.Manager<DestinationPoints>, jmri.Ins
     
     // initialize logging
     private final static Logger log = LoggerFactory.getLogger(EntryExitPairs.class);
+
 }

@@ -110,4 +110,9 @@ public abstract class JsonNamedBeanHttpServiceTestBase<B extends NamedBean, S ex
             assertEquals("ID is 42", 42, ex.getId());
         }
     }
+    
+    @Test
+    public void testDoSchema() throws JsonException {
+        testDoSchema(service.getType());
+    }
 }

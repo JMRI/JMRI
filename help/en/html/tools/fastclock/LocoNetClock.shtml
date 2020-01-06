@@ -24,11 +24,10 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>JMRI Fast Clocks - LocoNet Capability</h1>
       <p>A Digitrax
       LocoNet can contain its own fast clock timebase. This can be

@@ -1,5 +1,6 @@
 package jmri.jmrix.can;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -11,6 +12,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
+import jmri.NamedBean;
+import jmri.util.NamedBeanComparator;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -129,6 +132,11 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return null;
         }
         return manager.getActionModelResourceBundle();
+    }
+
+    @Override
+    public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+        return new NamedBeanComparator<>();
     }
 
     /**

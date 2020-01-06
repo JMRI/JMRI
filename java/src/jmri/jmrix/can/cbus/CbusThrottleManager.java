@@ -12,7 +12,6 @@ import jmri.LocoAddress;
 import jmri.SpeedStepMode;
 import jmri.ThrottleListener;
 import jmri.ThrottleListener.DecisionType;
-import jmri.ThrottleManager;
 import jmri.jmrit.throttle.ThrottlesPreferences;
 import jmri.jmrix.AbstractThrottleManager;
 import jmri.jmrix.can.CanListener;
@@ -31,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author Andrew Crosland Copyright (C) 2009
  * @author Steve Young Copyright (C) 2019
  */
-public class CbusThrottleManager extends AbstractThrottleManager implements  CanListener {
+public class CbusThrottleManager extends AbstractThrottleManager implements CanListener {
 
     private boolean _handleExpected = false;
     private boolean _handleExpectedSecondLevelRequest = false;
@@ -41,12 +40,12 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
     private JDialog canErrorDialog;
     private JDialog invalidErrorDialog;
 
-    private HashMap<Integer, CbusThrottle> softThrottles = new HashMap<Integer, CbusThrottle>(CbusConstants.CBUS_MAX_SLOTS);
+    private final HashMap<Integer, CbusThrottle> softThrottles = new HashMap<>(CbusConstants.CBUS_MAX_SLOTS);
 
     public CbusThrottleManager(CanSystemConnectionMemo memo) {
         super(memo);
         tc = memo.getTrafficController();
-        tc.addCanListener(this);
+        addTc(tc);
     }
     
     public void dispose() {
@@ -54,7 +53,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
         stopThrottleRequestTimer();
     }
 
-    private TrafficController tc;
+    private final TrafficController tc;
 
     /**
      * CBUS allows Throttle sharing, both internally within JMRI and externally by command stations
@@ -67,8 +66,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
     }
 
     /**
-     * Request a new throttle object be created for the address
-     *
+     * {@inheritDoc}
      */
     @Override
     public void requestThrottleSetup(LocoAddress address, boolean control) {
@@ -97,46 +95,44 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
         }
         CanMessage msg;
         
-        if ( decision == DecisionType.STEAL_OR_SHARE ) { // 1st line request
-            
-            // Request a session for this throttle normally
-            _handleExpectedSecondLevelRequest = false;
-            msg = new CanMessage(3, tc.getCanid());
-            msg.setOpCode(CbusConstants.CBUS_RLOC);
-            msg.setElement(1, _intAddr / 256);
-            msg.setElement(2, _intAddr & 0xff);
-            
-        }
-        else if ( decision == DecisionType.STEAL ) { // 2nd line request
-            
-            // Request a Steal session
-            _handleExpectedSecondLevelRequest = true;
-            msg = new CanMessage(4, tc.getCanid());
-            msg.setOpCode(CbusConstants.CBUS_GLOC);
-            msg.setElement(1, _intAddr / 256);
-            msg.setElement(2, _intAddr & 0xff);
-            msg.setElement(3, 0x01); // bit 0 flag set
-            
-        }
-        else if ( decision == DecisionType.SHARE ){ // 2nd line request
-            
-            // Request a Share session
-            _handleExpectedSecondLevelRequest = true;
-            msg = new CanMessage(4, tc.getCanid());
-            msg.setOpCode(CbusConstants.CBUS_GLOC);
-            msg.setElement(1, _intAddr / 256);
-            msg.setElement(2, _intAddr & 0xff);
-            msg.setElement(3, 0x02); // bit 1 flag set
-        }
-        else {
-            log.error("decision type {} unknown to CbusThrottleManager",decision);
-            return;
+        switch (decision) {
+            case STEAL_OR_SHARE:
+                // 1st line request
+                // Request a session for this throttle normally
+                _handleExpectedSecondLevelRequest = false;
+                msg = new CanMessage(3, tc.getCanid());
+                msg.setOpCode(CbusConstants.CBUS_RLOC);
+                msg.setElement(1, _intAddr / 256);
+                msg.setElement(2, _intAddr & 0xff);
+                break;
+            case STEAL:
+                // 2nd line request
+                // Request a Steal session
+                _handleExpectedSecondLevelRequest = true;
+                msg = new CanMessage(4, tc.getCanid());
+                msg.setOpCode(CbusConstants.CBUS_GLOC);
+                msg.setElement(1, _intAddr / 256);
+                msg.setElement(2, _intAddr & 0xff);
+                msg.setElement(3, 0x01); // bit 0 flag set
+                break;
+            case SHARE:
+                // 2nd line request
+                // Request a Share session
+                _handleExpectedSecondLevelRequest = true;
+                msg = new CanMessage(4, tc.getCanid());
+                msg.setOpCode(CbusConstants.CBUS_GLOC);
+                msg.setElement(1, _intAddr / 256);
+                msg.setElement(2, _intAddr & 0xff);
+                msg.setElement(3, 0x02); // bit 1 flag set
+                break;
+            default:
+                log.error("decision type {} unknown to CbusThrottleManager",decision);
+                return;
         }
         
         // send the request to layout
         _handleExpected = true;
         tc.sendCanMessage(msg, this);
-        
     }
 
     /**
@@ -210,17 +206,11 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
     }
 
     private boolean isCanErrorDialogVisible(){
-        if ( canErrorDialog!=null && canErrorDialog.isVisible()) {
-            return true;
-        }
-        return false;
+        return canErrorDialog!=null && canErrorDialog.isVisible();
     }
     
     private boolean isInvalidErrorDialogVisible(){
-        if ( invalidErrorDialog!=null && invalidErrorDialog.isVisible()) {
-            return true;
-        }
-        return false;
+        return invalidErrorDialog!=null && invalidErrorDialog.isVisible();
     }
 
     /**
@@ -228,7 +218,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
      */
     @Override
     public void reply(CanReply m) {
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
         int opc = m.getElement(0);
@@ -331,19 +321,15 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
                             
                             if ( !steal && !share ){
                                 failedThrottleRequest(_dccAddr, errStr);
-                                return;
                             }
                             else if ( steal && share ){
                                 notifyDecisionRequest(_dccAddr,DecisionType.STEAL_OR_SHARE);
-                                return;
                             }
                             else if ( steal ){
                                 notifyDecisionRequest(_dccAddr,DecisionType.STEAL);
-                                return;
                             }
                             else if ( share ){
                                 notifyDecisionRequest(_dccAddr,DecisionType.SHARE);
-                                return;
                             }
                         } else {
                             log.debug("ERR address not matched");
@@ -396,7 +382,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
                                 canErrorDialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
                                 canErrorDialog.setModal(false);
                                 canErrorDialog.setVisible(true);
-                                return;
                             });
                         }
                         return;
@@ -409,7 +394,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
                                 invalidErrorDialog = pane.createDialog(null, Bundle.getMessage("CBUS_ERROR"));
                                 invalidErrorDialog.setModal(false);
                                 invalidErrorDialog.setVisible(true);
-                                return;
                             });
                         }
                         return;
@@ -506,7 +490,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
                         // if something external to JMRI is sharing a session
                         // dispatch is invalid
                         throttle.setDispatchActive(false);
-                        throttle.updateFunction(m.getElement(2), (opc == CbusConstants.CBUS_DFNON) ? true : false);
+                        throttle.updateFunction(m.getElement(2), (opc == CbusConstants.CBUS_DFNON));
                     }
                 }
                 break;
@@ -597,6 +581,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
 
     /**
      * CBUS has a dynamic Dispatch function, defaulting to false
+     * {@inheritDoc}
      */
     @Override
     public boolean hasDispatchFunction() {
@@ -608,10 +593,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
      */
     @Override
     public boolean canBeLongAddress(int address) {
-        if (address > 0) {
-            return true;
-        }
-        return false;
+        return address > 0;
     }
 
     /**
@@ -620,10 +602,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
      */
     @Override
     public boolean canBeShortAddress(int address) {
-        if (address < 128) {
-            return true;
-        }
-        return false;
+        return address < 128;
     }
 
     /**
@@ -667,30 +646,32 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
      * {@inheritDoc}
      */
     @Override
-    protected void makeHardwareDecision(LocoAddress address, DecisionType question){
-        
+    protected void makeHardwareDecision(LocoAddress address,DecisionType question){
         // no need to check if share / steal currently enabled on command station,
         // this has already been done to produce the correct question
-        if ( question == DecisionType.STEAL ){ // share has been disabled in command station
-            responseThrottleDecision(address, null, DecisionType.STEAL );
-        }
-        else if ( question == DecisionType.SHARE ){ // steal has been disabled in command station
-            responseThrottleDecision(address, null, DecisionType.SHARE );
-        }
-        else if ( question == DecisionType.STEAL_OR_SHARE ){
-            if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
-                log.debug("Creating new ThrottlesPreference Instance");
-                jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
-            }
-            ThrottlesPreferences tp = jmri.InstanceManager.getDefault(ThrottlesPreferences.class);
-            if ( tp.isSilentSteal() ){
+        switch (question) {
+            case STEAL:
+                // share has been disabled in command station
                 responseThrottleDecision(address, null, DecisionType.STEAL );
-            }
-            else {
+                break;
+            case SHARE:
+                // steal has been disabled in command station
                 responseThrottleDecision(address, null, DecisionType.SHARE );
-            }
-        } else {
-            log.error("Question type {} unknown",question);
+                break;
+            case STEAL_OR_SHARE:
+                if (jmri.InstanceManager.getNullableDefault(ThrottlesPreferences.class) == null) {
+                    log.debug("Creating new ThrottlesPreference Instance");
+                    jmri.InstanceManager.store(new ThrottlesPreferences(), ThrottlesPreferences.class);
+                }   ThrottlesPreferences tp = jmri.InstanceManager.getDefault(ThrottlesPreferences.class);
+                if ( tp.isSilentSteal() ){
+                    responseThrottleDecision(address, null, DecisionType.STEAL );
+                }
+                else {
+                    responseThrottleDecision(address, null, DecisionType.SHARE );
+                }   break;
+            default:
+                log.error("Question type {} unknown",question);
+                break;
         }
     }
 
@@ -759,6 +740,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements  Can
      * This can be changed by a subsequent message from Throttle to CS,
      * or by message from Command Station to CbusThrottle.
      * Supported modes are 128, 28 and 14.
+     * {@inheritDoc }
      */
     @Override
     public EnumSet<SpeedStepMode> supportedSpeedModes() {

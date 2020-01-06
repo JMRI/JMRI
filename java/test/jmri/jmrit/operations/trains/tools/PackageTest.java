@@ -7,6 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         BundleTest.class,
         ChangeDepartureTimesFrameTest.class,
+        ExportTimetableActionTest.class,
+        ExportTimetableTest.class,
         ExportTrainRosterActionTest.class,
         ExportTrainsTest.class,
         ShowCarsInTrainFrameTest.class,

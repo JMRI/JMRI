@@ -1,7 +1,10 @@
 package jmri.server.json.block;
 
+import static jmri.server.json.JSON.VALUE;
 import static jmri.server.json.block.JsonBlock.BLOCK;
 import static jmri.server.json.block.JsonBlock.BLOCKS;
+import static jmri.server.json.idtag.JsonIdTag.IDTAG;
+import static jmri.server.json.reporter.JsonReporter.REPORTER;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,7 +16,9 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.NamedBean;
 import jmri.ProvidingManager;
+import jmri.Reportable;
 import jmri.Reporter;
 import jmri.ReporterManager;
 import jmri.Sensor;
@@ -21,7 +26,9 @@ import jmri.SensorManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.idtag.JsonIdTagHttpService;
 import jmri.server.json.reporter.JsonReporter;
+import jmri.server.json.reporter.JsonReporterHttpService;
 import jmri.server.json.sensor.JsonSensor;
 
 /**
@@ -30,6 +37,9 @@ import jmri.server.json.sensor.JsonSensor;
  * @author Randall Wood Copyright 2018, 2019
  */
 public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
+
+    private JsonIdTagHttpService idTagService = new JsonIdTagHttpService(mapper);
+    private JsonReporterHttpService reporterService = new JsonReporterHttpService(mapper);
 
     public JsonBlockHttpService(ObjectMapper mapper) {
         super(mapper);
@@ -41,13 +51,25 @@ public class JsonBlockHttpService extends JsonNamedBeanHttpService<Block> {
         ObjectNode data = root.with(JSON.DATA);
         switch (block.getState()) {
             case Block.UNDETECTED:
-            case Block.UNKNOWN:
+            case NamedBean.UNKNOWN:
                 data.put(JSON.STATE, JSON.UNKNOWN);
                 break;
             default:
                 data.put(JSON.STATE, block.getState());
         }
-        data.put(JSON.VALUE, block.getValue() != null ? block.getValue().toString() : null);
+        //set block value based on type stored there
+        Object bv = block.getValue();
+        if (bv == null) {
+            data.putNull(VALUE);
+        } else if (bv instanceof jmri.IdTag){
+            ObjectNode idTagValue = idTagService.doGet((jmri.IdTag)bv, name, IDTAG, locale, id);
+            data.set(VALUE, idTagValue);
+        } else if (bv instanceof Reportable) {
+            ObjectNode reporterValue = reporterService.doGet((jmri.Reporter)bv, name, REPORTER, locale, id);
+            data.set(VALUE, reporterValue);
+        } else {
+            data.put(VALUE, bv.toString()); //send string for types not explicitly handled
+        }
         data.put(JsonSensor.SENSOR, block.getSensor() != null ? block.getSensor().getSystemName() : null);
         data.put(JsonReporter.REPORTER, block.getReporter() != null ? block.getReporter().getSystemName() : null);
         data.put(JSON.SPEED, block.getBlockSpeed());

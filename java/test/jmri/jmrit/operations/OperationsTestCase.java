@@ -81,6 +81,8 @@ public class OperationsTestCase {
         }
         
         JUnitUtil.clearShutDownManager();
+
+        JUnitUtil.resetWindows(false,false);
         JUnitUtil.tearDown();
     }
 

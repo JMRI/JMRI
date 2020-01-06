@@ -102,6 +102,7 @@ public class ToolsMenu extends JMenu {
         clockMenu.add(new jmri.jmrit.nixieclock.NixieClockAction(Bundle.getMessage("MenuItemNixieClock")));
         clockMenu.add(new jmri.jmrit.lcdclock.LcdClockAction(Bundle.getMessage("MenuItemLcdClock")));
         clockMenu.add(new jmri.jmrit.analogclock.AnalogClockAction(Bundle.getMessage("MenuItemAnalogClock")));
+        clockMenu.add(new jmri.jmrit.pragotronclock.PragotronClockAction(Bundle.getMessage("MenuItemPragotronClock")));
         add(clockMenu);
 
         add(new JSeparator());

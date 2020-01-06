@@ -2,6 +2,9 @@ package jmri.jmrix;
 
 import jmri.util.JUnitUtil;
 import jmri.InstanceManager;
+import jmri.NamedBean;
+
+import java.util.Comparator;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -14,44 +17,33 @@ import org.junit.Test;
  */
 public class SystemConnectionMemoTest {
 
+    private SystemConnectionMemo _memo = null;
+
     @Test
     public void testCTor() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
-            @Override
-            protected java.util.ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-        };
-        Assert.assertNotNull("exists", t);
+        Assert.assertNotNull("exists", _memo);
     }
 
     @Test
     public void testGetConsistManagerNull() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
-            @Override
-            protected java.util.ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-        };
-        Assert.assertNull("null consist manager", t.get(jmri.ConsistManager.class));
+        Assert.assertNull("null consist manager", _memo.get(jmri.ConsistManager.class));
     }
 
     @Test
     public void testProvidesConsistManagerNull() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
-            @Override
-            protected java.util.ResourceBundle getActionModelResourceBundle() {
-                return null;
-            }
-        };
-        Assert.assertFalse("null consist manager", t.provides(jmri.ConsistManager.class));
+        Assert.assertFalse("null consist manager", _memo.provides(jmri.ConsistManager.class));
     }
 
     @Test
     public void testGetConsistManagerWithCS() {
-        SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
+        SystemConnectionMemo m = new SystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+
+            @Override
+            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
                 return null;
             }
 
@@ -73,7 +65,7 @@ public class SystemConnectionMemoTest {
             }
 
         };
-        Assert.assertNotNull("consist manager", t.get(jmri.ConsistManager.class));
+        Assert.assertNotNull("consist manager", m.get(jmri.ConsistManager.class));
     }
 
     @Test
@@ -81,6 +73,11 @@ public class SystemConnectionMemoTest {
         SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+
+            @Override
+            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
                 return null;
             }
 
@@ -109,6 +106,11 @@ public class SystemConnectionMemoTest {
         SystemConnectionMemo t = new SystemConnectionMemo("T", "Test") {
             @Override
             protected java.util.ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+
+            @Override
+            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
                 return null;
             }
 
@@ -142,6 +144,11 @@ public class SystemConnectionMemoTest {
             }
 
             @Override
+            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+                return null;
+            }
+
+            @Override
             public boolean provides(Class<?> c) {
                 if (c.equals(jmri.AddressedProgrammerManager.class)) {
                     return true;
@@ -166,6 +173,17 @@ public class SystemConnectionMemoTest {
         JUnitUtil.setUp();
         JUnitUtil.initDebugCommandStation();
         JUnitUtil.initDebugProgrammerManager();
+        _memo = new SystemConnectionMemo("T", "Test") {
+            @Override
+            protected java.util.ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+
+            @Override
+            public <B extends NamedBean> Comparator<B> getNamedBeanComparator(Class<B> type) {
+                return null;
+            }
+        };
     }
 
     @After

@@ -10,7 +10,8 @@
   <title>JMRI: Signaling introduction</title>
   <meta name="Author" content="Bob Jacobsen">
   <meta name="Author" content="Egbert Broerse">
-  <meta name="Date.Modified" content="20151214"><!-- Style -->
+  <meta name="Date.Modified" content="20151214">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -18,15 +19,14 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <!-- Page Body -->
 

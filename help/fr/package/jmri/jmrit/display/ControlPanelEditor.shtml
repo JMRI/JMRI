@@ -9,22 +9,24 @@
   <title>JMRI: L'&Eacute;diteur Panneau de Commande</title>
   <meta name="author" content="Pete Cressman">
   <meta name="keywords" content="JMRI help Panel Editor">
-  <!-- Style --><meta http-equiv="Content-Type" content=
+  <!-- Style -->
+  <meta http-equiv="Content-Type" content=
           "text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
   media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
 
    <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+<div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>L'&Eacute;diteur Panneau de Commande</h1>
       L'<b>&Eacute;diteur Panneau de Commande</b> est
       tout simplement une vue alternative et un contr&ocirc;leur
@@ -254,7 +256,8 @@
       s&eacute;lection par l'appui sur la touche <b>Ctrl</b> quand
       vous s&eacute;lectionnez l'article.</p>
 
-      <h3>Glisser la S&eacute;lections</h3>Glisser une
+      <h3>Glisser la S&eacute;lections</h3>
+      <p>Glisser une
       s&eacute;lection ou un groupe de s&eacute;lection peut
       &ecirc;tre faite soit avec bouton de la souris dans
       l'&eacute;diteur de Panneau de Commande. Une ic&ocirc;ne de

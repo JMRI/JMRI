@@ -6,15 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Transferable;
-import javax.swing.DropMode;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.TransferHandler;
+import javax.swing.*;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
@@ -140,7 +132,7 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
         
     }
     
-    boolean hideEditButton = false;
+    private boolean hideEditButton = false;
     
     protected void setHideEditButton(){
         hideEditButton = true;
@@ -201,10 +193,7 @@ public class CbusNodeEventTablePane extends jmri.jmrix.can.swing.CanPanel {
      */
     @Override
     public String getTitle() {
-        if (memo != null) {
-            return (memo.getUserName() + " " + Bundle.getMessage("MenuItemNodeTable"));
-        }
-        return Bundle.getMessage("MenuItemNodeTable");
+        return prependConnToString(Bundle.getMessage("MenuItemNodeTable"));
     }
     
     @Override

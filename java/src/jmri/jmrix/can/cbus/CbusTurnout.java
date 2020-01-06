@@ -64,7 +64,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
                 return;
         }
         // connect
-        tc.addCanListener(this);
+        addTc(tc);
     }
 
     /**

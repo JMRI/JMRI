@@ -1,10 +1,12 @@
 package jmri.jmrit.operations.rollingstock.cars.tools;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrit.operations.OperationsTestCase;
+
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Test;
+
+import jmri.jmrit.operations.OperationsTestCase;
 
 /**
  *
@@ -16,7 +18,7 @@ public class PrintCarLoadsActionTest extends OperationsTestCase {
     public void testCTor() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         jmri.util.JmriJFrame jf = new jmri.util.JmriJFrame("Print Car Loads Frame");
-        PrintCarLoadsAction t = new PrintCarLoadsAction("Test Action",true,jf);
+        PrintCarLoadsAction t = new PrintCarLoadsAction(true,jf);
         Assert.assertNotNull("exists",t);
     }
 

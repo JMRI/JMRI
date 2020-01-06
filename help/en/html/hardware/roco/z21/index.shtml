@@ -18,29 +18,32 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: Fleischmann/Roco z21/Z21</h1>
 
       <p>The Roco z21/Z21 is a command station with support for
       LocoNet, R-Bus and XPressNet devices and it includes a built
-      in Ethernet port. The device is also sold under the
+      in Ethernet port. The Z21 device is also sold under the
       Fleischmann name.</p>
 
-      <p>For connection to the device via the LocoNet or XPressNet
+      <p>For connecting to the device via the LocoNet or XPressNet
       interface, please see the <a href=
-      "../../loconet/">LocoNet</a> and <a href=
-      "../../XPressNet/">XPressNet</a> connection pages.</p>
+      "../../loconet/Digitrax.shtml">LocoNet</a> and <a href=
+      "../../XPressNet/index.shtml">XPressNet</a> connection
+      pages.</p>
 
-      <p>This page specifies connection to the z21/Z21 via the
+      <p>This page specifies connecting to the z21/Z21 via the
       Ethernet port as documented on the <a href=
-      "http://www.z21.eu/en/Downloads">Z21 website</a>)</p>
+      "https://www.z21.eu/en/">Z21 website</a>.</p>
 
       <ul>
         <!-- TOC -->
@@ -64,8 +67,9 @@
         <li><a href="#tools">JMRI Z21 Tools</a></li>
 
         <li><a href="#documentation">Documentation</a></li>
-      </ul><a name="hardware" id="hardware"></a>
+      </ul>
 
+      <a name="hardware" id="hardware"></a>
       <h2>Supported Hardware</h2>
 
       <p>Roco has two devices it sells as the White Z21 and
@@ -115,8 +119,9 @@
       "RocoZ21Ethernet"></a>
 
       <h3>Connecting to the Roco z21 or Z21 via the Ethernet
-      connection</h3><b>Note: The first JMRI release supporting the
-      Lenz LIUSB Ethernet connection was v 3.11.7.</b>
+      connection</h3>
+      <p>Note: The first JMRI release supporting the
+      Lenz LIUSB Ethernet connection was v 3.11.7.</p>
 
       <ol>
         <li>To connect your computer to either the z21 or Z21 via
@@ -165,8 +170,9 @@
         program to quit, click "Yes".</li>
 
         <li>Restart the program. You should be up and running.</li>
-      </ol><a name="tools" id="tools"></a>
+      </ol>
 
+      <a name="tools" id="tools"></a>
       <h2>JMRI z21/Z21 Tools</h2>
 
       <p>The following tools are available from the menu when this
@@ -196,7 +202,7 @@
       <h3>Third Party info</h3>
 
       <ul>
-        <li><a href="http://www.z21.eu/en">The Z21 Website</a> has
+        <li><a href="https://www.z21.eu/en">The Z21 Website</a> has
         a wealth of information about the Z21.</li>
       </ul>
 

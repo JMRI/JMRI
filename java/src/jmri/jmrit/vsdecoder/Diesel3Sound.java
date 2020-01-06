@@ -216,7 +216,7 @@ class Diesel3Sound extends EngineSound {
                 List<AudioBuffer> l = D3Notch.getBufferList(vf, fn, "n" + i + "_" + j, i + "_" + j);
                 log.debug("Buffers Created: ");
                 for (AudioBuffer b : l) {
-                    log.debug("\tSubBuffer: {}", b.getSystemName());
+                    log.debug("\tSubBuffer: {}, length: {}", b.getSystemName(), SoundBite.calcLength(b));
                 }
                 sb.addLoopBuffers(l);
                 j++;

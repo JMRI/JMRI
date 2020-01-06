@@ -66,7 +66,6 @@ public class EngineEditFrame extends RollingStockEditFrame {
 
         // load tool tips
         builtTextField.setToolTipText(Bundle.getMessage("buildDateTip"));
-        rfidComboBox.setToolTipText(Bundle.getMessage("TipRfid"));
         editModelButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("Model").toLowerCase()}));
         editGroupButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),

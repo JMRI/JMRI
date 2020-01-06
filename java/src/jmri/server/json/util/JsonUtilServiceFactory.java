@@ -17,14 +17,18 @@ public class JsonUtilServiceFactory implements JsonServiceFactory<JsonUtilHttpSe
     @Override
     public String[] getTypes() {
         return new String[]{JSON.GOODBYE,
-            JSON.HELLO,
-            JSON.METADATA,
-            JSON.NETWORK_SERVICES,
-            JSON.NODE,
-            JSON.PANELS,
-            JSON.RAILROAD,
-            JSON.SYSTEM_CONNECTIONS,
-            JSON.CONFIG_PROFILES};
+                JSON.HELLO,
+                JSON.METADATA,
+                JSON.NETWORK_SERVICE,
+                JSON.NETWORK_SERVICES,
+                JSON.NODE,
+                JSON.PANEL,
+                JSON.PANELS,
+                JSON.RAILROAD,
+                JSON.SYSTEM_CONNECTION,
+                JSON.SYSTEM_CONNECTIONS,
+                JSON.CONFIG_PROFILE,
+                JSON.CONFIG_PROFILES};
     }
 
     @Override

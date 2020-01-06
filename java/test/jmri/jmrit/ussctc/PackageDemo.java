@@ -21,6 +21,7 @@ public class PackageDemo {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
         JUnitUtil.initMemoryManager();  
         JUnitUtil.resetProfileManager();
 

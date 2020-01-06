@@ -38,5 +38,4 @@ public class AllTest {
     static public void main(String[] args) {
         TestClassMainMethod.run(AllTest.class);
     }
-
 }

@@ -133,7 +133,9 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String TYPE = Bundle.getMessage("Type");
     public static final String MODEL = Bundle.getMessage("Model");
     public static final String LENGTH = Bundle.getMessage("Length");
+    public static final String WEIGHT = Bundle.getMessage("Weight");
     public static final String LOAD = Bundle.getMessage("Load");
+    public static final String LOAD_TYPE = Bundle.getMessage("Load_Type");
     public static final String COLOR = Bundle.getMessage("Color");
     public static final String TRACK = Bundle.getMessage("Track");
     public static final String DESTINATION = Bundle.getMessage("Destination");
@@ -172,15 +174,15 @@ public class Setup implements InstanceManagerAutoDefault, Disposable {
     public static final String METER = Bundle.getMessage("Meter");
 
     private static final String[] CAR_ATTRIBUTES
-            = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
+            = {ROAD, NUMBER, TYPE, LENGTH, WEIGHT, LOAD, LOAD_TYPE, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
                 TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
                 PICKUP_COMMENT, RWE};
-    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
+    private static final String[] ENGINE_ATTRIBUTES = {ROAD, NUMBER, TYPE, MODEL, LENGTH, WEIGHT, CONSIST, OWNER, TRACK,
         LOCATION, DESTINATION, COMMENT};
     /*
      * The print Manifest and switch list user selectable options are stored in the xml file using the English translation.
      */
-    private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Load", "Color", // NOI18N
+    private static final String[] KEYS = {"Road", "Number", "Type", "Model", "Length", "Weight", "Load", "Load_Type", "Color", // NOI18N
         "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", // NOI18N
         "Kernel_Size", "Owner", "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab", "Tab2", "Tab3"}; // NOI18N
 

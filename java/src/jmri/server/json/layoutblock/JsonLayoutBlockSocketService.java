@@ -32,7 +32,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
 
     private final HashMap<LayoutBlock, LayoutBlockListener> layoutBlockListeners = new HashMap<>();
     private final LayoutBlocksListener layoutBlocksListener = new LayoutBlocksListener();
-    private static final Logger log = LoggerFactory.getLogger(JsonLayoutBlockServiceFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(JsonLayoutBlockSocketService.class);
 
     public JsonLayoutBlockSocketService(JsonConnection connection) {
         super(connection, new JsonLayoutBlockHttpService(connection.getObjectMapper()));
@@ -81,7 +81,7 @@ public class JsonLayoutBlockSocketService extends JsonSocketService<JsonLayoutBl
 
     private void removeListenersFromRemovedBeans() {
         for (LayoutBlock layoutBlock : new HashSet<>(layoutBlockListeners.keySet())) {
-            if (InstanceManager.getDefault(LayoutBlockManager.class).getBeanBySystemName(layoutBlock.getSystemName()) == null) {
+            if (InstanceManager.getDefault(LayoutBlockManager.class).getBySystemName(layoutBlock.getSystemName()) == null) {
                 layoutBlockListeners.remove(layoutBlock);
             }
         }

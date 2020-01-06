@@ -9,7 +9,8 @@
   <title>JMRI Hardware Support - XpressNet</title>
   <meta name="author" content="Paul Bender, Egbert Broerse">
   <meta name="keywords" content=
-  "XpressNet java model railroad JMRI install"><!-- Style -->
+  "XpressNet java model railroad JMRI install">
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -17,14 +18,16 @@
   <link rel="stylesheet" type="text/css" href="/css/print.css"
   media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/"><!-- /Style -->
+  <link rel="home" title="Home" href="/">
+  <!-- /Style -->
 </head>
 
 <body>
   <!--#include virtual="/Header" -->
-
-  <div class="nomenu" id="mBody">
+  <div id="mBody">
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
+
       <h1>Hardware Support: XpressNet</h1>
 
       <p>XpressNet is a Command Bus developed by Lenz and used by:
@@ -34,14 +37,14 @@
       "http://www.opendcc.de/index_e.html">OpenDCC (DIY)</a>,
       <a href="http://usuaris.tinet.cat/fmco/home_en.htm">Paco
       Canada (DIY)</a>, <a href="http://www.roco.co.at">Roco</a>
+      (some models),
       <a href="http://www.viessmann-modell.com/">Viessmann</a> and
       <a href="http://www.ztccontrols.com">ZTC Controls</a>.</p>
 
       <p>The XpressNet specification (available from the <a href=
       "http://www.lenzusa.com/techinfo/index.htm">Lenz website</a>)
       specifies the electrical communications standards and command
-      set needed for devices to communicate with the command
-      station.</p>
+      set for devices to communicate with the command station.</p>
 
       <ul>
         <!-- TOC -->
@@ -217,8 +220,8 @@
 
       <h3>Computer Interfaces</h3>
 
-      <p>Currently 15 XpressNet computer interfaces are supported
-      by JMRI:</p>
+      <p>Currently the following XpressNet computer interfaces are
+      supported by JMRI:</p>
 
       <ul>
         <li>The Lenz LI100 is Lenz's original computer interface.
@@ -358,8 +361,9 @@
         devices with the port speed set to 19,200bps. The OpenDCC
         Command Station provides feedback via an S88
         connection.</li>
-      </ul><a name="Limitations" id="Limitations"></a>
+      </ul>
 
+      <a name="Limitations" id="Limitations"></a>
       <h2>Limitations</h2>
 
       <div class="list">
@@ -477,6 +481,9 @@
             supported XpressNet computer interfaces, but it is
             unknown at this point what, if any, limitations exist
             when using this connection.</p>
+
+            <p>The Roco Z21 Command Station is covered
+            <a href="../roco/z21/index.shtml">here</a>.</p>
           </dd>
 
           <dt class="left">OpenDCC</dt>

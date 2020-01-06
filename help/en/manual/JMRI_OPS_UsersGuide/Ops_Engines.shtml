@@ -6,7 +6,8 @@
   <meta name="generator" content=
   "HTML Tidy for Mac OS X (vers 31 October 2006 - Apple Inc. build 15.17), see www.w3.org">
 
-  <title>JMRI OperationsPro - Locomotives</title><!-- Style -->
+  <title>JMRI OperationsPro - Locomotives</title>
+  <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
   <link rel="stylesheet" type="text/css" href="/css/default.css"
@@ -19,10 +20,8 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
-
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
       <a name="Top" id="Top"></a>
 

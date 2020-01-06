@@ -7,6 +7,8 @@ import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Nonnull;
+
 /**
  * Utility Class supporting parsing and testing of Maple addresses.
  * <p>
@@ -83,7 +85,7 @@ public class SerialAddress {
      * @return 'true' if system name has a valid format,
      * else returns 'false'
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format

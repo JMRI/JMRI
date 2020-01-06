@@ -37,7 +37,7 @@ public class JsonSchemaHttpService extends JsonHttpService {
         if (data.path(JSON.CLIENT).isBoolean()) {
             if (server == null) {
                 server = !data.path(JSON.CLIENT).asBoolean();
-            } else if (server) {
+            } else if (Boolean.TRUE.equals(server)) {
                 server = null; // server and client are true
             }
         }
@@ -57,34 +57,11 @@ public class JsonSchemaHttpService extends JsonHttpService {
                         Set<JsonNode> dedup = new HashSet<>();
                         for (JsonHttpService service : InstanceManager.getDefault(JsonSchemaServiceCache.class)
                                 .getServices(name)) {
-                            // separate try/catch blocks to ensure one failure
-                            // does not
-                            // block following from being accepted
                             if (server == null || server) {
-                                try {
-                                    JsonNode schema = service.doSchema(name, true, locale, id);
-                                    if (!dedup.contains(schema)) {
-                                        schemas.add(schema);
-                                        dedup.add(schema);
-                                    }
-                                } catch (JsonException ex) {
-                                    if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
-                                        throw ex;
-                                    }
-                                }
+                                this.doSchema(schemas, dedup, service, name, true, locale, id);
                             }
                             if (server == null || !server) {
-                                try {
-                                    JsonNode schema = service.doSchema(name, false, locale, id);
-                                    if (!dedup.contains(schema)) {
-                                        schemas.add(schema);
-                                        dedup.add(schema);
-                                    }
-                                } catch (JsonException ex) {
-                                    if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
-                                        throw ex;
-                                    }
-                                }
+                                this.doSchema(schemas, dedup, service, name, false, locale, id);
                             }
                         }
                         // return single object if only one, otherwise return
@@ -152,6 +129,20 @@ public class JsonSchemaHttpService extends JsonHttpService {
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
                         Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+        }
+    }
+    
+    private void doSchema(ArrayNode schemas, Set<JsonNode> dedup, JsonHttpService service, String name, boolean server, Locale locale, int id) throws JsonException {
+        try {
+            JsonNode schema = service.doSchema(name, server, locale, id);
+            if (!dedup.contains(schema)) {
+                schemas.add(schema);
+                dedup.add(schema);
+            }
+        } catch (JsonException ex) {
+            if (ex.getCode() != HttpServletResponse.SC_BAD_REQUEST) {
+                throw ex;
+            }
         }
     }
 }

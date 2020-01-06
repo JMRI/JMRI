@@ -17,9 +17,9 @@
 
 <body>
   <!--#include virtual="/Header" -->
-
   <div class="nomenu" id="mBody">
     <div id="mainContent">
+
       <h1>Conditional List Editor</h1>
 
       <h2>Edit Logix</h2>

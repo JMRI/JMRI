@@ -217,7 +217,7 @@ public interface TurnoutManager extends ProvidingManager<Turnout> {
     public boolean isControlTypeSupported(@Nonnull String systemName);
 
     /**
-     * A method that determines if it is possible to add a range of turnouts in
+     * Determines if it is possible to add a range of turnouts in
      * numerical order.
      *
      * @param systemName the starting turnout system name; ignored in all known

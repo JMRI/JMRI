@@ -6,7 +6,6 @@ import com.networknt.schema.JsonSchema;
 import com.networknt.schema.JsonSchemaFactory;
 import com.networknt.schema.SchemaValidatorsConfig;
 import com.networknt.schema.ValidationMessage;
-import com.networknt.schema.url.URLFactory;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -41,15 +40,14 @@ public class JsonSchemaServiceCache implements InstanceManagerAutoDefault {
     public JsonSchemaServiceCache() {
         Map<String, String> map = new HashMap<>();
         try {
-            for (JsonNode mapping : mapper
-                    .readTree(URLFactory.toURL("resource:jmri/server/json/schema-map.json"))) {
+            for (JsonNode mapping : mapper.readTree(JsonSchemaServiceCache.class.getResource("/jmri/server/json/schema-map.json"))) {
                 map.put(mapping.get("publicURL").asText(),
                         mapping.get("localURL").asText());
             }
         } catch (IOException ex) {
             log.error("Unable to read JMRI resources for JSON schema mapping", ex);
         }
-        config.setUrlMappings(map);
+        config.setUriMappings(map);
     }
 
     @Nonnull

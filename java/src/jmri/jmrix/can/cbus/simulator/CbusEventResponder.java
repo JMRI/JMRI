@@ -41,7 +41,7 @@ public class CbusEventResponder implements CanListener {
         memo = memod;
         if (memo != null) {
             tc = memo.getTrafficController();
-            tc.addCanListener(this);
+            addTc(tc);
         }
         init();
     }
