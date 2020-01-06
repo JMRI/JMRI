@@ -8,7 +8,7 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: Signal Masts documentation</title>
-  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+  <meta name="Author" content="Bob Jacobsen, Egbert B79roerse">
   <meta name="Date.Modified" content="20160323">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
@@ -68,19 +68,26 @@
         <h3>Signal Mast Repeaters</h3><img src=
         "images/SignalMastRepeaterPane.png" width="291" height="98"
         align="right">
-
-        <p>From the Signal Mast Table's <b>Tools</b> menu you may
-        configure Signal Mast Repeaters. These mirror another mast,
-        and can be set as Slave, merely following the other Mast,
-        or as a two way coupling so clicking he Repeater on your
-        Panel also sets the Master.</p>
         
-        <p>Signal mast repeaters can provide an easy way to overcome a
-            limitation of JMRI Signal Masts when using JMRI's automatic discovery 
-            for Signal Mast Logic in those cases where there are multiple physical
-            routes between a signal mast and its "destination" signal mast.  See 
-            <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
-            Signal Mast Repeater</a> documentation for more details.
+        <p>A Signal Mast Repeater enables one physical (or virutal) signal to 
+            mimic another signal's aspect.</p>
+        <p>This can be useful in a number of ways:</p>
+        <ul>
+            <li>When one physical signal mast must provide an aspect which is exactly 
+                identical to another physical signal mast.  This could be used to 
+                "repeat" the aspect of a "hard-to-see" signal mast on some other 
+                easy-to-see signal mast, such as one modeled in the fascia of the 
+                layout.</li>
+            <li>When there are multiple different routes between two physical signal masts, 
+                JMRI Signal Mast Logic discovery will only identify logic for one
+                of the routes.  By providing multiple signal masts at the "destination"
+                end of the route, it is possible to manually create and configure
+                Signal Mast Logic for each of the alternate routes, such that the
+                "source" signal mast displays the correct indication to protect the 
+                "destination" signal mast, regardless of which route is selected.</li>            
+        </ul>
+        <p>See <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
+            Signal Mast Repeater</a> documentation for more details.</p>
 
         <h2>Saving and Reloading Configuration</h2>
 
