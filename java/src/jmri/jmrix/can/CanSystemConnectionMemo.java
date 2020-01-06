@@ -31,6 +31,10 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public CanSystemConnectionMemo() {
         super("M", DEFAULT_USERNAME);
         super.register(); // registers general type
+        storeCanMemotoInstance();
+    }
+    
+    protected final void storeCanMemotoInstance() {
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
 
@@ -197,10 +201,9 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         String oldValue = m.get(option);
         if (value.equals(oldValue)) return;
         m.put(option, value);
-        isDirty();
-        isRestartRequired();
+        // @todo When the connection options are changed, we need to mark the profile as dirty.
     }
-
+    
     /**
      * {@inheritDoc }
      */
