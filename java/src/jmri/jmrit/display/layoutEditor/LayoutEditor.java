@@ -26,7 +26,8 @@ import javax.annotation.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.filechooser.*;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import jmri.*;
 import jmri.configurexml.StoreXmlUserAction;
 import jmri.jmrit.catalog.NamedIcon;
@@ -1876,45 +1877,38 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     private void adjustScrollBars() {
-        log.info("adjustScrollBars()");
+        //log.info("adjustScrollBars()");
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
-//        log.info("  getViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
-//        //JViewport viewPort = scrollPane.getViewport();
-//        //Dimension viewSize = viewPort.getViewSize();
-//        Dimension viewSize = scrollPane.getSize();
-//        //Dimension panelSize = _targetPanel.getSize();
-        Dimension panelSize = getTargetPanelSize();
-//        if ((panelWidth != (int) panelSize.getWidth())
-//                || (panelHeight != (int) panelSize.getHeight())) {
-//            log.info("  viewSize: {}, panelSize: {}, panelWidth: {}, panelHeight: {}",
-//                    viewSize, panelSize, "" + panelWidth, "" + panelHeight);
-//        }
+        //log.info("  getViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
+        Rectangle2D panelBounds = getPanelBounds();
+        Dimension panelSize = MathUtil.getSize(panelBounds);
+        Dimension targetPanelSize = getTargetPanelSize();
 
         double scale = getZoom();
 
         JScrollBar horScroll = scrollPane.getHorizontalScrollBar();
-        int oldX = horScroll.getValue();
-        int oldMaxX = horScroll.getMaximum();
+        double oldX = horScroll.getValue();
+        double oldMaxX = horScroll.getMaximum();
         double ratioX = (oldMaxX < 1) ? 0 : oldX / oldMaxX;
 
-        int virtualWidth = (int) panelSize.getWidth();
-        int physicalWidth = (int) (scrollBounds.getWidth() / scale);
-//        int physicalWidth = (int) (scrollBounds.getWidth());
-        int newMaxX = (int) Math.max(virtualWidth - physicalWidth, 0.0);
+        //int panelWidth = (int) (panelSize.getWidth() * scale);
+        int panelWidth = (int) (targetPanelSize.getWidth());
+        int scrollWidth = (int) scrollBounds.getWidth();
+        int newMaxX = (int) (Math.max(panelWidth - scrollWidth, 0.0));
         int newX = (int) (newMaxX * ratioX);
         horScroll.setMaximum(newMaxX);
         horScroll.setValue(newX);
 
         JScrollBar vertScroll = scrollPane.getVerticalScrollBar();
-        int oldY = vertScroll.getValue();
-        int oldMaxY = vertScroll.getMaximum();
+        double oldY = vertScroll.getValue();
+        double oldMaxY = vertScroll.getMaximum();
         double ratioY = (oldMaxY < 1) ? 0 : oldY / oldMaxY;
 
-        int virtualHeight = (int) panelSize.getHeight(); //(panelHeight * scale);
-        int physicalHeight = (int) (scrollBounds.getHeight() / scale);
-//        int physicalHeight = (int) (scrollBounds.getHeight());
-        int newMaxY = (int) Math.max(virtualHeight - physicalHeight, 0.0);
+        //int panelHeight = (int) (panelSize.getHeight() * scale);
+        int panelHeight = (int) (targetPanelSize.getHeight());
+        int scrollHeight = (int) scrollBounds.getHeight();
+        int newMaxY = (int) (Math.max(panelHeight - scrollHeight, 0.0));
         int newY = (int) (newMaxY * ratioY);
         vertScroll.setMaximum(newMaxY);
         vertScroll.setValue(newY);
@@ -1924,44 +1918,25 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     private void adjustClip() {
-        log.info("adjustClip()");
+        //log.info("adjustClip()");
 
-        //Rectangle2D clipBounds = g2.getClipBounds();
-        //log.info("drawPanelGrid() clipBounds: " + clipBounds);
-        // calculate the bounds for the scroll pane
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
-        log.info("  getViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
-
-        // Rectangle2D newClipBounds = SwingUtilities.convertRectangle(
-        //        scrollPane.getParent(), scrollBounds, this);
-        //Rectangle2D newClipBounds = MathUtil.rectangleToRectangle2D(scrollPane.getVisibleRect());
-        //log.info("  getVisibleRect: {}", MathUtil.rectangle2DToString(newClipBounds));
-        Rectangle2D newClipBounds = MathUtil.rectangleToRectangle2D(scrollBounds);
-
-//        double scale = getZoom();
-//        int width = (int) (newClipBounds.getWidth() / scale);
-//        int height = (int) (newClipBounds.getHeight() / scale);
-//        int originX = (int) (scrollPane.getHorizontalScrollBar().getValue() / scale);
-//        int originY = (int) (scrollPane.getVerticalScrollBar().getValue() / scale);
-//        //log.info("  origin: {{}, {}}", originX, originY);
-//
-//        newClipBounds = new Rectangle2D.Double(originX, originY, width, height);
-//        log.info("  newClipBounds: {}", MathUtil.rectangle2DToString(newClipBounds));
-//        layoutEditorComponent.setClip(newClipBounds);
+        //log.info("  ViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
 
         JScrollBar horScroll = scrollPane.getHorizontalScrollBar();
         int scrollX = horScroll.getValue();
         JScrollBar vertScroll = scrollPane.getVerticalScrollBar();
         int scrollY = vertScroll.getValue();
 
-        //Rectangle2D newClip = MathUtil.offset(scrollBounds, -scrollX, -scrollY);
-        Rectangle2D newClip = new Rectangle2D.Double(scrollBounds.getMinX(), scrollBounds.getMinY(), 
-                scrollBounds.getWidth() + scrollX, scrollBounds.getHeight() + scrollY);
-//        log.info("  newClip: {}", MathUtil.rectangle2DToString(newClip));
-        newClip = MathUtil.scale(newClip, 2.0);
-        layoutEditorComponent.setClip(newClip);
-//        layoutEditorComponent.setClip(scrollBounds);
+        Rectangle2D newClipRect = MathUtil.offset(
+                scrollBounds,
+                scrollX - scrollBounds.getMinX(),
+                scrollY - scrollBounds.getMinY());
+        newClipRect = MathUtil.scale(newClipRect, 1.0 / getZoom());
+        newClipRect = MathUtil.granulize(newClipRect, 1.0); //round to nearest pixel
+        layoutEditorComponent.setClip(newClipRect);
+
         redrawPanel();
     }
 
@@ -1970,22 +1945,22 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         //log.warn("mouseWheelMoved");
         if (event.isAltDown()) {
             // get the mouse position from the event and convert to target panel coordinates
-            Component c = (Component) event.getSource();
-            Point ep = event.getPoint();
-            JComponent t = getTargetPanel();
-            Point2D mousePos2D = SwingUtilities.convertPoint(c, ep, t);
+            Component component = (Component) event.getSource();
+            Point eventPoint = event.getPoint();
+            JComponent targetPanel = getTargetPanel();
+            Point2D mousePoint = SwingUtilities.convertPoint(component, eventPoint, targetPanel);
 
             // get the old view port position
             JScrollPane scrollPane = getPanelScrollPane();
             JViewport viewPort = scrollPane.getViewport();
-            Point2D oldViewPos2D = viewPort.getViewPosition();
+            Point2D viewPosition = viewPort.getViewPosition();
 
             // convert from oldZoom (scaled) coordinates to image coordinates
-            double oldZoom = getZoom();
-            Point2D imP2D = MathUtil.divide(mousePos2D, oldZoom);
-            Point2D ivP2D = MathUtil.divide(oldViewPos2D, oldZoom);
+            double zoom = getZoom();
+            Point2D imageMousePoint = MathUtil.divide(mousePoint, zoom);
+            Point2D imageViewPosition = MathUtil.divide(viewPosition, zoom);
             // compute the delta (in image coordinates)
-            Point2D iDeltaP2D = MathUtil.subtract(imP2D, ivP2D);
+            Point2D imageDelta = MathUtil.subtract(imageMousePoint, imageViewPosition);
 
             // compute how much to change zoom
             double amount = Math.pow(1.1, event.getScrollAmount());
@@ -1994,25 +1969,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
                 amount = 1.0 / amount;
             }
             // set the new zoom
-            double newZoom = setZoom(oldZoom * amount);
+            double newZoom = setZoom(zoom * amount);
             // recalulate the amount (in case setZoom didn't zoom as much as we wanted)
-            amount = newZoom / oldZoom;
+            amount = newZoom / zoom;
 
             // convert the old delta to the new
-            Point2D iNewDeltaP2D = MathUtil.divide(iDeltaP2D, amount);
+            Point2D newImageDelta = MathUtil.divide(imageDelta, amount);
             // calculate the new view position (in image coordinates)
-            Point2D iNewViewPos2D = MathUtil.subtract(imP2D, iNewDeltaP2D);
+            Point2D newImageViewPosition = MathUtil.subtract(imageMousePoint, newImageDelta);
             // convert from image coordinates to newZoom (scaled) coordinates
-            Point2D newViewPos2D = MathUtil.multiply(iNewViewPos2D, newZoom);
+            Point2D newViewPosition = MathUtil.multiply(newImageViewPosition, newZoom);
 
             // don't let origin go negative
-            newViewPos2D = MathUtil.pin(newViewPos2D, MathUtil.zeroPoint2D, MathUtil.infinityPoint2D);
-            log.debug("mouseWheelMoved: newViewPos2D: {}", newViewPos2D);
+            newViewPosition = MathUtil.max(newViewPosition, MathUtil.zeroPoint2D);
+            log.info("mouseWheelMoved: newViewPos2D: {}", newViewPosition);
 
             // set new view position
-            viewPort.setViewPosition(MathUtil.point2DToPoint(newViewPos2D));
-
-            adjustScrollBars();
+            viewPort.setViewPosition(MathUtil.point2DToPoint(newViewPosition));
         } else {
             JScrollPane scrollPane = getPanelScrollPane();
             if (scrollPane != null) {
@@ -2080,14 +2053,21 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     //
     //
     public double setZoom(double zoomFactor) {
-        //TODO: add code to re-calculate minZoom (so panel never smaller than view)
+        //re-calculate minZoom (so panel never smaller than view)
+        JScrollPane scrollPane = getPanelScrollPane();
+        Rectangle2D scrollBounds = scrollPane.getViewportBorderBounds();
+        Rectangle2D panelBounds = getPanelBounds();
+        Dimension panelSize = MathUtil.getSize(panelBounds);
+        minZoom = Math.min(scrollBounds.getWidth() / panelSize.getWidth(),
+                scrollBounds.getHeight() / panelSize.getHeight());
+
         double newZoom = MathUtil.pin(zoomFactor, minZoom, maxZoom);
 
         if (!MathUtil.equals(newZoom, getPaintScale())) {
             log.debug("zoom: {}", zoomFactor);
-            //setPaintScale(newZoom);
-            _paintScale = newZoom;
-            adjustScrollBars();
+            //setPaintScale(newZoom);   //<<== don't call; messes up scrollbars
+            _paintScale = newZoom;      //just set paint scale directly
+            adjustScrollBars();         //and adjust the scrollbars ourselves
 
             leToolBarPanel.zoomLabel.setText(String.format("x%1$,.2f", newZoom));
             selectZoomMenuItem(newZoom);
@@ -2160,11 +2140,13 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         }
 
-        // put a grid size margin around it
+        //put a grid size margin around it
         result = MathUtil.inset(result, gridSize1st * gridSize2nd / -2.0);
 
-        // don't let origin go negative
-        result = result.createIntersection(MathUtil.zeroToInfinityRectangle2D);
+        //don't let origin go negative
+        //result = result.createIntersection(MathUtil.zeroToInfinityRectangle2D);
+        //force origin to {zero, zero}
+        result = MathUtil.setOrigin(result, MathUtil.zeroPoint2D);
 
         return result;
     }

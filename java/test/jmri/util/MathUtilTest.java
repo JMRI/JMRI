@@ -580,14 +580,14 @@ public class MathUtilTest {
     public void test_origin() {
         Rectangle2D rD = new Rectangle2D.Double(3.14, 1.59, 33.3, 44.4);
         Assert.assertEquals("MathUtil.origin(r)", new Point2D.Double(3.14, 1.59),
-                MathUtil.origin(rD));
+                MathUtil.getOrigin(rD));
     }
 
     @Test
     public void test_size() {
         Rectangle2D rD = new Rectangle2D.Double(3.14, 1.59, 33.3, 44.4);
         Assert.assertEquals("MathUtil.size(r)", new Point2D.Double(33.3, 44.4),
-                MathUtil.size(rD));
+                MathUtil.getSize(rD));
     }
 
     @Test

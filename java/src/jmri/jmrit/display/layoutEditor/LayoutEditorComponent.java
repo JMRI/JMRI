@@ -53,25 +53,8 @@ class LayoutEditorComponent extends JComponent {
             Graphics2D g2 = (Graphics2D) g;
 
             if (clipBounds != null) {
-                Rectangle r = g2.getClipBounds();
-                if (!clipBounds.equals(r)) {
-                    Stroke stroke = g2.getStroke();
-                    Color color = g2.getColor();
-
-                    g2.setColor(new Color(255, 0, 0));
-                    g2.setStroke(new BasicStroke(3.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-                    g2.draw(r);
-
-                    g2.setColor(new Color(0, 255, 0));
-                    g2.setStroke(new BasicStroke(3.0F, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
-                    g2.draw(clipBounds);
-
-                    g2.setColor(color);
-                    g2.setStroke(stroke);
-
-                    log.warn("old clipBounds: {}", MathUtil.rectangle2DToString(r));
+                if (!clipBounds.equals(g2.getClipBounds())) {
                     g2.setClip(clipBounds);
-                    log.warn("new clipBounds: {}", MathUtil.rectangle2DToString(clipBounds));
                 }
             }
             //Optional antialising, to eliminate (reduce) staircase on diagonal lines

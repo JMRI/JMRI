@@ -4,6 +4,7 @@ import static java.lang.Float.NEGATIVE_INFINITY;
 import static java.lang.Float.POSITIVE_INFINITY;
 import static java.lang.Math.PI;
 
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.Rectangle;
@@ -120,11 +121,23 @@ public final class MathUtil {
      * @param pA the first point
      * @param pB the second point
      * @param pC the third point
-     * @return the coordinated of pA pined between pB and pC
+     * @return the coordinates of pA pined between pB and pC
      */
     @CheckReturnValue
     public static Point2D pin(@Nonnull Point2D pA, @Nonnull Point2D pB, @Nonnull Point2D pC) {
         return min(max(pA, min(pB, pC)), max(pB, pC));
+    }
+
+    /**
+     * Get the coordinates of a point pinned in a rectangle
+     *
+     * @param pA the point
+     * @param pR the rectangle
+     * @return the coordinates of point pA pined in rectangle pR
+     */
+    @CheckReturnValue
+    public static Point2D pin(@Nonnull Point2D pA, @Nonnull Rectangle2D pR) {
+        return min(max(pA, getOrigin(pR)), offset(getOrigin(pR), pR.getWidth(), pR.getHeight()));
     }
 
     /**
@@ -544,10 +557,10 @@ public final class MathUtil {
     }
 
     /**
-     * Round point to horzontal and vertical granular increments.
+     * Round point to horizontal and vertical granular increments.
      *
      * @param p  the point to granulize
-     * @param gH the horzontal granularity
+     * @param gH the horizontal granularity
      * @param gV the vertical granularity
      * @return the point granulized to the granularity
      */
@@ -557,7 +570,7 @@ public final class MathUtil {
     }
 
     /**
-     * Round point to granulur increment.
+     * Round point to granular increment.
      *
      * @param p the point to granulize
      * @param g the granularity
@@ -566,6 +579,22 @@ public final class MathUtil {
     @CheckReturnValue
     public static Point2D granulize(@Nonnull Point2D p, double g) {
         return granulize(p, g, g);
+    }
+
+    /**
+     * Round Rectangle2D to granular increment.
+     *
+     * @param r the rectangle to granulize
+     * @param g the granularity
+     * @return the rectangle granulized to the granularity
+     */
+    @CheckReturnValue
+    public static Rectangle2D granulize(@Nonnull Rectangle2D r, double g) {
+        return new Rectangle2D.Double(
+                granulize(r.getMinX(), g),
+                granulize(r.getMinY(), g),
+                granulize(r.getWidth(), g),
+                granulize(r.getHeight(), g));
     }
 
     /**
@@ -804,6 +833,7 @@ public final class MathUtil {
 
     /**
      * rectangle2DToString return a string to represent a rectangle
+     *
      * @param r the rectangle2D
      * @return the string
      */
@@ -842,19 +872,55 @@ public final class MathUtil {
      * @return the origin of the rectangle
      */
     @CheckReturnValue
-    public static Point2D origin(@Nonnull Rectangle2D r) {
+    public static Point2D getOrigin(@Nonnull Rectangle2D r) {
         return new Point2D.Double(r.getX(), r.getY());
     }
 
     /**
-     * Get the size of the rectangle.
+     * Set the origin (top left) of the rectangle.
+     *
+     * @param r      the rectangle
+     * @param origin the origin
+     * @return a new rectangle with the new origin
+     */
+    @CheckReturnValue
+    public static Rectangle2D setOrigin(@Nonnull Rectangle2D r, @Nonnull Point2D origin) {
+        return new Rectangle2D.Double(origin.getX(), origin.getY(), r.getWidth(), r.getHeight());
+    }
+
+    /**
+     * Get the size of a rectangle.
      *
      * @param r the rectangle
      * @return the size of the rectangle
      */
     @CheckReturnValue
-    public static Point2D size(@Nonnull Rectangle2D r) {
-        return new Point2D.Double(r.getWidth(), r.getHeight());
+    public static Dimension getSize(@Nonnull Rectangle2D r) {
+        return new Dimension((int) r.getWidth(), (int) r.getHeight());
+    }
+
+    /**
+     * Set the size of a rectangle
+     *
+     * @param r the rectangle
+     * @param d the new size (as dimension)
+     * @return a new rectangle with the new size
+     */
+    @CheckReturnValue
+    public static Rectangle2D setSize(@Nonnull Rectangle2D r, @Nonnull Dimension d) {
+        return new Rectangle2D.Double(r.getMinX(), r.getMinY(), d.getWidth(), d.getHeight());
+    }
+
+    /**
+     * Set the size of a rectangle
+     *
+     * @param r the rectangle
+     * @param s the new size (as Point2D)
+     * @return a new rectangle with the new size
+     */
+    @CheckReturnValue
+    public static Rectangle2D setSize(@Nonnull Rectangle2D r, @Nonnull Point2D s) {
+        return new Rectangle2D.Double(r.getMinX(), r.getMinY(), s.getX(), s.getY());
     }
 
     /**
@@ -883,7 +949,7 @@ public final class MathUtil {
      * Offset a rectangle by distinct x,y values.
      *
      * @param r the rectangle
-     * @param x the horzontal offset
+     * @param x the horizontal offset
      * @param y the vertical offset
      * @return the offset rectangle
      */
