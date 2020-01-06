@@ -15,7 +15,7 @@ public class SerialMonAction extends AbstractAction {
 
     private CMRISystemConnectionMemo _memo = null;
 
-    public SerialMonAction(String s,CMRISystemConnectionMemo memo) {
+    public SerialMonAction(String s, CMRISystemConnectionMemo memo) {
         super(s);
         _memo = memo;
     }
