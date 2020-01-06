@@ -51,9 +51,6 @@ import jmri.implementation.DefaultConditionalAction;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Swing action to create and register groups of Logix Condtionals to perform a
  * railroad control task.
@@ -3039,5 +3036,5 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         return Bundle.getMessage("TitleLRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(LRouteTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(LRouteTableAction.class);
 }
