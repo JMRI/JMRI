@@ -49,7 +49,7 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
 
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DFUN, 1, 0x00, 0x00 },0x12 );
         cbtm.reply(r);
-        JUnitAppender.assertErrorMessageStartsWith("Unrecognised function group");
+        
         r.setElement(2, 1);
         r.setElement(3, 0x1f);
         cbtm.reply(r);
@@ -137,6 +137,8 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         Assert.assertEquals("F26 off",false,cbtm.getThrottleInfo(addr,Throttle.F26));
         Assert.assertEquals("F27 off",false,cbtm.getThrottleInfo(addr,Throttle.F27));
         Assert.assertEquals("F28 off",false,cbtm.getThrottleInfo(addr,Throttle.F28));
+        
+        JUnitAppender.assertErrorMessageStartsWith("Unrecognised function group");
         
     }
     
