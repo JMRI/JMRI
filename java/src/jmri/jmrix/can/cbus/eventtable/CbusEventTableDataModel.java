@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus.eventtable;
 
-import javax.annotation.CheckForNull;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -97,11 +96,10 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
     }
 
     /**
-     * Get the Column Tooltips
+     * Get the Column Tooltips.
      *<p>
-     * Order needs to match column list top of dtabledatamodel
+     * Order needs to match column list
      */
-    @CheckForNull
     public static final String[] CBUS_EV_TABLE_COL_TOOLTIPS = {
         Bundle.getMessage("NodeColTip"),
         Bundle.getMessage("EventColTip"),
