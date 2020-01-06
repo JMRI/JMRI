@@ -148,7 +148,7 @@ public class VSDConfigDialog extends JDialog {
         rosterSelector.setNonSelectedItem(Bundle.getMessage("EmptyRosterBox"));
         rosterSelector.setToolTipText(Bundle.getMessage("LTPRosterSelectorToolTip"));
         //rosterComboBox.setToolTipText("tool tip for roster box");
-        rosterSelector.addPropertyChangeListener(rosterSelector.SELECTED_ROSTER_ENTRIES, new PropertyChangeListener() {
+        rosterSelector.addPropertyChangeListener("selectedRosterEntries", new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent pce) {
                 rosterItemSelectAction(null);

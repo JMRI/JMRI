@@ -52,8 +52,6 @@ public class VSDecoderCreationAction extends AbstractAction {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        String fp;
-        String fn;
         JFrame tf;
 
         if (_useNewGUI) {
