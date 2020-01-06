@@ -1533,304 +1533,292 @@ public class DispatcherFrame extends jmri.util.JmriJFrame implements InstanceMan
         AllocatedSection as = null;
         Section nextSection = null;
         int nextSectionSeqNo = 0;
-        if (ar != null) {
-            ActiveTrain at = ar.getActiveTrain();
-            Section s = ar.getSection();
-            if (at.reachedRestartPoint()) {
-                log.debug("{}: waiting for restart, [{}] not allocated", at.getTrainName(), s.getUserName());
+        ActiveTrain at = ar.getActiveTrain();
+        Section s = ar.getSection();
+        if (at.reachedRestartPoint()) {
+            log.debug("{}: waiting for restart, [{}] not allocated", at.getTrainName(), s.getUserName());
+            return null;
+        }
+        if (at.holdAllocation()) {
+            log.debug("{}: allocation is held, [{}] not allocated", at.getTrainName(), s.getUserName());
+            return null;
+        }
+        if (s.getState() != Section.FREE) {
+            log.debug("{}: section [{}] is not free", at.getTrainName(), s.getUserName());
+            return null;
+        }
+        // skip occupancy check if this is the first allocation and the train is occupying the Section
+        boolean checkOccupancy = true;
+        if ((at.getLastAllocatedSection() == null) && (s.containsBlock(at.getStartBlock()))) {
+            checkOccupancy = false;
+        }
+        // check if section is occupied
+        if (checkOccupancy && (s.getOccupancy() == Section.OCCUPIED)) {
+            if (_AutoAllocate) {
+                return null;  // autoAllocate never overrides occupancy
+            }
+            int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
+                    Bundle.getMessage("Question1"), Bundle.getMessage("WarningTitle"),
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
+            if (selectedValue == 1) {
+                return null;   // return without allocating if "No" response
+            }
+        }
+        // check if train has reached its start time if delayed start
+        if (checkOccupancy && (!at.getStarted()) && at.getDelayedStart() != ActiveTrain.NODELAY) {
+            if (_AutoAllocate) {
+                return null;  // autoAllocate never overrides start time
+            }
+            int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
+                    Bundle.getMessage("Question4"), Bundle.getMessage("WarningTitle"),
+                    JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                    new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
+            if (selectedValue == 1) {
                 return null;
+            } else {
+                at.setStarted();
+                for (int i = delayedTrains.size() - 1; i >= 0; i--) {
+                    if (delayedTrains.get(i) == at) {
+                        delayedTrains.remove(i);
+                    }
+                }
             }
-            if (at.holdAllocation()) {
-                log.debug("{}: allocation is held, [{}] not allocated", at.getTrainName(), s.getUserName());
-                return null;
+        }
+        //check here to see if block is already assigned to an allocated section;
+        if (getSignalType() == SIGNALMAST && checkBlocksNotInAllocatedSection(s, ar) != null) {
+            return null;
+        }
+        // Programming
+        // Note: if ns is not null, the program will not check for end Block, but will use ns.
+        // Calling code must do all validity checks on a non-null ns.
+        if (ns != null) {
+            nextSection = ns;
+        } else if ((ar.getSectionSeqNumber() != -99) && (at.getNextSectionSeqNumber() == ar.getSectionSeqNumber())
+                && (!((s == at.getEndBlockSection()) && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())))
+                && (!(at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1)))) {
+            // not at either end - determine the next section
+            int seqNum = ar.getSectionSeqNumber();
+            if (at.isAllocationReversed()) {
+                seqNum -= 1;
+            } else {
+                seqNum += 1;
             }
-            if (s.getState() != Section.FREE) {
-                log.debug("{}: section [{}] is not free", at.getTrainName(), s.getUserName());
-                return null;
-            }
-            // skip occupancy check if this is the first allocation and the train is occupying the Section
-            boolean checkOccupancy = true;
-            if ((at.getLastAllocatedSection() == null) && (s.containsBlock(at.getStartBlock()))) {
-                checkOccupancy = false;
-            }
-            // check if section is occupied
-            if (checkOccupancy && (s.getOccupancy() == Section.OCCUPIED)) {
+            List<Section> secList = at.getTransit().getSectionListBySeq(seqNum);
+            if (secList.size() == 1) {
+                nextSection = secList.get(0);
+
+            } else if (secList.size() > 1) {
                 if (_AutoAllocate) {
-                    return null;  // autoAllocate never overrides occupancy
-                }
-                int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
-                        Bundle.getMessage("Question1"), Bundle.getMessage("WarningTitle"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
-                if (selectedValue == 1) {
-                    return null;   // return without allocating if "No" response
+                    nextSection = autoChoice(secList, ar);
+                } else {
+                    nextSection = dispatcherChoice(secList, ar);
                 }
             }
-            // check if train has reached its start time if delayed start
-            if (checkOccupancy && (!at.getStarted()) && at.getDelayedStart() != ActiveTrain.NODELAY) {
+            nextSectionSeqNo = seqNum;
+        } else if (at.getReverseAtEnd() && (!at.isAllocationReversed()) && (s == at.getEndBlockSection())
+                && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())) {
+            // need to reverse Transit direction when train is in the last Section, set next section.
+            if (at.getResetWhenDone()) {
+                if (at.getDelayedRestart() != ActiveTrain.NODELAY) {
+                    log.debug("{}: setting allocation to held", at.getTrainName());
+                    at.holdAllocation(true);
+                }
+            }
+            nextSectionSeqNo = at.getEndBlockSectionSequenceNumber() - 1;
+            at.setAllocationReversed(true);
+            List<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
+            if (secList.size() == 1) {
+                nextSection = secList.get(0);
+            } else if (secList.size() > 1) {
                 if (_AutoAllocate) {
-                    return null;  // autoAllocate never overrides start time
-                }
-                int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
-                        Bundle.getMessage("Question4"), Bundle.getMessage("WarningTitle"),
-                        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                        new Object[]{Bundle.getMessage("ButtonOverride"), Bundle.getMessage("ButtonNo")}, Bundle.getMessage("ButtonNo"));
-                if (selectedValue == 1) {
-                    return null;
+                    nextSection = autoChoice(secList, ar);
                 } else {
-                    at.setStarted();
-                    for (int i = delayedTrains.size() - 1; i >= 0; i--) {
-                        if (delayedTrains.get(i) == at) {
-                            delayedTrains.remove(i);
-                        }
+                    nextSection = dispatcherChoice(secList, ar);
+                }
+            }
+        } else if (((!at.isAllocationReversed()) && (s == at.getEndBlockSection())
+                && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber()))
+                || (at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1))) {
+            // request to allocate the last block in the Transit, or the Transit is reversed and
+            //      has reached the beginning of the Transit--check for automatic restart
+            if (at.getResetWhenDone()) {
+                if (at.getDelayedRestart() != ActiveTrain.NODELAY) {
+                    log.debug("{}: setting allocation to held", at.getTrainName());
+                    at.holdAllocation(true);
+                }
+                nextSection = at.getSecondAllocatedSection();
+                nextSectionSeqNo = 2;
+                at.setAllocationReversed(false);
+            }
+        }
+
+        //This might be the location to check to see if we have an intermediate section that we then need to perform extra checks on.
+        //Working on the basis that if the nextsection is not null, then we are not at the end of the transit.
+        List<Section> intermediateSections = new ArrayList<>();
+        Section mastHeldAtSection = null;
+        if (nextSection != null && ar.getSection().getProperty("intermediateSection") != null && ((Boolean) ar.getSection().getProperty("intermediateSection")).booleanValue()) {
+            String property = "forwardMast";
+            if (at.isAllocationReversed()) {
+                property = "reverseMast";
+            }
+            if (ar.getSection().getProperty(property) != null) {
+                SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(ar.getSection().getProperty(property).toString());
+                if (endMast != null) {
+                    if (endMast.getHeld()) {
+                        mastHeldAtSection = ar.getSection();
                     }
                 }
             }
-            //check here to see if block is already assigned to an allocated section;
-            if (getSignalType() == SIGNALMAST && checkBlocksNotInAllocatedSection(s, ar) != null) {
-                return null;
-            }
-            // Programming
-            // Note: if ns is not null, the program will not check for end Block, but will use ns.
-            // Calling code must do all validity checks on a non-null ns.
-            if (ns != null) {
-                nextSection = ns;
-            } else if ((ar.getSectionSeqNumber() != -99) && (at.getNextSectionSeqNumber() == ar.getSectionSeqNumber())
-                    && (!((s == at.getEndBlockSection()) && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())))
-                    && (!(at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1)))) {
-                // not at either end - determine the next section
-                 int seqNum = ar.getSectionSeqNumber();
-                if (at.isAllocationReversed()) {
-                    seqNum -= 1;
-                } else {
-                    seqNum += 1;
-                }
-                List<Section> secList = at.getTransit().getSectionListBySeq(seqNum);
-                if (secList.size() == 1) {
-                    nextSection = secList.get(0);
-
-                } else if (secList.size() > 1) {
-                    if (_AutoAllocate) {
-                        nextSection = autoChoice(secList, ar);
-                    } else {
-                        nextSection = dispatcherChoice(secList, ar);
-                    }
-                }
-                nextSectionSeqNo = seqNum;
-            } else if (at.getReverseAtEnd() && (!at.isAllocationReversed()) && (s == at.getEndBlockSection())
-                    && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber())) {
-                // need to reverse Transit direction when train is in the last Section, set next section.
-                if (at.getResetWhenDone()) {
-                    if (at.getDelayedRestart() != ActiveTrain.NODELAY) {
-                        log.debug("{}: setting allocation to held", at.getTrainName());
-                        at.holdAllocation(true);
-                    }
-                }
-                nextSectionSeqNo = at.getEndBlockSectionSequenceNumber() - 1;
-                at.setAllocationReversed(true);
-                List<Section> secList = at.getTransit().getSectionListBySeq(nextSectionSeqNo);
-                if (secList.size() == 1) {
-                    nextSection = secList.get(0);
-                } else if (secList.size() > 1) {
-                    if (_AutoAllocate) {
-                        nextSection = autoChoice(secList, ar);
-                    } else {
-                        nextSection = dispatcherChoice(secList, ar);
-                    }
-                }
-            } else if (((!at.isAllocationReversed()) && (s == at.getEndBlockSection())
-                    && (ar.getSectionSeqNumber() == at.getEndBlockSectionSequenceNumber()))
-                    || (at.isAllocationReversed() && (ar.getSectionSeqNumber() == 1))) {
-                // request to allocate the last block in the Transit, or the Transit is reversed and
-                //      has reached the beginning of the Transit--check for automatic restart
-                if (at.getResetWhenDone()) {
-                    if (at.getDelayedRestart() != ActiveTrain.NODELAY) {
-                        log.debug("{}: setting allocation to held", at.getTrainName());
-                        at.holdAllocation(true);
-                    }
-                    nextSection = at.getSecondAllocatedSection();
-                    nextSectionSeqNo = 2;
-                    at.setAllocationReversed(false);
-//                } else if ((at.isAllocationReversed() && ar.getSectionSeqNumber() == 1)) {
-                    //nextSection = at.getSecondAllocatedSection();
-                    //nextSectionSeqNo = 2;
-//                    nextSection = ar.getSection();
-//                    nextSectionSeqNo = 1;
-//                    log.debug("I");
-                    //at.holdAllocation(true);
-                    //at.setAllocationReversed(false);
-                }
-            }
-
-            //This might be the location to check to see if we have an intermediate section that we then need to perform extra checks on.
-            //Working on the basis that if the nextsection is not null, then we are not at the end of the transit.
-            List<Section> intermediateSections = new ArrayList<>();
-            Section mastHeldAtSection = null;
-            if (nextSection != null && ar.getSection().getProperty("intermediateSection") != null && ((Boolean) ar.getSection().getProperty("intermediateSection")).booleanValue()) {
-                String property = "forwardMast";
-                if (at.isAllocationReversed()) {
-                    property = "reverseMast";
-                }
-                if (ar.getSection().getProperty(property) != null) {
-                    SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(ar.getSection().getProperty(property).toString());
-                    if (endMast != null) {
-                        if (endMast.getHeld()) {
-                            mastHeldAtSection = ar.getSection();
-                        }
-                    }
-                }
-                List<TransitSection> tsList = ar.getActiveTrain().getTransit().getTransitSectionList();
-                boolean found = false;
-                if (at.isAllocationReversed()) {
-                    for (int i = tsList.size() - 1; i > 0; i--) {
-                        TransitSection ts = tsList.get(i);
-                        if (ts.getSection() == ar.getSection() && ts.getSequenceNumber() == ar.getSectionSeqNumber()) {
-                            found = true;
-                        } else if (found) {
-                            if (ts.getSection().getProperty("intermediateSection") != null && ((Boolean) ts.getSection().getProperty("intermediateSection")).booleanValue()) {
-                                intermediateSections.add(ts.getSection());
-                            } else {
-                                //we add the section after the last intermediate in, so that the last allocation request can be built correctly
-                                intermediateSections.add(ts.getSection());
-                                break;
-                            }
-                        }
-                    }
-                } else {
-                    for (int i = 0; i <= tsList.size() - 1; i++) {
-                        TransitSection ts = tsList.get(i);
-                        if (ts.getSection() == ar.getSection() && ts.getSequenceNumber() == ar.getSectionSeqNumber()) {
-                            found = true;
-                        } else if (found) {
-                            if (ts.getSection().getProperty("intermediateSection") != null && ((Boolean) ts.getSection().getProperty("intermediateSection")).booleanValue()) {
-                                intermediateSections.add(ts.getSection());
-                            } else {
-                                //we add the section after the last intermediate in, so that the last allocation request can be built correctly
-                                intermediateSections.add(ts.getSection());
-                                break;
-                            }
-                        }
-                    }
-                }
-                boolean intermediatesOccupied = false;
-
-                for (int i = 0; i < intermediateSections.size() - 1; i++) {  // ie do not check last section which is not an intermediate section
-                    Section se = intermediateSections.get(i);
-                    if (se.getState() == Section.FREE) {
-                        //If the section state is free, we need to look to see if any of the blocks are used else where
-                        Section conflict = checkBlocksNotInAllocatedSection(se, null);
-                        if (conflict != null) {
-                            //We have a conflicting path
-                            //We might need to find out if the section which the block is allocated to is one in our transit, and if so is it running in the same direction.
-                            return null;
+            List<TransitSection> tsList = ar.getActiveTrain().getTransit().getTransitSectionList();
+            boolean found = false;
+            if (at.isAllocationReversed()) {
+                for (int i = tsList.size() - 1; i > 0; i--) {
+                    TransitSection ts = tsList.get(i);
+                    if (ts.getSection() == ar.getSection() && ts.getSequenceNumber() == ar.getSectionSeqNumber()) {
+                        found = true;
+                    } else if (found) {
+                        if (ts.getSection().getProperty("intermediateSection") != null && ((Boolean) ts.getSection().getProperty("intermediateSection")).booleanValue()) {
+                            intermediateSections.add(ts.getSection());
                         } else {
-                            if (mastHeldAtSection == null) {
-                                if (se.getProperty(property) != null) {
-                                    SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(se.getProperty(property).toString());
-                                    if (endMast != null && endMast.getHeld()) {
-                                        mastHeldAtSection = se;
-                                    }
+                            //we add the section after the last intermediate in, so that the last allocation request can be built correctly
+                            intermediateSections.add(ts.getSection());
+                            break;
+                        }
+                    }
+                }
+            } else {
+                for (int i = 0; i <= tsList.size() - 1; i++) {
+                    TransitSection ts = tsList.get(i);
+                    if (ts.getSection() == ar.getSection() && ts.getSequenceNumber() == ar.getSectionSeqNumber()) {
+                        found = true;
+                    } else if (found) {
+                        if (ts.getSection().getProperty("intermediateSection") != null && ((Boolean) ts.getSection().getProperty("intermediateSection")).booleanValue()) {
+                            intermediateSections.add(ts.getSection());
+                        } else {
+                            //we add the section after the last intermediate in, so that the last allocation request can be built correctly
+                            intermediateSections.add(ts.getSection());
+                            break;
+                        }
+                    }
+                }
+            }
+            boolean intermediatesOccupied = false;
+
+            for (int i = 0; i < intermediateSections.size() - 1; i++) {  // ie do not check last section which is not an intermediate section
+                Section se = intermediateSections.get(i);
+                if (se.getState() == Section.FREE) {
+                    //If the section state is free, we need to look to see if any of the blocks are used else where
+                    Section conflict = checkBlocksNotInAllocatedSection(se, null);
+                    if (conflict != null) {
+                        //We have a conflicting path
+                        //We might need to find out if the section which the block is allocated to is one in our transit, and if so is it running in the same direction.
+                        return null;
+                    } else {
+                        if (mastHeldAtSection == null) {
+                            if (se.getProperty(property) != null) {
+                                SignalMast endMast = InstanceManager.getDefault(jmri.SignalMastManager.class).getSignalMast(se.getProperty(property).toString());
+                                if (endMast != null && endMast.getHeld()) {
+                                    mastHeldAtSection = se;
                                 }
                             }
                         }
-                    } else if (at.getLastAllocatedSection() != null && se.getState() != at.getLastAllocatedSection().getState()) {
-                        //Last allocated section and the checking section direction are not the same
-                        return null;
-                    } else {
-                        intermediatesOccupied = true;
                     }
-                }
-                //If the intermediate sections are already occupied or allocated then we clear the intermediate list and only allocate the original request.
-                if (intermediatesOccupied) {
-                    intermediateSections = new ArrayList<>();
+                } else if (at.getLastAllocatedSection() != null && se.getState() != at.getLastAllocatedSection().getState()) {
+                    //Last allocated section and the checking section direction are not the same
+                    return null;
+                } else {
+                    intermediatesOccupied = true;
                 }
             }
+            //If the intermediate sections are already occupied or allocated then we clear the intermediate list and only allocate the original request.
+            if (intermediatesOccupied) {
+                intermediateSections = new ArrayList<>();
+            }
+        }
 
-            // check/set turnouts if requested or if autorun
-            // Note: If "Use Connectivity..." is specified in the Options window, turnouts are checked. If
-            //   turnouts are not set correctly, allocation will not proceed without dispatcher override.
-            //   If in addition Auto setting of turnouts is requested, the turnouts are set automatically
-            //   if not in the correct position.
-            // Note: Turnout checking and/or setting is not performed when allocating an extra section.
-            if ((_UseConnectivity) && (ar.getSectionSeqNumber() != -99)) {
-                if (!checkTurnoutStates(s, ar.getSectionSeqNumber(), nextSection, at, at.getLastAllocatedSection())) {
+        // check/set turnouts if requested or if autorun
+        // Note: If "Use Connectivity..." is specified in the Options window, turnouts are checked. If
+        //   turnouts are not set correctly, allocation will not proceed without dispatcher override.
+        //   If in addition Auto setting of turnouts is requested, the turnouts are set automatically
+        //   if not in the correct position.
+        // Note: Turnout checking and/or setting is not performed when allocating an extra section.
+        if ((_UseConnectivity) && (ar.getSectionSeqNumber() != -99)) {
+            if (!checkTurnoutStates(s, ar.getSectionSeqNumber(), nextSection, at, at.getLastAllocatedSection())) {
+                return null;
+            }
+            Section preSec = s;
+            Section tmpcur = nextSection;
+            int tmpSeqNo = nextSectionSeqNo;
+            //The first section in the list will be the same as the nextSection, so we skip that.
+            for (int i = 1; i < intermediateSections.size(); i++) {
+                Section se = intermediateSections.get(i);
+                if (preSec == mastHeldAtSection) {
+                    log.debug("Section is beyond held mast do not set turnouts {}", (tmpcur != null ? tmpcur.getDisplayName() : "null"));
+                    break;
+                }
+                if (!checkTurnoutStates(tmpcur, tmpSeqNo, se, at, preSec)) {
                     return null;
                 }
-                Section preSec = s;
-                Section tmpcur = nextSection;
-                int tmpSeqNo = nextSectionSeqNo;
-                //The first section in the list will be the same as the nextSection, so we skip that.
-                for (int i = 1; i < intermediateSections.size(); i++) {
-                    Section se = intermediateSections.get(i);
-                    if (preSec == mastHeldAtSection) {
-                        log.debug("Section is beyond held mast do not set turnouts {}", (tmpcur != null ? tmpcur.getDisplayName() : "null"));
-                        break;
-                    }
-                    if (!checkTurnoutStates(tmpcur, tmpSeqNo, se, at, preSec)) {
-                        return null;
-                    }
-                    preSec = tmpcur;
-                    tmpcur = se;
-                    if (at.isAllocationReversed()) {
-                        tmpSeqNo -= 1;
-                    } else {
-                        tmpSeqNo += 1;
-                    }
+                preSec = tmpcur;
+                tmpcur = se;
+                if (at.isAllocationReversed()) {
+                    tmpSeqNo -= 1;
+                } else {
+                    tmpSeqNo += 1;
                 }
             }
+        }
 
-            as = allocateSection(at, s, ar.getSectionSeqNumber(), nextSection, nextSectionSeqNo, ar.getSectionDirection());
-            if (intermediateSections.size() > 1 && mastHeldAtSection != s) {
-                Section tmpcur = nextSection;
-                int tmpSeqNo = nextSectionSeqNo;
-                int tmpNxtSeqNo = tmpSeqNo;
+        as = allocateSection(at, s, ar.getSectionSeqNumber(), nextSection, nextSectionSeqNo, ar.getSectionDirection());
+        if (intermediateSections.size() > 1 && mastHeldAtSection != s) {
+            Section tmpcur = nextSection;
+            int tmpSeqNo = nextSectionSeqNo;
+            int tmpNxtSeqNo = tmpSeqNo;
+            if (at.isAllocationReversed()) {
+                tmpNxtSeqNo -= 1;
+            } else {
+                tmpNxtSeqNo += 1;
+            }
+            //The first section in the list will be the same as the nextSection, so we skip that.
+            for (int i = 1; i < intermediateSections.size(); i++) {
+                if (tmpcur == mastHeldAtSection) {
+                    log.debug("Section is beyond held mast do not allocate any more sections {}", (tmpcur != null ? tmpcur.getDisplayName() : "null"));
+                    break;
+                }
+                Section se = intermediateSections.get(i);
+                as = allocateSection(at, tmpcur, tmpSeqNo, se, tmpNxtSeqNo, ar.getSectionDirection());
+                tmpcur = se;
                 if (at.isAllocationReversed()) {
+                    tmpSeqNo -= 1;
                     tmpNxtSeqNo -= 1;
                 } else {
+                    tmpSeqNo += 1;
                     tmpNxtSeqNo += 1;
                 }
-                //The first section in the list will be the same as the nextSection, so we skip that.
-                for (int i = 1; i < intermediateSections.size(); i++) {
-                    if (tmpcur == mastHeldAtSection) {
-                        log.debug("Section is beyond held mast do not allocate any more sections {}", (tmpcur != null ? tmpcur.getDisplayName() : "null"));
-                        break;
-                    }
-                    Section se = intermediateSections.get(i);
-                    as = allocateSection(at, tmpcur, tmpSeqNo, se, tmpNxtSeqNo, ar.getSectionDirection());
-                    tmpcur = se;
-                    if (at.isAllocationReversed()) {
-                        tmpSeqNo -= 1;
-                        tmpNxtSeqNo -= 1;
-                    } else {
-                        tmpSeqNo += 1;
-                        tmpNxtSeqNo += 1;
-                    }
-                }
             }
-            int ix = -1;
-            for (int i = 0; i < allocationRequests.size(); i++) {
-                if (ar == allocationRequests.get(i)) {
-                    ix = i;
-                }
-            }
-            allocationRequests.remove(ix);
-            ar.dispose();
-            allocationRequestTableModel.fireTableDataChanged();
-            activeTrainsTableModel.fireTableDataChanged();
-            if (allocatedSectionTableModel != null) {
-                allocatedSectionTableModel.fireTableDataChanged();
-            }
-            if (extraFrame != null) {
-                cancelExtraRequested(null);
-            }
-            if (_AutoAllocate) {
-                requestNextAllocation(at);
-                autoAllocate.scanAllocationRequestList(allocationRequests);
-            }
-
-        } else {
-            log.error("Null Allocation Request provided in request to allocate a section");
         }
+        int ix = -1;
+        for (int i = 0; i < allocationRequests.size(); i++) {
+            if (ar == allocationRequests.get(i)) {
+                ix = i;
+            }
+        }
+        allocationRequests.remove(ix);
+        ar.dispose();
+        allocationRequestTableModel.fireTableDataChanged();
+        activeTrainsTableModel.fireTableDataChanged();
+        if (allocatedSectionTableModel != null) {
+            allocatedSectionTableModel.fireTableDataChanged();
+        }
+        if (extraFrame != null) {
+            cancelExtraRequested(null);
+        }
+        if (_AutoAllocate) {
+            requestNextAllocation(at);
+            autoAllocate.scanAllocationRequestList(allocationRequests);
+        }
+
         return as;
     }
 
