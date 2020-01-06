@@ -659,7 +659,7 @@ public class LayoutTrackEditorsTest {
     }
 
     @Test
-    @Ignore("giving up after X failures")
+    ///@Ignore("giving up after X failures")
     public void testEditTurntableDone() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         Assume.assumeFalse("Ignoring intermittent test", Boolean.getBoolean("jmri.skipTestsRequiringSeparateRunning"));
