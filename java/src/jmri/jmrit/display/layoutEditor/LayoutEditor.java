@@ -1706,7 +1706,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         zoomInItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomInAccelerator), primary_modifier));
         zoomMenu.add(zoomInItem);
         zoomInItem.addActionListener((ActionEvent event) -> {
-            zoomIn();
+            setZoom(getZoom() * 1.1);
         });
 
         JMenuItem zoomOutItem = new JMenuItem(Bundle.getMessage("ZoomOut"));
@@ -1716,7 +1716,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         zoomOutItem.setAccelerator(KeyStroke.getKeyStroke(stringsToVTCodes.get(zoomOutAccelerator), primary_modifier));
         zoomMenu.add(zoomOutItem);
         zoomOutItem.addActionListener((ActionEvent event) -> {
-            zoomOut();
+            setZoom(getZoom() / 1.1);
         });
 
         JMenuItem zoomFitItem = new JMenuItem(Bundle.getMessage("ZoomToFit"));
@@ -1882,10 +1882,10 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
         //log.info("  getViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
         Rectangle2D panelBounds = getPanelBounds();
-        Dimension panelSize = MathUtil.getSize(panelBounds);
+        //Dimension panelSize = MathUtil.getSize(panelBounds);
         Dimension targetPanelSize = getTargetPanelSize();
 
-        double scale = getZoom();
+        //double scale = getZoom();
 
         JScrollBar horScroll = scrollPane.getHorizontalScrollBar();
         double oldX = horScroll.getValue();
@@ -2049,9 +2049,11 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         zoom075Item.setSelected(newZoomFactor == 75);
     }
 
-    //
-    //
-    //
+    /**
+     * setZoom
+     * @param zoomFactor the amount to scale
+     * @return the new scale amount (not necessarily the same as zoomFactor)
+     */
     public double setZoom(double zoomFactor) {
         //re-calculate minZoom (so panel never smaller than view)
         JScrollPane scrollPane = getPanelScrollPane();
@@ -2080,16 +2082,28 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         return getPaintScale();
     }
 
+    /**
+     * getZoom
+     * @return the zooming scale
+     */
     public double getZoom() {
         return getPaintScale();
     }
 
-    private double zoomIn() {
-        return setZoom(getZoom() * 1.1);
+    /**
+     * getMinZoom
+     * @return the minimum zoom scale
+     */
+    public double getMinZoom() {
+        return minZoom;
     }
 
-    private double zoomOut() {
-        return setZoom(getZoom() / 1.1);
+    /**
+     * getMaxZoom
+     * @return the maximum zoom scale
+     */
+    public double getMaxZoom() {
+        return maxZoom;
     }
 
     //
