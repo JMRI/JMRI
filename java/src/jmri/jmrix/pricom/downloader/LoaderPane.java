@@ -120,7 +120,7 @@ public class LoaderPane extends javax.swing.JPanel {
     }
 
     synchronized void sendBytes(byte[] bytes) {
-        log.debug("Send {0}: {1}", bytes.length, jmri.util.StringUtil.hexStringFromBytes(bytes));
+        log.debug("Send {}: {}", bytes.length, jmri.util.StringUtil.hexStringFromBytes(bytes));
         try {
             // send the STX at the start
             byte startbyte = 0x02;
