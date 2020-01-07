@@ -167,7 +167,7 @@ Select the "development" branch in this case.
 When a new branch is created, it only exists on your local computer. In order to push
 it to the server, we click on the button "Publish branch".
 
-<br/><a href="images/GHD_Image_9_NewBranch_Development.png"><img src="images/GHD_Image_9_NewBranch_Development.png" height="50%" width="50%"></a><br/>
+<br/><a href="images/GHD_Image_10_PublishBranch.png"><img src="images/GHD_Image_10_PublishBranch.png" height="50%" width="50%"></a><br/>
 
 <h3>Do a commit</h3>
 
