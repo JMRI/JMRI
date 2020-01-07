@@ -20,8 +20,6 @@ import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
 import jmri.implementation.QuietShutDownTask;
 import jmri.jmris.JmriServer;
-import jmri.server.json.JsonClientHandler;
-import jmri.server.json.JsonConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
