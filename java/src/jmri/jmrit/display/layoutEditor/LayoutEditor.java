@@ -1878,37 +1878,41 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     private void adjustScrollBars() {
         //log.info("adjustScrollBars()");
+
+        //This is the bounds of what's on the screen
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
         //log.info("  getViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
-        Rectangle2D panelBounds = getPanelBounds();
-        //Dimension panelSize = MathUtil.getSize(panelBounds);
+
+        //this is the size of the entire scaled layout panel
         Dimension targetPanelSize = getTargetPanelSize();
+        //log.info("  getTargetPanelSize: {}", MathUtil.dimensionToString(targetPanelSize));
 
         //double scale = getZoom();
-
+        //determine the relative position of the current horizontal scrollbar
         JScrollBar horScroll = scrollPane.getHorizontalScrollBar();
         double oldX = horScroll.getValue();
         double oldMaxX = horScroll.getMaximum();
         double ratioX = (oldMaxX < 1) ? 0 : oldX / oldMaxX;
 
-        //int panelWidth = (int) (panelSize.getWidth() * scale);
+        //calculate the new X maximum and value
         int panelWidth = (int) (targetPanelSize.getWidth());
         int scrollWidth = (int) scrollBounds.getWidth();
-        int newMaxX = (int) (Math.max(panelWidth - scrollWidth, 0.0));
+        int newMaxX = Math.max(panelWidth - scrollWidth, 0);
         int newX = (int) (newMaxX * ratioX);
         horScroll.setMaximum(newMaxX);
         horScroll.setValue(newX);
 
+        //determine the relative position of the current vertical scrollbar
         JScrollBar vertScroll = scrollPane.getVerticalScrollBar();
         double oldY = vertScroll.getValue();
         double oldMaxY = vertScroll.getMaximum();
         double ratioY = (oldMaxY < 1) ? 0 : oldY / oldMaxY;
 
-        //int panelHeight = (int) (panelSize.getHeight() * scale);
+        //calculate the new X maximum and value
         int panelHeight = (int) (targetPanelSize.getHeight());
         int scrollHeight = (int) scrollBounds.getHeight();
-        int newMaxY = (int) (Math.max(panelHeight - scrollHeight, 0.0));
+        int newMaxY = Math.max(panelHeight - scrollHeight, 0);
         int newY = (int) (newMaxY * ratioY);
         vertScroll.setMaximum(newMaxY);
         vertScroll.setValue(newY);
@@ -1920,6 +1924,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     private void adjustClip() {
         //log.info("adjustClip()");
 
+        //This is the bounds of what's on the screen
         JScrollPane scrollPane = getPanelScrollPane();
         Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
         //log.info("  ViewportBorderBounds: {}", MathUtil.rectangle2DToString(scrollBounds));
@@ -1982,7 +1987,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
             // don't let origin go negative
             newViewPosition = MathUtil.max(newViewPosition, MathUtil.zeroPoint2D);
-            log.info("mouseWheelMoved: newViewPos2D: {}", newViewPosition);
+            //log.info("mouseWheelMoved: newViewPos2D: {}", newViewPosition);
 
             // set new view position
             viewPort.setViewPosition(MathUtil.point2DToPoint(newViewPosition));
@@ -2021,12 +2026,31 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
 
     //
+    // enable the apropreate zoom menu items based on the zoomFactor
     //
+    private void enableZoomMenuItem(double zoomFactor) {
+        zoom025Item.setEnabled(zoomFactor <= 0.25);
+        zoom05Item.setEnabled(zoomFactor <= 0.5);
+        zoom075Item.setEnabled(zoomFactor <= 0.75);
+        noZoomItem.setEnabled(zoomFactor <= 1.0);
+        zoom15Item.setEnabled(zoomFactor <= 1.5);
+        zoom20Item.setEnabled(zoomFactor <= 2.0);
+        zoom30Item.setEnabled(zoomFactor <= 3.0);
+        zoom40Item.setEnabled(zoomFactor <= 4.0);
+        zoom50Item.setEnabled(zoomFactor <= 5.0);
+        zoom60Item.setEnabled(zoomFactor <= 6.0);
+        zoom70Item.setEnabled(zoomFactor <= 7.0);
+        zoom80Item.setEnabled(zoomFactor <= 8.0);
+    }
+
+    //
+    // select the apropreate zoom menu item based on the zoomFactor
     //
     private void selectZoomMenuItem(double zoomFactor) {
         //this will put zoomFactor on 100% increments
         //(so it will more likely match one of these values)
-        int newZoomFactor = ((int) Math.round(zoomFactor)) * 100;
+        int newZoomFactor = (int) MathUtil.granulize(zoomFactor, 100);
+        //int newZoomFactor = ((int) Math.round(zoomFactor)) * 100;
         noZoomItem.setSelected(newZoomFactor == 100);
         zoom20Item.setSelected(newZoomFactor == 200);
         zoom30Item.setSelected(newZoomFactor == 300);
@@ -2038,19 +2062,22 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
         //this will put zoomFactor on 50% increments
         //(so it will more likely match one of these values)
-        newZoomFactor = ((int) (zoomFactor * 2)) * 50;
+        //newZoomFactor = ((int) (zoomFactor * 2)) * 50;
+        newZoomFactor = (int) MathUtil.granulize(zoomFactor, 50);
         zoom05Item.setSelected(newZoomFactor == 50);
         zoom15Item.setSelected(newZoomFactor == 150);
 
         //this will put zoomFactor on 25% increments
         //(so it will more likely match one of these values)
-        newZoomFactor = ((int) (zoomFactor * 4)) * 25;
+        //newZoomFactor = ((int) (zoomFactor * 4)) * 25;
+        newZoomFactor = (int) MathUtil.granulize(zoomFactor, 25);
         zoom025Item.setSelected(newZoomFactor == 25);
         zoom075Item.setSelected(newZoomFactor == 75);
     }
 
     /**
      * setZoom
+     *
      * @param zoomFactor the amount to scale
      * @return the new scale amount (not necessarily the same as zoomFactor)
      */
@@ -2062,17 +2089,20 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         Dimension panelSize = MathUtil.getSize(panelBounds);
         minZoom = Math.min(scrollBounds.getWidth() / panelSize.getWidth(),
                 scrollBounds.getHeight() / panelSize.getHeight());
+        enableZoomMenuItem(minZoom);
 
         double newZoom = MathUtil.pin(zoomFactor, minZoom, maxZoom);
+        selectZoomMenuItem(newZoom);
 
         if (!MathUtil.equals(newZoom, getPaintScale())) {
             log.debug("zoom: {}", zoomFactor);
             //setPaintScale(newZoom);   //<<== don't call; messes up scrollbars
             _paintScale = newZoom;      //just set paint scale directly
+            resetTargetSize();          //calculate new target panel size
             adjustScrollBars();         //and adjust the scrollbars ourselves
+            //adjustClip();
 
             leToolBarPanel.zoomLabel.setText(String.format("x%1$,.2f", newZoom));
-            selectZoomMenuItem(newZoom);
 
             //save the window specific saved zoom user preference
             InstanceManager.getOptionalDefault(UserPreferencesManager.class).ifPresent((prefsMgr) -> {
@@ -2084,6 +2114,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * getZoom
+     *
      * @return the zooming scale
      */
     public double getZoom() {
@@ -2092,6 +2123,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * getMinZoom
+     *
      * @return the minimum zoom scale
      */
     public double getMinZoom() {
@@ -2100,6 +2132,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
 
     /**
      * getMaxZoom
+     *
      * @return the maximum zoom scale
      */
     public double getMaxZoom() {
@@ -2186,7 +2219,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         // make sure it includes the origin
         panelBounds.add(MathUtil.zeroPoint2D);
 
-        log.info("resizePanelBounds: {}", MathUtil.rectangle2DToString(panelBounds));
+        //log.info("resizePanelBounds: {}", MathUtil.rectangle2DToString(panelBounds));
 
         setPanelBounds(panelBounds);
 
@@ -6985,20 +7018,23 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         if (!getPanelBounds().equals(newBounds)) {
             panelWidth = (int) newBounds.getWidth();
             panelHeight = (int) newBounds.getHeight();
-
-            int newTargetWidth = (int) (panelWidth * getZoom());
-            int newTargetHeight = (int) (panelHeight * getZoom());
-
-            Dimension targetPanelSize = getTargetPanelSize();
-            int oldTargetWidth = (int) targetPanelSize.getWidth();
-            int oldTargetHeight = (int) targetPanelSize.getHeight();
-
-            if ((newTargetWidth != oldTargetWidth) || (newTargetHeight != oldTargetHeight)) {
-                setTargetPanelSize(newTargetWidth, newTargetHeight);
-                adjustScrollBars();
-            }
+            resetTargetSize();
         }
         log.debug("setPanelBounds(({})", newBounds);
+    }
+
+    private void resetTargetSize() {
+        int newTargetWidth = (int) (panelWidth * getZoom());
+        int newTargetHeight = (int) (panelHeight * getZoom());
+
+        Dimension targetPanelSize = getTargetPanelSize();
+        int oldTargetWidth = (int) targetPanelSize.getWidth();
+        int oldTargetHeight = (int) targetPanelSize.getHeight();
+
+        if ((newTargetWidth != oldTargetWidth) || (newTargetHeight != oldTargetHeight)) {
+            setTargetPanelSize(newTargetWidth, newTargetHeight);
+            adjustScrollBars();
+        }
     }
 
     // this will grow the panel bounds based on items added to the layout

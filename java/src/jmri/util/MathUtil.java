@@ -889,6 +889,17 @@ public final class MathUtil {
     }
 
     /**
+     * dimensionToString return a string to represent a Dimension
+     *
+     * @param d the Dimension
+     * @return the string
+     */
+    @Nonnull
+    public static String dimensionToString(@Nonnull Dimension d) {
+        return String.format("{%.2f, %.2f}", d.getWidth(), d.getHeight());
+    }
+
+    /**
      * Get the size of a rectangle.
      *
      * @param r the rectangle
