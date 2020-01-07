@@ -15,7 +15,6 @@ import jmri.NamedBean;
 import jmri.Section;
 import jmri.SectionManager;
 import jmri.Sensor;
-import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.SignalMastLogic;
 import jmri.SignalMastLogicManager;

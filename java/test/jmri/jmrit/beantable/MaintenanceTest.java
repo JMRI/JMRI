@@ -10,7 +10,6 @@ import org.junit.*;
 import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  *

@@ -1,17 +1,11 @@
 package jmri.jmrix.can.cbus.node;
 
-import static java.util.Comparator.comparing;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JButton;
-import javax.swing.JTextField;
 import jmri.jmrit.XmlFile;
 import jmri.jmrix.can.cbus.CbusPreferences;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;

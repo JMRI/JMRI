@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Portal;
-import jmri.jmrit.logix.PortalManager;
 
 /**
  *

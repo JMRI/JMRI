@@ -3,6 +3,7 @@ package jmri.jmrit.display.layoutEditor;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import java.util.*;
+import java.util.List;
 import java.util.logging.*;
 import java.util.stream.Collectors;
 import javax.annotation.*;

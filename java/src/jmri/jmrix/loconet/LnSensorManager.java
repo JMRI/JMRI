@@ -4,7 +4,6 @@ import java.util.Locale;
 import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Sensor;
-import jmri.util.Log4JUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

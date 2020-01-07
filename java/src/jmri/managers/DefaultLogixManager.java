@@ -5,7 +5,6 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Manager;
-import jmri.SignalHead;
 import jmri.implementation.DefaultLogix;
 import jmri.jmrit.beantable.LRouteTableAction;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;

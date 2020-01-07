@@ -8,9 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import jmri.DccLocoAddress;
-import jmri.InstanceManager;
 import jmri.server.json.JsonMockConnection;
-import jmri.util.JUnitAppender;
 
 /**
  *

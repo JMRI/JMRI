@@ -1,10 +1,5 @@
 package jmri.jmrix.roco.z21.swing.mon;
 
-import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * Swing action to create and register a Z21MonFrame object
  *

@@ -2,9 +2,7 @@ package jmri.jmrit.catalog;
 
 import java.awt.Container;
 import java.awt.GraphicsEnvironment;
-import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.netbeans.jemmy.QueueTool;
 
 import jmri.InstanceManager;
 import jmri.util.JUnitUtil;

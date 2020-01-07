@@ -4,7 +4,6 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.Manager.NameValidity;
 import jmri.JmriException;
-import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.util.JUnitAppender;
 import jmri.util.JUnitUtil;

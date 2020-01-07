@@ -54,7 +54,7 @@ import org.slf4j.LoggerFactory;
  */
 public class VSDConfigDialog extends JDialog {
 
-    public static final String CONFIG_PROPERTY = "Config";
+    private static final String CONFIG_PROPERTY = "Config";
 
     // Map of Mnemonic KeyEvent values to GUI Components
     private static final Map<String, Integer> Mnemonics = new HashMap<>();
@@ -88,16 +88,21 @@ public class VSDConfigDialog extends JDialog {
     private VSDConfig config; // local reference to the config being constructed by this dialog
     private RosterEntry rosterEntry; // local reference to the selected RosterEntry
 
+    private RosterEntry rosterEntrySelected;
+    private boolean is_auto_loading;
+
     /**
      * Constructor
      *
      * @param parent Ancestor panel
      * @param title  title for the dialog
      * @param c      Config object to be set by the dialog
+     * @param ial    Is Auto Loading
      */
-    public VSDConfigDialog(JPanel parent, String title, VSDConfig c) {
+    public VSDConfigDialog(JPanel parent, String title, VSDConfig c, boolean ial) {
         super(SwingUtilities.getWindowAncestor(parent), title);
         config = c;
+        is_auto_loading = ial;
         VSDecoderManager.instance().addEventListener(new VSDManagerListener() {
             @Override
             public void eventAction(VSDManagerEvent evt) {
@@ -258,7 +263,7 @@ public class VSDConfigDialog extends JDialog {
         this.setVisible(true);
     }
 
-    public void cancelButtonActionPerformed(java.awt.event.ActionEvent ae) {
+    private void cancelButtonActionPerformed(java.awt.event.ActionEvent ae) {
         dispose();
     }
 
@@ -267,7 +272,7 @@ public class VSDConfigDialog extends JDialog {
      */
     private void closeButtonActionPerformed(java.awt.event.ActionEvent ae) {
         if (profileComboBox.getSelectedItem() == null) {
-            config.setProfileName(profileComboBox.getSelectedItem().toString());
+            log.debug("Profile item selected: {}", profileComboBox.getSelectedItem());
             JOptionPane.showMessageDialog(null, "Please select a valid Profile");
             rosterSaveButton.setEnabled(false);
             closeButton.setEnabled(false);
@@ -276,8 +281,8 @@ public class VSDConfigDialog extends JDialog {
             log.debug("Profile item selected: {}", config.getProfileName());
 
             config.setLocoAddress(addressSelector.getAddress());
-            if (rosterSelector.getSelectedRosterEntries().length > 0) {
-                config.setRosterEntry(rosterSelector.getSelectedRosterEntries()[0]);
+            if (getSelectedRosterItem() != null) {
+                config.setRosterEntry(getSelectedRosterItem());
             } else {
                 config.setRosterEntry(null);
             }
@@ -312,9 +317,9 @@ public class VSDConfigDialog extends JDialog {
      * If all VSD Infos are provided, close the Config Dialog.
      */
     private void rosterItemSelectAction(ActionEvent e) {
-        if (rosterSelector.getSelectedRosterEntries().length != 0) {
-            log.debug("Roster Entry selected... {}", rosterSelector.getSelectedRosterEntries()[0]);
-            setRosterEntry(rosterSelector.getSelectedRosterEntries()[0]);
+        if (getSelectedRosterItem() != null) {
+            log.debug("Roster Entry selected... {}", getSelectedRosterItem().getId());
+            setRosterEntry(getSelectedRosterItem());
             enableProfileStuff(true);
 
             log.debug("profile ComboBox selected item: {}", profileComboBox.getSelectedItem());
@@ -328,6 +333,32 @@ public class VSDConfigDialog extends JDialog {
                 closeButton.doClick(); // All done
             }
         }
+    }
+
+    // Roster Entry via Auto-Load from VSDManagerFrame
+    void setRosterItem(RosterEntry s) {
+        rosterEntrySelected = s;
+        log.debug("Auto-Load selected roster id: {}, profile: {}", rosterEntrySelected.getId(),
+                rosterEntrySelected.getAttribute("VSDecoder_Profile"));
+        rosterItemSelectAction(null); // trigger the next step for Auto-Load (works, but does not seem to be implemented correctly)
+    }
+
+    private RosterEntry getRosterItem() {
+        return rosterEntrySelected;
+    }
+
+    private RosterEntry getSelectedRosterItem() {
+        // Used by Auto-Load and non Auto-Load
+        if (is_auto_loading && getRosterItem() != null) {
+            rosterEntrySelected = getRosterItem();
+        } else {
+            if (rosterSelector.getSelectedRosterEntries().length != 0) {
+                rosterEntrySelected = rosterSelector.getSelectedRosterEntries()[0];
+            } else {
+                rosterEntrySelected = null;
+            }
+        }
+        return rosterEntrySelected;
     }
 
     /**
@@ -437,8 +468,8 @@ public class VSDConfigDialog extends JDialog {
         if (profileComboBox.getItemCount() > 0) {
             profileComboBox.setEnabled(true);
             // Enable the roster save button if roster items are available.
-            if (rosterSelector.getSelectedRosterEntries().length > 0) {
-                RosterEntry r = rosterSelector.getSelectedRosterEntries()[0];
+            if (getSelectedRosterItem() != null) {
+                RosterEntry r = getSelectedRosterItem();
                 String profile = r.getAttribute("VSDecoder_Profile");
                 log.debug("Trying to set the ProfileComboBox to this Profile: {}", profile);
                 if (profile != null) {

@@ -2192,6 +2192,18 @@
         </spotbugs>
     </target>
 
+    <!-- Checkstyle -->
+
+    <target name="checkstyle:check" depends="tests" description="Run Checkstyle checks">
+        <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+            classpath="${libdir}/checkstyle-8.24-all.jar" />
+        <checkstyle config="checkstyle.xml">
+            <fileset dir="${source}" />
+            <fileset dir="${test}" />
+            <fileset dir="${acceptancetest}" />
+        </checkstyle>
+    </target>
+
     <!--  Start for checker framework -->
 
     <property environment="env"/>

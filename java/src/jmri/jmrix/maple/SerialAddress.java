@@ -3,7 +3,6 @@ package jmri.jmrix.maple;
 import java.util.Locale;
 import jmri.Manager;
 import jmri.Manager.NameValidity;
-import jmri.NamedBean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

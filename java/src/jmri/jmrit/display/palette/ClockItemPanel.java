@@ -5,7 +5,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map.Entry;
 import javax.swing.BorderFactory;
 import javax.swing.Box;

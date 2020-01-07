@@ -10,7 +10,6 @@ import jmri.jmrit.ctc.ctcserialdata.TrafficLockingEntry;
 import jmri.jmrit.ctc.editor.code.AwtWindowProperties;
 import jmri.jmrit.ctc.editor.code.CheckJMRIObject;
 import jmri.jmrit.ctc.editor.code.CommonSubs;
-import jmri.jmrit.ctc.editor.gui.FrmMainForm;
 
 /**
  *

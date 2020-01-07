@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.node;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.Iterator;
-import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;

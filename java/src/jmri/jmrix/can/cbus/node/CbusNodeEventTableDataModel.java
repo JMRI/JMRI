@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.node;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import java.util.ArrayList;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;

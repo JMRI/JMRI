@@ -2,13 +2,10 @@ package jmri.jmrix.lenz.li100;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetTrafficController;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Programmer support for Lenz XpressNet.

@@ -17,7 +17,6 @@ import javax.swing.table.TableRowSorter;
 
 import jmri.*;
 import jmri.implementation.SignalSpeedMap;
-import jmri.jmrit.beantable.oblock.Bundle;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.OPath;

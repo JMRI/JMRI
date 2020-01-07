@@ -21,7 +21,6 @@ import jmri.ThrottleManager;
 import jmri.TurnoutManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.jmrix.loconet.swing.LnComponentFactory;
 import jmri.jmrix.swing.ComponentFactory;
 import jmri.managers.DefaultProgrammerManager;

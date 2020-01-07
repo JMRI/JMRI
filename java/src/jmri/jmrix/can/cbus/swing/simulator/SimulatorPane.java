@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus.swing.simulator;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -12,7 +11,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.Timer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.simulator.CbusSimulator;
 

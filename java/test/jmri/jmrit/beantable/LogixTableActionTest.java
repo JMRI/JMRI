@@ -15,7 +15,6 @@ import org.junit.rules.*;
 
 import org.netbeans.jemmy.operators.JButtonOperator;
 import org.netbeans.jemmy.operators.JCheckBoxOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 

@@ -2,8 +2,10 @@ package jmri.jmrit.throttle;
 
 import java.awt.Component;
 import javax.swing.JToggleButton;
+
 import jmri.DccLocoAddress;
 import jmri.util.swing.JemmyUtil;
+
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.*;
 
