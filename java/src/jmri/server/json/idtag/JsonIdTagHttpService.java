@@ -56,7 +56,7 @@ public class JsonIdTagHttpService extends JsonNamedBeanHttpService<IdTag> {
         if (node.isNull()) {
             idTag.setWhereLastSeen(null);
         } else if (node.isTextual()) {
-            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBeanBySystemName(node.asText());
+            Reporter reporter = InstanceManager.getDefault(ReporterManager.class).getBySystemName(node.asText());
             if (reporter != null) {
                 idTag.setWhereLastSeen(reporter);
             } else {

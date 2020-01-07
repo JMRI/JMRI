@@ -306,12 +306,14 @@ public class LoadAndStoreTestBase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
+        System.setProperty("jmri.test.no-dialogs", "true");
     }
 
     @After
     public void tearDown() {
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
+        System.setProperty("jmri.test.no-dialogs", "false");
     }
 
     private final static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class);

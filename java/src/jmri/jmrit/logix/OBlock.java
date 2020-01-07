@@ -15,7 +15,6 @@ import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
-import jmri.jmrit.beantable.oblock.OBlockTableModel;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -115,12 +114,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
     private final ArrayList<Portal> _portals = new ArrayList<>();     // portals to this block
 
-    private Warrant _warrant;       // when not null, block is allocated to this warrant
-    private String _pathName;      // when not null, this is the allocated path
-    protected long _entryTime;  // time when block became occupied
+    private Warrant _warrant;        // when not null, block is allocated to this warrant
+    private String _pathName;        // when not null, this is the allocated path
+    protected long _entryTime;       // time when block became occupied
     private boolean _metric = false; // desired display mode
     private NamedBeanHandle<Sensor> _errNamedSensor;
-    // pathName keys a list of Blocks whose paths conflict with the path.  These Blocks key 
+    // pathName keys a list of Blocks whose paths conflict with the path. These Blocks key
     // a list of their conflicting paths. 
     // A conflicting path has a turnout that is shared with a 'pathName'
     private final HashMap<String, List<HashMap<OBlock, List<OPath>>>> _sharedTO
@@ -130,16 +129,15 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private Color _markerBackground = DEFAULT_FILL_COLOR;
     private Font _markerFont;
 
-    public OBlock(String systemName) {
+    public OBlock(@Nonnull String systemName) {
         super(systemName);
         setState(UNDETECTED);
     }
 
-    public OBlock(String systemName, String userName) {
+    public OBlock(@Nonnull String systemName, String userName) {
         super(systemName, userName);
         setState(UNDETECTED);
     }
-
 
     /* What super does currently is fine.
      * FindBug wants us to duplicate and override anyway
@@ -214,8 +212,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
     }
 
-    /*
-     * return true if successful
+    /**
+     * @return true if successful
      */
     public boolean setErrorSensor(String pName) {
         if (getErrorSensor() != null) {

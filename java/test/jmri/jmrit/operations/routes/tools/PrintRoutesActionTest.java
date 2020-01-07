@@ -2,7 +2,6 @@ package jmri.jmrit.operations.routes.tools;
 
 import java.awt.GraphicsEnvironment;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.routes.tools.PrintRoutesAction;
 
 import org.junit.Assert;
 import org.junit.Assume;

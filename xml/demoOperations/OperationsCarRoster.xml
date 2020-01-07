@@ -2,7 +2,7 @@
 <?xml-stylesheet href="/xml/XSLT/operations-cars.xsl" type="text/xsl"?>
 <!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-cars.dtd">
 <operations-config>
-  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:47:34 EST 2016 $Id$-->
+  <!--Written by JMRI version 4.5.7ish-201611210453-Daniel Boudreau on Mon Dec 26 10:47:34 EST 2016 -->
   <roads>
     <road name="AA" />
     <road name="ACL" />

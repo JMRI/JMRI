@@ -1,7 +1,6 @@
 package jmri.jmrix.jmriclient.swing.packetgen;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.jmriclient.JMRIClientTrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

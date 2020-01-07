@@ -206,15 +206,6 @@ public class DccSignalHead extends AbstractSignalHead {
         appearanceToOutput.put(SignalHead.DARK, getDefaultNumberForAppearance(SignalHead.DARK));
     }
 
-    /**
-     * Replaced by {@link #getDefaultNumberForAppearance} for misspelling
-     * @deprecated since 4.5.17
-     */
-    @Deprecated
-    public static int getDefaultNumberForApperance(int i) {
-        return getDefaultNumberForAppearance(i);
-    }
-
     public static int getDefaultNumberForAppearance(int i) {
         switch (i) {
             case SignalHead.DARK:

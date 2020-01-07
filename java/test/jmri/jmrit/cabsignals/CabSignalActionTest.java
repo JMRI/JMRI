@@ -1,8 +1,6 @@
 package jmri.jmrit.cabsignals;
 
 import java.awt.GraphicsEnvironment;
-import jmri.ConsistManager;
-import jmri.InstanceManager;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;

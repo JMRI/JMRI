@@ -346,7 +346,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         set.removeAll(excludedItems);
         Vector<B> vector = new Vector<>(set);
         if (allowNull) {
-            vector.insertElementAt(null, 0);
+            vector.add(0, null);
         }
         setModel(new DefaultComboBoxModel<>(vector));
         // retain selection
@@ -570,7 +570,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
          * {@inheritDoc}
          */
         @Override
-        @SuppressWarnings("unchecked") // unchecked cast due to API constraints
+        @SuppressWarnings({"unchecked", "rawtypes"}) // unchecked cast due to API constraints
         public int selectionForKey(char key, ComboBoxModel model) {
             long time = System.currentTimeMillis();
 
@@ -625,7 +625,7 @@ public class NamedBeanComboBox<B extends NamedBean> extends JComboBox<B> {
         /**
          * Find the index of the item in the model that starts with the prefix.
          */
-        @SuppressWarnings("unchecked") // unchecked cast due to API constraints
+        @SuppressWarnings({"unchecked", "rawtypes"}) // unchecked cast due to API constraints
         private int getNextMatch(String prefix, int start, int end, ComboBoxModel model) {
             for (int i = start; i < end; i++) {
                 B item = (B) model.getElementAt(i);

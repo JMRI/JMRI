@@ -45,6 +45,12 @@
         <authorinitials>DB</authorinitials>
         <revremark>Added mapping information</revremark>
      </revision>    
+    <revision>
+      <revnumber>2.3</revnumber>
+      <date>2019-12-30</date>
+      <authorinitials>BM</authorinitials>
+      <revremark>Remove ourAspect values which are not supported by this mast type</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>B&amp;O 1957</aspecttable>
@@ -133,7 +139,6 @@
       <advancedAspect>Clear</advancedAspect>
       <ourAspect>Clear</ourAspect>
       <ourAspect>Medium Clear</ourAspect>
-      <ourAspect>Slow Clear</ourAspect>
     </aspectMapping>
 
     <aspectMapping>

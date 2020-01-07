@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../../XSLT/appearancetable.xsl" type="text/xsl"?>
 <appearancetable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/appearancetable.xsd">
   <copyright xmlns="http://docbook.org/ns/docbook">
@@ -20,6 +20,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Initial version</revremark>
     </revision>
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Remove ourAspect values which cannot be displayed by this mast type</revremark>
+     </revision>    
   </revhistory>
   <aspecttable>BNSF-1996</aspecttable>
   <name>Triple head absolute searchlight signal with Lunar on lower head</name>
@@ -265,7 +271,6 @@
     </aspectMapping>
     <aspectMapping>
       <advancedAspect>Diverging Approach Diverging</advancedAspect>
-      <ourAspect>Approach Limited</ourAspect>
       <ourAspect>Advance Approach</ourAspect>
       <ourAspect>Approach Medium (Diverging)</ourAspect>
       <ourAspect>Diverging Approach Diverging</ourAspect>

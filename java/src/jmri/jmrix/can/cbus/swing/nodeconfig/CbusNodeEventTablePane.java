@@ -15,9 +15,6 @@ import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
-
 /**
  * Pane providing a CBUS Node Event table for a single node.
  *

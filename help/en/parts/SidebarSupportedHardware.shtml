@@ -1,6 +1,6 @@
 <!-- SidebarSupportedHardware.shtml -->
 <!-- This is the common sidebar definition for supported hardware pages -->
-		<dt><h3 style="padding-left: 1em;"><a href="index.shtml">Supported Hardware</a></h3></dt>
+		<dt><h3 style="padding-left: 1em;"><a href="/help/en/html/hardware/">Supported Hardware</a></h3></dt>
 		<dd>
 		    <ul>
 				<!-- copy this list from /root sidebar, compare with /help/en/html/index.shtml, checked 11/2019 -->

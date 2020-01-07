@@ -226,9 +226,9 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
         }
         manager.createNewBlock("IB1", null);
         // delete existing bean (no named listener)
-        assertNotNull(manager.getBeanBySystemName("IB1"));
+        assertNotNull(manager.getBySystemName("IB1"));
         service.doDelete(service.getType(), "IB1", message, locale, 42);
-        assertNull(manager.getBeanBySystemName("IB1"));
+        assertNull(manager.getBySystemName("IB1"));
         Block block = manager.createNewBlock("IB1", null);
         assertNotNull(block);
         block.addPropertyChangeListener(new PropertyChangeListener() {
@@ -248,10 +248,10 @@ public class JsonBlockHttpServiceTest extends JsonNamedBeanHttpServiceTestBase<B
             assertEquals("Test Listener", ex.getAdditionalData().path(JSON.CONFLICT).path(0).asText());
             message = message.put(JSON.FORCE_DELETE, ex.getAdditionalData().path(JSON.FORCE_DELETE).asText());
         }
-        assertNotNull(manager.getBeanBySystemName("IB1"));
+        assertNotNull(manager.getBySystemName("IB1"));
         // will throw if prior catch failed
         service.doDelete(service.getType(), "IB1", message, locale, 0);
-        assertNull(manager.getBeanBySystemName("IB1"));
+        assertNull(manager.getBySystemName("IB1"));
         try {
             // deleting again should throw an exception
             service.doDelete(service.getType(), "IB1", NullNode.getInstance(), locale, 0);

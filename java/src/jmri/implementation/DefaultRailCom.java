@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
-import jmri.DccLocoAddress;
 import jmri.JmriException;
 import jmri.Sensor;
 import org.slf4j.Logger;

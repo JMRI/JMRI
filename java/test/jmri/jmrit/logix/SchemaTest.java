@@ -18,8 +18,7 @@ public class SchemaTest extends SchemaTestBase {
 
     @Parameters(name = "{0} (pass={1})")
     public static Iterable<Object[]> data() {
-        // the following are just tested for schema pass/fail, not load/store
-        return getFiles(new File("java/test/jmri/jmrit/logix/valid"), true, true);
+        return setTestFilesBelowThisPath("java/test/jmri/jmrit/logix");
     }
 
     public SchemaTest(File file, boolean pass) {
