@@ -561,7 +561,6 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * @param canid CAN ID the event was sent from
      * @param out 1 if outgoing, else 0
      * @param in 1 if incoming, else 0
-     * @stakes canid, node, event, onoroffince 4.1ssage
      * @param state Enum of Event State
      * @param node of can message 
      * @param event of can message 
