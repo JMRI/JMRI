@@ -153,19 +153,21 @@ public class CbusThrottleManagerTest extends jmri.managers.AbstractThrottleManag
         
         JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,"F0")!=null); }, "throttle not created");
         CanReply r = new CanReply( new int[]{CbusConstants.CBUS_DFNON, 1, 0 },0x12 );
-
+        r.setElement(2, 0xff);
+        cbtmb.reply(r);
+        
         for ( int i=0 ; (i < 29 ) ; i++){
             String _f = "F" + i;            
             r.setElement(0, CbusConstants.CBUS_DFNON);
             r.setElement(2, i);
             cbtmb.reply(r);
-            Assert.assertEquals("Function loop on " + i,true,cbtmb.getThrottleInfo(addr,_f));
+            JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,_f).equals(true)); }, "Function loop on " + i);
+            // Assert.assertEquals("Function loop on " + i,true,cbtmb.getThrottleInfo(addr,_f));
             r.setElement(0, CbusConstants.CBUS_DFNOF);
-            cbtmb.reply(r);            
-            Assert.assertEquals("Function loop off " + i,false,cbtmb.getThrottleInfo(addr,_f));            
+            cbtmb.reply(r);
+            JUnitUtil.waitFor(()->{ return(cbtmb.getThrottleInfo(addr,_f).equals(false)); }, "Function loop off " + i);          
         }
-        r.setElement(2, 0xff);
-        cbtmb.reply(r);
+        
         JUnitAppender.assertWarnMessage("Unhandled function number: 255");
     }
     
