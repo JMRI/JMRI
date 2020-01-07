@@ -55,6 +55,7 @@ public class CbusAllocateNodeNumberTest {
             JDialogOperator jdo = new JDialogOperator(Bundle.getMessage("NdEntrNumTitle",1234));
             
             JLabelOperator labelOper = new JLabelOperator(jdo, Bundle.getMessage("NdRqNdDetails"));
+            Assert.assertNotNull("labelOper exists",labelOper);
             
             CanReply rs = new CanReply();
             rs.setNumDataElements(7);
@@ -69,6 +70,7 @@ public class CbusAllocateNodeNumberTest {
             t.reply(rs);
             
             JLabelOperator labelOper2 = new JLabelOperator(jdo, CbusNodeConstants.getManu(1));
+            Assert.assertNotNull("labelOper2 exists",labelOper2);
             
             CanReply rsn = new CanReply();
             rsn.setNumDataElements(7);
@@ -83,6 +85,7 @@ public class CbusAllocateNodeNumberTest {
             t.reply(rsn);
             
             JLabelOperator labelOper3 = new JLabelOperator(jdo, "Manufacturer 1 CANCATFLAP");
+            Assert.assertNotNull("labelOper3 exists",labelOper3);
             
             JSpinnerOperator spinner = new JSpinnerOperator(jdo, 0);
             
@@ -91,11 +94,13 @@ public class CbusAllocateNodeNumberTest {
             
             jtfo.setText("123");
             JLabelOperator labelOper4 = new JLabelOperator(jdo, CbusNodeConstants.getReservedModule(123));
+            Assert.assertNotNull("labelOper4 exists",labelOper4);
             
             Assert.assertNotNull(nodeModel.provideNodeByNodeNum(789));
             jtfo.setText("789");
             JLabelOperator labelOper5 = new JLabelOperator(jdo, 
                 Bundle.getMessage("NdNumInUse",nodeModel.getNodeNumberName(789)));
+            Assert.assertNotNull("labelOper5 exists",labelOper5);
             
             CanMessage rmes = new CanMessage(tcis.getCanid());
             rmes.setNumDataElements(1);
@@ -148,8 +153,6 @@ public class CbusAllocateNodeNumberTest {
         rsna.setElement(1, 0xff); // 65432
         rsna.setElement(2, 0x98); // 65432
         t.reply(rsna);
-        
-        pref = null;
         
         t.dispose();
         
