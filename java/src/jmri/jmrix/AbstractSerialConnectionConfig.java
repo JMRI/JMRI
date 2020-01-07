@@ -15,7 +15,6 @@ import java.awt.event.KeyListener;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.JButton;

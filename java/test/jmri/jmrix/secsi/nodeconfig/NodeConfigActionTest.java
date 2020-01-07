@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import jmri.jmrix.secsi.SerialTrafficController;
 import jmri.jmrix.secsi.SerialTrafficControlScaffold;
 import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 

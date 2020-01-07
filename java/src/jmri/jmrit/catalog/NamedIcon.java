@@ -17,7 +17,6 @@ import java.io.InputStream;
 import java.net.URL;
 import java.util.Iterator;
 import javax.annotation.CheckForNull;
-import javax.annotation.CheckForNull;
 import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;

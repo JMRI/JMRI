@@ -455,6 +455,9 @@
             <fileset file="session.log"/>
         </delete>
         <ant dir="xml/XSLT" target="clean" inheritAll="false"  />
+        <!-- Eclipse artifacts -->
+        <delete dir=".apt_generated"/>
+        <delete dir=".apt_generated_tests"/>
     </target>
 
     <!-- end of utility targets -->
@@ -2187,6 +2190,18 @@
             <class location="${jartarget}/jmri.jar"/>
             <auxClasspath refid="compile.class.path" />
         </spotbugs>
+    </target>
+
+    <!-- Checkstyle -->
+
+    <target name="checkstyle:check" depends="tests" description="Run Checkstyle checks">
+        <taskdef resource="com/puppycrawl/tools/checkstyle/ant/checkstyle-ant-task.properties"
+            classpath="${libdir}/checkstyle-8.24-all.jar" />
+        <checkstyle config="checkstyle.xml">
+            <fileset dir="${source}" />
+            <fileset dir="${test}" />
+            <fileset dir="${acceptancetest}" />
+        </checkstyle>
     </target>
 
     <!--  Start for checker framework -->

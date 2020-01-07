@@ -4,7 +4,6 @@ import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Before;
 import jmri.jmrix.loconet.LocoNetInterfaceScaffold;
-import jmri.jmrix.loconet.UhlenbrockSlotManager;
 
 /**
  *

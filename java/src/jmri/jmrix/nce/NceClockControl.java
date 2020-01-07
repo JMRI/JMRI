@@ -3,7 +3,6 @@ package jmri.jmrix.nce;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.text.DecimalFormat;
 import java.util.Date;
-import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.Timebase;
 import jmri.implementation.DefaultClockControl;

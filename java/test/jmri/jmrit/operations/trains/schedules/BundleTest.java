@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.trains.schedules;
 
 import java.util.Locale;
-import jmri.jmrit.operations.trains.schedules.Bundle;
 import org.junit.Assert;
 import org.junit.Test;
 

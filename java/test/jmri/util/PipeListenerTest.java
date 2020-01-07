@@ -4,7 +4,6 @@ import java.io.PipedReader;
 import java.io.PipedWriter;
 import javax.swing.JTextArea;
 
-import jmri.util.JUnitUtil;
 
 import org.junit.After;
 import org.junit.Assert;

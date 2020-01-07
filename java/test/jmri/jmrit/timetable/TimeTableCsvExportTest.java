@@ -2,7 +2,6 @@ package jmri.jmrit.timetable;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.List;
 import java.util.Scanner;
 import jmri.util.FileUtil;
 import jmri.util.JUnitUtil;

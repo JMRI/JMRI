@@ -1,13 +1,10 @@
 package jmri.jmrix.can.cbus.swing.cbusslotmonitor;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.TimerTask;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.InstanceManager;
 import jmri.DccLocoAddress;
 import jmri.util.swing.TextAreaFIFO;
 import jmri.jmrit.catalog.NamedIcon;
@@ -17,7 +14,6 @@ import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusConstants;
 import jmri.jmrix.can.cbus.CbusMessage;
-import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.TrafficController;
 import jmri.util.ThreadingUtil;
 import jmri.util.TimerUtil;

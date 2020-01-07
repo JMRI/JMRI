@@ -1,11 +1,9 @@
 package jmri.jmrix.can.cbus.simulator;
 
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 import javax.swing.Timer;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.simulator.CbusDummyCS;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

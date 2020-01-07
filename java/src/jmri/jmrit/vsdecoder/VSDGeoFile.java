@@ -1,13 +1,11 @@
 package jmri.jmrit.vsdecoder;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Iterator;
 import jmri.jmrit.XmlFile;
 import jmri.Scale;
-import jmri.PhysicalLocationReporter;
 import jmri.Reporter;
 import jmri.util.FileUtil;
 import jmri.util.PhysicalLocation;

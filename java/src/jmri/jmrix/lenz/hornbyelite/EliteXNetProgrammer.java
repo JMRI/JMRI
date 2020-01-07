@@ -2,7 +2,6 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.lenz.XNetListener;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetReply;

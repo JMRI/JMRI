@@ -242,6 +242,8 @@ variables, and by shortening certain method calls.
 
         <li>warrants</li>
 
+        <li>entryExitPairs <span class="since">since 4.19.2</span></li>
+        
       </ul>These can then be referenced directly in Jython as
       <pre>
    t2 = turnouts.provideTurnout("12");

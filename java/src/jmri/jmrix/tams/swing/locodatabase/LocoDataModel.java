@@ -2,7 +2,6 @@ package jmri.jmrix.tams.swing.locodatabase;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;

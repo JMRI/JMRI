@@ -1,7 +1,10 @@
 package jmri.managers.configurexml;
 
+import java.awt.GraphicsEnvironment;
 import java.util.List;
 import java.util.SortedSet;
+
+import javax.swing.JOptionPane;
 
 import jmri.InstanceManager;
 import jmri.Route;
@@ -9,6 +12,7 @@ import jmri.RouteManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.managers.DefaultRouteManager;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -237,6 +241,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         List<Element> routeList = routes.getChildren("route");
         log.debug("Found {} routes", routeList.size());
         RouteManager tm = InstanceManager.getDefault(jmri.RouteManager.class);
+        int namesChanged = 0;
 
         for (Element el : routeList) {
 
@@ -244,6 +249,20 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             if (sysName == null) {
                 log.warn("unexpected null in systemName {}", el);
                 break;
+            }
+            // convert typeLetter from R to tm.typeLetter()
+            if (sysName.startsWith(tm.getSystemPrefix() + 'R')) {
+                String old = sysName;
+                sysName = tm.getSystemNamePrefix() + sysName.substring(tm.getSystemNamePrefix().length());
+                log.warn("Converting route system name {} to {}", old, sysName);
+                namesChanged++;
+            }
+            // prepend systemNamePrefix if missing
+            if (!sysName.startsWith(tm.getSystemNamePrefix())) {
+                String old = sysName;
+                sysName = tm.getSystemNamePrefix() + sysName;
+                log.warn("Converting route system name {} to {}", old, sysName);
+                namesChanged++;
             }
 
             String userName = getUserName(el);
@@ -473,6 +492,18 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
             }
             // and start it working
             r.activateRoute();
+        }
+        if (namesChanged > 0) {
+            // TODO: replace the System property check with an in-application mechanism
+            // for notifying users of multiple changes that can be silenced as part of
+            // normal operations
+            if (!GraphicsEnvironment.isHeadless() && !Boolean.getBoolean("jmri.test.no-dialogs")) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage(namesChanged > 1 ? "RouteManager.SystemNamesChanged.Message" : "RouteManager.SystemNameChanged.Message", namesChanged),
+                        Bundle.getMessage("Manager.SystemNamesChanged.Title", namesChanged, tm.getBeanTypeHandled(namesChanged > 1)),
+                        JOptionPane.WARNING_MESSAGE);
+            }
+            log.warn("System names for {} Routes changed; this may have operational impacts.", namesChanged); 
         }
     }
 

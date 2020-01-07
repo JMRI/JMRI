@@ -1,7 +1,5 @@
 package jmri.jmrit.logix;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingQueue;
 import jmri.DccThrottle;

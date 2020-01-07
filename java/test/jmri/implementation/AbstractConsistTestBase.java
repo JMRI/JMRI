@@ -6,8 +6,6 @@ import java.io.IOException;
 import jmri.Consist;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.CvValue;
 import jmri.jmrit.symbolicprog.VariableTableModel;
