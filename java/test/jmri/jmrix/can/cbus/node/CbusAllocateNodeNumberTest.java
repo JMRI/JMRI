@@ -29,12 +29,16 @@ public class CbusAllocateNodeNumberTest {
     @Test
     public void testCTor() {
         
-        Assert.assertEquals("listening",1,tcis.numListeners());
+        Assert.assertEquals("node model listening",1,tcis.numListeners());
         
         t = new CbusAllocateNodeNumber(memo,nodeModel);
         
         Assert.assertNotNull("exists",t);
         Assert.assertEquals("listening",2,tcis.numListeners());
+        
+        t.dispose();
+        
+        Assert.assertEquals("not listening",1,tcis.numListeners());
         
     }
     
@@ -147,6 +151,8 @@ public class CbusAllocateNodeNumberTest {
         
         pref = null;
         
+        t.dispose();
+        
     }
     
     @Test
@@ -172,6 +178,8 @@ public class CbusAllocateNodeNumberTest {
         Assert.assertEquals("has sent 1", 1 ,tcis.outbound.size() );
         Assert.assertEquals("Message sent is request params", "[5f8] 10",
             tcis.outbound.elementAt(0).toString());
+        
+        t.dispose();
         
     }
     
@@ -227,6 +235,8 @@ public class CbusAllocateNodeNumberTest {
         
         JUnitAppender.assertErrorMessageStartsWith("No confirmation from node when setting node number 12345");
 
+        t.dispose();
+        
     }        
     
     private CanSystemConnectionMemo memo;
@@ -249,7 +259,6 @@ public class CbusAllocateNodeNumberTest {
 
     @After
     public void tearDown() {
-        t.dispose();
         t = null;
         nodeModel.dispose();
         nodeModel = null;
