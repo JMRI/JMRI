@@ -194,15 +194,12 @@
           content with that of the remote repo you originally
           cloned things from.</p>
 
-          <p>The following reference should get you started using
-          either the git command line or GitHub Desktop:</p>
-
-          <ul>
-            <li>Log in to GitHub and clone your own copy of the
+          <h3>Getting Started</h3>
+            The first step is to log in to GitHub and clone your own copy of the
             main JMRI repo. This will give you a safe place to push
-            and pull from without impacting others.</li>
+            and pull from without impacting others.
 
-            <li>Using git:
+            <h4>Using Git from the command line</h4>
 
               <ul>
                 <li>Clone the JMRI repo to your local system (or
@@ -258,10 +255,17 @@
 </pre>
                 </li>
               </ul>
-            </li>
 
-            <li>Using GitHub Desktop:
+            <h4>Using GitHub Desktop application</h4>
 
+            GitHub Desktop is a free application that 
+            can do many of the same things that the git command-line tool does,
+            but provides an interface that many people find easier and more friendly.
+            <p>
+            For more on GitHub Desktop,
+            please see our
+            <a href="githubdesktopinto.shtml">page on using GitHub Desktop</a>.
+            
               <ul>
                 <li>Clone the JMRI repo to your local system by
                 picking an item from the "Clone" tab in the File
@@ -377,8 +381,6 @@
                   delete the branch safely.</p>
                 </li>
               </ul>
-            </li>
-          </ul>
         </dd>
 
         <dt id="branchexamples">Branch Examples</dt>
@@ -554,7 +556,7 @@
             </li>
 
             <li>Using GitHub Desktop:
-
+            
               <ul>
                 <li>Click the "Add a Branch (+)" button, provide a
                 name for your new branch and using the From:

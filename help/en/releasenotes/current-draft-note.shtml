@@ -495,7 +495,7 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Petr Sidlo added a Pragotron clock, which is digital clock
-            found in many European train stations.</li>
+                found in many European train stations.</li>
             <li>The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
                 calls in the various <code>Manager<code> classes
                 are no longer needed with Java 8 and have been deprecated for eventual
@@ -512,5 +512,9 @@
 		    	correctly, but it is possible that references to those Routes will need
 		    	to be updated.
 			    </li>
+			<li>Daniel Bergqvist provided information on 
+			    <a href="jmri.org/help/en/html/doc/Technical/githubdesktopinto.shtml">how to use the GitHub Desktop tool</a>
+			    for JMRI development.
+			    
         </ul>
 
