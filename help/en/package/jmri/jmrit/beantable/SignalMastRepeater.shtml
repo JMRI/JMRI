@@ -11,7 +11,7 @@
   "text/html; charset=us-ascii">
   <meta name="author" content="Kevin Dickerson">
   <meta name="author" content="B. Milhaupt">
-  <meta name="Date.Modified" content="20191107">
+  <meta name="Date.Modified" content="20200106">
   <meta name="keywords" content="JMRI help Signal Mast Repeater">
   <!--#include virtual="/Style" -->
 </head>
@@ -118,7 +118,7 @@
       <p>That explanation of the problem contains a hint on how to resolve the
       problem - JMRI's Signal Mast Logic works with unique pairs of signals.  This
       implies that a signal mast which duplicates the behavior of RA173 might
-      allow Signal Mast Logic to be created for the un-discovered route from RA2 to
+      allow Signal Mast Logic to be created for the undiscovered route from RA2 to
       RA173.</p>
 
       <p>The duplicate of signal mast RA173 turns out to be a great idea! And it
@@ -130,7 +130,7 @@
       way, it also means that Signal Mast Logic discovery <strong>is unable</strong> to automatically
       identify the alternate path to the the duplicate of RA173.</p>
 
-      <p>Proceding from this point requires manual work - it is necessary to
+      <p>Proceeding from this point requires manual work - it is necessary to
       manually create the Signal Mast Logic entry which we would have preferred
       that Signal Mast Logic discovery would create.  That's where the "Add Signal Logic"
       button on the signal's "Signal Mast Logic" window comes into play.</p>
@@ -139,12 +139,12 @@
       <p>The steps to work around the Signal Mast Discovery shortcoming described above
       are:</p>
       <ol>
-          <li>Create a duplicate "destination" signal mast</li>
+          <li>Create a duplicate "destination" signal mast;</li>
           <li>Configure the duplicate mast as a Signal Mast Repeater for the 
               primary destination signal mast;</li>
           <li>Place the virtual signal mast on the Layout Editor panel;</li>
           <li>Manually create the required Signal Mast Logic;</li>
-          <li>Test the logic</li>
+          <li>Test the logic.</li>
       </ol>
       <p>The steps are detailed here:</p>
       <ol>
@@ -154,13 +154,17 @@
                   via "Tools"->"Tables"->"Signal Masts".</li>
                   <li><a href="AddEditSignalingLogic.shtml">Add</a> the dummy
                   signal mast to be a near-identical of the physical
-                  signal mast, which is RA173 in this case.  Give it a name that
-                  is similar to the mast being mimic'd - in the case here, "Virtual
-                  RA173".  This dummy mast must use the same "signaling system" as
-                  the mast it is to mimic, and it must be of the same "mast type".  If the
-                  mast requires one or more a hardware addresses, define it with appropriate
-                  address information which is not already in-use by other layout 
-                  hardware or other "dummy" masts.</li>
+                  signal mast, which is RA173 in this case.  For ease of reference,
+                  choose a name that is similar to the mast being mimic'd - 
+                  in the case here, "Virtual RA173".<br>
+                  This dummy mast must use the same "signaling system" as
+                  the mast it is to mimic, and it must be of the same "mast type".
+                  The Repeater need not use the same "Mast Driver" type.<br>
+                  If no physical representation of the repeated mast is required, 
+                  the Mast Driver type of "Virtual Mast".  If the chosen Mast 
+                  Driver type uses one or more a hardware addresses, be sure to 
+                  define the mast using address information which is not already 
+                  in-use by any other layout hardware or other virtual masts.</li>
               </ol>
           </li>
           <li>Configure the duplicate mast to repeat the physical mast
@@ -168,20 +172,22 @@
                   <li>Select the "Tools" pull-down on the Signal Mast Table's tool
                   bar.  Select "Repeaters".  This opens the "Signal Mast Repeater"
                   window.</li>
-                  <li>Select the "master" signal.  In this case, "RA173".</li>
-                  <li>Select the "Slave" signal.  In this case, "Virtual RA173".<p>
+                  <li>Select the "Master" signal - in this case, mast "RA173".  The tool will
+                  pre-populate the list of "Slave" signal masts which use the same
+                  signaling system and mast type as the selected Master mast.</li>
+                  <li>Select the "Slave" signal - in this case, mast "Virtual RA173".<p>
                   <img src="images/SignalMastRepeaterCreation0.png"/> </li>
                   <li>Select the "Add" button.  This will place a new line in the table
                   of repeaters.</li>
                   <li>The arrow within the table entry for "RA173" and "Virtual RA173"
                   determines whether changes to one signal mast will be reflected by
                   the other mast.  By default, a change on one mast will be reflected
-                  on the other, as shown by the button which shows "< >".  Click on that
-                  button to cycle the arrowheads so that there is only one arrowhead,
-                  and it should point towards "Virtual RA173". This means
-                  that changes to RA173's indication will be reflected upon Virtual RA173,
-                  but that changes on Virtual RA173 will not be reflected upon RA173.
-                  This is shown below.<p>
+                  on the other, as shown by the button which shows "< >".<br>
+                  Click on that button to cycle the arrowheads so that there is 
+                  only one arrowhead, and it should point towards "Virtual RA173". 
+                  This means that changes to RA173's indication will be reflected 
+                  upon Virtual RA173, but that changes on Virtual RA173 will not 
+                  be reflected upon RA173. This is shown below.<p>
                   <img src="images/SignalMastRepeaterCreation.png"/> </li>
                   <li>You may close the Signal Mast Repeater window.</li>
               </ol>
@@ -202,7 +208,7 @@
                   remains un-hidden.</li>
               </ol>
           </li>
-          <li>Create the Signal Mast Logic for the un-discovered route.
+          <li>Create the Signal Mast Logic for the undiscovered route.
               <ol>
               <li>Right-click on RA2 and select the "Signal Mast Logic: RA2" selection.
               This opens up the "Signal Mast Pairs: RA2" window (For further help,
@@ -322,11 +328,11 @@
           <li>The <a href="AspectSignaling.shtml">Aspect
                   Signaling</a> help page.</li>
           <li>The <a href="../../../../html/tools/signaling/SignalMasts.shtml">Signal Mast</a> documentation.</li>
-          <li>The <a href="SignalMastTable.shtml">The Signal Mast Table</a> help.</li>
-          <li>The <a href="SignalMastAddEdit.shtml">Adding Signal Masts</a> help.</li>
+          <li>The <a href="SignalMastTable.shtml">The Signal Mast Table</a> help page.</li>
+          <li>The <a href="SignalMastAddEdit.shtml">Adding Signal Masts</a> help page.</li>
           <li>The <a href="../../../../html/tools/signaling/SignalMastLogic.shtml">Signal Mast Logic</a> introduction.</li>
-          <li>The <a href="SignalMastLogicTable.shtml">Signal Mast Logic Table</a> help.</li>
-          <li>The <a href="AddEditSignalingLogic.shtml">Adding/Editing Signal Mast Logic</a> help.</li>
+          <li>The <a href="SignalMastLogicTable.shtml">Signal Mast Logic Table</a> help page.</li>
+          <li>The <a href="AddEditSignalingLogic.shtml">Adding/Editing Signal Mast Logic</a> help page.</li>
       </ul>
       <!--#include virtual="/Footer" -->
     </div><!-- closes #mainContent-->

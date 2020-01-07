@@ -8,8 +8,8 @@
   <!-- Copyright Bob Jacobsen 2008 -->
 
   <title>JMRI: Signal Masts documentation</title>
-  <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-  <meta name="Date.Modified" content="20160323">
+  <meta name="Author" content="Bob Jacobsen, Egbert Broerse, B. Milhaupt">
+  <meta name="Date.Modified" content="20200106">
   <!-- Style -->
   <meta http-equiv="Content-Type" content=
   "text/html; charset=us-ascii">
@@ -69,8 +69,8 @@
         "images/SignalMastRepeaterPane.png" width="291" height="98"
         align="right">
         
-        <p>A Signal Mast Repeater enables one physical (or virtual) signal to 
-            mimic another signal's aspect.</p>
+        <p>A Signal Mast Repeater enables one physical (or virtual) signal mast to 
+            mimic another signal mast's aspect.</p>
         <p>This can be useful in a number of ways:</p>
         <ul>
             <li>When one physical signal mast must provide an aspect which is exactly 
@@ -86,7 +86,7 @@
                 "source" signal mast displays the correct indication to protect the 
                 "destination" signal mast, regardless of which route is selected.</li>            
         </ul>
-        <p>See <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
+        <p>See the <a href="../../../package/jmri/jmrit/beantable/SignalMastRepeater.shtml">
             Signal Mast Repeater</a> documentation for more details.</p>
 
         <h2>Saving and Reloading Configuration</h2>
