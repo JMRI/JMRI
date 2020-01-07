@@ -198,7 +198,7 @@ In order to do that, we click on the button "Create Pull Request".
 This will open a web browser. If you are not logged in to GitHub, you need to log in.
 When you have logged in, you will see the web page for creation of a Pull Request.
 
-<br/><a href="images/GHD_Image_14_CreatePullRequest.png"><img src="images/GHD_Image_14_CreatePullRequest.png" height="50%" width="50%"></a><br/>
+<br/><a href="images/GHD_Image_13_CreatePullRequest.png"><img src="images/GHD_Image_13_CreatePullRequest.png" height="50%" width="50%"></a><br/>
 
 Fill in a title and a description of the Pull Request and click on the button
 "Create Pull Request".
