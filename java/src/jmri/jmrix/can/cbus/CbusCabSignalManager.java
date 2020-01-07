@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.CabSignal;
-import jmri.implementation.DefaultCabSignal;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.LocoAddress;
 import jmri.managers.AbstractCabSignalManager;

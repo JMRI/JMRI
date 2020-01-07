@@ -5,11 +5,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-import jmri.DccThrottle;
-import jmri.Throttle;
-import jmri.ThrottleListener;
 
 /**
  * Common tests for classes derived from jmri.jmris.AbstractThrottleServer class

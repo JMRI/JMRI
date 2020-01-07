@@ -3,10 +3,6 @@ package jmri.jmrix.openlcb;
 import java.util.*;
 import javax.annotation.*;
 
-import jmri.CommandStation;
-import jmri.InstanceManager;
-import jmri.NmraPacket;
-import jmri.SignalMast;
 import jmri.implementation.AbstractSignalMast;
 import jmri.jmrix.SystemConnectionMemo;
 

@@ -3,9 +3,7 @@ package jmri.managers;
 import jmri.*;
 
 import java.beans.PropertyVetoException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import jmri.util.JUnitAppender;
 import org.apache.log4j.Level;
 

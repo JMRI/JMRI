@@ -2,7 +2,6 @@ package jmri.managers;
 
 import java.io.File;
 import java.net.URISyntaxException;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nonnull;
@@ -10,7 +9,6 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
-import jmri.SignalHead;
 import jmri.implementation.DefaultSignalGroup;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.FileUtil;

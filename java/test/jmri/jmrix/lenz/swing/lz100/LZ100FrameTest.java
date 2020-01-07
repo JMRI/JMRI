@@ -1,9 +1,6 @@
 package jmri.jmrix.lenz.swing.lz100;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetInterfaceScaffold;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

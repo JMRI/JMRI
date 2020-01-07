@@ -1,11 +1,9 @@
 package jmri.jmrit.timetable.swing;
 
 import java.awt.*;
-import java.awt.event.*;
 import java.awt.geom.*;
 import java.awt.print.*;
 import java.util.*;
-import javax.swing.*;
 import jmri.jmrit.timetable.*;
 
 /**

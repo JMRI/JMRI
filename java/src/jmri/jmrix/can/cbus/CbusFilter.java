@@ -5,8 +5,6 @@ import java.util.List;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanFrame;
-import jmri.jmrix.can.cbus.CbusConstants;
-import jmri.jmrix.can.cbus.CbusOpCodes;
 import jmri.jmrix.can.cbus.swing.CbusFilterFrame;
 import jmri.util.ThreadingUtil;
 

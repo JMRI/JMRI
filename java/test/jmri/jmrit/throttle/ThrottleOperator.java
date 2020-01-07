@@ -1,11 +1,8 @@
 package jmri.jmrit.throttle;
 
 import java.awt.Component;
-import javax.swing.JLabel;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import jmri.DccLocoAddress;
-import jmri.jmrit.DccLocoAddressSelector;
 import jmri.util.swing.JemmyUtil;
 import org.netbeans.jemmy.ComponentChooser;
 import org.netbeans.jemmy.operators.JButtonOperator;
@@ -13,14 +10,12 @@ import org.netbeans.jemmy.operators.JCheckBoxOperator;
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
 import org.netbeans.jemmy.operators.JInternalFrameOperator;
-import org.netbeans.jemmy.operators.JLabelOperator;
 import org.netbeans.jemmy.operators.JPopupMenuOperator;
 import org.netbeans.jemmy.operators.JTextFieldOperator;
 import org.netbeans.jemmy.operators.JToggleButtonOperator;
 import org.netbeans.jemmy.operators.JRadioButtonOperator;
 import org.netbeans.jemmy.operators.JSliderOperator;
 import org.netbeans.jemmy.operators.JSpinnerOperator;
-import org.netbeans.jemmy.util.NameComponentChooser;
 
 /*
  *  Helper class for operating the Throttle Frame.

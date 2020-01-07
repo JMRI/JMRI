@@ -5,9 +5,7 @@ import static jmri.ConditionalVariable.*;
 
 import jmri.util.JUnitUtil;
 import jmri.implementation.VirtualSignalHead;
-import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
-import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.logix.WarrantManager;
 import org.junit.*;
 

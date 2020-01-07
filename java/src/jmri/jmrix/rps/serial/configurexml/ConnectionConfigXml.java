@@ -1,6 +1,5 @@
 package jmri.jmrix.rps.serial.configurexml;
 
-import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.rps.serial.ConnectionConfig;
 import jmri.jmrix.rps.serial.SerialAdapter;
