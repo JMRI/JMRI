@@ -6,8 +6,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Class to lookup CBUS event names via the event table
@@ -99,6 +99,7 @@ public class CbusNameService {
     
     @CheckForNull
     private CbusNodeTableDataModel getNodeModel(){
+        log.debug("memo: {}",_memo);
         // if (_memo!=null) {
         //     return _memo.get(CbusNodeTableDataModel.class);
         // } else {
@@ -115,5 +116,5 @@ public class CbusNameService {
         // }
     }
 
-    // private static final Logger log = LoggerFactory.getLogger(CbusNameService.class);
+    private static final Logger log = LoggerFactory.getLogger(CbusNameService.class);
 }

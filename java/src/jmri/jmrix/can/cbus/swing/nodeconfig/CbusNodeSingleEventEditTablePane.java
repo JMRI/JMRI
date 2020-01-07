@@ -30,7 +30,7 @@ public class CbusNodeSingleEventEditTablePane extends jmri.jmrix.can.swing.CanPa
     private int largerFont;
     private JTable singleEvTable;
     
-    private NodeConfigToolPane mainpane;
+    // private NodeConfigToolPane mainpane;
 
     protected CbusNodeSingleEventEditTablePane( CbusNodeSingleEventTableDataModel eVModel ) {
         super();
@@ -40,7 +40,7 @@ public class CbusNodeSingleEventEditTablePane extends jmri.jmrix.can.swing.CanPa
 
     public void initComponents(CanSystemConnectionMemo memo, NodeConfigToolPane pane ) {
         super.initComponents(memo);
-        mainpane = pane;
+        // mainpane = pane;
         singleEvTable = new JTable(singleEVModel);
         init();
         

@@ -19,8 +19,8 @@ import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * Pane for monitoring and configuring a MERG CBUS Command Station.
@@ -224,6 +224,6 @@ public class CbusSlotMonitorPane extends jmri.jmrix.can.swing.CanPanel {
         }
     }
 
-    private static final Logger log = LoggerFactory.getLogger(CbusSlotMonitorPane.class);
+    // private static final Logger log = LoggerFactory.getLogger(CbusSlotMonitorPane.class);
 
 }

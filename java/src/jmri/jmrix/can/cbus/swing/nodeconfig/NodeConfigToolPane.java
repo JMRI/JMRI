@@ -51,11 +51,7 @@ public class NodeConfigToolPane extends jmri.jmrix.can.swing.CanPanel  {
     private CbusNodeBackupsPane _backupPane;
     
     private JScrollPane eventScroll;
-    private JScrollPane tabbedScroll;
     private JSplitPane split;
-    private JPanel pane1;
-    // protected JPanel toppanelcontainer;
-    // protected JPanel buttoncontainer = new JPanel();
     private JTabbedPane tabbedPane;
     
     private int _selectedNode;

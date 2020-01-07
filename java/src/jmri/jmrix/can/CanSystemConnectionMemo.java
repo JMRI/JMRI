@@ -38,8 +38,6 @@ public class CanSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.store(this, CanSystemConnectionMemo.class); // also register as specific type
     }
 
-    private final jmri.jmrix.swing.ComponentFactory cf = null;
-
     protected TrafficController tm;
 
     public void setTrafficController(TrafficController tm) {
