@@ -23,10 +23,7 @@ public class CbusNodeTrickleFetch implements CanListener {
     private final CbusNodeTableDataModel nodeModel;
     private final TrafficController tc;
     private TimerTask trickleTimer;
-    
-    // next fetch call is double this as there should be a response from a module
     private final long trickleTimeoutValue;
-    
     private boolean networkActive;
     
     public CbusNodeTrickleFetch(CanSystemConnectionMemo memo, CbusNodeTableDataModel model, long timeoutValue) {
