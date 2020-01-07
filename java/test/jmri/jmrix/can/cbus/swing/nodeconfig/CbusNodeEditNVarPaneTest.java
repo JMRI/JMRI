@@ -79,8 +79,11 @@ public class CbusNodeEditNVarPaneTest {
     @After
     public void tearDown() {
         t = null;
-        memo = null;
-        tcis = null;
+        memo.dispose();
+        memo=null;
+        tcis.terminateThreads();
+        tcis=null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarFrameTest.class);
