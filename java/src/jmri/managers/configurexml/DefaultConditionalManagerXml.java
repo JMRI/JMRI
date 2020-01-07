@@ -1,8 +1,12 @@
 package jmri.managers.configurexml;
 
+import java.awt.GraphicsEnvironment;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
+
+import javax.swing.JOptionPane;
 
 import jmri.Conditional;
 import jmri.ConditionalAction;
@@ -187,11 +191,21 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         log.debug("Found {} conditionals", conditionalList.size());  // NOI18N
         ConditionalManager cm = InstanceManager.getDefault(jmri.ConditionalManager.class);
 
+        String systemNamePrefix = cm.getSystemNamePrefix();
+        int namesChanged = 0;
+
         for (Element condElem : conditionalList) {
             String sysName = getSystemName(condElem);
             if (sysName == null) {
                 log.warn("unexpected null in systemName {}", condElem);  // NOI18N
                 break;
+            }
+
+            if (!sysName.startsWith(systemNamePrefix)) {
+                String old = sysName;
+                sysName = systemNamePrefix + ":" + sysName;
+                log.warn("Converting Conditional system name from {} to {}", old, sysName);
+                namesChanged++;
             }
 
             // omitted username is treated as empty, not null
@@ -395,6 +409,16 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 triggerOnChange = true;
             }
             c.setTriggerOnChange(triggerOnChange);
+        }
+
+        if (namesChanged > 0) {
+            if (!GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage(namesChanged > 1 ? "ConditionalManager.SystemNamesChanged.Message" : "ConditionalManager.SystemNameChanged.Message", namesChanged),
+                        Bundle.getMessage("Manager.SystemNamesChanged.Title", namesChanged, cm.getBeanTypeHandled(namesChanged > 1)),
+                        JOptionPane.WARNING_MESSAGE);
+            }
+            log.warn("System names for {} Conditionals changed; this may have operational impacts.", namesChanged);
         }
     }
 

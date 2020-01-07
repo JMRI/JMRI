@@ -1,7 +1,11 @@
 package jmri.managers.configurexml;
 
+import java.awt.GraphicsEnvironment;
+
 import java.util.List;
 import java.util.SortedSet;
+
+import javax.swing.JOptionPane;
 
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -128,11 +132,21 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         log.debug("Found {} Logixs", logixList.size());  // NOI18N
         LogixManager lxm = InstanceManager.getDefault(jmri.LogixManager.class);
 
+        String systemNamePrefix = lxm.getSystemNamePrefix();
+        int namesChanged = 0;
+
         for (Element elem : logixList) {
             String sysName = getSystemName(elem);
             if (sysName == null) {
                 log.warn("unexpected null in systemName {}", elem);  // NOI18N
                 break;
+            }
+
+            if (!sysName.startsWith(systemNamePrefix)) {
+                String old = sysName;
+                sysName = systemNamePrefix + ":" + sysName;
+                log.warn("Converting Logix system name from {} to {}", old, sysName);
+                namesChanged++;
             }
 
             String userName = getUserName(elem);
@@ -167,12 +181,28 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
                                 lxcond, lxcond.getAttributes());
                         break;
                     }
+
+                    // Fix conditional name if necessary
+                    if (!cSysName.startsWith(systemNamePrefix)) {
+                        cSysName = systemNamePrefix + ":" + cSysName;
+                    }
+
                     int cOrder = Integer.parseInt(lxcond
                             .getAttribute("order").getValue()); // NOI18N
                     // add the conditional to logix
                     x.addConditional(cSysName, cOrder);
                 }
             }
+        }
+
+        if (namesChanged > 0) {
+            if (!GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(null,
+                        Bundle.getMessage(namesChanged > 1 ? "LogixManager.SystemNamesChanged.Message" : "LogixManager.SystemNameChanged.Message", namesChanged),
+                        Bundle.getMessage("Manager.SystemNamesChanged.Title", namesChanged, lxm.getBeanTypeHandled(namesChanged > 1)),
+                        JOptionPane.WARNING_MESSAGE);
+            }
+        log.warn("System names for {} Logixs changed; this may have operational impacts.", namesChanged);
         }
     }
 

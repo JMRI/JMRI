@@ -402,7 +402,6 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
             outputTS.add(new RouteOutputSensor(systemName, userName));
             alignTS.add(new AlignElement(systemName, userName));
         });
-
         jmri.LightManager lm = InstanceManager.lightManagerInstance();
         lm.getNamedBeanSet().forEach((nb) -> {
             String userName = nb.getUserName();
@@ -886,8 +885,8 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
      * Set up Create/Edit LRoute pane
      */
     void makeEditWindow() {
+        buildLists();
         if (_addFrame == null) {
-            buildLists();
             _addFrame = new JmriJFrame(rbx.getString("LRouteAddTitle"), false, false);
             _addFrame.addHelpMenu("package.jmri.jmrit.beantable.LRouteAddEdit", true);
             _addFrame.setLocation(100, 30);
@@ -1133,11 +1132,7 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
                 public void windowClosing(java.awt.event.WindowEvent e) {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
-                        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("BeanNameLRoute")),
-                                        getClassName(),
-                                        "remindSaveRoute"); // NOI18N
-                        routeDirty = false;
+                        showReminderMessage();
                     }
                     clearPage();
                     _addFrame.setVisible(false);
@@ -1158,7 +1153,14 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         } else {
             _addFrame.setVisible(true);
         }
-    }   // addPressed
+    }
+
+    void showReminderMessage() {
+        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+            showInfoMessage(Bundle.getMessage("ReminderTitle"), Bundle.getMessage("ReminderSaveString", Bundle.getMessage("BeanNameLRoute")),
+                    getClassName(),
+                    "remindSaveRoute"); // NOI18N
+    }
 
     /*
      * Utility for addPressed
@@ -1979,6 +1981,10 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         _newRouteType = true;
         _newRouteButton.doClick();
         _lockCheckBox.setSelected(_lock);
+        if (routeDirty) {
+            showReminderMessage();
+            routeDirty = false;
+        }
         _addFrame.setVisible(false);
     }
 
@@ -2372,10 +2378,17 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
     }
 
-    public final static String LOGIX_SYS_NAME = "RTX";
-    public final static String LOGIX_INITIALIZER = LOGIX_SYS_NAME + "INITIALIZER";
-    public final static String CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
+    public final static String LOGIX_SYS_NAME;
+    public final static String LOGIX_INITIALIZER;
+    public final static String CONDITIONAL_SYS_PREFIX;
     public final static String CONDITIONAL_USER_PREFIX = "Route ";
+
+    static {
+        String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        LOGIX_SYS_NAME = logixPrefix + ":RTX";
+        LOGIX_INITIALIZER = LOGIX_SYS_NAME + "INITIALIZER";
+        CONDITIONAL_SYS_PREFIX = LOGIX_SYS_NAME + "C";
+    }
 
     public final static int SENSOR_TYPE = 1;
     public final static int TURNOUT_TYPE = 2;
@@ -2477,12 +2490,12 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
         }
 
         static jmri.util.AlphanumComparator ac = new jmri.util.AlphanumComparator();
-    
+
         @Override
         public int compare(RouteElement e1, RouteElement e2) {
             String s1 = e1.getSysName();
             String s2 = e2.getSysName();
-            
+
             int p1len = Manager.getSystemPrefixLength(s1);
             int p2len = Manager.getSystemPrefixLength(s2);
 
@@ -2491,11 +2504,11 @@ public class LRouteTableAction extends AbstractTableAction<Logix> {
 
             char c1 = s1.charAt(p1len);
             char c2 = s2.charAt(p2len);
-           
+
             if (c1 == c2) return ac.compare(s1.substring(p1len+1), s2.substring(p2len+1));
             else return (c1 > c2) ? +1 : -1 ;
         }
-        
+
     }
 
     /**

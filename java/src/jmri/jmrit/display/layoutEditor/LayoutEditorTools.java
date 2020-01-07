@@ -13609,7 +13609,8 @@ public class LayoutEditorTools {
         String turnoutName = turn.getDisplayName();
         String farTurnoutName = farTurn.getDisplayName();
 
-        String logixName = "IX_LAYOUTSLIP:" + slip.ident;
+        String logixPrefix = InstanceManager.getDefault(jmri.LogixManager.class).getSystemNamePrefix();
+        String logixName = logixPrefix + "IX_LAYOUTSLIP:" + slip.ident;
         String sensorName = "IS:" + logixName + "C" + number;
         try {
             InstanceManager.sensorManagerInstance().provideSensor(sensorName);
