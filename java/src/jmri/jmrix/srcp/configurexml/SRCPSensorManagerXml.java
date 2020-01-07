@@ -1,7 +1,6 @@
 package jmri.jmrix.srcp.configurexml;
 
 import jmri.configurexml.JmriConfigureXmlException;
-import jmri.jmrix.srcp.SRCPSensorManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

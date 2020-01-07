@@ -4,6 +4,9 @@
           <li>Fixed a problem introduced in JMRI 4.19.1 that 
           prevented the function buttons in the on-screen throttles
           from working on some types of computers.</li>
+          <li>Fixed a problem introduced in JMRI 4.17.7 that
+          causes a partial crash when reading in historical
+          consist data from the consist.xml file.
         </ul>
 
 	    <h4>Anyma DMX512</h4>
@@ -489,12 +492,22 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>In the 
+            <a href="https://groups.io/g/jmriusers/message/165236">jmriusers forum</a> 
+            it has been suggested to open a JMRI throttle
+            automatically when a VSDecoder via Roster Entry is added.
+            VSD does already save the Path and the Profile of a VSDecoder in the Roster Media.
+            This PR adds a new attribute: VSDecoder_LaunchThrottle = yes launches
+            a JMRI throttle automatically.
+            The new attribute is stored when the user clicks the "Save to Roster" button.
+            The new attribute can be changed manually or by a Jython script.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
+            <li>Petr Sidlo added a Pragotron clock, which is digital clock
+                found in many European train stations.</li>
             <li>The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
                 calls in the various <code>Manager<code> classes
                 are no longer needed with Java 8 and have been deprecated for eventual
@@ -511,5 +524,9 @@
 		    	correctly, but it is possible that references to those Routes will need
 		    	to be updated.
 			    </li>
+			<li>Daniel Bergqvist provided information on 
+			    <a href="jmri.org/help/en/html/doc/Technical/githubdesktopinto.shtml">how to use the GitHub Desktop tool</a>
+			    for JMRI development.
+			    
         </ul>
 

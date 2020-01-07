@@ -1,13 +1,11 @@
 package jmri.managers;
 
-import java.text.DecimalFormat;
 import java.util.Objects;
 import javax.annotation.Nonnull;
 import javax.annotation.CheckForNull;
 import jmri.Manager;
 import jmri.Memory;
 import jmri.MemoryManager;
-import jmri.SignalHead;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

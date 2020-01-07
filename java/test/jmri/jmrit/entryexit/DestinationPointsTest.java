@@ -3,20 +3,16 @@ package jmri.jmrit.entryexit;
 import java.awt.GraphicsEnvironment;
 import java.util.HashMap;
 import jmri.InstanceManager;
-import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
-import jmri.jmrit.entryexit.EntryExitPairs;
 import jmri.util.JUnitUtil;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.netbeans.jemmy.EventTool;
 
 /**
  *

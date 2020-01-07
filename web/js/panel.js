@@ -154,8 +154,8 @@ class Decoration {
         var $cps = $widget.controlpoints;   // get the control points
         var $cp0 = $cps[0];
         var $cpN = $cps[$cps.length - 1];
-        var cp0 = [Number($cp0.attributes.x.value), Number($cp0.attributes.y.value)];
-        var cpN = [Number($cpN.attributes.x.value), Number($cpN.attributes.y.value)];
+        var cp0 = $getLayoutPoint($cp0);
+        var cpN = $getLayoutPoint($cpN);
         this.startAngleRAD = (Math.PI / 2) - $computeAngleRAD2(cp0, this.ep1);
         this.stopAngleRAD = (Math.PI / 2) - $computeAngleRAD2(this.ep2, cpN);
     }
@@ -578,7 +578,7 @@ class BridgeDecoration extends Decoration {
         var points = [[ep1[0], ep1[1]]];    // first point
         var $cps = $widget.controlpoints;   // get the control points
         $cps.each(function( idx, elem ) {   // control points
-            points.push([elem.attributes.x.value, elem.attributes.y.value]);
+            points.push($getLayoutPoint(elem));
         });
         points.push([ep2[0], ep2[1]]);  // last point
         var halfWidth = this.deckwidth / 2;
@@ -798,7 +798,7 @@ class TunnelDecoration extends Decoration {
         var points = [[ep1[0], ep1[1]]];    // first point
         var $cps = $widget.controlpoints;   // get the control points
         $cps.each(function( idx, elem ) {   // control points
-            points.push([elem.attributes.x.value, elem.attributes.y.value]);
+            points.push($getLayoutPoint(elem));
         });
         points.push([ep2[0], ep2[1]]);  // last point
         var halfWidth = this.floorwidth / 2;
@@ -1021,758 +1021,828 @@ function processPanelXML($returnedData, $success, $xhr) {
 
     //process all elements in the panel xml, drawing them on screen, and building persistent array of widgets
     $panel.contents().each(
-            function() {
-                var $widget = new Array();
-                $widget['widgetType'] = this.nodeName;
-                $widget['scale'] = "1"; //default to no scale
-                $widget['degrees'] = 0; //default to no rotation
-                $widget['rotation'] = 0; // default to no rotation
-                //convert attributes to an object array
-                $(this.attributes).each(function() {
-                    $widget[this.name] = this.value;
-                });
-                //default various css attributes to not-set, then set in later code as needed
-                var $hoverText = "";
+        function() {
+            var $widget = new Array();
+            $widget['widgetType'] = this.nodeName;
+            $widget['scale'] = "1"; //default to no scale
+            $widget['degrees'] = 0; //default to no rotation
+            $widget['rotation'] = 0; // default to no rotation
+            //convert attributes to an object array
+            $(this.attributes).each(function() {
+                $widget[this.name] = this.value;
+            });
+            //default various css attributes to not-set, then set in later code as needed
+            var $hoverText = "";
 
-                // add and normalize the various type-unique values, from the various spots they are stored
-                // icon names based on states returned from JSON server,
-                $widget['state'] = UNKNOWN; //initial state is unknown
-                $widget.jsonType = ""; //default to no JSON type (avoid undefined)
+            // add and normalize the various type-unique values, from the various spots they are stored
+            // icon names based on states returned from JSON server,
+            $widget['state'] = UNKNOWN; //initial state is unknown
+            $widget.jsonType = ""; //default to no JSON type (avoid undefined)
 
-                if ((typeof $widget["systemName"] === "undefined") &&  //set systemName from id if missing
-                	  (typeof $widget["id"] !== "undefined")) {
-                	$widget.systemName = $widget["id"];
-                }
-                $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
-                $widget['widgetFamily'] = $getWidgetFamily($widget, this);
-                var $jc = "";
-                if (typeof($widget["class"]) !== "undefined") {
-                    var $ta = $widget["class"].split('.'); //get last part of java class name for a css class
-                    $jc = $ta[$ta.length - 1];
-                }
-                $widget['classes'] = $widget.widgetType + " " + $widget.widgetFamily + " rotatable " + $jc;
-                if ($widget.momentary == "true") {
-                    $widget.classes += " momentary ";
-                }
-                if ($widget.hidden == "yes") {
-                    $widget.classes += " hidden ";
-                }
-                //set additional values in this widget
-                switch ($widget.widgetFamily) {
-                    case "icon" :
-                        $widget['styles'] = $getTextCSSFromObj($widget);
-                        switch ($widget.widgetType) {
-                            case "positionablelabel" :
-                                $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
-                                $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
-                                $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
-                                $widget['scale'] = $(this).find('icon').attr('scale');
-                                break;
-                            case "linkinglabel" :
-                                $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
-                                $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
-                                $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
-                                $widget['scale'] = $(this).find('icon').attr('scale');
-                                $url = $(this).find('url').text();
-                                $widget['url'] = $url; //default to using url value as is
-                                if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-                                break;
-                            case "indicatortrackicon" :
-                                $widget['icon' + UNKNOWN] = $(this).find('iconmap').find('ClearTrack').attr('url');
-                                $widget['icon2'] = $widget['icon' + UNKNOWN];
-                                $widget['icon4'] = $widget['icon' + UNKNOWN];
-                                $widget['icon8'] = $widget['icon' + UNKNOWN];
-                                $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
-                                $widget['iconOccupied2'] = $widget['iconOccupied' + UNKNOWN];
-                                $widget['iconOccupied4'] = $widget['iconOccupied' + UNKNOWN];
-                                $widget['iconOccupied8'] = $widget['iconOccupied' + UNKNOWN];
-                                $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
-                                $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
-                                $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
-                                if ($(this).find('occupancysensor')) {  //store the occupancy sensor name and state
-                                    $widget['occupancysensor'] = $(this).find('occupancysensor').text();
-                                    $widget['occupancystate'] = UNKNOWN;
-                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
-                                }
-                                break;
-                            case "indicatorturnouticon" :
-                                $widget['name'] = $(this).find('turnout').text();
-                                ; //normalize name
-                                $widget.jsonType = 'turnout'; // JSON object type
-                                $widget['icon' + UNKNOWN] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
-                                $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
-                                $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
-                                $widget['icon8'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
-                                $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateUnknown').attr('url');
-                                $widget['iconOccupied2'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateClosed').attr('url');
-                                $widget['iconOccupied4'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url');
-                                $widget['iconOccupied8'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
-                                $widget['rotation'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text() * 1;
-                                $widget['degrees'] = ($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($widget.rotation * 90);
-                                $widget['scale'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
-                                if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-                                if ($(this).find('occupancysensor')) {  //store the occupancy sensor name and state
-                                    $widget['occupancysensor'] = $(this).find('occupancysensor').text();
-                                    $widget['occupancystate'] = UNKNOWN;
-                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
-                                }
-                                jmri.getTurnout($widget["systemName"]);
-                                break;
-                            case "turnouticon" :
-                                $widget['name'] = $widget.turnout; //normalize name
-                                $widget.jsonType = "turnout"; // JSON object type
-                                $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
-                                $widget['icon2'] = $(this).find('icons').find('closed').attr('url');
-                                $widget['icon4'] = $(this).find('icons').find('thrown').attr('url');
-                                $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
-                                $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
-                                $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
-                                $widget['scale'] = $(this).find('icons').find('unknown').attr('scale');
-                                if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-                                jmri.getTurnout($widget["systemName"]);
-                                break;
-                            case "sensoricon" :
-                                $widget['name'] = $widget.sensor; //normalize name
-                                $widget.jsonType = "sensor"; // JSON object type
-                                $widget['icon' + UNKNOWN] = $(this).find('unknown').attr('url');
-                                $widget['icon2'] = $(this).find('active').attr('url');
-                                $widget['icon4'] = $(this).find('inactive').attr('url');
-                                $widget['icon8'] = $(this).find('inconsistent').attr('url');
-                                $widget['rotation'] = $(this).find('unknown').find('rotation').text() * 1;
-                                $widget['degrees'] = ($(this).find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
-                                $widget['scale'] = $(this).find('unknown').attr('scale');
-                                if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-                                if (typeof $widget["systemName"] === "undefined")
-                                    $widget["systemName"] = $widget.name;
-                                jmri.getSensor($widget["systemName"]);
-                                break;
-                            case "LightIcon" :
-                                $widget['name'] = $widget.light; //normalize name
-                                $widget.jsonType = "light"; // JSON object type
-                                $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
-                                $widget['icon2'] = $(this).find('icons').find('on').attr('url');
-                                $widget['icon4'] = $(this).find('icons').find('off').attr('url');
-                                $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
-                                $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
-                                $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
-                                $widget['scale'] = $(this).find('unknown').attr('scale');
-                                if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-                                if (typeof $widget["systemName"] === "undefined")
-                                    $widget["systemName"] = $widget.name;
-                                jmri.getLight($widget["systemName"]);
-                                break;
-                            case "signalheadicon" :
-                                $widget['name'] = $widget.signalhead; //normalize name
-                                $widget.jsonType = "signalHead"; // JSON object type
-                                $widget['icon' + HELD] = $(this).find('icons').find('held').attr('url');
-                                $widget['icon' + DARK] = $(this).find('icons').find('dark').attr('url');
-                                $widget['icon' + RED] = $(this).find('icons').find('red').attr('url');
-                                if (typeof $widget['icon' + RED] === "undefined") { //look for held if no red
-                                    $widget['icon' + RED] = $(this).find('icons').find('held').attr('url');
-                                }
-                                $widget['icon' + YELLOW] = $(this).find('icons').find('yellow').attr('url');
-                                $widget['icon' + GREEN] = $(this).find('icons').find('green').attr('url');
-                                $widget['icon' + FLASHRED] = $(this).find('icons').find('flashred').attr('url');
-                                $widget['icon' + FLASHYELLOW] = $(this).find('icons').find('flashyellow').attr('url');
-                                $widget['icon' + FLASHGREEN] = $(this).find('icons').find('flashgreen').attr('url');
-                                $widget['icon' + LUNAR] = $(this).find('icons').find('lunar').attr('url');
-                                $widget['icon' + FLASHLUNAR] = $(this).find('icons').find('lunar').attr('url');
-                                $widget['rotation'] = $(this).find('icons').find('dark').find('rotation').text() * 1;
-                                $widget['degrees'] = ($(this).find('icons').find('dark').attr('degrees') * 1) - ($widget.rotation * 90);
-                                $widget['scale'] = $(this).find('icons').find('dark').attr('scale');
-                                if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-                                jmri.getSignalHead($widget["systemName"]);
-                                break;
-                            case "signalmasticon" :
-                                $widget['name'] = $widget.signalmast; //normalize name
-                                $widget.jsonType = "signalMast"; // JSON object type
-                                var icons = $(this).find('icons').children(); //get array of icons
-                                icons.each(function(i, item) {  //loop thru icons array and set all iconXX urls for widget
-                                    $widget['icon' + $(item).attr('aspect')] = $(item).attr('url');
-                                });
-                                $widget['degrees'] = $(this).attr('degrees') * 1;
-                                $widget['scale'] = $(this).attr('scale');
-                                if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-                                if (typeof $widget["iconUnlit"] !== "undefined") {
-                                    $widget['state'] = "Unlit"; //set the initial aspect to Unlit if defined
-                                } else {
-                                    $widget['state'] = "Unknown"; //else set to Unknown
-                                }
-                                jmri.getSignalMast($widget["systemName"]);
-                                break;
-                            case "multisensoricon" :
-                                //create multiple widgets, 1st with all images, stack others with non-active states set to a clear image
-                                //  set up siblings array so each widget can also set state of the others
-                                $widget.jsonType = "sensor"; // JSON object type
-                                $widget['icon' + UNKNOWN] = $(this).find('unknown').attr('url');
-                                $widget['icon4'] = $(this).find('inactive').attr('url');
-                                $widget['icon8'] = $(this).find('inconsistent').attr('url');
-                                $widget['rotation'] = $(this).find('unknown').find('rotation').text() * 1;
-                                $widget['degrees'] = ($(this).find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
-                                $widget['scale'] = $(this).find('unknown').attr('scale');
-                                if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-                                $widget['siblings'] = new Array();  //array of related multisensors
-                                $widget['hoverText'] = "";          //for override of hovertext
-                                var actives = $(this).find('active'); //get array of actives used by this multisensor
-                                var $id = $widget.id;
-                                actives.each(function(i, item) {  //loop thru array once to set up siblings array, to be copied to all siblings
-                                    $widget.siblings.push($id);
-                                    $widget.hoverText += $(item).attr('sensor') + " "; //add sibling names to hovertext
-                                    $id = "widget-" + $gUnique(); //set new id to a unique value for each sibling
-                                });
-                                actives.each(function(i, item) {  //loop thru array again to create each widget
-                                    $widget['id'] = $widget.siblings[i];         // use id already set in sibling array
-                                    $widget.name = $(item).attr('sensor');
-                                    $widget['icon2'] = $(item).attr('url');
-                                    if (i < actives.size() - 1) { //only save widget and make a new one if more than one active found
-                                        $preloadWidgetImages($widget); //start loading all images
-                                        $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-                                        $widget["systemName"] = $widget.name;
-                                        $gWidgets[$widget.id] = $widget; //store widget in persistent array
-                                        $drawIcon($widget); //actually place and position the widget on the panel
-                                        jmri.getSensor($widget["systemName"]);
-                                        if (!($widget.systemName in whereUsed)) {  //set where-used for this new sensor
-                                            whereUsed[$widget.systemName] = new Array();
-                                        }
-                                        whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
-                                        $widget = jQuery.extend(true, {}, $widget); //get a new copy of widget
-                                        $widget['icon' + UNKNOWN] = "/web/images/transparent_1x1.png";
-                                        $widget['icon4'] = "/web/images/transparent_1x1.png"; //set non-actives to transparent image
-                                        $widget['icon8'] = "/web/images/transparent_1x1.png";
-                                        $widget['state'] = ACTIVE; //to avoid sizing based on the transparent image
-                                    }
-                                });
+            if ((typeof $widget["systemName"] === "undefined") &&  //set systemName from id if missing
+                  (typeof $widget["id"] !== "undefined")) {
+                $widget.systemName = $widget["id"];
+            }
+            $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
+            $widget['widgetFamily'] = $getWidgetFamily($widget, this);
+            var $jc = "";
+            if (typeof($widget["class"]) !== "undefined") {
+                var $ta = $widget["class"].split('.'); //get last part of java class name for a css class
+                $jc = $ta[$ta.length - 1];
+            }
+            $widget['classes'] = $widget.widgetType + " " + $widget.widgetFamily + " rotatable " + $jc;
+            if ($widget.momentary == "true") {
+                $widget.classes += " momentary ";
+            }
+            if ($widget.hidden == "yes") {
+                $widget.classes += " hidden ";
+            }
+            //set additional values in this widget
+            switch ($widget.widgetFamily) {
+                case "icon" :
+                    $widget['styles'] = $getTextCSSFromObj($widget);
+                    switch ($widget.widgetType) {
+                        case "positionablelabel" :
+                            $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
+                            $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icon').attr('scale');
+                            break;
+                        case "linkinglabel" :
+                            $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
+                            $widget['rotation'] = $(this).find('icon').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icon').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icon').attr('scale');
+                            $url = $(this).find('url').text();
+                            $widget['url'] = $url; //default to using url value as is
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            break;
+                        case "indicatortrackicon" :
+                            $widget['icon' + UNKNOWN] = $(this).find('iconmap').find('ClearTrack').attr('url');
+                            $widget['icon2'] = $widget['icon' + UNKNOWN];
+                            $widget['icon4'] = $widget['icon' + UNKNOWN];
+                            $widget['icon8'] = $widget['icon' + UNKNOWN];
+                            $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmap').find('OccupiedTrack').attr('url');
+                            $widget['iconOccupied2'] = $widget['iconOccupied' + UNKNOWN];
+                            $widget['iconOccupied4'] = $widget['iconOccupied' + UNKNOWN];
+                            $widget['iconOccupied8'] = $widget['iconOccupied' + UNKNOWN];
+                            $widget['rotation'] = $(this).find('iconmap').find('ClearTrack').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('iconmap').find('ClearTrack').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('iconmap').find('ClearTrack').attr('scale');
+                            if ($(this).find('occupancysensor')) {  //store the occupancy sensor name and state
+                                $widget['occupancysensor'] = $(this).find('occupancysensor').text();
+                                $widget['occupancystate'] = UNKNOWN;
+                                jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+                            }
+                            break;
+                        case "indicatorturnouticon" :
+                            $widget['name'] = $(this).find('turnout').text();
+                            ; //normalize name
+                            $widget.jsonType = 'turnout'; // JSON object type
+                            $widget['icon' + UNKNOWN] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('url');
+                            $widget['icon2'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateClosed').attr('url');
+                            $widget['icon4'] = $(this).find('iconmaps').find('ClearTrack').find('TurnoutStateThrown').attr('url');
+                            $widget['icon8'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateInconsistent').attr('url');
+                            $widget['iconOccupied' + UNKNOWN] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateUnknown').attr('url');
+                            $widget['iconOccupied2'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateClosed').attr('url');
+                            $widget['iconOccupied4'] = $(this).find('iconmaps').find('OccupiedTrack').find('TurnoutStateThrown').attr('url');
+                            $widget['iconOccupied8'] = $(this).find('iconmaps').find('OccupiedTrack').find('BeanStateInconsistent').attr('url');
+                            $widget['rotation'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('iconmaps').find('ClearTrack').find('BeanStateUnknown').attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            if ($(this).find('occupancysensor')) {  //store the occupancy sensor name and state
+                                $widget['occupancysensor'] = $(this).find('occupancysensor').text();
+                                $widget['occupancystate'] = UNKNOWN;
+                                jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+                            }
+                            jmri.getTurnout($widget["systemName"]);
+                            break;
+                        case "turnouticon" :
+                            $widget['name'] = $widget.turnout; //normalize name
+                            $widget.jsonType = "turnout"; // JSON object type
+                            $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
+                            $widget['icon2'] = $(this).find('icons').find('closed').attr('url');
+                            $widget['icon4'] = $(this).find('icons').find('thrown').attr('url');
+                            $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
+                            $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icons').find('unknown').attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            jmri.getTurnout($widget["systemName"]);
+                            break;
+                        case "sensoricon" :
+                            $widget['name'] = $widget.sensor; //normalize name
+                            $widget.jsonType = "sensor"; // JSON object type
+                            $widget['icon' + UNKNOWN] = $(this).find('unknown').attr('url');
+                            $widget['icon2'] = $(this).find('active').attr('url');
+                            $widget['icon4'] = $(this).find('inactive').attr('url');
+                            $widget['icon8'] = $(this).find('inconsistent').attr('url');
+                            $widget['rotation'] = $(this).find('unknown').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('unknown').attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            if (typeof $widget["systemName"] === "undefined")
                                 $widget["systemName"] = $widget.name;
-                                jmri.getSensor($widget["systemName"]);
-                                break;
-                            case "memoryicon" :
-                                $widget['name'] = $widget.memory; //normalize name
-                                $widget.jsonType = "memory"; // JSON object type
-                                $widget['state'] = $widget.memory; //use name for initial state as well
-                                var memorystates = $(this).find('memorystate');
-                                memorystates.each(function(i, item) {  //get any memorystates defined
-                                    //store icon url in "iconXX" where XX is the state to match
-                                    $widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value;
-                                    $widget['state'] = item.attributes['value'].value; //use value for initial state
-                                });
-                                $widget['iconnull']="/web/images/transparent_19x16.png"; //transparent for null value
-                                if (typeof $widget["systemName"] === "undefined")
+                            jmri.getSensor($widget["systemName"]);
+                            break;
+                        case "LightIcon" :
+                            $widget['name'] = $widget.light; //normalize name
+                            $widget.jsonType = "light"; // JSON object type
+                            $widget['icon' + UNKNOWN] = $(this).find('icons').find('unknown').attr('url');
+                            $widget['icon2'] = $(this).find('icons').find('on').attr('url');
+                            $widget['icon4'] = $(this).find('icons').find('off').attr('url');
+                            $widget['icon8'] = $(this).find('icons').find('inconsistent').attr('url');
+                            $widget['rotation'] = $(this).find('icons').find('unknown').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icons').find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('unknown').attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            if (typeof $widget["systemName"] === "undefined")
+                                $widget["systemName"] = $widget.name;
+                            jmri.getLight($widget["systemName"]);
+                            break;
+                        case "signalheadicon" :
+                            $widget['name'] = $widget.signalhead; //normalize name
+                            $widget.jsonType = "signalHead"; // JSON object type
+                            $widget['icon' + HELD] = $(this).find('icons').find('held').attr('url');
+                            $widget['icon' + DARK] = $(this).find('icons').find('dark').attr('url');
+                            $widget['icon' + RED] = $(this).find('icons').find('red').attr('url');
+                            if (typeof $widget['icon' + RED] === "undefined") { //look for held if no red
+                                $widget['icon' + RED] = $(this).find('icons').find('held').attr('url');
+                            }
+                            $widget['icon' + YELLOW] = $(this).find('icons').find('yellow').attr('url');
+                            $widget['icon' + GREEN] = $(this).find('icons').find('green').attr('url');
+                            $widget['icon' + FLASHRED] = $(this).find('icons').find('flashred').attr('url');
+                            $widget['icon' + FLASHYELLOW] = $(this).find('icons').find('flashyellow').attr('url');
+                            $widget['icon' + FLASHGREEN] = $(this).find('icons').find('flashgreen').attr('url');
+                            $widget['icon' + LUNAR] = $(this).find('icons').find('lunar').attr('url');
+                            $widget['icon' + FLASHLUNAR] = $(this).find('icons').find('lunar').attr('url');
+                            $widget['rotation'] = $(this).find('icons').find('dark').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('icons').find('dark').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('icons').find('dark').attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            jmri.getSignalHead($widget["systemName"]);
+                            break;
+                        case "signalmasticon" :
+                            $widget['name'] = $widget.signalmast; //normalize name
+                            $widget.jsonType = "signalMast"; // JSON object type
+                            var icons = $(this).find('icons').children(); //get array of icons
+                            icons.each(function(i, item) {  //loop thru icons array and set all iconXX urls for widget
+                                $widget['icon' + $(item).attr('aspect')] = $(item).attr('url');
+                            });
+                            $widget['degrees'] = $(this).attr('degrees') * 1;
+                            $widget['scale'] = $(this).attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            if (typeof $widget["iconUnlit"] !== "undefined") {
+                                $widget['state'] = "Unlit"; //set the initial aspect to Unlit if defined
+                            } else {
+                                $widget['state'] = "Unknown"; //else set to Unknown
+                            }
+                            jmri.getSignalMast($widget["systemName"]);
+                            break;
+                        case "multisensoricon" :
+                            //create multiple widgets, 1st with all images, stack others with non-active states set to a clear image
+                            //  set up siblings array so each widget can also set state of the others
+                            $widget.jsonType = "sensor"; // JSON object type
+                            $widget['icon' + UNKNOWN] = $(this).find('unknown').attr('url');
+                            $widget['icon4'] = $(this).find('inactive').attr('url');
+                            $widget['icon8'] = $(this).find('inconsistent').attr('url');
+                            $widget['rotation'] = $(this).find('unknown').find('rotation').text() * 1;
+                            $widget['degrees'] = ($(this).find('unknown').attr('degrees') * 1) - ($widget.rotation * 90);
+                            $widget['scale'] = $(this).find('unknown').attr('scale');
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            $widget['siblings'] = new Array();  //array of related multisensors
+                            $widget['hoverText'] = "";          //for override of hovertext
+                            var actives = $(this).find('active'); //get array of actives used by this multisensor
+                            var $id = $widget.id;
+                            actives.each(function(i, item) {  //loop thru array once to set up siblings array, to be copied to all siblings
+                                $widget.siblings.push($id);
+                                $widget.hoverText += $(item).attr('sensor') + " "; //add sibling names to hovertext
+                                $id = "widget-" + $gUnique(); //set new id to a unique value for each sibling
+                            });
+                            actives.each(function(i, item) {  //loop thru array again to create each widget
+                                $widget['id'] = $widget.siblings[i];         // use id already set in sibling array
+                                $widget.name = $(item).attr('sensor');
+                                $widget['icon2'] = $(item).attr('url');
+                                if (i < actives.size() - 1) { //only save widget and make a new one if more than one active found
+                                    $preloadWidgetImages($widget); //start loading all images
+                                    $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
                                     $widget["systemName"] = $widget.name;
-                                jmri.getMemory($widget["systemName"]);
-                                break;
-                        }
-                        $preloadWidgetImages($widget); //start loading all images
-                        $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-                        $gWidgets[$widget.id] = $widget; //store widget in persistent array
-                        $drawIcon($widget); //actually place and position the widget on the panel
-                        break;
-
-                    case "text" :
-                        $widget['styles'] = $getTextCSSFromObj($widget);
-                        switch ($widget.widgetType) {
-                            case "sensoricon" :
-                                $widget['name'] = $widget.sensor; //normalize name
-                                $widget.jsonType = "sensor"; // JSON object type
-                                //set each state's text
-                                $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text');
-                                $widget['text2'] = $(this).find('activeText').attr('text');
-                                $widget['text4'] = $(this).find('inactiveText').attr('text');
-                                $widget['text8'] = $(this).find('inconsistentText').attr('text');
-                                //set each state's css attribute array (text color, etc.)
-                                $widget['css' + UNKNOWN] = $getTextCSSFromObj($getObjFromXML($(this).find('unknownText')[0]));
-                                $widget['css2'] = $getTextCSSFromObj($getObjFromXML($(this).find('activeText')[0]));
-                                $widget['css4'] = $getTextCSSFromObj($getObjFromXML($(this).find('inactiveText')[0]));
-                                $widget['css8'] = $getTextCSSFromObj($getObjFromXML($(this).find('inconsistentText')[0]));
-                                if (typeof $widget.name !== "undefined" && $widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-                                if (typeof $widget["systemName"] === "undefined")
-                                    $widget["systemName"] = $widget.name;
-                                jmri.getSensor($widget["systemName"]);
-                                break;
-                            case "locoicon" :
-                            case "trainicon" :
-                                //also set the background icon for this one (additional css in .html file)
-                                $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
-                                $widget.styles['background-image'] = "url('" + $widget['icon' + UNKNOWN] + "')";
-                                $widget['scale'] = $(this).find('icon').attr('scale');
-                                if ($widget.scale != 1) {
-                                    $widget.styles['background-size'] = $widget.scale * 100 + "%";
-                                    $widget.styles['line-height'] = $widget.scale * 20 + "px";  //center vertically
-                                }
-                                break;
-                            case "fastclock" :
-                                jmri.getMemory("IMRATEFACTOR"); //enable updates for fast clock rate
-                                $widget['name'] = 'IMCURRENTTIME';  // already defined in JMRI
-                                $widget.jsonType = 'memory';
-                                $widget.styles['width'] = "166px";  //hard-coded to match original size of clock image
-                                $widget.styles['height'] = "166px";
-                                $widget['scale'] = $(this).attr('scale');
-                                if (typeof $widget.level === "undefined") {
-                                    $widget['level'] = 10;  //if not included in xml
-                                }
-                                $widget['text'] = "00:00 AM";
-                                $widget['state'] = "00:00 AM";
-                                if (typeof $widget["systemName"] === "undefined")
-                                    $widget["systemName"] = $widget.name;
-                                jmri.getMemory($widget["systemName"]);
-
-                                break;
-                            case "memoryicon" :
-                                $widget['name'] = $widget.memory; //normalize name
-                                $widget.jsonType = "memory"; // JSON object type
-                                $widget['text'] = $widget.memory; //use name for initial text
-                                $widget['state'] = $widget.memory; //use name for initial state as well
-                                if (typeof $widget["systemName"] === "undefined")
-                                    $widget["systemName"] = $widget.name;
-                                jmri.getMemory($widget["systemName"]);
-                                break;
-                            case "reportericon" :
-                                $widget['name'] = $widget.reporter; //normalize name
-                                $widget.jsonType = "reporter"; // JSON object type
-                                $widget['text'] = $widget.reporter; //use name for initial text
-                                if (typeof $widget["systemName"] === "undefined")
-                                    $widget["systemName"] = $widget.name;
-                                jmri.getReporter($widget["systemName"]);
-                                break;
-                            case "BlockContentsIcon" :
-                                $widget['name'] = $widget.systemName; //normalize name (id got stepped on)
-                                $widget.jsonType = "block"; // JSON object type
-                                $widget['text'] = $widget.name; //use name for initial text
-                                $widget['state'] = $widget.name; //use name for initial state as well
-                                jmri.getBlock($widget["systemName"]);
-                                break;
-                            case "memoryInputIcon" :
-                            case "memoryComboIcon" :
-                                $widget['name'] = $widget.memory; //normalize name
-                                $widget.jsonType = "memory"; // JSON object type
-                                $widget['text'] = $widget.memory; //use name for initial text
-                                $widget['state'] = $widget.memory; //use name for initial state as well
-                                $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
-                                if (typeof $widget["systemName"] === "undefined")
-                                    $widget["systemName"] = $widget.name;
-                                jmri.getMemory($widget["systemName"]);
-                                break;
-                            case "linkinglabel" :
-                                $url = $(this).find('url').text();
-                                $widget['url'] = $url; //just store url value in widget, for use in click handler
-                                if ($widget.forcecontroloff != "true") {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-                                break;
-                            case "beanswitch" : // Switchboard BeanSwitch of shape "button"
-                                $widget['name'] = $widget.label; // normalize name
-                                $widget['text'] = $widget.label; // use label as initial button text
-                                if (typeof $widget["systemName"] === "undefined")
-                                    $widget["systemName"] = $widget.name;
-                                switch  ($widget["type"]) {
-                                    case "T" :
-                                        $widget.jsonType = "turnout"; // JSON object type
-                                        jmri.getTurnout($widget["systemName"]); // have the html button immediately follow the state on the layout
-                                        break;
-                                    case "S" :
-                                        $widget.jsonType = "sensor"; // JSON object type
-                                        jmri.getSensor($widget["systemName"]);
-                                        break;
-                                    default :
-                                        $widget.jsonType = "light"; // JSON object type
-                                        jmri.getLight($widget["systemName"]);
-                                }
-                                // set each state's text (this is only applied when shape is button)
-                                $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text'); // mimick java switchboard buttons
-                                $widget['text2'] = $(this).find('activeText').attr('text');
-                                $widget['text4'] = $(this).find('inactiveText').attr('text');
-                                $widget['text8'] = $(this).find('inconsistentText').attr('text');
-                                $widget['state'] = UNKNOWN; // use UNKNOWN for initial state
-                                $widget.styles['border'] = "2px solid black" //add border for looks (temporary)
-                                $widget.styles['border-radius'] = "8px" // mimick JButtons
-                                $widget.styles['color'] = $widget.textcolor; // use jmri color
-                                $widget.styles['width'] = (90/$widget.columns) + "%"; // use jmri column number, 90pc to fit on screen
-                                // CSS properties
-                                $("#panel-area>#" + $widget.id).css(
-                                {position: 'relative', float: 'left'});
-                                $widget.classes += "button ";
-                                if ($widget.connected == "true") {
-                                    $widget['text'] = $widget['text0']; // add UNKNOWN state to label of connected switches
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                    $widget.styles['background-color'] = "rgb(240,240,240)" // very light grey to mark connected buttons
-                                }
-                                break;
-                        }
-                        $widget['safeName'] = $safeName($widget.name);
-                        switch ($widget['orientation']) { //use orientation instead of degrees if populated
-                        	case "vertical_up"   : $widget.degrees = 270;
-                        	case "vertical_down" : $widget.degrees = 90;
-                        }
-                        $gWidgets[$widget.id] = $widget; //store widget in persistent array
-                        //put the text element on the page
-                        $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" + $widget.text + "</div>");
-                        $("#panel-area>#" + $widget.id).css($widget.styles); //apply style array to widget
-                        $setWidgetPosition($("#panel-area>#" + $widget.id));
-                        break;
-
-                    case "drawn" :
-                        if (jmri_logging) {
-                            jmri.log("case drawm " + $widget.widgetType);
-                            $logProperties($widget);
-                        }
-                        switch ($widget.widgetType) {
-                            case "positionablepoint" :
-                                //jmri.log("#### Positionable Point ####");
-                                //just store these points in persistent variable for use when drawing tracksegments and layoutturnouts
-                                //id is ident plus ".type", e.g. "A4.2"
-                                $gPts[$widget.ident + "." + $widget.type] = $widget;
-                                //End bumpers and Connectors use wrong type, so also store type 1
-                                if (($widget.ident.substring(0, 2) == "EB") ||
-                                     ($widget.ident.substring(0, 2) == "EC")) {
-                                        $gPts[$widget.ident + ".1"] = $widget;
-                                }
-                                break;
-                            case "layoutblock" :
-                                $widget['state'] = UNKNOWN;  //add a state member for this block
-                                $widget["blockcolor"] = $widget.trackcolor; //init blockcolor to trackcolor
-                                //store these blocks in a persistent var
-                                $gBlks[$widget.systemName] = $widget;
-                                //jmri.log("layoutblock:");
-                                //$logProperties($widget, true);
-                                //jmri.log("block[" + $widget.systemName + "].blockcolor: '" + $widget.trackcolor + "'.")
-                                jmri.getLayoutBlock($widget.systemName);
-                                break;
-                            case "layoutturnout" :
-                                $widget['id'] = $widget.ident;
-                                $widget['name'] = $widget.turnoutname; //normalize name
-                                $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-                                $widget.jsonType = "turnout"; // JSON object type
-                                $widget['x'] = $widget.xcen; //normalize x,y
-                                $widget['y'] = $widget.ycen;
-                                if ((typeof $widget.name !== "undefined") && ($widget.disabled !== "yes")) {
-                                    $widget.classes += $widget.jsonType + " clickable "; //make it clickable (unless no turnout assigned)
-                                }
-                                //set widget occupancy sensor from block to speed affected changes later
-                                if (typeof $gBlks[$widget.blockname] !== "undefined") {
-                                    $widget['occupancysensorA'] = $gBlks[$widget.blockname].occupancysensor;
-                                    $widget['occupancystateA'] = $gBlks[$widget.blockname].state;
-                                }
-                                if (typeof $gBlks[$widget.blockbname] !== "undefined") {
-                                    $widget['occupancysensorB'] = $gBlks[$widget.blockbname].occupancysensor;
-                                    $widget['occupancystateB'] = $gBlks[$widget.blockbname].state;
-                                }
-                                if (typeof $gBlks[$widget.blockcname] !== "undefined") {
-                                    $widget['occupancysensorC'] = $gBlks[$widget.blockcname].occupancysensor;
-                                    $widget['occupancystateC'] = $gBlks[$widget.blockcname].state;
-                                }
-                                if (typeof $gBlks[$widget.blockdname] !== "undefined") {
-                                    $widget['occupancysensorD'] = $gBlks[$widget.blockdname].occupancysensor;
-                                    $widget['occupancystateD'] = $gBlks[$widget.blockdname].state;
-                                }
-                                $gWidgets[$widget.id] = $widget; //store widget in persistent array
-                                $storeTurnoutPoints($widget); //also store the turnout's 3 end points for other connections
-                                $drawTurnout($widget); //draw the turnout
-
-                                //add an empty, but clickable, div to the panel and position it over the turnout circle
-                                $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
-                                $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "' " + $hoverText + "></div>");
-                                var $cr = $gPanel.turnoutcirclesize * SIZE;  //turnout circle radius
-                                var $cd = $cr * 2;
-                                $("#panel-area>#" + $widget.id).css(
-                                    {position: 'absolute', left: ($widget.x - $cr) + 'px', top: ($widget.y - $cr) + 'px', zIndex: 3,
-                                        width: $cd + 'px', height: $cd + 'px'});
-                                if (typeof $widget["systemName"] === "undefined")
-                                    $widget["systemName"] = $widget.name;
-                                jmri.getTurnout($widget["systemName"]);
-                                if ($widget["occupancysensorA"])
-                                    jmri.getSensor($widget["occupancysensorA"]); //listen for occupancy changes
-                                if ($widget["occupancysensorB"])
-                                    jmri.getSensor($widget["occupancysensorB"]); //listen for occupancy changes
-                                if ($widget["occupancysensorC"])
-                                    jmri.getSensor($widget["occupancysensorC"]); //listen for occupancy changes
-                                if ($widget["occupancysensorD"])
-                                    jmri.getSensor($widget["occupancysensorD"]); //listen for occupancy changes
-                                break;
-                            case 'layoutSlip' :
-                                $widget['id'] = $widget.ident;
-                                $widget['name'] = $widget.ident;
-                                $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
-                                $widget.jsonType = "turnout"; // JSON object type
-
-                                //save the slip state to turnout state information
-                                $widget['turnout'] = $(this).find('turnout:first').text();
-                                $widget['turnoutB'] = $(this).find('turnoutB:first').text();
-                                $widget['stateA'] = UNKNOWN;
-                                $widget['stateB'] = UNKNOWN;
-
-                                //jmri.log("tA: " + $widget.turnout + ", tB: " + $widget.turnoutB);
-
-                                $widget['turnoutA_AC'] = Number($(this).find('states').find('A-C').find('turnout').text());
-                                $widget['turnoutA_AD'] = Number($(this).find('states').find('A-D').find('turnout').text());
-                                $widget['turnoutA_BC'] = Number($(this).find('states').find('B-C').find('turnout').text());
-                                $widget['turnoutA_BD'] = Number($(this).find('states').find('B-D').find('turnout').text());
-
-                                $widget['turnoutB_AC'] = Number($(this).find('states').find('A-C').find('turnoutB').text());
-                                $widget['turnoutB_AD'] = Number($(this).find('states').find('A-D').find('turnoutB').text());
-                                $widget['turnoutB_BC'] = Number($(this).find('states').find('B-C').find('turnoutB').text());
-                                $widget['turnoutB_BD'] = Number($(this).find('states').find('B-D').find('turnoutB').text());
-
-                                // default to this state
-                                $widget['state'] = UNKNOWN;
-
-                                $widget['x'] = $widget.xcen; //normalize x,y
-                                $widget['y'] = $widget.ycen;
-
-                                if (((typeof $widget.turnout !== "undefined") || (typeof $widget.turnoutB !== "undefined"))
-                                		&& ($widget.disabled !== "yes")) {
-                                    $widget.classes += $widget.jsonType + " clickable ";
-                                }
-
-                                //set widget occupancy sensor from block to speed affected changes later
-                                if (typeof $gBlks[$widget.blockname] !== "undefined") {
-                                    $widget['occupancysensorA'] = $gBlks[$widget.blockname].occupancysensor;
-                                    $widget['occupancystateA'] = $gBlks[$widget.blockname].state;
-                                }
-                                if (typeof $gBlks[$widget.blockbname] !== "undefined") {
-                                    $widget['occupancysensorB'] = $gBlks[$widget.blockbname].occupancysensor;
-                                    $widget['occupancystateB'] = $gBlks[$widget.blockbname].state;
-                                }
-                                if (typeof $gBlks[$widget.blockcname] !== "undefined") {
-                                    $widget['occupancysensorC'] = $gBlks[$widget.blockcname].occupancysensor;
-                                    $widget['occupancystateC'] = $gBlks[$widget.blockcname].state;
-                                }
-                                if (typeof $gBlks[$widget.blockdname] !== "undefined") {
-                                    $widget['occupancysensorD'] = $gBlks[$widget.blockdname].occupancysensor;
-                                    $widget['occupancystateD'] = $gBlks[$widget.blockdname].state;
-                                }
-
-                                $gWidgets[$widget.id] = $widget;    //store widget in persistent array
-                                $storeSlipPoints($widget);          //also store the slip's 4 end points for other connections
-                                $drawSlip($widget);                 //draw the slip
-
-                                // convenience variables for points (A, B, C, D)
-                                var a = $getPoint($widget.ident + SLIP_A);
-                                var b = $getPoint($widget.ident + SLIP_B);
-                                var c = $getPoint($widget.ident + SLIP_C);
-                                var d = $getPoint($widget.ident + SLIP_D);
-
-                                var $cr = $gPanel.turnoutcirclesize * SIZE; //turnout circle radius
-                                var $cd = $cr * 2;                          //turnout circle diameter
-
-                                // center
-                                var cen = [$widget.xcen, $widget.ycen];
-                                // left center
-                                var lcen = $point_midpoint(a, b);
-                                var ldelta = $point_subtract(cen, lcen);
-
-                                // left fraction
-                                var lf = $cr / Math.hypot(ldelta[0], ldelta[1]);
-                                // left circle
-                                var lcc = $point_lerp(cen, lcen, lf);
-
-                                //add an empty, but clickable, div to the panel and position it over the left turnout circle
-                                $hoverText = " title='" + $widget.turnout + "' alt='" + $widget.turnout + "'";
-                                $("#panel-area").append("<div id=" + $widget.id + "l class='" + $widget.classes + "' " + $hoverText + "></div>");
-                                $("#panel-area>#" + $widget.id + "l").css(
-                                    {position: 'absolute', left: (lcc[0] - $cr) + 'px', top: (lcc[1] - $cr) + 'px', zIndex: 3,
-                                        width: $cd + 'px', height: $cd + 'px'});
-
-                                // right center
-                                var rcen = $point_midpoint(c, d);
-                                var rdelta = $point_subtract(cen, rcen);
-                                // right fraction
-                                var rf = $cr / Math.hypot(rdelta[0], rdelta[1]);
-                                // right circle
-                                var rcc = $point_lerp(cen, rcen, rf);
-
-                                //add an empty, but clickable, div to the panel and position it over the right turnout circle
-                                $hoverText = " title='" + $widget.turnoutB + "' alt='" + $widget.turnoutB + "'";
-                                $("#panel-area").append("<div id=" + $widget.id + "r class='" + $widget.classes + "' " + $hoverText + "></div>");
-                                $("#panel-area>#" + $widget.id + "r").css(
-                                    {position: 'absolute', left: (rcc[0] - $cr) + 'px', top: (rcc[1] - $cr) + 'px', zIndex: 3,
-                                        width: $cd + 'px', height: $cd + 'px'});
-
-                                // setup notifications (?)
-                                jmri.getTurnout($widget["turnout"]);
-                                jmri.getTurnout($widget["turnoutB"]);
-
-                                if ($widget["occupancysensorA"])
-                                    jmri.getSensor($widget["occupancysensorA"]); //listen for occupancy changes
-                                if ($widget["occupancysensorB"])
-                                    jmri.getSensor($widget["occupancysensorB"]); //listen for occupancy changes
-                                if ($widget["occupancysensorC"])
-                                    jmri.getSensor($widget["occupancysensorC"]); //listen for occupancy changes
-                                if ($widget["occupancysensorD"])
-                                    jmri.getSensor($widget["occupancysensorD"]); //listen for occupancy changes
-
-                                // NOTE: turnout & turnoutB may appear to be swapped here however this is intentional
-                                // (since the left turnout controls the right points and vice-versa) and we want
-                                // the slip circles to toggle the points (not the turnout) on the corresponding side.
-                                //
-                                // note: the <div> areas above have their titles & alts turnouts swapped (left <-> right) also
-
-                                // add turnout to whereUsed array (as $widget + 'r')
-                                if (!($widget.turnout in whereUsed)) {  //set where-used for this new turnout
-                                   whereUsed[$widget.turnout] = new Array();
-                                }
-                                whereUsed[$widget.turnout][whereUsed[$widget.turnout].length] = $widget.id + "r";
-
-                                // add turnoutB to whereUsed array (as $widget + 'l')
-                                if (!($widget.turnoutB in whereUsed)) {  //set where-used for this new turnout
-                                   whereUsed[$widget.turnoutB] = new Array();
-                                }
-                                whereUsed[$widget.turnoutB][whereUsed[$widget.turnoutB].length] = $widget.id + "l";
-                                break;
-                            case "tracksegment" :
-                                //jmri.log("#### Track Segment ####");
-                                //set widget occupancy sensor from block to speed affected changes later
-                                if (typeof $gBlks[$widget.blockname] !== "undefined") {
-                                    $widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor;
-                                    $widget['occupancystate'] = $gBlks[$widget.blockname].state;
-                                }
-                                //store this widget in persistent array, with ident as key
-                                $widget['id'] = $widget.ident;
-                                $gWidgets[$widget.id] = $widget;
-
-                                if ($widget.bezier == "yes") {
-                                    $widget['controlpoints'] = $(this).find('controlpoint');
-                                }
-
-                                // find decorations
-                                var $decorations = $(this).find('decorations');
-
-                                //copy arrow decoration
-                                //<arrow style="4" end="stop" direction="out" color="#000000" linewidth="4" length="16" gap="1" />
-                                var $arrow = $decorations.find('arrow');
-                                var $arrowstyle = $arrow.attr('style');
-                                if (typeof $arrowstyle !== "undefined") {
-                                    if (Number($arrowstyle) > 0) {
-                                        $widget['arrow'] = new ArrowDecoration($widget, $arrow);
+                                    $gWidgets[$widget.id] = $widget; //store widget in persistent array
+                                    $drawIcon($widget); //actually place and position the widget on the panel
+                                    jmri.getSensor($widget["systemName"]);
+                                    if (!($widget.systemName in whereUsed)) {  //set where-used for this new sensor
+                                        whereUsed[$widget.systemName] = new Array();
                                     }
+                                    whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
+                                    $widget = jQuery.extend(true, {}, $widget); //get a new copy of widget
+                                    $widget['icon' + UNKNOWN] = "/web/images/transparent_1x1.png";
+                                    $widget['icon4'] = "/web/images/transparent_1x1.png"; //set non-actives to transparent image
+                                    $widget['icon8'] = "/web/images/transparent_1x1.png";
+                                    $widget['state'] = ACTIVE; //to avoid sizing based on the transparent image
                                 }
-
-                                //copy bridge decoration
-                                //<bridge side="both" end="both" color="#000000" linewidth="1" approachwidth="8" deckwidth="10" />
-                                var $bridge = $decorations.find('bridge');
-                                var $bridgeside = $bridge.attr('side');
-                                if (typeof $bridgeside !== "undefined") {
-                                    $widget['bridge'] = new BridgeDecoration($widget, $bridge);
-                                }
-
-                                //copy bumper decoration
-                                //<bumper end="stop" color="#000000" linewidth="2" length="16" />
-                                var $bumper = $decorations.find('bumper');
-                                var $bumperend = $bumper.attr('end');
-                                if (typeof $bumperend !== "undefined") {
-                                    $widget['bumper'] = new BumperDecoration($widget, $bumper);
-                                }
-
-                                //copy tunnel decoration
-                                //<tunnel side="right" end="both" color="#FF00FF" linewidth="2" entrancewidth="16" floorwidth="12" />
-                                var $tunnel = $decorations.find('tunnel');
-                                var $tunnelside = $tunnel.attr('side');
-                                if (typeof $tunnelside !== "undefined") {
-                                    $widget['tunnel'] = new TunnelDecoration($widget, $tunnel);
-                                }
-
-                                if ($widget["occupancysensor"])
-                                    jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
-
-                                //draw the tracksegment
-                                $drawTrackSegment($widget);
-                                break;
-                            case "levelxing" :
-                                $widget['x'] = $widget.xcen; //normalize x,y
-                                $widget['y'] = $widget.ycen;
-                                //set widget occupancy sensor from block to speed affected changes later
-                                //TODO: handle BD block
-                                if (typeof $gBlks[$widget.blocknameac] !== "undefined") {
-                                    $widget['occupancysensorAC'] = $gBlks[$widget.blocknameac].occupancysensor;
-                                    $widget['occupancystateAC'] = $gBlks[$widget.blocknameac].state;
-                                }
-                                if (typeof $gBlks[$widget.blocknamebd] !== "undefined") {
-                                    $widget['occupancysensorBD'] = $gBlks[$widget.blocknamebd].occupancysensor;
-                                    $widget['occupancystateBD'] = $gBlks[$widget.blocknamebd].state;
-                                }
-                                //store widget in persistent array
-//                                $widget['id'] = $widget.ident;
-                                $gWidgets[$widget.id] = $widget;
-                                //also store the xing's 4 end points for other connections
-                                $storeLevelXingPoints($widget);
-                                //draw the xing
-                                $drawLevelXing($widget);
-
-                                //listen for occupancy changes
-                                if ($widget["occupancysensorAC"])
-                                    jmri.getSensor($widget["occupancysensorAC"]);
-                                if ($widget["occupancysensorBD"])
-                                    jmri.getSensor($widget["occupancysensorBD"]);
-                                break;
-                            case "layoutturntable" :
-                                //draw the turntable
-                                $drawTurntable($widget);
-                                break;
-                            case "backgroundColor" :  //set background color of the panel itself
-                                $("#panel-area").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
-                                break;
-                            case "layoutShape" :
-                                //jmri.log("#### Layout Shape ####");
-                                //store this widget in persistent array, with ident as key
-                                $widget['id'] = $widget.ident;
-                                $gWidgets[$widget.id] = $widget;
-
-                                $widget['points'] = $(this).find('point');
-
-                                //draw the LayoutShape
-                                $drawLayoutShape($widget);
-                                break;
-                            default:
-                                jmri.log("unknown $widget.widgetType: " + $widget.widgetType + ".");
-                                break;
-                        }
-                        break;
-                    default:
-                        //log any unsupported widgets, listing childnodes as info
-                        $("div#logArea").append("<br />Unsupported: " + $widget.widgetType + ":");
-                        $(this.attributes).each(function() {
-                            $("div#logArea").append(" " + this.name);
-                        });
-                        $("div#logArea").append(" | ");
-                        $(this.childNodes).each(function() {
-                            $("div#logArea").append(" " + this.nodeName);
-                        });
-                        break;
-                }
-                //add widgetid to whereused array to support updates
-                if ($widget.systemName) {
-                    if (!($widget.systemName in whereUsed)) {
-                        whereUsed[$widget.systemName] = new Array();
+                            });
+                            $widget["systemName"] = $widget.name;
+                            jmri.getSensor($widget["systemName"]);
+                            break;
+                        case "memoryicon" :
+                            $widget['name'] = $widget.memory; //normalize name
+                            $widget.jsonType = "memory"; // JSON object type
+                            $widget['state'] = $widget.memory; //use name for initial state as well
+                            var memorystates = $(this).find('memorystate');
+                            memorystates.each(function(i, item) {  //get any memorystates defined
+                                //store icon url in "iconXX" where XX is the state to match
+                                $widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value;
+                                $widget['state'] = item.attributes['value'].value; //use value for initial state
+                            });
+                            $widget['iconnull']="/web/images/transparent_19x16.png"; //transparent for null value
+                            if (typeof $widget["systemName"] === "undefined")
+                                $widget["systemName"] = $widget.name;
+                            jmri.getMemory($widget["systemName"]);
+                            break;
                     }
-                    whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
+                    $preloadWidgetImages($widget); //start loading all images
+                    $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
+                    $gWidgets[$widget.id] = $widget; //store widget in persistent array
+                    $drawIcon($widget); //actually place and position the widget on the panel
+                    break;
+
+                case "text" :
+                    $widget['styles'] = $getTextCSSFromObj($widget);
+                    switch ($widget.widgetType) {
+                        case "sensoricon" :
+                            $widget['name'] = $widget.sensor; //normalize name
+                            $widget.jsonType = "sensor"; // JSON object type
+                            //set each state's text
+                            $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text');
+                            $widget['text2'] = $(this).find('activeText').attr('text');
+                            $widget['text4'] = $(this).find('inactiveText').attr('text');
+                            $widget['text8'] = $(this).find('inconsistentText').attr('text');
+                            //set each state's css attribute array (text color, etc.)
+                            $widget['css' + UNKNOWN] = $getTextCSSFromObj($getObjFromXML($(this).find('unknownText')[0]));
+                            $widget['css2'] = $getTextCSSFromObj($getObjFromXML($(this).find('activeText')[0]));
+                            $widget['css4'] = $getTextCSSFromObj($getObjFromXML($(this).find('inactiveText')[0]));
+                            $widget['css8'] = $getTextCSSFromObj($getObjFromXML($(this).find('inconsistentText')[0]));
+                            if (typeof $widget.name !== "undefined" && $widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            if (typeof $widget["systemName"] === "undefined")
+                                $widget["systemName"] = $widget.name;
+                            jmri.getSensor($widget["systemName"]);
+                            break;
+                        case "locoicon" :
+                        case "trainicon" :
+                            //also set the background icon for this one (additional css in .html file)
+                            $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
+                            $widget.styles['background-image'] = "url('" + $widget['icon' + UNKNOWN] + "')";
+                            $widget['scale'] = $(this).find('icon').attr('scale');
+                            if ($widget.scale != 1) {
+                                $widget.styles['background-size'] = $widget.scale * 100 + "%";
+                                $widget.styles['line-height'] = $widget.scale * 20 + "px";  //center vertically
+                            }
+                            break;
+                        case "fastclock" :
+                            jmri.getMemory("IMRATEFACTOR"); //enable updates for fast clock rate
+                            $widget['name'] = 'IMCURRENTTIME';  // already defined in JMRI
+                            $widget.jsonType = 'memory';
+                            $widget.styles['width'] = "166px";  //hard-coded to match original size of clock image
+                            $widget.styles['height'] = "166px";
+                            $widget['scale'] = $(this).attr('scale');
+                            if (typeof $widget.level === "undefined") {
+                                $widget['level'] = 10;  //if not included in xml
+                            }
+                            $widget['text'] = "00:00 AM";
+                            $widget['state'] = "00:00 AM";
+                            if (typeof $widget["systemName"] === "undefined")
+                                $widget["systemName"] = $widget.name;
+                            jmri.getMemory($widget["systemName"]);
+
+                            break;
+                        case "memoryicon" :
+                            $widget['name'] = $widget.memory; //normalize name
+                            $widget.jsonType = "memory"; // JSON object type
+                            $widget['text'] = $widget.memory; //use name for initial text
+                            $widget['state'] = $widget.memory; //use name for initial state as well
+                            if (typeof $widget["systemName"] === "undefined")
+                                $widget["systemName"] = $widget.name;
+                            jmri.getMemory($widget["systemName"]);
+                            break;
+                        case "reportericon" :
+                            $widget['name'] = $widget.reporter; //normalize name
+                            $widget.jsonType = "reporter"; // JSON object type
+                            $widget['text'] = $widget.reporter; //use name for initial text
+                            if (typeof $widget["systemName"] === "undefined")
+                                $widget["systemName"] = $widget.name;
+                            jmri.getReporter($widget["systemName"]);
+                            break;
+                        case "BlockContentsIcon" :
+                            $widget['name'] = $widget.systemName; //normalize name (id got stepped on)
+                            $widget.jsonType = "block"; // JSON object type
+                            $widget['text'] = $widget.name; //use name for initial text
+                            $widget['state'] = $widget.name; //use name for initial state as well
+                            jmri.getBlock($widget["systemName"]);
+                            break;
+                        case "memoryInputIcon" :
+                        case "memoryComboIcon" :
+                            $widget['name'] = $widget.memory; //normalize name
+                            $widget.jsonType = "memory"; // JSON object type
+                            $widget['text'] = $widget.memory; //use name for initial text
+                            $widget['state'] = $widget.memory; //use name for initial state as well
+                            $widget.styles['border'] = "1px solid black" //add border for looks (temporary)
+                            if (typeof $widget["systemName"] === "undefined")
+                                $widget["systemName"] = $widget.name;
+                            jmri.getMemory($widget["systemName"]);
+                            break;
+                        case "linkinglabel" :
+                            $url = $(this).find('url').text();
+                            $widget['url'] = $url; //just store url value in widget, for use in click handler
+                            if ($widget.forcecontroloff != "true") {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+                            break;
+                        case "beanswitch" : // Switchboard BeanSwitch of shape "button"
+                            $widget['name'] = $widget.label; // normalize name
+                            $widget['text'] = $widget.label; // use label as initial button text
+                            if (typeof $widget["systemName"] === "undefined")
+                                $widget["systemName"] = $widget.name;
+                            switch  ($widget["type"]) {
+                                case "T" :
+                                    $widget.jsonType = "turnout"; // JSON object type
+                                    jmri.getTurnout($widget["systemName"]); // have the html button immediately follow the state on the layout
+                                    break;
+                                case "S" :
+                                    $widget.jsonType = "sensor"; // JSON object type
+                                    jmri.getSensor($widget["systemName"]);
+                                    break;
+                                default :
+                                    $widget.jsonType = "light"; // JSON object type
+                                    jmri.getLight($widget["systemName"]);
+                            }
+                            // set each state's text (this is only applied when shape is button)
+                            $widget['text' + UNKNOWN] = $(this).find('unknownText').attr('text'); // mimick java switchboard buttons
+                            $widget['text2'] = $(this).find('activeText').attr('text');
+                            $widget['text4'] = $(this).find('inactiveText').attr('text');
+                            $widget['text8'] = $(this).find('inconsistentText').attr('text');
+                            $widget['state'] = UNKNOWN; // use UNKNOWN for initial state
+                            $widget.styles['border'] = "2px solid black" //add border for looks (temporary)
+                            $widget.styles['border-radius'] = "8px" // mimick JButtons
+                            $widget.styles['color'] = $widget.textcolor; // use jmri color
+                            $widget.styles['width'] = (90/$widget.columns) + "%"; // use jmri column number, 90pc to fit on screen
+                            // CSS properties
+                            $("#panel-area>#" + $widget.id).css(
+                            {position: 'relative', float: 'left'});
+                            $widget.classes += "button ";
+                            if ($widget.connected == "true") {
+                                $widget['text'] = $widget['text0']; // add UNKNOWN state to label of connected switches
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                                $widget.styles['background-color'] = "rgb(240,240,240)" // very light grey to mark connected buttons
+                            }
+                            break;
+                    }
+                    $widget['safeName'] = $safeName($widget.name);
+                    switch ($widget['orientation']) { //use orientation instead of degrees if populated
+                        case "vertical_up"   : $widget.degrees = 270;
+                        case "vertical_down" : $widget.degrees = 90;
+                    }
+                    $gWidgets[$widget.id] = $widget; //store widget in persistent array
+                    //put the text element on the page
+                    $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "'>" + $widget.text + "</div>");
+                    $("#panel-area>#" + $widget.id).css($widget.styles); //apply style array to widget
+                    $setWidgetPosition($("#panel-area>#" + $widget.id));
+                    break;
+
+                case "drawn" :
+                    if (jmri_logging) {
+                        jmri.log("case drawm " + $widget.widgetType);
+                        $logProperties($widget);
+                    }
+                    switch ($widget.widgetType) {
+                        case "positionablepoint" :
+                            //jmri.log("#### Positionable Point ####");
+                            //just store these points in persistent variable for use when drawing tracksegments and layoutturnouts
+                            //id is ident plus ".type", e.g. "A4.2"
+                            $gPts[$widget.ident + "." + $widget.type] = $widget;
+                            //End bumpers and Connectors use wrong type, so also store type 1
+                            if (($widget.ident.substring(0, 2) == "EB") ||
+                                 ($widget.ident.substring(0, 2) == "EC")) {
+                                    $gPts[$widget.ident + ".1"] = $widget;
+                            }
+                            break;
+                        case "layoutblock" :
+                            $widget['state'] = UNKNOWN;  //add a state member for this block
+                            $widget["blockcolor"] = $widget.trackcolor; //init blockcolor to trackcolor
+                            //store these blocks in a persistent var
+                            $gBlks[$widget.systemName] = $widget;
+                            //jmri.log("layoutblock:");
+                            //$logProperties($widget, true);
+                            //jmri.log("block[" + $widget.systemName + "].blockcolor: '" + $widget.trackcolor + "'.")
+                            jmri.getLayoutBlock($widget.systemName);
+                            break;
+                        case "layoutturnout" :
+                            $widget['id'] = $widget.ident;
+                            $widget['name'] = $widget.turnoutname; //normalize name
+                            $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
+                            $widget.jsonType = "turnout"; // JSON object type
+                            $widget['x'] = $widget.xcen; //normalize x,y
+                            $widget['y'] = $widget.ycen;
+                            if ((typeof $widget.name !== "undefined") && ($widget.disabled !== "yes")) {
+                                $widget.classes += " " + $widget.jsonType + " clickable "; //make it clickable (unless no turnout assigned)
+                            }
+                            //set widget occupancy sensor from block to speed affected changes later
+                            if (typeof $gBlks[$widget.blockname] !== "undefined") {
+                                $widget['occupancysensorA'] = $gBlks[$widget.blockname].occupancysensor;
+                                $widget['occupancystateA'] = $gBlks[$widget.blockname].state;
+                            }
+                            if (typeof $gBlks[$widget.blockbname] !== "undefined") {
+                                $widget['occupancysensorB'] = $gBlks[$widget.blockbname].occupancysensor;
+                                $widget['occupancystateB'] = $gBlks[$widget.blockbname].state;
+                            }
+                            if (typeof $gBlks[$widget.blockcname] !== "undefined") {
+                                $widget['occupancysensorC'] = $gBlks[$widget.blockcname].occupancysensor;
+                                $widget['occupancystateC'] = $gBlks[$widget.blockcname].state;
+                            }
+                            if (typeof $gBlks[$widget.blockdname] !== "undefined") {
+                                $widget['occupancysensorD'] = $gBlks[$widget.blockdname].occupancysensor;
+                                $widget['occupancystateD'] = $gBlks[$widget.blockdname].state;
+                            }
+                            $gWidgets[$widget.id] = $widget; //store widget in persistent array
+                            $storeTurnoutPoints($widget); //also store the turnout's 3 end points for other connections
+                            $drawTurnout($widget); //draw the turnout
+
+                            //add an empty, but clickable, div to the panel and position it over the turnout circle
+                            $hoverText = " title='" + $widget.name + "' alt='" + $widget.name + "'";
+                            $("#panel-area").append("<div id=" + $widget.id + " class='" + $widget.classes + "' " + $hoverText + "></div>");
+                            var $cr = $gPanel.turnoutcirclesize * SIZE;  //turnout circle radius
+                            var $cd = $cr * 2;
+                            $("#panel-area>#" + $widget.id).css(
+                            {
+                                position: 'absolute',
+                                left: ($widget.x - $cr) + 'px',
+                                top: ($widget.y - $cr) + 'px',
+                                zIndex: 3,
+                                width: $cd + 'px',
+                                height: $cd + 'px'
+                            });
+                            if (typeof $widget["systemName"] === "undefined")
+                                $widget["systemName"] = $widget.name;
+                            jmri.getTurnout($widget["systemName"]);
+                            if ($widget["occupancysensorA"])
+                                jmri.getSensor($widget["occupancysensorA"]); //listen for occupancy changes
+                            if ($widget["occupancysensorB"])
+                                jmri.getSensor($widget["occupancysensorB"]); //listen for occupancy changes
+                            if ($widget["occupancysensorC"])
+                                jmri.getSensor($widget["occupancysensorC"]); //listen for occupancy changes
+                            if ($widget["occupancysensorD"])
+                                jmri.getSensor($widget["occupancysensorD"]); //listen for occupancy changes
+                            break;
+                        case 'layoutSlip' :
+                            $widget['id'] = $widget.ident;
+                            $widget['name'] = $widget.ident;
+                            $widget['safeName'] = $safeName($widget.name);  //add a html-safe version of name
+                            $widget.jsonType = "turnout"; // JSON object type
+
+                            //save the slip state to turnout state information
+                            $widget['turnout'] = $(this).find('turnout:first').text();
+                            $widget['turnoutB'] = $(this).find('turnoutB:first').text();
+                            $widget['stateA'] = UNKNOWN;
+                            $widget['stateB'] = UNKNOWN;
+
+                            //jmri.log("tA: " + $widget.turnout + ", tB: " + $widget.turnoutB);
+
+                            $widget['turnoutA_AC'] = Number($(this).find('states').find('A-C').find('turnout').text());
+                            $widget['turnoutA_AD'] = Number($(this).find('states').find('A-D').find('turnout').text());
+                            $widget['turnoutA_BC'] = Number($(this).find('states').find('B-C').find('turnout').text());
+                            $widget['turnoutA_BD'] = Number($(this).find('states').find('B-D').find('turnout').text());
+
+                            $widget['turnoutB_AC'] = Number($(this).find('states').find('A-C').find('turnoutB').text());
+                            $widget['turnoutB_AD'] = Number($(this).find('states').find('A-D').find('turnoutB').text());
+                            $widget['turnoutB_BC'] = Number($(this).find('states').find('B-C').find('turnoutB').text());
+                            $widget['turnoutB_BD'] = Number($(this).find('states').find('B-D').find('turnoutB').text());
+
+                            // default to this state
+                            $widget['state'] = UNKNOWN;
+
+                            $widget['x'] = $widget.xcen; //normalize x,y
+                            $widget['y'] = $widget.ycen;
+
+                            if ((isDefined($widget.turnout) || isDefined($widget.turnoutB))
+                                    && ($widget.disabled !== "yes")) {
+                                $widget.classes += " " + $widget.jsonType + " clickable ";
+                            }
+
+                            //set widget occupancy sensor from block to speed affected changes later
+                            if (typeof $gBlks[$widget.blockname] !== "undefined") {
+                                $widget['occupancysensorA'] = $gBlks[$widget.blockname].occupancysensor;
+                                $widget['occupancystateA'] = $gBlks[$widget.blockname].state;
+                            }
+                            if (typeof $gBlks[$widget.blockbname] !== "undefined") {
+                                $widget['occupancysensorB'] = $gBlks[$widget.blockbname].occupancysensor;
+                                $widget['occupancystateB'] = $gBlks[$widget.blockbname].state;
+                            }
+                            if (typeof $gBlks[$widget.blockcname] !== "undefined") {
+                                $widget['occupancysensorC'] = $gBlks[$widget.blockcname].occupancysensor;
+                                $widget['occupancystateC'] = $gBlks[$widget.blockcname].state;
+                            }
+                            if (typeof $gBlks[$widget.blockdname] !== "undefined") {
+                                $widget['occupancysensorD'] = $gBlks[$widget.blockdname].occupancysensor;
+                                $widget['occupancystateD'] = $gBlks[$widget.blockdname].state;
+                            }
+
+                            $gWidgets[$widget.id] = $widget;    //store widget in persistent array
+                            $storeSlipPoints($widget);          //also store the slip's 4 end points for other connections
+                            $drawSlip($widget);                 //draw the slip
+
+                            // convenience variables for points (A, B, C, D)
+                            var a = $getPoint($widget.ident + SLIP_A);
+                            var b = $getPoint($widget.ident + SLIP_B);
+                            var c = $getPoint($widget.ident + SLIP_C);
+                            var d = $getPoint($widget.ident + SLIP_D);
+
+                            var $cr = $gPanel.turnoutcirclesize * SIZE; //turnout circle radius
+                            var $cd = $cr * 2;                          //turnout circle diameter
+
+                            // center
+                            var cen = [$widget.xcen, $widget.ycen];
+                            // left center
+                            var lcen = $point_midpoint(a, b);
+                            var ldelta = $point_subtract(cen, lcen);
+
+                            // left fraction
+                            var lf = $cr / Math.hypot(ldelta[0], ldelta[1]);
+                            // left circle
+                            var lcc = $point_lerp(cen, lcen, lf);
+
+                            //add an empty, but clickable, div to the panel and position it over the left turnout circle
+                            $hoverText = " title='" + $widget.turnout + "' alt='" + $widget.turnout + "'";
+                            $("#panel-area").append("<div id=" + $widget.id + "l class='" + $widget.classes + "' " + $hoverText + "></div>");
+                            $("#panel-area>#" + $widget.id + "l").css(
+                                {position: 'absolute', left: (lcc[0] - $cr) + 'px', top: (lcc[1] - $cr) + 'px', zIndex: 3,
+                                    width: $cd + 'px', height: $cd + 'px'});
+
+                            // right center
+                            var rcen = $point_midpoint(c, d);
+                            var rdelta = $point_subtract(cen, rcen);
+                            // right fraction
+                            var rf = $cr / Math.hypot(rdelta[0], rdelta[1]);
+                            // right circle
+                            var rcc = $point_lerp(cen, rcen, rf);
+
+                            //add an empty, but clickable, div to the panel and position it over the right turnout circle
+                            $hoverText = " title='" + $widget.turnoutB + "' alt='" + $widget.turnoutB + "'";
+                            $("#panel-area").append("<div id=" + $widget.id + "r class='" + $widget.classes + "' " + $hoverText + "></div>");
+                            $("#panel-area>#" + $widget.id + "r").css(
+                                {position: 'absolute', left: (rcc[0] - $cr) + 'px', top: (rcc[1] - $cr) + 'px', zIndex: 3,
+                                    width: $cd + 'px', height: $cd + 'px'});
+
+                            // setup notifications (?)
+                            jmri.getTurnout($widget["turnout"]);
+                            jmri.getTurnout($widget["turnoutB"]);
+
+                            if ($widget["occupancysensorA"])
+                                jmri.getSensor($widget["occupancysensorA"]); //listen for occupancy changes
+                            if ($widget["occupancysensorB"])
+                                jmri.getSensor($widget["occupancysensorB"]); //listen for occupancy changes
+                            if ($widget["occupancysensorC"])
+                                jmri.getSensor($widget["occupancysensorC"]); //listen for occupancy changes
+                            if ($widget["occupancysensorD"])
+                                jmri.getSensor($widget["occupancysensorD"]); //listen for occupancy changes
+
+                            // NOTE: turnout & turnoutB may appear to be swapped here however this is intentional
+                            // (since the left turnout controls the right points and vice-versa) and we want
+                            // the slip circles to toggle the points (not the turnout) on the corresponding side.
+                            //
+                            // note: the <div> areas above have their titles & alts turnouts swapped (left <-> right) also
+
+                            // add turnout to whereUsed array (as $widget + 'r')
+                            if (!($widget.turnout in whereUsed)) {  //set where-used for this new turnout
+                               whereUsed[$widget.turnout] = new Array();
+                            }
+                            whereUsed[$widget.turnout][whereUsed[$widget.turnout].length] = $widget.id + "r";
+
+                            // add turnoutB to whereUsed array (as $widget + 'l')
+                            if (!($widget.turnoutB in whereUsed)) {  //set where-used for this new turnout
+                               whereUsed[$widget.turnoutB] = new Array();
+                            }
+                            whereUsed[$widget.turnoutB][whereUsed[$widget.turnoutB].length] = $widget.id + "l";
+                            break;
+                        case "tracksegment" :
+                            //jmri.log("#### Track Segment ####");
+                            //set widget occupancy sensor from block to speed affected changes later
+                            if (typeof $gBlks[$widget.blockname] !== "undefined") {
+                                $widget['occupancysensor'] = $gBlks[$widget.blockname].occupancysensor;
+                                $widget['occupancystate'] = $gBlks[$widget.blockname].state;
+                            }
+                            //store this widget in persistent array, with ident as key
+                            $widget['id'] = $widget.ident;
+                            $gWidgets[$widget.id] = $widget;
+
+                            if ($widget.bezier == "yes") {
+                                $widget['controlpoints'] = $(this).find('controlpoint');
+                            }
+
+                            // find decorations
+                            var $decorations = $(this).find('decorations');
+
+                            //copy arrow decoration
+                            //<arrow style="4" end="stop" direction="out" color="#000000" linewidth="4" length="16" gap="1" />
+                            var $arrow = $decorations.find('arrow');
+                            var $arrowstyle = $arrow.attr('style');
+                            if (typeof $arrowstyle !== "undefined") {
+                                if (Number($arrowstyle) > 0) {
+                                    $widget['arrow'] = new ArrowDecoration($widget, $arrow);
+                                }
+                            }
+
+                            //copy bridge decoration
+                            //<bridge side="both" end="both" color="#000000" linewidth="1" approachwidth="8" deckwidth="10" />
+                            var $bridge = $decorations.find('bridge');
+                            var $bridgeside = $bridge.attr('side');
+                            if (typeof $bridgeside !== "undefined") {
+                                $widget['bridge'] = new BridgeDecoration($widget, $bridge);
+                            }
+
+                            //copy bumper decoration
+                            //<bumper end="stop" color="#000000" linewidth="2" length="16" />
+                            var $bumper = $decorations.find('bumper');
+                            var $bumperend = $bumper.attr('end');
+                            if (typeof $bumperend !== "undefined") {
+                                $widget['bumper'] = new BumperDecoration($widget, $bumper);
+                            }
+
+                            //copy tunnel decoration
+                            //<tunnel side="right" end="both" color="#FF00FF" linewidth="2" entrancewidth="16" floorwidth="12" />
+                            var $tunnel = $decorations.find('tunnel');
+                            var $tunnelside = $tunnel.attr('side');
+                            if (typeof $tunnelside !== "undefined") {
+                                $widget['tunnel'] = new TunnelDecoration($widget, $tunnel);
+                            }
+
+                            if ($widget["occupancysensor"])
+                                jmri.getSensor($widget["occupancysensor"]); //listen for occupancy changes
+
+                            //draw the tracksegment
+                            $drawTrackSegment($widget);
+                            break;
+                        case "levelxing" :
+                            $widget['x'] = $widget.xcen; //normalize x,y
+                            $widget['y'] = $widget.ycen;
+                            //set widget occupancy sensor from block to speed affected changes later
+                            //TODO: handle BD block
+                            if (typeof $gBlks[$widget.blocknameac] !== "undefined") {
+                                $widget['occupancysensorAC'] = $gBlks[$widget.blocknameac].occupancysensor;
+                                $widget['occupancystateAC'] = $gBlks[$widget.blocknameac].state;
+                            }
+                            if (typeof $gBlks[$widget.blocknamebd] !== "undefined") {
+                                $widget['occupancysensorBD'] = $gBlks[$widget.blocknamebd].occupancysensor;
+                                $widget['occupancystateBD'] = $gBlks[$widget.blocknamebd].state;
+                            }
+                            //store widget in persistent array
+    //                                $widget['id'] = $widget.ident;
+                            $gWidgets[$widget.id] = $widget;
+                            //also store the xing's 4 end points for other connections
+                            $storeLevelXingPoints($widget);
+                            //draw the xing
+                            $drawLevelXing($widget);
+
+                            //listen for occupancy changes
+                            if ($widget["occupancysensorAC"])
+                                jmri.getSensor($widget["occupancysensorAC"]);
+                            if ($widget["occupancysensorBD"])
+                                jmri.getSensor($widget["occupancysensorBD"]);
+                            break;
+                        case "layoutturntable" :
+                            //jmri.log("#### Layout Turntable ####");
+                            $widget['id'] = $widget.ident;
+                            $widget['name'] = $widget.ident;
+                            $widget['safeName'] = $safeName($widget.name); //add a html-safe version of name
+                            $widget.jsonType = "turnout"; // JSON object type
+                            $gWidgets[$widget.id] = $widget; //store widget in persistent array
+
+                            if ($widget.turnoutControlled == "yes") {
+                                $widget.classes += " " + $widget.jsonType + " clickable"; //make it clickable
+                                if (!$('#' + $widget.id).hasClass('clickable')) {
+                                    $('#' + $widget.id).addClass("clickable");
+                                    $('#' + $widget.id).bind(UPEVENT, $handleClick);
+                                }
+                            }
+
+                            //get the center
+                            var $txcen = $widget.xcen * 1;
+                            var $tycen = $widget.ycen * 1;
+
+                            var $tr = $widget.radius * 1; //turntable circle radius
+                            var $td = $tr * 2;
+
+                            var $cr = $gPanel.turnoutcirclesize * SIZE; //turnout circle radius
+                            var $cd = $cr * 2;
+
+                            //loop thru raytracks, calc and store end of ray point for each
+                            $widget['raytracks'] = $(this).find('raytrack');
+                            $widget.raytracks.each(function(i, item) {
+                                //$logProperties(item, true);
+                                //note:the 50 offset is due to TrackSegment.java TURNTABLE_RAY_OFFSET
+                                var rayID = $widget.ident + "." + (50 + item.attributes.index.value * 1);
+                                var $t = {ident:rayID};
+                                var $angle = $toRadians(item.attributes.angle.value);
+                                $t['x'] = $txcen + (($tr + $cr) * Math.sin($angle));
+                                $t['y'] = $tycen - (($tr + $cr) * Math.cos($angle));
+                                $gPts[$t.ident] = $t; //store the endpoint of this ray
+
+                                if (isDefined(item.attributes.turnout)) {
+                                    var turnout = item.attributes.turnout.value;
+                                    var state = item.attributes.turnoutstate.value;
+                                    //add an empty, but clickable, div to the panel and position it over the turnout circle
+                                    $("#panel-area").append("<div " +
+                                            "id='" + rayID + "' " +
+                                            "class='" + $widget.classes + "' " +
+                                            "style='position:absolute;" +
+                                            "left:" + ($t.x - $cr) + "px;" +
+                                            "top: " + ($t.y - $cr) + "px;" +
+                                            "z-index: 3;" +
+                                            "width:" + $cd + "px;" +
+                                            "height:" + $cd + "px;' " +
+                                            "title='" + turnout + "(" + state + ")' " +
+                                            "alt='" + turnout + "'" +
+                                            "></div>");
+                                    //setup notifications
+                                    jmri.getTurnout(turnout);
+
+                                    // add turnout to whereUsed array (as $widget + 'r')
+                                    if (!(turnout in whereUsed)) { //set where-used for this new turnout
+                                        whereUsed[turnout] = new Array();
+                                    }
+                                    whereUsed[turnout].push(rayID);
+                                }
+                            });
+
+                            //draw the turntable
+                            $drawTurntable($widget);
+                            break;
+                        case "backgroundColor": //set background color of the panel itself
+                            $("#panel-area").css({"background-color": "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ")"});
+                            break;
+                        case "layoutShape" :
+                            //jmri.log("#### Layout Shape ####");
+                            //store this widget in persistent array, with ident as key
+                            $widget['id'] = $widget.ident;
+                            $gWidgets[$widget.id] = $widget;
+
+                            $widget['points'] = $(this).find('point');
+
+                            //draw the LayoutShape
+                            $drawLayoutShape($widget);
+                            break;
+                        default:
+                            jmri.log("unknown $widget.widgetType: " + $widget.widgetType + ".");
+                            break;
+                    }
+                    break;
+                default:
+                    //log any unsupported widgets, listing childnodes as info
+                    $("div#logArea").append("<br />Unsupported: " + $widget.widgetType + ":");
+                    $(this.attributes).each(function() {
+                        $("div#logArea").append(" " + this.name);
+                    });
+                    $("div#logArea").append(" | ");
+                    $(this.childNodes).each(function() {
+                        $("div#logArea").append(" " + this.nodeName);
+                    });
+                    break;
+            }
+            //add widgetid to whereused array to support updates
+            if ($widget.systemName) {
+                if (!($widget.systemName in whereUsed)) {
+                    whereUsed[$widget.systemName] = new Array();
                 }
-                //store occupancy sensors where-used
-                if ($gWidgets[$widget.id]) {
-                    $store_occupancysensor($widget.id, $widget.occupancysensor);
-                    $store_occupancysensor($widget.id, $widget.occupancysensorA);
-                    $store_occupancysensor($widget.id, $widget.occupancysensorB);
-                    $store_occupancysensor($widget.id, $widget.occupancysensorC);
-                    $store_occupancysensor($widget.id, $widget.occupancysensorD);
-                    $store_occupancysensor($widget.id, $widget.occupancysensorAC);
-                    $store_occupancysensor($widget.id, $widget.occupancysensorBD);
-                }
-            }  //end of function
+                whereUsed[$widget.systemName][whereUsed[$widget.systemName].length] = $widget.id;
+            }
+            //store occupancy sensors where-used
+            if ($gWidgets[$widget.id]) {
+                $store_occupancysensor($widget.id, $widget.occupancysensor);
+                $store_occupancysensor($widget.id, $widget.occupancysensorA);
+                $store_occupancysensor($widget.id, $widget.occupancysensorB);
+                $store_occupancysensor($widget.id, $widget.occupancysensorC);
+                $store_occupancysensor($widget.id, $widget.occupancysensorD);
+                $store_occupancysensor($widget.id, $widget.occupancysensorAC);
+                $store_occupancysensor($widget.id, $widget.occupancysensorBD);
+            }
+        }  //end of function
     );  //end of each
 
     //hook up mouseup state toggle function to non-momentary clickable widgets, except for multisensor and linkinglabel
@@ -1815,7 +1885,6 @@ function $handleClick(e) {
 
     e.stopPropagation();
     e.preventDefault(); //prevent double-firing (touch + click)
-    var $widget = $gWidgets[this.id];
 
     // if (null == $widget) {
     //     $logProperties(this);
@@ -1825,7 +1894,7 @@ function $handleClick(e) {
     if (this.className.startsWith('layoutSlip ')) {
         if (this.id.startsWith("SL") && (this.id.endsWith("r") || this.id.endsWith("l"))) {
             var slipID = this.id.slice(0, -1);
-            $widget = $gWidgets[slipID];
+            var $widget = $gWidgets[slipID];
 
             if (this.id.endsWith("l")) {
                 $widget["side"] = "left";
@@ -1860,16 +1929,35 @@ function $handleClick(e) {
         } else {
             jmri.log("$handleClick(e): unknown slip widget " + this.id);
             $logProperties(this);
-        }
+        }   // special case for layoutSlips
+    } else if (this.className.startsWith('layoutturntable ')) {
+        var $rayID = this.id;
+        var $turntableID = $rayID.split(".")[0];
+        var $widget = $gWidgets[$turntableID];
+        $widget.raytracks.each(function(i, item) {
+            //$logProperties(item, true);
+            //note:offset 50 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
+            var rayID = $turntableID + "." + (50 + item.attributes.index.value * 1);
+            if (rayID == $rayID) {
+                if (isDefined(item.attributes.turnout)) {
+                    var turnout = item.attributes.turnout.value;
+                    var state = item.attributes.turnoutstate.value;
+                    var $newState = (state == 'thrown') ? THROWN : CLOSED;
+                    //jmri.log("sendElementChange(" + $widget.jsonType + ", " + turnout + ", " + $newState + ")");
+                    sendElementChange($widget.jsonType, turnout, $newState);
+                }
+            }
+        });
     } else {
+        var $widget = $gWidgets[this.id];
         var $newState = $getNextState($widget);  //determine next state from current state
         sendElementChange($widget.jsonType, $widget.systemName, $newState);
         //also send new state to related turnout
-        if (typeof $widget.turnoutB !== "undefined") {
+        if (isDefined($widget.turnoutB)) {
             sendElementChange($widget.jsonType, $widget.turnoutB, $newState);
         }
         //used for crossover, layoutTurnout type 5
-        if (typeof $widget.secondturnoutname !== "undefined") {
+        if (isDefined($widget.secondturnoutname)) {
         	//invert 2nd turnout if requested
         	if ($widget.secondturnoutinverted == "true") {
         		$newState = ($newState==CLOSED ? THROWN : CLOSED);
@@ -2034,7 +2122,7 @@ function $drawTrackSegmentBezier($widget) {
     var $cps = $widget.controlpoints;   // get the control points
     var points = [[ep1[0], ep1[1]]];    // first point
     $cps.each(function( idx, elem ) {   // control points
-        points.push([elem.attributes.x.value, elem.attributes.y.value]);
+        points.push($getLayoutPoint(elem));
     });
     points.push([ep2[0], ep2[1]]);  // last point
 
@@ -2188,27 +2276,69 @@ function $drawIcon($widget) {
 }
 
 //draw a turntable (pass in widget)
+//from jmri.jmrit.display.layoutEditor.layoutTurntable
 function $drawTurntable($widget) {
-    //from jmri.jmrit.display.layoutEditor.layoutTurntable
-    $drawCircle($widget.xcen, $widget.ycen, $widget.radius);
-    var $raytracks = $(this).find('raytrack');
+    //$logProperties($widget, true);
+
+    //get the center
     var $txcen = $widget.xcen * 1;
     var $tycen = $widget.ycen * 1;
-    $raytracks.each(function(i, item) {  //loop thru raytracks, calc and store end of ray point for each
-        var $t = [];
-        //note: .5 is due to TrackSegment.java TURNTABLE_RAY_OFFSET
-        $t['ident'] = $widget.ident + ".5" + item.attributes['index'].value * 1;
-        $angle = $toRadians(item.attributes['angle'].value);
-        $t['x'] = $txcen + (($widget.radius*1.25)*Math.sin($angle)); //from getRayCoordsIndexed()
-        $t['y'] = $tycen - (($widget.radius*1.25)*Math.cos($angle));
-        $gPts[$t.ident] = $t; //store the endpoint of this ray
+
+    var $tr = $widget.radius * 1; //turntable circle radius
+    var $cr = $gPanel.turnoutcirclesize * SIZE; //turnout circle radius
+    //var $cd = $cr * 2;
+
+    //the fraction that $cr is of ($tr + $cr)
+    //(used to draw ray tracks from circle to ray end point (control circle))
+    var f = $cr / ($tr + $cr);
+
+    //loop thru raytracks drawing each one (and control circles if it has a turnout)
+    $widget.raytracks.each(function(i, item) {
+        //$logProperties(item, true);
+        var rayID = $widget.ident + "." + (50 + item.attributes.index.value * 1);
+        var $t = $gPts[rayID];
         //draw the line from ray endpoint to turntable edge
         var $t1 = [];
-        $t1['x'] = $t.x - (($t.x - $txcen) * 0.2); //from drawTurntables()
-        $t1['y'] = $t.y - (($t.y - $tycen) * 0.2);
+        $t1['x'] = $t.x - (($t.x - $txcen) * f);
+        $t1['y'] = $t.y - (($t.y - $tycen) * f);
         $drawLine($t1.x, $t1.y, $t.x, $t.y, $gPanel.defaulttrackcolor, $gPanel.sidetrackwidth);
+
+        if (isDefined(item.attributes.turnout)) {
+            // var turnout = item.attributes.turnout.value;
+            // var state = item.attributes.turnoutstate.value;
+            // jmri.log("$drawTurntable ray # " + i + " turnout: '" + turnout + "', state: " + state);
+            //draw the turnout control circle
+            $drawCircle($t.x, $t.y, $cr, $gPanel.turnoutcirclecolor, 1);
+        }
+        if (isDefined($widget.activeRayID)) {
+            var drawFlag = false;
+            if (isDefined(item.attributes.turnout)) {
+                var turnout = item.attributes.turnout.value;
+                if (turnout == $widget.activeRayTurnout) {
+                    var state = item.attributes.turnoutstate.value;
+                    if (state.toUpperCase() == $widget.activeRayState) {
+                        drawFlag = true;
+                    }
+                }
+            }
+            var $angle = $toRadians(item.attributes.angle.value);
+            var $t1 = [];
+            $t1['x'] = $txcen + ($tr * Math.sin($angle));
+            $t1['y'] = $tycen - ($tr * Math.cos($angle));
+            var $t2 = [];
+            $t2['x'] = $txcen - ($tr * Math.sin($angle));
+            $t2['y'] = $tycen + ($tr * Math.cos($angle));
+            if (drawFlag) {
+                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.defaulttrackcolor, $gPanel.sidetrackwidth);
+            } else {
+                $drawLine($t1.x, $t1.y, $t2.x, $t2.y, $gPanel.backgroundcolor, $gPanel.sidetrackwidth);
+            }
+        }
     });
-}
+
+    $drawCircle($txcen, $tycen, $tr, $gPanel.defaulttrackcolor, $gPanel.mainlinetrackwidth);
+    $drawCircle($txcen, $tycen, $tr / 4, $gPanel.defaulttrackcolor, $gPanel.sidetrackwidth);
+}   //$drawTurntable
 
 //draw a LevelXing (pass in widget)
 function $drawLevelXing($widget) {
@@ -2482,8 +2612,8 @@ function $drawTurnout($widget) {
     			$('#'+$widget.id).bind(UPEVENT, $handleClick);
     		}
     	}
-    }   // function $drawTurnout($widget)
-}
+    }
+}   // function $drawTurnout($widget)
 
 //draw a Slip (pass in widget)
 //  see LayoutSlip.draw()
@@ -2692,21 +2822,20 @@ function $drawLayoutShape($widget) {
 
         var shapeType = $widget.type;
 
-        var cnt = $pts.length;
         $pts.each(function(idx, $lsp) {  //loop thru points
             // this point
-            var p = $getLayoutShapePoint($lsp);
+            var p = $getLayoutPoint($lsp);
 
             // left point
-            var idxL = $wrapValue(idx - 1, 0, cnt);
+            var idxL = $wrapValue(idx - 1, 0, len);
             var $lspL = $pts[idxL];
-            var pL = $getLayoutShapePoint($lspL);
+            var pL = $getLayoutPoint($lspL);
             var midL = $point_midpoint(pL, p);
 
             // right point
-            var idxR = $wrapValue(idx + 1, 0, cnt);
+            var idxR = $wrapValue(idx + 1, 0, len);
             var $lspR = $pts[idxR];
-            var pR = $getLayoutShapePoint($lspR);
+            var pR = $getLayoutPoint($lspR);
             var midR = $point_midpoint(p, pR);
 
             var lspt = $lsp.attributes.type.value;  // Straight or Curve
@@ -2756,9 +2885,10 @@ function $drawLayoutShape($widget) {
     }   // if (len > 0)
 }
 
-function $getLayoutShapePoint($lsp) {
-    return [Number($lsp.attributes.x.value), Number($lsp.attributes.y.value)];
+function $getLayoutPoint($p) {
+    return [Number($p.attributes.x.value), Number($p.attributes.y.value)];
 }
+
 // wrap inValue around between minVal and maxVal
 function $wrapValue(inValue, minVal, maxVal) {
     var range = maxVal - minVal;
@@ -3436,6 +3566,17 @@ var $setWidgetState = function($id, $newState, data) {
 
             // set $id to slip id
             $id = slipID;
+        } else if ($id.startsWith("TUR")) {
+            //jmri.log("$setWidgetState(" + $id + ", " + $newState + ", " + data + ")");
+            //$logProperties(data, true);
+
+            var turntableID = $id.split(".")[0];
+            $widget = $gWidgets[turntableID];
+            $widget['activeRayID'] = $id;
+            $widget['activeRayTurnout'] = data.name;
+            $widget['activeRayState'] = turnoutStateToString($newState);
+            $drawTurntable($widget);
+            return;
         } else {
             if (jmri_logging) {
             	jmri.log("$setWidgetState unknown $id: '" + $id + "'.");
@@ -3463,7 +3604,7 @@ var $setWidgetState = function($id, $newState, data) {
         		$widget.widgetFamily=="icon" && data.value.type=="idTag") {
         	$widget.state = data.value.data.name;
         }
-        
+
         switch ($widget.widgetFamily) {
             case "icon" :
                	$reDrawIcon($widget)
@@ -3803,7 +3944,7 @@ var $drawAllIconWidgets = function() {
     });
 };
 
-function updateWidgets(name, state, data) {   
+function updateWidgets(name, state, data) {
 	//update all widgets based on the element that changed, using systemname
     if (whereUsed[name]) {
         if (jmri_logging) jmri.log("updateWidgets(" + name + ", " + state + ", data);");
@@ -3988,7 +4129,7 @@ $(document).ready(function() {
             		if (value.type == "idTag") {
             			value = value.data.userName; //for idTags, use the value in userName instead
             		} else if (value.type == "reporter"){
-            			value = value.data.value;    //for reporters, use the value in data instead            		
+            			value = value.data.value;    //for reporters, use the value in data instead
             		}
             	}
                 updateWidgets(name, value, data);
@@ -4001,7 +4142,7 @@ $(document).ready(function() {
             		if (value.type == "idTag") {
             			value = value.data.userName; //for idTags, use the value in userName instead
             		} else if (value.type == "reporter"){
-            			value = value.data.value;    //for reporters, use the value in data instead            		
+            			value = value.data.value;    //for reporters, use the value in data instead
             		}
             	}
                 updateWidgets(name, value, data);
@@ -4227,3 +4368,4 @@ function getNextSlipState(slipWidget) {
     //jmri.log("  result:" + result);
     return result;
 }   // function getNextSlipState(slipWidget)
+

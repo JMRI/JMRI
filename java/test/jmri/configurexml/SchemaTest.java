@@ -1,7 +1,6 @@
 package jmri.configurexml;
 
 import java.io.File;
-import java.util.ArrayList;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;

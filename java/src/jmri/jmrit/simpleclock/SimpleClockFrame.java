@@ -91,6 +91,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
     private int startNixieClock = 1;
     private int startAnalogClock = 2;
     private int startLcdClock = 3;
+    private int startPragotronClock = 4 ;
 
     /**
      * Constructor method.
@@ -330,6 +331,7 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
         clockStartBox.addItem(Bundle.getMessage("MenuItemNixieClock"));
         clockStartBox.addItem(Bundle.getMessage("MenuItemAnalogClock"));
         clockStartBox.addItem(Bundle.getMessage("MenuItemLcdClock"));
+        clockStartBox.addItem(Bundle.getMessage("MenuItemPragotronClock"));
         clockStartBox.setSelectedIndex(startNone);
         if (clock.getStartClockOption() == Timebase.NIXIE_CLOCK) {
             clockStartBox.setSelectedIndex(startNixieClock);
@@ -339,6 +341,10 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
             } else {
                 if (clock.getStartClockOption() == Timebase.LCD_CLOCK) {
                     clockStartBox.setSelectedIndex(startLcdClock);
+                } else {
+                    if (clock.getStartClockOption() == Timebase.PRAGOTRON_CLOCK) {
+                        clockStartBox.setSelectedIndex(startPragotronClock);
+                    }                     
                 }
             }
         }
@@ -730,6 +736,8 @@ public class SimpleClockFrame extends JmriJFrame implements PropertyChangeListen
             sel = Timebase.ANALOG_CLOCK;
         } else if (clockStartBox.getSelectedIndex() == startLcdClock) {
             sel = Timebase.LCD_CLOCK;
+        } else if (clockStartBox.getSelectedIndex() == startPragotronClock) {
+            sel = Timebase.PRAGOTRON_CLOCK;
         }
         clock.setStartClockOption(sel);
         changed = true;

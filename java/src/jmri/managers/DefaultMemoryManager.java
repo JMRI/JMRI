@@ -2,7 +2,6 @@ package jmri.managers;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.implementation.DefaultMemory;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;

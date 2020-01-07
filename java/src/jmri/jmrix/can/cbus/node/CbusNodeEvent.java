@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus.node;
 
 import java.util.Arrays;
 import java.util.Objects;
-import javax.annotation.Nonnull;
 import jmri.jmrix.can.cbus.CbusEvent;
 import jmri.util.StringUtil;
 

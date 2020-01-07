@@ -1,8 +1,5 @@
 package jmri.jmrix;
 
-import org.junit.*;
-import javax.swing.JPanel;
-
 /**
  * Base tests for SimulatorConnectionConfig objects.
  *

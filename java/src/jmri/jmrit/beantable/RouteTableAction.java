@@ -47,8 +47,6 @@ import jmri.util.AlphanumComparator;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.swing.NamedBeanComboBox;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to create and register a Route Table.
@@ -2285,6 +2283,6 @@ public class RouteTableAction extends AbstractTableAction<Route> {
         return Bundle.getMessage("TitleRouteTable");
     }
 
-    private final static Logger log = LoggerFactory.getLogger(RouteTableAction.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(RouteTableAction.class);
 
 }

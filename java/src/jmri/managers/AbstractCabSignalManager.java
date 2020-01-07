@@ -11,8 +11,6 @@ import jmri.CabSignal;
 import jmri.CabSignalListListener;
 import jmri.CabSignalManager;
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
-import jmri.implementation.DefaultCabSignal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

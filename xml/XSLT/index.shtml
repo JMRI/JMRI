@@ -37,7 +37,7 @@
 
         <p>We also provide files in
         "<a href="https://en.wikipedia.org/wiki/Comma-separated_values">comma-separated values</a>" format via a
-        <a href="CSVindex.html">separate index page</a>.</p>
+        <a href="CSVindex.shtml">separate index page</a>.</p>
         <p>
         Windows and Java .properties files containing some of the information are
         <a href="properties">available in a separate directory</a>.</p>

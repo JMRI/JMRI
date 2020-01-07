@@ -2,7 +2,6 @@ package jmri.managers;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.SortedSet;
 import jmri.InstanceManager;
 import jmri.SignalSystem;
 import jmri.implementation.SignalSystemTestUtil;

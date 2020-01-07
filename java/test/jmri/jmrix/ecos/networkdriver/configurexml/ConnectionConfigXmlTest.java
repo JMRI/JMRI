@@ -2,7 +2,6 @@ package jmri.jmrix.ecos.networkdriver.configurexml;
 
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import jmri.jmrix.easydcc.serialdriver.ConnectionConfig;
 
 /**
  * ConnectionConfigXmlTest.java

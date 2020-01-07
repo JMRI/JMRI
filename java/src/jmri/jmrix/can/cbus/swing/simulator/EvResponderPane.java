@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus.swing.simulator;
 
 import javax.swing.BoxLayout;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;

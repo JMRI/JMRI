@@ -5,8 +5,6 @@ import java.beans.PropertyChangeListener;
 import java.util.TimeZone;
 import jmri.InstanceManager;
 import jmri.Timebase;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Fast Clock interface for Wi-Fi throttles.
