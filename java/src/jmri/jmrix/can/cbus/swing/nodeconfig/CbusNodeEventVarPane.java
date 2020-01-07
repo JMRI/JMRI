@@ -63,7 +63,7 @@ public class CbusNodeEventVarPane extends JPanel {
             infoPane = null;
         }
 
-        infoPane = newInfoPane();
+        infoPane = newInfoPane(nodeOfInterest);
         // Pane to hold Event
         
         setLayout(new BorderLayout() );
@@ -74,7 +74,7 @@ public class CbusNodeEventVarPane extends JPanel {
         
     }
     
-    private JPanel newInfoPane(){
+    private JPanel newInfoPane(CbusNode nodeOfI){
     
         JPanel newPane = new JPanel();
         newPane.setLayout(new BorderLayout() );
@@ -88,13 +88,13 @@ public class CbusNodeEventVarPane extends JPanel {
         evMenuPane.add(newEvButton);
         
         // check number of event variables per node event
-        if ( nodeOfInterest.getParameter(5) < 1 ) {
+        if ( nodeOfI.getParameter(5) < 1 ) {
             newEvButton.setEnabled(false);
         }
         
         CbusNodeEventTablePane genericEvTable = new CbusNodeEventTablePane(nodeEvModel);
         genericEvTable.initComponents(_memo);
-        genericEvTable.setNode( nodeOfInterest );
+        genericEvTable.setNode( nodeOfI );
         
         newPane.add(evMenuPane, BorderLayout.PAGE_START);
         newPane.add(genericEvTable, BorderLayout.CENTER);
