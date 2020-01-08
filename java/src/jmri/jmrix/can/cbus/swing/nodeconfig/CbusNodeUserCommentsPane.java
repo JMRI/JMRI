@@ -29,6 +29,7 @@ public class CbusNodeUserCommentsPane extends JPanel implements KeyListener {
 
     /**
      * Create a new instance of CbusNodeSetupPane.
+     * @param main the main NodeConfigToolPane this is a pane of.
      */
     protected CbusNodeUserCommentsPane( NodeConfigToolPane main ) {
         super();
@@ -95,19 +96,28 @@ public class CbusNodeUserCommentsPane extends JPanel implements KeyListener {
     
     //typingArea.setFocusTraversalKeysEnabled(false);
 
-    /** Handle the key typed event from the text field. */
+    /** 
+     * Handle the key typed event from the text field.
+     * {@inheritDoc}
+     */
     @Override
     public void keyTyped(KeyEvent e) {
         // resetCommentButtons();
     }
 
-    /** Handle the key-pressed event from the text field. */
+    /** 
+     * Handle the key-pressed event from the text field.
+     * {@inheritDoc}
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         // resetCommentButtons();
     }
 
-    /** Handle the key-released event from the text field. */
+    /** 
+     * Handle the key-released event from the text field.
+     * {@inheritDoc}
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         resetCommentButtons();

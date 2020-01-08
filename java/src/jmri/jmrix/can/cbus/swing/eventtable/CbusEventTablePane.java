@@ -19,30 +19,12 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.DropMode;
+import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.JButton;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JComponent;
-import javax.swing.JFormattedTextField;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.RowFilter;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.TransferHandler;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
@@ -64,7 +46,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame providing a Cbus event table. Menu code copied from BeanTableFrame.
+ * Frame providing a CBUS event table. Menu code copied from BeanTableFrame.
  *
  * @author Andrew Crosland (C) 2009
  * @author Kevin Dickerson (C) 2012
@@ -138,7 +120,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
                             java.awt.Point p = e.getPoint();
                             int index = columnModel.getColumnIndexAtX(p.x);
                             int realIndex = columnModel.getColumn(index).getModelIndex();
-                            return CbusEventTableDataModel.columnToolTips[realIndex];    
+                            return CbusEventTableDataModel.CBUS_EV_TABLE_COL_TOOLTIPS[realIndex];    
                         } catch (RuntimeException e1) {
                             //catch null pointer exception if mouse is over an empty line
                         }
@@ -214,7 +196,7 @@ public class CbusEventTablePane extends jmri.jmrix.can.swing.CanPanel implements
             String colName = _eventTable.getColumnName(colnumber);
             StayOpenCheckBoxItem showcol = new StayOpenCheckBoxItem(colName);
             colMenuList.add(showcol);
-            showcol.setToolTipText(CbusEventTableDataModel.columnToolTips[i]);
+            showcol.setToolTipText(CbusEventTableDataModel.CBUS_EV_TABLE_COL_TOOLTIPS[i]);
             
             if ( i < 7 ) {
                 //tcm.setColumnVisible(tcm.getColumnByModelIndex(colnumber), false);

@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of DccThrottle via AbstractThrottle with code specific to a
- * Cbus connection.
+ * CBUS connection.
  * <p>
  * Speed in the Throttle interfaces and AbstractThrottle is a float, but in CBUS
  * is an int with values from 0 to 127.
@@ -29,7 +29,9 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Constructor
      *
+     * @param memo System Connection
      * @param address The address this throttle relates to.
+     * @param handle the Session ID for the Throttle
      */
     public CbusThrottle(CanSystemConnectionMemo memo, LocoAddress address, int handle) {
         super(memo);
@@ -106,6 +108,10 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Set initial throttle values as taken from PLOC reply from hardware
      *
+     * @param speed including direction flag
+     * @param f0f4 Functions 0-4
+     * @param f5f8 Functions 5-8
+     * @param f9f12 Functions 9-12
      */
     protected void throttleInit(int speed, int f0f4, int f5f8, int f9f12) {
         log.debug("Setting throttle initial values");
@@ -146,14 +152,17 @@ public class CbusThrottle extends AbstractThrottle {
 
     /**
      * Convert a CBUS speed integer to a float speed value
+     * @param lSpeed -1 to 127
+     * @return float value -1 to 1
      */
     protected float floatSpeed(int lSpeed) {
-        if (lSpeed == 0) {
-            return 0.f;
-        } else if (lSpeed == 1) {
-            return -1.f;   // estop
-        } else {
-            return ((lSpeed - 1) / 126.f);
+        switch (lSpeed) {
+            case 0:
+                return 0.f;
+            case 1:
+                return -1.f;   // estop
+            default:
+                return ((lSpeed - 1) / 126.f);
         }
     }
 
@@ -232,6 +241,7 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Update the state of locomotive functions F0, F1, F2, F3, F4 in response
      * to a message from the hardware
+     * @param fns int value Fn 0-4
      */
     protected void updateFunctionGroup1(int fns) {
         updateFunction( 0, (fns & CbusConstants.CBUS_F0) == CbusConstants.CBUS_F0 );
@@ -244,6 +254,7 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Update the state of locomotive functions F5, F6, F7, F8 in response to a
      * message from the hardware
+     * @param fns int value Fn 5-8
      */
     protected void updateFunctionGroup2(int fns) {
         updateFunction( 5, (fns & CbusConstants.CBUS_F5) == CbusConstants.CBUS_F5);
@@ -255,6 +266,7 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Update the state of locomotive functions F9, F10, F11, F12 in response to
      * a message from the hardware
+     * @param fns int value Fn 9-12
      */
     protected void updateFunctionGroup3(int fns) {
         updateFunction( 9, (fns & CbusConstants.CBUS_F9) == CbusConstants.CBUS_F9);
@@ -266,6 +278,7 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Update the state of locomotive functions F13, F14, F15, F16, F17, F18,
      * F19, F20 in response to a message from the hardware
+     * @param fns int value Fn 13-20
      */
     protected void updateFunctionGroup4(int fns) {
         
@@ -282,6 +295,7 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Update the state of locomotive functions F21, F22, F23, F24, F25, F26,
      * F27, F28 in response to a message from the hardware
+     * @param fns int value Fn 21-28
      */
     protected void updateFunctionGroup5(int fns) {
         updateFunction( 21 , ((fns & CbusConstants.CBUS_F21) == CbusConstants.CBUS_F21));
@@ -295,8 +309,10 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Update the state of a single function in response to a message fromn the
+     * Update the state of a single function in response to a message from the
      * hardware
+     * @param fn Function Number 0-28
+     * @param state On - True, Off - False
      */
     protected void updateFunction(int fn, boolean state) {
         switch (fn) {
@@ -560,6 +576,7 @@ public class CbusThrottle extends AbstractThrottle {
     /**
      * Set the direction and reset speed.
      * Forwards to the layout
+     * {@inheritDoc}
      */
     @Override
     public void setIsForward(boolean forward) {
@@ -572,20 +589,22 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Update the throttles direction without sending to hardware. Used to
+     * Update the throttles direction without sending to hardware.Used to
      * support CBUS sharing by taking direction received <b>from</b> the
      * hardware in an OPC_DSPD message.
-     *
+     * @param forward True if Forward, else False
      */
     protected void updateIsForward(boolean forward) {
         boolean old = isForward;
         isForward = forward;
-        // updateSpeedSetting(intSpeed(speedSetting));
         if (old != isForward) {
             notifyPropertyChangeListener(ISFORWARD, old, isForward);
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String toString() {
         return getLocoAddress().toString();
@@ -604,7 +623,7 @@ public class CbusThrottle extends AbstractThrottle {
      * Set the handle for this throttle
      * <p>
      * This is normally done on Throttle Construction but certain
-     * operations, eg recovering from an external steal
+     * operations, eg. recovering from an external steal
      * may need to change this.
      * @param newHandle session handle
      */
@@ -650,6 +669,7 @@ public class CbusThrottle extends AbstractThrottle {
 
     /**
      * Get the number of external steal recovery attempts
+     * @return Number of attempts since last reset
      */
     protected int getNumRecoverAttempts(){
         return _recoveryAttempts;
@@ -662,13 +682,16 @@ public class CbusThrottle extends AbstractThrottle {
         _recoveryAttempts++;
     }
     
+    /**
+     * Reset count of recovery attempts
+     */
     protected void resetNumRecoverAttempts(){
         _recoveryAttempts = 0;
     }
 
     /**
      * Release session from a command station
-     * ie throttle with clean full dispose called from releaseThrottle
+     * ie. throttle with clean full dispose called from releaseThrottle
      */
     protected void releaseFromCommandStation(){
         if ( cs != null ) {
@@ -701,12 +724,9 @@ public class CbusThrottle extends AbstractThrottle {
     javax.swing.Timer mRefreshTimer = null;
 
     // CBUS command stations expect DSPD per sesison every 4s
-    protected void startRefresh() {
-        mRefreshTimer = new javax.swing.Timer(4000, new java.awt.event.ActionListener() {
-            @Override
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                keepAlive();
-            }
+    protected final void startRefresh() {
+        mRefreshTimer = new javax.swing.Timer(4000, (java.awt.event.ActionEvent e) -> {
+            keepAlive();
         });
         mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
         mRefreshTimer.start();

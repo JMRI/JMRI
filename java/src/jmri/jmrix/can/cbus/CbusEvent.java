@@ -13,6 +13,7 @@ public class CbusEvent {
     private int _en;
     protected EvState _state;
     protected String _name;
+    private CanSystemConnectionMemo _memo;
     
     /**
      * Enum of the event state.
@@ -39,6 +40,23 @@ public class CbusEvent {
         this._en = en;
         this._state = EvState.UNKNOWN;
         this._name = "";
+    }
+    
+    /**
+     * Create a new event by Connection
+     * <p>
+     * New events have an unknown on or off status
+     *
+     * @param memo System Connection
+     * @param nn Node Number
+     * @param en Event Number
+     */
+    public CbusEvent( CanSystemConnectionMemo memo, int nn, int en){
+        this._nn = nn;
+        this._en = en;
+        this._state = EvState.UNKNOWN;
+        this._name = "";
+        this._memo = memo;
     }
 
     /**
@@ -125,7 +143,7 @@ public class CbusEvent {
      * @return Node Name
      */
     public String getNodeName() {
-        return new CbusNameService().getNodeName( getNn() );
+        return new CbusNameService(_memo).getNodeName( getNn() );
     }
     
     /**
@@ -137,10 +155,7 @@ public class CbusEvent {
      * @return true on match, else false
      */
     public boolean matches(int nn, int en) {
-        if ( (nn == _nn) && (en == _en) ) {
-            return true;
-        }
-        return false;
+        return (nn == _nn) && (en == _en);
     }
     
     /**
@@ -182,7 +197,12 @@ public class CbusEvent {
      * @param state The enum state requested to be sent, ie ON, OFF, REQUEST, TOGGLE
      */
     public void sendEvent(EvState state) {
-        CanSystemConnectionMemo memo = jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class);
+        CanSystemConnectionMemo memo;
+        if (_memo==null) {
+            memo = jmri.InstanceManager.getDefault(CanSystemConnectionMemo.class);
+        } else {
+            memo = _memo;
+        }
         TrafficController _tc = memo.getTrafficController();
         if ( state == EvState.TOGGLE ) {
             if ( _state == EvState.OFF )  {
@@ -196,24 +216,27 @@ public class CbusEvent {
         CanMessage m = new CanMessage(_tc.getCanid());
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         m.setNumDataElements(5);
-        if (state==EvState.ON) {
-            if (_nn > 0) {
-                m.setElement(0, CbusConstants.CBUS_ACON);
-            } else {
-                m.setElement(0, CbusConstants.CBUS_ASON);
-            }
-        } else if (state==EvState.OFF) {
-            if (_nn > 0) {
-                m.setElement(0, CbusConstants.CBUS_ACOF);
-            } else {
-                m.setElement(0, CbusConstants.CBUS_ASOF);
-            }
-        } else if (state==EvState.REQUEST) {
-            if (_nn > 0) {
-                m.setElement(0, CbusConstants.CBUS_AREQ);
-            } else {
-                m.setElement(0, CbusConstants.CBUS_ASRQ);
-            }
+        if (null!=state) switch (state) {
+            case ON:
+                if (_nn > 0) {
+                    m.setElement(0, CbusConstants.CBUS_ACON);
+                } else {
+                    m.setElement(0, CbusConstants.CBUS_ASON);
+                }   break;
+            case OFF:
+                if (_nn > 0) {
+                    m.setElement(0, CbusConstants.CBUS_ACOF);
+                } else {
+                    m.setElement(0, CbusConstants.CBUS_ASOF);
+                }   break;
+            case REQUEST:
+                if (_nn > 0) {
+                    m.setElement(0, CbusConstants.CBUS_AREQ);
+                } else {
+                    m.setElement(0, CbusConstants.CBUS_ASRQ);
+                }   break;
+            default:
+                break;
         }
         m.setElement(1, _nn >> 8);
         m.setElement(2, _nn & 0xff);
