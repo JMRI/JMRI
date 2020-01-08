@@ -51,8 +51,8 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/connection.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/userpreferences.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/turnouts-4-19-2.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/sensors-2-9-6.xsd"/>
-  <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights-2-9-6.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/sensors-4-19-2.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/types/lights-4-19-2.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/reporters-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/memories-2-9-6.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/blocks-2-9-6.xsd"/>
