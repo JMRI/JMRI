@@ -155,7 +155,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                     }
                 }
             } catch (Exception e) {
-                log.warn("notify: During dispatch to {}\nException {}", listener, e.toString());
+                log.warn("notify: During dispatch to {}", listener, e);
             }
         }
         // forward to the last listener who sent a message
@@ -176,7 +176,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 }
 
             } catch (Exception e) {
-                log.warn("notify: During dispatch to {}\nException {}", listener, e.toString());
+                log.warn("notify: During dispatch to {}", listener, e);
             }
         }
         // forward to the last listener who sent a message
@@ -199,7 +199,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
                 }
 
             } catch (Exception e) {
-                log.warn("notify: During dispatch to {}\nException: {}", listener, e.toString());
+                log.warn("notify: During dispatch to {}", listener, e);
             }
         }
         

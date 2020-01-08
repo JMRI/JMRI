@@ -15,7 +15,6 @@ import jmri.NamedBeanHandle;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.SignalMast;
-import jmri.SignalSystem;
 import jmri.Turnout;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.internal.InternalSystemConnectionMemo;
@@ -173,18 +172,6 @@ public class LayoutBlockManager extends AbstractManager<LayoutBlock> implements 
             }
         }
         return null;
-    }
-
-    @CheckReturnValue
-    @CheckForNull
-    public LayoutBlock getBySystemName(@Nonnull String key) {
-        return _tsys.get(key);
-    }
-
-    @CheckReturnValue
-    @CheckForNull
-    public LayoutBlock getByUserName(@Nonnull String key) {
-        return _tuser.get(key);
     }
 
     /**

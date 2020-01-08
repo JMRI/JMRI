@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.InstanceManagerAutoDefault;
-import jmri.Scale;
 import jmri.ScaleManager;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;

@@ -1,7 +1,12 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li></li>
+          <li>Fixed a problem introduced in JMRI 4.19.1 that 
+          prevented the function buttons in the on-screen throttles
+          from working on some types of computers.</li>
+          <li>Fixed a problem introduced in JMRI 4.17.7 that
+          causes a partial crash when reading in historical
+          consist data from the consist.xml file.
         </ul>
 
 	    <h4>Anyma DMX512</h4>
@@ -261,7 +266,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li>TSU2 Steam fix legacy function names</li>
+                <li></li>
             </ul>
 
         <h4>TAMS</h4>
@@ -463,7 +468,19 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li>The RESTful API end point
+				<a href="http://127.0.0.1:12080/json/version">/json/version</a>
+				has been added to provide a list of JMRI JSON API versions
+				supported by the running JMRI instance.</li>
+			<li>The JSON services have been rewritten to potentially support
+				multiple version of the JMRI JSON API in a future release.</li>
+            <li>JSON services now optionally take a version number as part of
+				the URL. See the
+				<a href="https://www.jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#package.description">JSON Server JavaDocs</a>
+				for details of this change. This should have no impact on
+				existing clients.</li>
+            <li>The JMRI JSON API version has been incremented to 5.3.0 to
+            	reflect the above changes.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -475,12 +492,41 @@
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li></li>
+            <li>In the 
+            <a href="https://groups.io/g/jmriusers/message/165236">jmriusers forum</a> 
+            it has been suggested to open a JMRI throttle
+            automatically when a VSDecoder via Roster Entry is added.
+            VSD does already save the Path and the Profile of a VSDecoder in the Roster Media.
+            This PR adds a new attribute: VSDecoder_LaunchThrottle = yes launches
+            a JMRI throttle automatically.
+            The new attribute is stored when the user clicks the "Save to Roster" button.
+            The new attribute can be changed manually or by a Jython script.</li>
         </ul>
 
     <h3>Miscellaneous</h3>
         <a id="Misc" name="Misc"></a>
         <ul>
-            <li></li>
+            <li>Petr Sidlo added a Pragotron clock, which is digital clock
+                found in many European train stations.</li>
+            <li>The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+                calls in the various <code>Manager<code> classes
+                are no longer needed with Java 8 and have been deprecated for eventual
+                removal.  Their replacements are 
+                <code>getByUserName<code> and <code>getBySystemName<code> 
+                respectively.
+                If you use <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+                in script or Java code you've written, please 
+                switch to the new names.
+            </li>
+		    <li>The system names for Routes are required to start with "IO" to avoid
+		    	ambiguity or confusion with Reporters (the system names of which start
+		    	with "IR"). JMRI 4.19.2 or later should automatically rename Routes
+		    	correctly, but it is possible that references to those Routes will need
+		    	to be updated.
+			    </li>
+			<li>Daniel Bergqvist provided information on 
+			    <a href="jmri.org/help/en/html/doc/Technical/githubdesktopinto.shtml">how to use the GitHub Desktop tool</a>
+			    for JMRI development.
+			    
         </ul>
 

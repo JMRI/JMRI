@@ -19,7 +19,6 @@ import org.junit.runners.Suite;
         SchedulesByLoadFrameTest.class,
         SchedulesTableFrameTest.class,
         SchedulesTableModelTest.class,
-        XmlTest.class,
         ScheduleResetHitsActionTest.class,
         SchedulesByLoadActionTest.class,
         SchedulesResetHitsActionTest.class,

@@ -101,7 +101,6 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-286.gif</imagelink>
     </appearance>
 
-
     <appearance>
       <aspectname>Diverging Approach</aspectname>
       <show>red</show>
@@ -116,14 +115,6 @@ July 1978 Revision of the St. Louis San Francisco Railway Company publication "R
       <show>red</show>
       <reference>Rule 288</reference>
       <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-288-a.gif</imagelink>
-    </appearance>
-
-    <appearance>
-      <aspectname>Restricting</aspectname>
-      <show>red</show>
-      <show>lunar</show>
-      <reference>Rule 288</reference>
-      <imagelink>../../../resources/icons/smallschematics/aspects/SLSF-1973/SL-2-high/rule-288-b.gif</imagelink>
     </appearance>
 
     <appearance>

@@ -122,6 +122,12 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
             Tracker t = findTrackerIn(block);
             if (t != null && !name.equals(block.getValue())) {
                 msg = Bundle.getMessage("blockInUse", t.getTrainName(), block.getDisplayName());
+            } else {
+                Warrant w = block.getWarrant();
+                if (w != null) {
+                    msg = Bundle.getMessage("AllocatedToWarrant",
+                            w.getDisplayName(), block.getDisplayName(), w.getTrainName());   
+                }
             }
         }
         if (msg != null) {
@@ -388,10 +394,10 @@ public class TrackerTableAction extends AbstractAction implements PropertyChange
     private void processTrackerStateChange(Tracker tracker, OBlock block, int state) {
         List<OBlock> oldRange = tracker.makeRange();// total range in effect when state change was detected
         if (tracker.move(block, state)) {   // new total range has been made after move was done.
-            block._entryTime = System.currentTimeMillis();
             if (tracker._statusMessage != null) {
                 _frame.setStatus(tracker._statusMessage);
             } else {
+                block._entryTime = System.currentTimeMillis();
                 adjustBlockListeners(oldRange, tracker.makeRange(), tracker);
                 _frame.setStatus(Bundle.getMessage("TrackerBlockEnter",
                         tracker.getTrainName(), block.getDisplayName()));

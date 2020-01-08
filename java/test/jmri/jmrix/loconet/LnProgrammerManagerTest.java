@@ -17,7 +17,7 @@ public class LnProgrammerManagerTest {
         LnTrafficController lnis = new LocoNetInterfaceScaffold();
         SlotManager slotmanager = new SlotManager(lnis);
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, slotmanager);
-        LnProgrammerManager t = new LnProgrammerManager(slotmanager, memo);
+        LnProgrammerManager t = new LnProgrammerManager(memo);
         Assert.assertNotNull("exists", t);
         memo.dispose();
     }

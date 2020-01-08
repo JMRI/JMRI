@@ -5,7 +5,6 @@ import java.awt.*;
 import jmri.Block;
 import jmri.InstanceManager;
 import jmri.Path;
-import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.util.JUnitUtil;
@@ -14,11 +13,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JDialogOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
-
-import javax.swing.*;
 
 /**
  *

@@ -530,7 +530,6 @@ public class SignalHeadIcon extends PositionableIcon implements java.beans.Prope
      * Change the SignalHead state when the icon is clicked. Note that this
      * change may not be permanent if there is logic controlling the signal
      * head.
-     * <p>
      */
     @Override
     public void doMouseClicked(java.awt.event.MouseEvent e) {

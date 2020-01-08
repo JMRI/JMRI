@@ -101,7 +101,6 @@ import org.slf4j.LoggerFactory;
  * implemented at JDK 1.2 for backward compatibility
  *
  * @author Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
- *
  */
 public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
 
@@ -1585,7 +1584,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     /**
-     * Create popup for a Positionable object Popup items common to all
+     * Create popup for a Positionable object. Popup items common to all
      * positionable objects are done before and after the items that pertain
      * only to specific Positionable types.
      */

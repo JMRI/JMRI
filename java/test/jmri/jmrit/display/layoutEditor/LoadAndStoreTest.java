@@ -2,6 +2,8 @@ package jmri.jmrit.display.layoutEditor;
 
 import java.io.File;
 import org.junit.runners.Parameterized;
+import org.junit.Before;
+import jmri.util.JUnitUtil;
 
 /**
  * Test that configuration files can be read and then stored again consistently.
@@ -26,5 +28,12 @@ public class LoadAndStoreTest extends jmri.configurexml.LoadAndStoreTestBase {
 
     public LoadAndStoreTest(File file, boolean pass) {
         super(file, pass, SaveType.User, true); // isGUEonly, as these contain panels, no not headless
+    }
+
+    @Before
+    @Override
+    public void setUp() {
+        super.setUp();
+        JUnitUtil.initLayoutBlockManager();
     }
 }

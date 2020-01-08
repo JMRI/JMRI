@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TimerTask;
+import javax.annotation.CheckForNull;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.*;
@@ -425,6 +426,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * @param csnum The Command Station Number ( the default in CBUS is 0 )
      * @return the Node which has the command station number, else null
      */
+    @CheckForNull
     public CbusNode getCsByNum( int csnum) {
         for (int i = 0; i < getRowCount(); i++) {
             if ( _mainArray.get(i).getCsNum() == csnum ) {
@@ -482,6 +484,7 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
      * @param nodenum The Node Number ( min 1, max 65535 )
      * @return the Node which has the node number, else null
      */
+    @CheckForNull
     public CbusNode getNodeByNodeNum( int nodenum ) {
         for (int i = 0; i < getRowCount(); i++) {
             if ( _mainArray.get(i).getNodeNumber() == nodenum ) {
@@ -729,52 +732,58 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
         }
         
         // If a node is selected in the node manager the details for this are fetched next
-        if ( getNodeByNodeNum(urgentNode) != null ) {
+        
+        CbusNode _urgentNode = getNodeByNodeNum(urgentNode);
+        
+        if ( _urgentNode != null ) {
             
-            if (urgentTab==2) { // NV's selected
-                if ( getNodeByNodeNum(urgentNode).getOutstandingNvCount() > 0 ){ // this nv
-                    getNodeByNodeNum(urgentNode).sendNextNVToFetch();
+            if (urgentTab==2 ) { // NV's selected
+                if ( _urgentNode.getOutstandingNvCount() > 0 ){ // this nv
+                    _urgentNode.sendNextNVToFetch();
                     return;
                 }
-                if ( getNodeByNodeNum(urgentNode).getOutstandingEvVars() > 0 ) { // this events
-                    getNodeByNodeNum(urgentNode).sendNextEvVarToFetch();
+                if ( _urgentNode.getOutstandingEvVars() > 0 ) { // this events
+                    _urgentNode.sendNextEvVarToFetch();
                     return;
                 }
             } else {
-                if ( getNodeByNodeNum(urgentNode).getOutstandingEvVars() > 0 ) { // this events
-                    getNodeByNodeNum(urgentNode).sendNextEvVarToFetch();
+                if ( _urgentNode.getOutstandingEvVars() > 0 ) { // this events
+                    _urgentNode.sendNextEvVarToFetch();
                     return;
                 }
-                if ( getNodeByNodeNum(urgentNode).getOutstandingNvCount() > 0 ){ // this nv
-                    getNodeByNodeNum(urgentNode).sendNextNVToFetch();
+                if ( _urgentNode.getOutstandingNvCount() > 0 ){ // this nv
+                    _urgentNode.sendNextNVToFetch();
                     return;
                 }
             }
             
+            CbusNode _beforeNode = getNodeByNodeNum(nodebefore);
+            CbusNode _afterNode = getNodeByNodeNum(nodeafter);
+            
             if (urgentTab==2) { // NV's selected
-                if ( nodeafter > -1 ) {
-                    if ( getNodeByNodeNum(nodeafter).getOutstandingNvCount() > 0 ){ // below nv
-                        getNodeByNodeNum(nodeafter).sendNextNVToFetch();
+                if ( _afterNode != null ) {
+                    if ( _afterNode.getOutstandingNvCount() > 0 ){ // below nv
+                        _afterNode.sendNextNVToFetch();
                         return;
                     }
                 }
-                if ( nodebefore > -1 ) {
-                    if ( getNodeByNodeNum(nodebefore).getOutstandingNvCount() > 0 ){ // above nv
-                        getNodeByNodeNum(nodebefore).sendNextNVToFetch();
+                if ( _beforeNode != null ) {
+                    if ( _beforeNode.getOutstandingNvCount() > 0 ){ // above nv
+                        _beforeNode.sendNextNVToFetch();
                         return;
                     }
                 }
             }
             else { // events selected
-                if ( nodeafter > -1 ) {
-                    if ( getNodeByNodeNum(nodeafter).getOutstandingEvVars() > 0 ) { // below events
-                        getNodeByNodeNum(nodeafter).sendNextEvVarToFetch();
+                if ( _afterNode != null ) {
+                    if ( _afterNode.getOutstandingEvVars() > 0 ) { // below events
+                        _afterNode.sendNextEvVarToFetch();
                         return;
                     } 
                 }
-                if ( nodebefore > -1 ) {
-                    if ( getNodeByNodeNum(nodebefore).getOutstandingEvVars() > 0 ) { // above events
-                        getNodeByNodeNum(nodebefore).sendNextEvVarToFetch();
+                if ( _beforeNode != null ) {
+                    if ( _beforeNode.getOutstandingEvVars() > 0 ) { // above events
+                        _beforeNode.sendNextEvVarToFetch();
                         return;
                     } 
                 }
@@ -910,14 +919,16 @@ public class CbusNodeTableDataModel extends javax.swing.table.AbstractTableModel
     public void removeRow(int row, boolean removeXml) {
         CbusNode toRemove = getNodeByNodeNum( _mainArray.get(row).getNodeNumber() );
         _mainArray.remove(row);
-        if (removeXml) {
-            // delete xml file
-            if (!(toRemove.getNodeBackupFile().removeNode(true))){
-                log.error("Unable to delete node xml file");
+        if (toRemove != null) {
+            if (removeXml) {
+                // delete xml file
+                if (!(toRemove.getNodeBackupFile().removeNode(true))){
+                    log.error("Unable to delete node xml file");
+                }
             }
+            ThreadingUtil.runOnGUI( ()->{ fireTableRowsDeleted(row,row); });
+            toRemove.dispose();
         }
-        ThreadingUtil.runOnGUI( ()->{ fireTableRowsDeleted(row,row); });
-        toRemove.dispose();
     }
     
     /**

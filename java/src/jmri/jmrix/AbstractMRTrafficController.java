@@ -1173,6 +1173,7 @@ abstract public class AbstractMRTrafficController {
     // to request termination, which might have happened
     // before in any case
     @Override
+    @SuppressWarnings("deprecation") // finalize deprecated in Java 9, but not yet removed
     protected final void finalize() throws Throwable {
         terminate();
         super.finalize();

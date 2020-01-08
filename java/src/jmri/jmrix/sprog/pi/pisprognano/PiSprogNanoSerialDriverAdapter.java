@@ -2,7 +2,6 @@ package jmri.jmrix.sprog.pi.pisprognano;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
-import java.util.Arrays;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.

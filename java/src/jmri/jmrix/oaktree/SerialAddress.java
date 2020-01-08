@@ -1,9 +1,9 @@
 package jmri.jmrix.oaktree;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Manager.NameValidity;
 import jmri.NamedBean;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -240,7 +240,7 @@ public class SerialAddress {
      * @param type Letter indicating device type expected
      * @return 'true' if system name has a valid format, else returns 'false'
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!(systemName.startsWith(prefix)) || (systemName.charAt(prefix.length()) != type )) {
             // here if an illegal format 

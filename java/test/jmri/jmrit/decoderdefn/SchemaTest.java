@@ -19,6 +19,8 @@ public class SchemaTest extends SchemaTestBase {
     @Parameters(name = "{0} (pass={1})")
     public static Iterable<Object[]> data() {
         ArrayList<Object[]> files = new ArrayList<>();
+        // check that name list file is valid
+        files.addAll(getFiles(new File("xml/names.xml"), true, true));
         // check that the schema passes useful constructs
         files.addAll(getFiles(new File("java/test/jmri/jmrit/decoderdefn/pass"), true, true));
         // check that the schema detects errors

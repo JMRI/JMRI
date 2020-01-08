@@ -16,32 +16,13 @@ import java.awt.geom.GeneralPath;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.function.Consumer;
-import java.util.function.Predicate;
-import java.util.function.Supplier;
-import javax.annotation.CheckForNull;
-import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.Path;
+import java.util.*;
+import java.util.function.*;
+import javax.annotation.*;
+import javax.swing.*;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
-import jmri.util.ColorUtil;
-import jmri.util.FileUtil;
-import jmri.util.MathUtil;
-import jmri.util.QuickPromptUtil;
+import jmri.util.*;
 import jmri.util.swing.JmriColorChooser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -513,14 +494,11 @@ public class TrackSegment extends LayoutTrack {
      * non-accessor methods
      */
     /**
-     * Scale this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
+     * {@inheritDoc}
      */
     @Override
-    public void scaleCoords(float xFactor, float yFactor) {
-        Point2D factor = new Point2D.Float(xFactor, yFactor);
+    public void scaleCoords(double xFactor, double yFactor) {
+        Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.multiply(center, factor);
         if (isBezier()) {
             for (Point2D p : bezierControlPoints) {
@@ -530,14 +508,23 @@ public class TrackSegment extends LayoutTrack {
     }
 
     /**
-     * Translate (2D Move) this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to translate X coordinates
-     * @param yFactor the amount to translate Y coordinates
+     * {@inheritDoc}
      */
     @Override
-    public void translateCoords(float xFactor, float yFactor) {
-        setCoordsCenter(MathUtil.add(center, new Point2D.Float(xFactor, yFactor)));
+    public void translateCoords(double xFactor, double yFactor) {
+        setCoordsCenter(MathUtil.add(center, new Point2D.Double(xFactor, yFactor)));
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void rotateCoords(double angleDEG) {
+        if (isBezier()) {
+            for (Point2D p : bezierControlPoints) {
+                p.setLocation(MathUtil.rotateDEG(p, center, angleDEG));
+            }
+        }
     }
 
     /**
@@ -603,7 +590,7 @@ public class TrackSegment extends LayoutTrack {
         }
     }
 
-    protected void updateBlockInfo() {
+    public void updateBlockInfo() {
         LayoutBlock layoutBlock = getLayoutBlock();
         if (layoutBlock != null) {
             layoutBlock.updatePaths();
@@ -653,7 +640,7 @@ public class TrackSegment extends LayoutTrack {
             //note: optimization here: instead of creating rectangles for all the
             // points to check below, we create a rectangle for the test point
             // and test if the points below are in that rectangle instead.
-            Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+            Rectangle2D r = layoutEditor.layoutEditorControlCircleRectAt(hitPoint);
             Point2D p, minPoint = MathUtil.zeroPoint2D;
 
             double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -1863,7 +1850,7 @@ public class TrackSegment extends LayoutTrack {
      *
      * @see #remove()
      */
-    void dispose() {
+    public void dispose() {
         if (popupMenu != null) {
             popupMenu.removeAll();
         }
@@ -1873,12 +1860,12 @@ public class TrackSegment extends LayoutTrack {
     /**
      * Remove this object from display and persistance.
      */
-    void remove() {
+    public void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }
 
-    boolean active = true;
+    private boolean active = true;
 
     /**
      * Get state. "active" means that the object is still displayed, and should
@@ -2360,20 +2347,20 @@ public class TrackSegment extends LayoutTrack {
                 g2.draw(new Line2D.Double(circleCenterPoint, ep2));
                 // Draw a circle and square at the circles centre, that
                 // allows the user to change the angle by dragging the mouse.
-                g2.draw(layoutEditor.trackEditControlCircleAt(circleCenterPoint));
-                g2.draw(layoutEditor.trackEditControlRectAt(circleCenterPoint));
+                g2.draw(trackEditControlCircleAt(circleCenterPoint));
+                g2.draw(layoutEditor.layoutEditorControlRectAt(circleCenterPoint));
             } else if (isBezier()) {
                 //draw construction lines and control circles
                 Point2D lastPt = ep1;
                 for (Point2D bcp : bezierControlPoints) {
                     g2.draw(new Line2D.Double(lastPt, bcp));
                     lastPt = bcp;
-                    g2.draw(layoutEditor.trackEditControlRectAt(bcp));
+                    g2.draw(layoutEditor.layoutEditorControlRectAt(bcp));
                 }
                 g2.draw(new Line2D.Double(lastPt, ep2));
             }
         }
-        g2.draw(layoutEditor.trackEditControlCircleAt(getCentreSeg()));
+        g2.draw(trackEditControlCircleAt(getCentreSeg()));
     }   // drawEditControls
 
     @Override

@@ -10,7 +10,6 @@ import org.junit.runners.Suite;
         EngineTypesTest.class,
         EngineModelsTest.class,
         EngineManagerTest.class,
-        XmlTest.class,
         BundleTest.class,
         EnginesTableFrameTest.class,
         EngineEditFrameTest.class,

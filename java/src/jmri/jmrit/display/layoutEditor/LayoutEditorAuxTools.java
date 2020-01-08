@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import jmri.BeanSetting;
-import jmri.InstanceManager;
 import jmri.Path;
 import jmri.Turnout;
 import org.slf4j.Logger;

@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus.swing.simulator;
 
 import javax.swing.BoxLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class CsPane extends JPanel {
     
-    private CbusDummyCS _cs;
+    private final CbusDummyCS _cs;
     private JComboBox<String> _selectCs;
     private int _id;
     private int _type;
@@ -46,7 +45,7 @@ public class CsPane extends JPanel {
         _sessionText = new JLabel();
         _sessionText.setToolTipText(Bundle.getMessage("ActiveSess"));
         
-        _selectCs = new JComboBox<String>();
+        _selectCs = new JComboBox<>();
         _selectCs.setEditable(false);
         
         ComboBoxToolTipRenderer renderer = new ComboBoxToolTipRenderer();
@@ -55,7 +54,7 @@ public class CsPane extends JPanel {
         updateSessionTotal();
         
         _cs.setPane(this);
-        tooltips = new ArrayList<String>();
+        tooltips = new ArrayList<>();
         String getSelected="";
         
         for (int i = 0; i < _cs.csTypes.size(); i++) {
@@ -68,17 +67,12 @@ public class CsPane extends JPanel {
         }
         
         _selectCs.setSelectedItem(getSelected);
-        _selectCs.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String chosen = (String)_selectCs.getSelectedItem();
-                
-                for (int i = 0; i < _cs.csTypes.size(); i++) {
-                    String option = _cs.csTypes.get(i);
-                    if (option.equals(chosen)) {
-                        log.debug("chosen {} {}",i,chosen);
-                        _cs.setDummyType(i);
-                    }
+        _selectCs.addActionListener ((ActionEvent e) -> {
+            String chosen = (String)_selectCs.getSelectedItem();
+            for (int i = 0; i < _cs.csTypes.size(); i++) {
+                if (_cs.csTypes.get(i).equals(chosen)) {
+                    log.debug("chosen {} {}",i,chosen);
+                    _cs.setDummyType(i);
                 }
             }
         });
@@ -99,11 +93,8 @@ public class CsPane extends JPanel {
         add(topPane);
         add(dp);
         
-        _resetCs.addActionListener (new ActionListener () {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                _cs.resetCS();
-            }
+        _resetCs.addActionListener ((ActionEvent e) -> {
+            _cs.resetCS();
         });
     }
     

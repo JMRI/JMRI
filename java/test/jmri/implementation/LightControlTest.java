@@ -12,7 +12,7 @@ import jmri.util.JUnitUtil;
 import org.junit.*;
 
 /**
- * Tests for the LightControl class
+ * Tests for the LightControl class.
  *
  * @author Paul Bender Copyright (C) 2016
  * @author Steve Young Copyright (C) 2019
@@ -149,7 +149,6 @@ public class LightControlTest {
         Assert.assertTrue(l1.equals(l2));
 
         Assert.assertNotNull("Has Hashcode", l1.hashCode());
-
     }
 
     @Test
@@ -232,7 +231,6 @@ public class LightControlTest {
 
         l.deactivateLight();
         l.dispose();
-
     }
 
     @Test
@@ -245,7 +243,6 @@ public class LightControlTest {
         l.addLightControl(lc);
         l.activateLight();
         JUnitAppender.assertErrorMessage("Light ILL1 is linked to a Sensor that does not exist:");
-
     }
 
     @Test
@@ -262,7 +259,6 @@ public class LightControlTest {
 
         lc.setControlTurnoutState(999);
         JUnitAppender.assertErrorMessageStartsWith("Incorrect Turnout State Set");
-
     }
 
     @Test
@@ -321,7 +317,6 @@ public class LightControlTest {
 
         l.deactivateLight();
         l.dispose();
-
     }
 
     @Test
@@ -662,7 +657,6 @@ public class LightControlTest {
         Assert.assertEquals("Light still off", Light.OFF, l.getState());
 
         l.dispose();
-
     }
 
     @Test
@@ -675,7 +669,6 @@ public class LightControlTest {
         l.addLightControl(lc);
         l.activateLight();
         JUnitAppender.assertErrorMessage("Light ILL1 is linked to a Sensor that does not exist:");
-
     }
 
     @Test
@@ -707,7 +700,6 @@ public class LightControlTest {
 
         lc.setControlSensorSense(999);
         JUnitAppender.assertErrorMessage("Incorrect Sensor State Set");
-
     }
 
     @Test
@@ -777,7 +769,6 @@ public class LightControlTest {
 
         l.deactivateLight();
         l.dispose();
-
     }
 
     @Test
@@ -906,4 +897,5 @@ public class LightControlTest {
     }
 
     // private final static Logger log = LoggerFactory.getLogger(LightControlTest.class);
+
 }

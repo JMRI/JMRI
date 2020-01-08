@@ -13,6 +13,7 @@ import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 
 /**
@@ -20,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * have the "Build" checkbox selected are exported. If a train is built, a
  * summary of the train's route and work is provided.
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @author Daniel Boudreau Copyright (C) 2010, 2011, 2019
  *
  */
 public class ExportTrains extends XmlFile {
@@ -96,7 +97,19 @@ public class ExportTrains extends XmlFile {
                 del +
                 Bundle.getMessage("Status") +
                 del +
-                Bundle.getMessage("Comment");
+                Bundle.getMessage("Comment") +
+                del +
+                Bundle.getMessage("LocoTypes") +
+                del +
+                Bundle.getMessage("CarTypes") +
+                del +
+                Bundle.getMessage("RoadOption") +
+                del +
+                Bundle.getMessage("Roads") +
+                del +
+                Bundle.getMessage("LoadOption") +
+                del +
+                Bundle.getMessage("Loads");
         fileOut.println(header);
 
         int count = 0;
@@ -138,6 +151,30 @@ public class ExportTrains extends XmlFile {
                     del +
                     ESC +
                     train.getComment() +
+                    ESC +
+                    del +
+                    ESC +
+                    TrainCommon.formatStringToCommaSeparated(train.getLocoTypeNames()) +
+                    ESC +
+                    del +
+                    ESC +
+                    TrainCommon.formatStringToCommaSeparated(train.getCarTypeNames()) +
+                    ESC +
+                    del +
+                    ESC +
+                    getRoadOption(train) +
+                    ESC +
+                    del +
+                    ESC +
+                    getRoads(train) +
+                    ESC +
+                    del +
+                    ESC +
+                    getLoadOption(train) +
+                    ESC +
+                    del +
+                    ESC +
+                    getLoads(train) +
                     ESC;
             fileOut.println(line);
         }
@@ -215,6 +252,47 @@ public class ExportTrains extends XmlFile {
                         count, defaultOperationsFilename()}),
                 Bundle.getMessage("ExportComplete"),
                 JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    private String getRoadOption(Train train) {
+        String roadOption = Bundle.getMessage("AcceptAll");
+ 
+        if (train.getRoadOption().equals(Train.INCLUDE_ROADS)) {
+            roadOption = Bundle.getMessage("AcceptOnly") + " " + train.getRoadNames().length + " "
+                    + Bundle.getMessage("Roads");
+        } else if (train.getRoadOption().equals(Train.EXCLUDE_ROADS)) {
+            roadOption = Bundle.getMessage("Exclude") + " " + train.getRoadNames().length + " "
+                    + Bundle.getMessage("Roads");
+        }
+        return roadOption;
+    }
+    
+    private String getRoads(Train train) {
+        if (train.getRoadOption().equals(Train.ALL_ROADS)) {
+            return "";
+        } else {
+            return TrainCommon.formatStringToCommaSeparated(train.getRoadNames());
+        }
+    }
+    
+    private String getLoadOption (Train train) {
+        String loadOption = Bundle.getMessage("AcceptAll");
+        if (train.getLoadOption().equals(Train.INCLUDE_LOADS)) {
+            loadOption = Bundle.getMessage("AcceptOnly") + " " + train.getLoadNames().length + " "
+                    + Bundle.getMessage("Loads");
+        } else if (train.getLoadOption().equals(Train.EXCLUDE_LOADS)) {
+            loadOption = Bundle.getMessage("Exclude") + " " + train.getLoadNames().length + " "
+                    + Bundle.getMessage("Loads");
+        }
+        return loadOption;
+    }
+    
+    private String getLoads(Train train) {
+        if (train.getLoadOption().equals(Train.ALL_LOADS)) {
+            return "";
+        } else {
+            return TrainCommon.formatStringToCommaSeparated(train.getLoadNames());
+        }
     }
 
     // Operation files always use the same directory

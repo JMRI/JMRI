@@ -21,18 +21,6 @@ public class OlcbThrottleManager extends AbstractThrottleManager {
     /**
      * Constructor.
      * @param memo system connection memo
-     * @param mgr config manager
-     * @deprecated since 4.13.4
-     */
-    @Deprecated
-    public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo, OlcbConfigurationManager mgr) {
-        this(memo);
-        jmri.util.Log4JUtil.deprecationWarning(log, "OlcbThrottleManager(..)");        
-    }
-
-    /**
-     * Constructor.
-     * @param memo system connection memo
      */
     public OlcbThrottleManager(jmri.jmrix.SystemConnectionMemo memo) {
         super(memo);

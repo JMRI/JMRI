@@ -1,5 +1,6 @@
 package jmri.jmrix.internal;
 
+import javax.annotation.Nonnull;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.implementation.AbstractSensor;
@@ -21,17 +22,18 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
 
     /** {@inheritDoc} */
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 
     /**
-     * Create an internal (dummy) sensor object
+     * {@inheritDoc}
      *
-     * @return new null
+     * @return a new (dummy) Internal sensor
      */
     @Override
-    protected Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    protected Sensor createNewSensor(@Nonnull String systemName, String userName) {
         Sensor sen = new AbstractSensor(systemName, userName) {
 
             @Override
@@ -40,7 +42,7 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
             }
 
             @Override
-            public int compareSystemNameSuffix(String suffix1, String suffix2, NamedBean n) {
+            public int compareSystemNameSuffix(@Nonnull String suffix1, @Nonnull String suffix2, NamedBean n) {
                 return (new PreferNumericComparator()).compare(suffix1, suffix2);
             }
         };
@@ -75,7 +77,7 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
 
     /** {@inheritDoc} */
     @Override
-    public String getNextValidAddress(String curAddress, String prefix) {
+    public String getNextValidAddress(@Nonnull String curAddress, @Nonnull String prefix) {
         // If the hardware address passed does not already exist then this can
         // be considered the next valid address.
         Sensor s = getBySystemName(prefix + typeLetter() + curAddress);
@@ -115,6 +117,7 @@ public class InternalSensorManager extends jmri.managers.AbstractSensorManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public InternalSystemConnectionMemo getMemo() {
         return (InternalSystemConnectionMemo) memo;
     }

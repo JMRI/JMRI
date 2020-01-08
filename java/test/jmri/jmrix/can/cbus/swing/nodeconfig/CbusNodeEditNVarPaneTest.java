@@ -12,8 +12,6 @@ import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
-import org.netbeans.jemmy.operators.JButtonOperator;
-import org.netbeans.jemmy.operators.JFrameOperator;
 
 /**
  * Test simple functioning of CbusNodeEditNVarFrame
@@ -79,8 +77,11 @@ public class CbusNodeEditNVarPaneTest {
     @After
     public void tearDown() {
         t = null;
-        memo = null;
-        tcis = null;
+        memo.dispose();
+        memo=null;
+        tcis.terminateThreads();
+        tcis=null;
+        JUnitUtil.tearDown();
     }
 
     // private final static Logger log = LoggerFactory.getLogger(CbusNodeEditNVarFrameTest.class);

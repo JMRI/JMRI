@@ -25,20 +25,28 @@ import org.openide.util.lookup.ServiceProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-// try to limit the JDOM to this class, so that others can manipulate...
 /**
- * DecoderIndex represents a decoderIndex.xml file in memory.
+ * DecoderIndex represents the decoderIndex.xml (decoder types) and 
+ * nmra_mfg_list.xml (Manufacturer ID list) files in memory.
  * <p>
  * This allows a program to navigate to various decoder descriptions without
  * having to manipulate files.
  * <p>
  * This class doesn't provide tools for defining the index; that's done
- * manually, or at least not done here.
+ * by the {@link jmri.jmrit.decoderdefn.DecoderIndexBuilder} class which 
+ * rebuilds it from the decoder files.
  * <p>
  * Multiple DecoderIndexFile objects don't make sense, so we use an "instance"
  * member to navigate to a single one.
- *
- * @author Bob Jacobsen Copyright (C) 2001
+ * <p>
+ * Previous to JMRI 4.19.1, the manufacturer information was kept in the 
+ * decoderIndex.xml file. Starting with that version it's in the separate
+ * nmra_mfg_list.xml file, but still written to decoderIndex.xml when 
+ * one is created.
+ * 
+ * @author Bob Jacobsen Copyright (C) 2001, 2019
+ * @see jmri.jmrit.decoderdefn.DecoderIndexBuilder
+ * 
  */
 public class DecoderIndexFile extends XmlFile {
 
@@ -388,7 +396,7 @@ public class DecoderIndexFile extends XmlFile {
         if (log.isDebugEnabled()) {
             log.debug("readFile " + name);
         }
-
+        
         // read file, find root
         Element root = rootFromName(name);
 
@@ -401,15 +409,17 @@ public class DecoderIndexFile extends XmlFile {
                 );
             }
             log.debug("found fileVersion of {}", fileVersion);
-            readMfgSection(root.getChild("decoderIndex"));
+            readMfgSection();
             readFamilySection(root.getChild("decoderIndex"));
         } else {
             log.error("Unrecognized decoderIndex file contents in file: {}", name);
         }
     }
 
-    void readMfgSection(Element decoderIndex) {
-        Element mfgList = decoderIndex.getChild("mfgList");
+    void readMfgSection() throws org.jdom2.JDOMException, java.io.IOException {
+        // always reads the file distributed with JMRI
+        Element mfgList = rootFromName("nmra_mfg_list.xml");
+        
         if (mfgList != null) {
 
             Attribute a;
@@ -442,7 +452,7 @@ public class DecoderIndexFile extends XmlFile {
                 }
             }
         } else {
-            log.warn("no mfgList found in decoderIndexFile");
+            log.warn("no mfgList found");
         }
     }
 

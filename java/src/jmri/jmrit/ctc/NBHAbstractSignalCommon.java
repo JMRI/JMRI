@@ -1,10 +1,6 @@
 package jmri.jmrit.ctc;
 
 import java.beans.PropertyChangeListener;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandleManager;
-import jmri.SignalHeadManager;
-import jmri.SignalMastManager;
 
 /**
  *

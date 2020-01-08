@@ -3,9 +3,7 @@ package jmri.jmrix.sprog.pi.pisprogone;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
 
 /**
  * Tests for ConnectionConfig class.

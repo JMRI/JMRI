@@ -19,7 +19,6 @@ public class ConflictingSystemConnectionMemoTest extends SystemConnectionMemoTes
 
     @Override
     @Test
-    @SuppressWarnings("deprecation")
     public void testMultipleMemosSamePrefix() {
         assertTrue(SystemConnectionMemoManager.getDefault().isSystemPrefixAvailable("c"));
         scm.register();
@@ -35,7 +34,6 @@ public class ConflictingSystemConnectionMemoTest extends SystemConnectionMemoTes
 
     @Before
     @Override
-    @SuppressWarnings("deprecation")
     public void setUp() {
         JUnitUtil.setUp();
         scm = new ConflictingSystemConnectionMemo("c", "conflicting");

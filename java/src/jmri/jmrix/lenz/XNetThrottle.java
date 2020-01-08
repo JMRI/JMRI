@@ -1105,7 +1105,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener {
     protected void stopStatusTimer() {
         log.debug("Status Timer Stopped");
         if (statusTask != null) {
-            statusTask.cancel();
+            try{
+               statusTask.cancel();
+            } catch(IllegalStateException ise){
+               log.debug("Timer already canceled");
+            }
             statusTask = null;
         }
     }

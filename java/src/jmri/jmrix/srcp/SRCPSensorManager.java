@@ -1,9 +1,10 @@
 package jmri.jmrix.srcp;
 
+import javax.annotation.Nonnull;
 import jmri.Sensor;
 
 /**
- * Implement Sensor manager for SRCP systems.
+ * Implement SensorMmanager for SRCP systems.
  * <p>
  * System names are "DSnnn", where D is the user configurable system prefix,
  * nnn is the sensor number without padding.
@@ -12,25 +13,48 @@ import jmri.Sensor;
  */
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
-    int _bus;
-
-    public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
+    public SRCPSensorManager(SRCPBusConnectionMemo memo) {
         super(memo);
-        _bus = bus;
+    }
+
+    /**
+     *
+     * @param memo the associated SystemConnectionMemo
+     * @param bus the bus ID configured for this connection
+     * @deprecated since 4.18 use {@link SRCPBusConnectionMemo#getBus()}
+     */
+    @Deprecated
+    public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
+        this(memo);
     }
 
     /**
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public SRCPBusConnectionMemo getMemo() {
         return (SRCPBusConnectionMemo) memo;
     }
 
+    /**
+     * {@inheritDoc}
+     * <p>
+     * System name is normalized to ensure uniqueness.
+     * @throws IllegalArgumentException when SystemName can't be converted
+     */
     @Override
-    public Sensor createNewSensor(String systemName, String userName) {
+    @Nonnull
+    public Sensor createNewSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
         Sensor t;
-        int addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        int addr;
+        try {
+            addr = Integer.parseInt(systemName.substring(getSystemPrefix().length() + 1));
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Unable to convert " +  // NOI18N
+                    systemName.substring(getSystemPrefix().length() + 1) +
+                    " to SRCP sensor address"); // NOI18N
+        }
         t = new SRCPSensor(addr, getMemo());
         t.setUserName(userName);
 

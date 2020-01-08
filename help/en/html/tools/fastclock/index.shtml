@@ -24,7 +24,7 @@
 <body>
   <!--#include virtual="/Header" -->
   <div id="mBody">
-    <!--#include virtual="Sidebar" -->
+    <!--#include virtual="Sidebar.shtml" -->
     <div id="mainContent">
 
       <h1>JMRI: Fast Clocks</h1>
@@ -78,6 +78,8 @@
         old-style Nixie tubes</li>
         <li>Panel clock - you can also embed a clock in a panel
         (instead of a separate window) from the panel editor.</li>
+        <li>Pragotron clock - flip clock used in net Czechoslovak State Railways &ndash; &#268;SD 
+            <span class="since">since 4.19.2</span></li>
       </ul>
 
       <p>When a clock is running, JMRI creates an internal sensor

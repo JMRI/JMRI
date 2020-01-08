@@ -39,7 +39,7 @@ table.sortable th {
 <body>
 <!--#include virtual="/Header" -->
   <div id="mBody">
-  <!--#include virtual="../html/Sidebar" -->
+  <!--#include virtual="../html/Sidebar.shtml" -->
   <div id="mainContent">
 
   <h1>JMRI: Glossary</h1>

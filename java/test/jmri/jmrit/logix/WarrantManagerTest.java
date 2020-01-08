@@ -23,6 +23,7 @@ public class WarrantManagerTest {
     @Before
     public void setUp() {
         JUnitUtil.setUp();
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
     }
 
     @After

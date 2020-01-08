@@ -511,7 +511,6 @@ public abstract class RollingStockEditFrame extends OperationsFrame implements j
         return true;
     }
 
-    @SuppressWarnings("unchecked")
     protected <T extends RollingStock> void save(RollingStockManager<T> manager, boolean isSave) {
         // if the rolling stock's road or number changes, it needs a new id
         if (isSave &&

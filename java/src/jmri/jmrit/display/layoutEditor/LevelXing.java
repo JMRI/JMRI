@@ -6,36 +6,17 @@ import static java.lang.Math.PI;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
-import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.awt.event.*;
+import java.awt.geom.*;
+import java.util.*;
 import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
-import javax.swing.AbstractAction;
-import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
-import javax.swing.JSeparator;
-import jmri.InstanceManager;
-import jmri.NamedBeanHandle;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
-import jmri.SignalMastLogic;
+import javax.swing.*;
+import jmri.*;
 import jmri.jmrit.display.layoutEditor.blockRoutingTable.LayoutBlockRouteTableAction;
 import jmri.jmrit.signalling.SignallingGuiTools;
 import jmri.util.MathUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.slf4j.*;
 
 /**
  * A LevelXing is two track segment on a layout that cross at an angle.
@@ -121,7 +102,6 @@ public class LevelXing extends LayoutTrack {
     /*
      * Accessor methods
      */
-
     @Nonnull
     public String getBlockNameAC() {
         String result = null;
@@ -795,7 +775,7 @@ public class LevelXing extends LayoutTrack {
 
     }
 
-    protected void updateBlockInfo() {
+    public void updateBlockInfo() {
         LayoutBlock blockAC = getLayoutBlockAC();
         LayoutBlock blockBD = getLayoutBlockBD();
         LayoutBlock b1 = null;
@@ -845,8 +825,8 @@ public class LevelXing extends LayoutTrack {
     /**
      * Test if mainline track or not.
      *
-     * @return true if either connecting track segment is mainline; Defaults
-     * to not mainline if connecting track segments are missing
+     * @return true if either connecting track segment is mainline; Defaults to
+     *         not mainline if connecting track segments are missing
      */
     public boolean isMainlineAC() {
         if (((connectA != null) && (((TrackSegment) connectA).isMainline()))
@@ -891,13 +871,10 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * Scale this LayoutTrack's coordinates by the x and y factors
-     *
-     * @param xFactor the amount to scale X coordinates
-     * @param yFactor the amount to scale Y coordinates
+     * {@inheritDoc}
      */
     @Override
-    public void scaleCoords(float xFactor, float yFactor) {
+    public void scaleCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.granulize(MathUtil.multiply(center, factor), 1.0);
         dispA = MathUtil.granulize(MathUtil.multiply(dispA, factor), 1.0);
@@ -905,15 +882,31 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * Translate (2D move) this LayoutTrack's coordinates by the x and y factors.
-     *
-     * @param xFactor the amount to translate X coordinates
-     * @param yFactor the amount to translate Y coordinates
+     * {@inheritDoc}
      */
     @Override
-    public void translateCoords(float xFactor, float yFactor) {
+    public void translateCoords(double xFactor, double yFactor) {
         Point2D factor = new Point2D.Double(xFactor, yFactor);
         center = MathUtil.add(center, factor);
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void rotateCoords(double angleDEG) {
+        // rotate coordinates
+        double rotRAD = Math.toRadians(angleDEG);
+        double sineRot = Math.sin(rotRAD);
+        double cosineRot = Math.cos(rotRAD);
+
+        // rotate displacements around origin {0, 0}
+        Point2D center_temp = center;
+        center = MathUtil.zeroPoint2D;
+        dispA = rotatePoint(dispA, sineRot, cosineRot);
+        dispB = rotatePoint(dispB, sineRot, cosineRot);
+        center = center_temp;
+
     }
 
     /**
@@ -925,7 +918,7 @@ public class LevelXing extends LayoutTrack {
         //note: optimization here: instead of creating rectangles for all the
         // points to check below, we create a rectangle for the test point
         // and test if the points below are in that rectangle instead.
-        Rectangle2D r = layoutEditor.trackControlCircleRectAt(hitPoint);
+        Rectangle2D r = trackControlCircleRectAt(hitPoint);
         Point2D p, minPoint = MathUtil.zeroPoint2D;
 
         double circleRadius = LayoutEditor.SIZE * layoutEditor.getTurnoutCircleSize();
@@ -1058,31 +1051,57 @@ public class LevelXing extends LayoutTrack {
     }
 
     /**
-     * Build a list of sensors, signal heads, and signal masts attached to a level crossing point.
+     * Build a list of sensors, signal heads, and signal masts attached to a
+     * level crossing point.
+     *
      * @param pointName Specify the point (A-D) or all (All) points.
      * @return a list of bean reference names.
      */
     public ArrayList<String> getBeanReferences(String pointName) {
         ArrayList<String> references = new ArrayList<>();
         if (pointName.equals("A") || pointName.equals("All")) {  // NOI18N
-            if (!getSignalAMastName().isEmpty()) references.add(getSignalAMastName());
-            if (!getSensorAName().isEmpty()) references.add(getSensorAName());
-            if (!getSignalAName().isEmpty()) references.add(getSignalAName());
+            if (!getSignalAMastName().isEmpty()) {
+                references.add(getSignalAMastName());
+            }
+            if (!getSensorAName().isEmpty()) {
+                references.add(getSensorAName());
+            }
+            if (!getSignalAName().isEmpty()) {
+                references.add(getSignalAName());
+            }
         }
         if (pointName.equals("B") || pointName.equals("All")) {  // NOI18N
-            if (!getSignalBMastName().isEmpty()) references.add(getSignalBMastName());
-            if (!getSensorBName().isEmpty()) references.add(getSensorBName());
-            if (!getSignalBName().isEmpty()) references.add(getSignalBName());
+            if (!getSignalBMastName().isEmpty()) {
+                references.add(getSignalBMastName());
+            }
+            if (!getSensorBName().isEmpty()) {
+                references.add(getSensorBName());
+            }
+            if (!getSignalBName().isEmpty()) {
+                references.add(getSignalBName());
+            }
         }
         if (pointName.equals("C") || pointName.equals("All")) {  // NOI18N
-            if (!getSignalCMastName().isEmpty()) references.add(getSignalCMastName());
-            if (!getSensorCName().isEmpty()) references.add(getSensorCName());
-            if (!getSignalCName().isEmpty()) references.add(getSignalCName());
+            if (!getSignalCMastName().isEmpty()) {
+                references.add(getSignalCMastName());
+            }
+            if (!getSensorCName().isEmpty()) {
+                references.add(getSensorCName());
+            }
+            if (!getSignalCName().isEmpty()) {
+                references.add(getSignalCName());
+            }
         }
         if (pointName.equals("D") || pointName.equals("All")) {  // NOI18N
-            if (!getSignalDMastName().isEmpty()) references.add(getSignalDMastName());
-            if (!getSensorDName().isEmpty()) references.add(getSensorDName());
-            if (!getSignalDName().isEmpty()) references.add(getSignalDName());
+            if (!getSignalDMastName().isEmpty()) {
+                references.add(getSignalDMastName());
+            }
+            if (!getSensorDName().isEmpty()) {
+                references.add(getSensorDName());
+            }
+            if (!getSignalDName().isEmpty()) {
+                references.add(getSignalDName());
+            }
         }
         return references;
     }
@@ -1215,10 +1234,11 @@ public class LevelXing extends LayoutTrack {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         // bring up signals at level crossing tool dialog
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                         layoutEditor.getLETools().
                                 setSignalsAtLevelXingFromMenu(LevelXing.this,
-                                        layoutEditor.signalIconEditor,
-                                        layoutEditor.signalFrame);
+                                        letbp.signalIconEditor,
+                                        letbp.signalFrame);
                     }
                 };
                 JMenu jm = new JMenu(Bundle.getMessage("SignalHeads"));
@@ -1281,19 +1301,21 @@ public class LevelXing extends LayoutTrack {
                 popup.add(new AbstractAction(Bundle.getMessage("SetSignalMasts")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                         layoutEditor.getLETools().
                                 setSignalMastsAtLevelXingFromMenu(
                                         LevelXing.this, boundaryBetween,
-                                        layoutEditor.signalFrame);
+                                        letbp.signalFrame);
                     }
                 });
                 popup.add(new AbstractAction(Bundle.getMessage("SetSensors")) {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        LayoutEditorToolBarPanel letbp = getLayoutEditorToolBarPanel();
                         layoutEditor.getLETools().setSensorsAtLevelXingFromMenu(
                                 LevelXing.this, boundaryBetween,
-                                layoutEditor.sensorIconEditor,
-                                layoutEditor.sensorFrame);
+                                letbp.sensorIconEditor,
+                                letbp.sensorFrame);
                     }
                 });
             }
@@ -1359,7 +1381,7 @@ public class LevelXing extends LayoutTrack {
      * Clean up when this object is no longer needed. Should not be called while
      * the object is still displayed; see remove().
      */
-    void dispose() {
+    public void dispose() {
         if (popup != null) {
             popup.removeAll();
         }
@@ -1369,7 +1391,7 @@ public class LevelXing extends LayoutTrack {
     /**
      * Remove this object from display and persistance.
      */
-    void remove() {
+    public void remove() {
         // remove from persistance by flagging inactive
         active = false;
     }
@@ -1565,57 +1587,57 @@ public class LevelXing extends LayoutTrack {
     protected void highlightUnconnected(Graphics2D g2, int specificType) {
         if (((specificType == NONE) || (specificType == LEVEL_XING_A))
                 && (getConnectA() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsA()));
+            g2.fill(trackControlCircleAt(getCoordsA()));
         }
 
         if (((specificType == NONE) || (specificType == LEVEL_XING_B))
                 && (getConnectB() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsB()));
+            g2.fill(trackControlCircleAt(getCoordsB()));
         }
 
         if (((specificType == NONE) || (specificType == LEVEL_XING_C))
                 && (getConnectC() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsC()));
+            g2.fill(trackControlCircleAt(getCoordsC()));
         }
 
         if (((specificType == NONE) || (specificType == LEVEL_XING_D))
                 && (getConnectD() == null)) {
-            g2.fill(layoutEditor.trackControlCircleAt(getCoordsD()));
+            g2.fill(trackControlCircleAt(getCoordsD()));
         }
     }
 
     @Override
     protected void drawEditControls(Graphics2D g2) {
         g2.setColor(layoutEditor.getDefaultTrackColorColor());
-        g2.draw(layoutEditor.trackEditControlCircleAt(getCoordsCenter()));
+        g2.draw(trackEditControlCircleAt(getCoordsCenter()));
 
         if (getConnectA() == null) {
             g2.setColor(Color.magenta);
         } else {
             g2.setColor(Color.blue);
         }
-        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsA()));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsA()));
 
         if (getConnectB() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsB()));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsB()));
 
         if (getConnectC() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsC()));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsC()));
 
         if (getConnectD() == null) {
             g2.setColor(Color.red);
         } else {
             g2.setColor(Color.green);
         }
-        g2.draw(layoutEditor.trackEditControlRectAt(getCoordsD()));
+        g2.draw(layoutEditor.layoutEditorControlRectAt(getCoordsD()));
     }
 
     @Override
