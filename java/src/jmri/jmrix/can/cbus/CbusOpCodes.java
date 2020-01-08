@@ -487,7 +487,7 @@ public class CbusOpCodes {
         Bundle.getMessage("OPC_DN") + ":,%2, " + Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1, ,%1, ,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_DDWS, Bundle.getMessage("CBUS_DDWS") + " " + 
-        Bundle.getMessage("OPC_DN") + ":,%2, " + Bundle.getMessage("OPC_AD") + ":,^2, ,%1, ,%1"); // NOI18N
+        Bundle.getMessage("OPC_DN") + ":,%2, Type:,%1, " + Bundle.getMessage("OPC_AD") + ":,^2, ,%1, ,%1"); // NOI18N
         
         result.put(CbusConstants.CBUS_ARSON3, Bundle.getMessage("CBUS_ARSON3") + " ,$4, " +
         Bundle.getMessage("OPC_DA") + ":,%1, ,%1, ,%1"); // NOI18N
