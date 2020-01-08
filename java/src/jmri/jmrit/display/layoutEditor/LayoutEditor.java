@@ -7596,7 +7596,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     }
      */
 
-    private @Nonnull
+    @Nonnull
     private Stream<LayoutTrack> getLayoutTracksOfClass(Class<? extends LayoutTrack> layoutTrackClass) {
         return layoutTrackList.stream()
                 .filter(layoutTrackClass::isInstance)
