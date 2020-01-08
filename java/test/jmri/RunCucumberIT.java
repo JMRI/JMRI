@@ -37,6 +37,15 @@ public class RunCucumberIT {
    @AfterClass
    public static void afterTests(){
       jmri.util.web.BrowserFactory.CloseAllDriver();
+      if (InstanceManager.containsDefault(ShutDownManager.class)) {
+          ShutDownManager sm = InstanceManager.getDefault(jmri.ShutDownManager.class);
+          List<ShutDownTask> list = sm.tasks();
+          while (list != null && list.size() > 0) {
+              ShutDownTask task = list.get(0);
+              sm.deregister(task);
+              list = sm.tasks();  // avoid ConcurrentModificationException
+          }
+      }
       jmri.util.JUnitUtil.tearDown();
    }
 
