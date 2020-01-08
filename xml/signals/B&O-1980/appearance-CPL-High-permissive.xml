@@ -24,6 +24,12 @@
         <authorinitials>GM</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2019-12-30</date>
+        <authorinitials>BM</authorinitials>
+        <revremark>Correct 'held' specific appearance</revremark>
+    </revision>    
   </revhistory>
 
   <aspecttable>B&amp;O 1980</aspecttable>
@@ -115,9 +121,8 @@
       <aspect>Stop and Proceed</aspect>
     </danger>
 	
-	<!-- This file doesn't define a Stop aspect and appearance.  Should it? It's rule 292 in the aspects file. -->
     <held>
-      <aspect>Stop</aspect>
+      <aspect>Stop and Proceed</aspect>
     </held>
 	
 	<dark>

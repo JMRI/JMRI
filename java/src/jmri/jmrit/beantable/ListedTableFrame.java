@@ -11,7 +11,6 @@ import java.beans.PropertyChangeEvent;
 import java.lang.reflect.InvocationTargetException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.ResourceBundle;
 import java.util.Vector;
 import javax.swing.Box;
 import javax.swing.BoxLayout;

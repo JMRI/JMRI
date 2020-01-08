@@ -1,7 +1,6 @@
 package jmri;
 
 import java.lang.annotation.*;
-import javax.annotation.concurrent.NotThreadSafe;
 
 /**
  * Annotation denoting that specific code was auto-generated

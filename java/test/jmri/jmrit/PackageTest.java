@@ -41,6 +41,7 @@ import org.junit.runners.Suite;
         jmri.jmrit.withrottle.PackageTest.class,
         jmri.jmrit.ampmeter.PackageTest.class,
         jmri.jmrit.lcdclock.PackageTest.class,
+        jmri.jmrit.pragotronclock.PackageTest.class,
         jmri.jmrit.throttle.PackageTest.class,
         jmri.jmrit.audio.PackageTest.class,
         jmri.jmrit.turnoutoperations.PackageTest.class,

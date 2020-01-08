@@ -136,10 +136,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         if ( m.extendedOrRtr() ) {
             return;
         }
-        if (progState == NOTPROGRAMMING) {
-            // we get the complete set of replies now, so ignore these
-            return;
-        } else if (progState == COMMANDSENT) {
+        if (progState == COMMANDSENT) {
             log.debug("reply in COMMANDSENT state");
             // operation done, capture result, then have to leave programming mode
             // check for errors
@@ -173,9 +170,6 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
                     log.debug("Reply ignored: {}", m);
                 }
             }
-
-        } else {
-            log.debug("reply in un-decoded state");
         }
     }
 

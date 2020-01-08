@@ -1,7 +1,5 @@
 package jmri.jmrix.lenz;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

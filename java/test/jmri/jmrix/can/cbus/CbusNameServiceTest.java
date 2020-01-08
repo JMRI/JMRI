@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.jmrix.can.cbus.eventtable.CbusEventTableDataModel;
-import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeTableDataModel;
 import jmri.util.JUnitUtil;
 import org.junit.After;
@@ -44,13 +43,13 @@ public class CbusNameServiceTest {
 
     @Test
     public void testgetEventNodeString() {
-        CbusNameService t = new CbusNameService();
+        
+        memo.setTrafficController(tcis);
+        
+        CbusNameService t = new CbusNameService(memo);
+        
         Assert.assertEquals("EventNodeStr","NN:123 EN:456 ",t.getEventNodeString(123,456));
         Assert.assertEquals("EventNodeStr nd 0","EN:456 ",t.getEventNodeString(0,456));
-        
-        TrafficControllerScaffold tcis = new TrafficControllerScaffold();
-        CanSystemConnectionMemo memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(tcis);
         
         CbusEventTableDataModel m = new CbusEventTableDataModel(
             memo, 5, CbusEventTableDataModel.MAX_COLUMN);
@@ -91,7 +90,7 @@ public class CbusNameServiceTest {
 
     @After
     public void tearDown() {
-        
+        tcis.terminateThreads();
         tcis = null;
         memo = null;
         

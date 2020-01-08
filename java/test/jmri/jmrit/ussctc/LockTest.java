@@ -1,7 +1,5 @@
 package jmri.jmrit.ussctc;
 
-import java.util.*;
-import jmri.*;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

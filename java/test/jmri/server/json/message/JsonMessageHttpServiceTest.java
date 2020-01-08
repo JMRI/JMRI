@@ -9,8 +9,10 @@ import static org.junit.Assert.fail;
 
 import com.fasterxml.jackson.databind.node.NullNode;
 
+import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpServiceTestBase;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitUtil;
 
 public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMessageHttpService> {
@@ -18,7 +20,7 @@ public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMess
     @Test
     public void testDoGet() {
         try {
-            service.doGet(JsonMessage.MESSAGE, "", mapper.createObjectNode(), locale, 42);
+            service.doGet(JsonMessage.MESSAGE, "", mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -29,7 +31,7 @@ public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMess
     @Test
     public void testDoPut() {
         try {
-            service.doPut(JsonMessage.MESSAGE, "", mapper.createObjectNode(), locale, 42);
+            service.doPut(JsonMessage.MESSAGE, "", mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -40,7 +42,7 @@ public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMess
     @Test
     public void testDoPost() {
         try {
-            service.doPost(JsonMessage.MESSAGE, "", mapper.createObjectNode(), locale, 42);
+            service.doPost(JsonMessage.MESSAGE, "", mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -52,7 +54,7 @@ public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMess
     @Override
     public void testDoDelete() {
         try {
-            service.doDelete(JsonMessage.MESSAGE, "", NullNode.getInstance(), locale, 42);
+            service.doDelete(JsonMessage.MESSAGE, "", NullNode.getInstance(), new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP Method Not Allowed", 405, ex.getCode());
@@ -63,7 +65,7 @@ public class JsonMessageHttpServiceTest extends JsonHttpServiceTestBase<JsonMess
     @Test
     public void testDoGetList() {
         try {
-            service.doGetList(JsonMessage.MESSAGE, mapper.createObjectNode(), locale, 42);
+            service.doGetList(JsonMessage.MESSAGE, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown.");
         } catch (JsonException ex) {
             assertEquals("Error code is HTTP Bad Request", 400, ex.getCode());

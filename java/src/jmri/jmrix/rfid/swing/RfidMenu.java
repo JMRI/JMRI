@@ -1,6 +1,5 @@
 package jmri.jmrix.rfid.swing;
 
-import java.util.ResourceBundle;
 import javax.swing.JMenu;
 import javax.swing.JSeparator;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;

@@ -7,11 +7,9 @@ import jmri.JmriException;
 import jmri.util.JUnitUtil;
 import jmri.util.MathUtil;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Assume;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**

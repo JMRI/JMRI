@@ -1,6 +1,5 @@
 package jmri.jmrix.grapevine.simulator;
 
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.grapevine.GrapevineSystemConnectionMemo;

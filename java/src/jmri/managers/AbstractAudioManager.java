@@ -5,7 +5,6 @@ import javax.annotation.Nonnull;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
-import jmri.SignalSystem;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

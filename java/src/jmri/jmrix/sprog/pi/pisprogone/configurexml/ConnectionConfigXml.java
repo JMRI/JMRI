@@ -3,8 +3,6 @@ package jmri.jmrix.sprog.pi.pisprogone.configurexml;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.sprog.pi.pisprogone.ConnectionConfig;
 import jmri.jmrix.sprog.pi.pisprogone.PiSprogOneSerialDriverAdapter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening the
