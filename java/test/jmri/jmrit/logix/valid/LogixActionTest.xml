@@ -331,9 +331,9 @@
             <userName>EnableTest</userName>
             <logixConditional systemName="IXEnableTestC1" order="0" />
         </logix>
-        <logix systemName="RTXINITIALIZER" enabled="yes">
-            <systemName>RTXINITIALIZER</systemName>
-            <logixConditional systemName="RTXINITIALIZER1T" order="0" />
+        <logix systemName="IX:RTXINITIALIZER" enabled="yes">
+            <systemName>IX:RTXINITIALIZER</systemName>
+            <logixConditional systemName="IX:RTXINITIALIZER1T" order="0" />
         </logix>
     </logixs>
     <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
@@ -411,8 +411,8 @@
             <conditionalAction option="1" type="13" systemName="ActionTests" data="-1" delay="0" string="" />
             <conditionalAction option="2" type="14" systemName="ActionTests" data="-1" delay="0" string="" />
         </conditional>
-        <conditional systemName="RTXINITIALIZER1T" userName="Route 1C " antecedent="R1" logicType="3" triggerOnChange="yes">
-            <systemName>RTXINITIALIZER1T</systemName>
+        <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C " antecedent="R1" logicType="3" triggerOnChange="yes">
+            <systemName>IX:RTXINITIALIZER1T</systemName>
             <userName>Route 1C</userName>
             <conditionalStateVariable operator="4" negated="no" type="0" systemName="RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
             <conditionalAction option="1" type="9" systemName="Occupancy OB1" data="4" delay="0" string="" />

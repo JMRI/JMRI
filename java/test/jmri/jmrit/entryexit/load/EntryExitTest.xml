@@ -511,14 +511,14 @@
   </signalmastlogics>
   <logixs class="jmri.managers.configurexml.DefaultLogixManagerXml">
     <logix userName="Initialize" enabled="yes">
-      <systemName>RTXINITIALIZER</systemName>
+      <systemName>IX:RTXINITIALIZER</systemName>
       <userName>Initialize</userName>
-      <logixConditional systemName="RTXINITIALIZER1T" order="0" />
+      <logixConditional systemName="IX:RTXINITIALIZER1T" order="0" />
     </logix>
   </logixs>
   <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
-    <conditional systemName="RTXINITIALIZER1T" userName="Route 1C Initialize" antecedent="R1" logicType="3" triggerOnChange="yes">
-      <systemName>RTXINITIALIZER1T</systemName>
+    <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C Initialize" antecedent="R1" logicType="3" triggerOnChange="yes">
+      <systemName>IX:RTXINITIALIZER1T</systemName>
       <userName>Route 1C Initialize</userName>
       <conditionalStateVariable operator="4" negated="no" type="0" systemName="RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="Reset" data="2" delay="0" string="" />
