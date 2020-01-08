@@ -35,7 +35,7 @@
       <xs:documentation>
       Defines the JMRI programmer definition file "names.xml"
 
-      This version is for use with JMRI 4.19.1 and later.
+      This version is for use with JMRI 4.19.2 and later.
 
       </xs:documentation>
       <xs:appinfo>
