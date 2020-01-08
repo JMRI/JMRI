@@ -1,17 +1,11 @@
 package jmri.jmrix.can.cbus.node;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
-import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
 import jmri.jmrix.can.CanSystemConnectionMemo;
-import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants.BackupType;
-    
-// import org.slf4j.Logger;
-// import org.slf4j.LoggerFactory;
 
 /**
  * Class to represent a node imported from FCU file or CbusNodeXml.

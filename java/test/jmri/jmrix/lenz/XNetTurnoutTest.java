@@ -2,8 +2,6 @@ package jmri.jmrix.lenz;
 
 import jmri.util.JUnitUtil;
 import jmri.Turnout;
-import jmri.Sensor;
-import jmri.InstanceManager;
 import org.junit.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

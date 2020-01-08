@@ -4,7 +4,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.text.DecimalFormat;
 import java.util.*;
-import java.util.List;
 
 import javax.annotation.Nonnull;
 import javax.swing.*;

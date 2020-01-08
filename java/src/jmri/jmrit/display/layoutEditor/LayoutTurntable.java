@@ -1113,15 +1113,18 @@ public class LayoutTurntable extends LayoutTrack {
     protected void draw1(Graphics2D g2, boolean isMain, boolean isBlock) {
         float trackWidth = 2.F;
         float halfTrackWidth = trackWidth / 2.f;
-        double radius = getRadius(), diameter = radius + radius;
+        double radius = getRadius(), diameter = 2.f * radius;
 
         if (isBlock && isMain) {
+            double radius2 = Math.max(radius / 4.f, trackWidth * 2);
+            double diameter2 = radius2 * 2.f;
             Stroke stroke = g2.getStroke();
             Color color = g2.getColor();
             // draw turntable circle - default track color, side track width
             g2.setStroke(new BasicStroke(trackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND));
             g2.setColor(layoutEditor.getDefaultTrackColorColor());
             g2.draw(new Ellipse2D.Double(center.getX() - radius, center.getY() - radius, diameter, diameter));
+            g2.draw(new Ellipse2D.Double(center.getX() - radius2, center.getY() - radius2, diameter2, diameter2));
             g2.setStroke(stroke);
             g2.setColor(color);
         }

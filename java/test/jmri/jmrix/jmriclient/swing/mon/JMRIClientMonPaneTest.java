@@ -1,11 +1,9 @@
     package jmri.jmrix.jmriclient.swing.mon;
 
-import java.awt.GraphicsEnvironment;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
-import org.junit.Assume;
 import org.junit.Before;
 import org.junit.Test;
 

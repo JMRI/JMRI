@@ -3,10 +3,8 @@ package jmri.jmrit.timetable.swing;
 import java.awt.GraphicsEnvironment;
 import javax.swing.JPopupMenu;
 import javax.swing.JMenuItem;
-import jmri.jmrit.timetable.*;
 import jmri.util.JUnitUtil;
 import org.junit.*;
-import org.netbeans.jemmy.EventTool;
 import org.netbeans.jemmy.operators.*;
 
 /**

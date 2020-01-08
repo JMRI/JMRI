@@ -1,7 +1,6 @@
 package jmri.jmrix.ieee802154.swing.packetgen;
 
 import java.awt.GraphicsEnvironment;
-import jmri.jmrix.ieee802154.IEEE802154TrafficController;
 import jmri.util.JUnitUtil;
 import org.junit.*;
 

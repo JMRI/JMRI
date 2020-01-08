@@ -1,7 +1,5 @@
 package jmri.jmrix.nce.simulator;
 
-import javax.swing.JPanel;
-
 /**
  * Definition of objects to handle configuring a layout connection via an NCE
  * SerialDriverAdapter object, set up as Simulator.

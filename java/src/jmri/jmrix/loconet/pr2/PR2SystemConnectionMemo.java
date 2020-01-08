@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.pr2;
 
 import jmri.GlobalProgrammerManager;
 import jmri.InstanceManager;
-import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.jmrix.loconet.LnPr2ThrottleManager;
 import jmri.jmrix.loconet.LnPowerManager;
 import jmri.jmrix.loconet.LnTrafficController;

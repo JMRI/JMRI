@@ -12,7 +12,6 @@ import jmri.util.junit.rules.RetryRule;
 import jmri.util.swing.JemmyUtil;
 
 import org.junit.*;
-import org.junit.rules.Timeout;
 
 import org.netbeans.jemmy.operators.JDialogOperator;
 import org.netbeans.jemmy.operators.JFrameOperator;
