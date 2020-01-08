@@ -2,7 +2,6 @@ package jmri.web.servlet.panel;
 
 import java.awt.Color;
 import java.util.List;
-
 import javax.annotation.Nonnull;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -260,7 +259,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      *
      * @param e element to be updated
      */
-    private void replaceUserNames(@NonNull Element e) {
+    private void replaceUserNames(@Nonnull Element e) {
         replaceUserNameAttribute(e, "turnout", "turnoutname");
         replaceUserNameAttribute(e, "turnout", "secondturnoutname");
 
