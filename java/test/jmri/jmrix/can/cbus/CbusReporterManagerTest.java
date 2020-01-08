@@ -1,7 +1,6 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.Manager.NameValidity;
-import jmri.Reporter;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;
@@ -57,7 +56,14 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
         return "MR" + i;
     }
     
+    @Test
+    @Override
+    public void testAutoSystemNames() {
+        Assert.assertEquals("No auto system names",0,tcis.numListeners());
+    }
+    
     private CanSystemConnectionMemo memo;
+    private TrafficControllerScaffold tcis;
 
     // The minimal setup for log4J
     @Before
@@ -65,13 +71,15 @@ public class CbusReporterManagerTest extends jmri.managers.AbstractReporterMgrTe
     public void setUp() {
         JUnitUtil.setUp();
         memo = new CanSystemConnectionMemo();
-        memo.setTrafficController(new TrafficControllerScaffold());
+        tcis = new TrafficControllerScaffold();
+        memo.setTrafficController(tcis);
         l = new CbusReporterManager(memo);
     }
 
     @After
     public void tearDown() {
         l = null;
+        tcis = null;
         memo = null;
         jmri.util.JUnitUtil.clearShutDownManager();
         JUnitUtil.tearDown();

@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.locobufferii;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 
-import java.util.Arrays;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it refers to the

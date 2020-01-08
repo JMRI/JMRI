@@ -1,6 +1,5 @@
 package jmri.implementation;
 
-import java.beans.PropertyChangeListener;
 import java.util.TimerTask;
 import jmri.MultiMeter;
 import jmri.beans.Bean;

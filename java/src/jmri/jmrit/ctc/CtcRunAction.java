@@ -2,7 +2,6 @@ package jmri.jmrit.ctc;
 
 import java.awt.event.ActionEvent;
 import jmri.util.swing.JmriAbstractAction;
-import jmri.util.swing.WindowInterface;
 
 /**
  * Swing action to create and register the CTC Run Time.

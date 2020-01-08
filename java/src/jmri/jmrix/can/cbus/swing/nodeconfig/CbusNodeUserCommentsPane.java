@@ -1,13 +1,9 @@
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import javax.swing.border.Border;
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,6 +29,7 @@ public class CbusNodeUserCommentsPane extends JPanel implements KeyListener {
 
     /**
      * Create a new instance of CbusNodeSetupPane.
+     * @param main the main NodeConfigToolPane this is a pane of.
      */
     protected CbusNodeUserCommentsPane( NodeConfigToolPane main ) {
         super();
@@ -99,19 +96,28 @@ public class CbusNodeUserCommentsPane extends JPanel implements KeyListener {
     
     //typingArea.setFocusTraversalKeysEnabled(false);
 
-    /** Handle the key typed event from the text field. */
+    /** 
+     * Handle the key typed event from the text field.
+     * {@inheritDoc}
+     */
     @Override
     public void keyTyped(KeyEvent e) {
         // resetCommentButtons();
     }
 
-    /** Handle the key-pressed event from the text field. */
+    /** 
+     * Handle the key-pressed event from the text field.
+     * {@inheritDoc}
+     */
     @Override
     public void keyPressed(KeyEvent e) {
         // resetCommentButtons();
     }
 
-    /** Handle the key-released event from the text field. */
+    /** 
+     * Handle the key-released event from the text field.
+     * {@inheritDoc}
+     */
     @Override
     public void keyReleased(KeyEvent e) {
         resetCommentButtons();

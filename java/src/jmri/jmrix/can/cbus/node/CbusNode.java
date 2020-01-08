@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.node;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArraySet;
 import java.util.Iterator;
-import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -30,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * @author Steve Young Copyright (C) 2019
  */
 public class CbusNode implements CanListener {
-    private CanSystemConnectionMemo memo;
+    private final CanSystemConnectionMemo memo;
     private TrafficController tc;
     
     private int _nodeNumber;
@@ -90,10 +89,10 @@ public class CbusNode implements CanListener {
         _type = -1;
         _eventIndexValid = false;
         _flags = -1;
-        _nvTableModels = new CopyOnWriteArraySet<CbusNodeNVTableDataModel>();
-        _evTableModels = new CopyOnWriteArraySet<CbusNodeEventTableDataModel>();
-        _backupTableModels = new CopyOnWriteArraySet<CbusNodeBackupTableModel>();
-        _infoPanes = new CopyOnWriteArraySet<CbusNodeInfoPane>();
+        _nvTableModels = new CopyOnWriteArraySet<>();
+        _evTableModels = new CopyOnWriteArraySet<>();
+        _backupTableModels = new CopyOnWriteArraySet<>();
+        _infoPanes = new CopyOnWriteArraySet<>();
         if (memo != null) {
             tc = memo.getTrafficController();
             addTc(tc);
@@ -204,6 +203,7 @@ public class CbusNode implements CanListener {
     /**
      * Returns Node Number
      *
+     * @return Node Number,1-65535
      */
     public int getNodeNumber() {
         return _nodeNumber;
@@ -333,7 +333,7 @@ public class CbusNode implements CanListener {
     }
     
     private void setNodeInSlim(){
-        log.warn("Node in SLiM mode");
+        log.info("Node {} in SLiM mode",this);
         if (!backupStarted) { // 1st time in this session
             startLoadFromXml();
             getNodeBackupFile().nodeInSLiM();
@@ -404,8 +404,11 @@ public class CbusNode implements CanListener {
     }
     
     /**
-     * 
+     * Set a Single Node Parameter.
+     * Parameter array should be initialised before calling 
      *
+     * @param index Parameter Index, 
+     * @param newval New Parameter Value, 0-255
      */
     public void setParameter( int index, int newval ) {
         if ( _parameters == null ){
@@ -427,7 +430,7 @@ public class CbusNode implements CanListener {
     /**
      * Get Number of outstanding unknown Parameters to be fetched from a CbusNode
      * 
-     * @return Number of outstanding Paramteters, else 8
+     * @return Number of outstanding Parameters, else 8
      */
     public int getOutstandingParams(){
         
@@ -691,9 +694,7 @@ public class CbusNode implements CanListener {
      * that the core node has changed (eg. coming online after starting offline)
      */
     private void notifyNodeNvModelResetNvs(){
-        Iterator itr = _nvTableModels.iterator(); 
-        while (itr.hasNext()) {
-            CbusNodeNVTableDataModel model = (CbusNodeNVTableDataModel)itr.next(); 
+        for (CbusNodeNVTableDataModel model : _nvTableModels) { 
             if ( model != null) {
                 model.resetNewNvs();
                 model.fireTableDataChanged();
@@ -805,7 +806,7 @@ public class CbusNode implements CanListener {
      * @param fwMin Minor Firmware Type
      * @param fwBuild Firmware Build Number
      */
-    public void setFW( int fwMaj, int fwMin, int fwBuild ){
+    public final void setFW( int fwMaj, int fwMin, int fwBuild ){
         _fwMaj = fwMaj;
         _fwMin = fwMin;
         _fwBuild = fwBuild;
@@ -917,6 +918,7 @@ public class CbusNode implements CanListener {
     
     /**
      * Get a specific Node Variable
+     * @param index NV Index
      * @return -1 if NV's unknown, else Node Variable value.
      *
      */
@@ -1054,7 +1056,9 @@ public class CbusNode implements CanListener {
     }
     
     /**
-     * Set the Node event index as valid or invalid
+     * Set the Node event index flag as valid or invalid.
+     * <p>
+     * Resets all Node Event Indexes to -1 if invalid.
      */
     private void setEvIndexValid( boolean newval ) {
         _eventIndexValid = newval;
@@ -1140,7 +1144,6 @@ public class CbusNode implements CanListener {
             if ( evEditFrame != null ) {
                 evEditFrame.notifyDeleteEvoutcome(1,"Delete event on node sent" );
             }
-            return;
             
         }, 100 );
     }
@@ -1210,7 +1213,7 @@ public class CbusNode implements CanListener {
      */
     public void resetNodeEvents() {
         _nodeEvents = null;
-        _nodeEvents = new ArrayList<CbusNodeEvent>();
+        _nodeEvents = new ArrayList<>();
         notifyModelIfExists(CbusNodeTableDataModel.NODE_EVENTS_COLUMN);
     }
     
@@ -1235,10 +1238,7 @@ public class CbusNode implements CanListener {
     }
     
     public boolean hasLoadErrors() {
-        if  (numEvTimeoutCount + paramRequestTimeoutCount + allEvTimeoutCount > 0 ){
-            return true;
-        }
-        return false;
+        return numEvTimeoutCount + paramRequestTimeoutCount + allEvTimeoutCount > 0;
     }
     
     /**
@@ -1282,6 +1282,7 @@ public class CbusNode implements CanListener {
     
     /**
      * Add an event to the node, will not overwrite an existing event.
+     * Resets Event Index as Invalid for All Node Events
      *
      * @param newEvent the new event to be added
      */
@@ -1404,10 +1405,10 @@ public class CbusNode implements CanListener {
     }
 
     /**
-     * Get the Node event by ArrayList Index
+     * Get the Node event by ArrayList Index.
      *
      * @param index the index of the CbusNodeEvent within the ArrayList
-     * @return the list of Node Events
+     * @return the Node Event
      */
     public CbusNodeEvent getNodeEventByArrayID(int index) {
         return _nodeEvents.get(index);
@@ -2097,7 +2098,7 @@ public class CbusNode implements CanListener {
      */
     @Override
     public void message(CanMessage m) {
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
         switch ( CbusMessage.getOpcode(m) ) {
@@ -2125,7 +2126,7 @@ public class CbusNode implements CanListener {
      */
     @Override
     public void reply(CanReply m) {
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
         int opc = CbusMessage.getOpcode(m);
@@ -2468,21 +2469,14 @@ public class CbusNode implements CanListener {
      */
     protected boolean hasActiveTimers(){
         
-        if ( 
-            allParamTask != null
+        return allParamTask != null
             || allEvTimerTask != null
             || nextEvTimerTask != null
             || nextNvTimerTask != null
             || sendEnumTask != null
             || sendEditEvTask != null
             || sendEditNvTask != null
-            || numEvTimerTask != null
-        ) {
-            return true;
-        }
-        else {
-            return false;
-        }
+            || numEvTimerTask != null;
     }
     
     /**

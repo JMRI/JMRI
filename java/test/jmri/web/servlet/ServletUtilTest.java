@@ -57,7 +57,7 @@ public class ServletUtilTest {
         String name = "TEST_RAILROAD";
         Locale locale = Locale.ENGLISH;
         InstanceManager.getDefault(WebServerPreferences.class).setRailroadName(name);
-        Assert.assertEquals(Bundle.getMessage(locale, "HtmlTitle", name, title), instance.getTitle(locale, title));
+        Assert.assertEquals("TITLE | TEST_RAILROAD", instance.getTitle(locale, title));
     }
 
 }

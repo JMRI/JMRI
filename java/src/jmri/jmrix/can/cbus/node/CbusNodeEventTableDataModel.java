@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.node;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import java.util.ArrayList;
 import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.jmrix.can.cbus.CbusNameService;
 import jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolPane;
@@ -13,16 +12,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of Cbus Nodes
+ * Table data model for display of CBUS Nodes
  *
  * @author Steve Young (c) 2019
  * 
  */
 public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTableModel {
 
-    private CbusNameService nameService;
+    private final CbusNameService nameService;
     private CbusNode nodeOfInterest;
-    private NodeConfigToolPane _mainpane;
+    private final NodeConfigToolPane _mainpane;
     
     // column order needs to match list in column tooltips
     static public final int NODE_NUMBER_COLUMN = 0;
@@ -34,18 +33,18 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     static public final int EV_INDEX_COLUMN = 6;
     static public final int MAX_COLUMN = 7;
     
-    CanSystemConnectionMemo _memo;
+    private final CanSystemConnectionMemo _memo;
 
     public CbusNodeEventTableDataModel( NodeConfigToolPane mainpane, CanSystemConnectionMemo memo, int row, int column) {
         
         log.debug("Starting MERG CBUS Node Event Table");
         _mainpane = mainpane;
         _memo = memo;
-        nameService = new CbusNameService();
+        nameService = new CbusNameService(memo);
     }
     
     /**
-     * Return the number of rows to be displayed.
+     * {@inheritDoc}
      */
     @Override
     public int getRowCount() {
@@ -55,7 +54,10 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             return 0;
         }
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getColumnCount() {
         return MAX_COLUMN;
@@ -66,6 +68,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
+     * @param eventTable Table to be Configured
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns
@@ -83,9 +86,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     }
 
     /**
-     * Returns String of column name from column int
-     * used in table header
-     * @param col int col number
+     * {@inheritDoc}
      */
     @Override
     public String getColumnName(int col) { // not in any order
@@ -97,7 +98,7 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
             case NODE_EDIT_BUTTON_COLUMN:
                 return ("Edit");
             case NODE_NAME_COLUMN:
-                return ("Producer Node");
+                return ("Node Name");
             case EVENT_NAME_COLUMN:
                 return ("Event Name");
             case EV_VARS_COLUMN:
@@ -110,9 +111,10 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     }
 
     /**
-    * Returns int of startup column widths
-    * @param col int col number
-    */
+     * Returns int of startup column widths
+     * @param col int col number
+     * @return Preferred Initial Column Width
+     */
     public static int getPreferredWidth(int col) {
         switch (col) {
             case NODE_EDIT_BUTTON_COLUMN:
@@ -131,8 +133,8 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     }
     
     /**
-    * Returns column class type.
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
@@ -152,9 +154,8 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     }
     
     /**
-    * Boolean return to edit table cell or not
-    * @return boolean
-    */
+     * {@inheritDoc}
+     */
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
@@ -165,10 +166,8 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
         }
     }
 
-     /**
-     * Return table values
-     * @param row int row number
-     * @param col int col number
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Object getValueAt(int row, int col) {
@@ -209,12 +208,11 @@ public class CbusNodeEventTableDataModel extends javax.swing.table.AbstractTable
     }
     
     /**
-     *
-     *
+     * {@inheritDoc}
      */
     @Override
     public void setValueAt(Object value, int row, int col) {
-        if (col == NODE_EDIT_BUTTON_COLUMN) {
+        if (col == NODE_EDIT_BUTTON_COLUMN && _mainpane!=null) {
             
             ThreadingUtil.runOnGUIDelayed( ()->{
                 _mainpane.getEditEvFrame().initComponents(_memo, nodeOfInterest.getNodeEventByArrayID(row) );
