@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.swing.BorderFactory;
@@ -48,7 +47,6 @@ import jmri.InstanceManager;
 import jmri.Logix;
 import jmri.LogixManager;
 import jmri.Manager;
-import jmri.NamedBean;
 import jmri.UserPreferencesManager;
 import jmri.jmrit.conditional.ConditionalEditBase;
 import jmri.jmrit.conditional.ConditionalListEdit;
@@ -1644,7 +1642,7 @@ public class LogixTableAction extends AbstractTableAction<Logix> {
      * @return a TextArea, empty if reference is not used
      * @since 4.7.4
      */
-    JTextArea buildWhereUsedListing() {
+    public JTextArea buildWhereUsedListing() {
         JTextArea condText = new javax.swing.JTextArea();
         condText.setText(null);
         HashMap<String, ArrayList<String>> whereUsed = InstanceManager.getDefault(ConditionalManager.class).getWhereUsedMap();

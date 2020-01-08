@@ -1,7 +1,6 @@
 package jmri.jmrit.display.switchboardEditor;
 
 import java.io.File;
-import java.util.ArrayList;
 import jmri.configurexml.SchemaTestBase;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;

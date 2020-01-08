@@ -1,6 +1,5 @@
 package jmri.jmrix.can.cbus;
 
-import jmri.ProgListenerScaffold;
 import jmri.ProgrammingMode;
 import jmri.jmrix.can.TrafficControllerScaffold;
 import jmri.util.JUnitUtil;

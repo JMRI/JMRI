@@ -166,6 +166,8 @@ public class LogixActionTest {
 
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
+        JUnitUtil.initWarrantManager();
     }
 
     @After

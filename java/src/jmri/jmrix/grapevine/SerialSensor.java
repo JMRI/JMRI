@@ -1,8 +1,6 @@
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractSensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement Sensor for Grapevine.

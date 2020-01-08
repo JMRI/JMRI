@@ -3,7 +3,6 @@ package jmri.jmrix;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;

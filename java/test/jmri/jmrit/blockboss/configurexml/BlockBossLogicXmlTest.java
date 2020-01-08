@@ -142,6 +142,7 @@ public class BlockBossLogicXmlTest {
         JUnitUtil.setUp();
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
         
         // clear the BlockBossLogic static list
         Enumeration<BlockBossLogic> en = BlockBossLogic.entries();

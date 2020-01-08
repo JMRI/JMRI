@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -27,7 +28,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manages the ECoS Loco entries within JMRI.
+ * Class to manage the ECoS Loco entries within JMRI.
  *
  * @author Kevin Dickerson
  */
@@ -36,7 +37,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     private Hashtable<String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
     private Hashtable<Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
 
-    public EcosLocoAddressManager(EcosSystemConnectionMemo memo) {
+    public EcosLocoAddressManager(@Nonnull EcosSystemConnectionMemo memo) {
         super(memo);
         locoToRoster = new EcosLocoToRoster(getMemo());
         tc = getMemo().getTrafficController();
@@ -57,6 +58,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public EcosSystemConnectionMemo getMemo() {
         return (EcosSystemConnectionMemo) memo;
     }
@@ -76,7 +78,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
         return 65400;
     }
 
-    String rosterAttribute;
+    private String rosterAttribute;
     private RosterEntry _re;
     private boolean addLocoToRoster = false;
 
@@ -87,11 +89,14 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
      * @return the resultant system name
      */
     @Override
-    public String makeSystemName(String s) {
+    @Nonnull
+    public String makeSystemName(@Nonnull String s) {
         return s;
     }
 
+
     @Override
+    @Nonnull
     @Deprecated  // will be removed when Manager method is removed due to @Override
     public List<String> getSystemNameList() {
         return new ArrayList<String>();
@@ -108,11 +113,10 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     public boolean getLocoToRoster() {
         return addLocoToRoster;
     }
-    EcosPreferences p;
 
-    ShutDownTask ecosLocoShutDownTask;
-
-    EcosTrafficController tc;
+    private EcosPreferences p;
+    private ShutDownTask ecosLocoShutDownTask;
+    private EcosTrafficController tc;
 
     public EcosLocoAddress provideEcosLoco(String EcosObject, int DCCAddress) {
         EcosLocoAddress l = getByEcosObject(EcosObject);
@@ -208,7 +212,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
             waitPrefLoad = new Thread(new WaitPrefLoad());
             waitPrefLoad.setName("Wait for Preferences to be loaded");
             waitPrefLoad.start();
-            return;
         }
     }
 
@@ -324,7 +327,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
         boolean hasTempEntries = false;
         Enumeration<String> en = _tecos.keys();
         _tdcc.clear();
-        //This will remove/deregister non-temporary locos from the list.
+        // This will remove/deregister non-temporary locos from the list.
         while (en.hasMoreElements()) {
             String ecosObject = en.nextElement();
             if (_tecos.get(ecosObject).getEcosTempEntry()) {
@@ -358,8 +361,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
             final JCheckBox remember = new JCheckBox(Bundle.getMessage("MessageRememberSetting"));
             remember.setFont(remember.getFont().deriveFont(10f));
             remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-            //user preferences do not have the save option, but once complete the following line can be removed
-            //Need to get the method to save connection configuration.
+            // user preferences do not have the save option, but once complete the following line can be removed
+            // TODO get the method to save connection configuration.
             remember.setVisible(true);
             JButton yesButton = new JButton(Bundle.getMessage("ButtonYes"));
             JButton noButton = new JButton(Bundle.getMessage("ButtonNo"));
@@ -400,7 +403,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
         return true;
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    private java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
 
     @Override
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
@@ -578,7 +581,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
         }
     }
 
-    boolean processLocoToRosterQueue = true;
+    private boolean processLocoToRosterQueue = true;
 
     @Override
     public void reply(EcosReply m) {
@@ -708,8 +711,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     void checkLocoList(String[] ecoslines) {
         log.debug("Checking loco list");
         String loco;
-        for (int i = 0; i < ecoslines.length; i++) {
-            loco = ecoslines[i];
+        for (String ecosline : ecoslines) {
+            loco = ecosline;
             loco = loco.replaceAll("[\\n\\r]", "");
             if (getByEcosObject(loco) == null) {
                 log.debug("We are to add loco {} to the Ecos Loco List", loco);
@@ -720,21 +723,21 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
 
         String[] jmrilist = getEcosObjectArray();
         boolean nomatch = true;
-        for (int i = 0; i < jmrilist.length; i++) {
+        for (String entry : jmrilist) {
             nomatch = true;
-            for (int k = 0; k < ecoslines.length; k++) {
-                loco = ecoslines[k];
+            for (String ecosline : ecoslines) {
+                loco = ecosline;
                 loco = loco.replaceAll("[\\n\\r]", "");
-                if (loco.equals(jmrilist[i])) {
+                if (loco.equals(entry)) {
                     nomatch = false;
                     break;
                 }
             }
             if (nomatch) {
-                //We do not have a match, therefore this should be deleted from the Ecos loco Manager " + jmrilist[i]
+                // We do not have a match, therefore this should be deleted from the Ecos loco Manager " + jmrilist[i]
                 log.debug("Loco not found so need to remove from register");
-                if (getByEcosObject(jmrilist[i]).getRosterId() != null) {
-                    final String rosterid = getByEcosObject(jmrilist[i]).getRosterId();
+                if (getByEcosObject(entry).getRosterId() != null) {
+                    final String rosterid = getByEcosObject(entry).getRosterId();
                     final Roster _roster = Roster.getDefault();
                     final RosterEntry re = _roster.entryFromTitle(rosterid);
                     re.deleteAttribute(p.getRosterAttribute());
@@ -805,8 +808,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
                         }
                     }
                 }
-                //Even if we do not delete the loco from the roster, we need to remove it from the ecos list.
-                deregister(getByEcosObject(jmrilist[i]));
+                // Even if we do not delete the loco from the roster, we need to remove it from the ecos list.
+                deregister(getByEcosObject(entry));
             }
         }
     }
@@ -833,9 +836,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
 
     }
 
-    EcosLocoToRoster locoToRoster;
-
-    Thread waitPrefLoad;
+    private EcosLocoToRoster locoToRoster;
+    private Thread waitPrefLoad;
 
     private class WaitPrefLoad implements Runnable {
 
@@ -889,7 +891,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
         if (monitorState) {
             List<String> objects = getEcosObjectList();
             for (int x = 0; x < objects.size(); x++) {
-                //Do a release before anything else.
+                // Do a release before anything else.
                 m = new EcosMessage("release(" + getByEcosObject(objects.get(x)) + ", view, control)");
                 tc.sendEcosMessage(m, this);
             }
@@ -909,6 +911,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager<NamedB
     }
 
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage("EcosLocoAddresses");
     }

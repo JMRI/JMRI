@@ -89,10 +89,12 @@ public class LoadAndCheckTest {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
+        System.setProperty("jmri.test.no-dialogs", "true");
     }
 
     @After
     public void tearDown() {
         JUnitUtil.tearDown();
+        System.setProperty("jmri.test.no-dialogs", "false");
     }
 }

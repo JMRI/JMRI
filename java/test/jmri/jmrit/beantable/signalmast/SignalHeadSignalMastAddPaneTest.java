@@ -4,7 +4,6 @@ import jmri.*;
 import jmri.implementation.*;
 import jmri.util.*;
 
-import java.util.*;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -52,6 +51,7 @@ public class SignalHeadSignalMastAddPaneTest extends AbstractSignalMastAddPaneTe
     public void setUp() {
         JUnitUtil.setUp();
         JUnitUtil.initDefaultUserMessagePreferences();
+        JUnitUtil.initInternalSignalHeadManager();
     }
 
     @After

@@ -1,5 +1,6 @@
 package jmri.jmrix.pi;
 
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 
 /**
@@ -21,12 +22,13 @@ public class RaspberryPiTurnoutManager extends jmri.managers.AbstractTurnoutMana
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public RaspberryPiSystemConnectionMemo getMemo() {
         return (RaspberryPiSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         Turnout t = new RaspberryPiTurnout(systemName, userName);
         return t;
     }

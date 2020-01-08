@@ -1,7 +1,6 @@
 package jmri.jmrit.display;
 
 import java.awt.GraphicsEnvironment;
-import javax.swing.JComponent;
 import jmri.NamedBeanHandle;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;

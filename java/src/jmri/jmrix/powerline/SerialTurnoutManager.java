@@ -82,7 +82,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = tc.getAdapterMemo().getSerialAddress().normalizeSystemName(systemName);
         if (sName.equals("")) {
@@ -110,7 +110,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String name, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String name, @Nonnull Locale locale) {
         return tc.getAdapterMemo().getSerialAddress().validateSystemNameFormat(name, typeLetter(), locale);
     }
 
@@ -118,7 +119,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return tc.getAdapterMemo().getSerialAddress().validSystemNameFormat(systemName, typeLetter());
     }
 
@@ -133,5 +134,3 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     private final static Logger log = LoggerFactory.getLogger(SerialTurnoutManager.class);
 
 }
-
-

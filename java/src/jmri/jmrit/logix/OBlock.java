@@ -15,7 +15,6 @@ import jmri.NamedBeanHandle;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.Turnout;
-import jmri.jmrit.beantable.oblock.OBlockTableModel;
 import jmri.util.ThreadingUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

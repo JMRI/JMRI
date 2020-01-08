@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.annotation.CheckForNull;
 import javax.annotation.Nonnull;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
@@ -39,9 +40,9 @@ public class CbusAddress {
     // 7: optional "N"
     // 8: node number
     // 9: event number
-    static final String singleAddressPattern = "((\\+|-)?\\d++)|([Xx](\\p{XDigit}\\p{XDigit}){1,8})|((\\+|-)?([Nn])?(\\d++)[Ee](\\d++))";
+    static final String SINGLE_ADDRESS_PATTERN = "((\\+|-)?\\d++)|([Xx](\\p{XDigit}\\p{XDigit}){1,8})|((\\+|-)?([Nn])?(\\d++)[Ee](\\d++))";
 
-    private Matcher hCode = Pattern.compile("^" + singleAddressPattern + "$").matcher("");
+    private final Matcher hCode = Pattern.compile("^" + SINGLE_ADDRESS_PATTERN + "$").matcher("");
 
     String aString = null;
     int[] aFrame = null;
@@ -51,6 +52,7 @@ public class CbusAddress {
 
     /**
      * Construct from string without leading system or type letters.
+     * @param s CBUS Hardware Address format
      */
     public CbusAddress(String s) {
         aString = s;
@@ -71,24 +73,22 @@ public class CbusAddress {
                 aFrame[1] = (node >> 8) & 0xff;
 
                 // add command
-                if (aString.substring(0, 1).equals("+")) {
-                    if (node > 0) {
-                        aFrame[0] = CbusConstants.CBUS_ACON;
-                    } else {
-                        aFrame[0] = CbusConstants.CBUS_ASON;
-                    }
-                } else if (aString.substring(0, 1).equals("-")) {
-                    if (node > 0) {
-                        aFrame[0] = CbusConstants.CBUS_ACOF;
-                    } else {
-                        aFrame[0] = CbusConstants.CBUS_ASOF;
-                    }
-                } else {   // default
-                    if (node > 0) {
-                        aFrame[0] = CbusConstants.CBUS_ACON;
-                    } else {
-                        aFrame[0] = CbusConstants.CBUS_ASON;
-                    }
+                switch (aString.substring(0, 1)) {
+                    case "-":
+                        if (node > 0) {
+                            aFrame[0] = CbusConstants.CBUS_ACOF;
+                        } else {
+                            aFrame[0] = CbusConstants.CBUS_ASOF;
+                        }   
+                        break;
+                    case "+":
+                    default:
+                        if (node > 0) {
+                            aFrame[0] = CbusConstants.CBUS_ACON;
+                        } else {
+                            aFrame[0] = CbusConstants.CBUS_ASON;
+                        }
+                        break;
                 }
             } else if (hCode.group(3) != null) {
                 // hit on hex form
@@ -129,6 +129,7 @@ public class CbusAddress {
 
     /**
      * Two addresses are equal if they result in the same numeric contents.
+     * @param r The other CbusAddress to compare
      */
     @Override
     public boolean equals(Object r) {
@@ -293,13 +294,15 @@ public class CbusAddress {
     /**
      * Increments a CBUS address by 1 eg +123 to +124 eg -N123E456 to -N123E457
      *
+     * @param testAddr initial CbusAddress String, eg -N123E456
      * @return null if unable to make the address
      */
+    @CheckForNull
     public static String getIncrement(@Nonnull String testAddr) {
         log.debug("testing address {}", testAddr);
         CbusAddress a = new CbusAddress(testAddr);
         CbusAddress[] v = a.split();
-        String newString = "";
+        String newString;
         switch (v.length) {
             case 2:
                 int lasta = StringUtil.getLastIntFromString(v[0].toString());
@@ -325,12 +328,13 @@ public class CbusAddress {
     }
 
     /**
-     * Work out the details for Cbus hardware address validation. Logging of
-     * handled cases no higher than WARN.
+     * Work out the details for CBUS hardware address validation.
+     * Logging of handled cases no higher than WARN.
      *
      * @param address the hardware address to check
-     * @throws IllegalArgumentException when delimiter is not found or contains
-     *                                  too many parts
+     * @return same address if all OK
+     * @throws IllegalArgumentException when delimiter is not found 
+     * or contains too many parts
      */
     public static String validateSysName(String address) throws IllegalArgumentException {
 
@@ -364,7 +368,7 @@ public class CbusAddress {
                 if (address.startsWith("+") || address.startsWith("-")) {
                     break;
                 }
-                int unsigned = 0;
+                int unsigned;
                 try {
                     unsigned = Integer.parseInt(address); // accept unsigned integer
                     if (unsigned > 100000) {
@@ -389,7 +393,7 @@ public class CbusAddress {
      * @param testpart    string part of Cbus address to check, will accept
      *                    unsigned single integer
      * @param plusOrMinus character to add in front if not yet present
-     * @return part of Cbus address including + or - (on off) sign
+     * @return part of CBUS address including + or - (on off) sign
      */
     private static String checkPartOfName(String testpart, String plusOrMinus) {
         int unsigned = 0;
@@ -411,13 +415,6 @@ public class CbusAddress {
             if (unsigned < -65535 && unsigned > -100000) {
                 throw new IllegalArgumentException("Off Too big for an event, too low for node + event : " + part);
             }
-            if (part == "+0") {
-                throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
-            }
-            if (part == "-0") {
-                throw new IllegalArgumentException("Event cannot be 0 in address: " + part);
-            }
-
         } catch (NumberFormatException ex) {
             log.debug("Unable to convert {} into Cbus format +nn", part);
         }
@@ -453,6 +450,7 @@ public class CbusAddress {
 
     /**
      * Used in Testing.
+     * @return true if split length is 1 or 2, else false.
      */
     public boolean checkSplit() {
         switch (split().length) {
@@ -477,7 +475,8 @@ public class CbusAddress {
     }
 
     /**
-     * eg. x9801D203A4 or x90007B01C8
+     * eg.x9801D203A4 or x90007B01C8
+     * @return x followed by Can Frame Data
      */
     public String toCanonicalString() {
         String retval = "x";

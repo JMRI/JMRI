@@ -1,10 +1,11 @@
 package jmri.jmrix.nce;
 
-import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import jmri.util.JUnitUtil;
 
 /**
  * JUnit tests for the NceReplyclass
@@ -197,7 +198,7 @@ public class NceReplyTest extends jmri.jmrix.AbstractMessageTestBase {
     @Override
     @Before
     public void setUp() {
-        jmri.util.JUnitUtil.setUp();
+        JUnitUtil.setUp();
         tc = new NceTrafficController();
         m = msg = new NceReply(tc);
     }
@@ -207,7 +208,7 @@ public class NceReplyTest extends jmri.jmrix.AbstractMessageTestBase {
 	    m = msg = null;
 	    tc = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
-        jmri.util.JUnitUtil.tearDown();
+        JUnitUtil.tearDown();
     }
 
 }

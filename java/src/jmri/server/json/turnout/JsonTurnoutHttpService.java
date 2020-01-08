@@ -12,15 +12,16 @@ import static jmri.server.json.turnout.JsonTurnoutServiceFactory.TURNOUTS;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.ProvidingManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonNamedBeanHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  *
@@ -33,8 +34,8 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
     }
 
     @Override
-    public ObjectNode doGet(Turnout turnout, String name, String type, Locale locale, int id) throws JsonException {
-        ObjectNode root = this.getNamedBean(turnout, name, type, locale, id); // throws JsonException if turnout == null
+    public ObjectNode doGet(Turnout turnout, String name, String type, JsonRequest request) throws JsonException {
+        ObjectNode root = this.getNamedBean(turnout, name, type, request); // throws JsonException if turnout == null
         ObjectNode data = root.with(JSON.DATA);
         if (turnout != null) {
             data.put(INVERTED, turnout.getInverted());
@@ -45,10 +46,10 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                 case Turnout.CLOSED:
                     data.put(STATE, CLOSED);
                     break;
-                case Turnout.INCONSISTENT:
+                case NamedBean.INCONSISTENT:
                     data.put(STATE, INCONSISTENT);
                     break;
-                case Turnout.UNKNOWN:
+                case NamedBean.UNKNOWN:
                 default:
                     data.put(STATE, UNKNOWN);
                     break;
@@ -58,7 +59,7 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
     }
 
     @Override
-    public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public ObjectNode doPost(Turnout turnout, String name, String type, JsonNode data, JsonRequest request) throws JsonException {
         if (data.path(INVERTED).isBoolean()) {
             turnout.setInverted(data.path(INVERTED).asBoolean());
         }
@@ -74,13 +75,13 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                 // leave state alone in this case
                 break;
             default:
-                throw new JsonException(400, Bundle.getMessage(locale, "ErrorUnknownState", TURNOUT, state), id);
+                throw new JsonException(400, Bundle.getMessage(request.locale, "ErrorUnknownState", TURNOUT, state), request.id);
         }
-        return this.doGet(turnout, name, type, locale, id);
+        return this.doGet(turnout, name, type, request);
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
         switch (type) {
             case TURNOUT:
             case TURNOUTS:
@@ -88,9 +89,9 @@ public class JsonTurnoutHttpService extends JsonNamedBeanHttpService<Turnout> {
                         server,
                         "jmri/server/json/turnout/turnout-server.json",
                         "jmri/server/json/turnout/turnout-client.json",
-                        id);
+                        request.id);
             default:
-                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), request.id);
         }
     }
 

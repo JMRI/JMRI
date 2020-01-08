@@ -1,7 +1,6 @@
 package jmri.jmrix.mqtt;
 
 import javax.annotation.Nonnull;
-
 import jmri.JmriException;
 import jmri.Turnout;
 
@@ -34,6 +33,7 @@ public class MqttTurnoutManager extends jmri.managers.AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public MqttSystemConnectionMemo getMemo() {
         return (MqttSystemConnectionMemo) memo;
     }

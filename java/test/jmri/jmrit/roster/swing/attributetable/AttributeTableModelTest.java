@@ -1,6 +1,5 @@
 package jmri.jmrit.roster.swing.attributetable;
 
-import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.util.JUnitUtil;

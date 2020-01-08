@@ -1,18 +1,11 @@
 package jmri.jmrit.ctc;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyVetoException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Set;
 import jmri.InstanceManager;
 import jmri.JmriException;
-import jmri.NamedBean;
 import jmri.NamedBeanHandle;
 import jmri.NamedBeanHandleManager;
-import jmri.Reporter;
 import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.jmrit.ctc.ctcserialdata.ProjectsCommonSubs;

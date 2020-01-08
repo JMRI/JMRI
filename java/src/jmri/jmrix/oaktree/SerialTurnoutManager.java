@@ -1,6 +1,7 @@
 package jmri.jmrix.oaktree;
 
 import java.util.Locale;
+import javax.annotation.Nonnull;
 import jmri.Turnout;
 import jmri.managers.AbstractTurnoutManager;
 import org.slf4j.Logger;
@@ -24,12 +25,13 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
+    @Nonnull
     public OakTreeSystemConnectionMemo getMemo() {
         return (OakTreeSystemConnectionMemo) memo;
     }
 
     @Override
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(@Nonnull String systemName, String userName) {
         // validate the system name, and normalize it
         String sName = SerialAddress.normalizeSystemName(systemName, getSystemPrefix());
         if (sName.equals("")) {
@@ -53,7 +55,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         // does system name correspond to configured hardware
         if (!SerialAddress.validSystemNameConfig(sName, 'T', getMemo())) {
             // system name does not correspond to configured hardware
-            log.warn("Turnout '{}' refers to an undefined Serial Node.", sName);
+            log.warn("Turnout '{}' refers to an undefined Serial Node", sName);
         }
         return t;
     }
@@ -62,7 +64,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public String validateSystemNameFormat(String systemName, Locale locale) {
+    @Nonnull
+    public String validateSystemNameFormat(@Nonnull String systemName, @Nonnull Locale locale) {
         return SerialAddress.validateSystemNameFormat(systemName, getSystemNamePrefix(), locale);
     }
 
@@ -70,12 +73,12 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
      * {@inheritDoc}
      */
     @Override
-    public NameValidity validSystemNameFormat(String systemName) {
+    public NameValidity validSystemNameFormat(@Nonnull String systemName) {
         return (SerialAddress.validSystemNameFormat(systemName, typeLetter(), getSystemPrefix()));
     }
 
     @Override
-    public boolean allowMultipleAdditions(String systemName) {
+    public boolean allowMultipleAdditions(@Nonnull String systemName) {
         return true;
     }
 

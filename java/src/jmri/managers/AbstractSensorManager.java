@@ -2,7 +2,7 @@ package jmri.managers;
 
 import java.util.Enumeration;
 import java.util.Objects;
-
+import javax.annotation.Nonnull;
 import jmri.JmriException;
 import jmri.Manager;
 import jmri.Sensor;
@@ -10,7 +10,6 @@ import jmri.SensorManager;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.annotation.Nonnull;
 
 /**
  * Abstract base implementation of the SensorManager interface.
@@ -73,6 +72,7 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
      * Special handling for numeric argument, which is treated as the suffix of a new system name
     */
     @Override
+
     public Sensor getBySystemName(@Nonnull String key) {
         if (isNumber(key)) {
             key = makeSystemName(key);
@@ -84,9 +84,9 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     @Override
     @Nonnull
     public Sensor newSensor(@Nonnull String systemName, String userName) throws IllegalArgumentException {
-        log.debug(" newSensor(\"{}\", \"{}\")", systemName, userName);
-        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was " + ((userName == null) ? "null" : userName));  // NOI18N
-
+        log.debug(" newSensor(\"{}\", \"{}\")", systemName, (userName == null ? "null" : userName));
+        Objects.requireNonNull(systemName, "SystemName cannot be null. UserName was "
+                + (userName == null ? "null" : userName));  // NOI18N
         systemName = validateSystemNameFormat(systemName);
         // return existing if there is one
         Sensor s;
@@ -105,15 +105,8 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
             }
             return s;
         }
-
         // doesn't exist, make a new one
         s = createNewSensor(systemName, userName);
-
-        // if that failed, blame it on the input arguments
-        if (s == null) {
-            throw new IllegalArgumentException();
-        }
-
         // save in the maps
         register(s);
 
@@ -136,19 +129,21 @@ public abstract class AbstractSensorManager extends AbstractManager<Sensor> impl
     }
 
     /**
-     * Internal method to invoke the factory, after all the logic for returning
-     * an existing Sensor has been invoked.
+     * Internal method to invoke the factory and create a new Sensor based on the system
+     * name and optional user name, after all the logic for returning an existing Sensor
+     * has been invoked.
      *
      * @param systemName the system name to use for the new Sensor
-     * @param userName   the user name to use for the new Sensor
+     * @param userName   the optional user name to use for the new Sensor
      * @return a new Sensor
      */
-    abstract protected Sensor createNewSensor(String systemName, String userName);
+    @Nonnull
+    abstract protected Sensor createNewSensor(@Nonnull String systemName, String userName);
 
     /**
      * {@inheritDoc}
      * Note that this null implementation only needs be implemented in
-     * system-specific Sensor Managers where readout of sensor status from the
+     * system-specific SensorManagers where readout of sensor status from the
      * layout is possible.
      */
     @Override

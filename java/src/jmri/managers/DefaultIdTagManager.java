@@ -15,7 +15,6 @@ import jmri.InstanceManager;
 import jmri.Reporter;
 import jmri.ShutDownManager;
 import jmri.ShutDownTask;
-import jmri.SignalHead;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.implementation.DefaultIdTag;
 import jmri.jmrix.SystemConnectionMemo;
@@ -198,7 +197,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         if (!initialised && !loading) {
             init();
         }
-        log.debug("new IdTag:{};{}", systemName, (userName == null) ? "null" : userName); // NOI18N
+        log.debug("new IdTag:{};{}", systemName, (userName == null ? "null" : userName)); // NOI18N
         Objects.requireNonNull(systemName, "SystemName cannot be null.");
 
         // return existing if there is one
@@ -359,6 +358,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
 
     /** {@inheritDoc} */
     @Override
+    @Nonnull
     public String getBeanTypeHandled(boolean plural) {
         return Bundle.getMessage(plural ? "BeanNameReporters" : "BeanNameReporter");
     }
@@ -377,6 +377,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
     public static class Initializer extends AbstractInstanceInitializer {
 
         @Override
+        @Nonnull
         public <T> Object getDefault(Class<T> type) throws IllegalArgumentException {
             if (type.equals(IdTagManager.class)) {
                 return new DefaultIdTagManager(InstanceManager.getDefault(InternalSystemConnectionMemo.class));
@@ -385,6 +386,7 @@ public class DefaultIdTagManager extends AbstractManager<IdTag> implements IdTag
         }
 
         @Override
+        @Nonnull
         public Set<Class<?>> getInitalizes() {
             Set<Class<?>> set = super.getInitalizes();
             set.add(IdTagManager.class);

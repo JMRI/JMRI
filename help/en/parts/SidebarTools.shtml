@@ -1,6 +1,6 @@
 <!-- SidebarTools.shtml -->
 <!-- This is the common sidebar definition for Tools pages -->
-		<dt><h3><a href="tools/index.shtml">Tools</a></h3></dt>
+		<dt><h3><a href="/help/en/html/tools/">Tools</a></h3></dt>
 		<dd>JMRI provides powerful tools for working with your
 		layout.
 		<ul>

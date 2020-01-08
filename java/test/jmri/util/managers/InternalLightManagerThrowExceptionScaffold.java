@@ -22,7 +22,7 @@ public class InternalLightManagerThrowExceptionScaffold extends InternalLightMan
     
     /** {@inheritDoc} */
     @Override
-    protected Light createNewLight(String systemName, String userName) {
+    protected Light createNewLight(@Nonnull String systemName, String userName) {
         throw new IllegalArgumentException("Illegal argument");
     }
     

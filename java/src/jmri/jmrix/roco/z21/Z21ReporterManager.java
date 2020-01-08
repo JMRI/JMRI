@@ -61,7 +61,7 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
     }
 
     @Override
-    public Reporter createNewReporter(String systemName, String userName) {
+    public Reporter createNewReporter(@Nonnull String systemName, String userName) {
         if (!systemName.matches(getSystemPrefix() + typeLetter() + "[" + 1 + "]")) {
             int bitNum = Z21CanBusAddress.getBitFromSystemName(systemName, getSystemPrefix());
             if (bitNum != -1) {
@@ -110,19 +110,19 @@ public class Z21ReporterManager extends jmri.managers.AbstractReporterManager im
                 int netID = (msg.getElement(4) & 0xFF) + ((msg.getElement(5) & 0xFF) << 8);
                 int msgPort = (msg.getElement(8) & 0xFF);
                 int address = (msg.getElement(6) & 0xFF) + ((msg.getElement(7) & 0xFF) << 8);
-                String sysName = Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),address,msgPort);
-                log.debug("asking for reporter {}", sysName);
-                Z21CanReporter r = (Z21CanReporter) getBySystemName(sysName);
+                String systemName = Z21CanBusAddress.buildDecimalSystemNameFromParts(getSystemPrefix(),typeLetter(),address,msgPort);
+                log.debug("asking for reporter {}", systemName);
+                Z21CanReporter r = (Z21CanReporter) getBySystemName(systemName);
                 if (null == r) {
                     // try with the module's CAN network ID
-                    sysName = Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),netID,msgPort);
-                    log.debug("not found; asking for reporter {}", sysName);
-                    r = (Z21CanReporter) getBySystemName(sysName);
+                    systemName = Z21CanBusAddress.buildHexSystemNameFromParts(getSystemPrefix(),typeLetter(),netID,msgPort);
+                    log.debug("not found; asking for reporter {}", systemName);
+                    r = (Z21CanReporter) getBySystemName(systemName);
                     if (null == r) {
-                        log.debug("Creating reporter {}", sysName);
+                        log.debug("Creating reporter {}", systemName);
                         // need to create a new one, and send the message on 
                         // to the newly created object.
-                        ((Z21CanReporter) provideReporter(sysName)).reply(msg);
+                        ((Z21CanReporter) provideReporter(systemName)).reply(msg);
                     }
                 }
             }

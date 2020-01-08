@@ -3,16 +3,21 @@
 	<hr class="hide">
 	
     <div id="side"> <!-- Block of text on left side of page -->
-        <div style="text-align: center">JMRI is...</div>
+        <div style="text-align: center">JMRI&reg; is...</div>
         <dl>
 
             <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
 
-            <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->
-
             <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+	    
+	    <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
 
          </dl>
+	 
+    <a href="/donations.shtml">
+     <img src="http://sourceforge.net/images/project-support.jpg" width="88" height="32" border="0" ALIGN="RIGHT" alt="Donate to JMRI" />
+    </a>
+	 
 
     </div> <!-- closes #side -->
 

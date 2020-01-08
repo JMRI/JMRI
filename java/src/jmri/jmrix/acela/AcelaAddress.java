@@ -1,6 +1,7 @@
 package jmri.jmrix.acela;
 
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import javax.annotation.Nonnull;
 import jmri.Manager.NameValidity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -114,7 +115,7 @@ public class AcelaAddress {
      *
      * @return 'true' if system name has a valid format, else return 'false'
      */
-    public static NameValidity validSystemNameFormat(String systemName, char type, String prefix) {
+    public static NameValidity validSystemNameFormat(@Nonnull String systemName, char type, String prefix) {
         // validate the system Name leader characters
         if (!systemName.startsWith(prefix + type )) {
             // here if an illegal format 
@@ -129,7 +130,7 @@ public class AcelaAddress {
             return NameValidity.INVALID;
         }
         if (num >= 0) {
-            // This is a ALnnxxx address
+            // This is an ALnnxxx address
             return NameValidity.VALID;
         } else {
             log.debug("invalid Acela system name: {}", systemName);

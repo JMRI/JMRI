@@ -385,6 +385,7 @@ public class LinkedWarrantTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initOBlockManager();
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.initWarrantManager();
         JUnitUtil.initDebugThrottleManager();
 
@@ -402,7 +403,6 @@ public class LinkedWarrantTest {
         _sensorMgr.dispose();
         _sensorMgr = null;
         
-        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 }

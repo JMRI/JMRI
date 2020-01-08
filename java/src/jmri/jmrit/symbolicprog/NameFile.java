@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import jmri.InstanceInitializer;
-import jmri.InstanceManager;
 import jmri.implementation.AbstractInstanceInitializer;
 import jmri.jmrit.XmlFile;
 import org.jdom2.Element;

@@ -1,4 +1,4 @@
-<!-- Sidebar -->
+<!-- Sidebar.shtml -->
 <!-- This is the common sidebar definition for html/tools/scripting pages -->
 	  <hr class="hide">
 	  <div id="side"> <!-- Block of text on left side of page -->
@@ -31,7 +31,10 @@
 
             <!--#include virtual="/help/en/parts/SidebarTools.shtml" -->
 
-            <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->	
+            <!--#include virtual="/help/en/parts/SidebarLayoutAutomation.shtml" -->
+	    
+   	    <!--#include virtual="/help/en/parts/SidebarSupportedHardware.shtml" -->    
+
 
 	  </dl>
 
@@ -42,4 +45,4 @@
     <script type="text/javascript" src="/web/js/here.js"></script>
     <!-- /Sidebar-Tail -->
 
-<!-- /Sidebar -->
+<!-- /Sidebar.shtml -->
