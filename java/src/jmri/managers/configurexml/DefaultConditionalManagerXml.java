@@ -302,8 +302,10 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 }
                 variable.setType(Conditional.Type.getOperatorFromIntValue(
                         Integer.parseInt(cvar.getAttribute("type").getValue())));  // NOI18N
-                variable.setName(cvar
-                        .getAttribute("systemName").getValue());  // NOI18N
+
+                String tempName = cvar.getAttribute("systemName").getValue();  // NOI18N
+                variable.setName(tempName.equals("RTXINITIALIZER") ? systemNamePrefix + ":" + tempName : tempName);  // NOI18N
+
                 if (cvar.getAttribute("dataString") != null) {  // NOI18N
                     variable.setDataString(cvar
                             .getAttribute("dataString").getValue());  // NOI18N

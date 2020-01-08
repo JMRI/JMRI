@@ -414,7 +414,7 @@
         <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C " antecedent="R1" logicType="3" triggerOnChange="yes">
             <systemName>IX:RTXINITIALIZER1T</systemName>
             <userName>Route 1C</userName>
-            <conditionalStateVariable operator="4" negated="no" type="0" systemName="RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
+            <conditionalStateVariable operator="4" negated="no" type="0" systemName="IX:RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
             <conditionalAction option="1" type="9" systemName="Occupancy OB1" data="4" delay="0" string="" />
             <conditionalAction option="1" type="9" systemName="Occupancy OB2" data="4" delay="0" string="" />
             <conditionalAction option="1" type="9" systemName="Occupancy OB3" data="4" delay="0" string="" />

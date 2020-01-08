@@ -520,7 +520,7 @@
     <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C Initialize" antecedent="R1" logicType="3" triggerOnChange="yes">
       <systemName>IX:RTXINITIALIZER1T</systemName>
       <userName>Route 1C Initialize</userName>
-      <conditionalStateVariable operator="4" negated="no" type="0" systemName="RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="0" systemName="IX:RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="9" systemName="Reset" data="2" delay="0" string="" />
     </conditional>
   </conditionals>
