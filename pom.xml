@@ -403,6 +403,9 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${surefire.version}</version>
                 <configuration>
+	                <additionalClasspathElements>
+	                	<additionalClasspathElement>${basedir}</additionalClasspathElement>
+	                </additionalClasspathElements>
                     <excludes>
                         <!-- ignore until #3492 is resolved -->
                         <exclude>%regex[jmri.jmrix.loconet.locormi.LnMessage[Client|Server]Test]</exclude>

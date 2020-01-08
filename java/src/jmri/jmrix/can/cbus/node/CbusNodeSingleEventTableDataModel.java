@@ -2,6 +2,7 @@ package jmri.jmrix.can.cbus.node;
 
 import java.util.Arrays;
 import java.util.ArrayList;
+import javax.annotation.CheckForNull;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import jmri.jmrix.can.CanSystemConnectionMemo;
@@ -19,9 +20,8 @@ import org.slf4j.LoggerFactory;
  */
 public class CbusNodeSingleEventTableDataModel extends javax.swing.table.AbstractTableModel {
 
-    private CbusNodeTableDataModel nodeModel = null;
     public int[] newEVs;
-    private CbusNodeEvent _ndEv;
+    private final CbusNodeEvent _ndEv;
     
     // column order needs to match list in column tooltips
     static public final int EV_NUMBER_COLUMN = 0;
@@ -38,7 +38,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
         log.debug("Starting a Single Node Event Variable Model");
 
         _ndEv = ndEv;
-        if ( _ndEv._evVarArr == null ) {
+        if ( _ndEv.getEvVarArray() == null ) {
             newEVs = new int[0];
         }
         else {
@@ -50,27 +50,35 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
                 _ndEv._evVarArr.length);
             log.debug(" set ev var arr length {} data {}",newEVs.length, newEVs);
         }
+        setTableModel();
+    }
+    
+    public final void setTableModel(){
         _ndEv.setEditTableModel(this);
     }
     
     /**
-     * Return the number of rows to be displayed.
+     * {@inheritDoc}
      */
     @Override
     public int getRowCount() {
         return _ndEv.getNumEvVars();
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getColumnCount() {
         return MAX_COLUMN;
     }
-
+    
     /**
      * Configure a table to have our standard rows and columns.
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
+     * @param eventTable Table to configure
      */
     public void configureTable(JTable eventTable) {
         // allow reordering of the columns
@@ -117,6 +125,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     /**
     * Returns int of startup column widths
     * @param col int col number
+    * @return preferred initial width
     */
     public static int getPreferredWidth(int col) {
         switch (col) {
@@ -135,8 +144,8 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     }
     
     /**
-    * Returns column class type.
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
@@ -151,9 +160,8 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     }
     
     /**
-    * Boolean return to edit table cell or not
-    * @return boolean
-    */
+     * {@inheritDoc}
+     */
     @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
@@ -164,10 +172,8 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
         }
     }
 
-     /**
-     * Return table values
-     * @param row int row number
-     * @param col int col number
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Object getValueAt(int row, int col) {
@@ -223,8 +229,7 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     }
     
     /**
-     *
-     *
+     * {@inheritDoc}
      */
     @Override
     public void setValueAt(Object value, int row, int col) {
@@ -243,7 +248,6 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     }
     
     public boolean isTableLoaded(){
-        
         if ( getRowCount() < 1 ) {
             return false;
         }
@@ -261,13 +265,8 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     }
     
     public boolean isSingleEvDirty( int evToCheck ) {
-        
-        if ( ( (int) getValueAt(evToCheck,EV_CURRENT_VAL_COLUMN) ) != (
-            (int) getValueAt(evToCheck,EV_SELECT_COLUMN) ) ) {
-            return true;
-        }
-        return false;
-        
+        return ( (int) getValueAt(evToCheck,EV_CURRENT_VAL_COLUMN) ) != (
+            (int) getValueAt(evToCheck,EV_SELECT_COLUMN) );
     }
     
     public boolean isTableDirty() {
@@ -295,15 +294,18 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
     }
     
     public void resetnewEVs() {
-        
         for (int i = 0; i < getRowCount(); i++) {
             setValueAt( getValueAt(i,EV_CURRENT_VAL_COLUMN), i, EV_SELECT_COLUMN);
         }
-        
+    }
+
+    @CheckForNull
+    private CbusNode getEventNode(){
+        CbusNodeTableDataModel nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
+        return nodeModel.getNodeByNodeNum( _ndEv.getParentNn() );
     }
     
     public void passNewEvToNode ( CbusNodeEditEventFrame frame ) {
-        
         CbusNodeEvent newevent = new CbusNodeEvent(
                 frame.getNodeVal(),
                 frame.getEventVal(),
@@ -313,46 +315,33 @@ public class CbusNodeSingleEventTableDataModel extends javax.swing.table.Abstrac
         
         newevent.setEvArr(newEVs);
         
-        ArrayList<CbusNodeEvent> eventArray = new ArrayList<CbusNodeEvent>(1);
+        ArrayList<CbusNodeEvent> eventArray = new ArrayList<>(1);
         eventArray.add(newevent);
         log.debug(" pass changes arr length {} ",newEVs.length);
-        try {
-            nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-            nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).sendNewEvSToNode( eventArray, frame, null);
-        } catch (NullPointerException e) {
-            log.error("Unable to get Node Table from Instance Manager");
+
+        CbusNode tmpNode = getEventNode();
+        if (tmpNode!=null) {
+            tmpNode.sendNewEvSToNode( eventArray, frame, null);
         }
-        
     }
 
     public void passEditEvToNode( CbusNodeEditEventFrame frame ) {
-
         if ( frame.spinnersDirty() ) {
-            
-            try {
-                nodeModel = jmri.InstanceManager.getDefault(CbusNodeTableDataModel.class);
-                // learn mode - timeout, no feedback from node
-                // unlearn event - timeout, no feedback from node
-                // this should take 100ms
-                nodeModel.getNodeByNodeNum( _ndEv.getParentNn() ).deleteEvOnNode(_ndEv.getNn(), _ndEv.getEn(), null );
-            } catch (NullPointerException e) {
-                log.error("Unable to get Node Table from Instance Manager");
+            CbusNode tmpNode = getEventNode();
+            if (tmpNode!=null) {
+                tmpNode.deleteEvOnNode(_ndEv.getNn(), _ndEv.getEn(), null );
             }
             
             // learn mode - to reset after unlearn, timeout, no feedback from node
             // teach new event ( as brand new event )
             // notify frame
             ThreadingUtil.runOnLayoutDelayed( () -> {
-            
                 passNewEvToNode(frame);
-            
             }, 200 );
             
         } else {
-            
             // loop through each ev var and send
             passNewEvToNode(frame);
-            
         }
     }
     

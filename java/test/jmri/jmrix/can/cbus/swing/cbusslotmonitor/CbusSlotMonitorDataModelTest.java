@@ -393,7 +393,7 @@ public class CbusSlotMonitorDataModelTest {
         r.setElement(1, 0x01); // session 1
         t.reply(r);
         
-        Assert.assertEquals("Session Unset CanReply",0, t.getValueAt(0,CbusSlotMonitorDataModel.SESSION_ID_COLUMN) );
+        Assert.assertEquals("Session Unset CanReply","", t.getValueAt(0,CbusSlotMonitorDataModel.SESSION_ID_COLUMN) );
         
     }
     
@@ -466,7 +466,7 @@ public class CbusSlotMonitorDataModelTest {
         r.setElement(3, 8); // error byte 3 session cancelled
         t.reply(r);
         
-        Assert.assertEquals("Session cancelled err CanReply",0, t.getValueAt(0,CbusSlotMonitorDataModel.SESSION_ID_COLUMN) );
+        Assert.assertEquals("Session cancelled err CanReply","", t.getValueAt(0,CbusSlotMonitorDataModel.SESSION_ID_COLUMN) );
         
       //  Assert.assertEquals("feedb","",t.tablefeedback().getText() );
         
