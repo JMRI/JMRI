@@ -260,7 +260,7 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
      *
      * @param e element to be updated
      */
-    private void replaceUserNames(@NonNull Element e) {
+    private void replaceUserNames(@Nonnull Element e) {
         replaceUserNameAttribute(e, "turnout", "turnoutname");
         replaceUserNameAttribute(e, "turnout", "secondturnoutname");
 

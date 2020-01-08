@@ -69,6 +69,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonHttpService;
+import jmri.server.json.JsonRequest;
 
 /**
  * @author Randall Wood (C) 2016, 2018, 2019
@@ -83,7 +84,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doGet(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGet(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        Locale locale = request.locale;
+        int id = request.id;
         switch (type) {
             case CAR:
                 return message(type, utilities.getCar(name, locale, id), id);
@@ -115,7 +118,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doPost(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doPost(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        Locale locale = request.locale;
+        int id = request.id;
         String newName = name;
         switch (type) {
             case CAR:
@@ -148,13 +153,15 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 throw new JsonException(HttpServletResponse.SC_METHOD_NOT_ALLOWED,
                         Bundle.getMessage(locale, "PostNotAllowed", type), id); // NOI18N
         }
-        return doGet(type, name, data, locale, id);
+        return doGet(type, name, data, request);
     }
 
     @Override
     // Nullable overrides super class'es non-null requirement for name
-    public JsonNode doPut(String type, @CheckForNull String name, JsonNode data, Locale locale, int id)
+    public JsonNode doPut(String type, @CheckForNull String name, JsonNode data, JsonRequest request)
             throws JsonException {
+        Locale locale = request.locale;
+        int id = request.id;
         switch (type) {
             case CAR:
                 if (data.path(ROAD).isMissingNode()) {
@@ -256,12 +263,14 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
                             Bundle.getMessage(locale, JsonException.ERROR_MISSING_PROPERTY_PUT, NAME, type), id); // NOI18N
                 }
-                return super.doPut(type, name, data, locale, id);
+                return super.doPut(type, name, data, request);
         }
     }
 
     @Override
-    public JsonNode doGetList(String type, JsonNode data, Locale locale, int id) throws JsonException {
+    public JsonNode doGetList(String type, JsonNode data, JsonRequest request) throws JsonException {
+        Locale locale = request.locale;
+        int id = request.id;
         switch (type) {
             case CAR:
             case CARS:
@@ -288,7 +297,9 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public void doDelete(String type, String name, JsonNode data, Locale locale, int id) throws JsonException {
+    public void doDelete(String type, String name, JsonNode data, JsonRequest request) throws JsonException {
+        Locale locale = request.locale;
+        int id = request.id;
         String token = data.path(FORCE_DELETE).asText();
         switch (type) {
             case CAR:
@@ -311,7 +322,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     for (Location location : locations) {
                         conflicts.add(message(LOCATION, utilities.getLocation(location, locale), 0));
                     }
-                    throwDeleteConflictException(type, name, conflicts, locale, id);
+                    throwDeleteConflictException(type, name, conflicts, request);
                 }
                 InstanceManager.getDefault(CarTypes.class).deleteName(name);
                 break;
@@ -326,7 +337,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                             Bundle.getMessage(locale, JsonException.ERROR_NOT_FOUND, type, name), id);
                 }
                 if (kernel.getSize() != 0 && !acceptForceDeleteToken(type, name, token)) {
-                    throwDeleteConflictException(type, name, getKernelCars(kernel, true, locale), locale, id);
+                    throwDeleteConflictException(type, name, getKernelCars(kernel, true, locale), request);
                 }
                 carManager().deleteKernel(name);
                 break;
@@ -339,7 +350,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                 deleteTrack(name, data, locale, id);
                 break;
             default:
-                super.doDelete(type, name, data, locale, id);
+                super.doDelete(type, name, data, request);
         }
     }
 
@@ -717,7 +728,8 @@ public class JsonOperationsHttpService extends JsonHttpService {
     }
 
     @Override
-    public JsonNode doSchema(String type, boolean server, Locale locale, int id) throws JsonException {
+    public JsonNode doSchema(String type, boolean server, JsonRequest request) throws JsonException {
+        int id = request.id;
         switch (type) {
             case CAR:
             case CARS:
@@ -760,7 +772,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                     }
                 } else {
                     throw new JsonException(HttpServletResponse.SC_BAD_REQUEST,
-                            Bundle.getMessage(locale, "NotAClientType", type), id);
+                            Bundle.getMessage(request.locale, "NotAClientType", type), id);
                 }
             case TRAIN:
             case TRAINS:
@@ -771,7 +783,7 @@ public class JsonOperationsHttpService extends JsonHttpService {
                         id);
             default:
                 throw new JsonException(HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-                        Bundle.getMessage(locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
+                        Bundle.getMessage(request.locale, JsonException.ERROR_UNKNOWN_TYPE, type), id);
         }
     }
 

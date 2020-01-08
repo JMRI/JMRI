@@ -38,6 +38,15 @@
       <!-- message is appended to "Line matches the illegal pattern " -->
       <property name="message" value="edu.umd.cs.findbugs.annotations.NonNull (replace with javax.annotations.Nonnull)" />
     </module>
+    <module name="Regexp">
+      <!-- Flag uses of e.g. {0} in a logging statement (should be {} )  -->
+      <!-- the attribute takes the regex string, without Java quoting, then uses the Java regex support -->
+      <property name="format" value="log\..*\(.*\{[0-9][0-9]*}"/>
+      <property name="illegalPattern" value="true"/>
+      <property name="severity" value="error"/>
+      <!-- message is appended to "Line matches the illegal pattern " -->
+      <property name="message" value="{digit} in logging call, should be {}" />
+    </module>
   </module>
   <module name="NewlineAtEndOfFile">
     <property name="severity" value="error"/>

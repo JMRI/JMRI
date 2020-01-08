@@ -5,8 +5,8 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 import jmri.LocoAddress;
 import jmri.managers.AbstractCabSignalManager;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+// import org.slf4j.Logger;
+// import org.slf4j.LoggerFactory;
 
 /**
  * CBUS implementation of the {@link jmri.CabSignalManager} interface.
@@ -33,7 +33,6 @@ public class CbusCabSignalManager extends AbstractCabSignalManager {
     public CbusCabSignalManager(CanSystemConnectionMemo memo){
         super();
         _memo = memo;
-        log.debug("CBUS Cab Signal Manager initialized");
     }
 
     /**
@@ -44,5 +43,5 @@ public class CbusCabSignalManager extends AbstractCabSignalManager {
            return new CbusCabSignal(_memo,address);
     }
 
-    private final static Logger log = LoggerFactory.getLogger(CbusCabSignalManager.class);
+    // private final static Logger log = LoggerFactory.getLogger(CbusCabSignalManager.class);
 }

@@ -52,12 +52,17 @@ class LayoutEditorComponent extends JComponent {
 
             Graphics2D g2 = (Graphics2D) g;
 
-            //drawPositionableLabelBorder(g2);
+            if (clipBounds != null) {
+                if (!clipBounds.equals(g2.getClipBounds())) {
+                    g2.setClip(clipBounds);
+                }
+            }
             //Optional antialising, to eliminate (reduce) staircase on diagonal lines
             if (layoutEditor.antialiasingOn) {
                 g2.setRenderingHints(antialiasing);
             }
 
+            //drawPositionableLabelBorder(g2);
             // things that only get drawn in edit mode
             if (layoutEditor.isEditable()) {
                 if (layoutEditor.getDrawGrid()) {
@@ -105,16 +110,14 @@ class LayoutEditorComponent extends JComponent {
     }
 
     private void drawPanelGrid(Graphics2D g2) {
-        int wideMod = layoutEditor.gridSize1st * layoutEditor.gridSize2nd;
-        int wideMin = layoutEditor.gridSize1st / 2;
+        int wideMod = layoutEditor.getGridSize() * layoutEditor.getGridSize2nd();
+        int wideMin = layoutEditor.getGridSize() / 2;
 
-        //Rectangle2D clipBounds = g2.getClipBounds();
-        //log.info("drawPanelGrid() clipBounds: " + clipBounds);
-        // granulize puts these on gridSize1st increments
+        // granulize puts these on getGridSize() increments
         int minX = 0;
         int minY = 0;
-        int maxX = (int) MathUtil.granulize(layoutEditor.panelWidth, layoutEditor.gridSize1st);
-        int maxY = (int) MathUtil.granulize(layoutEditor.panelHeight, layoutEditor.gridSize1st);
+        int maxX = (int) MathUtil.granulize(layoutEditor.panelWidth, layoutEditor.getGridSize());
+        int maxY = (int) MathUtil.granulize(layoutEditor.panelHeight, layoutEditor.getGridSize());
 
         log.debug("drawPanelGrid: minX: {}, minY: {}, maxX: {}, maxY: {}", minX, minY, maxX, maxY);
 
@@ -126,26 +129,8 @@ class LayoutEditorComponent extends JComponent {
         g2.setColor(Color.gray);
         g2.setStroke(narrow);
 
-        // calculate the bounds for the scroll pane
-//        JScrollPane scrollPane = layoutEditor.getPanelScrollPane();
-        // Rectangle scrollBounds = scrollPane.getViewportBorderBounds();
-        // log.info("  scrollBounds: " + scrollBounds);
-        // Rectangle2D newClipBounds = SwingUtilities.convertRectangle(
-        //        scrollPane.getParent(), scrollBounds, this);
-//        Rectangle2D newClipBounds = MathUtil.rectangleToRectangle2D(scrollPane.getVisibleRect());
-//        log.debug("  newClipBounds: {}", newClipBounds);
-//
-//        double scale = layoutEditor.getZoom();
-//        int width = (int) (newClipBounds.getWidth() / scale);
-//        int height = (int) (newClipBounds.getHeight() / scale);
-//        int originX = (int) (scrollPane.getHorizontalScrollBar().getValue() / scale);
-//        int originY = (int) (scrollPane.getVerticalScrollBar().getValue() / scale);
-        //log.info("  origin: {{}, {}}", originX, originY);
-        //newClipBounds = new Rectangle2D.Double(originX, originY, width, height);
-        //log.info("  newClipBounds: " + newClipBounds);
-//        g2.setClip(originX, originY, width, height);
         //draw horizontal lines
-        for (int y = minY; y <= maxY; y += layoutEditor.gridSize1st) {
+        for (int y = minY; y <= maxY; y += layoutEditor.getGridSize()) {
             startPt.setLocation(minX, y);
             stopPt.setLocation(maxX, y);
 
@@ -159,7 +144,7 @@ class LayoutEditorComponent extends JComponent {
         }
 
         //draw vertical lines
-        for (int x = minX; x <= maxX; x += layoutEditor.gridSize1st) {
+        for (int x = minX; x <= maxX; x += layoutEditor.getGridSize()) {
             startPt.setLocation(x, minY);
             stopPt.setLocation(x, maxY);
 
@@ -725,6 +710,12 @@ class LayoutEditorComponent extends JComponent {
     public int getHeight() {
         Rectangle bounds = getBounds();
         return (int) bounds.getHeight();
+    }
+
+    private Rectangle2D clipBounds = null;
+
+    public void setClip(Rectangle2D clipBounds) {
+        this.clipBounds = clipBounds;
     }
 
     //initialize logging

@@ -3,7 +3,6 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,7 +24,7 @@ import org.slf4j.LoggerFactory;
 public class CbusNodeInfoPane extends JPanel {
     
     private JPanel infoPane;
-    private JButton nodesupportlinkbutton;
+    private final JButton nodesupportlinkbutton;
     private URI supportlink;
     private CbusNode nodeOfInterest;
     private JLabel header;
@@ -39,11 +38,8 @@ public class CbusNodeInfoPane extends JPanel {
         super();
         
         nodesupportlinkbutton = new JButton();
-        nodesupportlinkbutton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                openUri(supportlink);
-            }
+        nodesupportlinkbutton.addActionListener((ActionEvent e) -> {
+            openUri(supportlink);
         });
         
     }
@@ -206,16 +202,16 @@ public class CbusNodeInfoPane extends JPanel {
             textAreaString.append ("Num Backups in Node xml file : ");
             textAreaString.append (nodeOfInterest.getNumBackups());
             textAreaString.append(System.getProperty("line.separator"));
+            if( nodeOfInterest.getNumBackups()>0 ) {
+                textAreaString.append ("First entry : ");
+                textAreaString.append (nodeOfInterest.getFirstBackupTime());
+                textAreaString.append(System.getProperty("line.separator"));
             
-            textAreaString.append ("First entry : ");
-            textAreaString.append (nodeOfInterest.getFirstBackupTime());
-            textAreaString.append(System.getProperty("line.separator"));
+                textAreaString.append ("Last entry : ");
+                textAreaString.append (nodeOfInterest.getLastBackupTime());
             
-            textAreaString.append ("Last entry : ");
-            textAreaString.append (nodeOfInterest.getLastBackupTime());
-            
-            textAreaString.append(System.getProperty("line.separator"));
-        
+                textAreaString.append(System.getProperty("line.separator"));
+            }
         }
         
         if ( !nodeOfInterest.getsendsWRACKonNVSET() ) {

@@ -17,7 +17,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.text.DefaultFormatter;
 import jmri.jmrix.can.cbus.node.CbusNode;
 import jmri.jmrix.can.cbus.node.CbusNodeConstants;
@@ -43,6 +42,7 @@ public class CbusNodeSetupPane extends JPanel {
     
     /**
      * Create a new instance of CbusNodeSetupPane.
+     * @param main the main NodeConfigToolPane this is a pane of.
      */
     protected CbusNodeSetupPane( NodeConfigToolPane main ) {
         super();
@@ -164,9 +164,7 @@ public class CbusNodeSetupPane extends JPanel {
                     "Please Confirm", 
                     JOptionPane.OK_CANCEL_OPTION, 
                     JOptionPane.QUESTION_MESSAGE, null, null, null);
-                if (option == JOptionPane.CANCEL_OPTION) {
-                    return;
-                } else if (option == JOptionPane.OK_OPTION) {
+                if (option == JOptionPane.OK_OPTION) {
                     nodeModel.removeRow( nodeModel.getNodeRowFromNodeNum(_nodeNum),checkbox.isSelected() );
                 }
             };
@@ -198,9 +196,7 @@ public class CbusNodeSetupPane extends JPanel {
                     "Please Confirm", 
                     JOptionPane.OK_CANCEL_OPTION, 
                     JOptionPane.QUESTION_MESSAGE, null, null, null);
-                if (option == JOptionPane.CANCEL_OPTION) {
-                    return;
-                } else if (option == JOptionPane.OK_OPTION) {
+                if (option == JOptionPane.OK_OPTION) {
                     
                     // check for existing nodes in learn mode
                     if ( nodeModel.getAnyNodeInLearnMode() > -1 ) {
@@ -279,13 +275,10 @@ public class CbusNodeSetupPane extends JPanel {
         DefaultFormatter rqformatter = (DefaultFormatter) rqfield.getFormatter();
         rqformatter.setCommitsOnValidEdit(true);
         rqfield.setBackground(Color.white);
-        rqnnSpinner.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                int newval = (Integer) rqnnSpinner.getValue();
-                log.debug("new canid selected value {}",newval);
-                updateSpinnerFeedback(newval);
-            }
+        rqnnSpinner.addChangeListener((ChangeEvent e) -> {
+            int newval = (Integer) rqnnSpinner.getValue();
+            log.debug("new canid selected value {}",newval);
+            updateSpinnerFeedback(newval);
         });
         
         bottomrqNNpane.add(rqNNspinnerlabel);
