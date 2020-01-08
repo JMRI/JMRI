@@ -465,7 +465,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         Bundle.getMessage("ErrorTitle"),
                         JOptionPane.ERROR_MESSAGE);
                 this.disableDownloadVerifyButtons();
-                log.warn("Invalid dmf file 'Options' value {0}",text);
+                log.warn("Invalid dmf file 'Options' value {}",text);
                 return;
             }
         }
@@ -494,7 +494,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             }
             
             if (interpretationProblem == true) {
-                log.warn("Invalid dmf file 'Erase Blk Size' value {0}",text);
+                log.warn("Invalid dmf file 'Erase Blk Size' value {}",text);
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ErrorInvalidEraseBlkSize", text, "Erase Blk Size"), // NOI18N
                         Bundle.getMessage("ErrorTitle"), // NOI18N
