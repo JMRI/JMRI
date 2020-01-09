@@ -125,8 +125,7 @@
         <pathelement location="${libdir}/xml-apis-1.4.01.jar"/>
         <pathelement location="${libdir}/gluegen-rt.jar"/>
         <pathelement location="${libdir}/javacsv.jar"/>
-        <pathelement location="${libdir}/jdom-2.0.5.jar"/>
-        <pathelement location="${libdir}/jdom.jar"/>
+        <pathelement location="${libdir}/jdom2-2.0.6.jar"/>
         <pathelement location="${libdir}/jhall.jar"/>
         <pathelement location="${libdir}/jinput.jar"/>
         <pathelement location="${libdir}/jmdns-3.5.5.jar"/>
