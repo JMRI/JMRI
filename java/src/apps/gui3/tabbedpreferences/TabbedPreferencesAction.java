@@ -2,13 +2,10 @@ package apps.gui3.tabbedpreferences;
 
 import java.awt.event.ActionEvent;
 import javax.swing.Icon;
-import javax.swing.SwingUtilities;
 
 import jmri.InstanceManager;
 import jmri.util.swing.JmriPanel;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Action launches the tabbed preferences window.

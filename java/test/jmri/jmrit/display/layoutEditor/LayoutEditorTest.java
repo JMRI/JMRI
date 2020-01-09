@@ -138,8 +138,6 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
             m.setSaveAllowed(false); // prevent attempts to save while zooming in rest of test
         });
         Assert.assertEquals("Zoom Get", 1.0, e.getZoom(), 0.0);
-        // note: Layout Editor won't allow zooms below 0.25
-        Assert.assertEquals("Zoom Set", 0.25, e.setZoom(0.1), 0.0);
         // note: Layout Editor won't allow zooms above 8.0.
         Assert.assertEquals("Zoom Set", 8.0, e.setZoom(10.0), 0.0);
         Assert.assertEquals("Zoom Set", 3.33, e.setZoom(3.33), 0.0);

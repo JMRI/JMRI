@@ -1,7 +1,6 @@
 package jmri.jmrit.operations.routes.tools;
 
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.routes.tools.RouteCopyAction;
 
 import org.junit.Assert;
 import org.junit.Test;

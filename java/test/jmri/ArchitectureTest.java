@@ -3,9 +3,6 @@ package jmri;
 import org.junit.*;
 import org.junit.runner.*;
 
-import com.tngtech.archunit.*;
-import com.tngtech.archunit.core.domain.JavaClasses;
-import com.tngtech.archunit.core.importer.ClassFileImporter;
 import com.tngtech.archunit.lang.*;
 import com.tngtech.archunit.junit.*;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
@@ -82,6 +79,16 @@ public class ArchitectureTest {
                                 .haveNameNotMatching("jmri\\.util\\.TimerUtil")
                             .should()
                                 .dependOnClassesThat().haveFullyQualifiedName("java.util.Timer");
+     
+    /**
+     * No access to javax.annotation.Nullable except the FindBugsCheck test routine
+     */
+    @ArchTest 
+    public static final ArchRule checkNullableAnnotationRestricted = noClasses().that()
+                                // classes with permitted access
+                                .haveNameNotMatching("apps\\.FindBugsCheck")
+                            .should()
+                                .dependOnClassesThat().haveFullyQualifiedName("javax.annotation.Nullable");
      
    /**
      * No jmri.jmrix in basic interfaces.

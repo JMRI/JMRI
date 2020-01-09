@@ -35,7 +35,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import jmri.Block;
-import jmri.BlockManager;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;

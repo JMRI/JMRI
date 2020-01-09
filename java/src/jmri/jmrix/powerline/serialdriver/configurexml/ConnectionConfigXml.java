@@ -1,6 +1,5 @@
 package jmri.jmrix.powerline.serialdriver.configurexml;
 
-import java.util.List;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.powerline.serialdriver.ConnectionConfig;
 import jmri.jmrix.powerline.serialdriver.SerialDriverAdapter;

@@ -20,28 +20,28 @@ import jmri.util.ThreadingUtil;
  */
 public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
 
-    private ArrayList<CbusNodeFromBackup> _mainArray;
-    private CanSystemConnectionMemo _memo;
+    private final ArrayList<CbusNodeFromBackup> __mainArray;
+    private final CanSystemConnectionMemo _memo;
     
     // column order needs to match list in column tooltips
-    static public final int NODE_NUMBER_COLUMN = 0; 
-    static public final int NODE_TYPE_NAME_COLUMN = 1; 
-    static public final int NODE_USER_NAME_COLUMN = 2;
-    static public final int NODE_EVENTS_COLUMN = 3;
+    static public final int FCU_NODE_NUMBER_COLUMN = 0; 
+    static public final int FCU_NODE_TYPE_NAME_COLUMN = 1; 
+    static public final int FCU_NODE_USER_NAME_COLUMN = 2;
+    static public final int FCU_NODE_EVENTS_COLUMN = 3;
     static public final int NODE_NV_TOTAL_COLUMN = 4;
-    static public final int NODE_TOTAL_BYTES_COLUMN = 5;
-    static public final int MAX_COLUMN = 6;
+    static public final int FCU_NODE_TOTAL_BYTES_COLUMN = 5;
+    static public final int FCU_MAX_COLUMN = 6;
 
     public CbusNodeFromFcuTableDataModel(CanSystemConnectionMemo memo, int row, int column) {
         super (memo, row, column);
         
-        _mainArray = new ArrayList<CbusNodeFromBackup>();
+        __mainArray = new ArrayList<>();
         _memo = memo;
         
     }
     
     // order needs to match column list top of dtabledatamodel
-    public static final String[] columnToolTips = {
+    public static final String[] FCUTABLETIPS = {
         null,
         null,
         null,
@@ -56,16 +56,19 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     }; // Length = number of items in array should (at least) match number of columns
     
     /**
-     * Return the number of rows to be displayed.
+     * {@inheritDoc}
      */
     @Override
     public int getRowCount() {
-        return _mainArray.size();
+        return __mainArray.size();
     }
-
+    
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public int getColumnCount() {
-        return MAX_COLUMN;
+        return FCU_MAX_COLUMN;
     }
 
     /**
@@ -73,6 +76,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
      * <p>
      * This is optional, in that other table formats can use this table model.
      * But we put it here to help keep it consistent.
+     * @param eventTable table to configure
      */
     @Override
     public void configureTable(JTable eventTable) {
@@ -94,22 +98,22 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     /**
      * Returns String of column name from column int
      * used in table header
-     * @param col int col number
+     * {@inheritDoc}
      */
     @Override
     public String getColumnName(int col) { // not in any order
         switch (col) {
-            case NODE_NUMBER_COLUMN:
+            case FCU_NODE_NUMBER_COLUMN:
                 return ("Node Num");
-            case NODE_USER_NAME_COLUMN:
+            case FCU_NODE_USER_NAME_COLUMN:
                 return ("User Name");
-            case NODE_TYPE_NAME_COLUMN:
+            case FCU_NODE_TYPE_NAME_COLUMN:
                 return ("Node Type");
-            case NODE_EVENTS_COLUMN:
+            case FCU_NODE_EVENTS_COLUMN:
                 return ("Events");
             case NODE_NV_TOTAL_COLUMN:
                 return("Total NV's");
-            case NODE_TOTAL_BYTES_COLUMN:
+            case FCU_NODE_TOTAL_BYTES_COLUMN:
                 return("Tot. Bytes");
             default:
                 return "unknown " + col; // NOI18N
@@ -117,38 +121,38 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     }
 
     /**
-    * Returns int of startup column widths
-    * @param col int col number
-    */
+     * Returns int of startup column widths
+     * @param col int col number
+     * @return preferred width
+     */
     public static int getPreferredWidth(int col) {
         switch (col) {
-            case NODE_EVENTS_COLUMN:
-            case NODE_NUMBER_COLUMN:
+            case FCU_NODE_EVENTS_COLUMN:
+            case FCU_NODE_NUMBER_COLUMN:
             case NODE_NV_TOTAL_COLUMN:
-            case NODE_TOTAL_BYTES_COLUMN:
+            case FCU_NODE_TOTAL_BYTES_COLUMN:
                 return new JTextField(6).getPreferredSize().width;
-            case NODE_TYPE_NAME_COLUMN:
-            case NODE_USER_NAME_COLUMN:
+            case FCU_NODE_TYPE_NAME_COLUMN:
+            case FCU_NODE_USER_NAME_COLUMN:
                 return new JTextField(13).getPreferredSize().width;
             default:
                 return new JTextField(" <unknown> ").getPreferredSize().width; // NOI18N
         }
     }
     
-    
     /**
-    * Returns column class type.
-    */
+     * {@inheritDoc}
+     */
     @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case NODE_NUMBER_COLUMN:
-            case NODE_EVENTS_COLUMN:
+            case FCU_NODE_NUMBER_COLUMN:
+            case FCU_NODE_EVENTS_COLUMN:
             case NODE_NV_TOTAL_COLUMN:
-            case NODE_TOTAL_BYTES_COLUMN:
+            case FCU_NODE_TOTAL_BYTES_COLUMN:
                 return Integer.class;
-            case NODE_USER_NAME_COLUMN:
-            case NODE_TYPE_NAME_COLUMN:
+            case FCU_NODE_USER_NAME_COLUMN:
+            case FCU_NODE_TYPE_NAME_COLUMN:
                 return String.class;
             default:
                 return null;
@@ -156,34 +160,32 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     }
     
     /**
-    * Boolean return to edit table cell or not
-    * @return boolean
-    */
+     * Boolean return to edit table cell or not
+     * @return boolean
+     */
     @Override
     public boolean isCellEditable(int row, int col) {
         return false;
     }
 
-     /**
-     * Return table values
-     * @param row int row number
-     * @param col int col number
+    /**
+     * {@inheritDoc}
      */
     @Override
     public Object getValueAt(int row, int col) {
         switch (col) {
-            case NODE_NUMBER_COLUMN:
-                return _mainArray.get(row).getNodeNumber();
-            case NODE_USER_NAME_COLUMN:
-                return _mainArray.get(row).getUserName();
-            case NODE_TYPE_NAME_COLUMN:
-                return _mainArray.get(row).getNodeTypeName();
-            case NODE_EVENTS_COLUMN:
-                return _mainArray.get(row).getTotalNodeEvents();
+            case FCU_NODE_NUMBER_COLUMN:
+                return __mainArray.get(row).getNodeNumber();
+            case FCU_NODE_USER_NAME_COLUMN:
+                return __mainArray.get(row).getUserName();
+            case FCU_NODE_TYPE_NAME_COLUMN:
+                return __mainArray.get(row).getNodeTypeName();
+            case FCU_NODE_EVENTS_COLUMN:
+                return __mainArray.get(row).getTotalNodeEvents();
             case NODE_NV_TOTAL_COLUMN:
-                return _mainArray.get(row).getTotalNVs();
-            case NODE_TOTAL_BYTES_COLUMN:
-                return _mainArray.get(row).totalNodeBytes();
+                return __mainArray.get(row).getTotalNVs();
+            case FCU_NODE_TOTAL_BYTES_COLUMN:
+                return __mainArray.get(row).totalNodeBytes();
             default:
                 return null;
         }
@@ -215,7 +217,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     @Override
     public int getNodeRowFromNodeNum( int nodenum ) {
         for (int i = 0; i < getRowCount(); i++) {
-            if ( _mainArray.get(i).getNodeNumber() == nodenum ) {
+            if ( __mainArray.get(i).getNodeNumber() == nodenum ) {
                 return i;
             }
         }
@@ -232,9 +234,10 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     
     /**
      * Register new CbusNodeFromBackup node to table
+     * @param node the node to add
      */
     public void addNode(CbusNodeFromBackup node ) {
-        _mainArray.add(node);
+        __mainArray.add(node);
         node.setTableModel(this);
         // notify the JTable object that a row has changed; do that in the Swing thread!
         ThreadingUtil.runOnGUI( ()->{
@@ -250,8 +253,8 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
             return null;
         }
         for (int i = 0; i < getRowCount(); i++) {
-            if ( _mainArray.get(i).getNodeNumber() == nodenum ) {
-                return _mainArray.get(i);
+            if ( __mainArray.get(i).getNodeNumber() == nodenum ) {
+                return __mainArray.get(i);
             }
         }
         CbusNodeFromBackup cs = new CbusNodeFromBackup(_memo, nodenum);
@@ -265,8 +268,8 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
     @Override
     public CbusNodeFromBackup getNodeByNodeNum( int nodenum ) {
         for (int i = 0; i < getRowCount(); i++) {
-            if ( _mainArray.get(i).getNodeNumber() == nodenum ) {
-                return _mainArray.get(i);
+            if ( __mainArray.get(i).getNodeNumber() == nodenum ) {
+                return __mainArray.get(i);
             }
         }
         return null;        
@@ -279,7 +282,7 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
      */
     @Override
     public CbusNode getNodeByRowNum( int rowNum ) {
-        return _mainArray.get(rowNum);
+        return __mainArray.get(rowNum);
     }
     
     /**
@@ -309,11 +312,11 @@ public class CbusNodeFromFcuTableDataModel extends CbusNodeTableDataModel {
         if ( rownum < 0 ) {
             return "";
         }
-        if ( !_mainArray.get(rownum).getUserName().isEmpty() ) {
-            return _mainArray.get(rownum).getUserName();
+        if ( !__mainArray.get(rownum).getUserName().isEmpty() ) {
+            return __mainArray.get(rownum).getUserName();
         }
-        if ( !_mainArray.get(rownum).getNodeTypeName().isEmpty() ) {
-            return _mainArray.get(rownum).getNodeTypeName();
+        if ( !__mainArray.get(rownum).getNodeTypeName().isEmpty() ) {
+            return __mainArray.get(rownum).getNodeTypeName();
         }        
         return "";
     }

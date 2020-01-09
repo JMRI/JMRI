@@ -8,7 +8,6 @@ import javax.annotation.Nonnull;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Manager;
-import jmri.SignalHead;
 import jmri.SignalHeadManager;
 import jmri.SignalMast;
 import jmri.SignalMastManager;

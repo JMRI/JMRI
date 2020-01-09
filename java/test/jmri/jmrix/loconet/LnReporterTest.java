@@ -1,12 +1,9 @@
 package jmri.jmrix.loconet;
 
 import jmri.IdTag;
-import jmri.InstanceManager;
 import jmri.Reportable;
 import jmri.LocoAddress;
-import jmri.NamedBean;
 import jmri.PhysicalLocationReporter;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 import jmri.util.JUnitUtil;
 import jmri.util.PhysicalLocation;
 import org.junit.After;

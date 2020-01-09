@@ -114,7 +114,7 @@ public class MrcPacketizer extends MrcTrafficController {
                 }
             }
         } catch (RuntimeException e) {
-            log.warn("passing to xmit: unexpected exception: {0}", e); //IN18N
+            log.warn("passing to xmit: unexpected exception: {}", e); //IN18N
         }
     }
 
@@ -474,7 +474,7 @@ public class MrcPacketizer extends MrcTrafficController {
                     // done with this one
                 } catch (MrcMessageException e) {
                     // just let it ride for now
-                    log.warn("run: unexpected MrcMessageException: {0}", e); //IN18N
+                    log.warn("run: unexpected MrcMessageException: {}", e); //IN18N
                 } catch (java.io.EOFException e) {
                     // posted from idle port when enableReceiveTimeout used
                     log.trace("EOFException, is Mrc serial I/O using timeouts?");

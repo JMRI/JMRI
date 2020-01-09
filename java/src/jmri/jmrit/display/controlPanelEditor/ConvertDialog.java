@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.Map.Entry;
 
 import javax.swing.JDialog;
-import javax.swing.JScrollPane;
 
 import jmri.InstanceManager;
 import jmri.NamedBeanHandleManager;

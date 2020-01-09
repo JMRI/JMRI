@@ -8,7 +8,6 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.List;
-import jmri.InstanceManager;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
@@ -17,7 +16,6 @@ import org.jdom2.JDOMException;
 // import org.jdom2.ProcessingInstruction;
 
 import jmri.jmrit.timetable.*;
-import jmri.jmrit.timetable.swing.*;
 
 /**
  * Load and store the timetable data file: TimeTableData.xml

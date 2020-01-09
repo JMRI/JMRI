@@ -1,6 +1,5 @@
 package jmri.jmrix.srcp;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Vector;
 import jmri.jmrix.AbstractMRListener;

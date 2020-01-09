@@ -1,9 +1,9 @@
 package jmri.jmrix.can.cbus;
 
 import jmri.ProgrammingMode;
+import jmri.jmrix.can.CanFrame;
 import jmri.jmrix.can.CanMessage;
 import jmri.jmrix.can.CanReply;
-import jmri.jmrix.can.cbus.CbusOpCodes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,10 +34,22 @@ public class CbusMessage {
     public static CanReply opcRangeToStl(CanReply msg){
         int opc = getOpcode(msg);
         // log.debug(" about to check opc {} ",opc);
-        if (opc==CbusConstants.CBUS_ARON) { msg.setElement(0, CbusConstants.CBUS_ACON); }
-        else if (opc==CbusConstants.CBUS_AROF) { msg.setElement(0, CbusConstants.CBUS_ACOF); }
-        else if (opc==CbusConstants.CBUS_ARSON) { msg.setElement(0, CbusConstants.CBUS_ASON); }
-        else if (opc==CbusConstants.CBUS_ARSOF) { msg.setElement(0, CbusConstants.CBUS_ASOF); }
+        switch (opc) {
+            case CbusConstants.CBUS_ARON:
+                msg.setElement(0, CbusConstants.CBUS_ACON);
+                break;
+            case CbusConstants.CBUS_AROF:
+                msg.setElement(0, CbusConstants.CBUS_ACOF);
+                break;
+            case CbusConstants.CBUS_ARSON:
+                msg.setElement(0, CbusConstants.CBUS_ASON);
+                break;
+            case CbusConstants.CBUS_ARSOF:
+                msg.setElement(0, CbusConstants.CBUS_ASOF);
+                break;
+            default:
+                break;
+        }
         return msg;
     }
     
@@ -96,6 +108,16 @@ public class CbusMessage {
      * @return the node number
      */
     public static int getNodeNumber(CanMessage m) {
+        return getNodeNumber((CanFrame)m);
+    }
+    
+    /**
+     * Get the Node Number from a CanFrame Event
+     *
+     * @param m CanFrame
+     * @return the node number if not a short event
+     */
+    public static int getNodeNumber(CanFrame m) {
         if (isEvent(m) && !isShort(m) ) {
             return m.getElement(1) * 256 + m.getElement(2);
         } else {
@@ -110,10 +132,20 @@ public class CbusMessage {
      * @return the message event ( device ) number
      */
     public static int getEvent(CanMessage m) {
+        return getEvent((CanFrame)m);
+    }
+    
+    /**
+     * Get the Event Number from a CUS Event CanFrame
+     *
+     * @param m CanFrame
+     * @return the message event ( device ) number, else -1 if not an event.
+     */
+    public static int getEvent(CanFrame m) {
         if (isEvent(m)) {
             return m.getElement(3) * 256 + m.getElement(4);
         } else {
-            return 0;
+            return -1;
         }
     }
 
@@ -121,9 +153,19 @@ public class CbusMessage {
      * Get the Event Type ( on or off ) from the CanMessage
      *
      * @param m CanMessage
-     * @return 0 or 1
+     * @return CbusConstant EVENT_ON or EVENT_OFF
      */
     public static int getEventType(CanMessage m) {
+        return getEventType((CanFrame)m);
+    }
+    
+    /**
+     * Get the Event Type ( on or off ) from a CanFrame
+     *
+     * @param m CanFrame
+     * @return CbusConstant EVENT_ON or EVENT_OFF
+     */
+    public static int getEventType(CanFrame m) {
         if ( CbusOpCodes.isOnEvent(m.getElement(0))) {
             return CbusConstants.EVENT_ON;
         } else {
@@ -132,31 +174,47 @@ public class CbusMessage {
     }
 
     /**
-     * Tests if CanMessage is an Event
+     * Tests if a CanMessage is an Event.
      *
      * Adheres to cbus spec, ie on off responses to an AREQ are events
      *
      * @param m CanMessage
+     * @return True if event, else False.
      */
     public static boolean isEvent(CanMessage m) {
-        if ( CbusOpCodes.isEvent(m.getElement(0))) {
-            return true;
-        } else {
-            return false;
-        }
+        return CbusOpCodes.isEvent(m.getElement(0));
+    }
+    
+/**
+     * Tests if a CanFrame is an Event.
+     *
+     * Adheres to cbus spec, ie on off responses to an AREQ are events
+     *
+     * @param m CanFrame to test
+     * @return True if event, else False.
+     */
+    public static boolean isEvent(CanFrame m) {
+        return CbusOpCodes.isEvent(m.getElement(0));
     }
     
     /**
      * Tests if CanMessage is a short event
      *
      * @param m CanMessage
+     * @return true if Short Event, else false
      */
     public static boolean isShort(CanMessage m) {
-        if ( CbusOpCodes.isShortEvent(m.getElement(0))) {
-            return true;
-        } else {
-            return false;
-        }
+        return CbusOpCodes.isShortEvent(m.getElement(0));
+    }
+    
+    /**
+     * Tests if CanFrame is a short event
+     *
+     * @param m CanFrame
+     * @return true if Short Event, else false
+     */
+    public static boolean isShort(CanFrame m) {
+        return CbusOpCodes.isShortEvent(m.getElement(0));
     }
 
     /**
@@ -207,22 +265,23 @@ public class CbusMessage {
      * @return String of hardware address form
      */
     public static String toAddress(CanMessage m) {
-        if (m.getElement(0) == CbusConstants.CBUS_ACON) {
-            // + form
-            return "+n" + (m.getElement(1) * 256 + m.getElement(2)) + "e" + (m.getElement(3) * 256 + m.getElement(4));
-        } else if (m.getElement(0) == CbusConstants.CBUS_ACOF) {
-            // - form
-            return "-n" + (m.getElement(1) * 256 + m.getElement(2)) + "e" + (m.getElement(3) * 256 + m.getElement(4));
-        } else if (m.getElement(0) == CbusConstants.CBUS_ASON) {
-            // + short form
-            return "+" + (m.getElement(3) * 256 + m.getElement(4));
-        } else if (m.getElement(0) == CbusConstants.CBUS_ASOF) {
-            // - short form
-            return "-" + (m.getElement(3) * 256 + m.getElement(4));
-        } else {
-            // hex form
-            String tmp = m.toString().replaceAll("\\s*\\[[^\\]]*\\]\\s*", ""); // remove the [header]
-            return "X" + tmp.replaceAll(" ", "");
+        switch (m.getElement(0)) {
+            case CbusConstants.CBUS_ACON:
+                // + form
+                return "+n" + (m.getElement(1) * 256 + m.getElement(2)) + "e" + (m.getElement(3) * 256 + m.getElement(4));
+            case CbusConstants.CBUS_ACOF:
+                // - form
+                return "-n" + (m.getElement(1) * 256 + m.getElement(2)) + "e" + (m.getElement(3) * 256 + m.getElement(4));
+            case CbusConstants.CBUS_ASON:
+                // + short form
+                return "+" + (m.getElement(3) * 256 + m.getElement(4));
+            case CbusConstants.CBUS_ASOF:
+                // - short form
+                return "-" + (m.getElement(3) * 256 + m.getElement(4));
+            default:
+                // hex form
+                String tmp = m.toString().replaceAll("\\s*\\[[^\\]]*\\]\\s*", ""); // remove the [header]
+                return "X" + tmp.replaceAll(" ", "");
         }
     }
 
@@ -233,10 +292,7 @@ public class CbusMessage {
      * @return boolean
      */
     public static boolean isRequestTrackOff(CanMessage m) {
-        if (m.getOpCode() == CbusConstants.CBUS_RTOF) {
-            return true;
-        }
-        return false;
+        return m.getOpCode() == CbusConstants.CBUS_RTOF;
     }
 
     /**
@@ -246,10 +302,7 @@ public class CbusMessage {
      * @return boolean
      */
     public static boolean isRequestTrackOn(CanMessage m) {
-        if (m.getOpCode() == CbusConstants.CBUS_RTON) {
-            return true;
-        }
-        return false;
+        return m.getOpCode() == CbusConstants.CBUS_RTON;
     }
 
     /**
@@ -307,11 +360,7 @@ public class CbusMessage {
      * @return the node number
      */
     public static int getNodeNumber(CanReply r) {
-        if (isEvent(r) && !isShort(r) ) {
-            return r.getElement(1) * 256 + r.getElement(2);
-        } else {
-            return 0;
-        }
+        return getNodeNumber((CanFrame)r);
     }
 
     /**
@@ -321,11 +370,7 @@ public class CbusMessage {
      * @return the message event ( device ) number
      */
     public static int getEvent(CanReply r) {
-        if (isEvent(r)) {
-            return r.getElement(3) * 256 + r.getElement(4);
-        } else {
-            return 0;
-        }
+        return getEvent((CanFrame)r);
     }
 
     /**
@@ -335,39 +380,26 @@ public class CbusMessage {
      * @return 0 or 1
      */
     public static int getEventType(CanReply r) {
-        if ( CbusOpCodes.isOnEvent(r.getElement(0))) {
-            return CbusConstants.EVENT_ON;
-        } else {
-            return CbusConstants.EVENT_OFF;
-        }
+        return getEventType((CanFrame)r);
     }
 
     /**
-     * Tests if CanReply is an Event
-     *
+     * Tests if CanReply is an Event.
      * Adheres to cbus spec, ie on off responses to an AREQ are events
-     *
      * @param r CanReply
+     * @return True if frame is an event, else False
      */
     public static boolean isEvent(CanReply r) {
-        if ( CbusOpCodes.isEvent(r.getElement(0))) {
-            return true;
-        } else {
-            return false;
-        }
+        return CbusOpCodes.isEvent(r.getElement(0));
     }
     
     /**
      * Tests if CanReply is a short event
-     *
      * @param r CanReply
+     * @return True if short, else False
      */
     public static boolean isShort(CanReply r) {
-        if ( CbusOpCodes.isShortEvent(r.getElement(0))) {
-            return true;
-        } else {
-            return false;
-        }
+        return CbusOpCodes.isShortEvent(r.getElement(0));
     }
     
     /**
@@ -422,43 +454,41 @@ public class CbusMessage {
     }
 
     /**
-     * Tests if CanReply is confirming Track Power Off
+     * Tests if CanReply is confirming Track Power Off.
      *
      * @param m CanReply
+     * @return True if is a Track Off notification
      */
     public static boolean isTrackOff(CanReply m) {
-        if (m.getOpCode() == CbusConstants.CBUS_TOF) {
-            return true;
-        }
-        return false;
+        return m.getOpCode() == CbusConstants.CBUS_TOF;
     }
 
     /**
-     * Tests if CanReply is confirming Track Power On
+     * Tests if CanReply is confirming Track Power On.
      *
      * @param m CanReply
+     * @return True if is a Track On notification
      */
     public static boolean isTrackOn(CanReply m) {
-        if (m.getOpCode() == CbusConstants.CBUS_TON) {
-            return true;
-        }
-        return false;
+        return m.getOpCode() == CbusConstants.CBUS_TON;
     }
 
     /**
      * Tests if CanReply is a System Reset
      *
      * @param m CanReply
+     * @return True if emergency Stop
      */
     public static boolean isArst(CanReply m) {
-        if (m.getOpCode() == CbusConstants.CBUS_ARST) {
-            return true;
-        }
-        return false;
+        return m.getOpCode() == CbusConstants.CBUS_ARST;
     }
 
     /**
      * CBUS programmer commands
+     * @param cv CV to read
+     * @param mode Programming Mode
+     * @param header CAN ID
+     * @return CanMessage ready to send
      */
     static public CanMessage getReadCV(int cv, ProgrammingMode mode, int header) {
         CanMessage m = new CanMessage(5, header);
@@ -479,6 +509,14 @@ public class CbusMessage {
         return m;
     }
 
+    /**
+     * Get a CanMessage to write a CV.
+     * @param cv Which CV, 0-65534
+     * @param val New CV value, 0-255
+     * @param mode Programming Mode
+     * @param header CAN ID
+     * @return ready to send CanMessage
+     */
     static public CanMessage getWriteCV(int cv, int val, ProgrammingMode mode, int header) {
         CanMessage m = new CanMessage(6, header);
         m.setElement(0, CbusConstants.CBUS_WCVS);
@@ -501,6 +539,12 @@ public class CbusMessage {
 
     /**
      * CBUS Ops mode programmer commands
+     * @param mAddress Loco Address, non-DCC format
+     * @param mLongAddr If Loco Address is a long address
+     * @param header CAN ID
+     * @param val New CV value
+     * @param cv Which CV, 0-65534
+     * @return ready to send CanMessage
      */
     static public CanMessage getOpsModeWriteCV(int mAddress, boolean mLongAddr, int cv, int val, int header) {
         CanMessage m = new CanMessage(7, header);
@@ -545,11 +589,14 @@ public class CbusMessage {
         return m;
     }
 
+
+    // CBUS bootloader commands
+    
     /**
-     * CBUS bootloader commands
-     */
-    /*
-     * This is a strict CBUS message to put a node into boot mode
+     * This is a strict CBUS message to put a node into boot mode.
+     * @param nn Node Number 1-65534
+     * @param header CAN ID
+     * @return ready to send CanMessage
      */
     static public CanMessage getBootEntry(int nn, int header) {
         CanMessage m = new CanMessage(3, header);
@@ -561,9 +608,11 @@ public class CbusMessage {
     }
 
     /**
-     * Microchip AN247 format NOP message to set address
-     *
+     * Microchip AN247 format NOP message to set address.
+     * <p>
      * The CBUS bootloader uses extended ID frames
+     * @param header CAN ID
+     * @return ready to send CanMessage
      */
     static public CanMessage getBootNop(int a, int header) {
         CanMessage m = new CanMessage(8, header);
@@ -582,7 +631,9 @@ public class CbusMessage {
     }
 
     /**
-     * Microchip AN247 format message to reset and enter normal mode
+     * Microchip AN247 format message to reset and enter normal mode.
+     * @param header CAN ID
+     * @return ready to send CanMessage
      */
     static public CanMessage getBootReset(int header) {
         CanMessage m = new CanMessage(8, header);
@@ -602,7 +653,9 @@ public class CbusMessage {
 
     /**
      * Microchip AN247 format message to initialise the bootloader and set the
-     * start address
+     * start address.
+     * @param header CAN ID
+     * @return ready to send CanMessage
      */
     static public CanMessage getBootInitialise(int a, int header) {
         CanMessage m = new CanMessage(8, header);
@@ -621,7 +674,10 @@ public class CbusMessage {
     }
 
     /**
-     * Microchip AN247 format message to send the checksum for comparison
+     * Microchip AN247 format message to send the checksum for comparison.
+     * @param c 0-65535
+     * @param header CAN ID
+     * @return ready to send CanMessage
      */
     static public CanMessage getBootCheck(int c, int header) {
         CanMessage m = new CanMessage(8, header);
@@ -640,7 +696,9 @@ public class CbusMessage {
     }
 
     /**
-     * Microchip AN247 format message to check if a module is in boot mode
+     * Microchip AN247 format message to check if a module is in boot mode.
+     * @param header CAN ID
+     * @return ready to send CanMessage
      */
     static public CanMessage getBootTest(int header) {
         CanMessage m = new CanMessage(8, header);
@@ -660,6 +718,9 @@ public class CbusMessage {
 
     /**
      * Microchip AN247 format message to write 8 bytes of data
+     * @param d data array, 8 length, values 0-255
+     * @param header CAN ID
+     * @return ready to send CanMessage
      */
     static public CanMessage getBootWriteData(int[] d, int header) {
         CanMessage m = new CanMessage(8, header);
@@ -675,26 +736,44 @@ public class CbusMessage {
             m.setElement(6, d[6] & 0xff);
             m.setElement(7, d[7] & 0xff);
         } catch (Exception e) {
-            log.error("Exception in bootloader data" + e);
+            log.error("Exception in bootloader data {}", e);
         }
         setPri(m, 0xb);
         return m;
     }
 
+    /**
+     * Tests if incoming CanReply is a Boot Error.
+     *
+     * @param r CanReply
+     * @return True if is a Boot Error
+     */
     public static boolean isBootError(CanReply r) {
         if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == 0)) {
             return (true);
-        }
+        } 
         return (false);
     }
 
+    /**
+     * Tests if incoming CanReply is a Boot OK.
+     *
+     * @param r CanReply
+     * @return True if is a Boot OK
+     */
     public static boolean isBootOK(CanReply r) {
         if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == 1)) {
             return (true);
         }
         return (false);
     }
-
+    
+    /**
+     * Tests if incoming CanReply is a Boot Confirm.
+     *
+     * @param r CanReply
+     * @return True if is a Boot Confirm
+     */
     public static boolean isBootConfirm(CanReply r) {
         if (r.isExtended() && (r.getHeader() == 0x10000004) && (r.getElement(0) == 2)) {
             return (true);

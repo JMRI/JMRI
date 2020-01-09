@@ -1,11 +1,8 @@
 package jmri;
 
 import java.util.*;
-import jmri.jmrix.internal.InternalReporterManager;
-import jmri.jmrix.internal.InternalSystemConnectionMemo;
 
 import jmri.util.JUnitUtil;
-import jmri.util.JUnitAppender;
 
 import org.junit.After;
 import org.junit.Assert;
