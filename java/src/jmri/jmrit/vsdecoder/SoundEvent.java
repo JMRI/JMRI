@@ -353,6 +353,7 @@ public class SoundEvent implements PropertyChangeListener {
                 });
                 break;
             case NOTHING:
+            case STOP_AT_ZERO:
                 // Used for when the target sound is missing.
                 //log.debug("NOTHING");
                 t.setCallback(new TriggerListener() {

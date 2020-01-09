@@ -190,6 +190,18 @@ public class EngineSoundEvent extends SoundEvent {
             }
         });
 
+        // Forward an option passed from the trigger ENGINE_STARTSTOP
+        // The option can force speed zero before the engine can be stopped
+        for (Trigger t : trigger_list.values()) {
+            if (t.getName().equals("ENGINE_STARTSTOP")) {
+                if (t.getTargetAction().equals(jmri.jmrit.vsdecoder.Trigger.TargetAction.STOP_AT_ZERO)) {
+                    getEnginePane().setStopOption(true); // force speed zero
+                } else {
+                    getEnginePane().setStopOption(false); // engine can be stopped at any speed
+                }
+            }
+        }
+
         if (log.isDebugEnabled()) {
             for (ButtonTrigger bt : button_trigger_list.values()) {
                 log.debug("Button Trigger: {}", bt.getName());

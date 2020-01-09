@@ -49,7 +49,7 @@ class ThrottleTrigger extends Trigger {
             //log.debug("Quit.  TriggerType = NONE");
             return;
         }
-        if (this.getTargetAction() == TargetAction.NOTHING) {
+        if (this.getTargetAction() == TargetAction.NOTHING || this.getTargetAction() == TargetAction.STOP_AT_ZERO) {
             //log.debug("Quit.  TargetAction = NOTHING");
             return;
         }
