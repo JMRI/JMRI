@@ -136,8 +136,8 @@ public abstract class MaleSocketTestBase {
         ((NamedBean)maleSocketA).setState(NamedBean.UNKNOWN);
         Assert.assertEquals("getState() is correct",
                 NamedBean.UNKNOWN, ((NamedBean)maleSocketA).getState());
-        JUnitAppender.assertWarnMessageStartsWith("Unexpected call to setState in ");
-        JUnitAppender.assertWarnMessageStartsWith("Unexpected call to getState in ");
+        JUnitAppender.assertWarnMessageStartingWith("Unexpected call to setState in ");
+        JUnitAppender.assertWarnMessageStartingWith("Unexpected call to getState in ");
     }
     
     @Test
