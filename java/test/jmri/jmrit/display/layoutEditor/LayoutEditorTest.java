@@ -123,7 +123,8 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
     @Override
     public void testSetSize() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
-        e.setSize(100, 100);
+        ThreadingUtil.runOnGUI(()->e.setSize(100, 100));
+        new QueueTool().waitEmpty(10);
         java.awt.Dimension d = e.getSize();
 
         // the java.awt.Dimension stores the values as floating point
@@ -140,9 +141,12 @@ public class LayoutEditorTest extends AbstractEditorTestBase<LayoutEditor> {
         });
         Assert.assertEquals("Zoom Get", 1.0, e.getZoom(), 0.0);
         // note: Layout Editor won't allow zooms above 8.0.
-        Assert.assertEquals("Zoom Set", 8.0, e.setZoom(10.0), 0.0);
-        Assert.assertEquals("Zoom Set", 3.33, e.setZoom(3.33), 0.0);
-        Assert.assertEquals("Zoom Get", 3.33, e.getZoom(), 0.0);
+        ThreadingUtil.runOnGUI(()->e.setZoom(10.0));
+        new QueueTool().waitEmpty(10);
+        Assert.assertEquals("Zoom Set", 8.0, e.getZoom(), 0.0);
+        ThreadingUtil.runOnGUI(()->e.setZoom(3.33));
+        new QueueTool().waitEmpty(10);
+        Assert.assertEquals("Zoom Set", 3.33, e.getZoom(), 0.0);
     }
 
     @Test
