@@ -5,13 +5,13 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.Date;
-import java.util.Locale;
 import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Timebase;
 import jmri.server.json.JsonConnection;
 import jmri.server.json.JsonException;
+import jmri.server.json.JsonRequest;
 import jmri.server.json.JsonSocketService;
 
 /**
@@ -32,23 +32,23 @@ public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService
     }
 
     @Override
-    public void onMessage(String type, JsonNode data, String method, Locale locale, int id) throws IOException, JmriException, JsonException {
-        if (!this.listening) {
+    public void onMessage(String type, JsonNode data, String method, JsonRequest request) throws IOException, JmriException, JsonException {
+        if (!listening) {
             Timebase manager = InstanceManager.getDefault(Timebase.class);
             manager.addPropertyChangeListener(this);
-            this.listening = true;
+            listening = true;
         }
-        this.connection.sendMessage(this.service.doPost(type, null, data, locale, id), id);
+        connection.sendMessage(service.doPost(type, null, data, request), request.id);
     }
 
     @Override
-    public void onList(String type, JsonNode data, Locale locale, int id) throws JsonException {
-        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(locale, "UnlistableService", type), id);
+    public void onList(String type, JsonNode data, JsonRequest request) throws JsonException {
+        throw new JsonException(HttpServletResponse.SC_BAD_REQUEST, Bundle.getMessage(request.locale, "UnlistableService", type), request.id);
     }
 
     @Override
     public void onClose() {
-        if (this.listening) {
+        if (listening) {
             Timebase manager = InstanceManager.getDefault(Timebase.class);
             manager.removePropertyChangeListener(this);
         }
@@ -62,9 +62,9 @@ public class JsonTimeSocketService extends JsonSocketService<JsonTimeHttpService
             if (evt.getPropertyName().equals("time")) {
                 time = (Date) evt.getNewValue();
             }
-            this.connection.sendMessage(this.service.doGet(manager, time, 0), 0);
+            connection.sendMessage(service.doGet(manager, time, 0), 0);
         } catch (IOException ex) {
-            this.onClose();
+            onClose();
         }
     }
 

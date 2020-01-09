@@ -534,7 +534,7 @@ public class JUnitAppender extends org.apache.log4j.ConsoleAppender {
      *
      * @param msg the message to assert exists
      */
-    public static void assertWarnMessageStartsWith(String msg) {
+    public static void assertWarnMessageStartingWith(String msg) {
         if (list.isEmpty()) {
             Assert.fail("No message present: " + msg);
             return;

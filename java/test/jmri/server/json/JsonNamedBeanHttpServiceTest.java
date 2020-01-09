@@ -51,7 +51,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
         String name = "non-existant";
         String type = "non-existant";
         try {
-            service.doGet(type, name, service.getObjectMapper().createObjectNode(), locale, 42);
+            service.doGet(type, name, service.getObjectMapper().createObjectNode(), new JsonRequest(locale, JSON.V5, 42));
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
@@ -74,7 +74,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
         String name = "non-existant";
         String type = "non-existant";
         try {
-            service.getNamedBean(bean, name, type, locale, 0);
+            service.getNamedBean(bean, name, type, new JsonRequest(locale, JSON.V5, 0));
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());
@@ -101,7 +101,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
         bean.setComment("Turnout Comment");
         bean.setProperty("foo", "bar");
         bean.setProperty("bar", null);
-        JsonNode root = service.getNamedBean(bean, name, JsonTurnoutServiceFactory.TURNOUT, locale, 42);
+        JsonNode root = service.getNamedBean(bean, name, JsonTurnoutServiceFactory.TURNOUT, new JsonRequest(locale, JSON.V5, 42));
         JsonNode data = root.path(JSON.DATA);
         Assert.assertEquals("Correct system name", bean.getSystemName(), data.path(JSON.NAME).asText());
         Assert.assertEquals("Correct user name", bean.getUserName(), data.path(JSON.USERNAME).asText());
@@ -110,7 +110,6 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
         Assert.assertEquals("Has 2 properties", 2, data.path(JSON.PROPERTIES).size());
         Assert.assertEquals("Message ID", 42, root.path(JSON.ID).asInt());
         data.path(JSON.PROPERTIES).fields().forEachRemaining((property) ->{
-            System.err.println(property.getKey());
             switch (property.getKey()) {
                 case "foo":
                     Assert.assertEquals("Foo value", "bar", property.getValue().asText());
@@ -137,7 +136,7 @@ public class JsonNamedBeanHttpServiceTest extends JsonNamedBeanHttpServiceTestBa
         String name = "non-existant";
         String type = "non-existant";
         try {
-            service.postNamedBean(bean, this.mapper.createObjectNode(), name, type, locale, 42);
+            service.postNamedBean(bean, this.mapper.createObjectNode(), name, type, new JsonRequest(locale, JSON.V5, 42));
             Assert.fail("Expected JsonException not thrown.");
         } catch (JsonException ex) {
             this.validate(ex.getJsonMessage());

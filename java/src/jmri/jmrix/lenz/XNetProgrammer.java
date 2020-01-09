@@ -6,8 +6,6 @@ import javax.annotation.Nonnull;
 
 import jmri.ProgrammingMode;
 import jmri.jmrix.AbstractProgrammer;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Convert the jmri.Programmer interface into commands for the Lenz XpressNet
@@ -520,6 +518,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
     /** 
      * {@inheritDoc}
+     *
+     * Not relevant to programming, so ignored.
      */
     @Override
     synchronized public void message(XNetMessage l) {
@@ -527,6 +527,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
     /** 
      * {@inheritDoc}
+     * 
+     * Log and ignore
      */
     @Override
     public void notifyTimeout(XNetMessage msg) {
@@ -586,6 +588,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
         return _controller;
     }
 
-    private final static Logger log = LoggerFactory.getLogger(XNetProgrammer.class);
+    private final static org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(XNetProgrammer.class);
 
 }

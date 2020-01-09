@@ -291,6 +291,16 @@
         "4" height="145" width="152"></p>
       </blockquote>
 
+      <ul>
+        <li><strong>Pragotron Clock</strong> <span class="since">since 4.19.2</span></li>
+      </ul>
+
+      <blockquote>
+        <p style="margin-left: 40px;"><img src=
+        "images/Main_FastClock_Pragotron.png" alt="Analog clock" border=
+        "4" height="115" width="209"></p>
+      </blockquote>
+
       <h3><strong>Power Control...</strong></h3>
 
       <p>Opens the Power Control Panel, which allows you to turn

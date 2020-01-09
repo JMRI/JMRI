@@ -475,7 +475,19 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li>The RESTful API end point
+				<a href="http://127.0.0.1:12080/json/version">/json/version</a>
+				has been added to provide a list of JMRI JSON API versions
+				supported by the running JMRI instance.</li>
+			<li>The JSON services have been rewritten to potentially support
+				multiple version of the JMRI JSON API in a future release.</li>
+            <li>JSON services now optionally take a version number as part of
+				the URL. See the
+				<a href="https://www.jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#package.description">JSON Server JavaDocs</a>
+				for details of this change. This should have no impact on
+				existing clients.</li>
+            <li>The JMRI JSON API version has been incremented to 5.3.0 to
+            	reflect the above changes.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -502,7 +514,7 @@
         <a id="Misc" name="Misc"></a>
         <ul>
             <li>Petr Sidlo added a Pragotron clock, which is digital clock
-            found in many European train stations.</li>
+                found in many European train stations.</li>
             <li>The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
                 calls in the various <code>Manager<code> classes
                 are no longer needed with Java 8 and have been deprecated for eventual
@@ -519,5 +531,9 @@
 		    	correctly, but it is possible that references to those Routes will need
 		    	to be updated.
 			    </li>
+			<li>Daniel Bergqvist provided information on 
+			    <a href="jmri.org/help/en/html/doc/Technical/githubdesktopinto.shtml">how to use the GitHub Desktop tool</a>
+			    for JMRI development.
+			    
         </ul>
 

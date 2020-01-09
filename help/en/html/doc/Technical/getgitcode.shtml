@@ -149,8 +149,10 @@
         <li>The download will start. It's likely to take a couple
         minutes.</li>
 
-        <li>For more details, see the our <a href=
-        "GitFAQ.shtml">Git FAQ help page</a>.</li>
+        <li>For more details, please see the our 
+        <a href="githubdesktopinto.shtml">page on using GitHub Desktop</a>
+        and the
+        <a href="GitFAQ.shtml">Git FAQ help page</a>.</li>
       </ul>
 
       <p>After the download is complete, there are menu items under
@@ -180,6 +182,11 @@
       "IntelliJ.shtml">IntelliJ</a>, etc. (Ant may be the easiest
       to install and use, and is the primary example in the
       documentation)</p><a name="cmd" id="cmd"></a>
+
+      <p>For more information on using the GitHub Desktop application, please see the our 
+        <a href="githubdesktopinto.shtml">page on using GitHub Desktop</a>
+        and the
+        <a href="GitFAQ.shtml">Git FAQ help page</a>.
 
       <h3>Using the command line</h3>
 

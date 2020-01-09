@@ -94,7 +94,7 @@ public class CbusMessageTest {
         m.setElement(4, 0x16);
         Assert.assertTrue("Event calculated OK", CbusMessage.getEvent(m) == 4374);
         m.setElement(0, 0x95); // EVULN OPC
-        Assert.assertTrue("Not an event returns node 0", CbusMessage.getEvent(m) == 0 );
+        Assert.assertTrue("Not an event returns -1", CbusMessage.getEvent(m) == -1 );
     }
     
     @Test
@@ -108,7 +108,7 @@ public class CbusMessageTest {
         r.setElement(4, 0x16);
         Assert.assertTrue("Event calculated OK", CbusMessage.getEvent(r) == 4374);
         r.setElement(0, 0x95); // EVULN OPC
-        Assert.assertTrue("Not an event returns node 0", CbusMessage.getEvent(r) == 0 );
+        Assert.assertTrue("Not an event returns -1", CbusMessage.getEvent(r) == -1 );
     }
 
     @Test

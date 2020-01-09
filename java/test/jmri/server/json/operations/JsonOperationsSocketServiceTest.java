@@ -23,6 +23,7 @@ import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.server.json.JSON;
 import jmri.server.json.JsonException;
 import jmri.server.json.JsonMockConnection;
+import jmri.server.json.JsonRequest;
 import jmri.util.JUnitOperationsUtil;
 import jmri.util.JUnitUtil;
 
@@ -35,7 +36,7 @@ public class JsonOperationsSocketServiceTest {
 
     @Test
     public void testOnListCar() throws IOException, JmriException, JsonException {
-        service.onList(JsonOperations.CAR, mapper.createObjectNode(), locale, 0);
+        service.onList(JsonOperations.CAR, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
         JsonNode message = connection.getMessage();
         assertNotNull(message);
         assertEquals(9, message.size());
@@ -63,7 +64,7 @@ public class JsonOperationsSocketServiceTest {
     public void testOnMessageKernel() throws IOException, JmriException, JsonException {
         try {
             service.onMessage(JsonOperations.KERNEL, mapper.createObjectNode().put(JSON.NAME, "non-existant"), JSON.GET,
-                    locale, 42);
+                    new JsonRequest(locale, JSON.V5, 42));
             fail("Expected exception not thrown");
         } catch (JsonException ex) {
             assertEquals(404, ex.getCode());
@@ -72,7 +73,7 @@ public class JsonOperationsSocketServiceTest {
 
     @Test
     public void testOnListKernel() throws IOException, JmriException, JsonException {
-        service.onList(JsonOperations.KERNEL, mapper.createObjectNode(), locale, 0);
+        service.onList(JsonOperations.KERNEL, mapper.createObjectNode(), new JsonRequest(locale, JSON.V5, 0));
         JsonNode message = connection.getMessage();
         assertNotNull(message);
         assertEquals(1, message.size());
@@ -100,6 +101,7 @@ public class JsonOperationsSocketServiceTest {
         service = new JsonOperationsSocketService(connection, new JsonOperationsHttpService(mapper));
     }
 
+    @SuppressWarnings("deprecation")
     @After
     public void tearDown() {
         service = null;

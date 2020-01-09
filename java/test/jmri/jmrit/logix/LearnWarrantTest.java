@@ -238,13 +238,13 @@ public class LearnWarrantTest {
         JUnitUtil.initOBlockManager();
         JUnitUtil.initLogixManager();
         JUnitUtil.initConditionalManager();
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.initWarrantManager();
     }
 
     @After
     public void tearDown() throws Exception {
         InstanceManager.getDefault(WarrantManager.class).dispose();
-        jmri.util.JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

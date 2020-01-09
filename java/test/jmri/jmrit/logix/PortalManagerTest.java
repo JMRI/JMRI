@@ -9,7 +9,6 @@ import jmri.util.JUnitUtil;
 
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.util.List;
 
 import org.junit.After;
 import org.junit.Assert;
@@ -141,6 +140,7 @@ public class PortalManagerTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initOBlockManager();
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.initWarrantManager();
         JUnitUtil.initDebugThrottleManager();
 
