@@ -3,6 +3,8 @@ package jmri.jmrit.display.layoutEditor.LayoutEditorDialogs;
 import java.awt.GraphicsEnvironment;
 import java.awt.geom.Rectangle2D;
 import javax.swing.JTextField;
+
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.util.JUnitUtil;
 import jmri.util.junit.rules.RetryRule;
@@ -37,6 +39,7 @@ public class EnterGridSizesDialogTest {
             layoutEditor = new LayoutEditor();
             enterGridSizesDialog = new EnterGridSizesDialog(layoutEditor);
             layoutEditor.setPanelBounds(new Rectangle2D.Double(0, 0, 640, 480));
+            layoutEditor.setVisible(true);
         }
     }
 
@@ -46,7 +49,8 @@ public class EnterGridSizesDialogTest {
     @After
     public void tearDown() {
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.dispose(layoutEditor);
+            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
+            efo.closeFrameWithConfirmations();
             layoutEditor = null;
             enterGridSizesDialog = null;
         }

@@ -4,6 +4,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.geom.Point2D;
 import javax.swing.*;
 import jmri.*;
+import jmri.jmrit.display.EditorFrameOperator;
 import jmri.jmrit.display.layoutEditor.*;
 import jmri.util.*;
 import jmri.util.junit.rules.RetryRule;
@@ -897,13 +898,13 @@ public class LayoutTrackEditorsTest {
         JUnitUtil.setUp();
         JUnitUtil.resetProfileManager();
         if (!GraphicsEnvironment.isHeadless()) {
-            JUnitUtil.resetProfileManager();
             JUnitUtil.resetInstanceManager();
             JUnitUtil.initInternalTurnoutManager();
             JUnitUtil.initInternalSensorManager();
             InstanceManager.setDefault(BlockManager.class, new BlockManager());
 
             layoutEditor = new LayoutEditor();
+            layoutEditor.setVisible(true);
             layoutTrackEditors = layoutEditor.getLayoutTrackEditors();
 
             Point2D point = new Point2D.Double(150.0, 100.0);
@@ -948,51 +949,52 @@ public class LayoutTrackEditorsTest {
 
     @After
     public void tearDown() {
-        if (layoutEditor != null) {
-            JUnitUtil.dispose(layoutEditor);
-        }
         if (doubleXoverLayoutTurnout != null) {
             doubleXoverLayoutTurnout.remove();
             doubleXoverLayoutTurnout.dispose();
-            doubleXoverLayoutTurnout = null;
         }
 
         if (rightHandLayoutTurnout != null) {
             rightHandLayoutTurnout.remove();
             rightHandLayoutTurnout.dispose();
-            rightHandLayoutTurnout = null;
         }
 
         if (doubleLayoutSlip != null) {
             doubleLayoutSlip.remove();
             doubleLayoutSlip.dispose();
-            doubleLayoutSlip = null;
         }
 
         if (singleLayoutSlip != null) {
             singleLayoutSlip.remove();
             singleLayoutSlip.dispose();
-            singleLayoutSlip = null;
         }
 
         if (levelXing != null) {
             levelXing.remove();
             levelXing.dispose();
-            levelXing = null;
         }
 
         if (trackSegment != null) {
             trackSegment.remove();
             trackSegment.dispose();
-            trackSegment = null;
         }
 
         if (layoutTurntable != null) {
             layoutTurntable.remove();
             layoutTurntable.dispose();
-            layoutTurntable = null;
         }
 
+        if (layoutEditor != null) {
+            EditorFrameOperator efo = new EditorFrameOperator(layoutEditor);
+            efo.closeFrameWithConfirmations();
+        }
+        doubleXoverLayoutTurnout = null;
+        rightHandLayoutTurnout = null;
+        doubleLayoutSlip = null;
+        singleLayoutSlip = null;
+        levelXing = null;
+        trackSegment = null;
+        layoutTurntable = null;
         layoutEditor = null;
         layoutTrackEditors = null;
 
