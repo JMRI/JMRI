@@ -1185,19 +1185,19 @@
       <logixConditional systemName="IX:AUTO:0003C10" order="8" />
     </logix>
     <logix userName="InitSignalMast" enabled="yes">
-      <systemName>MAST INIT</systemName>
+      <systemName>IX:MAST INIT</systemName>
       <userName>InitSignalMast</userName>
-      <logixConditional systemName="MAST INITC1" order="0" />
+      <logixConditional systemName="IX:MAST INITC1" order="0" />
     </logix>
     <logix userName="Initialize" enabled="yes">
-      <systemName>RTXINITIALIZER</systemName>
+      <systemName>IX:RTXINITIALIZER</systemName>
       <userName>Initialize</userName>
-      <logixConditional systemName="RTXINITIALIZER1T" order="0" />
+      <logixConditional systemName="IX:RTXINITIALIZER1T" order="0" />
     </logix>
     <logix userName="System Logix" enabled="yes">
-      <systemName>SYS</systemName>
+      <systemName>IX:SYS</systemName>
       <userName>System Logix</userName>
-      <logixConditional systemName="SYS_SGC_WARRANTS" order="0" />
+      <logixConditional systemName="IX:SYS_SGC_WARRANTS" order="0" />
     </logix>
   </logixs>
   <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
@@ -1304,18 +1304,18 @@
       <conditionalAction option="1" type="12" systemName="TrainName" data="-1" delay="0" string="EZX" />
       <conditionalAction option="1" type="12" systemName="TrainId" data="-1" delay="0" string="SantaFe" />
     </conditional>
-    <conditional systemName="MAST INITC1" userName="Signal Mast Init" antecedent="R1 and R2" logicType="2" triggerOnChange="yes">
-      <systemName>MAST INITC1</systemName>
+    <conditional systemName="IX:MAST INITC1" userName="Signal Mast Init" antecedent="R1 and R2" logicType="2" triggerOnChange="yes">
+      <systemName>IX:MAST INITC1</systemName>
       <userName>Signal Mast Init</userName>
       <conditionalStateVariable operator="4" negated="no" type="1" systemName="init" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="2" systemName="init" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="37" systemName="Triple Head Color" data="-1" delay="0" string="Clear" />
       <conditionalAction option="1" type="37" systemName="Triple Head Approach" data="-1" delay="0" string="Approach Medium" />
     </conditional>
-    <conditional systemName="RTXINITIALIZER1T" userName="Route 1C Initialize" antecedent="R1" logicType="3" triggerOnChange="yes">
-      <systemName>RTXINITIALIZER1T</systemName>
+    <conditional systemName="IX:RTXINITIALIZER1T" userName="Route 1C Initialize" antecedent="R1" logicType="3" triggerOnChange="yes">
+      <systemName>IX:RTXINITIALIZER1T</systemName>
       <userName>Route 1C Initialize</userName>
-      <conditionalStateVariable operator="4" negated="no" type="0" systemName="RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
+      <conditionalStateVariable operator="4" negated="no" type="0" systemName="IX:RTXINITIALIZER" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="3" systemName="SigEBMain1" data="4" delay="0" string="" />
       <conditionalAction option="1" type="3" systemName="SigEBMain2" data="16" delay="0" string="" />
       <conditionalAction option="1" type="9" systemName="init" data="4" delay="0" string="" />
@@ -1360,8 +1360,8 @@
       <conditionalAction option="1" type="2" systemName="toWayFarAway" data="2" delay="0" string="" />
       <conditionalAction option="1" type="2" systemName="YardSpurs" data="4" delay="0" string="" />
     </conditional>
-    <conditional systemName="SYS_SGC_WARRANTS" userName="Sensor Group warrants" antecedent="" logicType="2" triggerOnChange="yes">
-      <systemName>SYS_SGC_WARRANTS</systemName>
+    <conditional systemName="IX:SYS_SGC_WARRANTS" userName="Sensor Group warrants" antecedent="" logicType="2" triggerOnChange="yes">
+      <systemName>IX:SYS_SGC_WARRANTS</systemName>
       <userName>Sensor Group warrants</userName>
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS201" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="5" negated="no" type="1" systemName="IS202" dataString="" num1="0" num2="0" triggersCalc="yes" />
