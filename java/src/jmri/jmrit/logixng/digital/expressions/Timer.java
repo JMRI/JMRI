@@ -24,7 +24,6 @@ import org.slf4j.LoggerFactory;
  */
 public class Timer extends AbstractDigitalExpression {
 
-    private final java.util.Timer _timer;
     private MyTimerTask _timerTask;
     private TimerType _timerType = TimerType.WAIT_ONCE_TRIG_ONCE;
     private boolean _listenersAreRegistered = false;
@@ -36,7 +35,6 @@ public class Timer extends AbstractDigitalExpression {
     
     public Timer(String sys, String user) {
         super(sys, user);
-        _timer = new java.util.Timer("LogixNG ExpressionTimer timer thread", true);
     }
 
     /** {@inheritDoc} */
@@ -181,7 +179,7 @@ public class Timer extends AbstractDigitalExpression {
             if (_timerTask != null) _timerTask.cancel();
 
             _timerTask = getNewTimerTask();
-            _timer.schedule(_timerTask, delay);
+            jmri.util.TimerUtil.schedule(_timerTask, delay);
         }
     }
     
