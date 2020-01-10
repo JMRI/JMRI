@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/panelfile-2-9-6.xsl" type="text/xsl"?>
-<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
+<?xml-stylesheet href="/xml/XSLT/panelfile-4-19-2.xsl" type="text/xsl"?>
+<layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-4-19-2.xsd">
   <jmriversion>
     <major>4</major>
-    <minor>17</minor>
-    <test>7</test>
+    <minor>19</minor>
+    <test>2</test>
     <modifier>ish</modifier>
   </jmriversion>
   <sensors class="jmri.jmrix.internal.configurexml.InternalSensorManagerXml">
@@ -1033,14 +1033,14 @@
   </memories>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
     <route userName="Bakersfield 60">
-      <systemName>BF60</systemName>
+      <systemName>IOBF60</systemName>
       <userName>Bakersfield 60</userName>
       <routeOutputTurnout systemName="IT301" state="THROWN" />
       <routeSensor systemName="IS60" mode="onActive" />
       <turnoutsAlignedSensor name="ISS60" />
     </route>
     <route userName="Bakersfield 61">
-      <systemName>BF61</systemName>
+      <systemName>IOBF61</systemName>
       <userName>Bakersfield 61</userName>
       <routeOutputTurnout systemName="IT301" state="CLOSED" />
       <routeOutputTurnout systemName="IT303" state="THROWN" />
@@ -1049,7 +1049,7 @@
       <turnoutsAlignedSensor name="ISS61" />
     </route>
     <route userName="Bakersfield 62">
-      <systemName>BF62</systemName>
+      <systemName>IOBF62</systemName>
       <userName>Bakersfield 62</userName>
       <routeOutputTurnout systemName="IT301" state="CLOSED" />
       <routeOutputTurnout systemName="IT303" state="THROWN" />
@@ -1058,7 +1058,7 @@
       <turnoutsAlignedSensor name="ISS62" />
     </route>
     <route userName="Bakersfield 63">
-      <systemName>BF63</systemName>
+      <systemName>IOBF63</systemName>
       <userName>Bakersfield 63</userName>
       <routeOutputTurnout systemName="IT301" state="CLOSED" />
       <routeOutputTurnout systemName="IT303" state="CLOSED" />
@@ -1068,7 +1068,7 @@
       <turnoutsAlignedSensor name="ISS63" />
     </route>
     <route userName="Bakersfield 64">
-      <systemName>BF64</systemName>
+      <systemName>IOBF64</systemName>
       <userName>Bakersfield 64</userName>
       <routeOutputTurnout systemName="IT301" state="CLOSED" />
       <routeOutputTurnout systemName="IT303" state="CLOSED" />
@@ -1078,7 +1078,7 @@
       <turnoutsAlignedSensor name="ISS64" />
     </route>
     <route userName="Bakersfield 65">
-      <systemName>BF65</systemName>
+      <systemName>IOBF65</systemName>
       <userName>Bakersfield 65</userName>
       <routeOutputTurnout systemName="IT301" state="CLOSED" />
       <routeOutputTurnout systemName="IT303" state="CLOSED" />
@@ -1092,7 +1092,7 @@
       <turnoutsAlignedSensor name="ISS65" />
     </route>
     <route userName="Bakersfield 66">
-      <systemName>BF66</systemName>
+      <systemName>IOBF66</systemName>
       <userName>Bakersfield 66</userName>
       <routeOutputTurnout systemName="IT301" state="CLOSED" />
       <routeOutputTurnout systemName="IT303" state="CLOSED" />
@@ -1105,7 +1105,7 @@
       <turnoutsAlignedSensor name="ISS66" />
     </route>
     <route userName="Bakersfield 67">
-      <systemName>BF67</systemName>
+      <systemName>IOBF67</systemName>
       <userName>Bakersfield 67</userName>
       <routeOutputTurnout systemName="IT301" state="CLOSED" />
       <routeOutputTurnout systemName="IT303" state="CLOSED" />
@@ -1117,7 +1117,7 @@
       <turnoutsAlignedSensor name="ISS67" />
     </route>
     <route userName="Bakersfield 68">
-      <systemName>BF68</systemName>
+      <systemName>IOBF68</systemName>
       <userName>Bakersfield 68</userName>
       <routeOutputTurnout systemName="IT331" state="THROWN" />
       <routeOutputTurnout systemName="IT333" state="CLOSED" />
@@ -1126,7 +1126,7 @@
       <turnoutsAlignedSensor name="ISS68" />
     </route>
     <route userName="Bakersfield 69">
-      <systemName>BF69</systemName>
+      <systemName>IOBF69</systemName>
       <userName>Bakersfield 69</userName>
       <routeOutputTurnout systemName="IT331" state="THROWN" />
       <routeOutputTurnout systemName="IT333" state="CLOSED" />
@@ -1135,7 +1135,7 @@
       <turnoutsAlignedSensor name="ISS69" />
     </route>
     <route userName="Bakersfield 70">
-      <systemName>BF70</systemName>
+      <systemName>IOBF70</systemName>
       <userName>Bakersfield 70</userName>
       <routeOutputTurnout systemName="IT311" state="CLOSED" />
       <routeOutputTurnout systemName="IT321" state="CLOSED" />
@@ -1147,7 +1147,7 @@
       <turnoutsAlignedSensor name="ISS70" />
     </route>
     <route userName="Bakersfield 71">
-      <systemName>BF71</systemName>
+      <systemName>IOBF71</systemName>
       <userName>Bakersfield 71</userName>
       <routeOutputTurnout systemName="IT321" state="THROWN" />
       <routeOutputTurnout systemName="IT323" state="CLOSED" />
@@ -1158,7 +1158,7 @@
       <turnoutsAlignedSensor name="ISS71" />
     </route>
     <route userName="Bakersfield 72">
-      <systemName>BF72</systemName>
+      <systemName>IOBF72</systemName>
       <userName>Bakersfield 72</userName>
       <routeOutputTurnout systemName="IT323" state="THROWN" />
       <routeOutputTurnout systemName="IT325" state="CLOSED" />
@@ -1168,7 +1168,7 @@
       <turnoutsAlignedSensor name="ISS72" />
     </route>
     <route userName="Bakersfield 73">
-      <systemName>BF73</systemName>
+      <systemName>IOBF73</systemName>
       <userName>Bakersfield 73</userName>
       <routeOutputTurnout systemName="IT325" state="THROWN" />
       <routeOutputTurnout systemName="IT327" state="CLOSED" />
@@ -1177,7 +1177,7 @@
       <turnoutsAlignedSensor name="ISS73" />
     </route>
     <route userName="Bakersfield 74">
-      <systemName>BF74</systemName>
+      <systemName>IOBF74</systemName>
       <userName>Bakersfield 74</userName>
       <routeOutputTurnout systemName="IT327" state="THROWN" />
       <routeOutputTurnout systemName="IT329" state="THROWN" />
@@ -1185,7 +1185,7 @@
       <turnoutsAlignedSensor name="ISS74" />
     </route>
     <route userName="Bakersfield 75">
-      <systemName>BF75</systemName>
+      <systemName>IOBF75</systemName>
       <userName>Bakersfield 75</userName>
       <routeOutputTurnout systemName="IT329" state="CLOSED" />
       <routeOutputTurnout systemName="IT331" state="CLOSED" />
@@ -1194,7 +1194,7 @@
       <turnoutsAlignedSensor name="ISS75" />
     </route>
     <route userName="Bakersfield 76">
-      <systemName>BF76</systemName>
+      <systemName>IOBF76</systemName>
       <userName>Bakersfield 76</userName>
       <routeOutputTurnout systemName="IT337" state="THROWN" />
       <routeOutputTurnout systemName="IT339" state="CLOSED" />
@@ -1204,7 +1204,7 @@
       <turnoutsAlignedSensor name="ISS76" />
     </route>
     <route userName="Bakersfield 77">
-      <systemName>BF77</systemName>
+      <systemName>IOBF77</systemName>
       <userName>Bakersfield 77</userName>
       <routeOutputTurnout systemName="IT337" state="THROWN" />
       <routeOutputTurnout systemName="IT339" state="CLOSED" />
@@ -1214,7 +1214,7 @@
       <turnoutsAlignedSensor name="ISS77" />
     </route>
     <route userName="Bakersfield 78">
-      <systemName>BF78</systemName>
+      <systemName>IOBF78</systemName>
       <userName>Bakersfield 78</userName>
       <routeOutputTurnout systemName="IT337" state="THROWN" />
       <routeOutputTurnout systemName="IT339" state="THROWN" />
@@ -1223,14 +1223,14 @@
       <turnoutsAlignedSensor name="ISS78" />
     </route>
     <route userName="Bakersfield 79">
-      <systemName>BF79</systemName>
+      <systemName>IOBF79</systemName>
       <userName>Bakersfield 79</userName>
       <routeOutputTurnout systemName="IT337" state="THROWN" />
       <routeSensor systemName="IS79" mode="onActive" />
       <turnoutsAlignedSensor name="ISS79" />
     </route>
     <route userName="Bakersfield 80">
-      <systemName>BF80</systemName>
+      <systemName>IOBF80</systemName>
       <userName>Bakersfield 80</userName>
       <routeOutputTurnout systemName="IT311" state="THROWN" />
       <routeOutputTurnout systemName="IT313" state="CLOSED" />
@@ -1238,7 +1238,7 @@
       <turnoutsAlignedSensor name="ISS80" />
     </route>
     <route userName="Bakersfield 81">
-      <systemName>BF81</systemName>
+      <systemName>IOBF81</systemName>
       <userName>Bakersfield 81</userName>
       <routeOutputTurnout systemName="IT311" state="THROWN" />
       <routeOutputTurnout systemName="IT313" state="THROWN" />
@@ -1246,7 +1246,7 @@
       <turnoutsAlignedSensor name="ISS81" />
     </route>
     <route userName="Close Yard Switches">
-      <systemName>CLOSE YARD</systemName>
+      <systemName>IOCLOSE YARD</systemName>
       <userName>Close Yard Switches</userName>
       <routeOutputTurnout systemName="IT103" state="CLOSED" />
       <routeOutputTurnout systemName="IT117" state="CLOSED" />
@@ -1315,7 +1315,7 @@
       <turnoutsAlignedSensor name="ISS2" />
     </route>
     <route userName="Reset Danville" controlLockTurnout="IT1003" controlLockTurnoutState="CLOSED">
-      <systemName>DV</systemName>
+      <systemName>IODV</systemName>
       <userName>Reset Danville</userName>
       <routeOutputTurnout systemName="IT137" state="CLOSED" />
       <routeOutputTurnout systemName="IT147" state="CLOSED" />
@@ -1325,7 +1325,7 @@
       <turnoutsAlignedSensor name="ISDVS" />
     </route>
     <route userName="Danville 30">
-      <systemName>DV30</systemName>
+      <systemName>IODV30</systemName>
       <userName>Danville 30</userName>
       <routeOutputTurnout systemName="IT139" state="CLOSED" />
       <routeOutputTurnout systemName="IT141" state="THROWN" />
@@ -1333,7 +1333,7 @@
       <turnoutsAlignedSensor name="ISS30" />
     </route>
     <route userName="Danville 31">
-      <systemName>DV31</systemName>
+      <systemName>IODV31</systemName>
       <userName>Danville 31</userName>
       <routeOutputTurnout systemName="IT139" state="CLOSED" />
       <routeOutputTurnout systemName="IT141" state="CLOSED" />
@@ -1341,7 +1341,7 @@
       <turnoutsAlignedSensor name="ISS31" />
     </route>
     <route userName="Danville 32">
-      <systemName>DV32</systemName>
+      <systemName>IODV32</systemName>
       <userName>Danville 32</userName>
       <routeOutputTurnout systemName="IT139" state="THROWN" />
       <routeOutputTurnout systemName="IT141" state="CLOSED" />
@@ -1350,7 +1350,7 @@
       <turnoutsAlignedSensor name="ISS32" />
     </route>
     <route userName="Danville 33">
-      <systemName>DV33</systemName>
+      <systemName>IODV33</systemName>
       <userName>Danville 33</userName>
       <routeOutputTurnout systemName="IT139" state="THROWN" />
       <routeOutputTurnout systemName="IT141" state="CLOSED" />
@@ -1359,7 +1359,7 @@
       <turnoutsAlignedSensor name="ISS33" />
     </route>
     <route userName="Farmington Standard Steel">
-      <systemName>FM10</systemName>
+      <systemName>IOFM10</systemName>
       <userName>Farmington Standard Steel</userName>
       <routeOutputTurnout systemName="IT187" state="THROWN" />
       <routeOutputTurnout systemName="IT189" state="THROWN" />
@@ -1367,7 +1367,7 @@
       <turnoutsAlignedSensor name="ISS10" />
     </route>
     <route userName="Farmington Chalker Beach">
-      <systemName>FM11</systemName>
+      <systemName>IOFM11</systemName>
       <userName>Farmington Chalker Beach</userName>
       <routeOutputTurnout systemName="IT183" state="CLOSED" />
       <routeOutputTurnout systemName="IT187" state="THROWN" />
@@ -1376,7 +1376,7 @@
       <turnoutsAlignedSensor name="ISS11" />
     </route>
     <route userName="Farmington Wood's Hole">
-      <systemName>FM12</systemName>
+      <systemName>IOFM12</systemName>
       <userName>Farmington Wood's Hole</userName>
       <routeOutputTurnout systemName="IT179" state="CLOSED" />
       <routeOutputTurnout systemName="IT181" state="CLOSED" />
@@ -1386,7 +1386,7 @@
       <turnoutsAlignedSensor name="ISS12" />
     </route>
     <route userName="Reset Freemont" controlLockTurnout="IT1007" controlLockTurnoutState="CLOSED">
-      <systemName>FRMT</systemName>
+      <systemName>IOFRMT</systemName>
       <userName>Reset Freemont</userName>
       <routeOutputTurnout systemName="IT225" state="CLOSED" />
       <routeOutputTurnout systemName="IT227" state="CLOSED" />
@@ -1395,7 +1395,7 @@
       <turnoutsAlignedSensor name="ISFRMTS" />
     </route>
     <route userName="Reset Farmington">
-      <systemName>FRN</systemName>
+      <systemName>IOFRN</systemName>
       <userName>Reset Farmington</userName>
       <routeOutputTurnout systemName="IT101" state="CLOSED" />
       <routeOutputTurnout systemName="IT105" state="CLOSED" />
@@ -1405,7 +1405,7 @@
       <turnoutsAlignedSensor name="ISFRNS" />
     </route>
     <route userName="Reset Hillsboro" controlLockTurnout="IT1004" controlLockTurnoutState="CLOSED">
-      <systemName>HB</systemName>
+      <systemName>IOHB</systemName>
       <userName>Reset Hillsboro</userName>
       <routeOutputTurnout systemName="IT111" state="CLOSED" />
       <routeOutputTurnout systemName="IT113" state="CLOSED" />
@@ -1419,14 +1419,14 @@
       <turnoutsAlignedSensor name="ISHSS" />
     </route>
     <route userName="Hillsboro 20">
-      <systemName>HB20</systemName>
+      <systemName>IOHB20</systemName>
       <userName>Hillsboro 20</userName>
       <routeOutputTurnout systemName="IT121" state="THROWN" />
       <routeSensor systemName="IS20" mode="onActive" />
       <turnoutsAlignedSensor name="ISS20" />
     </route>
     <route userName="Hillsboro 21">
-      <systemName>HB21</systemName>
+      <systemName>IOHB21</systemName>
       <userName>Hillsboro 21</userName>
       <routeOutputTurnout systemName="IT121" state="CLOSED" />
       <routeOutputTurnout systemName="IT123" state="THROWN" />
@@ -1435,7 +1435,7 @@
       <turnoutsAlignedSensor name="ISS21" />
     </route>
     <route userName="Hillsboro 22">
-      <systemName>HB22</systemName>
+      <systemName>IOHB22</systemName>
       <userName>Hillsboro 22</userName>
       <routeOutputTurnout systemName="IT121" state="CLOSED" />
       <routeOutputTurnout systemName="IT123" state="THROWN" />
@@ -1444,7 +1444,7 @@
       <turnoutsAlignedSensor name="ISS22" />
     </route>
     <route userName="Hillsboro 23">
-      <systemName>HB23</systemName>
+      <systemName>IOHB23</systemName>
       <userName>Hillsboro 23</userName>
       <routeOutputTurnout systemName="IT121" state="CLOSED" />
       <routeOutputTurnout systemName="IT123" state="CLOSED" />
@@ -1453,19 +1453,19 @@
       <turnoutsAlignedSensor name="ISS23" />
     </route>
     <route userName="Lock Bakersfield" controlLockTurnout="IT1001" controlLockTurnoutState="CLOSED">
-      <systemName>LK_BKSFLD</systemName>
+      <systemName>IOLK_BKSFLD</systemName>
       <userName>Lock Bakersfield</userName>
       <routeOutputTurnout systemName="IT191" state="CLOSED" />
       <routeOutputTurnout systemName="IT193" state="CLOSED" />
     </route>
     <route userName="Lock Freemont Loop" controlLockTurnout="IT1009" controlLockTurnoutState="CLOSED">
-      <systemName>LK_FREEMONT</systemName>
+      <systemName>IOLK_FREEMONT</systemName>
       <userName>Lock Freemont Loop</userName>
       <routeOutputTurnout systemName="IT231" state="CLOSED" />
       <routeOutputTurnout systemName="IT233" state="CLOSED" />
     </route>
     <route userName="Lock Farmington" controlLockTurnout="IT1005" controlLockTurnoutState="CLOSED">
-      <systemName>LK_FRN</systemName>
+      <systemName>IOLK_FRN</systemName>
       <userName>Lock Farmington</userName>
       <routeOutputTurnout systemName="IT101" state="CLOSED" />
       <routeOutputTurnout systemName="IT107" state="CLOSED" />
@@ -1473,7 +1473,7 @@
       <routeSensor systemName="ISFRN" mode="onActive" />
     </route>
     <route userName="Lock all main turnouts" controlTurnout="IT1000" controlTurnoutState="CLOSED">
-      <systemName>LK_MAIN</systemName>
+      <systemName>IOLK_MAIN</systemName>
       <userName>Lock all main turnouts</userName>
       <routeOutputTurnout systemName="IT1001" state="CLOSED" />
       <routeOutputTurnout systemName="IT1002" state="CLOSED" />
@@ -1487,21 +1487,21 @@
       <routeOutputTurnout systemName="IT1010" state="CLOSED" />
     </route>
     <route userName="Fremont 231">
-      <systemName>LOOP 231</systemName>
+      <systemName>IOLOOP 231</systemName>
       <userName>Fremont 231</userName>
       <routeOutputTurnout systemName="IT231" state="CLOSED" />
       <routeOutputTurnout systemName="IT233" state="CLOSED" />
       <routeSensor systemName="IS231" mode="onActive" />
     </route>
     <route userName="Fremont 232">
-      <systemName>LOOP 232</systemName>
+      <systemName>IOLOOP 232</systemName>
       <userName>Fremont 232</userName>
       <routeOutputTurnout systemName="IT231" state="THROWN" />
       <routeOutputTurnout systemName="IT233" state="THROWN" />
       <routeSensor systemName="IS231" mode="onInactive" />
     </route>
     <route userName="Reset Niles" controlLockTurnout="IT1010" controlLockTurnoutState="CLOSED">
-      <systemName>NILE</systemName>
+      <systemName>IONILE</systemName>
       <userName>Reset Niles</userName>
       <routeOutputTurnout systemName="IT175" state="THROWN" />
       <routeOutputTurnout systemName="IT177" state="THROWN" />
@@ -1509,7 +1509,7 @@
       <turnoutsAlignedSensor name="ISNILES" />
     </route>
     <route userName="Reset Port Arthur" controlLockTurnout="IT1002" controlLockTurnoutState="CLOSED">
-      <systemName>PA</systemName>
+      <systemName>IOPA</systemName>
       <userName>Reset Port Arthur</userName>
       <routeOutputTurnout systemName="IT153" state="CLOSED" />
       <routeOutputTurnout systemName="IT155" state="CLOSED" />
@@ -1523,7 +1523,7 @@
       <turnoutsAlignedSensor name="ISPAS" />
     </route>
     <route userName="Port Arthur 40">
-      <systemName>PA40</systemName>
+      <systemName>IOPA40</systemName>
       <userName>Port Arthur 40</userName>
       <routeOutputTurnout systemName="IT167" state="THROWN" />
       <routeOutputTurnout systemName="IT169" state="THROWN" />
@@ -1531,7 +1531,7 @@
       <turnoutsAlignedSensor name="ISS40" />
     </route>
     <route userName="Port Arthur 41">
-      <systemName>PA41</systemName>
+      <systemName>IOPA41</systemName>
       <userName>Port Arthur 41</userName>
       <routeOutputTurnout systemName="IT167" state="THROWN" />
       <routeOutputTurnout systemName="IT169" state="CLOSED" />
@@ -1539,7 +1539,7 @@
       <turnoutsAlignedSensor name="ISS41" />
     </route>
     <route userName="Port Arthur 42">
-      <systemName>PA42</systemName>
+      <systemName>IOPA42</systemName>
       <userName>Port Arthur 42</userName>
       <routeOutputTurnout systemName="IT167" state="CLOSED" />
       <routeOutputTurnout systemName="IT171" state="CLOSED" />
@@ -1548,7 +1548,7 @@
       <turnoutsAlignedSensor name="ISS42" />
     </route>
     <route userName="Port Arthur 43">
-      <systemName>PA43</systemName>
+      <systemName>IOPA43</systemName>
       <userName>Port Arthur 43</userName>
       <routeOutputTurnout systemName="IT167" state="CLOSED" />
       <routeOutputTurnout systemName="IT171" state="CLOSED" />
@@ -1557,7 +1557,7 @@
       <turnoutsAlignedSensor name="ISS43" />
     </route>
     <route userName="Port Arthur 44">
-      <systemName>PA44</systemName>
+      <systemName>IOPA44</systemName>
       <userName>Port Arthur 44</userName>
       <routeOutputTurnout systemName="IT167" state="CLOSED" />
       <routeOutputTurnout systemName="IT171" state="THROWN" />
@@ -1565,7 +1565,7 @@
       <turnoutsAlignedSensor name="ISS44" />
     </route>
     <route userName="Port Arthur 45">
-      <systemName>PA45</systemName>
+      <systemName>IOPA45</systemName>
       <userName>Port Arthur 45</userName>
       <routeOutputTurnout systemName="IT415" state="THROWN" />
       <routeOutputTurnout systemName="IT417" state="CLOSED" />
@@ -1574,7 +1574,7 @@
       <turnoutsAlignedSensor name="ISS45" />
     </route>
     <route userName="Port Arthur 46">
-      <systemName>PA46</systemName>
+      <systemName>IOPA46</systemName>
       <userName>Port Arthur 46</userName>
       <routeOutputTurnout systemName="IT415" state="THROWN" />
       <routeOutputTurnout systemName="IT417" state="CLOSED" />
@@ -1583,7 +1583,7 @@
       <turnoutsAlignedSensor name="ISS46" />
     </route>
     <route userName="Port Arthur 47">
-      <systemName>PA47</systemName>
+      <systemName>IOPA47</systemName>
       <userName>Port Arthur 47</userName>
       <routeOutputTurnout systemName="IT415" state="THROWN" />
       <routeOutputTurnout systemName="IT417" state="THROWN" />
@@ -1592,7 +1592,7 @@
       <turnoutsAlignedSensor name="ISS47" />
     </route>
     <route userName="Port Arthur 48">
-      <systemName>PA48</systemName>
+      <systemName>IOPA48</systemName>
       <userName>Port Arthur 48</userName>
       <routeOutputTurnout systemName="IT415" state="THROWN" />
       <routeOutputTurnout systemName="IT417" state="THROWN" />
@@ -1602,7 +1602,7 @@
       <turnoutsAlignedSensor name="ISS48" />
     </route>
     <route userName="Reset Main Switches">
-      <systemName>RESET</systemName>
+      <systemName>IORESET</systemName>
       <userName>Reset Main Switches</userName>
       <routeOutputTurnout systemName="IT101" state="CLOSED" />
       <routeOutputTurnout systemName="IT105" state="CLOSED" />
@@ -1656,7 +1656,7 @@
       <turnoutsAlignedSensor name="ISS1" />
     </route>
     <route userName="Reset Silverton" controlLockTurnout="IT1008" controlLockTurnoutState="CLOSED">
-      <systemName>SLV</systemName>
+      <systemName>IOSLV</systemName>
       <userName>Reset Silverton</userName>
       <routeOutputTurnout systemName="IT205" state="CLOSED" />
       <routeOutputTurnout systemName="IT207" state="CLOSED" />
@@ -1667,7 +1667,7 @@
       <turnoutsAlignedSensor name="ISSLVS" />
     </route>
     <route userName="Silverton 50">
-      <systemName>ST50</systemName>
+      <systemName>IOST50</systemName>
       <userName>Silverton 50</userName>
       <routeOutputTurnout systemName="IT209" state="THROWN" />
       <routeOutputTurnout systemName="IT211" state="CLOSED" />
@@ -1677,7 +1677,7 @@
       <turnoutsAlignedSensor name="ISS50" />
     </route>
     <route userName="Silverton 51">
-      <systemName>ST51</systemName>
+      <systemName>IOST51</systemName>
       <userName>Silverton 51</userName>
       <routeOutputTurnout systemName="IT209" state="CLOSED" />
       <routeOutputTurnout systemName="IT211" state="CLOSED" />
@@ -1687,7 +1687,7 @@
       <turnoutsAlignedSensor name="ISS51" />
     </route>
     <route userName="Silverton 52">
-      <systemName>ST52</systemName>
+      <systemName>IOST52</systemName>
       <userName>Silverton 52</userName>
       <routeOutputTurnout systemName="IT211" state="THROWN" />
       <routeOutputTurnout systemName="IT213" state="CLOSED" />
@@ -1696,7 +1696,7 @@
       <turnoutsAlignedSensor name="ISS52" />
     </route>
     <route userName="Silverton 53">
-      <systemName>ST53</systemName>
+      <systemName>IOST53</systemName>
       <userName>Silverton 53</userName>
       <routeOutputTurnout systemName="IT213" state="THROWN" />
       <routeOutputTurnout systemName="IT215" state="THROWN" />
@@ -1704,7 +1704,7 @@
       <turnoutsAlignedSensor name="ISS53" />
     </route>
     <route userName="Silverton 54">
-      <systemName>ST54</systemName>
+      <systemName>IOST54</systemName>
       <userName>Silverton 54</userName>
       <routeOutputTurnout systemName="IT217" state="CLOSED" />
       <routeOutputTurnout systemName="IT219" state="CLOSED" />
@@ -1713,7 +1713,7 @@
       <turnoutsAlignedSensor name="ISS54" />
     </route>
     <route userName="Silverton 55">
-      <systemName>ST55</systemName>
+      <systemName>IOST55</systemName>
       <userName>Silverton 55</userName>
       <routeOutputTurnout systemName="IT217" state="THROWN" />
       <routeOutputTurnout systemName="IT219" state="CLOSED" />
@@ -1722,7 +1722,7 @@
       <turnoutsAlignedSensor name="ISS55" />
     </route>
     <route userName="Silverton 56">
-      <systemName>ST56</systemName>
+      <systemName>IOST56</systemName>
       <userName>Silverton 56</userName>
       <routeOutputTurnout systemName="IT219" state="THROWN" />
       <routeOutputTurnout systemName="IT221" state="THROWN" />
@@ -1730,7 +1730,7 @@
       <turnoutsAlignedSensor name="ISS56" />
     </route>
     <route userName="New River 57">
-      <systemName>ST57</systemName>
+      <systemName>IOST57</systemName>
       <userName>New River 57</userName>
       <routeOutputTurnout systemName="IT201" state="THROWN" />
       <routeOutputTurnout systemName="IT203" state="CLOSED" />
@@ -1739,7 +1739,7 @@
       <turnoutsAlignedSensor name="ISS57" />
     </route>
     <route userName="New River 58">
-      <systemName>ST58</systemName>
+      <systemName>IOST58</systemName>
       <userName>New River 58</userName>
       <routeOutputTurnout systemName="IT201" state="CLOSED" />
       <routeOutputTurnout systemName="IT203" state="CLOSED" />
@@ -1748,7 +1748,7 @@
       <turnoutsAlignedSensor name="ISS58" />
     </route>
     <route userName="New River 59">
-      <systemName>ST59</systemName>
+      <systemName>IOST59</systemName>
       <userName>New River 59</userName>
       <routeOutputTurnout systemName="IT203" state="THROWN" />
       <routeOutputTurnout systemName="IT205" state="THROWN" />
@@ -1756,7 +1756,7 @@
       <turnoutsAlignedSensor name="ISS59" />
     </route>
     <route userName="Throw Main Switches">
-      <systemName>THROW MAIN</systemName>
+      <systemName>IOTHROW MAIN</systemName>
       <userName>Throw Main Switches</userName>
       <routeOutputTurnout systemName="IT101" state="THROWN" />
       <routeOutputTurnout systemName="IT105" state="THROWN" />
@@ -1802,7 +1802,7 @@
       <turnoutsAlignedSensor name="ISS255" />
     </route>
     <route userName="Throw Yard Switches">
-      <systemName>THROW YARD</systemName>
+      <systemName>IOTHROW YARD</systemName>
       <userName>Throw Yard Switches</userName>
       <routeOutputTurnout systemName="IT103" state="THROWN" />
       <routeOutputTurnout systemName="IT117" state="THROWN" />
@@ -1871,7 +1871,7 @@
       <turnoutsAlignedSensor name="ISS254" />
     </route>
     <route userName="Unlock all main turnouts" controlTurnout="IT1000" controlTurnoutState="THROWN">
-      <systemName>UNLK_MAIN</systemName>
+      <systemName>IOUNLK_MAIN</systemName>
       <userName>Unlock all main turnouts</userName>
       <routeOutputTurnout systemName="IT1001" state="THROWN" />
       <routeOutputTurnout systemName="IT1002" state="THROWN" />
@@ -1885,7 +1885,7 @@
       <routeOutputTurnout systemName="IT1010" state="THROWN" />
     </route>
     <route userName="Reset Walnut Creek" controlLockTurnout="IT1006" controlLockTurnoutState="CLOSED">
-      <systemName>WC</systemName>
+      <systemName>IOWC</systemName>
       <userName>Reset Walnut Creek</userName>
       <routeOutputTurnout systemName="IT195" state="CLOSED" />
       <routeOutputTurnout systemName="IT197" state="CLOSED" />
@@ -1894,7 +1894,7 @@
       <turnoutsAlignedSensor name="ISWCS" />
     </route>
     <route userName="Woods Hole 85">
-      <systemName>WH85</systemName>
+      <systemName>IOWH85</systemName>
       <userName>Woods Hole 85</userName>
       <routeOutputTurnout systemName="IT401" state="CLOSED" />
       <routeOutputTurnout systemName="IT403" state="CLOSED" />
@@ -1902,7 +1902,7 @@
       <turnoutsAlignedSensor name="ISS85" />
     </route>
     <route userName="Woods Hole 86">
-      <systemName>WH86</systemName>
+      <systemName>IOWH86</systemName>
       <userName>Woods Hole 86</userName>
       <routeOutputTurnout systemName="IT401" state="CLOSED" />
       <routeOutputTurnout systemName="IT403" state="THROWN" />
@@ -1910,7 +1910,7 @@
       <turnoutsAlignedSensor name="ISS86" />
     </route>
     <route userName="Woods Hole 87">
-      <systemName>WH87</systemName>
+      <systemName>IOWH87</systemName>
       <userName>Woods Hole 87</userName>
       <routeOutputTurnout systemName="IT401" state="THROWN" />
       <routeOutputTurnout systemName="IT405" state="THROWN" />
@@ -1918,7 +1918,7 @@
       <turnoutsAlignedSensor name="ISS87" />
     </route>
     <route userName="Woods Hole 88">
-      <systemName>WH88</systemName>
+      <systemName>IOWH88</systemName>
       <userName>Woods Hole 88</userName>
       <routeOutputTurnout systemName="IT401" state="THROWN" />
       <routeOutputTurnout systemName="IT405" state="CLOSED" />
@@ -1927,7 +1927,7 @@
       <turnoutsAlignedSensor name="ISS88" />
     </route>
     <route userName="Woods Hole 89">
-      <systemName>WH89</systemName>
+      <systemName>IOWH89</systemName>
       <userName>Woods Hole 89</userName>
       <routeOutputTurnout systemName="IT401" state="THROWN" />
       <routeOutputTurnout systemName="IT405" state="CLOSED" />
@@ -1972,13 +1972,37 @@
       <conditionalAction option="1" type="1" systemName=" " data="0" delay="0" string="0" />
     </conditional>
   </conditionals>
-  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Feb 13 11:43:46 EST 2008" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
+  <timebase class="jmri.jmrit.simpleclock.configurexml.SimpleTimebaseXml" time="Wed Feb 13 08:43:46 PST 2008" rate="1.0" startrate="1.0" run="yes" master="yes" sync="no" correct="no" display="no" startstopped="no" startrunning="yes" startsettime="no" startclockoption="0" showbutton="no" startsetrate="yes" />
   <filehistory>
     <operation>
+      <type>Load OK</type>
+      <date>Fri Jan 10 11:28:50 PST 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/GrotonCentralRailroad.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Store</type>
+          <date>Sat Dec 07 10:20:09 EST 2019</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
+      <type>Load OK</type>
+      <date>Fri Jan 10 11:28:50 PST 2020</date>
+      <filename>/Users/jake/Documents/Trains/JMRI/projects/JMRI/java/test/jmri/configurexml/load/GrotonCentralRailroad.xml</filename>
+      <filehistory>
+        <operation>
+          <type>Store</type>
+          <date>Sat Dec 07 10:20:09 EST 2019</date>
+          <filename />
+        </operation>
+      </filehistory>
+    </operation>
+    <operation>
       <type>Store</type>
-      <date>Sat Dec 07 10:20:09 EST 2019</date>
+      <date>Fri Jan 10 11:28:50 PST 2020</date>
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 4.17.7ish+jake+20191207T1511Z+R6dc0e9e8eb on Sat Dec 07 10:20:09 EST 2019-->
+  <!--Written by JMRI version 4.19.2ish+jake+20200110T1923Z+R52a3c2af5a on Fri Jan 10 11:28:50 PST 2020-->
 </layout-config>

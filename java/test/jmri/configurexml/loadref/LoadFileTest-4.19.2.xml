@@ -15,11 +15,11 @@
     </sensor>
     <sensor inverted="false">
       <systemName>IS100</systemName>
-      <comment>Input for IR1, don't change</comment>
+      <comment>Input for IO1, don't change</comment>
     </sensor>
     <sensor inverted="false">
       <systemName>IS101</systemName>
-      <comment>Input for IR1, don't change</comment>
+      <comment>Input for IO1, don't change</comment>
     </sensor>
     <sensor inverted="false">
       <systemName>ISCLOCKRUNNING</systemName>
@@ -62,7 +62,7 @@
     </turnout>
     <turnout feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT101</systemName>
-      <comment>Input for IR1, don't change</comment>
+      <comment>Input for IO1, don't change</comment>
       <properties>
         <property>
           <key>test</key>
@@ -137,7 +137,7 @@
   </blocks>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
     <route userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED">
-      <systemName>IR1</systemName>
+      <systemName>IO1</systemName>
       <userName>random route 1</userName>
       <routeOutputTurnout systemName="IT1" state="THROWN" />
       <routeOutputTurnout systemName="IT2" state="CLOSED" />
