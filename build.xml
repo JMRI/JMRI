@@ -1874,7 +1874,8 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
+            <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
+            <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
             <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
@@ -1945,7 +1946,8 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
+            <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
+            <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
             <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
             <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
@@ -2029,9 +2031,13 @@
             <link href="http://download.java.net/media/java3d/javadoc/1.3.2/"/>
             <link href="https://static.javadoc.io/org.openlcb/openlcb/0.7.23/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
-            <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
-            <link href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
-            <link href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
+            <!-- marking this one offline as it doesn't currently serve the 'package-list' document -->
+            <link offline="true" href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/" packagelistLoc="lib/joal-2.3.1-packagelist"/>
+            <!-- marking this offline as linking to JavaDoc hosted on javadoc.io seems to break the build -->
+            <!-- due to attempting to interpret the injected Google Tag Manager script on javadoc.io -->
+            <link offline="true" href="https://static.javadoc.io/com.github.purejavacomm/purejavacomm/1.0.1.RELEASE/" packagelistLoc="lib/purejavacomm-1.0.1-package-list"/>
+            <!-- marking this offline also -->
+            <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jsplitbutton/1.3.1/" packagelistLoc="lib/jsplitbutton-1.3.1-package-list"/>
             <!-- The following Javadocs were built with JDK 11+ and can't be directly linked -->
             <link offline="true" href="https://static.javadoc.io/com.alexandriasoftware.swing/jinputvalidator/0.8.0/" packagelistLoc="lib/jinputvalidator-0.8.0-package-list"/>
             <link offline="true" href="https://static.javadoc.io/com.tngtech.archunit/archunit/0.11.0/" packagelistloc="lib/archunit-0.11.0-package-list"/>
