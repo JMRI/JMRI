@@ -788,7 +788,6 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         JTextField aspectBitsField = new JTextField(MAXMATRIXBITS); // for debug
         String aspect = "";
         String emptyChars = "0000000000"; // size of String = MAXMATRIXBITS; add another 0 in order to extend MAXMATRIXBITS
-        char[] emptyBits = emptyChars.toCharArray();
         char[] aspectBits = emptyChars.toCharArray();
 
         /**
