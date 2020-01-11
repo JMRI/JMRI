@@ -83,13 +83,10 @@ public class RaspberryPiTurnout extends AbstractTurnout implements java.io.Seria
    public boolean canInvert() {
        return true;
    }
-   
+
    /**
-    * Handle a request to change state, typically by sending a message to the
-    * layout in some child class. Public version (used by TurnoutOperator)
-    * sends the current commanded state without changing it.
-    * 
-    * @param s new state value
+    * {@inheritDoc}
+    * Sets the GPIO pin.
     */
    @Override
    protected void forwardCommandChangeToLayout(int s){

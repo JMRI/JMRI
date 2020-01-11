@@ -54,7 +54,7 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
                 if ((newState & Turnout.THROWN ) != 0 ^ getInverted()) {
                     // this is the disaster case!
                     log.error("Cannot command both CLOSED and THROWN: {}", newState);
-                    throw new IllegalArgumentException("Cannot command both CLOSED and THROWN: "+newState);
+                    throw new IllegalArgumentException("Cannot command both CLOSED and THROWN: " + newState);
                 } else {
                     // send a CLOSED command
                     return closedText;
@@ -73,7 +73,10 @@ public class MqttTurnout extends AbstractTurnout implements MqttEventListener {
         return true;
     }
 
-    // Handle a request to change state by sending a formatted DCC packet
+    /**
+     * {@inheritDoc}
+     * Sends an MQTT payload command
+     */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states

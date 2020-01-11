@@ -182,9 +182,8 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state by sending CBUS events.
-     *
-     * @param s new state value
+     * {@inheritDoc}
+     * Sends an OpenLCB command
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {

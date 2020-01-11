@@ -145,7 +145,9 @@ public class LnTurnout extends AbstractTurnout {
         return (boolean) returnVal;
     }
 
-    // Handle a request to change state by sending a LocoNet command
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void forwardCommandChangeToLayout(final int newstate) {
 

@@ -76,17 +76,15 @@ public class TamsTurnout extends AbstractTurnout
 
     private TamsTrafficController tc;
 
-    // Handle a request to change state by sending a turnout command
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         log.debug("*** forwardCommandChangeToLayout ***");
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
-            // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
-            } else {
+            if (noStateConflict(s & Turnout.THROWN)) {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
             }
@@ -97,7 +95,7 @@ public class TamsTurnout extends AbstractTurnout
     }
 
     // data members
-    private int _number;   // turnout number
+    private int _number; // turnout number
 
     /**
      * Set the turnout known state to reflect what's been observed from the

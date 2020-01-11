@@ -211,7 +211,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
     /**
-     * Handle a request to change state by sending an XpressNet command.
+     * {@inheritDoc}
+     * Sends an XpressNet command
      */
     @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {

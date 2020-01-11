@@ -37,18 +37,13 @@ public class SprogTurnout extends AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state by sending a formatted DCC packet.
+     * {@inheritDoc}
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
-            // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
-                return;
-            } else {
+            if (noStateConflict(s & Turnout.THROWN)) {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
             }

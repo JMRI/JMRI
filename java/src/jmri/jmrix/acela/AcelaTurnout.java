@@ -68,15 +68,13 @@ public class AcelaTurnout extends AbstractTurnout {
     protected int mState = UNKNOWN;  // current state of this turnout
     int mBit = -1;                // global address from 0
 
-    // Handle a request to change state by sending a turnout command
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         if ((s & Turnout.CLOSED) != 0) {
-            // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN {}", s);
-            } else {
+            if (noStateConflict(s & Turnout.THROWN)) {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
             }

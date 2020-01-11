@@ -119,11 +119,8 @@ public class XBeeTurnout extends AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state, typically by sending a message to the
-     * layout in some child class. Public version (used by TurnoutOperator)
-     * sends the current commanded state without changing it.
-     *
-     * @param s new state value
+     * {@inheritDoc}
+     * Sets the XBee node DIO pin value.
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
@@ -149,7 +146,6 @@ public class XBeeTurnout extends AbstractTurnout {
         } catch (XBeeException xbe) {
             log.error("Error setting IO line value for turout {} on {}", getUserName(), node.getXBee());
         }
-
     }
 
     /**

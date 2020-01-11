@@ -164,7 +164,10 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 	    }
     }
 
-    // Handle a request to change state by sending a DCC++ command
+    /**
+     * {@inheritDoc}
+     * Sends a DCC++ command
+     */
     @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {
         DCCppMessage msg;

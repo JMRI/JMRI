@@ -89,11 +89,10 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
             if (s2 != null) s2.requestUpdateFromLayout();
         }
     }
-    
+
     /**
-     * Handle a request to change state by sending CBUS events.
-     *
-     * @param s new state value
+     * {@inheritDoc}
+     * Sends a CBUS event
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {

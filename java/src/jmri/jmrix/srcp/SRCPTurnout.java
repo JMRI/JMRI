@@ -47,17 +47,15 @@ public class SRCPTurnout extends AbstractTurnout {
         return _number;
     }
 
-    // Handle a request to change state by sending a formatted DCC packet
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
-                return;
-            } else {
+            if (noStateConflict(s & Turnout.THROWN)) {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
             }
@@ -69,15 +67,13 @@ public class SRCPTurnout extends AbstractTurnout {
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        if (log.isDebugEnabled()) {
-            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton ET" + _number);
-        }
+        log.debug("Send command to {} Pushbutton ET{}", (_pushButtonLockout ? "Lock" : "Unlock"), _number);
     }
 
     // data members
-    int _number;   // turnout number
-    int _bus;   // bus number
-    SRCPTrafficController tc = null;   // traffic controller 
+    private int _number;   // turnout number
+    private int _bus;   // bus number
+    private SRCPTrafficController tc = null;   // traffic controller
 
     protected void sendMessage(boolean closed) {
         // get the message text

@@ -34,25 +34,13 @@ public class SerialTurnout extends AbstractTurnout {
     }
 
     /**
-     * Handle a request to change state by sending a turnout command.
+     * {@inheritDoc}
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
-        // implementing classes will typically have a function/listener to get
-        // updates from the layout, which will then call
-        //  public void firePropertyChange(String propertyName,
-        //                    Object oldValue,
-        //      Object newValue)
-        // _once_ if anything has changed state (or set the commanded state directly)
-
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
-            // first look for the double case, which we can't handle
-            if ((s & Turnout.THROWN) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
-                return;
-            } else {
+            if (noStateConflict(s & Turnout.THROWN)) {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
             }
@@ -64,9 +52,7 @@ public class SerialTurnout extends AbstractTurnout {
 
     @Override
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
-        if (log.isDebugEnabled()) {
-            log.debug("Send command to {} Pushbutton", (_pushButtonLockout ? "Lock" : "Unlock"));
-        }
+        log.debug("Send command to {} Pushbutton", (_pushButtonLockout ? "Lock" : "Unlock"));
     }
 
     // data members

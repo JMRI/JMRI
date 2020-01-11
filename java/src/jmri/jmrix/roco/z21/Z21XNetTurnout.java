@@ -19,12 +19,13 @@ public class Z21XNetTurnout extends XNetTurnout {
     }
 
     /**
-     * Handle a request to change state by sending an XpressNet command.
+     * {@inheritDoc}
+     * Sends an XpressNet command.
      */
     @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {
         if (s != _mClosed && s != _mThrown) {
-            log.warn("Turnout " + mNumber + ": state " + s + " not forwarded to layout.");
+            log.warn("Turnout {}: state {} not forwarded to layout.", mNumber, s);
             return;
         }
         // get the right packet
@@ -33,7 +34,7 @@ public class Z21XNetTurnout extends XNetTurnout {
                 true, false ); // for now always active and not queued.
         if (getFeedbackMode() == SIGNAL) {
             msg.setTimeout(0); // Set the timeout to 0, so the off message can
-            // be sent imediately.
+            // be sent immediately.
             // leave the next line commented out for now.
             // it may be enabled later to allow SIGNAL mode to ignore
             // directed replies, which lets the traffic controller move on

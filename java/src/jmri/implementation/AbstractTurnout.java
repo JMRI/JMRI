@@ -62,6 +62,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
      * Handle a request to change state, typically by sending a message to the
      * layout in some child class. Public version (used by TurnoutOperator)
      * sends the current commanded state without changing it.
+     * Implementing classes will typically check the value of s and send a system specific sendMessage command.
      *
      * @param s new state value
      */
@@ -71,12 +72,16 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         forwardCommandChangeToLayout(_commandedState);
     }
 
-    // implementing classes will typically have a function/listener to get
-    // updates from the layout, which will then call
-    //        public void firePropertyChange(String propertyName,
-    //                        Object oldValue,
-    //                        Object newValue)
-    // _once_ if anything has changed state
+    protected boolean noStateConflict(int checked) {
+        // look for the double case, which we can't handle
+        if (checked != 0) {
+            // this is the disaster case!
+            log.error("Cannot command both CLOSED and THROWN");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Set a new Commanded state, if need be notifying the listeners, but do
      * NOT send the command downstream.

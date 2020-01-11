@@ -43,20 +43,19 @@ public class XpaTurnout extends AbstractTurnout {
         return _number;
     }
 
-    // Handle a request to change state by sending a formatted DCC packet
+    /**
+     * {@inheritDoc}
+     */
     @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {
         XpaMessage m;
         // sort out states
         if ((s & _mClosed) != 0) {
-            // first look for the double case, which we can't handle
-            if ((s & _mThrown ) != 0) {
-                // this is the disaster case!
-                log.error("Cannot command both CLOSED and THROWN " + s);
-                return;
-            } else {
+            if (noStateConflict(s & _mThrown)) {
                 // send a CLOSED command
                 m = XpaMessage.getSwitchNormalMsg(_number);
+            } else {
+                return;
             }
         } else {
             // send a THROWN command
