@@ -16,7 +16,6 @@ public class LnNetworkPortControllerTest extends jmri.jmrix.AbstractNetworkPortC
     private LocoNetSystemConnectionMemo memo;
 
     @Test
-    @Override
     public void testGetAndSetOutputInterval() {
         ((LnNetworkPortController) apc).getSystemConnectionMemo().setOutputInterval(50);
         Assert.assertEquals("Output Interval after set", 50, ((LnNetworkPortController) apc).getSystemConnectionMemo().getOutputInterval());

@@ -1,7 +1,7 @@
 package jmri.implementation;
 
 import java.beans.*;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import javax.annotation.*;
@@ -140,7 +140,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 
     protected Thread thr;
     protected Runnable r;
-    protected LocalTime nextWait;
+    private LocalDateTime nextWait;
 
     /** {@inheritDoc}
      * Used in {@link jmri.implementation.DefaultRoute#setRoute()} and
@@ -150,19 +150,19 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
     public void setCommandedStateAtInterval(int s) {
         nextWait = InstanceManager.turnoutManagerInstance().outputIntervalEnds();
         // nextWait time is calculated using actual turnoutInterval in TurnoutManager
-        if (nextWait.isAfter(LocalTime.now())) { // don't sleep if nextWait =< now()
-            log.debug("Turnout now() = {}, waitUntil = {}", LocalTime.now(), nextWait);
+        if (nextWait.isAfter(LocalDateTime.now())) { // don't sleep if nextWait =< now()
+            log.debug("Turnout now() = {}, waitUntil = {}", LocalDateTime.now(), nextWait);
             // insert wait before sending next output command to the layout
             r = new Runnable() {
                 @Override
                 public void run() {
-                    log.debug("go to sleep for {} ms...", Math.max(0L, LocalTime.now().until(nextWait, ChronoUnit.MILLIS)));
+                    log.debug("go to sleep for {} ms...", Math.max(0L, LocalDateTime.now().until(nextWait, ChronoUnit.MILLIS)));
                     try {
-                        Thread.sleep(Math.max(0L, LocalTime.now().until(nextWait, ChronoUnit.MILLIS))); // nextWait might have passed in the meantime
-                        log.debug("back from sleep, forward on {}", LocalTime.now());
+                        Thread.sleep(Math.max(0L, LocalDateTime.now().until(nextWait, ChronoUnit.MILLIS))); // nextWait might have passed in the meantime
+                        log.debug("back from sleep, forward on {}", LocalDateTime.now());
                         setCommandedState(s);
                     } catch (InterruptedException ex) {
-                        log.debug("setCommandedStateAtInterval(s) interrupted at {}", LocalTime.now());
+                        log.debug("setCommandedStateAtInterval(s) interrupted at {}", LocalDateTime.now());
                         Thread.currentThread().interrupt(); // retain if needed later
                     }
                 }

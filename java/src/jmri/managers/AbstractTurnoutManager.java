@@ -1,6 +1,6 @@
 package jmri.managers;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 import javax.annotation.CheckForNull;
@@ -412,17 +412,17 @@ public abstract class AbstractTurnoutManager extends AbstractManager<Turnout>
      * Change from e.g. XNetTurnout extensions and scripts using {@link #setOutputInterval(int)}
      */
     private int turnoutInterval = memo.getOutputInterval();
-    private LocalTime waitUntil = LocalTime.now();
+    private LocalDateTime waitUntil = LocalDateTime.now();
 
     /** {@inheritDoc} */
     @Override
     @Nonnull
-    public LocalTime outputIntervalEnds() {
+    public LocalDateTime outputIntervalEnds() {
         log.debug("outputIntervalEnds called in AbstractTurnoutManager");
-        if (waitUntil.isAfter(LocalTime.now())) {
+        if (waitUntil.isAfter(LocalDateTime.now())) {
             waitUntil = waitUntil.plus(turnoutInterval, ChronoUnit.MILLIS);
         } else {
-            waitUntil = LocalTime.now().plus(turnoutInterval, ChronoUnit.MILLIS); // default interval = 250 Msec
+            waitUntil = LocalDateTime.now().plus(turnoutInterval, ChronoUnit.MILLIS); // default interval = 250 Msec
         }
         return waitUntil;
     }

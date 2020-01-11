@@ -1,6 +1,6 @@
 package jmri.managers;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
@@ -265,12 +265,13 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
 
     /**
      * {@inheritDoc}
-     * set outputInterval on all known TurnoutManagers
+     * This method is only used in jmri.jmrix.internal.InternalTurnoutManagerTest and should not be
+     * used in actual code, as it can overwrite individual per connection values set by the user.
      */
     @Override
     public void setOutputInterval(int newInterval) {
         log.debug("setOutputInterval called in ProxyTurnoutManager");
-        // not expected to be set via ProxyTurnoutManager
+        // only intended for testing, do not set interval via ProxyTurnoutManager in actual code
         for (int i = 0; i < nMgrs(); i++) {
             ((TurnoutManager) getMgr(i)).setOutputInterval(newInterval);
         }
@@ -282,7 +283,7 @@ public class ProxyTurnoutManager extends AbstractProxyManager<Turnout> implement
      */
     @Nonnull
     @Override
-    public LocalTime outputIntervalEnds() {
+    public LocalDateTime outputIntervalEnds() {
         log.debug("outputIntervalEnds called in ProxyTurnoutManager");
         return ((TurnoutManager) getMgr(0)).outputIntervalEnds();
     }

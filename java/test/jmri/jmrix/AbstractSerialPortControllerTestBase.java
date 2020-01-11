@@ -6,8 +6,4 @@ package jmri.jmrix;
  * @author      Paul Bender Copyright (C) 2016
  */
 public abstract class AbstractSerialPortControllerTestBase extends AbstractPortControllerTestBase {
-
-    public void testGetAndSetOutputInterval() {
-    }
-
 }

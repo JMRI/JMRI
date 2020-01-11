@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 public class TamsTurnout extends AbstractTurnout
         implements TamsListener {
 
-    String prefix;
+    private String prefix;
 
     /**
      * Tams turnouts use the NMRA number (0-2040) as their numerical
@@ -74,7 +74,7 @@ public class TamsTurnout extends AbstractTurnout
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    TamsTrafficController tc;
+    private TamsTrafficController tc;
 
     // Handle a request to change state by sending a turnout command
     @Override
@@ -86,7 +86,6 @@ public class TamsTurnout extends AbstractTurnout
             if ((s & Turnout.THROWN) != 0) {
                 // this is the disaster case!
                 log.error("Cannot command both CLOSED and THROWN " + s);
-                return;
             } else {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
@@ -98,7 +97,7 @@ public class TamsTurnout extends AbstractTurnout
     }
 
     // data members
-    int _number;   // turnout number
+    private int _number;   // turnout number
 
     /**
      * Set the turnout known state to reflect what's been observed from the
@@ -116,7 +115,6 @@ public class TamsTurnout extends AbstractTurnout
             log.debug("Returning");
             return;
         }
-        forwardCommandChangeToLayout(state);
         log.debug("Setting to state {}", state);
         newCommandedState(state);
     }
@@ -186,7 +184,7 @@ public class TamsTurnout extends AbstractTurnout
         }
     }
 
-    boolean updateReceived = false;
+    private boolean updateReceived = false;
 
     /*protected void pollForStatus() {
         if (_activeFeedbackType == MONITORING) {

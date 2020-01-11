@@ -14,7 +14,6 @@ import org.junit.Test;
 public class AcelaPortControllerTest extends jmri.jmrix.AbstractSerialPortControllerTestBase {
 
     @Test
-    @Override
     public void testGetAndSetOutputInterval() {
         ((AcelaPortController) apc).getSystemConnectionMemo().setOutputInterval(49);
         Assert.assertEquals("Output Interval after set", 49, ((AcelaPortController) apc).getSystemConnectionMemo().getOutputInterval());
