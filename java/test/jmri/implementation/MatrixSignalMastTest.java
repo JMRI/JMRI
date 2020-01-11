@@ -93,6 +93,8 @@ public class MatrixSignalMastTest {
 
         m.setLit(true);
         Assert.assertTrue(m.getLit());
+        
+        Assert.assertEquals(10, m.getOutputs().size());
 
     }
     
