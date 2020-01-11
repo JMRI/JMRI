@@ -501,6 +501,10 @@
             a JMRI throttle automatically.
             The new attribute is stored when the user clicks the "Save to Roster" button.
             The new attribute can be changed manually or by a Jython script.</li>
+            <li>Rework on Auto-Load, see
+            <a href="https://jmri.org/help/en/manual/DecoderPro/Main_VSD.shtml#auto-load">the details</a>.</li>
+            <li>Added a further action "STOP_AT_ZERO" for the "ENGINE_STARTSTOP" trigger. See the
+            <a href="https://jmri.org/help/en/manual/DecoderPro/VSD_File_and_Config.shtml#engine-startstop">VSD documentation</a></li>
         </ul>
 
     <h3>Miscellaneous</h3>
