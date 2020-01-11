@@ -311,6 +311,7 @@ public class LoadAndStoreTestBase {
 
     @After
     public void tearDown() {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.clearBlockBossLogic();
         JUnitUtil.tearDown();
         System.setProperty("jmri.test.no-dialogs", "false");

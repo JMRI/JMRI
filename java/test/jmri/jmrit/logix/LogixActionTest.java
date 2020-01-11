@@ -173,6 +173,7 @@ public class LogixActionTest {
     @After
     public void tearDown() {
         InstanceManager.getDefault(WarrantManager.class).dispose();
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 }

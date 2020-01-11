@@ -244,6 +244,7 @@ public class LearnWarrantTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         InstanceManager.getDefault(WarrantManager.class).dispose();
         JUnitUtil.tearDown();
     }

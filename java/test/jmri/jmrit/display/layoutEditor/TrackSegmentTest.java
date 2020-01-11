@@ -419,7 +419,7 @@ public class TrackSegmentTest {
     public void testDefaultGetSetBumperLineWidth() {
         Assume.assumeFalse(GraphicsEnvironment.isHeadless());
         if ((layoutEditor != null) && (trackSegment != null)) {
-            Assert.assertEquals("trackSegment.getBumperLineWidth() == 1 (default).", 1, trackSegment.getBumperLineWidth());
+            Assert.assertEquals("trackSegment.getBumperLineWidth() == 8 (default).", 8, trackSegment.getBumperLineWidth());
             trackSegment.setBumperLineWidth(-1);
             Assert.assertNotEquals("trackSegment.setBumperLineWidth(-1) not allowed.", -1, trackSegment.getBumperLineWidth());
             trackSegment.setBumperLineWidth(5);
