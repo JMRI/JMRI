@@ -69,8 +69,8 @@
       no bandwidth limit (500MHz scope). The ungrounded layout was
       probably generating a lot of RF noise...
 
-      <p><a href="./images/DiscGround.jpg"><img src=
-      "./images/DiscGround-thumb.jpg" alt=
+      <p><a href="DigitraxPower/images/DiscGround.jpg"><img src=
+      "DigitraxPower/images/DiscGround-thumb.jpg" alt=
       "Booster ground signal without connection to household ground"></a></p>
 
       <p>For the rest of the measurements, I reconnected the DCS100
@@ -79,19 +79,19 @@
 
       <p>With respect to system ground, the Rail A and Rail B lines
       alternate between 12V and about 0.8V:<br>
-      <a href="./images/RailA.jpg"><img src=
-      "./images/RailA-thumb.jpg" alt=
+      <a href="DigitraxPower/images/RailA.jpg"><img src=
+      "DigitraxPower/images/RailA-thumb.jpg" alt=
       "RailA signal relative to system gound"></a> <a href=
-      "./images/RailB.jpg"><img src="./images/RailB-thumb.jpg" alt=
+      "DigitraxPower/images/RailB.jpg"><img src="DigitraxPower/images/RailB-thumb.jpg" alt=
       "RailB signal relative to system gound"></a><br>
       It appears that the DCS100 internal high-power supply is only
       positive. To get a better understanding of that, I looked at
       the two power in lines from the transformer:<br>
-      <a href="./images/BoosterPower1.jpg"><img src=
-      "./images/BoosterPower1-thumb.jpg" border="2" width="100"
+      <a href="DigitraxPower/images/BoosterPower1.jpg"><img src=
+      "DigitraxPower/images/BoosterPower1-thumb.jpg" border="2" width="100"
       height="75"></a> <a href=
-      "./images/BoosterPower2.jpg"><img src=
-      "./images/BoosterPower2-thumb.jpg" border="2" width="100"
+      "DigitraxPower/images/BoosterPower2.jpg"><img src=
+      "DigitraxPower/images/BoosterPower2-thumb.jpg" border="2" width="100"
       height="75"></a><br>
       Note they are both positive at all times, not centered on
       ground. The lowest voltage is about 1.3V below ground. This
@@ -100,7 +100,7 @@
       voltage drop across the low-side diode, while the flat-top on
       the waveform occurs when the transformer reaches a large
       enough voltage to charge the filter capacitor.<br>
-      <img src="./images/Fullwave.jpg"></p>
+      <img src="DigitraxPower/images/Fullwave.jpg"></p>
 
       <h3>PM4 measurements</h3>My PM4 power supply is an isolated
       transformer. I made no measurements with a DC auxiliary
@@ -108,10 +108,10 @@
       connection.
 
       <p>The voltages on the PM4 power connections look like:<br>
-      <a href="./images/PM4Power1.jpg"><img src=
-      "./images/PM4Power1-thumb.jpg" border="2" width="100" height=
-      "75"></a> <a href="./images/PM4Power2.jpg"><img src=
-      "./images/PM4Power2-thumb.jpg" border="2" width="100" height=
+      <a href="DigitraxPower/images/PM4Power1.jpg"><img src=
+      "DigitraxPower/images/PM4Power1-thumb.jpg" border="2" width="100" height=
+      "75"></a> <a href="DigitraxPower/images/PM4Power2.jpg"><img src=
+      "DigitraxPower/images/PM4Power2-thumb.jpg" border="2" width="100" height=
       "75"></a><br>
       Like the booster, this is indicative of a full-wave rectified
       power supply. The load profile is very different from what's
@@ -126,14 +126,14 @@
 
       <p>The voltages on the DS54 "black" and "red" power
       connections look like:<br>
-      <a href="./images/DS54PowerBlack.jpg"><img src=
-      "./images/DS54PowerBlack-thumb.jpg" border="2" width="100"
+      <a href="DigitraxPower/images/DS54PowerBlack.jpg"><img src=
+      "DigitraxPower/images/DS54PowerBlack-thumb.jpg" border="2" width="100"
       height="75"></a> <a href=
-      "./images/DS54PowerRed.jpg"><img src="./images/DS54PowerRed-thumb.jpg"
+      "DigitraxPower/images/DS54PowerRed.jpg"><img src="DigitraxPower/images/DS54PowerRed-thumb.jpg"
       border="2" width="100" height="75"></a><br>
       This is indicative of a half-wave rectified power supply.
       Note this is different from the PM4 and DCS100.<br>
-      <img src="./images/Halfwave.jpg"><br>
+      <img src="DigitraxPower/images/Halfwave.jpg"><br>
       Note the ripple in the ground (black) lead. Digitrax
       recommends that you <b>not</b> connect the DS54 ground lead
       to system ground; this offset shows why its a good idea to
@@ -152,39 +152,39 @@
       <table border="0">
         <tr>
           <td width="120" height="120" align="center"><a href=
-          "./images/DS54ConnAna-99.jpg"><img src=
-          "./images/DS54ConnAna-99-thumb.jpg" border="2" width=
+          "DigitraxPower/images/DS54ConnAna-99.jpg"><img src=
+          "DigitraxPower/images/DS54ConnAna-99-thumb.jpg" border="2" width=
           "100" height="75">LocoNet connected, analog at
           -99</a></td>
 
           <td width="120" height="120" align="center"><a href=
-          "./images/DS54ConnAna0.jpg"><img src=
-          "./images/DS54ConnAna0-thumb.jpg" border="2" width="100"
+          "DigitraxPower/images/DS54ConnAna0.jpg"><img src=
+          "DigitraxPower/images/DS54ConnAna0-thumb.jpg" border="2" width="100"
           height="75">LocoNet connected, analog at 0</a></td>
 
           <td width="120" height="120" align="center"><a href=
-          "./images/DS54ConnAna+99.jpg"><img src=
-          "./images/DS54ConnAna+99-thumb.jpg" border="2" width=
+          "DigitraxPower/images/DS54ConnAna+99.jpg"><img src=
+          "DigitraxPower/images/DS54ConnAna+99-thumb.jpg" border="2" width=
           "100" height="75">LocoNet connected, analog at
           +99</a></td>
         </tr>
 
         <tr>
           <td width="120" height="120" align="center"><a href=
-          "./images/DS54DiscAna+99.jpg"><img src=
-          "./images/DS54DiscAna+99-thumb.jpg" border="2" width=
+          "DigitraxPower/images/DS54DiscAna+99.jpg"><img src=
+          "DigitraxPower/images/DS54DiscAna+99-thumb.jpg" border="2" width=
           "100" height="75">LocoNet disconnected, analog at
           -99</a></td>
 
           <td width="120" height="120" align="center"><a href=
-          "./images/DS54DiscAna-99.jpg"><img src=
-          "./images/DS54DiscAna-99-thumb.jpg" border="2" width=
+          "DigitraxPower/images/DS54DiscAna-99.jpg"><img src=
+          "DigitraxPower/images/DS54DiscAna-99-thumb.jpg" border="2" width=
           "100" height="75">LocoNet disconnected, analog at
           0</a></td>
 
           <td width="120" height="120" align="center"><a href=
-          "./images/DS54DiscAna0.jpg"><img src=
-          "./images/DS54DiscAna0-thumb.jpg" border="2" width="100"
+          "DigitraxPower/images/DS54DiscAna0.jpg"><img src=
+          "DigitraxPower/images/DS54DiscAna0-thumb.jpg" border="2" width="100"
           height="75">LocoNet disconnected, analog at +99</a></td>
         </tr>
       </table>People on the Digitrax mailing list have recommended
@@ -198,7 +198,7 @@
       <p>LocoNet&reg; is a registered trademark of <a href=
       "http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-      <p>Back to the <a href="../Digitrax.shtml">Digitrax Hardware
+      <p>Back to the <a href="Digitrax.shtml">Digitrax Hardware
       main Help Page</a></p>
 
       <!--#include virtual="/Footer" -->

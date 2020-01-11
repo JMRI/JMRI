@@ -27,7 +27,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
 
     }
 
-    TrafficController tc;
+    private final TrafficController tc;
 
     /**
      * Common initialization for both constructors.
@@ -112,6 +112,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     
     /**
      * Package method returning CanMessage for the Thrown Turnout Address
+     * @return CanMessage with the Thrown Address
      */    
     public CanMessage getAddrThrown(){
         CanMessage m;
@@ -125,6 +126,7 @@ public class CbusTurnout extends jmri.implementation.AbstractTurnout
     
     /**
      * Package method returning CanMessage for the Closed Turnout Address
+     * @return CanReply with the Closed Address
      */    
     public CanMessage getAddrClosed(){
         CanMessage m;

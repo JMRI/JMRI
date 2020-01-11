@@ -1,7 +1,7 @@
 
     <h3>Hardware Support</h3>
         <ul>
-          <li>Fixed a problem introduced in JMRI 4.19.1 that 
+          <li>Fixed a problem introduced in JMRI 4.19.1 that
           prevented the function buttons in the on-screen throttles
           from working on some types of computers.</li>
           <li>Fixed a problem introduced in JMRI 4.17.7 that
@@ -13,12 +13,12 @@
             <ul>
                 <li></li>
             </ul>
-		
+
 	    <h4>Bachrus Speedo</h4>
             <ul>
                 <li></li>
             </ul>
-		
+
         <h4>C/MRI</h4>
             <ul>
                 <li></li>
@@ -161,7 +161,7 @@
 
         <h4>BLI</h4>
             <ul>
-                <li></li>
+                <li>Add the word Receiver to Rolling Thunder Model</li>
             </ul>
 
         <h4>BNM Hobbies</h4>
@@ -266,7 +266,7 @@
 
         <h4>SoundTraxx</h4>
             <ul>
-                <li></li>
+                <li>Add SD90MAC-H model to TSU2 Genesis OEM</li>
             </ul>
 
         <h4>TAMS</h4>
@@ -278,7 +278,7 @@
             <ul>
                 <li></li>
             </ul>
-	    
+
 	    <h4>Team Digital</h4>
             <ul>
                 <li></li>
@@ -351,7 +351,14 @@
     <h3>Logix</h3>
         <a id="Logix" name="Logix"></a>
         <ul>
-          <li></li>
+          <li>The system names for generated Logix definitions created by Sensor Groups (SYS),
+          LRoutes (RTX*), Route Exports (RTX*), USS CTC and LE Slips now have a standard Logix
+          prefix of "IX:".  The existing names in panel xml files will be automatically
+          migrated during panel loading.  A dialog box will be displayed with the results.
+          The details of the affected Logix renames will be displayed in the JMRI System
+          console.  The migration will also apply to any other Logix which has a system
+          name that does not start with IX.
+          </li>
         </ul>
 
     <h3>Operations</h3>
@@ -422,7 +429,7 @@
                 it in Preferences &gt; Connection &gt; Additional Connection Settings. Default this is set to 250
                 Milliseconds.</li>
             </ul>
-            
+
     	<h4>Signal Groups</h4>
             <ul>
                 <li></li>
@@ -470,7 +477,19 @@
    <h3>Web Access</h3>
         <a id="WA" name="WA"></a>
         <ul>
-            <li> </li>
+            <li>The RESTful API end point
+				<a href="http://127.0.0.1:12080/json/version">/json/version</a>
+				has been added to provide a list of JMRI JSON API versions
+				supported by the running JMRI instance.</li>
+			<li>The JSON services have been rewritten to potentially support
+				multiple version of the JMRI JSON API in a future release.</li>
+            <li>JSON services now optionally take a version number as part of
+				the URL. See the
+				<a href="https://www.jmri.org/JavaDoc/doc/jmri/server/json/package-summary.html#package.description">JSON Server JavaDocs</a>
+				for details of this change. This should have no impact on
+				existing clients.</li>
+            <li>The JMRI JSON API version has been incremented to 5.3.0 to
+            	reflect the above changes.</li>
         </ul>
 
    <h3>WiThrottle Server</h3>
@@ -478,12 +497,12 @@
         <ul>
             <li></li>
         </ul>
-        
+
    <h3>Virtual Sound Decoder</h3>
         <a id="VSD" name="VSD"></a>
         <ul>
-            <li>In the 
-            <a href="https://groups.io/g/jmriusers/message/165236">jmriusers forum</a> 
+            <li>In the
+            <a href="https://groups.io/g/jmriusers/message/165236">jmriusers forum</a>
             it has been suggested to open a JMRI throttle
             automatically when a VSDecoder via Roster Entry is added.
             VSD does already save the Path and the Profile of a VSDecoder in the Roster Media.
@@ -498,14 +517,14 @@
         <ul>
             <li>Petr Sidlo added a Pragotron clock, which is digital clock
                 found in many European train stations.</li>
-            <li>The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
+            <li>The <code>getBeanByUserName<code> and <code>getBeanBySystemName<code>
                 calls in the various <code>Manager<code> classes
                 are no longer needed with Java 8 and have been deprecated for eventual
-                removal.  Their replacements are 
-                <code>getByUserName<code> and <code>getBySystemName<code> 
+                removal.  Their replacements are
+                <code>getByUserName<code> and <code>getBySystemName<code>
                 respectively.
-                If you use <code>getBeanByUserName<code> and <code>getBeanBySystemName<code> 
-                in script or Java code you've written, please 
+                If you use <code>getBeanByUserName<code> and <code>getBeanBySystemName<code>
+                in script or Java code you've written, please
                 switch to the new names.
             </li>
 		    <li>The system names for Routes are required to start with "IO" to avoid
@@ -514,9 +533,9 @@
 		    	correctly, but it is possible that references to those Routes will need
 		    	to be updated.
 			    </li>
-			<li>Daniel Bergqvist provided information on 
+			<li>Daniel Bergqvist provided information on
 			    <a href="jmri.org/help/en/html/doc/Technical/githubdesktopinto.shtml">how to use the GitHub Desktop tool</a>
 			    for JMRI development.
-			    
+			<li>Updated the JDOM library from 2.0.5 to 2.0.6. Removed the unused JDOM 1 support.</li>
         </ul>
 

@@ -59,7 +59,7 @@ public class CbusNodeFcuTablePane extends JPanel {
                             java.awt.Point p = e.getPoint();
                             int index = columnModel.getColumnIndexAtX(p.x);
                             int realIndex = columnModel.getColumn(index).getModelIndex();
-                            return CbusNodeFromFcuTableDataModel.columnToolTips[realIndex];    
+                            return CbusNodeFromFcuTableDataModel.FCUTABLETIPS[realIndex];    
                         } catch (RuntimeException e1) {
                             //catch null pointer exception if mouse is over an empty line
                         }
@@ -76,7 +76,7 @@ public class CbusNodeFcuTablePane extends JPanel {
         
        // nodeTable.setAutoCreateRowSorter(true);
         
-        sorter = new TableRowSorter<CbusNodeFromFcuTableDataModel>(nodeModel);
+        sorter = new TableRowSorter<>(nodeModel);
         nodeTable.setRowSorter(sorter);
         
         // prevent the TableColumnModel from being recreated and loosing custom cell renderers
@@ -89,12 +89,12 @@ public class CbusNodeFcuTablePane extends JPanel {
         nodeTable.setColumnSelectionAllowed(false);
         nodeTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         
-        tcm.getColumn(CbusNodeFromFcuTableDataModel.NODE_NUMBER_COLUMN).setCellRenderer(getRenderer());
-        tcm.getColumn(CbusNodeFromFcuTableDataModel.NODE_TYPE_NAME_COLUMN).setCellRenderer(getRenderer());
-        tcm.getColumn(CbusNodeFromFcuTableDataModel.NODE_USER_NAME_COLUMN).setCellRenderer(getRenderer());
-        tcm.getColumn(CbusNodeFromFcuTableDataModel.NODE_EVENTS_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusNodeFromFcuTableDataModel.FCU_NODE_NUMBER_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusNodeFromFcuTableDataModel.FCU_NODE_TYPE_NAME_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusNodeFromFcuTableDataModel.FCU_NODE_USER_NAME_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusNodeFromFcuTableDataModel.FCU_NODE_EVENTS_COLUMN).setCellRenderer(getRenderer());
         tcm.getColumn(CbusNodeFromFcuTableDataModel.NODE_NV_TOTAL_COLUMN).setCellRenderer(getRenderer());
-        tcm.getColumn(CbusNodeFromFcuTableDataModel.NODE_TOTAL_BYTES_COLUMN).setCellRenderer(getRenderer());
+        tcm.getColumn(CbusNodeFromFcuTableDataModel.FCU_NODE_TOTAL_BYTES_COLUMN).setCellRenderer(getRenderer());
         
         nodeTable.setRowHeight(22);
         
@@ -122,7 +122,7 @@ public class CbusNodeFcuTablePane extends JPanel {
                 f.setHorizontalAlignment(JTextField.CENTER);
                 f.setBorder( table.getBorder() );
                 
-                String string="";
+                String string;
                 if(arg1 != null){
                     string = arg1.toString();
                     try {

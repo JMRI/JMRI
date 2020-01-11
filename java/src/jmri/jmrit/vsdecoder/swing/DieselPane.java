@@ -52,7 +52,7 @@ public class DieselPane extends EnginePane {
     JToggleButton start_button;
 
     Integer throttle_setting;
-    Boolean engine_started;
+    private boolean engine_is_started;
 
     private Timer timer;
     int dtime = 1;
@@ -67,7 +67,7 @@ public class DieselPane extends EnginePane {
         super(n);
         initComponents();
         throttle_setting = THROTTLE_INIT;
-        engine_started = start_button.isSelected();
+        engine_is_started = start_button.isSelected();
     }
 
     /**
@@ -92,6 +92,7 @@ public class DieselPane extends EnginePane {
     }
 
     // Lock the start/stop-button until the start/stop-sound has finished
+    // Skip the timer if there is no start/stop-sound
     void startDelayTimer() {
         if (dtime > 1) {
             start_button.setEnabled(false);
@@ -161,7 +162,7 @@ public class DieselPane extends EnginePane {
         boolean armed = buttonModel.isArmed();
         boolean pressed = buttonModel.isPressed();
         boolean selected = buttonModel.isSelected();
-        if (armed && pressed && selected && (lastSpeed > 0.0f) && (!engine_started)) {
+        if (armed && pressed && selected && (lastSpeed > 0.0f) && (!engine_is_started)) {
             buttonModel.setArmed(false);
             buttonModel.setPressed(false);
             buttonModel.setSelected(false);
@@ -169,6 +170,16 @@ public class DieselPane extends EnginePane {
                 log.info(Bundle.getMessage("EngineStartSpeedMessage"));
             } else {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("EngineStartSpeedMessage"));
+            }
+        }
+
+        if (armed && pressed && selected && (lastSpeed > 0.0f) && (engine_is_started) && (getStopOption())) {
+            buttonModel.setArmed(false);
+            buttonModel.setPressed(false);
+            if (GraphicsEnvironment.isHeadless()) {
+                log.info(Bundle.getMessage("EngineStopSpeedMessage"));
+            } else {
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("EngineStopSpeedMessage"));
             }
         }
     }
@@ -187,10 +198,10 @@ public class DieselPane extends EnginePane {
      */
     public void startButtonChange(ActionEvent e) {
         firePropertyChangeEvent(new PropertyChangeEvent(this, "start", // NOI18N
-                engine_started,
+                engine_is_started,
                 start_button.isSelected()));
-        engine_started = start_button.isSelected();
-        if (engine_started) { // switch button name to make the panel more responsive
+        engine_is_started = start_button.isSelected();
+        if (engine_is_started) { // switch button name to make the panel more responsive
             start_button.setText(Bundle.getMessage("ButtonEngineStop"));
         } else {
             start_button.setText(Bundle.getMessage("ButtonEngineStart"));

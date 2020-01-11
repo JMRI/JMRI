@@ -140,6 +140,7 @@ public class PortalManagerTest {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugPowerManager();
         JUnitUtil.initOBlockManager();
+        WarrantPreferences.getDefault().setShutdown(WarrantPreferences.Shutdown.NO_MERGE);
         JUnitUtil.initWarrantManager();
         JUnitUtil.initDebugThrottleManager();
 
@@ -149,6 +150,7 @@ public class PortalManagerTest {
     @After
     public void tearDown() {
         _portalMgr = null;
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         JUnitUtil.tearDown();
     }
 

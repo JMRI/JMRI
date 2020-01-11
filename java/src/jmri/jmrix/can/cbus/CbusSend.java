@@ -21,14 +21,23 @@ import jmri.util.ThreadingUtil;
 public class CbusSend {
     
     private TrafficController tc;
-    private TextAreaFIFO ta;
-    private String newLine = System.getProperty("line.separator");
+    private final TextAreaFIFO ta;
+    private final String newLine = System.getProperty("line.separator");
     
+    /**
+     * Constructor
+     * @param memo System Connection
+     * @param txta a Text Area for any feedback messages
+     */
     public CbusSend( @Nonnull CanSystemConnectionMemo memo, TextAreaFIFO txta){
         tc = memo.getTrafficController();
         ta = txta;
     }
 
+    /**
+     * Constructor
+     * @param memo System Connection
+     */
     public CbusSend(CanSystemConnectionMemo memo){
         if (memo!=null) {
             tc = memo.getTrafficController();
@@ -38,10 +47,10 @@ public class CbusSend {
     
     /**
      * Sends an outgoing CanMessage or incoming CanReply from a CanReply with a specified delay
-     @param r A CanReply Can Frame which will be sent
-     @param sendReply true to send as incoming CcanReply
-     @param sendMessage true to send as outgoing CanMessage
-     @param delay delay in ms
+     * @param r A CanReply Can Frame which will be sent
+     * @param sendReply true to send as incoming CcanReply
+     * @param sendMessage true to send as outgoing CanMessage
+     * @param delay delay in ms
      */
     public void sendWithDelay( CanReply r, Boolean sendReply, Boolean sendMessage, int delay ){
         CbusMessage.setId(r, tc.getCanid() );
@@ -59,8 +68,7 @@ public class CbusSend {
 
     /**
      * Sends NNULN OPC , node exit learn mode
-     @param nn Node Number
-     *
+     * @param nn Node Number
      */
     public void nodeExitLearnEvMode( int nn ) {
         CanMessage m = new CanMessage(tc.getCanid());
@@ -76,9 +84,8 @@ public class CbusSend {
     }
     
     /**
-     * Sends NNLRN OPC , node enter learn mode
-     @param nn Node Number
-     *
+     * Sends NNLRN OPC , node enter learn mode.
+     * @param nn Node Number
      */
     public void nodeEnterLearnEvMode( int nn ) {
         CanMessage m = new CanMessage(tc.getCanid());
@@ -93,6 +100,10 @@ public class CbusSend {
         }
     }
     
+    /**
+     * Sends SNN OPC , Set Node Number to Node in Setup.
+     * @param nn Node Number
+     */
     public void nodeSetNodeNumber( int nn ) {
         CanMessage mn = new CanMessage(tc.getCanid());
         mn.setNumDataElements(3);
@@ -103,6 +114,9 @@ public class CbusSend {
         tc.sendCanMessage(mn, null);
     }
     
+    /**
+     * Sends RQNP OPC , Request Parameters from node in setup.
+     */
     public void nodeRequestParamSetup() {
         CanMessage m = new CanMessage(tc.getCanid());
         m.setNumDataElements(1);
@@ -113,12 +127,11 @@ public class CbusSend {
 
     /**
      * Sends EVLRN OPC , Event Learn
-     * when a node is in learn mode
-     @param newvalnd event variable node
-     @param newevent event variable event
-     @param varindex event variable index
-     @param newval  event variable value
-     *
+     * when a node is in learn mode.
+     * @param newvalnd event variable node
+     * @param newevent event variable event
+     * @param varindex event variable index
+     * @param newval  event variable value
      */
     public void nodeTeachEventLearnMode(int newvalnd, int newevent, int varindex, int newval) {
         CanMessage m = new CanMessage(tc.getCanid());
@@ -135,11 +148,10 @@ public class CbusSend {
     }
     
     /**
-     * Sends EVULN OPC , Event Unlearn
+     * Sends EVULN OPC , Event Unlearn.
      * when a node is in learn mode
-     @param newvalnd event variable node
-     @param newevent event variable event
-     *
+     * @param newvalnd event variable node
+     * @param newevent event variable event
      */
     public void nodeUnlearnEvent( int newvalnd, int newevent ){
         CanMessage m = new CanMessage(tc.getCanid());
@@ -153,13 +165,11 @@ public class CbusSend {
         tc.sendCanMessage(m, null);
     }
     
-    
     /**
-     * Sends REVAL OPC , Request for read of an event variable
-     @param nodeinsetup Node Number
-     @param nextev event index number
-     @param nextevvar event variable number
-     *
+     * Sends REVAL OPC , Request for read of an event variable.
+     * @param nodeinsetup Node Number
+     * @param nextev event index number
+     * @param nextevvar event variable number
      */
     public void rEVAL( int nodeinsetup, int nextev, int nextevvar ){
         CanMessage m = new CanMessage(tc.getCanid());
@@ -174,10 +184,9 @@ public class CbusSend {
     }    
 
     /**
-     * Sends RQNPN OPC , Request read of a node parameter by index
-     @param nodeinsetup Node Number
-     @param nextnodeparam parameter index number
-     *
+     * Sends RQNPN OPC , Request read of a node parameter by index.
+     * @param nodeinsetup Node Number
+     * @param nextnodeparam parameter index number
      */
     public void rQNPN( int nodeinsetup, int nextnodeparam ) {
         CanMessage m = new CanMessage(tc.getCanid());
@@ -191,8 +200,7 @@ public class CbusSend {
     }
 
     /**
-     * Sends CanMessage QNN to get all nodes
-     *
+     * Sends CanMessage QNN OPC to get all nodes.
      */
      public void searchForNodes() {
         CanMessage m = new CanMessage(tc.getCanid());
@@ -200,13 +208,11 @@ public class CbusSend {
         CbusMessage.setPri(m, CbusConstants.DEFAULT_DYNAMIC_PRIORITY * 4 + CbusConstants.DEFAULT_MINOR_PRIORITY);
         m.setElement(0, CbusConstants.CBUS_QNN);
         tc.sendCanMessage(m, null);
-
     }
     
     /**
      * Sends a message to request details of any connected command stations.
-     * Responses are received by the CBUS node table
-     *
+     * Responses are received by the CBUS node table.
      */
     public void searchForCommandStations(){
         CanMessage m = new CanMessage(tc.getCanid());
@@ -217,10 +223,9 @@ public class CbusSend {
     }
     
     /**
-     * Sends NVRD OPC , Request read of a node variable
-     @param nodeinsetup Node Number
-     @param nextnodenv variable number
-     *
+     * Sends NVRD OPC , Request read of a node variable.
+     * @param nodeinsetup Node Number
+     * @param nextnodenv variable number
      */
     public void nVRD( int nodeinsetup, int nextnodenv ) {
         CanMessage m = new CanMessage(tc.getCanid());
@@ -234,11 +239,10 @@ public class CbusSend {
     }
 
     /**
-     * Sends NVSET OPC , Node set individual NV
-     @param nodeinsetup Node Number
-     @param nv Node variable number
-     @param newval Node variable number value
-     *
+     * Sends NVSET OPC , Node set individual NV.
+     * @param nodeinsetup Node Number
+     * @param nv Node variable number
+     * @param newval Node variable number value
      */
     public void nVSET(int nodeinsetup,int nv,int newval ) {
         CanMessage m = new CanMessage(tc.getCanid());
@@ -253,11 +257,10 @@ public class CbusSend {
     }
 
     /**
-     * Sends RQEVN OPC , Read number of stored events in node
+     * Sends RQEVN OPC , Read number of stored events in node.
      * <p>
      * nb, NOT max events capable
-     @param nodeinsetup Node Number
-     *
+     * @param nodeinsetup Node Number
      */
     public void rQEVN( int nodeinsetup ) {
         CanMessage m = new CanMessage(tc.getCanid());
@@ -270,9 +273,8 @@ public class CbusSend {
     }
 
     /**
-     * Sends NERD OPC , Request to read all node events
-     @param nodeinsetup Node Number
-     *
+     * Sends NERD OPC , Request to read all node events.
+     * @param nodeinsetup Node Number
      */
     public void nERD(int nodeinsetup ){
         CanMessage m = new CanMessage(tc.getCanid());
@@ -285,9 +287,8 @@ public class CbusSend {
     }
 
     /**
-     * Sends a Sysstem Reset ARST OPC
+     * Sends a Sysstem Reset ARST OPC.
      * Full system reset
-     *
      */
     public void aRST(){
         CanMessage m = new CanMessage(tc.getCanid());
@@ -298,9 +299,8 @@ public class CbusSend {
     }
 
     /**
-     * Sends ENUM OPC , Force a self enumeration cycle for use with CAN
-     @param nodeinsetup Node Number
-     *
+     * Sends ENUM OPC , Force a self enumeration cycle for use with CAN.
+     * @param nodeinsetup Node Number
      */
     public void eNUM(int nodeinsetup ){
         CanMessage m = new CanMessage(tc.getCanid());
@@ -313,10 +313,9 @@ public class CbusSend {
     }
 
     /**
-     * Sends CANID OPC , Teach node a specific CANID
-     @param nodeinsetup Node Number
-     @param canid new CAN ID ( min 1, max 99 )
-     *
+     * Sends CANID OPC , Teach node a specific CANID.
+     * @param nodeinsetup Node Number
+     * @param canid new CAN ID ( min 1, max 99 )
      */
     public void cANID(int nodeinsetup, int canid ){
         CanMessage m = new CanMessage(tc.getCanid());
@@ -331,10 +330,10 @@ public class CbusSend {
     
     
     /**
-     * Sends NNCLR OPC , Clear all events from a node
+     * Sends NNCLR OPC , Clear all events from a node.
      * <p>
      * Node must be in Learn Mode to take effect
-     @param nodeinsetup Node Number
+     * @param nodeinsetup Node Number
      *
      */
     public void nNCLR(int nodeinsetup ){
@@ -348,10 +347,9 @@ public class CbusSend {
     }
     
     /**
-     * Sends RQMN OPC , Request name from node
+     * Sends RQMN OPC , Request name from node.
      * <p>
      * Node must be in Setup Mode to take effect
-     *
      */
     public void rQmn(){
         CanMessage m = new CanMessage(tc.getCanid());

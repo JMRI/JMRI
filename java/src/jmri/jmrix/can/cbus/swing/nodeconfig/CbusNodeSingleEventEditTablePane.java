@@ -24,13 +24,13 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  */
 public class CbusNodeSingleEventEditTablePane extends jmri.jmrix.can.swing.CanPanel {
 
-    private CbusNodeSingleEventTableDataModel singleEVModel;
+    private final CbusNodeSingleEventTableDataModel singleEVModel;
     private JScrollPane eventScroll;
     private JPanel pane1;
     private int largerFont;
     private JTable singleEvTable;
     
-    NodeConfigToolPane mainpane;
+    // private NodeConfigToolPane mainpane;
 
     protected CbusNodeSingleEventEditTablePane( CbusNodeSingleEventTableDataModel eVModel ) {
         super();
@@ -40,8 +40,7 @@ public class CbusNodeSingleEventEditTablePane extends jmri.jmrix.can.swing.CanPa
 
     public void initComponents(CanSystemConnectionMemo memo, NodeConfigToolPane pane ) {
         super.initComponents(memo);
-        mainpane = pane;
-        
+        // mainpane = pane;
         singleEvTable = new JTable(singleEVModel);
         init();
         
@@ -118,7 +117,7 @@ public class CbusNodeSingleEventEditTablePane extends jmri.jmrix.can.swing.CanPa
                 int oldval = (int) singleEVModel.getValueAt(row, CbusNodeSingleEventTableDataModel.EV_CURRENT_VAL_COLUMN);
                 int newval = (int) singleEVModel.getValueAt(row, CbusNodeSingleEventTableDataModel.EV_SELECT_COLUMN);
                 
-                String string="";
+                String string;
                 if(arg1 != null){
                     string = arg1.toString();
                     if (string.equals("0000 0000")) {

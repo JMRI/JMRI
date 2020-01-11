@@ -155,17 +155,6 @@ We roll some general code maintenance items into the release process.
         grep -lr '\t' jython/ | grep '\.py'
 ```
 
-- Check for Nullable annotations, which should be @CheckForNull instead (OK to have two and four in FindBugsCheck respectively, others should be removed)
-```
-        grep -r javax.annotation.Nullable java/src java/test
-        grep -r @Nullable java/src java/test
-```
-
-- Check for code that's using native Java Timers; see jmri.util.TimerUtil for background (requires code has been built; should only mention jmri/util/TimerUtil.class):
-```
-        grep -rl 'java.util.Timer\x01' target/
-```
-
 - Run "ant alltest"; make sure they all pass; fix problems and commit back (might also take the jvisualvm data below)
 
 - Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.

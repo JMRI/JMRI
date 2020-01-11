@@ -158,7 +158,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements CanL
      */
     @Override
     public void message(CanMessage m) {
-        if ( m.isExtended() || m.isRtr() ) {
+        if ( m.extendedOrRtr() ) {
             return;
         }
         int opc = m.getElement(0);
