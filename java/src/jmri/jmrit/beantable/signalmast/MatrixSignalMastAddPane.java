@@ -213,38 +213,11 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         }
  
         unLitPanelBits = Arrays.copyOf(currentMast.getUnLitBits(), MAXMATRIXBITS); // store as MAXMATRIXBITS character array
-        unlitCheck1.setSelected(unLitPanelBits[0] == '1'); // set checkboxes
-        if (bitNum > 1) {
-            unlitCheck2.setSelected(unLitPanelBits[1] == '1');
+        
+        // transfer the lit/unlit status to checkboxes
+        for (int i = 0; i < MAXMATRIXBITS; i++) {
+            unlitCheckArray[i].setSelected(unLitPanelBits[i] == '1');
         }
-        if (bitNum > 2) {
-            unlitCheck3.setSelected(unLitPanelBits[2] == '1');
-        }
-        if (bitNum > 3) {
-            unlitCheck4.setSelected(unLitPanelBits[3] == '1');
-        }
-        if (bitNum > 4) {
-            unlitCheck5.setSelected(unLitPanelBits[4] == '1');
-        }
-        if (bitNum > 5) {
-            unlitCheck6.setSelected(unLitPanelBits[5] == '1');
-        }
-        if (bitNum > 6) {
-            unlitCheck6.setSelected(unLitPanelBits[5] == '1');
-        }
-        if (bitNum > 7) {
-            unlitCheck6.setSelected(unLitPanelBits[5] == '1');
-        }
-        if (bitNum > 8) {
-            unlitCheck6.setSelected(unLitPanelBits[5] == '1');
-        }
-        if (bitNum > 9) {
-            unlitCheck6.setSelected(unLitPanelBits[5] == '1');
-        }
-        if (bitNum > 10) {
-            unlitCheck6.setSelected(unLitPanelBits[5] == '1');
-        }
-        // repeat in order to extend MAXMATRIXBITS
         
         allowUnLit.setSelected(currentMast.allowUnLit());
         // set up additional mast specific Delay
@@ -457,110 +430,40 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         JPanel turnoutpanel = new JPanel();
         
         // binary matrix outputs follow:
-        JPanel output1panel = new JPanel();
-        output1panel.add(turnoutBox1);
-        TitledBorder border1 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border1.setTitle(Bundle.getMessage("MatrixOutputLabel", 1));
-        output1panel.setBorder(border1);
+        
+        JPanel output1panel = makeOutputPanel(turnoutBox1,1);
         turnoutpanel.add(output1panel);
-
-        JPanel output2panel = new JPanel();
-        output2panel.add(turnoutBox2);
-        TitledBorder border2 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border2.setTitle(Bundle.getMessage("MatrixOutputLabel", 2));
-        output2panel.setBorder(border2);
-        turnoutpanel.add(output2panel);
-
-        JPanel output3panel = new JPanel();
-        output3panel.add(turnoutBox3);
-        TitledBorder border3 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border3.setTitle(Bundle.getMessage("MatrixOutputLabel", 3));
-        output3panel.setBorder(border3);
-        turnoutpanel.add(output3panel);
-
-        JPanel output4panel = new JPanel();
-        output4panel.add(turnoutBox4);
-        TitledBorder border4 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border4.setTitle(Bundle.getMessage("MatrixOutputLabel", 4));
-        output4panel.setBorder(border4);
-        turnoutpanel.add(output4panel);
-
-        // 4 is really enough, start another row
+        // output1panel always on
+        output1panel.setVisible(true);
+        
+        turnoutpanel.add(makeOutputPanel(turnoutBox2,2));
+        turnoutpanel.add(makeOutputPanel(turnoutBox3,3));
+        turnoutpanel.add(makeOutputPanel(turnoutBox4,4));
+        
+        // Four in a row is really enough, start another row
         matrixMastPanel.add(turnoutpanel);
         turnoutpanel = new JPanel();
         
-        JPanel output5panel = new JPanel();
-        output5panel.add(turnoutBox5);
-        TitledBorder border5 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border5.setTitle(Bundle.getMessage("MatrixOutputLabel", 5));
-        output5panel.setBorder(border5);
-        turnoutpanel.add(output5panel);
+        turnoutpanel.add(makeOutputPanel(turnoutBox5,5));
+        turnoutpanel.add(makeOutputPanel(turnoutBox6,6));
+        turnoutpanel.add(makeOutputPanel(turnoutBox7,7));
+        turnoutpanel.add(makeOutputPanel(turnoutBox8,8));
 
-        JPanel output6panel = new JPanel();
-        output6panel.add(turnoutBox6);
-        TitledBorder border6 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border6.setTitle(Bundle.getMessage("MatrixOutputLabel", 6));
-        output6panel.setBorder(border6);
-        turnoutpanel.add(output6panel);
-
-        JPanel output7panel = new JPanel();
-        output7panel.add(turnoutBox7);
-        TitledBorder border7 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border7.setTitle(Bundle.getMessage("MatrixOutputLabel", 7));
-        output7panel.setBorder(border7);
-        turnoutpanel.add(output7panel);
-
-        JPanel output8panel = new JPanel();
-        output8panel.add(turnoutBox8);
-        TitledBorder border8 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border8.setTitle(Bundle.getMessage("MatrixOutputLabel", 8));
-        output8panel.setBorder(border8);
-        turnoutpanel.add(output8panel);
-
-        // 4 is really enough, start another row
+        // Four in a row is really enough, start another row
         matrixMastPanel.add(turnoutpanel);
         turnoutpanel = new JPanel();
 
-        JPanel output9panel = new JPanel();
-        output9panel.add(turnoutBox9);
-        TitledBorder border9 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border9.setTitle(Bundle.getMessage("MatrixOutputLabel", 9));
-        output9panel.setBorder(border9);
-        turnoutpanel.add(output9panel);
-
-        JPanel output10panel = new JPanel();
-        output10panel.add(turnoutBox10);
-        TitledBorder border10 = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
-        border10.setTitle(Bundle.getMessage("MatrixOutputLabel", 10));
-        output10panel.setBorder(border10);
-        turnoutpanel.add(output10panel);
+        turnoutpanel.add(makeOutputPanel(turnoutBox9,9));
+        turnoutpanel.add(makeOutputPanel(turnoutBox10,10));
 
         // repeat in order to extend MAXMATRIXBITS
 
         matrixMastPanel.add(turnoutpanel);
 
-        // output1panel always on
-        output2panel.setVisible(bitNum > 1);
-        output3panel.setVisible(bitNum > 2);
-        output4panel.setVisible(bitNum > 3);
-        output5panel.setVisible(bitNum > 4);
-        output6panel.setVisible(bitNum > 5);
-        output7panel.setVisible(bitNum > 6);
-        output8panel.setVisible(bitNum > 7);
-        output9panel.setVisible(bitNum > 8);
-        output10panel.setVisible(bitNum> 9);
-        // repeat in order to extend MAXMATRIXBITS
-
-        unlitCheck2.setVisible(bitNum > 1);
-        unlitCheck3.setVisible(bitNum > 2);
-        unlitCheck4.setVisible(bitNum > 3);
-        unlitCheck5.setVisible(bitNum > 4);
-        unlitCheck6.setVisible(bitNum > 5);
-        unlitCheck7.setVisible(bitNum > 6);
-        unlitCheck8.setVisible(bitNum > 7);
-        unlitCheck9.setVisible(bitNum > 8);
-        unlitCheck10.setVisible(bitNum> 9);
-        // repeat in order to extend MAXMATRIXBITS
+        // show the active unlit check boxes
+        for (int i = 0; i < MAXMATRIXBITS; i++) {
+            unlitCheckArray[i].setVisible(i < bitNum);
+        }
 
         JPanel matrixHeader = new JPanel();
         JLabel matrixHeaderLabel = new JLabel(Bundle.getMessage("AspectMatrixHeaderLabel", bitNum), JLabel.CENTER);
@@ -605,7 +508,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     /**
      * Index is 1-based here:  1..MAXMATRIXBITS
      */
-    JPanel makeOutputPanel (JPanel turnoutPanel, int index) {
+    JPanel makeOutputPanel(JPanel turnoutPanel, int index) {
         JPanel outputpanel = new JPanel();
         outputpanel.add(turnoutPanel);
         TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
@@ -697,16 +600,14 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
     }*/
 
     private JPanel matrixUnLitPanel = new JPanel();
-    private JCheckBox unlitCheck1 = new JCheckBox();
-    private JCheckBox unlitCheck2 = new JCheckBox();
-    private JCheckBox unlitCheck3 = new JCheckBox();
-    private JCheckBox unlitCheck4 = new JCheckBox();
-    private JCheckBox unlitCheck5 = new JCheckBox();
-    private JCheckBox unlitCheck6 = new JCheckBox();
-    private JCheckBox unlitCheck7 = new JCheckBox();
-    private JCheckBox unlitCheck8 = new JCheckBox();
-    private JCheckBox unlitCheck9 = new JCheckBox();
-    private JCheckBox unlitCheck10= new JCheckBox();
+    
+    private JCheckBox[] unlitCheckArray = new JCheckBox[MAXMATRIXBITS];
+    {
+        for (int i = 0; i < MAXMATRIXBITS; i++) {
+            unlitCheckArray[i] = new JCheckBox();
+        }
+    }
+    
     // add more JCheckBoxes in order to extend MAXMATRIXBITS
 
     /**
@@ -720,17 +621,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         JPanel matrixUnLitDetails = new JPanel();
         matrixUnLitDetails.setLayout(new jmri.util.javaworld.GridLayout2(1, 1)); // stretch to full width
 
-        matrixUnLitDetails.add(unlitCheck1);
-        matrixUnLitDetails.add(unlitCheck2);
-        matrixUnLitDetails.add(unlitCheck3);
-        matrixUnLitDetails.add(unlitCheck4);
-        matrixUnLitDetails.add(unlitCheck5);
-        matrixUnLitDetails.add(unlitCheck6);
-        matrixUnLitDetails.add(unlitCheck7);
-        matrixUnLitDetails.add(unlitCheck8);
-        matrixUnLitDetails.add(unlitCheck9);
-        matrixUnLitDetails.add(unlitCheck10);
-        // repeat in order to extend MAXMATRIXBITS
+        for (int i = 0; i < MAXMATRIXBITS; i++) matrixUnLitDetails.add(unlitCheckArray[i]);
 
         matrixUnLitPanel.add(matrixUnLitDetails);
         TitledBorder border = BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black));
@@ -738,64 +629,64 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         matrixUnLitPanel.setBorder(border);
         matrixUnLitPanel.setToolTipText(Bundle.getMessage("MatrixUnlitTooltip"));
 
-        unlitCheck1.addActionListener(new ActionListener() {
+        unlitCheckArray[0].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUnLitBit(1, unlitCheck1.isSelected());
+                setUnLitBit(1, unlitCheckArray[0].isSelected());
             }
         });
-        unlitCheck2.addActionListener(new ActionListener() {
+        unlitCheckArray[1].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUnLitBit(2, unlitCheck2.isSelected());
+                setUnLitBit(2, unlitCheckArray[1].isSelected());
             }
         });
-        unlitCheck3.addActionListener(new ActionListener() {
+        unlitCheckArray[2].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUnLitBit(3, unlitCheck3.isSelected());
+                setUnLitBit(3, unlitCheckArray[2].isSelected());
             }
         });
-        unlitCheck4.addActionListener(new ActionListener() {
+        unlitCheckArray[3].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUnLitBit(4, unlitCheck4.isSelected());
+                setUnLitBit(4, unlitCheckArray[3].isSelected());
             }
         });
-        unlitCheck5.addActionListener(new ActionListener() {
+        unlitCheckArray[4].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUnLitBit(5, unlitCheck5.isSelected());
+                setUnLitBit(5, unlitCheckArray[4].isSelected());
             }
         });
-        unlitCheck6.addActionListener(new ActionListener() {
+        unlitCheckArray[5].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUnLitBit(6, unlitCheck6.isSelected());
+                setUnLitBit(6, unlitCheckArray[5].isSelected());
             }
         });
-        unlitCheck7.addActionListener(new ActionListener() {
+        unlitCheckArray[6].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUnLitBit(7, unlitCheck6.isSelected());
+                setUnLitBit(7, unlitCheckArray[6].isSelected());
             }
         });
-        unlitCheck8.addActionListener(new ActionListener() {
+        unlitCheckArray[7].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUnLitBit(8, unlitCheck6.isSelected());
+                setUnLitBit(8, unlitCheckArray[7].isSelected());
             }
         });
-        unlitCheck9.addActionListener(new ActionListener() {
+        unlitCheckArray[8].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUnLitBit(9, unlitCheck6.isSelected());
+                setUnLitBit(9, unlitCheckArray[8].isSelected());
             }
         });
-        unlitCheck10.addActionListener(new ActionListener() {
+        unlitCheckArray[9].addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                setUnLitBit(10, unlitCheck6.isSelected());
+                setUnLitBit(10, unlitCheckArray[9].isSelected());
             }
         });
         // repeat in order to extend MAXMATRIXBITS
@@ -898,7 +789,7 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
         String aspect = "";
         String emptyChars = "0000000000"; // size of String = MAXMATRIXBITS; add another 0 in order to extend MAXMATRIXBITS
         char[] emptyBits = emptyChars.toCharArray();
-        char[] aspectBits = emptyBits;
+        char[] aspectBits = emptyChars.toCharArray();
 
         /**
          * Build new aspect matrix panel.
@@ -1074,16 +965,16 @@ public class MatrixSignalMastAddPane extends SignalMastAddPane {
                 bitCheck6.setSelected(aspectBits[5] == '1');
             }
             if (bitNum > 6) {
-                bitCheck7.setSelected(aspectBits[5] == '1');
+                bitCheck7.setSelected(aspectBits[6] == '1');
             }
             if (bitNum > 7) {
-                bitCheck8.setSelected(aspectBits[5] == '1');
+                bitCheck8.setSelected(aspectBits[7] == '1');
             }
             if (bitNum > 8) {
-                bitCheck9.setSelected(aspectBits[5] == '1');
+                bitCheck9.setSelected(aspectBits[8] == '1');
             }
             if (bitNum > 9) {
-                bitCheck10.setSelected(aspectBits[5] == '1');
+                bitCheck10.setSelected(aspectBits[9] == '1');
             }
             // repeat in order to set extend MAXMATRIXBITS
             
