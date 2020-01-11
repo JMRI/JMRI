@@ -61,6 +61,42 @@ public class MatrixSignalMastTest {
     }
 
     @Test
+    public void testMaxOutputs10() {
+        int check = 10;
+        for (int i = 1; i <= check; i++) InstanceManager.getDefault(jmri.TurnoutManager.class).provideTurnout(""+i);
+
+        MatrixSignalMast m = new MatrixSignalMast("IF$xsm:basic:one-low($0001)-3t", "user");
+        m.setBitNum(check);
+        String clear = "";
+        String stop = "";
+
+        for (int i = 1; i <= check; i++)  {
+            m.setOutput("output"+i, "IT"+i); // Note: "IT" added to name by system
+            clear += "0";
+            stop += "1";
+        }
+        
+        m.setBitstring("Clear",  clear);
+        m.setBitstring("Stop", stop);
+        m.setBitstring("Unlit", stop);
+
+        m.setAllowUnLit(true);
+        m.setUnLitBits(stop);
+
+        m.aspect = "Clear"; // define some initial aspect before setting any aspect
+        // wait for outputs and outputbits to be set
+
+        Assert.assertTrue(m.getLit());
+
+        m.setLit(false);
+        Assert.assertFalse(m.getLit());
+
+        m.setLit(true);
+        Assert.assertTrue(m.getLit());
+
+    }
+    
+    @Test
     @SuppressWarnings("unused") // it11 etc. are indirectly used as NamedBeans IT11 etc.
     public void testLit() {
         // provide 3 turnouts:
