@@ -47,7 +47,7 @@
       <xs:group ref="CommonNamedBeanContentElements"/>
               <xs:element name="lightcontrol" minOccurs="0" maxOccurs="unbounded" >
                 <xs:complexType>
-           		  <xs:attribute name="controlType" type="xs:string" use="required"/>
+                  <xs:attribute name="controlType" type="xs:string" use="required"/>
                   <xs:attribute name="controlSensor" type="xs:string" />
                   <xs:attribute name="controlSensor2" type="xs:string" />
                   <xs:attribute name="sensorSense" type="xs:string" />
