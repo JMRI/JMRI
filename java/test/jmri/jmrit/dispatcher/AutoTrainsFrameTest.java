@@ -35,6 +35,7 @@ public class AutoTrainsFrameTest extends jmri.util.JmriJFrameTestBase {
             JUnitUtil.dispose(d);
             d = null;
         }
+        JUnitUtil.clearShutDownManager();
         super.tearDown(); // handles frame member
     }
 

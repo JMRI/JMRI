@@ -32,6 +32,7 @@ public class LearnThrottleFrameTest extends jmri.util.JmriJFrameTestBase {
             JUnitUtil.dispose(wf);
         }
         wf = null;
+        JUnitUtil.clearShutDownManager(); // should be converted to check of scheduled ShutDownActions
         super.tearDown();
     }
 
