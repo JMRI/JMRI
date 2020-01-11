@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Timer extends AbstractDigitalExpression {
 
+    private final Object _lock = new Object();
     private MyTimerTask _timerTask;
     private TimerType _timerType = TimerType.WAIT_ONCE_TRIG_ONCE;
     private boolean _listenersAreRegistered = false;
@@ -153,13 +154,12 @@ public class Timer extends AbstractDigitalExpression {
      * is cancelled and that it's not running any more. / Daniel Bergqvist
      */
     private MyTimerTask getNewTimerTask() {
-        final Timer timer = this;
         final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
         
         return new MyTimerTask() {
             @Override
             public void run() {
-                synchronized(timer) {
+                synchronized(_lock) {
                     if (_stopTimer) return;
                     _timerIsRunning = true;
                 }
@@ -167,7 +167,7 @@ public class Timer extends AbstractDigitalExpression {
                 _timerStatusRef.set(TimerStatus.FINISHED);
                 c.execute();
                 
-                synchronized(timer) {
+                synchronized(_lock) {
                     _timerIsRunning = false;
                 }
             }
@@ -175,9 +175,9 @@ public class Timer extends AbstractDigitalExpression {
     }
     
     private void scheduleTimer(long delay) {
-        synchronized(this) {
+        synchronized(_lock) {
             if (_timerTask != null) _timerTask.cancel();
-
+            
             _timerTask = getNewTimerTask();
             jmri.util.TimerUtil.schedule(_timerTask, delay);
         }
@@ -218,12 +218,12 @@ public class Timer extends AbstractDigitalExpression {
     private void stopTimer() {
         int count = 1;
         
-        if (_timerTask == null) return;
-        
-        synchronized(this) {
+        synchronized(_lock) {
+            if (_timerTask == null) return;
+            
             _timerTask._stopTimer = true;
             _timerTask.cancel();
-
+            
             // If the timer task is not running, we don't have
             // to wait for it to finish.
             if (!_timerTask._timerIsRunning) return;
@@ -231,7 +231,7 @@ public class Timer extends AbstractDigitalExpression {
         
         // Try max 50 times
         while (count <= 50) {
-            synchronized(this) {
+            synchronized(_lock) {
                 if (!_timerTask._timerIsRunning) {
                     _timerTask = null;
                     return;
@@ -312,7 +312,7 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        synchronized(this) {
+        synchronized(_lock) {
             if (_timerTask != null) _timerTask.cancel();
         }
     }
