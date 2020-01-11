@@ -210,6 +210,7 @@ public class LoadAtStartUpTest {
 
     @After
     public void tearDown() throws Exception {
+        JUnitUtil.clearShutDownManager();
         JUnitUtil.resetWindows(false,false);
         JUnitUtil.resetFileUtilSupport();
         JUnitUtil.tearDown();
