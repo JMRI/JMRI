@@ -298,7 +298,8 @@
         <include name="**/*.class" />
         <!-- Exclude classes necessary for testing only from the code coverage report-->
         <exclude name="**/*Test*.class" />
-        <exclude name="**/*IT*.class" />
+        <exclude name="**/*IT.class" />
+        <exclude name="**/IT*.class" />
         <!-- Exclude testing infrastructure classes -->
         <exclude name="**/*Scaffold.class" />
         <exclude name="**/*JUnit*.class" />
@@ -1418,7 +1419,8 @@
             <batchtest todir="${testreport}">
                 <formatter type="xml"/>
                 <fileset dir="${test}">
-                    <include name="**/*IT*.java"/>
+                    <include name="**/*IT.java"/>
+                    <include name="**/IT*.java"/>
                 </fileset>
             </batchtest>
 
@@ -1505,7 +1507,8 @@
             <batchtest todir="${testreport}"> 
                 <formatter usefile="no" type="brief"/>
                 <fileset dir="${test}">
-                    <include name="**/*IT*.java"/>
+                    <include name="**/*IT.java"/>
+                    <include name="**/IT*.java"/>
                 </fileset>
                 <formatter usefile="no" type="brief"/>
             </batchtest>
@@ -1550,7 +1553,8 @@
             <batchtest todir="${testreport}"> 
                 <formatter type="xml"/>
                 <fileset dir="${test}">
-                    <include name="**/*IT*.java"/>
+                    <include name="**/*IT.java"/>
+                    <include name="**/IT*.java"/>
                 </fileset>
             </batchtest>
         </junit>
@@ -1619,7 +1623,8 @@
             <batchtest todir="${testreport}"> 
                 <formatter type="xml"/>
                 <fileset dir="${test}">
-                    <include name="**/*IT*.java"/>
+                    <include name="**/*IT.java"/>
+                    <include name="**/IT*.java"/>
                 </fileset>
             </batchtest>
         </junit>
