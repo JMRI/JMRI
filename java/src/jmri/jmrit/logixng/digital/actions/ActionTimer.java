@@ -51,8 +51,6 @@ public class ActionTimer extends AbstractDigitalAction
      * Get a new timer task.
      */
     private ProtectedTimerTask getNewTimerTask() {
-        final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
-        
         return new ProtectedTimerTask() {
             @Override
             public void execute() {

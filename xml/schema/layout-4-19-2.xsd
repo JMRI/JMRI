@@ -76,6 +76,7 @@ signals - obsolete, EMPTY, never used
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/switchboardeditor.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/entryexitpair.xsd"/>
   <xs:include schemaLocation="http://jmri.org/xml/schema/types/filehistory.xsd"/>
+  <xs:include schemaLocation="http://jmri.org/xml/schema/logixng/logixng-4.19.2.xsd"/>
 
   <xs:element name="layout-config">
     <xs:complexType>
@@ -347,6 +348,15 @@ signals - obsolete, EMPTY, never used
         <xs:element name="routes"       type="RouteManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="logixs"       type="LogixManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="conditionals" type="ConditionalManagerType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="logixngs"                  type="LogixNG_ManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixngConditionalNGs"     type="LogixNG_ConditionalNGManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixngAnalogActions"      type="LogixNG_AnalogActionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixngAnalogExpressions"  type="LogixNG_AnalogExpressionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixngDigitalActions"     type="LogixNG_DigitalActionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixngDigitalExpressions" type="LogixNG_DigitalExpressionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixngStringActions"      type="LogixNG_StringActionManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="logixngStringExpressions"  type="LogixNG_StringExpressionManagerType" minOccurs="0" maxOccurs="unbounded" />
 
         <xs:element name="warrants"     type="WarrantManagerType" minOccurs="0" maxOccurs="unbounded" />
 
