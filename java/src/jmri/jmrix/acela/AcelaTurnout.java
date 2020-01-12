@@ -73,14 +73,15 @@ public class AcelaTurnout extends AbstractTurnout {
      */
     @Override
     protected void forwardCommandChangeToLayout(int s) {
+        // sort out states
         if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s & Turnout.THROWN)) {
+            if (noStateConflict(s)) {
                 // send a CLOSED command
-                sendMessage(true ^ getInverted());
+                sendMessage(!getInverted());
             }
         } else {
             // send a THROWN command
-            sendMessage(false ^ getInverted());
+            sendMessage(getInverted());
         }
     }
 
@@ -104,8 +105,8 @@ public class AcelaTurnout extends AbstractTurnout {
         return true;
     }
 
-    //method which takes a turnout state as a parameter and adjusts it  as necessary
-    //to reflect the turnout invert property
+    // method which takes a turnout state as a parameter and adjusts it as necessary
+    // to reflect the turnout invert property
     private int adjustStateForInversion(int rawState) {
 
         if (getInverted() && (rawState == CLOSED || rawState == THROWN)) {

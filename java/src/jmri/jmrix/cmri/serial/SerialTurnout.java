@@ -76,7 +76,7 @@ public class SerialTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int newState) {
         // sort out states
         if ((newState & Turnout.CLOSED) != 0) {
-            if (noStateConflict(newState & Turnout.THROWN)) {
+            if (noStateConflict(newState)) {
                 // send a CLOSED command
                 sendMessage(true);
             }

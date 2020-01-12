@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase {
 
     private AcelaTrafficControlScaffold tcis = null;
-    private AcelaSystemConnectionMemo memo = null;
 
     @Override
     public int numListeners() {
@@ -91,7 +90,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         JUnitUtil.setUp();
 
         tcis = new AcelaTrafficControlScaffold();
-        memo = new AcelaSystemConnectionMemo(tcis);
+        AcelaSystemConnectionMemo memo = new AcelaSystemConnectionMemo(tcis);
 
         // We need to delete the nodes so we can re-allocate them
         // otherwise we get another set of nodes for each test case
@@ -125,7 +124,7 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBas
         }
 
         // Must allocate a valid turnout t for abstract tests
-        t = new AcelaTurnout("AT11",memo);
+        t = new AcelaTurnout("AT11", memo);
     }
 
     @After

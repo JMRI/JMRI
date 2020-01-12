@@ -55,7 +55,7 @@ public class SRCPTurnout extends AbstractTurnout {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
             // first look for the double case, which we can't handle
-            if (noStateConflict(s & Turnout.THROWN)) {
+            if (noStateConflict(s)) {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
             }

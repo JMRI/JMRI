@@ -47,11 +47,11 @@ public class MarklinTurnout extends AbstractTurnout
         if ((s & Turnout.CLOSED) != 0) {
             if (noStateConflict(s & Turnout.THROWN)) {
                 // send a CLOSED command
-                sendMessage(true ^ getInverted());
+                sendMessage(!getInverted());
             }
         } else {
             // send a THROWN command
-            sendMessage(false ^ getInverted());
+            sendMessage(getInverted());
         }
     }
 

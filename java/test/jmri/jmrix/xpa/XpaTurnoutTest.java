@@ -45,7 +45,7 @@ public class XpaTurnoutTest extends jmri.implementation.AbstractTurnoutTestBase 
         memo = new XpaSystemConnectionMemo();
         xnis = new XpaTrafficControlScaffold();
         memo.setXpaTrafficController(xnis);
-        t = new XpaTurnout(3,memo);
+        t = new XpaTurnout(3, memo);
     }
 
     @After

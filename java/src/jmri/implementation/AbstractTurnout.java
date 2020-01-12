@@ -72,9 +72,21 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         forwardCommandChangeToLayout(_commandedState);
     }
 
-    protected boolean noStateConflict(int checked) {
+    protected boolean CommandChangeCheck(int s) {
+        // sort out states
+        if ((s & Turnout.CLOSED) != 0) {
+            if (noStateConflict(s)) {
+                // send a CLOSED command
+                return (false);
+            }
+        }
+        // send a THROWN command
+        return (true);
+    }
+
+    protected boolean noStateConflict(int s) {
         // look for the double case, which we can't handle
-        if (checked != 0) {
+        if ((s & Turnout.THROWN) != 0) {
             // this is the disaster case!
             log.error("Cannot command both CLOSED and THROWN");
             return false;
@@ -397,8 +409,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
         boolean oldInverted = _inverted;
         _inverted = inverted;
         if (oldInverted != _inverted) {
-            firePropertyChange("inverted", oldInverted,
-                    _inverted);
+            firePropertyChange("inverted", oldInverted, _inverted);
             int state = _knownState;
             if (state == THROWN) {
                 newKnownState(CLOSED);

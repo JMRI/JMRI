@@ -8,7 +8,7 @@ import javax.annotation.concurrent.GuardedBy;
 /**
  * Extend jmri.AbstractTurnout for XNet layouts
  * <p>
- * Turnout opperation on XpressNet based systems goes through the following
+ * Turnout operation on XpressNet based systems goes through the following
  * sequence:
  * <ul>
  * <li> set the commanded state, and, Send request to command station to start
@@ -212,7 +212,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     /**
      * {@inheritDoc}
-     * Sends an XpressNet command
+     * Sends an XpressNet command.
      */
     @Override
     synchronized protected void forwardCommandChangeToLayout(int s) {

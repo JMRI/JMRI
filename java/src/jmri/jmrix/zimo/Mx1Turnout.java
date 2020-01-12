@@ -44,13 +44,13 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s & Turnout.THROWN)) {
+            if (noStateConflict(s)) {
                 // send a CLOSED command
-                forwardToCommandStation(jmri.Turnout.THROWN);
+                forwardToCommandStation(Turnout.THROWN);
             }
         } else {
             // send a THROWN command
-            forwardToCommandStation(jmri.Turnout.CLOSED);
+            forwardToCommandStation(Turnout.CLOSED);
         }
     }
 
@@ -63,6 +63,6 @@ public class Mx1Turnout extends AbstractTurnout /*implements Mx1TrafficListener*
     protected void turnoutPushbuttonLockout(boolean pushButtonLockout) {
     }
 
-    private final static Logger log = LoggerFactory.getLogger(Mx1Turnout.class);
+    // private final static Logger log = LoggerFactory.getLogger(Mx1Turnout.class);
 
 }

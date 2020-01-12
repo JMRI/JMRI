@@ -53,7 +53,7 @@ public class EasyDccTurnout extends AbstractTurnout {
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
         if ((s & Turnout.CLOSED) != 0) {
-            if (noStateConflict(s & Turnout.THROWN)) {
+            if (noStateConflict(s)) {
                 // send a CLOSED command
                 sendMessage(true ^ getInverted());
             }
