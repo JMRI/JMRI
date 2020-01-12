@@ -1,8 +1,8 @@
 package jmri.jmrit.logixng.digital.expressions;
 
+import jmri.jmrit.logixng.util.ProtectedTimerTask;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.Locale;
-import java.util.TimerTask;
 import jmri.jmrit.logixng.Category;
 import jmri.jmrit.logixng.FemaleSocket;
 import org.slf4j.Logger;
@@ -24,8 +24,7 @@ import org.slf4j.LoggerFactory;
  */
 public class Timer extends AbstractDigitalExpression {
 
-    private final Object _lock = new Object();
-    private MyTimerTask _timerTask;
+    private ProtectedTimerTask _timerTask;
     private TimerType _timerType = TimerType.WAIT_ONCE_TRIG_ONCE;
     private boolean _listenersAreRegistered = false;
     private final AtomicReference<TimerStatus> _timerStatusRef = new AtomicReference<>(TimerStatus.NOT_STARTED);
@@ -154,10 +153,10 @@ public class Timer extends AbstractDigitalExpression {
      * This code ensures that we don't return from this method until _timerTask
      * is cancelled and that it's not running any more. / Daniel Bergqvist
      */
-    private MyTimerTask getNewTimerTask() {
+    private ProtectedTimerTask getNewTimerTask() {
         final jmri.jmrit.logixng.ConditionalNG c = getConditionalNG();
         
-        return new MyTimerTask() {
+        return new ProtectedTimerTask() {
             @Override
             public void execute() {
                 _timerStatusRef.set(TimerStatus.FINISHED);
@@ -167,7 +166,7 @@ public class Timer extends AbstractDigitalExpression {
     }
     
     private void scheduleTimer(long delay) {
-        synchronized(_lock) {
+        synchronized(this) {
             if (_timerTask != null) {
                 _timerTask.stopTimer();
                 _timerTask = null;
@@ -265,7 +264,7 @@ public class Timer extends AbstractDigitalExpression {
     /** {@inheritDoc} */
     @Override
     public void disposeMe() {
-        synchronized(_lock) {
+        synchronized(this) {
             if (_timerTask != null) {
                 _timerTask.stopTimer();
                 _timerTask = null;
