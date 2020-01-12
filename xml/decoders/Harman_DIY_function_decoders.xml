@@ -4,8 +4,10 @@
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Paul Harman" version="0.2" lastUpdated="20120918"/>
+	<version author="Michael Mosher" version="2" lastUpdated="20200109"/>
+	<!-- Version 2 - change mfg to match name in NMRA.xml -->
   <decoder>
-    <family name="Harman DIY Function Decoders" mfg="Harman-DIY">
+    <family name="Harman DIY Function Decoders" mfg="Harman DCC">
       <model model="Function1-8" numOuts="8" numFns="16" formFactor="HO">
         <output name="1" label="Output A"/>
         <output name="2" label="Output B"/>

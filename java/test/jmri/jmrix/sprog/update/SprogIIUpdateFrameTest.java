@@ -33,7 +33,10 @@ public class SprogIIUpdateFrameTest extends jmri.util.JmriJFrameTestBase {
     @Override
     public void tearDown() {
         m.getSlotThread().interrupt();
+        m.dispose();
         stcs.dispose();
+        m = null;
+        stcs = null;
         JUnitUtil.clearShutDownManager(); // put in place because AbstractMRTrafficController implementing subclass was not terminated properly
         super.tearDown();
     }
