@@ -16,22 +16,25 @@ import java.util.TimerTask;
  */
 public abstract class ProtectedTimerTask extends TimerTask {
 
-    private volatile boolean _timerTaskIsFinished = false;
-    private volatile boolean _stopTimerTask = false;
+    private final Object _lock = new Object();
+    private boolean _timerIsRunning = false;
+    private boolean _stopTimer = false;
     
-    /**
-     * The action to be performed by this timer task.
-     */
     public abstract void execute();
     
     @Override
-    public final void run() {
-        if (_stopTimerTask) return;
+    public void run() {
+        synchronized(_lock) {
+            if (_stopTimer) return;
+            _timerIsRunning = true;
+        }
         
         // Execute the task
         execute();
         
-        _timerTaskIsFinished = true;
+        synchronized(_lock) {
+            _timerIsRunning = false;
+        }
     }
     
     /**
@@ -42,16 +45,22 @@ public abstract class ProtectedTimerTask extends TimerTask {
      */
     @SuppressWarnings(value = "SleepWhileInLoop")
     public void stopTimer() {
-        _stopTimerTask = true;
-        
-        // If cancel() returns true, the task will never be executed and we are done.
-        if (cancel()) return;
-        
+        synchronized (_lock) {
+            _stopTimer = true;
+            // If cancel() returns true, the task will never be
+            // executed and we are done.
+            if (cancel()) return;
+            // If the timer task is not running, we don't have
+            // to wait for it to finish.
+            if (!_timerIsRunning) {
+                return;
+            }
+        }
         // Try max 50 times
         for (int count=0; count <= 50; count++) {
-            // If the task is finished, return
-            if (_timerTaskIsFinished) return;
-            
+            synchronized (_lock) {
+                if (!_timerIsRunning) return;
+            }
             try {
                 Thread.sleep(20);
             } catch (InterruptedException e) {

@@ -20,7 +20,6 @@ import jmri.util.JUnitAppender;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -226,7 +225,6 @@ public class ExpressionTimerTest extends AbstractDigitalExpressionTestBase {
         JUnitAppender.assertErrorMessage("setTimerDelay must not be called when listeners are registered");
     }
     
-//    @Ignore
     @Test
     public void testExecuteWaitOnceTrigOnce() {
         // Disable the _conditionalNG. This will unregister the listeners
@@ -261,7 +259,6 @@ public class ExpressionTimerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertFalse("timer has not triggered", _atomicBoolean.get());
     }
     
-//    @Ignore
     @Test
     public void testExecuteWaitOnceTrigUntilReset() {
         // Disable the _conditionalNG. This will unregister the listeners
@@ -323,7 +320,6 @@ public class ExpressionTimerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertTrue("atomicBoolean is set", _atomicBoolean.get());
     }
     
-    @Ignore
     @Test
     public void testExecuteSingleDelay() {
         // Disable the _conditionalNG. This will unregister the listeners
@@ -364,7 +360,6 @@ public class ExpressionTimerTest extends AbstractDigitalExpressionTestBase {
         JUnitUtil.waitFor(()->{return _atomicBoolean.get();}, "timer has not triggered");
     }
     
-    @Ignore
     @Test
     public void testExecuteDoubleDelay() {
         // Disable the _conditionalNG. This will unregister the listeners
