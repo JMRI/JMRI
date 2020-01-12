@@ -26,6 +26,7 @@ public class LogixNG_StartupAction extends JmriAbstractAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+/*        
         try {
             ((DefaultLogixNGManager)InstanceManager.getDefault(LogixNG_Manager.class)).testLogixNGs();
 //        } catch (PropertyVetoException ex) {

@@ -129,11 +129,6 @@ public class LogixNG_StartupTest {
             // We don't want to save config for this class
         }
         
-        @Override
-        public void testLogixNGs() throws PropertyVetoException {
-//            throw new PropertyVetoException("exception", null);
-        }
-        
     }
     
 }

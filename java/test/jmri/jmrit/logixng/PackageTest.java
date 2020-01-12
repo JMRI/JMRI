@@ -21,7 +21,7 @@ import org.junit.runners.Suite;
     jmri.jmrit.logixng.swing.PackageTest.class,
     jmri.jmrit.logixng.tools.PackageTest.class,
     jmri.jmrit.logixng.util.PackageTest.class,
-    jmri.jmrit.logixng.ztest.LogixNG_StartupTest.class,
+    jmri.jmrit.logixng.ztest.PackageTest.class,
     ConditionalNGTest.class,
     DigitalExpressionTest.class,
     LogixNGCategoryTest.class,
