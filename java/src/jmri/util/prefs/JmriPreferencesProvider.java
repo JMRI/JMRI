@@ -36,8 +36,9 @@ import jmri.util.node.NodeIdentity;
  * the Railroad Name preference.</li>
  * <li><code>&lt;node-identity&gt;/profile.properties</code> preferences that
  * are specific to the profile running on a specific host (&lt;node-identity&gt;
- * is the identity returned by {@link jmri.util.node.NodeIdentity#storageIdentity()}).
- * An example of such a preference would be a file location.</li>
+ * is the identity returned by
+ * {@link jmri.util.node.NodeIdentity#storageIdentity()}). An example of such a
+ * preference would be a file location.</li>
  * </ul>
  * <p>
  * Non-profile specific configuration that applies to all profiles is stored in
@@ -55,9 +56,7 @@ public final class JmriPreferencesProvider {
 
     private static final HashMap<File, JmriPreferencesProvider> SHARED_PROVIDERS = new HashMap<>();
     private static final HashMap<File, JmriPreferencesProvider> PRIVATE_PROVIDERS = new HashMap<>();
-    // retained for reference
-    //private static final String INVALID_KEY_CHARACTERS = "_.";
-    
+
     /**
      * Get the JmriPreferencesProvider for the specified profile path.
      *
@@ -65,23 +64,17 @@ public final class JmriPreferencesProvider {
      *               most frequently the path returned by
      *               {@link jmri.profile.Profile#getPath()}.
      * @param shared True if the preferences apply to the profile at path
-     *               regardless of host. If false, the preferences only apply
-     *               to this computer.
+     *               regardless of host. If false, the preferences only apply to
+     *               this computer.
      * @return The shared or private JmriPreferencesProvider for the project at
      *         path.
      */
     @Nonnull
     static synchronized JmriPreferencesProvider findProvider(@CheckForNull File path, boolean shared) {
         if (shared) {
-            if (SHARED_PROVIDERS.get(path) == null) {
-                SHARED_PROVIDERS.put(path, new JmriPreferencesProvider(path, shared));
-            }
-            return SHARED_PROVIDERS.get(path);
+            return SHARED_PROVIDERS.computeIfAbsent(path, v -> new JmriPreferencesProvider(path, shared));
         } else {
-            if (PRIVATE_PROVIDERS.get(path) == null) {
-                PRIVATE_PROVIDERS.put(path, new JmriPreferencesProvider(path, shared));
-            }
-            return PRIVATE_PROVIDERS.get(path);
+            return PRIVATE_PROVIDERS.computeIfAbsent(path, v -> new JmriPreferencesProvider(path, shared));
         }
     }
 
@@ -105,11 +98,35 @@ public final class JmriPreferencesProvider {
      *         clazz for project.
      */
     @Nonnull
-    public static Preferences getPreferences(@CheckForNull final Profile project, @CheckForNull final Class<?> clazz, final boolean shared) {
+    public static Preferences getPreferences(@CheckForNull final Profile project, @CheckForNull final Class<?> clazz,
+            final boolean shared) {
+        return getPreferences(project, clazz != null ? clazz.getPackage() : null, shared);
+    }
+
+    /**
+     * Get the {@link java.util.prefs.Preferences} for the specified package in
+     * the specified profile.
+     *
+     * @param project The profile. This is most often the profile returned by
+     *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
+     *                method of the ProfileManager returned by
+     *                {@link jmri.profile.ProfileManager#getDefault()}. If null,
+     *                preferences apply to all profiles on the computer and the
+     *                value of shared is ignored.
+     * @param pkg     The package requesting preferences.
+     * @param shared  True if the preferences apply to this profile regardless
+     *                of host. If false, the preferences only apply to this
+     *                computer. Ignored if the value of project is null.
+     * @return The shared or private Preferences node for the package for
+     *         project.
+     */
+    @Nonnull
+    public static Preferences getPreferences(@CheckForNull final Profile project, @CheckForNull final Package pkg,
+            final boolean shared) {
         if (project != null) {
-            return findProvider(project.getPath(), shared).getPreferences(clazz);
+            return findProvider(project.getPath(), shared).getPreferences(pkg);
         } else {
-            return findProvider(null, shared).getPreferences(clazz);
+            return findProvider(null, shared).getPreferences(pkg);
         }
     }
 
@@ -129,13 +146,15 @@ public final class JmriPreferencesProvider {
      *                computer. Ignored if the value of project is null.
      * @return The shared or private Preferences node for the package.
      * @deprecated Not for removal. Use of
-     * {@link #getPreferences(jmri.profile.Profile, java.lang.Class, boolean)}
-     * is preferred and recommended unless reading preferences for a
-     * non-existent package or class.
+     *             {@link #getPreferences(Profile, Class, boolean)} or
+     *             {@link #getPreferences(Profile, Package, boolean)} is
+     *             preferred and recommended unless reading preferences for a
+     *             non-existent package or class.
      */
     @Nonnull
     @Deprecated
-    public static Preferences getPreferences(@CheckForNull final Profile project, @CheckForNull final String pkg, final boolean shared) {
+    public static Preferences getPreferences(@CheckForNull final Profile project, @CheckForNull final String pkg,
+            final boolean shared) {
         if (project != null) {
             return findProvider(project.getPath(), shared).getPreferences(pkg);
         } else {
@@ -153,19 +172,34 @@ public final class JmriPreferencesProvider {
      *               and the value of shared is ignored.
      * @param clazz  The class requesting preferences. Note that the preferences
      *               returned are for the package containing the class.
-     * @param shared True if the preferences apply to this profile regardless
-     *               of host. If false, the preferences only apply to this
+     * @param shared True if the preferences apply to this profile regardless of
+     *               host. If false, the preferences only apply to this
      *               computer. Ignored if the value of path is null.
      * @return The shared or private Preferences node for the package containing
      *         clazz for project.
      * @deprecated Not for removal. Use of
-     * {@link #getPreferences(jmri.profile.Profile, java.lang.Class, boolean)}
-     * is preferred and recommended unless being used to during the construction
-     * of a Profile object.
+     *             {@link #getPreferences(jmri.profile.Profile, java.lang.Class, boolean)}
+     *             is preferred and recommended unless being used to during the
+     *             construction of a Profile object.
      */
     @Deprecated
-    public static Preferences getPreferences(@CheckForNull final File path, @CheckForNull final Class<?> clazz, final boolean shared) {
+    public static Preferences getPreferences(@CheckForNull final File path, @CheckForNull final Class<?> clazz,
+            final boolean shared) {
         return findProvider(path, shared).getPreferences(clazz);
+    }
+
+    /**
+     * Get the {@link java.util.prefs.Preferences} for the specified package.
+     *
+     * @param pkg The package requesting preferences.
+     * @return The shared or private Preferences node for the package.
+     */
+    // package private
+    Preferences getPreferences(@CheckForNull final Package pkg) {
+        if (pkg == null) {
+            return this.root;
+        }
+        return this.root.node(findCNBForPackage(pkg));
     }
 
     /**
@@ -176,11 +210,9 @@ public final class JmriPreferencesProvider {
      * @return The shared or private Preferences node for the package containing
      *         clazz.
      */
+    // package private
     Preferences getPreferences(@CheckForNull final Class<?> clazz) {
-        if (clazz == null) {
-            return this.root;
-        }
-        return this.root.node(findCNBForClass(clazz));
+        return getPreferences(clazz != null ? clazz.getPackage() : null);
     }
 
     /**
@@ -189,6 +221,7 @@ public final class JmriPreferencesProvider {
      * @param pkg The package for which preferences are needed.
      * @return The shared or private Preferences node for the package.
      */
+    // package private
     Preferences getPreferences(@CheckForNull final String pkg) {
         if (pkg == null) {
             return this.root;
@@ -222,23 +255,6 @@ public final class JmriPreferencesProvider {
         return this.firstUse;
     }
 
-    // retain unused method for reference - generates a String replacing
-    // all invalid characters in a String with underscores
-    //private static String encodeString(String s) {
-    //    StringBuilder result = new StringBuilder();
-    //
-    //    for (char c : s.toCharArray()) {
-    //        if (INVALID_KEY_CHARACTERS.indexOf(c) == (-1)) {
-    //            result.append(c);
-    //        } else {
-    //            result.append("_");
-    //            result.append(Integer.toHexString(c));
-    //            result.append("_");
-    //        }
-    //    }
-    //
-    //    return result.toString();
-    //}
     /**
      * Returns the name of the package for the class in a format that is treated
      * as a single token.
@@ -247,9 +263,18 @@ public final class JmriPreferencesProvider {
      * @return A sanitized package name
      */
     public static String findCNBForClass(@Nonnull Class<?> cls) {
-        String absolutePath;
-        absolutePath = cls.getName().replaceFirst("(^|\\.)[^.]+$", "");//NOI18N
-        return absolutePath.replace('.', '-');
+        return findCNBForPackage(cls.getPackage());
+    }
+
+    /**
+     * Returns the name of the package in a format that is treated as a single
+     * token.
+     *
+     * @param pkg The package for which a sanitized name is needed
+     * @return A sanitized package name
+     */
+    public static String findCNBForPackage(@Nonnull Package pkg) {
+        return pkg.getName().replace('.', '-');
     }
 
     @Nonnull
@@ -269,14 +294,13 @@ public final class JmriPreferencesProvider {
         } else {
             dir = new File(this.path, Profile.PROFILE);
             if (!this.shared) {
-                if (Profile.isProfile(this.path)) { // protect against testing a new profile
+                if (Profile.isProfile(this.path)) { // protect against testing a
+                                                    // new profile
                     try {
                         Profile profile = new Profile(this.path);
                         File nodeDir = new File(dir, NodeIdentity.storageIdentity(profile));
-                        if (!nodeDir.exists()) {
-                            if (!ProfileUtils.copyPrivateContentToCurrentIdentity(profile)) {
-                                log.debug("Starting profile with new private preferences.");
-                            }
+                        if (!nodeDir.exists() && !ProfileUtils.copyPrivateContentToCurrentIdentity(profile)) {
+                            log.debug("Starting profile with new private preferences.");
                         }
                     } catch (IOException ex) {
                         log.debug("Copying existing private configuration failed.");
@@ -396,13 +420,13 @@ public final class JmriPreferencesProvider {
 
                     StringBuilder sb = new StringBuilder();
                     getPath(sb);
-                    String path = sb.toString();
+                    String pp = sb.toString();
 
                     final Enumeration<?> pnen = p.propertyNames();
                     while (pnen.hasMoreElements()) {
                         String propKey = (String) pnen.nextElement();
-                        if (propKey.startsWith(path)) {
-                            String subKey = propKey.substring(path.length());
+                        if (propKey.startsWith(pp)) {
+                            String subKey = propKey.substring(pp.length());
                             // Only load immediate descendants
                             if (subKey.indexOf('.') == -1) {
                                 root.put(subKey, p.getProperty(propKey));
@@ -435,7 +459,7 @@ public final class JmriPreferencesProvider {
 
                     StringBuilder sb = new StringBuilder();
                     getPath(sb);
-                    String path = sb.toString();
+                    String pp = sb.toString();
 
                     if (file.exists()) {
                         try (FileInputStream fis = new FileInputStream(file)) {
@@ -444,12 +468,13 @@ public final class JmriPreferencesProvider {
 
                         List<String> toRemove = new ArrayList<>();
 
-                        // Make a list of all direct children of this node to be removed
+                        // Make a list of all direct children of this node to be
+                        // removed
                         final Enumeration<?> pnen = p.propertyNames();
                         while (pnen.hasMoreElements()) {
                             String propKey = (String) pnen.nextElement();
-                            if (propKey.startsWith(path)) {
-                                String subKey = propKey.substring(path.length());
+                            if (propKey.startsWith(pp)) {
+                                String subKey = propKey.substring(pp.length());
                                 // Only do immediate descendants
                                 if (subKey.indexOf('.') == -1) {
                                     toRemove.add(propKey);
@@ -458,16 +483,12 @@ public final class JmriPreferencesProvider {
                         }
 
                         // Remove them now that the enumeration is done with
-                        toRemove.stream().forEach((propKey) -> {
-                            p.remove(propKey);
-                        });
+                        toRemove.stream().forEach(p::remove);
                     }
 
                     // If this node hasn't been removed, add back in any values
                     if (!isRemoved) {
-                        root.keySet().stream().forEach((s) -> {
-                            p.setProperty(path + s, root.get(s));
-                        });
+                        root.keySet().stream().forEach(s -> p.setProperty(path + s, root.get(s)));
                     }
 
                     if (!JmriPreferencesProvider.this.isBackedUp() && file.exists()) {
@@ -483,6 +504,7 @@ public final class JmriPreferencesProvider {
                 }
             }
         }
+
         private final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(JmriPreferences.class);
     }
 

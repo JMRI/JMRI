@@ -102,6 +102,13 @@ public class JmriPreferencesProviderTest {
         shared = new JmriPreferencesProvider(project.getPath(), true);
         assertEquals(false, shared.isFirstUse());
     }
+
+    /**
+     * Test of findCNBForPackage method, of class JmriPreferencesProvider.
+     */
+    @Test
+    public void testFindCNBForPackage() {
+        assertEquals("jmri-server-json", JmriPreferencesProvider.findCNBForPackage(Package.getPackage("jmri.server.json")));
     }
 
     /**
