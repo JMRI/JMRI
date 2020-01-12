@@ -21,6 +21,7 @@ import jmri.util.junit.annotations.ToDo;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
@@ -226,6 +227,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         JUnitAppender.assertErrorMessage("setTimerDelay must not be called when listeners are registered");
     }
     
+//    @Ignore
     @Test
     public void testExecuteWaitOnceTrigOnce() {
         // Disable the _conditionalNG. This will unregister the listeners
@@ -260,6 +262,7 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
         Assert.assertFalse("timer has not triggered", _atomicBoolean.get());
     }
     
+//    @Ignore
     @Test
     public void testExecuteWaitOnceTrigUntilReset() {
         // Disable the _conditionalNG. This will unregister the listeners
@@ -325,6 +328,10 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     public void testExecuteSingleDelay() {
         // Disable the _conditionalNG. This will unregister the listeners
         _conditionalNG.setEnabled(false);
+        
+        // This test requires that runOnGUIDelayed is true
+        _conditionalNG.setRunOnGUIDelayed(true);
+        
         _atomicBoolean.set(false);
         _expressionTimer.setTimerType(TimerType.REPEAT_SINGLE_DELAY);
         _expressionTimer.setTimerDelay(100, 0);
@@ -361,6 +368,10 @@ public class TimerTest extends AbstractDigitalExpressionTestBase {
     public void testExecuteDoubleDelay() {
         // Disable the _conditionalNG. This will unregister the listeners
         _conditionalNG.setEnabled(false);
+        
+        // This test requires that runOnGUIDelayed is true
+        _conditionalNG.setRunOnGUIDelayed(true);
+        
         _atomicBoolean.set(false);
         _expressionTimer.setTimerType(TimerType.REPEAT_DOUBLE_DELAY);
         _expressionTimer.setTimerDelay(100, 100);

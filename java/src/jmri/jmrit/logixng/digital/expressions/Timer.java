@@ -88,7 +88,6 @@ public class Timer extends AbstractDigitalExpression {
         switch (_timerType) {
             case WAIT_ONCE_TRIG_ONCE:
                 if (_timerStatusRef.get() == TimerStatus.NOT_STARTED) {
-                    _timerStatusRef.set(TimerStatus.STARTED);
                     startTimer();
                 } else if (_timerStatusRef.get() == TimerStatus.FINISHED) {
                     _timerStatusRef.set(TimerStatus.WAIT_FOR_RESET);
@@ -98,7 +97,6 @@ public class Timer extends AbstractDigitalExpression {
                 
             case WAIT_ONCE_TRIG_UNTIL_RESET:
                 if (_timerStatusRef.get() == TimerStatus.NOT_STARTED) {
-                    _timerStatusRef.set(TimerStatus.STARTED);
                     startTimer();
                 } else if (_timerStatusRef.get() == TimerStatus.FINISHED) {
                     // Don't set _timerStatus to WAIT_FOR_RESET since we want
@@ -137,7 +135,10 @@ public class Timer extends AbstractDigitalExpression {
     @Override
     public void reset() {
         // stopTimer() will not return until the timer task is cancelled and stopped.
-        stopTimer();
+        if (_timerTask != null) {
+            _timerTask.stopTimer();
+            _timerTask = null;
+        }
         
         _onOrOff = false;
         _timerStatusRef.set(TimerStatus.NOT_STARTED);
@@ -158,25 +159,19 @@ public class Timer extends AbstractDigitalExpression {
         
         return new MyTimerTask() {
             @Override
-            public void run() {
-                synchronized(_lock) {
-                    if (_stopTimer) return;
-                    _timerIsRunning = true;
-                }
-                
+            public void execute() {
                 _timerStatusRef.set(TimerStatus.FINISHED);
                 c.execute();
-                
-                synchronized(_lock) {
-                    _timerIsRunning = false;
-                }
             }
         };
     }
     
     private void scheduleTimer(long delay) {
         synchronized(_lock) {
-            if (_timerTask != null) _timerTask.cancel();
+            if (_timerTask != null) {
+                _timerTask.stopTimer();
+                _timerTask = null;
+            }
             
             _timerTask = getNewTimerTask();
             jmri.util.TimerUtil.schedule(_timerTask, delay);
@@ -202,51 +197,6 @@ public class Timer extends AbstractDigitalExpression {
             default:
                 throw new RuntimeException("_timerType has unknown value: "+_timerType.name());
         }
-    }
-    
-    /**
-     * Stop the timer.
-     * This method will not return until the timer task is cancelled and stopped.
-     * I had some concurrency errors in about 1 of 20 times of running TimerTest.
-     * The call _timerTask.cancel() return even if the task is still running,
-     * so we are not guaranteed that after the call to _timerTask.cancel(),
-     * the _timerTask is completed.
-     * This code ensures that we don't return from this method until _timerTask
-     * is cancelled and that it's not running any more. / Daniel Bergqvist
-     */
-    @SuppressWarnings("SleepWhileInLoop")
-    private void stopTimer() {
-        int count = 1;
-        
-        synchronized(_lock) {
-            if (_timerTask == null) return;
-            
-            _timerTask._stopTimer = true;
-            _timerTask.cancel();
-            
-            // If the timer task is not running, we don't have
-            // to wait for it to finish.
-            if (!_timerTask._timerIsRunning) return;
-        }
-        
-        // Try max 50 times
-        while (count <= 50) {
-            synchronized(_lock) {
-                if (!_timerTask._timerIsRunning) {
-                    _timerTask = null;
-                    return;
-                }
-            }
-            
-            try {
-                Thread.sleep(20);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-            count++;
-        }
-        
-        throw new RuntimeException("Cannot stop timer");
     }
     
     @Override
@@ -305,7 +255,10 @@ public class Timer extends AbstractDigitalExpression {
     @Override
     public void unregisterListenersForThisClass() {
         // stopTimer() will not return until the timer task is cancelled and stopped.
-        stopTimer();
+        if (_timerTask != null) {
+            _timerTask.stopTimer();
+            _timerTask = null;
+        }
         _listenersAreRegistered = false;
     }
     
@@ -313,7 +266,10 @@ public class Timer extends AbstractDigitalExpression {
     @Override
     public void disposeMe() {
         synchronized(_lock) {
-            if (_timerTask != null) _timerTask.cancel();
+            if (_timerTask != null) {
+                _timerTask.stopTimer();
+                _timerTask = null;
+            }
         }
     }
     
@@ -350,13 +306,6 @@ public class Timer extends AbstractDigitalExpression {
         STARTED,
         FINISHED,
         WAIT_FOR_RESET,
-    }
-    
-    
-    private static abstract class MyTimerTask extends TimerTask {
-        
-        boolean _timerIsRunning = false;
-        boolean _stopTimer = false;
     }
     
     
