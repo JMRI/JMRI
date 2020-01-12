@@ -246,8 +246,11 @@ NOTE: joal.jar is currently replaced by an own-built version with modifications 
 - version Xerces-J 2.11.0
 - from http://www.apache.org/dist/xerces/j/
 
-
-
+##### usb-api-1.0.2.jar, usb4java-*.jar, libusb4java-*.jar
+- usb4java version 1.3.0
+- support for direct USB device usage
+- from https://github.com/usb4java/usb4java/releases/tag/usb4java-1.3.0
+  and https://github.com/usb4java/usb4java-javax/releases/tag/usb4java-javax-1.3.0
 
 
 ## For unit tests & development work only:
