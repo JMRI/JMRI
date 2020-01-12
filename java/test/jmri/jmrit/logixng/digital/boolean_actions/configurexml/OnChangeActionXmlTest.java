@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.digital.boolean_actions.configurexml;
 
-import jmri.jmrit.logixng.digital.boolean_actions.configurexml.OnChangeActionXml;
 import jmri.configurexml.JmriConfigureXmlException;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 import jmri.util.JUnitAppender;
@@ -16,7 +15,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2019
  */
-public class DigitalActionWithChangeXmlTest {
+public class OnChangeActionXmlTest {
 
     @Test
     public void testLoad() throws JmriConfigureXmlException {

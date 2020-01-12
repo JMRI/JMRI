@@ -1,6 +1,5 @@
 package jmri.jmrit.logixng.digital.implementation;
 
-import jmri.jmrit.logixng.digital.implementation.DefaultFemaleDigitalBooleanActionSocketFactory;
 import jmri.util.JUnitUtil;
 import org.junit.After;
 import org.junit.Assert;
@@ -12,7 +11,7 @@ import org.junit.Test;
  * 
  * @author Daniel Bergqvist 2018
  */
-public class DefaultFemaleLogixEmulatorActionSocketFactoryTest {
+public class DefaultFemaleDigitalBooleanActionSocketFactoryTest {
 
     @Test
     public void testCtor() {
