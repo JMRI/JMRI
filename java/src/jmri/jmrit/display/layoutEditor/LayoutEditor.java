@@ -2220,7 +2220,6 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
         panelBounds.add(MathUtil.zeroPoint2D);
 
         //log.info("resizePanelBounds: {}", MathUtil.rectangle2DToString(panelBounds));
-
         setPanelBounds(panelBounds);
 
         return panelBounds;
@@ -4191,11 +4190,8 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
             }
         });
 
-        _layoutShapeSelection.forEach((comp) -> {
-            remove(comp);
-        });
+        layoutShapes.removeAll(_layoutShapeSelection);
 
-        selectionActive = false;
         clearSelectionGroups();
         redrawPanel();
     }
@@ -7592,7 +7588,7 @@ public class LayoutEditor extends PanelEditor implements MouseWheelListener {
     List<LayoutTurnout> getLayoutTurnouts() {
         return layoutTrackList.stream() // next line excludes LayoutSlips
                 .filter((o) -> (!(o instanceof LayoutSlip) && (o instanceof LayoutTurnout)))
-                .map(LayoutTurnout.class::cast).map(LayoutTurnout.class::cast)
+                .map(LayoutTurnout.class::cast)
                 .collect(Collectors.toCollection(ArrayList<LayoutTurnout>::new));
     }
 
