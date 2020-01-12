@@ -37,7 +37,7 @@ public final class SwingTools {
         if (lastDot > 0) {
             // found package-class boundary OK
             String result = className.substring(0, lastDot)
-                    + ".configureswing."
+                    + ".swing."
                     + className.substring(lastDot + 1, className.length())
                     + "Swing";
             log.trace("adapter class name is {}", result);

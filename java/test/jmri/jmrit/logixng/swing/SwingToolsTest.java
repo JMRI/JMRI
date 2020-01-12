@@ -25,19 +25,19 @@ public class SwingToolsTest {
         Class actionClass = ActionTurnout.class;
         
         Assert.assertTrue("Class name is correct",
-                "jmri.jmrit.logixng.digital.actions.configureswing.ActionTurnoutSwing"
+                "jmri.jmrit.logixng.digital.actions.swing.ActionTurnoutSwing"
                         .equals(SwingTools.adapterNameForObject(action)));
         
         Assert.assertTrue("Class name is correct",
-                "jmri.jmrit.logixng.digital.actions.configureswing.ActionTurnoutSwing"
+                "jmri.jmrit.logixng.digital.actions.swing.ActionTurnoutSwing"
                         .equals(SwingTools.adapterNameForClass(actionClass)));
         
         Assert.assertTrue("Class is correct",
-                "jmri.jmrit.logixng.digital.actions.configureswing.ActionTurnoutSwing"
+                "jmri.jmrit.logixng.digital.actions.swing.ActionTurnoutSwing"
                         .equals(SwingTools.getSwingConfiguratorForObject(action).getClass().getName()));
         
         Assert.assertTrue("Class is correct",
-                "jmri.jmrit.logixng.digital.actions.configureswing.ActionTurnoutSwing"
+                "jmri.jmrit.logixng.digital.actions.swing.ActionTurnoutSwing"
                         .equals(SwingTools.getSwingConfiguratorForClass(actionClass).getClass().getName()));
         
         // The class SwingToolsTest does not have a swing configurator
